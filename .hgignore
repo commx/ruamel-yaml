@@ -12,3 +12,6 @@ build
 .tox
 .cache
 README.pdf
+ruamel
+convert
+cmd

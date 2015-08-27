@@ -160,8 +160,8 @@ def check_extensions():
 
 def main():
     install_requires = [
-        "ruamel.base==0.3",
-        "ruamel.std.argparse==0.5.2",
+        "ruamel.base>=1.0.0",
+        "ruamel.std.argparse",
     ]
     # use fast ordereddict for !!omap
     if sys.version_info[0] == 2 and \
@@ -188,7 +188,7 @@ def main():
         namespace_packages=[name_space],
         packages=packages,
         ext_modules=check_extensions(),
-        entry_points=mk_entry_points(full_package_name),
+        #entry_points=mk_entry_points(full_package_name),
         cmdclass={'install_lib': MyInstallLib},
         classifiers=[
             'Development Status :: 4 - Beta',
