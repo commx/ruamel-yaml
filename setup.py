@@ -160,8 +160,8 @@ def check_extensions():
 
 def main():
     install_requires = [
-        "ruamel.base",
-        "ruamel.std.argparse>=0.5.1",
+        "ruamel.base==0.3",
+        "ruamel.std.argparse==0.5.2",
     ]
     # use fast ordereddict for !!omap
     if sys.version_info[0] == 2 and \
