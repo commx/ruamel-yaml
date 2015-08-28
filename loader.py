@@ -4,7 +4,7 @@ __all__ = ['BaseLoader', 'SafeLoader', 'Loader', 'RoundTripLoader']
 
 from .reader import *
 from .scanner import *
-from .parser import *
+from .parser_ import *
 from .composer import *
 from .constructor import *
 from .resolver import *

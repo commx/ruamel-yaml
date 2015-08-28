@@ -11,6 +11,7 @@ build
 *.egg-info
 .tox
 .cache
+_yaml.so
 README.pdf
 ruamel
 convert

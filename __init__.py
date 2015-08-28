@@ -2,6 +2,15 @@
 
 from __future__ import absolute_import
 
+_package_data = dict(
+    full_package_name='ruamel.yaml',
+    version_info=(0, 10, 7),
+    author='Anthon van der Neut',
+    author_email='a.van.der.neut@ruamel.eu',
+    description="ruamel.yaml is a YAML parser/emitter that supports roundtrip preservation of comments, seq/map flow style, and map key order",  # NOQA
+    entry_points=None,
+    install_requires=['ruamel.base']
+)
 
 def _convert_version(tup):
     """create a PEP 386 pseudo-format conformant string from tuple tup"""
@@ -21,7 +30,8 @@ def _convert_version(tup):
     return ret_val
 
 
-version_info = (0, 10, 6)
+# <
+version_info = _package_data['version_info']
 __version__ = _convert_version(version_info)
 
 del _convert_version
@@ -32,6 +42,8 @@ try:
 except ImportError:
     __with_libyaml__ = False
 
+import sys
+
 # body extracted to main.py
 from .main import *
 
@@ -39,5 +51,5 @@ def main():
     # No direct import of yaml in order not to pollute namespace.
     # If other utility 'bodies' exist in this directory a module level
     # import here, would get you all of its initialisations/imports as well
-    from ruamel.yaml.yaml import main as util_main
+    from ruamel.yaml import main as util_main
     util_main()
