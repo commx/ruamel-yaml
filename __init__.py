@@ -1,17 +1,46 @@
 # coding: utf-8
 
+from __future__ import print_function
 from __future__ import absolute_import
 
-_package_data = dict(
-    full_package_name='ruamel.yaml',
-    version_info=(0, 10, 7),
-    author='Anthon van der Neut',
-    author_email='a.van.der.neut@ruamel.eu',
-    description="ruamel.yaml is a YAML parser/emitter that supports roundtrip preservation of comments, seq/map flow style, and map key order",  # NOQA
-    entry_points=None,
-    install_requires=['ruamel.base']
-)
+# install_requires of ruamel.base is not really required but the old
+# ruamel.base installed __init__.py, and thus a new version should
+# be installed at some point
 
+null = None
+_package_data = {   # JSON
+    "full_package_name": "ruamel.yaml",
+    "version_info": [0, 10, 7],
+    "author": "Anthon van der Neut",
+    "author_email": "a.van.der.neut@ruamel.eu",
+    "description": "ruamel.yaml is a YAML parser/emitter that supports roundtrip preservation of comments, seq/map flow style, and map key order",  # NOQA
+    "entry_points": null,
+    "install_requires": {
+        "any": ["ruamel.base>=1.0.0"],
+        "py26": ["ruamel.ordereddict"],
+        "py27": ["ruamel.ordereddict"]
+    },
+    "ext_modules": [ {
+        "name": "_yaml",
+        "src": ["ext/_yaml.c"],
+        "lib": ["yaml"],
+        "test": "#include <yaml.h>\n\nint main(int argc, char* argv[])\n{\nyaml_parser_t parser;\nparser = parser;  /* prevent warning */\nreturn 0;\n}\n"  # NOQA
+        }
+    ],
+    "classifiers": [
+        "Programming Language :: Python :: 2.6",
+        "Programming Language :: Python :: 2.7",
+        "Programming Language :: Python :: 3.3",
+        "Programming Language :: Python :: 3.4",
+        "Programming Language :: Python :: Implementation :: CPython",
+        "Programming Language :: Python :: Implementation :: PyPy",
+        "Topic :: Software Development :: Libraries :: Python Modules",
+        "Topic :: Text Processing :: Markup"
+    ]
+}   # JSON
+
+
+# < from ruamel.util.new import _convert_version
 def _convert_version(tup):
     """create a PEP 386 pseudo-format conformant string from tuple tup"""
     ret_val = str(tup[0])  # first is always digit

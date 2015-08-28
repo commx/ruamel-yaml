@@ -2,6 +2,11 @@
 ruamel.yaml
 ===========
 
+Starting with 0.10.7 the package has been reorganise and the
+commandline utility is in its own package ``ruamel.yaml.cmd`` (so
+installing ``ruamel.yaml`` doesn't pull in possible irrelevant modules
+only used in the commandline utility)
+
 ``ruamel.yaml`` is a YAML package for Python. It is a derivative
 of Kirill Simonov's `PyYAML 3.11 <https://bitbucket.org/xi/pyyaml>`_
 which supports YAML1.1
@@ -14,7 +19,7 @@ Major differences with PyYAML 3.11:
 - support for simple lists as mapping keys by transformation to tuples
 - ``!!omap`` generates ordereddict (C) on Python 2, collections.OrderedDict
   on Python 3, and ``!!omap`` is generated for these types.
-- some `YAML 1.2 <http://yaml.org/spec/1.2/spec.html>`_ enhancements 
+- some `YAML 1.2 <http://yaml.org/spec/1.2/spec.html>`_ enhancements
   (``0o`` octal prefix, ``\/`` escape)
 - pep8 compliance
 - tox and py.test based testing
@@ -53,9 +58,9 @@ collections (mappings/sequences resuting in Python dict/list). The basic
 for for this is::
 
   from __future__ import print_function
-  
+
   import ruamel.yaml
-  
+
   inp = """\
   abc:
     - a     # comment 1
@@ -67,14 +72,14 @@ for for this is::
     e: 5
     f: 6 # comment 3
   """
-  
+
   data = ruamel.yaml.load(inp, ruamel.yaml.RoundTripLoader)
   data['abc'].append('b')
   data['abc'].yaml_add_eol_comment('comment 4', 1)  # takes column of comment 1
   data['xyz'].yaml_add_eol_comment('comment 5', 'c')  # takes column of comment 2
   data['xyz'].yaml_add_eol_comment('comment 6', 'e')  # takes column of comment 3
   data['xyz'].yaml_add_eol_comment('comment 7', 'd', column=20)
-  
+
   print(ruamel.yaml.dump(data, Dumper=ruamel.yaml.RoundTripDumper), end='')
 
 .. example code add_comment.py
@@ -147,7 +152,7 @@ generates the original (or at least something much closer).
 Smartening
 ==========
 
-When you use round-tripping, then the complex data you get are 
+When you use round-tripping, then the complex data you get are
 already subclasses of the build in types. So you can patch
 in extra methods or override existing ones. Some methods are already
 included and you can do::
@@ -161,12 +166,12 @@ included and you can do::
       e:
         g: 3.14
     """
-    
-    
+
+
     data = yaml.load(yaml_str, Loader=yaml.RoundTripLoader)
-    
+
     assert data.mlget(['a', 1, 'd', 'f'], list_ok=True) == 196
-    
+
 
 Examples
 ========
@@ -175,9 +180,9 @@ Basic round trip of parsing YAML to Python objects, modifying
 and generating YAML::
 
   from __future__ import print_function
-  
+
   import ruamel.yaml
-  
+
   inp = """\
   # example
   name:
@@ -185,10 +190,10 @@ and generating YAML::
     family: Smith   # very common
     given: Alice    # one of the siblings
   """
-  
+
   code = ruamel.yaml.load(inp, ruamel.yaml.RoundTripLoader)
   code['name']['given'] = 'Bob'
-  
+
   print(ruamel.yaml.dump(code, Dumper=ruamel.yaml.RoundTripDumper), end='')
 
 .. example code small.py
@@ -205,12 +210,12 @@ Resulting in ::
 .. example output small.py
 
 
-YAML handcrafted anchors and references as well as key merging 
+YAML handcrafted anchors and references as well as key merging
 is preserved. The merged keys can transparently be accessed
 using ``[]`` and ``.get()``::
 
   import ruamel.yaml
-  
+
   inp = """\
   - &CENTER {x: 1, y: 2}
   - &LEFT {x: 0, y: 2}
@@ -234,10 +239,10 @@ using ``[]`` and ``.get()``::
     x: 1
     label: center/big
   """
-  
+
   data = ruamel.yaml.load(inp, ruamel.yaml.RoundTripLoader)
   assert data[7]['y'] == 2
-  
+
 
 .. example code anchor_merge.py
 
@@ -267,40 +272,3 @@ uses `virtualenv <https://pypi.python.org/pypi/virtualenv>`_ and
 `pytest <http://pytest.org/latest/>`_.
 
 
-yaml utlity
-===========
-
-A utility name  ``yaml`` is included and allows for basic operations on files:
-
-- ``yaml round-trip <file_name>`` for basic roundtrip testing of YAML
-  files
-- ``yaml json <file_name>`` for conversion of JSON file(s) to a single
-  YAML block style document
-- ``yaml ini <file_name>`` for conversion of an INI/config file (ConfigObj
-  comment and nested sections supported) to a YAML block style document.
-  This requires ``configobj`` to be installed (``pip install configobj``)
-- ``yaml from-csv <file_name>`` for conversion CSV to a YAML
-  file to a a table in an HTML file. 
-- ``yaml htmltable <file_name>`` for conversion of the basic structure in a YAML
-  file to a a table in an HTML file. The YAML file::
-
-    title:
-    - fruit
-    - legume
-    local:
-    - apple
-    - sprouts
-    import:
-    - orange
-    - broccoli
-
-  is converted into the table:
-
-  ====== ====== ========
-  title  fruit  legume
-  local  apple  sprouts
-  import orange broccoli
-  ====== ====== ========
-
-
-See ``yaml --help`` for more information on the availble commands
