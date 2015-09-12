@@ -2,122 +2,122 @@ from __future__ import absolute_import
 from __future__ import print_function
 
 import _yaml
-import ruamel.yaml as yaml
+import ruamel.yaml
 import types, pprint
-from yaml.compat import PY3
+from ruamel.yaml.compat import PY3
 
-yaml.PyBaseLoader = yaml.BaseLoader
-yaml.PySafeLoader = yaml.SafeLoader
-yaml.PyLoader = yaml.Loader
-yaml.PyBaseDumper = yaml.BaseDumper
-yaml.PySafeDumper = yaml.SafeDumper
-yaml.PyDumper = yaml.Dumper
+ruamel.yaml.PyBaseLoader = ruamel.yaml.BaseLoader
+ruamel.yaml.PySafeLoader = ruamel.yaml.SafeLoader
+ruamel.yaml.PyLoader = ruamel.yaml.Loader
+ruamel.yaml.PyBaseDumper = ruamel.yaml.BaseDumper
+ruamel.yaml.PySafeDumper = ruamel.yaml.SafeDumper
+ruamel.yaml.PyDumper = ruamel.yaml.Dumper
 
-old_scan = yaml.scan
-def new_scan(stream, Loader=yaml.CLoader):
+old_scan = ruamel.yaml.scan
+def new_scan(stream, Loader=ruamel.yaml.CLoader):
     return old_scan(stream, Loader)
 
-old_parse = yaml.parse
-def new_parse(stream, Loader=yaml.CLoader):
+old_parse = ruamel.yaml.parse
+def new_parse(stream, Loader=ruamel.yaml.CLoader):
     return old_parse(stream, Loader)
 
-old_compose = yaml.compose
-def new_compose(stream, Loader=yaml.CLoader):
+old_compose = ruamel.yaml.compose
+def new_compose(stream, Loader=ruamel.yaml.CLoader):
     return old_compose(stream, Loader)
 
-old_compose_all = yaml.compose_all
-def new_compose_all(stream, Loader=yaml.CLoader):
+old_compose_all = ruamel.yaml.compose_all
+def new_compose_all(stream, Loader=ruamel.yaml.CLoader):
     return old_compose_all(stream, Loader)
 
-old_load = yaml.load
-def new_load(stream, Loader=yaml.CLoader):
+old_load = ruamel.yaml.load
+def new_load(stream, Loader=ruamel.yaml.CLoader):
     return old_load(stream, Loader)
 
-old_load_all = yaml.load_all
-def new_load_all(stream, Loader=yaml.CLoader):
+old_load_all = ruamel.yaml.load_all
+def new_load_all(stream, Loader=ruamel.yaml.CLoader):
     return old_load_all(stream, Loader)
 
-old_safe_load = yaml.safe_load
+old_safe_load = ruamel.yaml.safe_load
 def new_safe_load(stream):
-    return old_load(stream, yaml.CSafeLoader)
+    return old_load(stream, ruamel.yaml.CSafeLoader)
 
-old_safe_load_all = yaml.safe_load_all
+old_safe_load_all = ruamel.yaml.safe_load_all
 def new_safe_load_all(stream):
-    return old_load_all(stream, yaml.CSafeLoader)
+    return old_load_all(stream, ruamel.yaml.CSafeLoader)
 
-old_emit = yaml.emit
-def new_emit(events, stream=None, Dumper=yaml.CDumper, **kwds):
+old_emit = ruamel.yaml.emit
+def new_emit(events, stream=None, Dumper=ruamel.yaml.CDumper, **kwds):
     return old_emit(events, stream, Dumper, **kwds)
 
-old_serialize = yaml.serialize
-def new_serialize(node, stream, Dumper=yaml.CDumper, **kwds):
+old_serialize = ruamel.yaml.serialize
+def new_serialize(node, stream, Dumper=ruamel.yaml.CDumper, **kwds):
     return old_serialize(node, stream, Dumper, **kwds)
 
-old_serialize_all = yaml.serialize_all
-def new_serialize_all(nodes, stream=None, Dumper=yaml.CDumper, **kwds):
+old_serialize_all = ruamel.yaml.serialize_all
+def new_serialize_all(nodes, stream=None, Dumper=ruamel.yaml.CDumper, **kwds):
     return old_serialize_all(nodes, stream, Dumper, **kwds)
 
-old_dump = yaml.dump
-def new_dump(data, stream=None, Dumper=yaml.CDumper, **kwds):
+old_dump = ruamel.yaml.dump
+def new_dump(data, stream=None, Dumper=ruamel.yaml.CDumper, **kwds):
     return old_dump(data, stream, Dumper, **kwds)
 
-old_dump_all = yaml.dump_all
-def new_dump_all(documents, stream=None, Dumper=yaml.CDumper, **kwds):
+old_dump_all = ruamel.yaml.dump_all
+def new_dump_all(documents, stream=None, Dumper=ruamel.yaml.CDumper, **kwds):
     return old_dump_all(documents, stream, Dumper, **kwds)
 
-old_safe_dump = yaml.safe_dump
+old_safe_dump = ruamel.yaml.safe_dump
 def new_safe_dump(data, stream=None, **kwds):
-    return old_dump(data, stream, yaml.CSafeDumper, **kwds)
+    return old_dump(data, stream, ruamel.yaml.CSafeDumper, **kwds)
 
-old_safe_dump_all = yaml.safe_dump_all
+old_safe_dump_all = ruamel.yaml.safe_dump_all
 def new_safe_dump_all(documents, stream=None, **kwds):
-    return old_dump_all(documents, stream, yaml.CSafeDumper, **kwds)
+    return old_dump_all(documents, stream, ruamel.yaml.CSafeDumper, **kwds)
 
 def _set_up():
-    yaml.BaseLoader = yaml.CBaseLoader
-    yaml.SafeLoader = yaml.CSafeLoader
-    yaml.Loader = yaml.CLoader
-    yaml.BaseDumper = yaml.CBaseDumper
-    yaml.SafeDumper = yaml.CSafeDumper
-    yaml.Dumper = yaml.CDumper
-    yaml.scan = new_scan
-    yaml.parse = new_parse
-    yaml.compose = new_compose
-    yaml.compose_all = new_compose_all
-    yaml.load = new_load
-    yaml.load_all = new_load_all
-    yaml.safe_load = new_safe_load
-    yaml.safe_load_all = new_safe_load_all
-    yaml.emit = new_emit
-    yaml.serialize = new_serialize
-    yaml.serialize_all = new_serialize_all
-    yaml.dump = new_dump
-    yaml.dump_all = new_dump_all
-    yaml.safe_dump = new_safe_dump
-    yaml.safe_dump_all = new_safe_dump_all
+    ruamel.yaml.BaseLoader = ruamel.yaml.CBaseLoader
+    ruamel.yaml.SafeLoader = ruamel.yaml.CSafeLoader
+    ruamel.yaml.Loader = ruamel.yaml.CLoader
+    ruamel.yaml.BaseDumper = ruamel.yaml.CBaseDumper
+    ruamel.yaml.SafeDumper = ruamel.yaml.CSafeDumper
+    ruamel.yaml.Dumper = ruamel.yaml.CDumper
+    ruamel.yaml.scan = new_scan
+    ruamel.yaml.parse = new_parse
+    ruamel.yaml.compose = new_compose
+    ruamel.yaml.compose_all = new_compose_all
+    ruamel.yaml.load = new_load
+    ruamel.yaml.load_all = new_load_all
+    ruamel.yaml.safe_load = new_safe_load
+    ruamel.yaml.safe_load_all = new_safe_load_all
+    ruamel.yaml.emit = new_emit
+    ruamel.yaml.serialize = new_serialize
+    ruamel.yaml.serialize_all = new_serialize_all
+    ruamel.yaml.dump = new_dump
+    ruamel.yaml.dump_all = new_dump_all
+    ruamel.yaml.safe_dump = new_safe_dump
+    ruamel.yaml.safe_dump_all = new_safe_dump_all
 
 def _tear_down():
-    yaml.BaseLoader = yaml.PyBaseLoader
-    yaml.SafeLoader = yaml.PySafeLoader
-    yaml.Loader = yaml.PyLoader
-    yaml.BaseDumper = yaml.PyBaseDumper
-    yaml.SafeDumper = yaml.PySafeDumper
-    yaml.Dumper = yaml.PyDumper
-    yaml.scan = old_scan
-    yaml.parse = old_parse
-    yaml.compose = old_compose
-    yaml.compose_all = old_compose_all
-    yaml.load = old_load
-    yaml.load_all = old_load_all
-    yaml.safe_load = old_safe_load
-    yaml.safe_load_all = old_safe_load_all
-    yaml.emit = old_emit
-    yaml.serialize = old_serialize
-    yaml.serialize_all = old_serialize_all
-    yaml.dump = old_dump
-    yaml.dump_all = old_dump_all
-    yaml.safe_dump = old_safe_dump
-    yaml.safe_dump_all = old_safe_dump_all
+    ruamel.yaml.BaseLoader = ruamel.yaml.PyBaseLoader
+    ruamel.yaml.SafeLoader = ruamel.yaml.PySafeLoader
+    ruamel.yaml.Loader = ruamel.yaml.PyLoader
+    ruamel.yaml.BaseDumper = ruamel.yaml.PyBaseDumper
+    ruamel.yaml.SafeDumper = ruamel.yaml.PySafeDumper
+    ruamel.yaml.Dumper = ruamel.yaml.PyDumper
+    ruamel.yaml.scan = old_scan
+    ruamel.yaml.parse = old_parse
+    ruamel.yaml.compose = old_compose
+    ruamel.yaml.compose_all = old_compose_all
+    ruamel.yaml.load = old_load
+    ruamel.yaml.load_all = old_load_all
+    ruamel.yaml.safe_load = old_safe_load
+    ruamel.yaml.safe_load_all = old_safe_load_all
+    ruamel.yaml.emit = old_emit
+    ruamel.yaml.serialize = old_serialize
+    ruamel.yaml.serialize_all = old_serialize_all
+    ruamel.yaml.dump = old_dump
+    ruamel.yaml.dump_all = old_dump_all
+    ruamel.yaml.safe_dump = old_safe_dump
+    ruamel.yaml.safe_dump_all = old_safe_dump_all
 
 def test_c_version(verbose=False):
     if verbose:
@@ -127,17 +127,17 @@ def test_c_version(verbose=False):
             (_yaml.get_version(), _yaml.get_version_string())
 
 def _compare_scanners(py_data, c_data, verbose):
-    py_tokens = list(yaml.scan(py_data, Loader=yaml.PyLoader))
+    py_tokens = list(ruamel.yaml.scan(py_data, Loader=ruamel.yaml.PyLoader))
     c_tokens = []
     try:
-        for token in yaml.scan(c_data, Loader=yaml.CLoader):
+        for token in ruamel.yaml.scan(c_data, Loader=ruamel.yaml.CLoader):
             c_tokens.append(token)
         assert len(py_tokens) == len(c_tokens), (len(py_tokens), len(c_tokens))
         for py_token, c_token in zip(py_tokens, c_tokens):
             assert py_token.__class__ == c_token.__class__, (py_token, c_token)
             if hasattr(py_token, 'value'):
                 assert py_token.value == c_token.value, (py_token, c_token)
-            if isinstance(py_token, yaml.StreamEndToken):
+            if isinstance(py_token, ruamel.yaml.StreamEndToken):
                 continue
             py_start = (py_token.start_mark.index, py_token.start_mark.line, py_token.start_mark.column)
             py_end = (py_token.end_mark.index, py_token.end_mark.line, py_token.end_mark.column)
@@ -166,10 +166,10 @@ test_c_scanner.unittest = ['.data', '.canonical']
 test_c_scanner.skip = ['.skip-ext']
 
 def _compare_parsers(py_data, c_data, verbose):
-    py_events = list(yaml.parse(py_data, Loader=yaml.PyLoader))
+    py_events = list(ruamel.yaml.parse(py_data, Loader=ruamel.yaml.PyLoader))
     c_events = []
     try:
-        for event in yaml.parse(c_data, Loader=yaml.CLoader):
+        for event in ruamel.yaml.parse(c_data, Loader=ruamel.yaml.CLoader):
             c_events.append(event)
         assert len(py_events) == len(c_events), (len(py_events), len(c_events))
         for py_event, c_event in zip(py_events, c_events):
@@ -199,12 +199,12 @@ test_c_parser.unittest = ['.data', '.canonical']
 test_c_parser.skip = ['.skip-ext']
 
 def _compare_emitters(data, verbose):
-    events = list(yaml.parse(data, Loader=yaml.PyLoader))
-    c_data = yaml.emit(events, Dumper=yaml.CDumper)
+    events = list(ruamel.yaml.parse(data, Loader=ruamel.yaml.PyLoader))
+    c_data = ruamel.yaml.emit(events, Dumper=ruamel.yaml.CDumper)
     if verbose:
         print(c_data)
-    py_events = list(yaml.parse(c_data, Loader=yaml.PyLoader))
-    c_events = list(yaml.parse(c_data, Loader=yaml.CLoader))
+    py_events = list(ruamel.yaml.parse(c_data, Loader=ruamel.yaml.PyLoader))
+    c_events = list(ruamel.yaml.parse(c_data, Loader=ruamel.yaml.CLoader))
     try:
         assert len(events) == len(py_events), (len(events), len(py_events))
         assert len(events) == len(c_events), (len(events), len(c_events))

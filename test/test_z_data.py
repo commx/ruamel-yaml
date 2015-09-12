@@ -4,6 +4,7 @@ from __future__ import print_function
 import sys
 import os
 import pytest
+import platform
 
 sys.path.insert(0, os.path.dirname(__file__) + '/lib')
 
@@ -22,6 +23,10 @@ def test_data():
 
 # @pytest.mark.skipif(not ruamel.yaml.__with_libyaml__,
 #                     reason="no libyaml")
+
+@pytest.mark.skipif(
+    platform.python_implementation() == "PyPy",
+    reason="too many open filehandles, old PyYAML tests rely on garbage collection")
 def test_data_ext():
     collections = []
     if ruamel.yaml.__with_libyaml__:

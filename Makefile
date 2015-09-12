@@ -11,6 +11,11 @@ gen_win_whl:
 
 clean:	clean_common
 
+cython:	ext/_yaml.c
+
+ext/_yaml.c:	ext/_yaml.pyx
+	cd ext; cython _yaml.pyx
+	
 
 #tstvenv: testvenv testsetup testtest
 #

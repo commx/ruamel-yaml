@@ -77,9 +77,3 @@ import sys
 from .main import *
 
 
-def main():
-    # No direct import of yaml in order not to pollute namespace.
-    # If other utility 'bodies' exist in this directory a module level
-    # import here, would get you all of its initialisations/imports as well
-    from ruamel.yaml import main as util_main
-    util_main()

@@ -158,9 +158,11 @@ def display(results, verbose):
             sys.stdout.write('-'*75+'\n')
             sys.stdout.write('%s:\n' % filename)
             if PY3:
-                data = open(filename, 'r', errors='replace').read()
+                with open(filename, 'r', errors='replace') as fp:
+                    data = fp.read()
             else:
-                data = open(filename, 'rb').read()
+                with open(filename, 'rb') as fp:
+                    data = fp.read()
             sys.stdout.write(data)
             if data and data[-1] != '\n':
                 sys.stdout.write('\n')

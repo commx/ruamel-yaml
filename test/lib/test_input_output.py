@@ -20,7 +20,8 @@ if PY2:
 
 if PY3:
     def test_unicode_input(unicode_filename, verbose=False):
-        data = open(unicode_filename, 'rb').read().decode('utf-8')
+        with open(unicode_filename, 'rb') as fp:
+            data = fp.read().decode('utf-8')
         value = ' '.join(data.split())
         output = yaml.load(data)
         assert output == value, (output, value)
@@ -38,7 +39,8 @@ if PY3:
             assert output == value, (output, value)
 else:
     def test_unicode_input(unicode_filename, verbose=False):
-        data = open(unicode_filename, 'rb').read().decode('utf-8')
+        with open(unicode_filename, 'rb') as fp:
+            data = fp.read().decode('utf-8')
         value = ' '.join(data.split())
         output = yaml.load(_unicode_open(StringIO(data.encode('utf-8')), 'utf-8'))
         assert output == value, (output, value)
@@ -56,7 +58,8 @@ else:
 test_unicode_input.unittest = ['.unicode']
 
 def test_unicode_input_errors(unicode_filename, verbose=False):
-    data = open(unicode_filename, 'rb').read().decode('utf-8')
+    with open(unicode_filename, 'rb') as fp:
+        data = fp.read().decode('utf-8')
     for input in [data.encode('latin1', 'ignore'),
                     data.encode('utf-16-be'), data.encode('utf-16-le'),
                     codecs.BOM_UTF8+data.encode('utf-16-be'),
@@ -81,7 +84,8 @@ test_unicode_input_errors.unittest = ['.unicode']
 
 if PY3:
     def test_unicode_output(unicode_filename, verbose=False):
-        data = open(unicode_filename, 'rb').read().decode('utf-8')
+        with open(unicode_filename, 'rb') as fp:
+            data = fp.read().decode('utf-8')
         value = ' '.join(data.split())
         for allow_unicode in [False, True]:
             data1 = yaml.dump(value, allow_unicode=allow_unicode)
@@ -127,7 +131,8 @@ if PY3:
                 assert isinstance(data2, str), (type(data2), encoding)
 else:
     def test_unicode_output(unicode_filename, verbose=False):
-        data = open(unicode_filename, 'rb').read().decode('utf-8')
+        with open(unicode_filename, 'rb') as fp:
+            data = fp.read().decode('utf-8')
         value = ' '.join(data.split())
         for allow_unicode in [False, True]:
             data1 = yaml.dump(value, allow_unicode=allow_unicode)
@@ -166,7 +171,8 @@ else:
 test_unicode_output.unittest = ['.unicode']
 
 def test_file_output(unicode_filename, verbose=False):
-    data = open(unicode_filename, 'rb').read().decode('utf-8')
+    with open(unicode_filename, 'rb') as fp:
+        data = fp.read().decode('utf-8')
     handle, filename = tempfile.mkstemp()
     os.close(handle)
     try:
@@ -208,7 +214,8 @@ def test_file_output(unicode_filename, verbose=False):
 test_file_output.unittest = ['.unicode']
 
 def test_unicode_transfer(unicode_filename, verbose=False):
-    data = open(unicode_filename, 'rb').read().decode('utf-8')
+    with open(unicode_filename, 'rb') as fp:
+        data = fp.read().decode('utf-8')
     for encoding in [None, 'utf-8', 'utf-16-be', 'utf-16-le']:
         input = data
         if PY3:

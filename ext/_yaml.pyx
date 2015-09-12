@@ -1,5 +1,4 @@
 
-import yaml
 
 def get_version_string():
     cdef char *value
@@ -15,51 +14,51 @@ def get_version():
     return (major, minor, patch)
 
 #Mark = yaml.error.Mark
-YAMLError = yaml.error.YAMLError
-ReaderError = yaml.reader.ReaderError
-ScannerError = yaml.scanner.ScannerError
-ParserError = yaml.parser.ParserError
-ComposerError = yaml.composer.ComposerError
-ConstructorError = yaml.constructor.ConstructorError
-EmitterError = yaml.emitter.EmitterError
-SerializerError = yaml.serializer.SerializerError
-RepresenterError = yaml.representer.RepresenterError
+from ruamel.yaml.error import YAMLError
+from ruamel.yaml.reader import ReaderError
+from ruamel.yaml.scanner import ScannerError
+from ruamel.yaml.parser_ import ParserError
+from ruamel.yaml.composer import ComposerError
+from ruamel.yaml.constructor import ConstructorError
+from ruamel.yaml.emitter import EmitterError
+from ruamel.yaml.serializer import SerializerError
+from ruamel.yaml.representer import RepresenterError
 
-StreamStartToken = yaml.tokens.StreamStartToken
-StreamEndToken = yaml.tokens.StreamEndToken
-DirectiveToken = yaml.tokens.DirectiveToken
-DocumentStartToken = yaml.tokens.DocumentStartToken
-DocumentEndToken = yaml.tokens.DocumentEndToken
-BlockSequenceStartToken = yaml.tokens.BlockSequenceStartToken
-BlockMappingStartToken = yaml.tokens.BlockMappingStartToken
-BlockEndToken = yaml.tokens.BlockEndToken
-FlowSequenceStartToken = yaml.tokens.FlowSequenceStartToken
-FlowMappingStartToken = yaml.tokens.FlowMappingStartToken
-FlowSequenceEndToken = yaml.tokens.FlowSequenceEndToken
-FlowMappingEndToken = yaml.tokens.FlowMappingEndToken
-KeyToken = yaml.tokens.KeyToken
-ValueToken = yaml.tokens.ValueToken
-BlockEntryToken = yaml.tokens.BlockEntryToken
-FlowEntryToken = yaml.tokens.FlowEntryToken
-AliasToken = yaml.tokens.AliasToken
-AnchorToken = yaml.tokens.AnchorToken
-TagToken = yaml.tokens.TagToken
-ScalarToken = yaml.tokens.ScalarToken
+from ruamel.yaml.tokens import StreamStartToken
+from ruamel.yaml.tokens import StreamEndToken
+from ruamel.yaml.tokens import DirectiveToken
+from ruamel.yaml.tokens import DocumentStartToken
+from ruamel.yaml.tokens import DocumentEndToken
+from ruamel.yaml.tokens import BlockSequenceStartToken
+from ruamel.yaml.tokens import BlockMappingStartToken
+from ruamel.yaml.tokens import BlockEndToken
+from ruamel.yaml.tokens import FlowSequenceStartToken
+from ruamel.yaml.tokens import FlowMappingStartToken
+from ruamel.yaml.tokens import FlowSequenceEndToken
+from ruamel.yaml.tokens import FlowMappingEndToken
+from ruamel.yaml.tokens import KeyToken
+from ruamel.yaml.tokens import ValueToken
+from ruamel.yaml.tokens import BlockEntryToken
+from ruamel.yaml.tokens import FlowEntryToken
+from ruamel.yaml.tokens import AliasToken
+from ruamel.yaml.tokens import AnchorToken
+from ruamel.yaml.tokens import TagToken
+from ruamel.yaml.tokens import ScalarToken
 
-StreamStartEvent = yaml.events.StreamStartEvent
-StreamEndEvent = yaml.events.StreamEndEvent
-DocumentStartEvent = yaml.events.DocumentStartEvent
-DocumentEndEvent = yaml.events.DocumentEndEvent
-AliasEvent = yaml.events.AliasEvent
-ScalarEvent = yaml.events.ScalarEvent
-SequenceStartEvent = yaml.events.SequenceStartEvent
-SequenceEndEvent = yaml.events.SequenceEndEvent
-MappingStartEvent = yaml.events.MappingStartEvent
-MappingEndEvent = yaml.events.MappingEndEvent
+from ruamel.yaml.events import StreamStartEvent
+from ruamel.yaml.events import StreamEndEvent
+from ruamel.yaml.events import DocumentStartEvent
+from ruamel.yaml.events import DocumentEndEvent
+from ruamel.yaml.events import AliasEvent
+from ruamel.yaml.events import ScalarEvent
+from ruamel.yaml.events import SequenceStartEvent
+from ruamel.yaml.events import SequenceEndEvent
+from ruamel.yaml.events import MappingStartEvent
+from ruamel.yaml.events import MappingEndEvent
 
-ScalarNode = yaml.nodes.ScalarNode
-SequenceNode = yaml.nodes.SequenceNode
-MappingNode = yaml.nodes.MappingNode
+from ruamel.yaml.nodes import ScalarNode
+from ruamel.yaml.nodes import SequenceNode
+from ruamel.yaml.nodes import MappingNode
 
 cdef class Mark:
     cdef readonly object name
@@ -964,7 +963,7 @@ cdef class CEmitter:
             if hasattr(stream, u'encoding'):
                 self.dump_unicode = 1
         self.use_encoding = encoding
-        yaml_emitter_set_output(&self.emitter, output_handler, <void *>self)    
+        yaml_emitter_set_output(&self.emitter, output_handler, <void *>self)
         if canonical:
             yaml_emitter_set_canonical(&self.emitter, 1)
         if indent is not None:
