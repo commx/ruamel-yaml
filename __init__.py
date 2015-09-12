@@ -10,7 +10,7 @@ from __future__ import absolute_import
 null = None
 _package_data = {   # JSON
     "full_package_name": "ruamel.yaml",
-    "version_info": [0, 10, 7],
+    "version_info": [0, 10, 8],
     "author": "Anthon van der Neut",
     "author_email": "a.van.der.neut@ruamel.eu",
     "description": "ruamel.yaml is a YAML parser/emitter that supports roundtrip preservation of comments, seq/map flow style, and map key order",  # NOQA
@@ -75,6 +75,7 @@ import sys
 
 # body extracted to main.py
 from .main import *
+
 
 def main():
     # No direct import of yaml in order not to pollute namespace.

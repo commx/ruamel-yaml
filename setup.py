@@ -78,7 +78,8 @@ def _package_data(fn):
                 raise NotImplementedError
     return data
 
-pkg_data = _package_data('__init__.py')
+# make sure you can run "python ../some/dir/setup.py install"
+pkg_data = _package_data(__file__.replace('setup.py', '__init__.py'))
 
 exclude_files = [
     'setup.py',
@@ -154,13 +155,14 @@ class NameSpacePackager(object):
         self._split = None
         self.depth = self.full_package_name.count('.')
         self.command = None
+        self._pkg = [None, None]  # required and pre-installable packages
         if sys.argv[0] == 'setup.py' and sys.argv[1] == 'install' and \
            '--single-version-externally-managed' not in sys.argv:
             print('error: have to install with "pip install ."')
             sys.exit(1)
-        # If you only support an extension module on Linux, Windows thinks it is
-        # pure. That way you would get pure python .whl files that take precedence
-        # for downloading on Linux over source with compilable C
+        # If you only support an extension module on Linux, Windows thinks it
+        # is pure. That way you would get pure python .whl files that take
+        # precedence for downloading on Linux over source with compilable C
         if self._pkg_data.get('universal'):
             Distribution.is_pure = lambda *args: True
         else:
@@ -178,7 +180,11 @@ class NameSpacePackager(object):
 
     @property
     def split(self):
-        """split the full package name in list of compontents"""
+        """split the full package name in list of compontents traditionally
+        done by setuptools.find_packages. This routine skips any directories
+        with __init__.py that start with "_" or ".", or contain a
+        setup.py/tox.ini (indicating a subpackage)
+        """
         if self._split is None:
             fpn = self.full_package_name.split('.')
             self._split = []
@@ -186,7 +192,7 @@ class NameSpacePackager(object):
                 self._split.insert(0, '.'.join(fpn))
                 fpn = fpn[:-1]
             for d in os.listdir('.'):
-                if not os.path.isdir(d) or d == self._split[0] or d[0] == '_':
+                if not os.path.isdir(d) or d == self._split[0] or d[0] in '._':
                     continue
                 # prevent sub-packages in namespace from being included
                 x = os.path.join(d, 'setup.py')
@@ -204,31 +210,35 @@ class NameSpacePackager(object):
     def namespace_packages(self):
         return self.split[:self.depth]
 
+    def namespace_directories(self, depth=None):
+        """return list of directories where the namespace should be created /
+        can be found
+        """
+        res = []
+        for index, d in enumerate(self.split[:depth]):
+            # toplevel gets a dot
+            if index > 0:
+                d = os.path.join(*d.split('.'))
+            res.append('.' + d)
+        return res
+
     @property
     def package_dir(self):
         return {
             # don't specify empty dir, clashes with package_data spec
             self.full_package_name: '.',
-            self.split[0]: self.split[0],
+            self.split[0]: self.namespace_directories(1)[0],
         }
 
     def create_dirs(self):
         """create the directories necessary for namespace packaging"""
-        if not os.path.exists(self.split[0]):
-            for d in self.split[:self.depth]:
-                d = os.path.join(*d.split('.'))
+        directories = self.namespace_directories(self.depth)
+        if not os.path.exists(directories[0]):
+            for d in directories:
                 os.mkdir(d)
                 with open(os.path.join(d, '__init__.py'), 'w') as fp:
                     fp.write('import pkg_resources\n'
                              'pkg_resources.declare_namespace(__name__)\n')
-            # not necessary if not using find_packages, recursive links
-            # are horrible anyway, slowing down pip
-            # os.symlink(
-            #     # a.b gives a/b -> ..
-            #     # a.b.c gives a/b/c  -> ../..
-            #     os.path.join(*['..'] * self.depth),
-            #    os.path.join(*self.split[self.depth].split('.'))
-            # )
 
     def check(self):
         try:
@@ -349,18 +359,41 @@ class NameSpacePackager(object):
 
     @property
     def install_requires(self):
+        """list of packages required for installation"""
+        return self._analyse_packages[0]
+
+    @property
+    def install_pre(self):
+        """list of packages required for installation"""
+        return self._analyse_packages[1]
+
+    @property
+    def _analyse_packages(self):
+        """gather from configuration, names starting with * need
+        to be installed explicitly as they are not on PyPI"""
+        if self._pkg[0] is None:
+            self._pkg[0] = []
+            self._pkg[1] = []
+
         ir = self._pkg_data.get('install_requires', [])
         if isinstance(ir, list):
             return ir
         # 'any' for all builds, 'py27' etc for specifics versions
-        res = ir.get('any', [])
+        packages = ir.get('any', [])
         implementation = platform.python_implementation()
         if implementation == 'CPython':
             pyver = 'py{0}{1}'.format(*sys.version_info)
         elif implementation == 'PyPy':
             pyver = 'pypy' if sys.version_info < (3, ) else 'pypy3'
-        res.extend(ir.get(pyver, []))
-        return res
+        packages.extend(ir.get(pyver, []))
+        for p in packages:
+            # package name starting with * means use local source tree,  non-published
+            # to PyPi or maybe not latest version on PyPI -> pre-install
+            if p[0] == '*':
+                p = p[1:]
+                self._pkg[1].append(p)
+            self._pkg[0].append(p)
+        return self._pkg
 
     @property
     def data_files(self):
@@ -455,13 +488,16 @@ class NameSpacePackager(object):
         """temporary add setup.cfg if creating a wheel to include LICENSE file
         https://bitbucket.org/pypa/wheel/issues/47
         """
-        if 'bdist_wheel' not in sys.argv or not os.path.exists('LICENSE'):
+        if 'bdist_wheel' not in sys.argv:
             return
         file_name = 'setup.cfg'
         if os.path.exists(file_name):  # add it if not in there?
             return
         with open(file_name, 'w') as fp:
-            fp.write('[metadata]\nlicense-file = LICENSE\n')
+            if os.path.exists('LICENSE'):
+                fp.write('[metadata]\nlicense-file = LICENSE\n')
+            else:
+                print("\n\n>>>>>> LICENSE file not found <<<<<\n\n")
             if self._pkg_data.get('universal'):
                 fp.write('[bdist_wheel]\nuniversal = 1\n')
         try:
@@ -504,6 +540,27 @@ def main():
         kw['long_description'] = fp.read()
     if nsp.wheel(kw, setup):
         return
+    for x in ['-c', 'egg_info', '--egg-base', 'pip-egg-info']:
+        if x not in sys.argv:
+            break
+    else:
+        # we're doing a tox setup install any starred package by searching up the source tree
+        # until you match your/package/name for your.package.name
+        for p in nsp.install_pre:
+            import subprocess
+            # search other source
+            setup_path = os.path.join(*p.split('.') + ['setup.py'])
+            try_dir = os.path.dirname(sys.executable)
+            while len(try_dir) > 1:
+                full_path_setup_py = os.path.join(try_dir, setup_path)
+                if os.path.exists(full_path_setup_py):
+                    pip = sys.executable.replace('python', 'pip')
+                    cmd = [pip, 'install', os.path.dirname(full_path_setup_py)]
+                    # with open('/var/tmp/notice', 'a') as fp:
+                    #     print('installing', cmd, file=fp)
+                    subprocess.check_output(cmd)
+                    break
+                try_dir = os.path.dirname(try_dir)
     setup(**kw)
 
 

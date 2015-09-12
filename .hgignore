@@ -13,6 +13,6 @@ build
 .cache
 _yaml.so
 README.pdf
-ruamel
+.ruamel
 convert
 cmd
