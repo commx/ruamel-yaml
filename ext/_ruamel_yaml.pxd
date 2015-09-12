@@ -1,5 +1,5 @@
 
-cdef extern from "_yaml.h":
+cdef extern from "_ruamel_yaml.h":
 
     void malloc(int l)
     void memcpy(char *d, char *s, int l)

@@ -21,8 +21,8 @@ _package_data = {   # JSON
         "py27": ["ruamel.ordereddict"]
     },
     "ext_modules": [ {
-        "name": "_yaml",
-        "src": ["ext/_yaml.c"],
+        "name": "_ruamel_yaml",
+        "src": ["ext/_ruamel_yaml.c"],
         "lib": ["yaml"],
         "test": "#include <yaml.h>\n\nint main(int argc, char* argv[])\n{\nyaml_parser_t parser;\nparser = parser;  /* prevent warning */\nreturn 0;\n}\n"  # NOQA
         }

@@ -3,7 +3,7 @@ from __future__ import absolute_import
 __all__ = ['CBaseLoader', 'CSafeLoader', 'CLoader',
            'CBaseDumper', 'CSafeDumper', 'CDumper']
 
-from _yaml import CParser, CEmitter
+from _ruamel_yaml import CParser, CEmitter
 
 from .constructor import *
 

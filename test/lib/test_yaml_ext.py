@@ -1,7 +1,7 @@
 from __future__ import absolute_import
 from __future__ import print_function
 
-import _yaml
+import _ruamel_yaml
 import ruamel.yaml
 import types, pprint
 from ruamel.yaml.compat import PY3
@@ -121,10 +121,10 @@ def _tear_down():
 
 def test_c_version(verbose=False):
     if verbose:
-        print(_yaml.get_version())
-        print(_yaml.get_version_string())
-    assert ("%s.%s.%s" % _yaml.get_version()) == _yaml.get_version_string(),    \
-            (_yaml.get_version(), _yaml.get_version_string())
+        print(_ruamel_yaml.get_version())
+        print(_ruamel_yaml.get_version_string())
+    assert ("%s.%s.%s" % _ruamel_yaml.get_version()) == _ruamel_yaml.get_version_string(),    \
+            (_ruamel_yaml.get_version(), _ruamel_yaml.get_version_string())
 
 def _compare_scanners(py_data, c_data, verbose):
     py_tokens = list(ruamel.yaml.scan(py_data, Loader=ruamel.yaml.PyLoader))

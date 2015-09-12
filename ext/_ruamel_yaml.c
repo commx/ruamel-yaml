@@ -234,9 +234,9 @@ static CYTHON_INLINE float __PYX_NAN() {
   #endif
 #endif
 
-#define __PYX_HAVE___yaml
-#define __PYX_HAVE_API___yaml
-#include "_yaml.h"
+#define __PYX_HAVE___ruamel_yaml
+#define __PYX_HAVE_API___ruamel_yaml
+#include "_ruamel_yaml.h"
 #ifdef _OPENMP
 #include <omp.h>
 #endif /* _OPENMP */
@@ -445,22 +445,22 @@ static const char *__pyx_filename;
 
 
 static const char *__pyx_f[] = {
-  "_yaml.pyx",
+  "_ruamel_yaml.pyx",
 };
 
 /*--- Type declarations ---*/
-struct __pyx_obj_5_yaml_Mark;
-struct __pyx_obj_5_yaml_CParser;
-struct __pyx_obj_5_yaml_CEmitter;
+struct __pyx_obj_12_ruamel_yaml_Mark;
+struct __pyx_obj_12_ruamel_yaml_CParser;
+struct __pyx_obj_12_ruamel_yaml_CEmitter;
 
-/* "_yaml.pyx":63
+/* "_ruamel_yaml.pyx":63
  * from ruamel.yaml.nodes import MappingNode
  * 
  * cdef class Mark:             # <<<<<<<<<<<<<<
  *     cdef readonly object name
  *     cdef readonly int index
  */
-struct __pyx_obj_5_yaml_Mark {
+struct __pyx_obj_12_ruamel_yaml_Mark {
   PyObject_HEAD
   PyObject *name;
   int index;
@@ -471,16 +471,16 @@ struct __pyx_obj_5_yaml_Mark {
 };
 
 
-/* "_yaml.pyx":246
+/* "_ruamel_yaml.pyx":246
  * #        self.style = style
  * 
  * cdef class CParser:             # <<<<<<<<<<<<<<
  * 
  *     cdef yaml_parser_t parser
  */
-struct __pyx_obj_5_yaml_CParser {
+struct __pyx_obj_12_ruamel_yaml_CParser {
   PyObject_HEAD
-  struct __pyx_vtabstruct_5_yaml_CParser *__pyx_vtab;
+  struct __pyx_vtabstruct_12_ruamel_yaml_CParser *__pyx_vtab;
   yaml_parser_t parser;
   yaml_event_t parsed_event;
   PyObject *stream;
@@ -495,16 +495,16 @@ struct __pyx_obj_5_yaml_CParser {
 };
 
 
-/* "_yaml.pyx":934
+/* "_ruamel_yaml.pyx":934
  *     return 1
  * 
  * cdef class CEmitter:             # <<<<<<<<<<<<<<
  * 
  *     cdef yaml_emitter_t emitter
  */
-struct __pyx_obj_5_yaml_CEmitter {
+struct __pyx_obj_12_ruamel_yaml_CEmitter {
   PyObject_HEAD
-  struct __pyx_vtabstruct_5_yaml_CEmitter *__pyx_vtab;
+  struct __pyx_vtabstruct_12_ruamel_yaml_CEmitter *__pyx_vtab;
   yaml_emitter_t emitter;
   PyObject *stream;
   int document_start_implicit;
@@ -521,7 +521,7 @@ struct __pyx_obj_5_yaml_CEmitter {
 
 
 
-/* "_yaml.pyx":246
+/* "_ruamel_yaml.pyx":246
  * #        self.style = style
  * 
  * cdef class CParser:             # <<<<<<<<<<<<<<
@@ -529,23 +529,23 @@ struct __pyx_obj_5_yaml_CEmitter {
  *     cdef yaml_parser_t parser
  */
 
-struct __pyx_vtabstruct_5_yaml_CParser {
-  PyObject *(*_parser_error)(struct __pyx_obj_5_yaml_CParser *);
-  PyObject *(*_scan)(struct __pyx_obj_5_yaml_CParser *);
-  PyObject *(*_token_to_object)(struct __pyx_obj_5_yaml_CParser *, yaml_token_t *);
-  PyObject *(*_parse)(struct __pyx_obj_5_yaml_CParser *);
-  PyObject *(*_event_to_object)(struct __pyx_obj_5_yaml_CParser *, yaml_event_t *);
-  PyObject *(*_compose_document)(struct __pyx_obj_5_yaml_CParser *);
-  PyObject *(*_compose_node)(struct __pyx_obj_5_yaml_CParser *, PyObject *, PyObject *);
-  PyObject *(*_compose_scalar_node)(struct __pyx_obj_5_yaml_CParser *, PyObject *);
-  PyObject *(*_compose_sequence_node)(struct __pyx_obj_5_yaml_CParser *, PyObject *);
-  PyObject *(*_compose_mapping_node)(struct __pyx_obj_5_yaml_CParser *, PyObject *);
-  int (*_parse_next_event)(struct __pyx_obj_5_yaml_CParser *);
+struct __pyx_vtabstruct_12_ruamel_yaml_CParser {
+  PyObject *(*_parser_error)(struct __pyx_obj_12_ruamel_yaml_CParser *);
+  PyObject *(*_scan)(struct __pyx_obj_12_ruamel_yaml_CParser *);
+  PyObject *(*_token_to_object)(struct __pyx_obj_12_ruamel_yaml_CParser *, yaml_token_t *);
+  PyObject *(*_parse)(struct __pyx_obj_12_ruamel_yaml_CParser *);
+  PyObject *(*_event_to_object)(struct __pyx_obj_12_ruamel_yaml_CParser *, yaml_event_t *);
+  PyObject *(*_compose_document)(struct __pyx_obj_12_ruamel_yaml_CParser *);
+  PyObject *(*_compose_node)(struct __pyx_obj_12_ruamel_yaml_CParser *, PyObject *, PyObject *);
+  PyObject *(*_compose_scalar_node)(struct __pyx_obj_12_ruamel_yaml_CParser *, PyObject *);
+  PyObject *(*_compose_sequence_node)(struct __pyx_obj_12_ruamel_yaml_CParser *, PyObject *);
+  PyObject *(*_compose_mapping_node)(struct __pyx_obj_12_ruamel_yaml_CParser *, PyObject *);
+  int (*_parse_next_event)(struct __pyx_obj_12_ruamel_yaml_CParser *);
 };
-static struct __pyx_vtabstruct_5_yaml_CParser *__pyx_vtabptr_5_yaml_CParser;
+static struct __pyx_vtabstruct_12_ruamel_yaml_CParser *__pyx_vtabptr_12_ruamel_yaml_CParser;
 
 
-/* "_yaml.pyx":934
+/* "_ruamel_yaml.pyx":934
  *     return 1
  * 
  * cdef class CEmitter:             # <<<<<<<<<<<<<<
@@ -553,13 +553,13 @@ static struct __pyx_vtabstruct_5_yaml_CParser *__pyx_vtabptr_5_yaml_CParser;
  *     cdef yaml_emitter_t emitter
  */
 
-struct __pyx_vtabstruct_5_yaml_CEmitter {
-  PyObject *(*_emitter_error)(struct __pyx_obj_5_yaml_CEmitter *);
-  int (*_object_to_event)(struct __pyx_obj_5_yaml_CEmitter *, PyObject *, yaml_event_t *);
-  int (*_anchor_node)(struct __pyx_obj_5_yaml_CEmitter *, PyObject *);
-  int (*_serialize_node)(struct __pyx_obj_5_yaml_CEmitter *, PyObject *, PyObject *, PyObject *);
+struct __pyx_vtabstruct_12_ruamel_yaml_CEmitter {
+  PyObject *(*_emitter_error)(struct __pyx_obj_12_ruamel_yaml_CEmitter *);
+  int (*_object_to_event)(struct __pyx_obj_12_ruamel_yaml_CEmitter *, PyObject *, yaml_event_t *);
+  int (*_anchor_node)(struct __pyx_obj_12_ruamel_yaml_CEmitter *, PyObject *);
+  int (*_serialize_node)(struct __pyx_obj_12_ruamel_yaml_CEmitter *, PyObject *, PyObject *, PyObject *);
 };
-static struct __pyx_vtabstruct_5_yaml_CEmitter *__pyx_vtabptr_5_yaml_CEmitter;
+static struct __pyx_vtabstruct_12_ruamel_yaml_CEmitter *__pyx_vtabptr_12_ruamel_yaml_CEmitter;
 
 /* --- Runtime support code (head) --- */
 #ifndef CYTHON_REFNANNY
@@ -802,32 +802,32 @@ static int __Pyx_check_binary_version(void);
 
 static int __Pyx_InitStrings(__Pyx_StringTabEntry *t);
 
-static PyObject *__pyx_f_5_yaml_7CParser__parser_error(struct __pyx_obj_5_yaml_CParser *__pyx_v_self); /* proto*/
-static PyObject *__pyx_f_5_yaml_7CParser__scan(struct __pyx_obj_5_yaml_CParser *__pyx_v_self); /* proto*/
-static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yaml_CParser *__pyx_v_self, yaml_token_t *__pyx_v_token); /* proto*/
-static PyObject *__pyx_f_5_yaml_7CParser__parse(struct __pyx_obj_5_yaml_CParser *__pyx_v_self); /* proto*/
-static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yaml_CParser *__pyx_v_self, yaml_event_t *__pyx_v_event); /* proto*/
-static PyObject *__pyx_f_5_yaml_7CParser__compose_document(struct __pyx_obj_5_yaml_CParser *__pyx_v_self); /* proto*/
-static PyObject *__pyx_f_5_yaml_7CParser__compose_node(struct __pyx_obj_5_yaml_CParser *__pyx_v_self, PyObject *__pyx_v_parent, PyObject *__pyx_v_index); /* proto*/
-static PyObject *__pyx_f_5_yaml_7CParser__compose_scalar_node(struct __pyx_obj_5_yaml_CParser *__pyx_v_self, PyObject *__pyx_v_anchor); /* proto*/
-static PyObject *__pyx_f_5_yaml_7CParser__compose_sequence_node(struct __pyx_obj_5_yaml_CParser *__pyx_v_self, PyObject *__pyx_v_anchor); /* proto*/
-static PyObject *__pyx_f_5_yaml_7CParser__compose_mapping_node(struct __pyx_obj_5_yaml_CParser *__pyx_v_self, PyObject *__pyx_v_anchor); /* proto*/
-static int __pyx_f_5_yaml_7CParser__parse_next_event(struct __pyx_obj_5_yaml_CParser *__pyx_v_self); /* proto*/
-static PyObject *__pyx_f_5_yaml_8CEmitter__emitter_error(struct __pyx_obj_5_yaml_CEmitter *__pyx_v_self); /* proto*/
-static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEmitter *__pyx_v_self, PyObject *__pyx_v_event_object, yaml_event_t *__pyx_v_event); /* proto*/
-static int __pyx_f_5_yaml_8CEmitter__anchor_node(struct __pyx_obj_5_yaml_CEmitter *__pyx_v_self, PyObject *__pyx_v_node); /* proto*/
-static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmitter *__pyx_v_self, PyObject *__pyx_v_node, PyObject *__pyx_v_parent, PyObject *__pyx_v_index); /* proto*/
+static PyObject *__pyx_f_12_ruamel_yaml_7CParser__parser_error(struct __pyx_obj_12_ruamel_yaml_CParser *__pyx_v_self); /* proto*/
+static PyObject *__pyx_f_12_ruamel_yaml_7CParser__scan(struct __pyx_obj_12_ruamel_yaml_CParser *__pyx_v_self); /* proto*/
+static PyObject *__pyx_f_12_ruamel_yaml_7CParser__token_to_object(struct __pyx_obj_12_ruamel_yaml_CParser *__pyx_v_self, yaml_token_t *__pyx_v_token); /* proto*/
+static PyObject *__pyx_f_12_ruamel_yaml_7CParser__parse(struct __pyx_obj_12_ruamel_yaml_CParser *__pyx_v_self); /* proto*/
+static PyObject *__pyx_f_12_ruamel_yaml_7CParser__event_to_object(struct __pyx_obj_12_ruamel_yaml_CParser *__pyx_v_self, yaml_event_t *__pyx_v_event); /* proto*/
+static PyObject *__pyx_f_12_ruamel_yaml_7CParser__compose_document(struct __pyx_obj_12_ruamel_yaml_CParser *__pyx_v_self); /* proto*/
+static PyObject *__pyx_f_12_ruamel_yaml_7CParser__compose_node(struct __pyx_obj_12_ruamel_yaml_CParser *__pyx_v_self, PyObject *__pyx_v_parent, PyObject *__pyx_v_index); /* proto*/
+static PyObject *__pyx_f_12_ruamel_yaml_7CParser__compose_scalar_node(struct __pyx_obj_12_ruamel_yaml_CParser *__pyx_v_self, PyObject *__pyx_v_anchor); /* proto*/
+static PyObject *__pyx_f_12_ruamel_yaml_7CParser__compose_sequence_node(struct __pyx_obj_12_ruamel_yaml_CParser *__pyx_v_self, PyObject *__pyx_v_anchor); /* proto*/
+static PyObject *__pyx_f_12_ruamel_yaml_7CParser__compose_mapping_node(struct __pyx_obj_12_ruamel_yaml_CParser *__pyx_v_self, PyObject *__pyx_v_anchor); /* proto*/
+static int __pyx_f_12_ruamel_yaml_7CParser__parse_next_event(struct __pyx_obj_12_ruamel_yaml_CParser *__pyx_v_self); /* proto*/
+static PyObject *__pyx_f_12_ruamel_yaml_8CEmitter__emitter_error(struct __pyx_obj_12_ruamel_yaml_CEmitter *__pyx_v_self); /* proto*/
+static int __pyx_f_12_ruamel_yaml_8CEmitter__object_to_event(struct __pyx_obj_12_ruamel_yaml_CEmitter *__pyx_v_self, PyObject *__pyx_v_event_object, yaml_event_t *__pyx_v_event); /* proto*/
+static int __pyx_f_12_ruamel_yaml_8CEmitter__anchor_node(struct __pyx_obj_12_ruamel_yaml_CEmitter *__pyx_v_self, PyObject *__pyx_v_node); /* proto*/
+static int __pyx_f_12_ruamel_yaml_8CEmitter__serialize_node(struct __pyx_obj_12_ruamel_yaml_CEmitter *__pyx_v_self, PyObject *__pyx_v_node, PyObject *__pyx_v_parent, PyObject *__pyx_v_index); /* proto*/
 
-/* Module declarations from '_yaml' */
-static PyTypeObject *__pyx_ptype_5_yaml_Mark = 0;
-static PyTypeObject *__pyx_ptype_5_yaml_CParser = 0;
-static PyTypeObject *__pyx_ptype_5_yaml_CEmitter = 0;
-static int __pyx_f_5_yaml_input_handler(void *, char *, int, int *); /*proto*/
-static int __pyx_f_5_yaml_output_handler(void *, char *, int); /*proto*/
-#define __Pyx_MODULE_NAME "_yaml"
-int __pyx_module_is_main__yaml = 0;
+/* Module declarations from '_ruamel_yaml' */
+static PyTypeObject *__pyx_ptype_12_ruamel_yaml_Mark = 0;
+static PyTypeObject *__pyx_ptype_12_ruamel_yaml_CParser = 0;
+static PyTypeObject *__pyx_ptype_12_ruamel_yaml_CEmitter = 0;
+static int __pyx_f_12_ruamel_yaml_input_handler(void *, char *, int, int *); /*proto*/
+static int __pyx_f_12_ruamel_yaml_output_handler(void *, char *, int); /*proto*/
+#define __Pyx_MODULE_NAME "_ruamel_yaml"
+int __pyx_module_is_main__ruamel_yaml = 0;
 
-/* Implementation of '_yaml' */
+/* Implementation of '_ruamel_yaml' */
 static PyObject *__pyx_builtin_MemoryError;
 static PyObject *__pyx_builtin_AttributeError;
 static PyObject *__pyx_builtin_TypeError;
@@ -851,7 +851,6 @@ static char __pyx_k_name[] = "name";
 static char __pyx_k_read[] = "read";
 static char __pyx_k_tags[] = "tags";
 static char __pyx_k_test[] = "__test__";
-static char __pyx_k_yaml[] = "_yaml";
 static char __pyx_k_class[] = "__class__";
 static char __pyx_k_index[] = "index";
 static char __pyx_k_major[] = "major";
@@ -902,6 +901,7 @@ static char __pyx_k_ScalarEvent[] = "ScalarEvent";
 static char __pyx_k_ScalarToken[] = "ScalarToken";
 static char __pyx_k_byte_string[] = "<byte string>";
 static char __pyx_k_get_version[] = "get_version";
+static char __pyx_k_ruamel_yaml[] = "_ruamel_yaml";
 static char __pyx_k_EmitterError[] = "EmitterError";
 static char __pyx_k_ScannerError[] = "ScannerError";
 static char __pyx_k_SequenceNode[] = "SequenceNode";
@@ -970,7 +970,7 @@ static char __pyx_k_but_found_another_document[] = "but found another document";
 static char __pyx_k_tag_handle_must_be_a_string[] = "tag handle must be a string";
 static char __pyx_k_tag_prefix_must_be_a_string[] = "tag prefix must be a string";
 static char __pyx_k_serializer_is_already_opened[] = "serializer is already opened";
-static char __pyx_k_home_avdndata_hg_ruamel_eu_src[] = "/home/avdndata/hg/ruamel.eu/src/site-packages/ruamel/yaml/ext/_yaml.pyx";
+static char __pyx_k_home_avdndata_hg_ruamel_eu_src[] = "/home/avdndata/hg/ruamel.eu/src/site-packages/ruamel/yaml/ext/_ruamel_yaml.pyx";
 static char __pyx_k_a_string_or_stream_input_is_requ[] = "a string or stream input is required";
 static char __pyx_k_expected_a_single_document_in_th[] = "expected a single document in the stream";
 static char __pyx_k_found_duplicate_anchor_first_occ[] = "found duplicate anchor; first occurence";
@@ -1095,6 +1095,7 @@ static PyObject *__pyx_n_s_pointer;
 static PyObject *__pyx_n_s_pyx_vtable;
 static PyObject *__pyx_n_s_read;
 static PyObject *__pyx_n_s_resolve;
+static PyObject *__pyx_n_s_ruamel_yaml;
 static PyObject *__pyx_n_s_ruamel_yaml_composer;
 static PyObject *__pyx_n_s_ruamel_yaml_constructor;
 static PyObject *__pyx_n_s_ruamel_yaml_emitter;
@@ -1146,42 +1147,41 @@ static PyObject *__pyx_kp_u_value_must_be_a_string;
 static PyObject *__pyx_n_s_version;
 static PyObject *__pyx_n_s_width;
 static PyObject *__pyx_n_s_write;
-static PyObject *__pyx_n_s_yaml;
-static PyObject *__pyx_pf_5_yaml_get_version_string(CYTHON_UNUSED PyObject *__pyx_self); /* proto */
-static PyObject *__pyx_pf_5_yaml_2get_version(CYTHON_UNUSED PyObject *__pyx_self); /* proto */
-static int __pyx_pf_5_yaml_4Mark___init__(struct __pyx_obj_5_yaml_Mark *__pyx_v_self, PyObject *__pyx_v_name, int __pyx_v_index, int __pyx_v_line, int __pyx_v_column, PyObject *__pyx_v_buffer, PyObject *__pyx_v_pointer); /* proto */
-static PyObject *__pyx_pf_5_yaml_4Mark_2get_snippet(CYTHON_UNUSED struct __pyx_obj_5_yaml_Mark *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_5_yaml_4Mark_4__str__(struct __pyx_obj_5_yaml_Mark *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_5_yaml_4Mark_4name___get__(struct __pyx_obj_5_yaml_Mark *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_5_yaml_4Mark_5index___get__(struct __pyx_obj_5_yaml_Mark *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_5_yaml_4Mark_4line___get__(struct __pyx_obj_5_yaml_Mark *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_5_yaml_4Mark_6column___get__(struct __pyx_obj_5_yaml_Mark *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_5_yaml_4Mark_6buffer___get__(struct __pyx_obj_5_yaml_Mark *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_5_yaml_4Mark_7pointer___get__(struct __pyx_obj_5_yaml_Mark *__pyx_v_self); /* proto */
-static int __pyx_pf_5_yaml_7CParser___init__(struct __pyx_obj_5_yaml_CParser *__pyx_v_self, PyObject *__pyx_v_stream); /* proto */
-static void __pyx_pf_5_yaml_7CParser_2__dealloc__(struct __pyx_obj_5_yaml_CParser *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_5_yaml_7CParser_4dispose(CYTHON_UNUSED struct __pyx_obj_5_yaml_CParser *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_5_yaml_7CParser_6raw_scan(struct __pyx_obj_5_yaml_CParser *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_5_yaml_7CParser_8get_token(struct __pyx_obj_5_yaml_CParser *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_5_yaml_7CParser_10peek_token(struct __pyx_obj_5_yaml_CParser *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_5_yaml_7CParser_12check_token(struct __pyx_obj_5_yaml_CParser *__pyx_v_self, PyObject *__pyx_v_choices); /* proto */
-static PyObject *__pyx_pf_5_yaml_7CParser_14raw_parse(struct __pyx_obj_5_yaml_CParser *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_5_yaml_7CParser_16get_event(struct __pyx_obj_5_yaml_CParser *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_5_yaml_7CParser_18peek_event(struct __pyx_obj_5_yaml_CParser *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_5_yaml_7CParser_20check_event(struct __pyx_obj_5_yaml_CParser *__pyx_v_self, PyObject *__pyx_v_choices); /* proto */
-static PyObject *__pyx_pf_5_yaml_7CParser_22check_node(struct __pyx_obj_5_yaml_CParser *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_5_yaml_7CParser_24get_node(struct __pyx_obj_5_yaml_CParser *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_5_yaml_7CParser_26get_single_node(struct __pyx_obj_5_yaml_CParser *__pyx_v_self); /* proto */
-static int __pyx_pf_5_yaml_8CEmitter___init__(struct __pyx_obj_5_yaml_CEmitter *__pyx_v_self, PyObject *__pyx_v_stream, PyObject *__pyx_v_canonical, PyObject *__pyx_v_indent, PyObject *__pyx_v_width, PyObject *__pyx_v_allow_unicode, PyObject *__pyx_v_line_break, PyObject *__pyx_v_encoding, PyObject *__pyx_v_explicit_start, PyObject *__pyx_v_explicit_end, PyObject *__pyx_v_version, PyObject *__pyx_v_tags); /* proto */
-static void __pyx_pf_5_yaml_8CEmitter_2__dealloc__(struct __pyx_obj_5_yaml_CEmitter *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_5_yaml_8CEmitter_4dispose(CYTHON_UNUSED struct __pyx_obj_5_yaml_CEmitter *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_5_yaml_8CEmitter_6emit(struct __pyx_obj_5_yaml_CEmitter *__pyx_v_self, PyObject *__pyx_v_event_object); /* proto */
-static PyObject *__pyx_pf_5_yaml_8CEmitter_8open(struct __pyx_obj_5_yaml_CEmitter *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_5_yaml_8CEmitter_10close(struct __pyx_obj_5_yaml_CEmitter *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_5_yaml_8CEmitter_12serialize(struct __pyx_obj_5_yaml_CEmitter *__pyx_v_self, PyObject *__pyx_v_node); /* proto */
-static PyObject *__pyx_tp_new_5_yaml_Mark(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
-static PyObject *__pyx_tp_new_5_yaml_CParser(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
-static PyObject *__pyx_tp_new_5_yaml_CEmitter(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
+static PyObject *__pyx_pf_12_ruamel_yaml_get_version_string(CYTHON_UNUSED PyObject *__pyx_self); /* proto */
+static PyObject *__pyx_pf_12_ruamel_yaml_2get_version(CYTHON_UNUSED PyObject *__pyx_self); /* proto */
+static int __pyx_pf_12_ruamel_yaml_4Mark___init__(struct __pyx_obj_12_ruamel_yaml_Mark *__pyx_v_self, PyObject *__pyx_v_name, int __pyx_v_index, int __pyx_v_line, int __pyx_v_column, PyObject *__pyx_v_buffer, PyObject *__pyx_v_pointer); /* proto */
+static PyObject *__pyx_pf_12_ruamel_yaml_4Mark_2get_snippet(CYTHON_UNUSED struct __pyx_obj_12_ruamel_yaml_Mark *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_12_ruamel_yaml_4Mark_4__str__(struct __pyx_obj_12_ruamel_yaml_Mark *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_12_ruamel_yaml_4Mark_4name___get__(struct __pyx_obj_12_ruamel_yaml_Mark *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_12_ruamel_yaml_4Mark_5index___get__(struct __pyx_obj_12_ruamel_yaml_Mark *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_12_ruamel_yaml_4Mark_4line___get__(struct __pyx_obj_12_ruamel_yaml_Mark *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_12_ruamel_yaml_4Mark_6column___get__(struct __pyx_obj_12_ruamel_yaml_Mark *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_12_ruamel_yaml_4Mark_6buffer___get__(struct __pyx_obj_12_ruamel_yaml_Mark *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_12_ruamel_yaml_4Mark_7pointer___get__(struct __pyx_obj_12_ruamel_yaml_Mark *__pyx_v_self); /* proto */
+static int __pyx_pf_12_ruamel_yaml_7CParser___init__(struct __pyx_obj_12_ruamel_yaml_CParser *__pyx_v_self, PyObject *__pyx_v_stream); /* proto */
+static void __pyx_pf_12_ruamel_yaml_7CParser_2__dealloc__(struct __pyx_obj_12_ruamel_yaml_CParser *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_12_ruamel_yaml_7CParser_4dispose(CYTHON_UNUSED struct __pyx_obj_12_ruamel_yaml_CParser *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_12_ruamel_yaml_7CParser_6raw_scan(struct __pyx_obj_12_ruamel_yaml_CParser *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_12_ruamel_yaml_7CParser_8get_token(struct __pyx_obj_12_ruamel_yaml_CParser *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_12_ruamel_yaml_7CParser_10peek_token(struct __pyx_obj_12_ruamel_yaml_CParser *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_12_ruamel_yaml_7CParser_12check_token(struct __pyx_obj_12_ruamel_yaml_CParser *__pyx_v_self, PyObject *__pyx_v_choices); /* proto */
+static PyObject *__pyx_pf_12_ruamel_yaml_7CParser_14raw_parse(struct __pyx_obj_12_ruamel_yaml_CParser *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_12_ruamel_yaml_7CParser_16get_event(struct __pyx_obj_12_ruamel_yaml_CParser *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_12_ruamel_yaml_7CParser_18peek_event(struct __pyx_obj_12_ruamel_yaml_CParser *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_12_ruamel_yaml_7CParser_20check_event(struct __pyx_obj_12_ruamel_yaml_CParser *__pyx_v_self, PyObject *__pyx_v_choices); /* proto */
+static PyObject *__pyx_pf_12_ruamel_yaml_7CParser_22check_node(struct __pyx_obj_12_ruamel_yaml_CParser *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_12_ruamel_yaml_7CParser_24get_node(struct __pyx_obj_12_ruamel_yaml_CParser *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_12_ruamel_yaml_7CParser_26get_single_node(struct __pyx_obj_12_ruamel_yaml_CParser *__pyx_v_self); /* proto */
+static int __pyx_pf_12_ruamel_yaml_8CEmitter___init__(struct __pyx_obj_12_ruamel_yaml_CEmitter *__pyx_v_self, PyObject *__pyx_v_stream, PyObject *__pyx_v_canonical, PyObject *__pyx_v_indent, PyObject *__pyx_v_width, PyObject *__pyx_v_allow_unicode, PyObject *__pyx_v_line_break, PyObject *__pyx_v_encoding, PyObject *__pyx_v_explicit_start, PyObject *__pyx_v_explicit_end, PyObject *__pyx_v_version, PyObject *__pyx_v_tags); /* proto */
+static void __pyx_pf_12_ruamel_yaml_8CEmitter_2__dealloc__(struct __pyx_obj_12_ruamel_yaml_CEmitter *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_12_ruamel_yaml_8CEmitter_4dispose(CYTHON_UNUSED struct __pyx_obj_12_ruamel_yaml_CEmitter *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_12_ruamel_yaml_8CEmitter_6emit(struct __pyx_obj_12_ruamel_yaml_CEmitter *__pyx_v_self, PyObject *__pyx_v_event_object); /* proto */
+static PyObject *__pyx_pf_12_ruamel_yaml_8CEmitter_8open(struct __pyx_obj_12_ruamel_yaml_CEmitter *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_12_ruamel_yaml_8CEmitter_10close(struct __pyx_obj_12_ruamel_yaml_CEmitter *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_12_ruamel_yaml_8CEmitter_12serialize(struct __pyx_obj_12_ruamel_yaml_CEmitter *__pyx_v_self, PyObject *__pyx_v_node); /* proto */
+static PyObject *__pyx_tp_new_12_ruamel_yaml_Mark(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
+static PyObject *__pyx_tp_new_12_ruamel_yaml_CParser(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
+static PyObject *__pyx_tp_new_12_ruamel_yaml_CEmitter(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
 static PyObject *__pyx_int_0;
 static PyObject *__pyx_int_1;
 static PyObject *__pyx_tuple_;
@@ -1251,7 +1251,7 @@ static PyObject *__pyx_tuple__74;
 static PyObject *__pyx_codeobj__73;
 static PyObject *__pyx_codeobj__75;
 
-/* "_yaml.pyx":3
+/* "_ruamel_yaml.pyx":3
  * 
  * 
  * def get_version_string():             # <<<<<<<<<<<<<<
@@ -1260,20 +1260,20 @@ static PyObject *__pyx_codeobj__75;
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_5_yaml_1get_version_string(PyObject *__pyx_self, CYTHON_UNUSED PyObject *unused); /*proto*/
-static PyMethodDef __pyx_mdef_5_yaml_1get_version_string = {"get_version_string", (PyCFunction)__pyx_pw_5_yaml_1get_version_string, METH_NOARGS, 0};
-static PyObject *__pyx_pw_5_yaml_1get_version_string(PyObject *__pyx_self, CYTHON_UNUSED PyObject *unused) {
+static PyObject *__pyx_pw_12_ruamel_yaml_1get_version_string(PyObject *__pyx_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static PyMethodDef __pyx_mdef_12_ruamel_yaml_1get_version_string = {"get_version_string", (PyCFunction)__pyx_pw_12_ruamel_yaml_1get_version_string, METH_NOARGS, 0};
+static PyObject *__pyx_pw_12_ruamel_yaml_1get_version_string(PyObject *__pyx_self, CYTHON_UNUSED PyObject *unused) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("get_version_string (wrapper)", 0);
-  __pyx_r = __pyx_pf_5_yaml_get_version_string(__pyx_self);
+  __pyx_r = __pyx_pf_12_ruamel_yaml_get_version_string(__pyx_self);
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_5_yaml_get_version_string(CYTHON_UNUSED PyObject *__pyx_self) {
+static PyObject *__pyx_pf_12_ruamel_yaml_get_version_string(CYTHON_UNUSED PyObject *__pyx_self) {
   char *__pyx_v_value;
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
@@ -1284,7 +1284,7 @@ static PyObject *__pyx_pf_5_yaml_get_version_string(CYTHON_UNUSED PyObject *__py
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("get_version_string", 0);
 
-  /* "_yaml.pyx":5
+  /* "_ruamel_yaml.pyx":5
  * def get_version_string():
  *     cdef char *value
  *     value = yaml_get_version_string()             # <<<<<<<<<<<<<<
@@ -1293,7 +1293,7 @@ static PyObject *__pyx_pf_5_yaml_get_version_string(CYTHON_UNUSED PyObject *__py
  */
   __pyx_v_value = yaml_get_version_string();
 
-  /* "_yaml.pyx":6
+  /* "_ruamel_yaml.pyx":6
  *     cdef char *value
  *     value = yaml_get_version_string()
  *     if PY_MAJOR_VERSION < 3:             # <<<<<<<<<<<<<<
@@ -1303,7 +1303,7 @@ static PyObject *__pyx_pf_5_yaml_get_version_string(CYTHON_UNUSED PyObject *__py
   __pyx_t_1 = ((PY_MAJOR_VERSION < 3) != 0);
   if (__pyx_t_1) {
 
-    /* "_yaml.pyx":7
+    /* "_ruamel_yaml.pyx":7
  *     value = yaml_get_version_string()
  *     if PY_MAJOR_VERSION < 3:
  *         return value             # <<<<<<<<<<<<<<
@@ -1317,7 +1317,7 @@ static PyObject *__pyx_pf_5_yaml_get_version_string(CYTHON_UNUSED PyObject *__py
     __pyx_t_2 = 0;
     goto __pyx_L0;
 
-    /* "_yaml.pyx":6
+    /* "_ruamel_yaml.pyx":6
  *     cdef char *value
  *     value = yaml_get_version_string()
  *     if PY_MAJOR_VERSION < 3:             # <<<<<<<<<<<<<<
@@ -1326,7 +1326,7 @@ static PyObject *__pyx_pf_5_yaml_get_version_string(CYTHON_UNUSED PyObject *__py
  */
   }
 
-  /* "_yaml.pyx":9
+  /* "_ruamel_yaml.pyx":9
  *         return value
  *     else:
  *         return PyUnicode_FromString(value)             # <<<<<<<<<<<<<<
@@ -1342,7 +1342,7 @@ static PyObject *__pyx_pf_5_yaml_get_version_string(CYTHON_UNUSED PyObject *__py
     goto __pyx_L0;
   }
 
-  /* "_yaml.pyx":3
+  /* "_ruamel_yaml.pyx":3
  * 
  * 
  * def get_version_string():             # <<<<<<<<<<<<<<
@@ -1353,7 +1353,7 @@ static PyObject *__pyx_pf_5_yaml_get_version_string(CYTHON_UNUSED PyObject *__py
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_2);
-  __Pyx_AddTraceback("_yaml.get_version_string", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("_ruamel_yaml.get_version_string", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -1361,7 +1361,7 @@ static PyObject *__pyx_pf_5_yaml_get_version_string(CYTHON_UNUSED PyObject *__py
   return __pyx_r;
 }
 
-/* "_yaml.pyx":11
+/* "_ruamel_yaml.pyx":11
  *         return PyUnicode_FromString(value)
  * 
  * def get_version():             # <<<<<<<<<<<<<<
@@ -1370,20 +1370,20 @@ static PyObject *__pyx_pf_5_yaml_get_version_string(CYTHON_UNUSED PyObject *__py
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_5_yaml_3get_version(PyObject *__pyx_self, CYTHON_UNUSED PyObject *unused); /*proto*/
-static PyMethodDef __pyx_mdef_5_yaml_3get_version = {"get_version", (PyCFunction)__pyx_pw_5_yaml_3get_version, METH_NOARGS, 0};
-static PyObject *__pyx_pw_5_yaml_3get_version(PyObject *__pyx_self, CYTHON_UNUSED PyObject *unused) {
+static PyObject *__pyx_pw_12_ruamel_yaml_3get_version(PyObject *__pyx_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static PyMethodDef __pyx_mdef_12_ruamel_yaml_3get_version = {"get_version", (PyCFunction)__pyx_pw_12_ruamel_yaml_3get_version, METH_NOARGS, 0};
+static PyObject *__pyx_pw_12_ruamel_yaml_3get_version(PyObject *__pyx_self, CYTHON_UNUSED PyObject *unused) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("get_version (wrapper)", 0);
-  __pyx_r = __pyx_pf_5_yaml_2get_version(__pyx_self);
+  __pyx_r = __pyx_pf_12_ruamel_yaml_2get_version(__pyx_self);
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_5_yaml_2get_version(CYTHON_UNUSED PyObject *__pyx_self) {
+static PyObject *__pyx_pf_12_ruamel_yaml_2get_version(CYTHON_UNUSED PyObject *__pyx_self) {
   int __pyx_v_major;
   int __pyx_v_minor;
   int __pyx_v_patch;
@@ -1398,7 +1398,7 @@ static PyObject *__pyx_pf_5_yaml_2get_version(CYTHON_UNUSED PyObject *__pyx_self
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("get_version", 0);
 
-  /* "_yaml.pyx":13
+  /* "_ruamel_yaml.pyx":13
  * def get_version():
  *     cdef int major, minor, patch
  *     yaml_get_version(&major, &minor, &patch)             # <<<<<<<<<<<<<<
@@ -1407,7 +1407,7 @@ static PyObject *__pyx_pf_5_yaml_2get_version(CYTHON_UNUSED PyObject *__pyx_self
  */
   yaml_get_version((&__pyx_v_major), (&__pyx_v_minor), (&__pyx_v_patch));
 
-  /* "_yaml.pyx":14
+  /* "_ruamel_yaml.pyx":14
  *     cdef int major, minor, patch
  *     yaml_get_version(&major, &minor, &patch)
  *     return (major, minor, patch)             # <<<<<<<<<<<<<<
@@ -1436,7 +1436,7 @@ static PyObject *__pyx_pf_5_yaml_2get_version(CYTHON_UNUSED PyObject *__pyx_self
   __pyx_t_4 = 0;
   goto __pyx_L0;
 
-  /* "_yaml.pyx":11
+  /* "_ruamel_yaml.pyx":11
  *         return PyUnicode_FromString(value)
  * 
  * def get_version():             # <<<<<<<<<<<<<<
@@ -1450,7 +1450,7 @@ static PyObject *__pyx_pf_5_yaml_2get_version(CYTHON_UNUSED PyObject *__pyx_self
   __Pyx_XDECREF(__pyx_t_2);
   __Pyx_XDECREF(__pyx_t_3);
   __Pyx_XDECREF(__pyx_t_4);
-  __Pyx_AddTraceback("_yaml.get_version", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("_ruamel_yaml.get_version", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -1458,7 +1458,7 @@ static PyObject *__pyx_pf_5_yaml_2get_version(CYTHON_UNUSED PyObject *__pyx_self
   return __pyx_r;
 }
 
-/* "_yaml.pyx":71
+/* "_ruamel_yaml.pyx":71
  *     cdef readonly pointer
  * 
  *     def __init__(self, object name, int index, int line, int column,             # <<<<<<<<<<<<<<
@@ -1467,8 +1467,8 @@ static PyObject *__pyx_pf_5_yaml_2get_version(CYTHON_UNUSED PyObject *__pyx_self
  */
 
 /* Python wrapper */
-static int __pyx_pw_5_yaml_4Mark_1__init__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static int __pyx_pw_5_yaml_4Mark_1__init__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+static int __pyx_pw_12_ruamel_yaml_4Mark_1__init__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static int __pyx_pw_12_ruamel_yaml_4Mark_1__init__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyObject *__pyx_v_name = 0;
   int __pyx_v_index;
   int __pyx_v_line;
@@ -1552,23 +1552,23 @@ static int __pyx_pw_5_yaml_4Mark_1__init__(PyObject *__pyx_v_self, PyObject *__p
   __pyx_L5_argtuple_error:;
   __Pyx_RaiseArgtupleInvalid("__init__", 1, 6, 6, PyTuple_GET_SIZE(__pyx_args)); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 71; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
   __pyx_L3_error:;
-  __Pyx_AddTraceback("_yaml.Mark.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("_ruamel_yaml.Mark.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return -1;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_5_yaml_4Mark___init__(((struct __pyx_obj_5_yaml_Mark *)__pyx_v_self), __pyx_v_name, __pyx_v_index, __pyx_v_line, __pyx_v_column, __pyx_v_buffer, __pyx_v_pointer);
+  __pyx_r = __pyx_pf_12_ruamel_yaml_4Mark___init__(((struct __pyx_obj_12_ruamel_yaml_Mark *)__pyx_v_self), __pyx_v_name, __pyx_v_index, __pyx_v_line, __pyx_v_column, __pyx_v_buffer, __pyx_v_pointer);
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static int __pyx_pf_5_yaml_4Mark___init__(struct __pyx_obj_5_yaml_Mark *__pyx_v_self, PyObject *__pyx_v_name, int __pyx_v_index, int __pyx_v_line, int __pyx_v_column, PyObject *__pyx_v_buffer, PyObject *__pyx_v_pointer) {
+static int __pyx_pf_12_ruamel_yaml_4Mark___init__(struct __pyx_obj_12_ruamel_yaml_Mark *__pyx_v_self, PyObject *__pyx_v_name, int __pyx_v_index, int __pyx_v_line, int __pyx_v_column, PyObject *__pyx_v_buffer, PyObject *__pyx_v_pointer) {
   int __pyx_r;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__init__", 0);
 
-  /* "_yaml.pyx":73
+  /* "_ruamel_yaml.pyx":73
  *     def __init__(self, object name, int index, int line, int column,
  *             object buffer, object pointer):
  *         self.name = name             # <<<<<<<<<<<<<<
@@ -1581,7 +1581,7 @@ static int __pyx_pf_5_yaml_4Mark___init__(struct __pyx_obj_5_yaml_Mark *__pyx_v_
   __Pyx_DECREF(__pyx_v_self->name);
   __pyx_v_self->name = __pyx_v_name;
 
-  /* "_yaml.pyx":74
+  /* "_ruamel_yaml.pyx":74
  *             object buffer, object pointer):
  *         self.name = name
  *         self.index = index             # <<<<<<<<<<<<<<
@@ -1590,7 +1590,7 @@ static int __pyx_pf_5_yaml_4Mark___init__(struct __pyx_obj_5_yaml_Mark *__pyx_v_
  */
   __pyx_v_self->index = __pyx_v_index;
 
-  /* "_yaml.pyx":75
+  /* "_ruamel_yaml.pyx":75
  *         self.name = name
  *         self.index = index
  *         self.line = line             # <<<<<<<<<<<<<<
@@ -1599,7 +1599,7 @@ static int __pyx_pf_5_yaml_4Mark___init__(struct __pyx_obj_5_yaml_Mark *__pyx_v_
  */
   __pyx_v_self->line = __pyx_v_line;
 
-  /* "_yaml.pyx":76
+  /* "_ruamel_yaml.pyx":76
  *         self.index = index
  *         self.line = line
  *         self.column = column             # <<<<<<<<<<<<<<
@@ -1608,7 +1608,7 @@ static int __pyx_pf_5_yaml_4Mark___init__(struct __pyx_obj_5_yaml_Mark *__pyx_v_
  */
   __pyx_v_self->column = __pyx_v_column;
 
-  /* "_yaml.pyx":77
+  /* "_ruamel_yaml.pyx":77
  *         self.line = line
  *         self.column = column
  *         self.buffer = buffer             # <<<<<<<<<<<<<<
@@ -1621,7 +1621,7 @@ static int __pyx_pf_5_yaml_4Mark___init__(struct __pyx_obj_5_yaml_Mark *__pyx_v_
   __Pyx_DECREF(__pyx_v_self->buffer);
   __pyx_v_self->buffer = __pyx_v_buffer;
 
-  /* "_yaml.pyx":78
+  /* "_ruamel_yaml.pyx":78
  *         self.column = column
  *         self.buffer = buffer
  *         self.pointer = pointer             # <<<<<<<<<<<<<<
@@ -1634,7 +1634,7 @@ static int __pyx_pf_5_yaml_4Mark___init__(struct __pyx_obj_5_yaml_Mark *__pyx_v_
   __Pyx_DECREF(__pyx_v_self->pointer);
   __pyx_v_self->pointer = __pyx_v_pointer;
 
-  /* "_yaml.pyx":71
+  /* "_ruamel_yaml.pyx":71
  *     cdef readonly pointer
  * 
  *     def __init__(self, object name, int index, int line, int column,             # <<<<<<<<<<<<<<
@@ -1648,7 +1648,7 @@ static int __pyx_pf_5_yaml_4Mark___init__(struct __pyx_obj_5_yaml_Mark *__pyx_v_
   return __pyx_r;
 }
 
-/* "_yaml.pyx":80
+/* "_ruamel_yaml.pyx":80
  *         self.pointer = pointer
  * 
  *     def get_snippet(self):             # <<<<<<<<<<<<<<
@@ -1657,24 +1657,24 @@ static int __pyx_pf_5_yaml_4Mark___init__(struct __pyx_obj_5_yaml_Mark *__pyx_v_
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_5_yaml_4Mark_3get_snippet(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
-static PyObject *__pyx_pw_5_yaml_4Mark_3get_snippet(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
+static PyObject *__pyx_pw_12_ruamel_yaml_4Mark_3get_snippet(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static PyObject *__pyx_pw_12_ruamel_yaml_4Mark_3get_snippet(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("get_snippet (wrapper)", 0);
-  __pyx_r = __pyx_pf_5_yaml_4Mark_2get_snippet(((struct __pyx_obj_5_yaml_Mark *)__pyx_v_self));
+  __pyx_r = __pyx_pf_12_ruamel_yaml_4Mark_2get_snippet(((struct __pyx_obj_12_ruamel_yaml_Mark *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_5_yaml_4Mark_2get_snippet(CYTHON_UNUSED struct __pyx_obj_5_yaml_Mark *__pyx_v_self) {
+static PyObject *__pyx_pf_12_ruamel_yaml_4Mark_2get_snippet(CYTHON_UNUSED struct __pyx_obj_12_ruamel_yaml_Mark *__pyx_v_self) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("get_snippet", 0);
 
-  /* "_yaml.pyx":81
+  /* "_ruamel_yaml.pyx":81
  * 
  *     def get_snippet(self):
  *         return None             # <<<<<<<<<<<<<<
@@ -1686,7 +1686,7 @@ static PyObject *__pyx_pf_5_yaml_4Mark_2get_snippet(CYTHON_UNUSED struct __pyx_o
   __pyx_r = Py_None;
   goto __pyx_L0;
 
-  /* "_yaml.pyx":80
+  /* "_ruamel_yaml.pyx":80
  *         self.pointer = pointer
  * 
  *     def get_snippet(self):             # <<<<<<<<<<<<<<
@@ -1701,7 +1701,7 @@ static PyObject *__pyx_pf_5_yaml_4Mark_2get_snippet(CYTHON_UNUSED struct __pyx_o
   return __pyx_r;
 }
 
-/* "_yaml.pyx":83
+/* "_ruamel_yaml.pyx":83
  *         return None
  * 
  *     def __str__(self):             # <<<<<<<<<<<<<<
@@ -1710,19 +1710,19 @@ static PyObject *__pyx_pf_5_yaml_4Mark_2get_snippet(CYTHON_UNUSED struct __pyx_o
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_5_yaml_4Mark_5__str__(PyObject *__pyx_v_self); /*proto*/
-static PyObject *__pyx_pw_5_yaml_4Mark_5__str__(PyObject *__pyx_v_self) {
+static PyObject *__pyx_pw_12_ruamel_yaml_4Mark_5__str__(PyObject *__pyx_v_self); /*proto*/
+static PyObject *__pyx_pw_12_ruamel_yaml_4Mark_5__str__(PyObject *__pyx_v_self) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__str__ (wrapper)", 0);
-  __pyx_r = __pyx_pf_5_yaml_4Mark_4__str__(((struct __pyx_obj_5_yaml_Mark *)__pyx_v_self));
+  __pyx_r = __pyx_pf_12_ruamel_yaml_4Mark_4__str__(((struct __pyx_obj_12_ruamel_yaml_Mark *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_5_yaml_4Mark_4__str__(struct __pyx_obj_5_yaml_Mark *__pyx_v_self) {
+static PyObject *__pyx_pf_12_ruamel_yaml_4Mark_4__str__(struct __pyx_obj_12_ruamel_yaml_Mark *__pyx_v_self) {
   PyObject *__pyx_v_where = NULL;
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
@@ -1734,7 +1734,7 @@ static PyObject *__pyx_pf_5_yaml_4Mark_4__str__(struct __pyx_obj_5_yaml_Mark *__
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__str__", 0);
 
-  /* "_yaml.pyx":85
+  /* "_ruamel_yaml.pyx":85
  *     def __str__(self):
  *         where = "  in \"%s\", line %d, column %d"   \
  *                 % (self.name, self.line+1, self.column+1)             # <<<<<<<<<<<<<<
@@ -1762,7 +1762,7 @@ static PyObject *__pyx_pf_5_yaml_4Mark_4__str__(struct __pyx_obj_5_yaml_Mark *__
   __pyx_v_where = ((PyObject*)__pyx_t_2);
   __pyx_t_2 = 0;
 
-  /* "_yaml.pyx":86
+  /* "_ruamel_yaml.pyx":86
  *         where = "  in \"%s\", line %d, column %d"   \
  *                 % (self.name, self.line+1, self.column+1)
  *         return where             # <<<<<<<<<<<<<<
@@ -1774,7 +1774,7 @@ static PyObject *__pyx_pf_5_yaml_4Mark_4__str__(struct __pyx_obj_5_yaml_Mark *__
   __pyx_r = __pyx_v_where;
   goto __pyx_L0;
 
-  /* "_yaml.pyx":83
+  /* "_ruamel_yaml.pyx":83
  *         return None
  * 
  *     def __str__(self):             # <<<<<<<<<<<<<<
@@ -1787,7 +1787,7 @@ static PyObject *__pyx_pf_5_yaml_4Mark_4__str__(struct __pyx_obj_5_yaml_Mark *__
   __Pyx_XDECREF(__pyx_t_1);
   __Pyx_XDECREF(__pyx_t_2);
   __Pyx_XDECREF(__pyx_t_3);
-  __Pyx_AddTraceback("_yaml.Mark.__str__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("_ruamel_yaml.Mark.__str__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XDECREF(__pyx_v_where);
@@ -1796,7 +1796,7 @@ static PyObject *__pyx_pf_5_yaml_4Mark_4__str__(struct __pyx_obj_5_yaml_Mark *__
   return __pyx_r;
 }
 
-/* "_yaml.pyx":64
+/* "_ruamel_yaml.pyx":64
  * 
  * cdef class Mark:
  *     cdef readonly object name             # <<<<<<<<<<<<<<
@@ -1805,19 +1805,19 @@ static PyObject *__pyx_pf_5_yaml_4Mark_4__str__(struct __pyx_obj_5_yaml_Mark *__
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_5_yaml_4Mark_4name_1__get__(PyObject *__pyx_v_self); /*proto*/
-static PyObject *__pyx_pw_5_yaml_4Mark_4name_1__get__(PyObject *__pyx_v_self) {
+static PyObject *__pyx_pw_12_ruamel_yaml_4Mark_4name_1__get__(PyObject *__pyx_v_self); /*proto*/
+static PyObject *__pyx_pw_12_ruamel_yaml_4Mark_4name_1__get__(PyObject *__pyx_v_self) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__get__ (wrapper)", 0);
-  __pyx_r = __pyx_pf_5_yaml_4Mark_4name___get__(((struct __pyx_obj_5_yaml_Mark *)__pyx_v_self));
+  __pyx_r = __pyx_pf_12_ruamel_yaml_4Mark_4name___get__(((struct __pyx_obj_12_ruamel_yaml_Mark *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_5_yaml_4Mark_4name___get__(struct __pyx_obj_5_yaml_Mark *__pyx_v_self) {
+static PyObject *__pyx_pf_12_ruamel_yaml_4Mark_4name___get__(struct __pyx_obj_12_ruamel_yaml_Mark *__pyx_v_self) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__get__", 0);
@@ -1833,7 +1833,7 @@ static PyObject *__pyx_pf_5_yaml_4Mark_4name___get__(struct __pyx_obj_5_yaml_Mar
   return __pyx_r;
 }
 
-/* "_yaml.pyx":65
+/* "_ruamel_yaml.pyx":65
  * cdef class Mark:
  *     cdef readonly object name
  *     cdef readonly int index             # <<<<<<<<<<<<<<
@@ -1842,19 +1842,19 @@ static PyObject *__pyx_pf_5_yaml_4Mark_4name___get__(struct __pyx_obj_5_yaml_Mar
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_5_yaml_4Mark_5index_1__get__(PyObject *__pyx_v_self); /*proto*/
-static PyObject *__pyx_pw_5_yaml_4Mark_5index_1__get__(PyObject *__pyx_v_self) {
+static PyObject *__pyx_pw_12_ruamel_yaml_4Mark_5index_1__get__(PyObject *__pyx_v_self); /*proto*/
+static PyObject *__pyx_pw_12_ruamel_yaml_4Mark_5index_1__get__(PyObject *__pyx_v_self) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__get__ (wrapper)", 0);
-  __pyx_r = __pyx_pf_5_yaml_4Mark_5index___get__(((struct __pyx_obj_5_yaml_Mark *)__pyx_v_self));
+  __pyx_r = __pyx_pf_12_ruamel_yaml_4Mark_5index___get__(((struct __pyx_obj_12_ruamel_yaml_Mark *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_5_yaml_4Mark_5index___get__(struct __pyx_obj_5_yaml_Mark *__pyx_v_self) {
+static PyObject *__pyx_pf_12_ruamel_yaml_4Mark_5index___get__(struct __pyx_obj_12_ruamel_yaml_Mark *__pyx_v_self) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -1872,7 +1872,7 @@ static PyObject *__pyx_pf_5_yaml_4Mark_5index___get__(struct __pyx_obj_5_yaml_Ma
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("_yaml.Mark.index.__get__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("_ruamel_yaml.Mark.index.__get__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -1880,7 +1880,7 @@ static PyObject *__pyx_pf_5_yaml_4Mark_5index___get__(struct __pyx_obj_5_yaml_Ma
   return __pyx_r;
 }
 
-/* "_yaml.pyx":66
+/* "_ruamel_yaml.pyx":66
  *     cdef readonly object name
  *     cdef readonly int index
  *     cdef readonly int line             # <<<<<<<<<<<<<<
@@ -1889,19 +1889,19 @@ static PyObject *__pyx_pf_5_yaml_4Mark_5index___get__(struct __pyx_obj_5_yaml_Ma
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_5_yaml_4Mark_4line_1__get__(PyObject *__pyx_v_self); /*proto*/
-static PyObject *__pyx_pw_5_yaml_4Mark_4line_1__get__(PyObject *__pyx_v_self) {
+static PyObject *__pyx_pw_12_ruamel_yaml_4Mark_4line_1__get__(PyObject *__pyx_v_self); /*proto*/
+static PyObject *__pyx_pw_12_ruamel_yaml_4Mark_4line_1__get__(PyObject *__pyx_v_self) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__get__ (wrapper)", 0);
-  __pyx_r = __pyx_pf_5_yaml_4Mark_4line___get__(((struct __pyx_obj_5_yaml_Mark *)__pyx_v_self));
+  __pyx_r = __pyx_pf_12_ruamel_yaml_4Mark_4line___get__(((struct __pyx_obj_12_ruamel_yaml_Mark *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_5_yaml_4Mark_4line___get__(struct __pyx_obj_5_yaml_Mark *__pyx_v_self) {
+static PyObject *__pyx_pf_12_ruamel_yaml_4Mark_4line___get__(struct __pyx_obj_12_ruamel_yaml_Mark *__pyx_v_self) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -1919,7 +1919,7 @@ static PyObject *__pyx_pf_5_yaml_4Mark_4line___get__(struct __pyx_obj_5_yaml_Mar
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("_yaml.Mark.line.__get__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("_ruamel_yaml.Mark.line.__get__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -1927,7 +1927,7 @@ static PyObject *__pyx_pf_5_yaml_4Mark_4line___get__(struct __pyx_obj_5_yaml_Mar
   return __pyx_r;
 }
 
-/* "_yaml.pyx":67
+/* "_ruamel_yaml.pyx":67
  *     cdef readonly int index
  *     cdef readonly int line
  *     cdef readonly int column             # <<<<<<<<<<<<<<
@@ -1936,19 +1936,19 @@ static PyObject *__pyx_pf_5_yaml_4Mark_4line___get__(struct __pyx_obj_5_yaml_Mar
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_5_yaml_4Mark_6column_1__get__(PyObject *__pyx_v_self); /*proto*/
-static PyObject *__pyx_pw_5_yaml_4Mark_6column_1__get__(PyObject *__pyx_v_self) {
+static PyObject *__pyx_pw_12_ruamel_yaml_4Mark_6column_1__get__(PyObject *__pyx_v_self); /*proto*/
+static PyObject *__pyx_pw_12_ruamel_yaml_4Mark_6column_1__get__(PyObject *__pyx_v_self) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__get__ (wrapper)", 0);
-  __pyx_r = __pyx_pf_5_yaml_4Mark_6column___get__(((struct __pyx_obj_5_yaml_Mark *)__pyx_v_self));
+  __pyx_r = __pyx_pf_12_ruamel_yaml_4Mark_6column___get__(((struct __pyx_obj_12_ruamel_yaml_Mark *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_5_yaml_4Mark_6column___get__(struct __pyx_obj_5_yaml_Mark *__pyx_v_self) {
+static PyObject *__pyx_pf_12_ruamel_yaml_4Mark_6column___get__(struct __pyx_obj_12_ruamel_yaml_Mark *__pyx_v_self) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -1966,7 +1966,7 @@ static PyObject *__pyx_pf_5_yaml_4Mark_6column___get__(struct __pyx_obj_5_yaml_M
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("_yaml.Mark.column.__get__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("_ruamel_yaml.Mark.column.__get__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -1974,7 +1974,7 @@ static PyObject *__pyx_pf_5_yaml_4Mark_6column___get__(struct __pyx_obj_5_yaml_M
   return __pyx_r;
 }
 
-/* "_yaml.pyx":68
+/* "_ruamel_yaml.pyx":68
  *     cdef readonly int line
  *     cdef readonly int column
  *     cdef readonly buffer             # <<<<<<<<<<<<<<
@@ -1983,19 +1983,19 @@ static PyObject *__pyx_pf_5_yaml_4Mark_6column___get__(struct __pyx_obj_5_yaml_M
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_5_yaml_4Mark_6buffer_1__get__(PyObject *__pyx_v_self); /*proto*/
-static PyObject *__pyx_pw_5_yaml_4Mark_6buffer_1__get__(PyObject *__pyx_v_self) {
+static PyObject *__pyx_pw_12_ruamel_yaml_4Mark_6buffer_1__get__(PyObject *__pyx_v_self); /*proto*/
+static PyObject *__pyx_pw_12_ruamel_yaml_4Mark_6buffer_1__get__(PyObject *__pyx_v_self) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__get__ (wrapper)", 0);
-  __pyx_r = __pyx_pf_5_yaml_4Mark_6buffer___get__(((struct __pyx_obj_5_yaml_Mark *)__pyx_v_self));
+  __pyx_r = __pyx_pf_12_ruamel_yaml_4Mark_6buffer___get__(((struct __pyx_obj_12_ruamel_yaml_Mark *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_5_yaml_4Mark_6buffer___get__(struct __pyx_obj_5_yaml_Mark *__pyx_v_self) {
+static PyObject *__pyx_pf_12_ruamel_yaml_4Mark_6buffer___get__(struct __pyx_obj_12_ruamel_yaml_Mark *__pyx_v_self) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__get__", 0);
@@ -2011,7 +2011,7 @@ static PyObject *__pyx_pf_5_yaml_4Mark_6buffer___get__(struct __pyx_obj_5_yaml_M
   return __pyx_r;
 }
 
-/* "_yaml.pyx":69
+/* "_ruamel_yaml.pyx":69
  *     cdef readonly int column
  *     cdef readonly buffer
  *     cdef readonly pointer             # <<<<<<<<<<<<<<
@@ -2020,19 +2020,19 @@ static PyObject *__pyx_pf_5_yaml_4Mark_6buffer___get__(struct __pyx_obj_5_yaml_M
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_5_yaml_4Mark_7pointer_1__get__(PyObject *__pyx_v_self); /*proto*/
-static PyObject *__pyx_pw_5_yaml_4Mark_7pointer_1__get__(PyObject *__pyx_v_self) {
+static PyObject *__pyx_pw_12_ruamel_yaml_4Mark_7pointer_1__get__(PyObject *__pyx_v_self); /*proto*/
+static PyObject *__pyx_pw_12_ruamel_yaml_4Mark_7pointer_1__get__(PyObject *__pyx_v_self) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__get__ (wrapper)", 0);
-  __pyx_r = __pyx_pf_5_yaml_4Mark_7pointer___get__(((struct __pyx_obj_5_yaml_Mark *)__pyx_v_self));
+  __pyx_r = __pyx_pf_12_ruamel_yaml_4Mark_7pointer___get__(((struct __pyx_obj_12_ruamel_yaml_Mark *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_5_yaml_4Mark_7pointer___get__(struct __pyx_obj_5_yaml_Mark *__pyx_v_self) {
+static PyObject *__pyx_pf_12_ruamel_yaml_4Mark_7pointer___get__(struct __pyx_obj_12_ruamel_yaml_Mark *__pyx_v_self) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__get__", 0);
@@ -2048,7 +2048,7 @@ static PyObject *__pyx_pf_5_yaml_4Mark_7pointer___get__(struct __pyx_obj_5_yaml_
   return __pyx_r;
 }
 
-/* "_yaml.pyx":261
+/* "_ruamel_yaml.pyx":261
  *     cdef int unicode_source
  * 
  *     def __init__(self, stream):             # <<<<<<<<<<<<<<
@@ -2057,8 +2057,8 @@ static PyObject *__pyx_pf_5_yaml_4Mark_7pointer___get__(struct __pyx_obj_5_yaml_
  */
 
 /* Python wrapper */
-static int __pyx_pw_5_yaml_7CParser_1__init__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static int __pyx_pw_5_yaml_7CParser_1__init__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+static int __pyx_pw_12_ruamel_yaml_7CParser_1__init__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static int __pyx_pw_12_ruamel_yaml_7CParser_1__init__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyObject *__pyx_v_stream = 0;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
@@ -2097,18 +2097,18 @@ static int __pyx_pw_5_yaml_7CParser_1__init__(PyObject *__pyx_v_self, PyObject *
   __pyx_L5_argtuple_error:;
   __Pyx_RaiseArgtupleInvalid("__init__", 1, 1, 1, PyTuple_GET_SIZE(__pyx_args)); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 261; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
   __pyx_L3_error:;
-  __Pyx_AddTraceback("_yaml.CParser.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("_ruamel_yaml.CParser.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return -1;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_5_yaml_7CParser___init__(((struct __pyx_obj_5_yaml_CParser *)__pyx_v_self), __pyx_v_stream);
+  __pyx_r = __pyx_pf_12_ruamel_yaml_7CParser___init__(((struct __pyx_obj_12_ruamel_yaml_CParser *)__pyx_v_self), __pyx_v_stream);
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static int __pyx_pf_5_yaml_7CParser___init__(struct __pyx_obj_5_yaml_CParser *__pyx_v_self, PyObject *__pyx_v_stream) {
+static int __pyx_pf_12_ruamel_yaml_7CParser___init__(struct __pyx_obj_12_ruamel_yaml_CParser *__pyx_v_self, PyObject *__pyx_v_stream) {
   PyObject *__pyx_v_is_readable = 0;
   int __pyx_r;
   __Pyx_RefNannyDeclarations
@@ -2126,7 +2126,7 @@ static int __pyx_pf_5_yaml_7CParser___init__(struct __pyx_obj_5_yaml_CParser *__
   __Pyx_RefNannySetupContext("__init__", 0);
   __Pyx_INCREF(__pyx_v_stream);
 
-  /* "_yaml.pyx":263
+  /* "_ruamel_yaml.pyx":263
  *     def __init__(self, stream):
  *         cdef is_readable
  *         if yaml_parser_initialize(&self.parser) == 0:             # <<<<<<<<<<<<<<
@@ -2136,7 +2136,7 @@ static int __pyx_pf_5_yaml_7CParser___init__(struct __pyx_obj_5_yaml_CParser *__
   __pyx_t_1 = ((yaml_parser_initialize((&__pyx_v_self->parser)) == 0) != 0);
   if (__pyx_t_1) {
 
-    /* "_yaml.pyx":264
+    /* "_ruamel_yaml.pyx":264
  *         cdef is_readable
  *         if yaml_parser_initialize(&self.parser) == 0:
  *             raise MemoryError             # <<<<<<<<<<<<<<
@@ -2145,7 +2145,7 @@ static int __pyx_pf_5_yaml_7CParser___init__(struct __pyx_obj_5_yaml_CParser *__
  */
     PyErr_NoMemory(); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 264; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-    /* "_yaml.pyx":263
+    /* "_ruamel_yaml.pyx":263
  *     def __init__(self, stream):
  *         cdef is_readable
  *         if yaml_parser_initialize(&self.parser) == 0:             # <<<<<<<<<<<<<<
@@ -2154,7 +2154,7 @@ static int __pyx_pf_5_yaml_7CParser___init__(struct __pyx_obj_5_yaml_CParser *__
  */
   }
 
-  /* "_yaml.pyx":265
+  /* "_ruamel_yaml.pyx":265
  *         if yaml_parser_initialize(&self.parser) == 0:
  *             raise MemoryError
  *         self.parsed_event.type = YAML_NO_EVENT             # <<<<<<<<<<<<<<
@@ -2163,7 +2163,7 @@ static int __pyx_pf_5_yaml_7CParser___init__(struct __pyx_obj_5_yaml_CParser *__
  */
   __pyx_v_self->parsed_event.type = YAML_NO_EVENT;
 
-  /* "_yaml.pyx":266
+  /* "_ruamel_yaml.pyx":266
  *             raise MemoryError
  *         self.parsed_event.type = YAML_NO_EVENT
  *         is_readable = 1             # <<<<<<<<<<<<<<
@@ -2173,7 +2173,7 @@ static int __pyx_pf_5_yaml_7CParser___init__(struct __pyx_obj_5_yaml_CParser *__
   __Pyx_INCREF(__pyx_int_1);
   __pyx_v_is_readable = __pyx_int_1;
 
-  /* "_yaml.pyx":267
+  /* "_ruamel_yaml.pyx":267
  *         self.parsed_event.type = YAML_NO_EVENT
  *         is_readable = 1
  *         try:             # <<<<<<<<<<<<<<
@@ -2187,7 +2187,7 @@ static int __pyx_pf_5_yaml_7CParser___init__(struct __pyx_obj_5_yaml_CParser *__
     __Pyx_XGOTREF(__pyx_t_4);
     /*try:*/ {
 
-      /* "_yaml.pyx":268
+      /* "_ruamel_yaml.pyx":268
  *         is_readable = 1
  *         try:
  *             stream.read             # <<<<<<<<<<<<<<
@@ -2198,7 +2198,7 @@ static int __pyx_pf_5_yaml_7CParser___init__(struct __pyx_obj_5_yaml_CParser *__
       __Pyx_GOTREF(__pyx_t_5);
       __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
 
-      /* "_yaml.pyx":267
+      /* "_ruamel_yaml.pyx":267
  *         self.parsed_event.type = YAML_NO_EVENT
  *         is_readable = 1
  *         try:             # <<<<<<<<<<<<<<
@@ -2213,7 +2213,7 @@ static int __pyx_pf_5_yaml_7CParser___init__(struct __pyx_obj_5_yaml_CParser *__
     __pyx_L4_error:;
     __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
 
-    /* "_yaml.pyx":269
+    /* "_ruamel_yaml.pyx":269
  *         try:
  *             stream.read
  *         except AttributeError:             # <<<<<<<<<<<<<<
@@ -2222,13 +2222,13 @@ static int __pyx_pf_5_yaml_7CParser___init__(struct __pyx_obj_5_yaml_CParser *__
  */
     __pyx_t_6 = PyErr_ExceptionMatches(__pyx_builtin_AttributeError);
     if (__pyx_t_6) {
-      __Pyx_AddTraceback("_yaml.CParser.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+      __Pyx_AddTraceback("_ruamel_yaml.CParser.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
       if (__Pyx_GetException(&__pyx_t_5, &__pyx_t_7, &__pyx_t_8) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 269; __pyx_clineno = __LINE__; goto __pyx_L6_except_error;}
       __Pyx_GOTREF(__pyx_t_5);
       __Pyx_GOTREF(__pyx_t_7);
       __Pyx_GOTREF(__pyx_t_8);
 
-      /* "_yaml.pyx":270
+      /* "_ruamel_yaml.pyx":270
  *             stream.read
  *         except AttributeError:
  *             is_readable = 0             # <<<<<<<<<<<<<<
@@ -2245,7 +2245,7 @@ static int __pyx_pf_5_yaml_7CParser___init__(struct __pyx_obj_5_yaml_CParser *__
     goto __pyx_L6_except_error;
     __pyx_L6_except_error:;
 
-    /* "_yaml.pyx":267
+    /* "_ruamel_yaml.pyx":267
  *         self.parsed_event.type = YAML_NO_EVENT
  *         is_readable = 1
  *         try:             # <<<<<<<<<<<<<<
@@ -2265,7 +2265,7 @@ static int __pyx_pf_5_yaml_7CParser___init__(struct __pyx_obj_5_yaml_CParser *__
     __pyx_L11_try_end:;
   }
 
-  /* "_yaml.pyx":271
+  /* "_ruamel_yaml.pyx":271
  *         except AttributeError:
  *             is_readable = 0
  *         self.unicode_source = 0             # <<<<<<<<<<<<<<
@@ -2274,7 +2274,7 @@ static int __pyx_pf_5_yaml_7CParser___init__(struct __pyx_obj_5_yaml_CParser *__
  */
   __pyx_v_self->unicode_source = 0;
 
-  /* "_yaml.pyx":272
+  /* "_ruamel_yaml.pyx":272
  *             is_readable = 0
  *         self.unicode_source = 0
  *         if is_readable:             # <<<<<<<<<<<<<<
@@ -2284,7 +2284,7 @@ static int __pyx_pf_5_yaml_7CParser___init__(struct __pyx_obj_5_yaml_CParser *__
   __pyx_t_1 = __Pyx_PyObject_IsTrue(__pyx_v_is_readable); if (unlikely(__pyx_t_1 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 272; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   if (__pyx_t_1) {
 
-    /* "_yaml.pyx":273
+    /* "_ruamel_yaml.pyx":273
  *         self.unicode_source = 0
  *         if is_readable:
  *             self.stream = stream             # <<<<<<<<<<<<<<
@@ -2297,7 +2297,7 @@ static int __pyx_pf_5_yaml_7CParser___init__(struct __pyx_obj_5_yaml_CParser *__
     __Pyx_DECREF(__pyx_v_self->stream);
     __pyx_v_self->stream = __pyx_v_stream;
 
-    /* "_yaml.pyx":274
+    /* "_ruamel_yaml.pyx":274
  *         if is_readable:
  *             self.stream = stream
  *             try:             # <<<<<<<<<<<<<<
@@ -2311,7 +2311,7 @@ static int __pyx_pf_5_yaml_7CParser___init__(struct __pyx_obj_5_yaml_CParser *__
       __Pyx_XGOTREF(__pyx_t_2);
       /*try:*/ {
 
-        /* "_yaml.pyx":275
+        /* "_ruamel_yaml.pyx":275
  *             self.stream = stream
  *             try:
  *                 self.stream_name = stream.name             # <<<<<<<<<<<<<<
@@ -2326,7 +2326,7 @@ static int __pyx_pf_5_yaml_7CParser___init__(struct __pyx_obj_5_yaml_CParser *__
         __pyx_v_self->stream_name = __pyx_t_8;
         __pyx_t_8 = 0;
 
-        /* "_yaml.pyx":274
+        /* "_ruamel_yaml.pyx":274
  *         if is_readable:
  *             self.stream = stream
  *             try:             # <<<<<<<<<<<<<<
@@ -2343,7 +2343,7 @@ static int __pyx_pf_5_yaml_7CParser___init__(struct __pyx_obj_5_yaml_CParser *__
       __Pyx_XDECREF(__pyx_t_7); __pyx_t_7 = 0;
       __Pyx_XDECREF(__pyx_t_8); __pyx_t_8 = 0;
 
-      /* "_yaml.pyx":276
+      /* "_ruamel_yaml.pyx":276
  *             try:
  *                 self.stream_name = stream.name
  *             except AttributeError:             # <<<<<<<<<<<<<<
@@ -2352,13 +2352,13 @@ static int __pyx_pf_5_yaml_7CParser___init__(struct __pyx_obj_5_yaml_CParser *__
  */
       __pyx_t_6 = PyErr_ExceptionMatches(__pyx_builtin_AttributeError);
       if (__pyx_t_6) {
-        __Pyx_AddTraceback("_yaml.CParser.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+        __Pyx_AddTraceback("_ruamel_yaml.CParser.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
         if (__Pyx_GetException(&__pyx_t_8, &__pyx_t_7, &__pyx_t_5) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 276; __pyx_clineno = __LINE__; goto __pyx_L17_except_error;}
         __Pyx_GOTREF(__pyx_t_8);
         __Pyx_GOTREF(__pyx_t_7);
         __Pyx_GOTREF(__pyx_t_5);
 
-        /* "_yaml.pyx":277
+        /* "_ruamel_yaml.pyx":277
  *                 self.stream_name = stream.name
  *             except AttributeError:
  *                 if PY_MAJOR_VERSION < 3:             # <<<<<<<<<<<<<<
@@ -2368,7 +2368,7 @@ static int __pyx_pf_5_yaml_7CParser___init__(struct __pyx_obj_5_yaml_CParser *__
         __pyx_t_1 = ((PY_MAJOR_VERSION < 3) != 0);
         if (__pyx_t_1) {
 
-          /* "_yaml.pyx":278
+          /* "_ruamel_yaml.pyx":278
  *             except AttributeError:
  *                 if PY_MAJOR_VERSION < 3:
  *                     self.stream_name = '<file>'             # <<<<<<<<<<<<<<
@@ -2381,7 +2381,7 @@ static int __pyx_pf_5_yaml_7CParser___init__(struct __pyx_obj_5_yaml_CParser *__
           __Pyx_DECREF(__pyx_v_self->stream_name);
           __pyx_v_self->stream_name = __pyx_kp_s_file;
 
-          /* "_yaml.pyx":277
+          /* "_ruamel_yaml.pyx":277
  *                 self.stream_name = stream.name
  *             except AttributeError:
  *                 if PY_MAJOR_VERSION < 3:             # <<<<<<<<<<<<<<
@@ -2391,7 +2391,7 @@ static int __pyx_pf_5_yaml_7CParser___init__(struct __pyx_obj_5_yaml_CParser *__
           goto __pyx_L25;
         }
 
-        /* "_yaml.pyx":280
+        /* "_ruamel_yaml.pyx":280
  *                     self.stream_name = '<file>'
  *                 else:
  *                     self.stream_name = u'<file>'             # <<<<<<<<<<<<<<
@@ -2414,7 +2414,7 @@ static int __pyx_pf_5_yaml_7CParser___init__(struct __pyx_obj_5_yaml_CParser *__
       goto __pyx_L17_except_error;
       __pyx_L17_except_error:;
 
-      /* "_yaml.pyx":274
+      /* "_ruamel_yaml.pyx":274
  *         if is_readable:
  *             self.stream = stream
  *             try:             # <<<<<<<<<<<<<<
@@ -2434,7 +2434,7 @@ static int __pyx_pf_5_yaml_7CParser___init__(struct __pyx_obj_5_yaml_CParser *__
       __pyx_L22_try_end:;
     }
 
-    /* "_yaml.pyx":281
+    /* "_ruamel_yaml.pyx":281
  *                 else:
  *                     self.stream_name = u'<file>'
  *             self.stream_cache = None             # <<<<<<<<<<<<<<
@@ -2447,7 +2447,7 @@ static int __pyx_pf_5_yaml_7CParser___init__(struct __pyx_obj_5_yaml_CParser *__
     __Pyx_DECREF(__pyx_v_self->stream_cache);
     __pyx_v_self->stream_cache = Py_None;
 
-    /* "_yaml.pyx":282
+    /* "_ruamel_yaml.pyx":282
  *                     self.stream_name = u'<file>'
  *             self.stream_cache = None
  *             self.stream_cache_len = 0             # <<<<<<<<<<<<<<
@@ -2456,7 +2456,7 @@ static int __pyx_pf_5_yaml_7CParser___init__(struct __pyx_obj_5_yaml_CParser *__
  */
     __pyx_v_self->stream_cache_len = 0;
 
-    /* "_yaml.pyx":283
+    /* "_ruamel_yaml.pyx":283
  *             self.stream_cache = None
  *             self.stream_cache_len = 0
  *             self.stream_cache_pos = 0             # <<<<<<<<<<<<<<
@@ -2465,16 +2465,16 @@ static int __pyx_pf_5_yaml_7CParser___init__(struct __pyx_obj_5_yaml_CParser *__
  */
     __pyx_v_self->stream_cache_pos = 0;
 
-    /* "_yaml.pyx":284
+    /* "_ruamel_yaml.pyx":284
  *             self.stream_cache_len = 0
  *             self.stream_cache_pos = 0
  *             yaml_parser_set_input(&self.parser, input_handler, <void *>self)             # <<<<<<<<<<<<<<
  *         else:
  *             if PyUnicode_CheckExact(stream) != 0:
  */
-    yaml_parser_set_input((&__pyx_v_self->parser), __pyx_f_5_yaml_input_handler, ((void *)__pyx_v_self));
+    yaml_parser_set_input((&__pyx_v_self->parser), __pyx_f_12_ruamel_yaml_input_handler, ((void *)__pyx_v_self));
 
-    /* "_yaml.pyx":272
+    /* "_ruamel_yaml.pyx":272
  *             is_readable = 0
  *         self.unicode_source = 0
  *         if is_readable:             # <<<<<<<<<<<<<<
@@ -2484,7 +2484,7 @@ static int __pyx_pf_5_yaml_7CParser___init__(struct __pyx_obj_5_yaml_CParser *__
     goto __pyx_L14;
   }
 
-  /* "_yaml.pyx":286
+  /* "_ruamel_yaml.pyx":286
  *             yaml_parser_set_input(&self.parser, input_handler, <void *>self)
  *         else:
  *             if PyUnicode_CheckExact(stream) != 0:             # <<<<<<<<<<<<<<
@@ -2495,7 +2495,7 @@ static int __pyx_pf_5_yaml_7CParser___init__(struct __pyx_obj_5_yaml_CParser *__
     __pyx_t_1 = ((PyUnicode_CheckExact(__pyx_v_stream) != 0) != 0);
     if (__pyx_t_1) {
 
-      /* "_yaml.pyx":287
+      /* "_ruamel_yaml.pyx":287
  *         else:
  *             if PyUnicode_CheckExact(stream) != 0:
  *                 stream = PyUnicode_AsUTF8String(stream)             # <<<<<<<<<<<<<<
@@ -2507,7 +2507,7 @@ static int __pyx_pf_5_yaml_7CParser___init__(struct __pyx_obj_5_yaml_CParser *__
       __Pyx_DECREF_SET(__pyx_v_stream, __pyx_t_5);
       __pyx_t_5 = 0;
 
-      /* "_yaml.pyx":288
+      /* "_ruamel_yaml.pyx":288
  *             if PyUnicode_CheckExact(stream) != 0:
  *                 stream = PyUnicode_AsUTF8String(stream)
  *                 if PY_MAJOR_VERSION < 3:             # <<<<<<<<<<<<<<
@@ -2517,7 +2517,7 @@ static int __pyx_pf_5_yaml_7CParser___init__(struct __pyx_obj_5_yaml_CParser *__
       __pyx_t_1 = ((PY_MAJOR_VERSION < 3) != 0);
       if (__pyx_t_1) {
 
-        /* "_yaml.pyx":289
+        /* "_ruamel_yaml.pyx":289
  *                 stream = PyUnicode_AsUTF8String(stream)
  *                 if PY_MAJOR_VERSION < 3:
  *                     self.stream_name = '<unicode string>'             # <<<<<<<<<<<<<<
@@ -2530,7 +2530,7 @@ static int __pyx_pf_5_yaml_7CParser___init__(struct __pyx_obj_5_yaml_CParser *__
         __Pyx_DECREF(__pyx_v_self->stream_name);
         __pyx_v_self->stream_name = __pyx_kp_s_unicode_string;
 
-        /* "_yaml.pyx":288
+        /* "_ruamel_yaml.pyx":288
  *             if PyUnicode_CheckExact(stream) != 0:
  *                 stream = PyUnicode_AsUTF8String(stream)
  *                 if PY_MAJOR_VERSION < 3:             # <<<<<<<<<<<<<<
@@ -2540,7 +2540,7 @@ static int __pyx_pf_5_yaml_7CParser___init__(struct __pyx_obj_5_yaml_CParser *__
         goto __pyx_L27;
       }
 
-      /* "_yaml.pyx":291
+      /* "_ruamel_yaml.pyx":291
  *                     self.stream_name = '<unicode string>'
  *                 else:
  *                     self.stream_name = u'<unicode string>'             # <<<<<<<<<<<<<<
@@ -2556,7 +2556,7 @@ static int __pyx_pf_5_yaml_7CParser___init__(struct __pyx_obj_5_yaml_CParser *__
       }
       __pyx_L27:;
 
-      /* "_yaml.pyx":292
+      /* "_ruamel_yaml.pyx":292
  *                 else:
  *                     self.stream_name = u'<unicode string>'
  *                 self.unicode_source = 1             # <<<<<<<<<<<<<<
@@ -2565,7 +2565,7 @@ static int __pyx_pf_5_yaml_7CParser___init__(struct __pyx_obj_5_yaml_CParser *__
  */
       __pyx_v_self->unicode_source = 1;
 
-      /* "_yaml.pyx":286
+      /* "_ruamel_yaml.pyx":286
  *             yaml_parser_set_input(&self.parser, input_handler, <void *>self)
  *         else:
  *             if PyUnicode_CheckExact(stream) != 0:             # <<<<<<<<<<<<<<
@@ -2575,7 +2575,7 @@ static int __pyx_pf_5_yaml_7CParser___init__(struct __pyx_obj_5_yaml_CParser *__
       goto __pyx_L26;
     }
 
-    /* "_yaml.pyx":294
+    /* "_ruamel_yaml.pyx":294
  *                 self.unicode_source = 1
  *             else:
  *                 if PY_MAJOR_VERSION < 3:             # <<<<<<<<<<<<<<
@@ -2586,7 +2586,7 @@ static int __pyx_pf_5_yaml_7CParser___init__(struct __pyx_obj_5_yaml_CParser *__
       __pyx_t_1 = ((PY_MAJOR_VERSION < 3) != 0);
       if (__pyx_t_1) {
 
-        /* "_yaml.pyx":295
+        /* "_ruamel_yaml.pyx":295
  *             else:
  *                 if PY_MAJOR_VERSION < 3:
  *                     self.stream_name = '<byte string>'             # <<<<<<<<<<<<<<
@@ -2599,7 +2599,7 @@ static int __pyx_pf_5_yaml_7CParser___init__(struct __pyx_obj_5_yaml_CParser *__
         __Pyx_DECREF(__pyx_v_self->stream_name);
         __pyx_v_self->stream_name = __pyx_kp_s_byte_string;
 
-        /* "_yaml.pyx":294
+        /* "_ruamel_yaml.pyx":294
  *                 self.unicode_source = 1
  *             else:
  *                 if PY_MAJOR_VERSION < 3:             # <<<<<<<<<<<<<<
@@ -2609,7 +2609,7 @@ static int __pyx_pf_5_yaml_7CParser___init__(struct __pyx_obj_5_yaml_CParser *__
         goto __pyx_L28;
       }
 
-      /* "_yaml.pyx":297
+      /* "_ruamel_yaml.pyx":297
  *                     self.stream_name = '<byte string>'
  *                 else:
  *                     self.stream_name = u'<byte string>'             # <<<<<<<<<<<<<<
@@ -2627,7 +2627,7 @@ static int __pyx_pf_5_yaml_7CParser___init__(struct __pyx_obj_5_yaml_CParser *__
     }
     __pyx_L26:;
 
-    /* "_yaml.pyx":298
+    /* "_ruamel_yaml.pyx":298
  *                 else:
  *                     self.stream_name = u'<byte string>'
  *             if PyString_CheckExact(stream) == 0:             # <<<<<<<<<<<<<<
@@ -2637,7 +2637,7 @@ static int __pyx_pf_5_yaml_7CParser___init__(struct __pyx_obj_5_yaml_CParser *__
     __pyx_t_1 = ((PyString_CheckExact(__pyx_v_stream) == 0) != 0);
     if (__pyx_t_1) {
 
-      /* "_yaml.pyx":299
+      /* "_ruamel_yaml.pyx":299
  *                     self.stream_name = u'<byte string>'
  *             if PyString_CheckExact(stream) == 0:
  *                 if PY_MAJOR_VERSION < 3:             # <<<<<<<<<<<<<<
@@ -2647,7 +2647,7 @@ static int __pyx_pf_5_yaml_7CParser___init__(struct __pyx_obj_5_yaml_CParser *__
       __pyx_t_1 = ((PY_MAJOR_VERSION < 3) != 0);
       if (__pyx_t_1) {
 
-        /* "_yaml.pyx":300
+        /* "_ruamel_yaml.pyx":300
  *             if PyString_CheckExact(stream) == 0:
  *                 if PY_MAJOR_VERSION < 3:
  *                     raise TypeError("a string or stream input is required")             # <<<<<<<<<<<<<<
@@ -2660,7 +2660,7 @@ static int __pyx_pf_5_yaml_7CParser___init__(struct __pyx_obj_5_yaml_CParser *__
         __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
         {__pyx_filename = __pyx_f[0]; __pyx_lineno = 300; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-        /* "_yaml.pyx":299
+        /* "_ruamel_yaml.pyx":299
  *                     self.stream_name = u'<byte string>'
  *             if PyString_CheckExact(stream) == 0:
  *                 if PY_MAJOR_VERSION < 3:             # <<<<<<<<<<<<<<
@@ -2669,7 +2669,7 @@ static int __pyx_pf_5_yaml_7CParser___init__(struct __pyx_obj_5_yaml_CParser *__
  */
       }
 
-      /* "_yaml.pyx":302
+      /* "_ruamel_yaml.pyx":302
  *                     raise TypeError("a string or stream input is required")
  *                 else:
  *                     raise TypeError(u"a string or stream input is required")             # <<<<<<<<<<<<<<
@@ -2684,7 +2684,7 @@ static int __pyx_pf_5_yaml_7CParser___init__(struct __pyx_obj_5_yaml_CParser *__
         {__pyx_filename = __pyx_f[0]; __pyx_lineno = 302; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       }
 
-      /* "_yaml.pyx":298
+      /* "_ruamel_yaml.pyx":298
  *                 else:
  *                     self.stream_name = u'<byte string>'
  *             if PyString_CheckExact(stream) == 0:             # <<<<<<<<<<<<<<
@@ -2693,7 +2693,7 @@ static int __pyx_pf_5_yaml_7CParser___init__(struct __pyx_obj_5_yaml_CParser *__
  */
     }
 
-    /* "_yaml.pyx":303
+    /* "_ruamel_yaml.pyx":303
  *                 else:
  *                     raise TypeError(u"a string or stream input is required")
  *             self.stream = stream             # <<<<<<<<<<<<<<
@@ -2706,7 +2706,7 @@ static int __pyx_pf_5_yaml_7CParser___init__(struct __pyx_obj_5_yaml_CParser *__
     __Pyx_DECREF(__pyx_v_self->stream);
     __pyx_v_self->stream = __pyx_v_stream;
 
-    /* "_yaml.pyx":304
+    /* "_ruamel_yaml.pyx":304
  *                     raise TypeError(u"a string or stream input is required")
  *             self.stream = stream
  *             yaml_parser_set_input_string(&self.parser, PyString_AS_STRING(stream), PyString_GET_SIZE(stream))             # <<<<<<<<<<<<<<
@@ -2717,7 +2717,7 @@ static int __pyx_pf_5_yaml_7CParser___init__(struct __pyx_obj_5_yaml_CParser *__
   }
   __pyx_L14:;
 
-  /* "_yaml.pyx":305
+  /* "_ruamel_yaml.pyx":305
  *             self.stream = stream
  *             yaml_parser_set_input_string(&self.parser, PyString_AS_STRING(stream), PyString_GET_SIZE(stream))
  *         self.current_token = None             # <<<<<<<<<<<<<<
@@ -2730,7 +2730,7 @@ static int __pyx_pf_5_yaml_7CParser___init__(struct __pyx_obj_5_yaml_CParser *__
   __Pyx_DECREF(__pyx_v_self->current_token);
   __pyx_v_self->current_token = Py_None;
 
-  /* "_yaml.pyx":306
+  /* "_ruamel_yaml.pyx":306
  *             yaml_parser_set_input_string(&self.parser, PyString_AS_STRING(stream), PyString_GET_SIZE(stream))
  *         self.current_token = None
  *         self.current_event = None             # <<<<<<<<<<<<<<
@@ -2743,7 +2743,7 @@ static int __pyx_pf_5_yaml_7CParser___init__(struct __pyx_obj_5_yaml_CParser *__
   __Pyx_DECREF(__pyx_v_self->current_event);
   __pyx_v_self->current_event = Py_None;
 
-  /* "_yaml.pyx":307
+  /* "_ruamel_yaml.pyx":307
  *         self.current_token = None
  *         self.current_event = None
  *         self.anchors = {}             # <<<<<<<<<<<<<<
@@ -2758,7 +2758,7 @@ static int __pyx_pf_5_yaml_7CParser___init__(struct __pyx_obj_5_yaml_CParser *__
   __pyx_v_self->anchors = __pyx_t_5;
   __pyx_t_5 = 0;
 
-  /* "_yaml.pyx":261
+  /* "_ruamel_yaml.pyx":261
  *     cdef int unicode_source
  * 
  *     def __init__(self, stream):             # <<<<<<<<<<<<<<
@@ -2773,7 +2773,7 @@ static int __pyx_pf_5_yaml_7CParser___init__(struct __pyx_obj_5_yaml_CParser *__
   __Pyx_XDECREF(__pyx_t_5);
   __Pyx_XDECREF(__pyx_t_7);
   __Pyx_XDECREF(__pyx_t_8);
-  __Pyx_AddTraceback("_yaml.CParser.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("_ruamel_yaml.CParser.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = -1;
   __pyx_L0:;
   __Pyx_XDECREF(__pyx_v_is_readable);
@@ -2782,7 +2782,7 @@ static int __pyx_pf_5_yaml_7CParser___init__(struct __pyx_obj_5_yaml_CParser *__
   return __pyx_r;
 }
 
-/* "_yaml.pyx":309
+/* "_ruamel_yaml.pyx":309
  *         self.anchors = {}
  * 
  *     def __dealloc__(self):             # <<<<<<<<<<<<<<
@@ -2791,21 +2791,21 @@ static int __pyx_pf_5_yaml_7CParser___init__(struct __pyx_obj_5_yaml_CParser *__
  */
 
 /* Python wrapper */
-static void __pyx_pw_5_yaml_7CParser_3__dealloc__(PyObject *__pyx_v_self); /*proto*/
-static void __pyx_pw_5_yaml_7CParser_3__dealloc__(PyObject *__pyx_v_self) {
+static void __pyx_pw_12_ruamel_yaml_7CParser_3__dealloc__(PyObject *__pyx_v_self); /*proto*/
+static void __pyx_pw_12_ruamel_yaml_7CParser_3__dealloc__(PyObject *__pyx_v_self) {
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__dealloc__ (wrapper)", 0);
-  __pyx_pf_5_yaml_7CParser_2__dealloc__(((struct __pyx_obj_5_yaml_CParser *)__pyx_v_self));
+  __pyx_pf_12_ruamel_yaml_7CParser_2__dealloc__(((struct __pyx_obj_12_ruamel_yaml_CParser *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
 }
 
-static void __pyx_pf_5_yaml_7CParser_2__dealloc__(struct __pyx_obj_5_yaml_CParser *__pyx_v_self) {
+static void __pyx_pf_12_ruamel_yaml_7CParser_2__dealloc__(struct __pyx_obj_12_ruamel_yaml_CParser *__pyx_v_self) {
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__dealloc__", 0);
 
-  /* "_yaml.pyx":310
+  /* "_ruamel_yaml.pyx":310
  * 
  *     def __dealloc__(self):
  *         yaml_parser_delete(&self.parser)             # <<<<<<<<<<<<<<
@@ -2814,7 +2814,7 @@ static void __pyx_pf_5_yaml_7CParser_2__dealloc__(struct __pyx_obj_5_yaml_CParse
  */
   yaml_parser_delete((&__pyx_v_self->parser));
 
-  /* "_yaml.pyx":311
+  /* "_ruamel_yaml.pyx":311
  *     def __dealloc__(self):
  *         yaml_parser_delete(&self.parser)
  *         yaml_event_delete(&self.parsed_event)             # <<<<<<<<<<<<<<
@@ -2823,7 +2823,7 @@ static void __pyx_pf_5_yaml_7CParser_2__dealloc__(struct __pyx_obj_5_yaml_CParse
  */
   yaml_event_delete((&__pyx_v_self->parsed_event));
 
-  /* "_yaml.pyx":309
+  /* "_ruamel_yaml.pyx":309
  *         self.anchors = {}
  * 
  *     def __dealloc__(self):             # <<<<<<<<<<<<<<
@@ -2835,7 +2835,7 @@ static void __pyx_pf_5_yaml_7CParser_2__dealloc__(struct __pyx_obj_5_yaml_CParse
   __Pyx_RefNannyFinishContext();
 }
 
-/* "_yaml.pyx":313
+/* "_ruamel_yaml.pyx":313
  *         yaml_event_delete(&self.parsed_event)
  * 
  *     def dispose(self):             # <<<<<<<<<<<<<<
@@ -2844,19 +2844,19 @@ static void __pyx_pf_5_yaml_7CParser_2__dealloc__(struct __pyx_obj_5_yaml_CParse
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_5_yaml_7CParser_5dispose(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
-static PyObject *__pyx_pw_5_yaml_7CParser_5dispose(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
+static PyObject *__pyx_pw_12_ruamel_yaml_7CParser_5dispose(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static PyObject *__pyx_pw_12_ruamel_yaml_7CParser_5dispose(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("dispose (wrapper)", 0);
-  __pyx_r = __pyx_pf_5_yaml_7CParser_4dispose(((struct __pyx_obj_5_yaml_CParser *)__pyx_v_self));
+  __pyx_r = __pyx_pf_12_ruamel_yaml_7CParser_4dispose(((struct __pyx_obj_12_ruamel_yaml_CParser *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_5_yaml_7CParser_4dispose(CYTHON_UNUSED struct __pyx_obj_5_yaml_CParser *__pyx_v_self) {
+static PyObject *__pyx_pf_12_ruamel_yaml_7CParser_4dispose(CYTHON_UNUSED struct __pyx_obj_12_ruamel_yaml_CParser *__pyx_v_self) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("dispose", 0);
@@ -2868,7 +2868,7 @@ static PyObject *__pyx_pf_5_yaml_7CParser_4dispose(CYTHON_UNUSED struct __pyx_ob
   return __pyx_r;
 }
 
-/* "_yaml.pyx":316
+/* "_ruamel_yaml.pyx":316
  *         pass
  * 
  *     cdef object _parser_error(self):             # <<<<<<<<<<<<<<
@@ -2876,7 +2876,7 @@ static PyObject *__pyx_pf_5_yaml_7CParser_4dispose(CYTHON_UNUSED struct __pyx_ob
  *             return MemoryError
  */
 
-static PyObject *__pyx_f_5_yaml_7CParser__parser_error(struct __pyx_obj_5_yaml_CParser *__pyx_v_self) {
+static PyObject *__pyx_f_12_ruamel_yaml_7CParser__parser_error(struct __pyx_obj_12_ruamel_yaml_CParser *__pyx_v_self) {
   PyObject *__pyx_v_context_mark = NULL;
   PyObject *__pyx_v_problem_mark = NULL;
   PyObject *__pyx_v_context = NULL;
@@ -2897,7 +2897,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__parser_error(struct __pyx_obj_5_yaml_C
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("_parser_error", 0);
 
-  /* "_yaml.pyx":317
+  /* "_ruamel_yaml.pyx":317
  * 
  *     cdef object _parser_error(self):
  *         if self.parser.error == YAML_MEMORY_ERROR:             # <<<<<<<<<<<<<<
@@ -2907,7 +2907,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__parser_error(struct __pyx_obj_5_yaml_C
   switch (__pyx_v_self->parser.error) {
     case YAML_MEMORY_ERROR:
 
-    /* "_yaml.pyx":318
+    /* "_ruamel_yaml.pyx":318
  *     cdef object _parser_error(self):
  *         if self.parser.error == YAML_MEMORY_ERROR:
  *             return MemoryError             # <<<<<<<<<<<<<<
@@ -2919,7 +2919,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__parser_error(struct __pyx_obj_5_yaml_C
     __pyx_r = __pyx_builtin_MemoryError;
     goto __pyx_L0;
 
-    /* "_yaml.pyx":317
+    /* "_ruamel_yaml.pyx":317
  * 
  *     cdef object _parser_error(self):
  *         if self.parser.error == YAML_MEMORY_ERROR:             # <<<<<<<<<<<<<<
@@ -2928,7 +2928,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__parser_error(struct __pyx_obj_5_yaml_C
  */
     break;
 
-    /* "_yaml.pyx":319
+    /* "_ruamel_yaml.pyx":319
  *         if self.parser.error == YAML_MEMORY_ERROR:
  *             return MemoryError
  *         elif self.parser.error == YAML_READER_ERROR:             # <<<<<<<<<<<<<<
@@ -2937,7 +2937,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__parser_error(struct __pyx_obj_5_yaml_C
  */
     case YAML_READER_ERROR:
 
-    /* "_yaml.pyx":320
+    /* "_ruamel_yaml.pyx":320
  *             return MemoryError
  *         elif self.parser.error == YAML_READER_ERROR:
  *             if PY_MAJOR_VERSION < 3:             # <<<<<<<<<<<<<<
@@ -2947,7 +2947,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__parser_error(struct __pyx_obj_5_yaml_C
     __pyx_t_1 = ((PY_MAJOR_VERSION < 3) != 0);
     if (__pyx_t_1) {
 
-      /* "_yaml.pyx":321
+      /* "_ruamel_yaml.pyx":321
  *         elif self.parser.error == YAML_READER_ERROR:
  *             if PY_MAJOR_VERSION < 3:
  *                 return ReaderError(self.stream_name, self.parser.problem_offset,             # <<<<<<<<<<<<<<
@@ -2960,7 +2960,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__parser_error(struct __pyx_obj_5_yaml_C
       __pyx_t_4 = __Pyx_PyInt_From_int(__pyx_v_self->parser.problem_offset); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 321; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_4);
 
-      /* "_yaml.pyx":322
+      /* "_ruamel_yaml.pyx":322
  *             if PY_MAJOR_VERSION < 3:
  *                 return ReaderError(self.stream_name, self.parser.problem_offset,
  *                         self.parser.problem_value, '?', self.parser.problem)             # <<<<<<<<<<<<<<
@@ -3011,7 +3011,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__parser_error(struct __pyx_obj_5_yaml_C
       __pyx_t_2 = 0;
       goto __pyx_L0;
 
-      /* "_yaml.pyx":320
+      /* "_ruamel_yaml.pyx":320
  *             return MemoryError
  *         elif self.parser.error == YAML_READER_ERROR:
  *             if PY_MAJOR_VERSION < 3:             # <<<<<<<<<<<<<<
@@ -3020,7 +3020,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__parser_error(struct __pyx_obj_5_yaml_C
  */
     }
 
-    /* "_yaml.pyx":324
+    /* "_ruamel_yaml.pyx":324
  *                         self.parser.problem_value, '?', self.parser.problem)
  *             else:
  *                 return ReaderError(self.stream_name, self.parser.problem_offset,             # <<<<<<<<<<<<<<
@@ -3034,7 +3034,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__parser_error(struct __pyx_obj_5_yaml_C
       __pyx_t_9 = __Pyx_PyInt_From_int(__pyx_v_self->parser.problem_offset); if (unlikely(!__pyx_t_9)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 324; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_9);
 
-      /* "_yaml.pyx":325
+      /* "_ruamel_yaml.pyx":325
  *             else:
  *                 return ReaderError(self.stream_name, self.parser.problem_offset,
  *                         self.parser.problem_value, u'?', PyUnicode_FromString(self.parser.problem))             # <<<<<<<<<<<<<<
@@ -3086,7 +3086,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__parser_error(struct __pyx_obj_5_yaml_C
       goto __pyx_L0;
     }
 
-    /* "_yaml.pyx":319
+    /* "_ruamel_yaml.pyx":319
  *         if self.parser.error == YAML_MEMORY_ERROR:
  *             return MemoryError
  *         elif self.parser.error == YAML_READER_ERROR:             # <<<<<<<<<<<<<<
@@ -3095,7 +3095,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__parser_error(struct __pyx_obj_5_yaml_C
  */
     break;
 
-    /* "_yaml.pyx":327
+    /* "_ruamel_yaml.pyx":327
  *                         self.parser.problem_value, u'?', PyUnicode_FromString(self.parser.problem))
  *         elif self.parser.error == YAML_SCANNER_ERROR    \
  *                 or self.parser.error == YAML_PARSER_ERROR:             # <<<<<<<<<<<<<<
@@ -3105,7 +3105,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__parser_error(struct __pyx_obj_5_yaml_C
     case YAML_SCANNER_ERROR:
     case YAML_PARSER_ERROR:
 
-    /* "_yaml.pyx":328
+    /* "_ruamel_yaml.pyx":328
  *         elif self.parser.error == YAML_SCANNER_ERROR    \
  *                 or self.parser.error == YAML_PARSER_ERROR:
  *             context_mark = None             # <<<<<<<<<<<<<<
@@ -3115,7 +3115,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__parser_error(struct __pyx_obj_5_yaml_C
     __Pyx_INCREF(Py_None);
     __pyx_v_context_mark = Py_None;
 
-    /* "_yaml.pyx":329
+    /* "_ruamel_yaml.pyx":329
  *                 or self.parser.error == YAML_PARSER_ERROR:
  *             context_mark = None
  *             problem_mark = None             # <<<<<<<<<<<<<<
@@ -3125,7 +3125,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__parser_error(struct __pyx_obj_5_yaml_C
     __Pyx_INCREF(Py_None);
     __pyx_v_problem_mark = Py_None;
 
-    /* "_yaml.pyx":330
+    /* "_ruamel_yaml.pyx":330
  *             context_mark = None
  *             problem_mark = None
  *             if self.parser.context != NULL:             # <<<<<<<<<<<<<<
@@ -3135,7 +3135,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__parser_error(struct __pyx_obj_5_yaml_C
     __pyx_t_1 = ((__pyx_v_self->parser.context != NULL) != 0);
     if (__pyx_t_1) {
 
-      /* "_yaml.pyx":332
+      /* "_ruamel_yaml.pyx":332
  *             if self.parser.context != NULL:
  *                 context_mark = Mark(self.stream_name,
  *                         self.parser.context_mark.index,             # <<<<<<<<<<<<<<
@@ -3145,7 +3145,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__parser_error(struct __pyx_obj_5_yaml_C
       __pyx_t_2 = __Pyx_PyInt_From_int(__pyx_v_self->parser.context_mark.index); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 332; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_2);
 
-      /* "_yaml.pyx":333
+      /* "_ruamel_yaml.pyx":333
  *                 context_mark = Mark(self.stream_name,
  *                         self.parser.context_mark.index,
  *                         self.parser.context_mark.line,             # <<<<<<<<<<<<<<
@@ -3155,7 +3155,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__parser_error(struct __pyx_obj_5_yaml_C
       __pyx_t_3 = __Pyx_PyInt_From_int(__pyx_v_self->parser.context_mark.line); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 333; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_3);
 
-      /* "_yaml.pyx":334
+      /* "_ruamel_yaml.pyx":334
  *                         self.parser.context_mark.index,
  *                         self.parser.context_mark.line,
  *                         self.parser.context_mark.column, None, None)             # <<<<<<<<<<<<<<
@@ -3165,7 +3165,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__parser_error(struct __pyx_obj_5_yaml_C
       __pyx_t_7 = __Pyx_PyInt_From_int(__pyx_v_self->parser.context_mark.column); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 334; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_7);
 
-      /* "_yaml.pyx":331
+      /* "_ruamel_yaml.pyx":331
  *             problem_mark = None
  *             if self.parser.context != NULL:
  *                 context_mark = Mark(self.stream_name,             # <<<<<<<<<<<<<<
@@ -3192,13 +3192,13 @@ static PyObject *__pyx_f_5_yaml_7CParser__parser_error(struct __pyx_obj_5_yaml_C
       __pyx_t_2 = 0;
       __pyx_t_3 = 0;
       __pyx_t_7 = 0;
-      __pyx_t_7 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_5_yaml_Mark), __pyx_t_5, NULL); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 331; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_7 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_12_ruamel_yaml_Mark), __pyx_t_5, NULL); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 331; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_7);
       __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
       __Pyx_DECREF_SET(__pyx_v_context_mark, __pyx_t_7);
       __pyx_t_7 = 0;
 
-      /* "_yaml.pyx":330
+      /* "_ruamel_yaml.pyx":330
  *             context_mark = None
  *             problem_mark = None
  *             if self.parser.context != NULL:             # <<<<<<<<<<<<<<
@@ -3207,7 +3207,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__parser_error(struct __pyx_obj_5_yaml_C
  */
     }
 
-    /* "_yaml.pyx":335
+    /* "_ruamel_yaml.pyx":335
  *                         self.parser.context_mark.line,
  *                         self.parser.context_mark.column, None, None)
  *             if self.parser.problem != NULL:             # <<<<<<<<<<<<<<
@@ -3217,7 +3217,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__parser_error(struct __pyx_obj_5_yaml_C
     __pyx_t_1 = ((__pyx_v_self->parser.problem != NULL) != 0);
     if (__pyx_t_1) {
 
-      /* "_yaml.pyx":337
+      /* "_ruamel_yaml.pyx":337
  *             if self.parser.problem != NULL:
  *                 problem_mark = Mark(self.stream_name,
  *                         self.parser.problem_mark.index,             # <<<<<<<<<<<<<<
@@ -3227,7 +3227,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__parser_error(struct __pyx_obj_5_yaml_C
       __pyx_t_7 = __Pyx_PyInt_From_int(__pyx_v_self->parser.problem_mark.index); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 337; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_7);
 
-      /* "_yaml.pyx":338
+      /* "_ruamel_yaml.pyx":338
  *                 problem_mark = Mark(self.stream_name,
  *                         self.parser.problem_mark.index,
  *                         self.parser.problem_mark.line,             # <<<<<<<<<<<<<<
@@ -3237,7 +3237,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__parser_error(struct __pyx_obj_5_yaml_C
       __pyx_t_5 = __Pyx_PyInt_From_int(__pyx_v_self->parser.problem_mark.line); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 338; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_5);
 
-      /* "_yaml.pyx":339
+      /* "_ruamel_yaml.pyx":339
  *                         self.parser.problem_mark.index,
  *                         self.parser.problem_mark.line,
  *                         self.parser.problem_mark.column, None, None)             # <<<<<<<<<<<<<<
@@ -3247,7 +3247,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__parser_error(struct __pyx_obj_5_yaml_C
       __pyx_t_3 = __Pyx_PyInt_From_int(__pyx_v_self->parser.problem_mark.column); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 339; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_3);
 
-      /* "_yaml.pyx":336
+      /* "_ruamel_yaml.pyx":336
  *                         self.parser.context_mark.column, None, None)
  *             if self.parser.problem != NULL:
  *                 problem_mark = Mark(self.stream_name,             # <<<<<<<<<<<<<<
@@ -3274,13 +3274,13 @@ static PyObject *__pyx_f_5_yaml_7CParser__parser_error(struct __pyx_obj_5_yaml_C
       __pyx_t_7 = 0;
       __pyx_t_5 = 0;
       __pyx_t_3 = 0;
-      __pyx_t_3 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_5_yaml_Mark), __pyx_t_2, NULL); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 336; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_3 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_12_ruamel_yaml_Mark), __pyx_t_2, NULL); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 336; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_3);
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
       __Pyx_DECREF_SET(__pyx_v_problem_mark, __pyx_t_3);
       __pyx_t_3 = 0;
 
-      /* "_yaml.pyx":335
+      /* "_ruamel_yaml.pyx":335
  *                         self.parser.context_mark.line,
  *                         self.parser.context_mark.column, None, None)
  *             if self.parser.problem != NULL:             # <<<<<<<<<<<<<<
@@ -3289,7 +3289,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__parser_error(struct __pyx_obj_5_yaml_C
  */
     }
 
-    /* "_yaml.pyx":340
+    /* "_ruamel_yaml.pyx":340
  *                         self.parser.problem_mark.line,
  *                         self.parser.problem_mark.column, None, None)
  *             context = None             # <<<<<<<<<<<<<<
@@ -3299,7 +3299,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__parser_error(struct __pyx_obj_5_yaml_C
     __Pyx_INCREF(Py_None);
     __pyx_v_context = Py_None;
 
-    /* "_yaml.pyx":341
+    /* "_ruamel_yaml.pyx":341
  *                         self.parser.problem_mark.column, None, None)
  *             context = None
  *             if self.parser.context != NULL:             # <<<<<<<<<<<<<<
@@ -3309,7 +3309,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__parser_error(struct __pyx_obj_5_yaml_C
     __pyx_t_1 = ((__pyx_v_self->parser.context != NULL) != 0);
     if (__pyx_t_1) {
 
-      /* "_yaml.pyx":342
+      /* "_ruamel_yaml.pyx":342
  *             context = None
  *             if self.parser.context != NULL:
  *                 if PY_MAJOR_VERSION < 3:             # <<<<<<<<<<<<<<
@@ -3319,7 +3319,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__parser_error(struct __pyx_obj_5_yaml_C
       __pyx_t_1 = ((PY_MAJOR_VERSION < 3) != 0);
       if (__pyx_t_1) {
 
-        /* "_yaml.pyx":343
+        /* "_ruamel_yaml.pyx":343
  *             if self.parser.context != NULL:
  *                 if PY_MAJOR_VERSION < 3:
  *                     context = self.parser.context             # <<<<<<<<<<<<<<
@@ -3331,7 +3331,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__parser_error(struct __pyx_obj_5_yaml_C
         __Pyx_DECREF_SET(__pyx_v_context, __pyx_t_3);
         __pyx_t_3 = 0;
 
-        /* "_yaml.pyx":342
+        /* "_ruamel_yaml.pyx":342
  *             context = None
  *             if self.parser.context != NULL:
  *                 if PY_MAJOR_VERSION < 3:             # <<<<<<<<<<<<<<
@@ -3341,7 +3341,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__parser_error(struct __pyx_obj_5_yaml_C
         goto __pyx_L7;
       }
 
-      /* "_yaml.pyx":345
+      /* "_ruamel_yaml.pyx":345
  *                     context = self.parser.context
  *                 else:
  *                     context = PyUnicode_FromString(self.parser.context)             # <<<<<<<<<<<<<<
@@ -3356,7 +3356,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__parser_error(struct __pyx_obj_5_yaml_C
       }
       __pyx_L7:;
 
-      /* "_yaml.pyx":341
+      /* "_ruamel_yaml.pyx":341
  *                         self.parser.problem_mark.column, None, None)
  *             context = None
  *             if self.parser.context != NULL:             # <<<<<<<<<<<<<<
@@ -3365,7 +3365,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__parser_error(struct __pyx_obj_5_yaml_C
  */
     }
 
-    /* "_yaml.pyx":346
+    /* "_ruamel_yaml.pyx":346
  *                 else:
  *                     context = PyUnicode_FromString(self.parser.context)
  *             if PY_MAJOR_VERSION < 3:             # <<<<<<<<<<<<<<
@@ -3375,7 +3375,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__parser_error(struct __pyx_obj_5_yaml_C
     __pyx_t_1 = ((PY_MAJOR_VERSION < 3) != 0);
     if (__pyx_t_1) {
 
-      /* "_yaml.pyx":347
+      /* "_ruamel_yaml.pyx":347
  *                     context = PyUnicode_FromString(self.parser.context)
  *             if PY_MAJOR_VERSION < 3:
  *                 problem = self.parser.problem             # <<<<<<<<<<<<<<
@@ -3387,7 +3387,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__parser_error(struct __pyx_obj_5_yaml_C
       __pyx_v_problem = __pyx_t_3;
       __pyx_t_3 = 0;
 
-      /* "_yaml.pyx":346
+      /* "_ruamel_yaml.pyx":346
  *                 else:
  *                     context = PyUnicode_FromString(self.parser.context)
  *             if PY_MAJOR_VERSION < 3:             # <<<<<<<<<<<<<<
@@ -3397,7 +3397,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__parser_error(struct __pyx_obj_5_yaml_C
       goto __pyx_L8;
     }
 
-    /* "_yaml.pyx":349
+    /* "_ruamel_yaml.pyx":349
  *                 problem = self.parser.problem
  *             else:
  *                 problem = PyUnicode_FromString(self.parser.problem)             # <<<<<<<<<<<<<<
@@ -3412,7 +3412,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__parser_error(struct __pyx_obj_5_yaml_C
     }
     __pyx_L8:;
 
-    /* "_yaml.pyx":350
+    /* "_ruamel_yaml.pyx":350
  *             else:
  *                 problem = PyUnicode_FromString(self.parser.problem)
  *             if self.parser.error == YAML_SCANNER_ERROR:             # <<<<<<<<<<<<<<
@@ -3422,7 +3422,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__parser_error(struct __pyx_obj_5_yaml_C
     __pyx_t_1 = ((__pyx_v_self->parser.error == YAML_SCANNER_ERROR) != 0);
     if (__pyx_t_1) {
 
-      /* "_yaml.pyx":351
+      /* "_ruamel_yaml.pyx":351
  *                 problem = PyUnicode_FromString(self.parser.problem)
  *             if self.parser.error == YAML_SCANNER_ERROR:
  *                 return ScannerError(context, context_mark, problem, problem_mark)             # <<<<<<<<<<<<<<
@@ -3469,7 +3469,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__parser_error(struct __pyx_obj_5_yaml_C
       __pyx_t_3 = 0;
       goto __pyx_L0;
 
-      /* "_yaml.pyx":350
+      /* "_ruamel_yaml.pyx":350
  *             else:
  *                 problem = PyUnicode_FromString(self.parser.problem)
  *             if self.parser.error == YAML_SCANNER_ERROR:             # <<<<<<<<<<<<<<
@@ -3478,7 +3478,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__parser_error(struct __pyx_obj_5_yaml_C
  */
     }
 
-    /* "_yaml.pyx":353
+    /* "_ruamel_yaml.pyx":353
  *                 return ScannerError(context, context_mark, problem, problem_mark)
  *             else:
  *                 return ParserError(context, context_mark, problem, problem_mark)             # <<<<<<<<<<<<<<
@@ -3527,7 +3527,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__parser_error(struct __pyx_obj_5_yaml_C
       goto __pyx_L0;
     }
 
-    /* "_yaml.pyx":326
+    /* "_ruamel_yaml.pyx":326
  *                 return ReaderError(self.stream_name, self.parser.problem_offset,
  *                         self.parser.problem_value, u'?', PyUnicode_FromString(self.parser.problem))
  *         elif self.parser.error == YAML_SCANNER_ERROR    \             # <<<<<<<<<<<<<<
@@ -3538,7 +3538,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__parser_error(struct __pyx_obj_5_yaml_C
     default: break;
   }
 
-  /* "_yaml.pyx":354
+  /* "_ruamel_yaml.pyx":354
  *             else:
  *                 return ParserError(context, context_mark, problem, problem_mark)
  *         if PY_MAJOR_VERSION < 3:             # <<<<<<<<<<<<<<
@@ -3548,7 +3548,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__parser_error(struct __pyx_obj_5_yaml_C
   __pyx_t_1 = ((PY_MAJOR_VERSION < 3) != 0);
   if (__pyx_t_1) {
 
-    /* "_yaml.pyx":355
+    /* "_ruamel_yaml.pyx":355
  *                 return ParserError(context, context_mark, problem, problem_mark)
  *         if PY_MAJOR_VERSION < 3:
  *             raise ValueError("no parser error")             # <<<<<<<<<<<<<<
@@ -3561,7 +3561,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__parser_error(struct __pyx_obj_5_yaml_C
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     {__pyx_filename = __pyx_f[0]; __pyx_lineno = 355; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-    /* "_yaml.pyx":354
+    /* "_ruamel_yaml.pyx":354
  *             else:
  *                 return ParserError(context, context_mark, problem, problem_mark)
  *         if PY_MAJOR_VERSION < 3:             # <<<<<<<<<<<<<<
@@ -3570,7 +3570,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__parser_error(struct __pyx_obj_5_yaml_C
  */
   }
 
-  /* "_yaml.pyx":357
+  /* "_ruamel_yaml.pyx":357
  *             raise ValueError("no parser error")
  *         else:
  *             raise ValueError(u"no parser error")             # <<<<<<<<<<<<<<
@@ -3585,7 +3585,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__parser_error(struct __pyx_obj_5_yaml_C
     {__pyx_filename = __pyx_f[0]; __pyx_lineno = 357; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   }
 
-  /* "_yaml.pyx":316
+  /* "_ruamel_yaml.pyx":316
  *         pass
  * 
  *     cdef object _parser_error(self):             # <<<<<<<<<<<<<<
@@ -3602,7 +3602,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__parser_error(struct __pyx_obj_5_yaml_C
   __Pyx_XDECREF(__pyx_t_6);
   __Pyx_XDECREF(__pyx_t_7);
   __Pyx_XDECREF(__pyx_t_9);
-  __Pyx_AddTraceback("_yaml.CParser._parser_error", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("_ruamel_yaml.CParser._parser_error", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = 0;
   __pyx_L0:;
   __Pyx_XDECREF(__pyx_v_context_mark);
@@ -3614,7 +3614,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__parser_error(struct __pyx_obj_5_yaml_C
   return __pyx_r;
 }
 
-/* "_yaml.pyx":359
+/* "_ruamel_yaml.pyx":359
  *             raise ValueError(u"no parser error")
  * 
  *     def raw_scan(self):             # <<<<<<<<<<<<<<
@@ -3623,19 +3623,19 @@ static PyObject *__pyx_f_5_yaml_7CParser__parser_error(struct __pyx_obj_5_yaml_C
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_5_yaml_7CParser_7raw_scan(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
-static PyObject *__pyx_pw_5_yaml_7CParser_7raw_scan(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
+static PyObject *__pyx_pw_12_ruamel_yaml_7CParser_7raw_scan(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static PyObject *__pyx_pw_12_ruamel_yaml_7CParser_7raw_scan(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("raw_scan (wrapper)", 0);
-  __pyx_r = __pyx_pf_5_yaml_7CParser_6raw_scan(((struct __pyx_obj_5_yaml_CParser *)__pyx_v_self));
+  __pyx_r = __pyx_pf_12_ruamel_yaml_7CParser_6raw_scan(((struct __pyx_obj_12_ruamel_yaml_CParser *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_5_yaml_7CParser_6raw_scan(struct __pyx_obj_5_yaml_CParser *__pyx_v_self) {
+static PyObject *__pyx_pf_12_ruamel_yaml_7CParser_6raw_scan(struct __pyx_obj_12_ruamel_yaml_CParser *__pyx_v_self) {
   yaml_token_t __pyx_v_token;
   int __pyx_v_done;
   int __pyx_v_count;
@@ -3650,7 +3650,7 @@ static PyObject *__pyx_pf_5_yaml_7CParser_6raw_scan(struct __pyx_obj_5_yaml_CPar
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("raw_scan", 0);
 
-  /* "_yaml.pyx":363
+  /* "_ruamel_yaml.pyx":363
  *         cdef int done
  *         cdef int count
  *         count = 0             # <<<<<<<<<<<<<<
@@ -3659,7 +3659,7 @@ static PyObject *__pyx_pf_5_yaml_7CParser_6raw_scan(struct __pyx_obj_5_yaml_CPar
  */
   __pyx_v_count = 0;
 
-  /* "_yaml.pyx":364
+  /* "_ruamel_yaml.pyx":364
  *         cdef int count
  *         count = 0
  *         done = 0             # <<<<<<<<<<<<<<
@@ -3668,7 +3668,7 @@ static PyObject *__pyx_pf_5_yaml_7CParser_6raw_scan(struct __pyx_obj_5_yaml_CPar
  */
   __pyx_v_done = 0;
 
-  /* "_yaml.pyx":365
+  /* "_ruamel_yaml.pyx":365
  *         count = 0
  *         done = 0
  *         while done == 0:             # <<<<<<<<<<<<<<
@@ -3679,7 +3679,7 @@ static PyObject *__pyx_pf_5_yaml_7CParser_6raw_scan(struct __pyx_obj_5_yaml_CPar
     __pyx_t_1 = ((__pyx_v_done == 0) != 0);
     if (!__pyx_t_1) break;
 
-    /* "_yaml.pyx":366
+    /* "_ruamel_yaml.pyx":366
  *         done = 0
  *         while done == 0:
  *             if yaml_parser_scan(&self.parser, &token) == 0:             # <<<<<<<<<<<<<<
@@ -3690,19 +3690,19 @@ static PyObject *__pyx_pf_5_yaml_7CParser_6raw_scan(struct __pyx_obj_5_yaml_CPar
     __pyx_t_1 = ((__pyx_t_2 == 0) != 0);
     if (__pyx_t_1) {
 
-      /* "_yaml.pyx":367
+      /* "_ruamel_yaml.pyx":367
  *         while done == 0:
  *             if yaml_parser_scan(&self.parser, &token) == 0:
  *                 error = self._parser_error()             # <<<<<<<<<<<<<<
  *                 raise error
  *             if token.type == YAML_NO_TOKEN:
  */
-      __pyx_t_3 = ((struct __pyx_vtabstruct_5_yaml_CParser *)__pyx_v_self->__pyx_vtab)->_parser_error(__pyx_v_self); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 367; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_3 = ((struct __pyx_vtabstruct_12_ruamel_yaml_CParser *)__pyx_v_self->__pyx_vtab)->_parser_error(__pyx_v_self); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 367; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_3);
       __pyx_v_error = __pyx_t_3;
       __pyx_t_3 = 0;
 
-      /* "_yaml.pyx":368
+      /* "_ruamel_yaml.pyx":368
  *             if yaml_parser_scan(&self.parser, &token) == 0:
  *                 error = self._parser_error()
  *                 raise error             # <<<<<<<<<<<<<<
@@ -3712,7 +3712,7 @@ static PyObject *__pyx_pf_5_yaml_7CParser_6raw_scan(struct __pyx_obj_5_yaml_CPar
       __Pyx_Raise(__pyx_v_error, 0, 0, 0);
       {__pyx_filename = __pyx_f[0]; __pyx_lineno = 368; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-      /* "_yaml.pyx":366
+      /* "_ruamel_yaml.pyx":366
  *         done = 0
  *         while done == 0:
  *             if yaml_parser_scan(&self.parser, &token) == 0:             # <<<<<<<<<<<<<<
@@ -3721,7 +3721,7 @@ static PyObject *__pyx_pf_5_yaml_7CParser_6raw_scan(struct __pyx_obj_5_yaml_CPar
  */
     }
 
-    /* "_yaml.pyx":369
+    /* "_ruamel_yaml.pyx":369
  *                 error = self._parser_error()
  *                 raise error
  *             if token.type == YAML_NO_TOKEN:             # <<<<<<<<<<<<<<
@@ -3731,7 +3731,7 @@ static PyObject *__pyx_pf_5_yaml_7CParser_6raw_scan(struct __pyx_obj_5_yaml_CPar
     __pyx_t_1 = ((__pyx_v_token.type == YAML_NO_TOKEN) != 0);
     if (__pyx_t_1) {
 
-      /* "_yaml.pyx":370
+      /* "_ruamel_yaml.pyx":370
  *                 raise error
  *             if token.type == YAML_NO_TOKEN:
  *                 done = 1             # <<<<<<<<<<<<<<
@@ -3740,7 +3740,7 @@ static PyObject *__pyx_pf_5_yaml_7CParser_6raw_scan(struct __pyx_obj_5_yaml_CPar
  */
       __pyx_v_done = 1;
 
-      /* "_yaml.pyx":369
+      /* "_ruamel_yaml.pyx":369
  *                 error = self._parser_error()
  *                 raise error
  *             if token.type == YAML_NO_TOKEN:             # <<<<<<<<<<<<<<
@@ -3750,7 +3750,7 @@ static PyObject *__pyx_pf_5_yaml_7CParser_6raw_scan(struct __pyx_obj_5_yaml_CPar
       goto __pyx_L6;
     }
 
-    /* "_yaml.pyx":372
+    /* "_ruamel_yaml.pyx":372
  *                 done = 1
  *             else:
  *                 count = count+1             # <<<<<<<<<<<<<<
@@ -3762,7 +3762,7 @@ static PyObject *__pyx_pf_5_yaml_7CParser_6raw_scan(struct __pyx_obj_5_yaml_CPar
     }
     __pyx_L6:;
 
-    /* "_yaml.pyx":373
+    /* "_ruamel_yaml.pyx":373
  *             else:
  *                 count = count+1
  *             yaml_token_delete(&token)             # <<<<<<<<<<<<<<
@@ -3772,7 +3772,7 @@ static PyObject *__pyx_pf_5_yaml_7CParser_6raw_scan(struct __pyx_obj_5_yaml_CPar
     yaml_token_delete((&__pyx_v_token));
   }
 
-  /* "_yaml.pyx":374
+  /* "_ruamel_yaml.pyx":374
  *                 count = count+1
  *             yaml_token_delete(&token)
  *         return count             # <<<<<<<<<<<<<<
@@ -3786,7 +3786,7 @@ static PyObject *__pyx_pf_5_yaml_7CParser_6raw_scan(struct __pyx_obj_5_yaml_CPar
   __pyx_t_3 = 0;
   goto __pyx_L0;
 
-  /* "_yaml.pyx":359
+  /* "_ruamel_yaml.pyx":359
  *             raise ValueError(u"no parser error")
  * 
  *     def raw_scan(self):             # <<<<<<<<<<<<<<
@@ -3797,7 +3797,7 @@ static PyObject *__pyx_pf_5_yaml_7CParser_6raw_scan(struct __pyx_obj_5_yaml_CPar
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_3);
-  __Pyx_AddTraceback("_yaml.CParser.raw_scan", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("_ruamel_yaml.CParser.raw_scan", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XDECREF(__pyx_v_error);
@@ -3806,7 +3806,7 @@ static PyObject *__pyx_pf_5_yaml_7CParser_6raw_scan(struct __pyx_obj_5_yaml_CPar
   return __pyx_r;
 }
 
-/* "_yaml.pyx":376
+/* "_ruamel_yaml.pyx":376
  *         return count
  * 
  *     cdef object _scan(self):             # <<<<<<<<<<<<<<
@@ -3814,7 +3814,7 @@ static PyObject *__pyx_pf_5_yaml_7CParser_6raw_scan(struct __pyx_obj_5_yaml_CPar
  *         if yaml_parser_scan(&self.parser, &token) == 0:
  */
 
-static PyObject *__pyx_f_5_yaml_7CParser__scan(struct __pyx_obj_5_yaml_CParser *__pyx_v_self) {
+static PyObject *__pyx_f_12_ruamel_yaml_7CParser__scan(struct __pyx_obj_12_ruamel_yaml_CParser *__pyx_v_self) {
   yaml_token_t __pyx_v_token;
   PyObject *__pyx_v_error = NULL;
   PyObject *__pyx_v_token_object = NULL;
@@ -3828,7 +3828,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__scan(struct __pyx_obj_5_yaml_CParser *
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("_scan", 0);
 
-  /* "_yaml.pyx":378
+  /* "_ruamel_yaml.pyx":378
  *     cdef object _scan(self):
  *         cdef yaml_token_t token
  *         if yaml_parser_scan(&self.parser, &token) == 0:             # <<<<<<<<<<<<<<
@@ -3839,19 +3839,19 @@ static PyObject *__pyx_f_5_yaml_7CParser__scan(struct __pyx_obj_5_yaml_CParser *
   __pyx_t_2 = ((__pyx_t_1 == 0) != 0);
   if (__pyx_t_2) {
 
-    /* "_yaml.pyx":379
+    /* "_ruamel_yaml.pyx":379
  *         cdef yaml_token_t token
  *         if yaml_parser_scan(&self.parser, &token) == 0:
  *             error = self._parser_error()             # <<<<<<<<<<<<<<
  *             raise error
  *         token_object = self._token_to_object(&token)
  */
-    __pyx_t_3 = ((struct __pyx_vtabstruct_5_yaml_CParser *)__pyx_v_self->__pyx_vtab)->_parser_error(__pyx_v_self); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 379; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_3 = ((struct __pyx_vtabstruct_12_ruamel_yaml_CParser *)__pyx_v_self->__pyx_vtab)->_parser_error(__pyx_v_self); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 379; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_3);
     __pyx_v_error = __pyx_t_3;
     __pyx_t_3 = 0;
 
-    /* "_yaml.pyx":380
+    /* "_ruamel_yaml.pyx":380
  *         if yaml_parser_scan(&self.parser, &token) == 0:
  *             error = self._parser_error()
  *             raise error             # <<<<<<<<<<<<<<
@@ -3861,7 +3861,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__scan(struct __pyx_obj_5_yaml_CParser *
     __Pyx_Raise(__pyx_v_error, 0, 0, 0);
     {__pyx_filename = __pyx_f[0]; __pyx_lineno = 380; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-    /* "_yaml.pyx":378
+    /* "_ruamel_yaml.pyx":378
  *     cdef object _scan(self):
  *         cdef yaml_token_t token
  *         if yaml_parser_scan(&self.parser, &token) == 0:             # <<<<<<<<<<<<<<
@@ -3870,19 +3870,19 @@ static PyObject *__pyx_f_5_yaml_7CParser__scan(struct __pyx_obj_5_yaml_CParser *
  */
   }
 
-  /* "_yaml.pyx":381
+  /* "_ruamel_yaml.pyx":381
  *             error = self._parser_error()
  *             raise error
  *         token_object = self._token_to_object(&token)             # <<<<<<<<<<<<<<
  *         yaml_token_delete(&token)
  *         return token_object
  */
-  __pyx_t_3 = ((struct __pyx_vtabstruct_5_yaml_CParser *)__pyx_v_self->__pyx_vtab)->_token_to_object(__pyx_v_self, (&__pyx_v_token)); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 381; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_3 = ((struct __pyx_vtabstruct_12_ruamel_yaml_CParser *)__pyx_v_self->__pyx_vtab)->_token_to_object(__pyx_v_self, (&__pyx_v_token)); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 381; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_3);
   __pyx_v_token_object = __pyx_t_3;
   __pyx_t_3 = 0;
 
-  /* "_yaml.pyx":382
+  /* "_ruamel_yaml.pyx":382
  *             raise error
  *         token_object = self._token_to_object(&token)
  *         yaml_token_delete(&token)             # <<<<<<<<<<<<<<
@@ -3891,7 +3891,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__scan(struct __pyx_obj_5_yaml_CParser *
  */
   yaml_token_delete((&__pyx_v_token));
 
-  /* "_yaml.pyx":383
+  /* "_ruamel_yaml.pyx":383
  *         token_object = self._token_to_object(&token)
  *         yaml_token_delete(&token)
  *         return token_object             # <<<<<<<<<<<<<<
@@ -3903,7 +3903,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__scan(struct __pyx_obj_5_yaml_CParser *
   __pyx_r = __pyx_v_token_object;
   goto __pyx_L0;
 
-  /* "_yaml.pyx":376
+  /* "_ruamel_yaml.pyx":376
  *         return count
  * 
  *     cdef object _scan(self):             # <<<<<<<<<<<<<<
@@ -3914,7 +3914,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__scan(struct __pyx_obj_5_yaml_CParser *
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_3);
-  __Pyx_AddTraceback("_yaml.CParser._scan", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("_ruamel_yaml.CParser._scan", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = 0;
   __pyx_L0:;
   __Pyx_XDECREF(__pyx_v_error);
@@ -3924,7 +3924,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__scan(struct __pyx_obj_5_yaml_CParser *
   return __pyx_r;
 }
 
-/* "_yaml.pyx":385
+/* "_ruamel_yaml.pyx":385
  *         return token_object
  * 
  *     cdef object _token_to_object(self, yaml_token_t *token):             # <<<<<<<<<<<<<<
@@ -3932,9 +3932,9 @@ static PyObject *__pyx_f_5_yaml_7CParser__scan(struct __pyx_obj_5_yaml_CParser *
  *                 token.start_mark.index,
  */
 
-static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yaml_CParser *__pyx_v_self, yaml_token_t *__pyx_v_token) {
-  struct __pyx_obj_5_yaml_Mark *__pyx_v_start_mark = NULL;
-  struct __pyx_obj_5_yaml_Mark *__pyx_v_end_mark = NULL;
+static PyObject *__pyx_f_12_ruamel_yaml_7CParser__token_to_object(struct __pyx_obj_12_ruamel_yaml_CParser *__pyx_v_self, yaml_token_t *__pyx_v_token) {
+  struct __pyx_obj_12_ruamel_yaml_Mark *__pyx_v_start_mark = NULL;
+  struct __pyx_obj_12_ruamel_yaml_Mark *__pyx_v_end_mark = NULL;
   PyObject *__pyx_v_encoding = NULL;
   PyObject *__pyx_v_handle = NULL;
   PyObject *__pyx_v_prefix = NULL;
@@ -3957,7 +3957,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("_token_to_object", 0);
 
-  /* "_yaml.pyx":387
+  /* "_ruamel_yaml.pyx":387
  *     cdef object _token_to_object(self, yaml_token_t *token):
  *         start_mark = Mark(self.stream_name,
  *                 token.start_mark.index,             # <<<<<<<<<<<<<<
@@ -3967,7 +3967,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
   __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_token->start_mark.index); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 387; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
 
-  /* "_yaml.pyx":388
+  /* "_ruamel_yaml.pyx":388
  *         start_mark = Mark(self.stream_name,
  *                 token.start_mark.index,
  *                 token.start_mark.line,             # <<<<<<<<<<<<<<
@@ -3977,7 +3977,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
   __pyx_t_2 = __Pyx_PyInt_From_int(__pyx_v_token->start_mark.line); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 388; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
 
-  /* "_yaml.pyx":389
+  /* "_ruamel_yaml.pyx":389
  *                 token.start_mark.index,
  *                 token.start_mark.line,
  *                 token.start_mark.column,             # <<<<<<<<<<<<<<
@@ -3987,7 +3987,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
   __pyx_t_3 = __Pyx_PyInt_From_int(__pyx_v_token->start_mark.column); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 389; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_3);
 
-  /* "_yaml.pyx":386
+  /* "_ruamel_yaml.pyx":386
  * 
  *     cdef object _token_to_object(self, yaml_token_t *token):
  *         start_mark = Mark(self.stream_name,             # <<<<<<<<<<<<<<
@@ -4014,13 +4014,13 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
   __pyx_t_1 = 0;
   __pyx_t_2 = 0;
   __pyx_t_3 = 0;
-  __pyx_t_3 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_5_yaml_Mark), __pyx_t_4, NULL); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 386; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_3 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_12_ruamel_yaml_Mark), __pyx_t_4, NULL); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 386; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __pyx_v_start_mark = ((struct __pyx_obj_5_yaml_Mark *)__pyx_t_3);
+  __pyx_v_start_mark = ((struct __pyx_obj_12_ruamel_yaml_Mark *)__pyx_t_3);
   __pyx_t_3 = 0;
 
-  /* "_yaml.pyx":392
+  /* "_ruamel_yaml.pyx":392
  *                 None, None)
  *         end_mark = Mark(self.stream_name,
  *                 token.end_mark.index,             # <<<<<<<<<<<<<<
@@ -4030,7 +4030,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
   __pyx_t_3 = __Pyx_PyInt_From_int(__pyx_v_token->end_mark.index); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 392; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_3);
 
-  /* "_yaml.pyx":393
+  /* "_ruamel_yaml.pyx":393
  *         end_mark = Mark(self.stream_name,
  *                 token.end_mark.index,
  *                 token.end_mark.line,             # <<<<<<<<<<<<<<
@@ -4040,7 +4040,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
   __pyx_t_4 = __Pyx_PyInt_From_int(__pyx_v_token->end_mark.line); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 393; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_4);
 
-  /* "_yaml.pyx":394
+  /* "_ruamel_yaml.pyx":394
  *                 token.end_mark.index,
  *                 token.end_mark.line,
  *                 token.end_mark.column,             # <<<<<<<<<<<<<<
@@ -4050,7 +4050,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
   __pyx_t_2 = __Pyx_PyInt_From_int(__pyx_v_token->end_mark.column); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 394; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
 
-  /* "_yaml.pyx":391
+  /* "_ruamel_yaml.pyx":391
  *                 token.start_mark.column,
  *                 None, None)
  *         end_mark = Mark(self.stream_name,             # <<<<<<<<<<<<<<
@@ -4077,13 +4077,13 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
   __pyx_t_3 = 0;
   __pyx_t_4 = 0;
   __pyx_t_2 = 0;
-  __pyx_t_2 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_5_yaml_Mark), __pyx_t_1, NULL); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 391; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_12_ruamel_yaml_Mark), __pyx_t_1, NULL); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 391; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_v_end_mark = ((struct __pyx_obj_5_yaml_Mark *)__pyx_t_2);
+  __pyx_v_end_mark = ((struct __pyx_obj_12_ruamel_yaml_Mark *)__pyx_t_2);
   __pyx_t_2 = 0;
 
-  /* "_yaml.pyx":396
+  /* "_ruamel_yaml.pyx":396
  *                 token.end_mark.column,
  *                 None, None)
  *         if token.type == YAML_NO_TOKEN:             # <<<<<<<<<<<<<<
@@ -4093,7 +4093,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
   switch (__pyx_v_token->type) {
     case YAML_NO_TOKEN:
 
-    /* "_yaml.pyx":397
+    /* "_ruamel_yaml.pyx":397
  *                 None, None)
  *         if token.type == YAML_NO_TOKEN:
  *             return None             # <<<<<<<<<<<<<<
@@ -4105,7 +4105,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
     __pyx_r = Py_None;
     goto __pyx_L0;
 
-    /* "_yaml.pyx":396
+    /* "_ruamel_yaml.pyx":396
  *                 token.end_mark.column,
  *                 None, None)
  *         if token.type == YAML_NO_TOKEN:             # <<<<<<<<<<<<<<
@@ -4114,7 +4114,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
  */
     break;
 
-    /* "_yaml.pyx":398
+    /* "_ruamel_yaml.pyx":398
  *         if token.type == YAML_NO_TOKEN:
  *             return None
  *         elif token.type == YAML_STREAM_START_TOKEN:             # <<<<<<<<<<<<<<
@@ -4123,7 +4123,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
  */
     case YAML_STREAM_START_TOKEN:
 
-    /* "_yaml.pyx":399
+    /* "_ruamel_yaml.pyx":399
  *             return None
  *         elif token.type == YAML_STREAM_START_TOKEN:
  *             encoding = None             # <<<<<<<<<<<<<<
@@ -4133,7 +4133,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
     __Pyx_INCREF(Py_None);
     __pyx_v_encoding = Py_None;
 
-    /* "_yaml.pyx":400
+    /* "_ruamel_yaml.pyx":400
  *         elif token.type == YAML_STREAM_START_TOKEN:
  *             encoding = None
  *             if token.data.stream_start.encoding == YAML_UTF8_ENCODING:             # <<<<<<<<<<<<<<
@@ -4143,7 +4143,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
     __pyx_t_5 = ((__pyx_v_token->data.stream_start.encoding == YAML_UTF8_ENCODING) != 0);
     if (__pyx_t_5) {
 
-      /* "_yaml.pyx":401
+      /* "_ruamel_yaml.pyx":401
  *             encoding = None
  *             if token.data.stream_start.encoding == YAML_UTF8_ENCODING:
  *                 if self.unicode_source == 0:             # <<<<<<<<<<<<<<
@@ -4153,7 +4153,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
       __pyx_t_5 = ((__pyx_v_self->unicode_source == 0) != 0);
       if (__pyx_t_5) {
 
-        /* "_yaml.pyx":402
+        /* "_ruamel_yaml.pyx":402
  *             if token.data.stream_start.encoding == YAML_UTF8_ENCODING:
  *                 if self.unicode_source == 0:
  *                     encoding = u"utf-8"             # <<<<<<<<<<<<<<
@@ -4163,7 +4163,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
         __Pyx_INCREF(__pyx_kp_u_utf_8);
         __Pyx_DECREF_SET(__pyx_v_encoding, __pyx_kp_u_utf_8);
 
-        /* "_yaml.pyx":401
+        /* "_ruamel_yaml.pyx":401
  *             encoding = None
  *             if token.data.stream_start.encoding == YAML_UTF8_ENCODING:
  *                 if self.unicode_source == 0:             # <<<<<<<<<<<<<<
@@ -4172,7 +4172,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
  */
       }
 
-      /* "_yaml.pyx":400
+      /* "_ruamel_yaml.pyx":400
  *         elif token.type == YAML_STREAM_START_TOKEN:
  *             encoding = None
  *             if token.data.stream_start.encoding == YAML_UTF8_ENCODING:             # <<<<<<<<<<<<<<
@@ -4182,7 +4182,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
       goto __pyx_L3;
     }
 
-    /* "_yaml.pyx":403
+    /* "_ruamel_yaml.pyx":403
  *                 if self.unicode_source == 0:
  *                     encoding = u"utf-8"
  *             elif token.data.stream_start.encoding == YAML_UTF16LE_ENCODING:             # <<<<<<<<<<<<<<
@@ -4192,7 +4192,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
     __pyx_t_5 = ((__pyx_v_token->data.stream_start.encoding == YAML_UTF16LE_ENCODING) != 0);
     if (__pyx_t_5) {
 
-      /* "_yaml.pyx":404
+      /* "_ruamel_yaml.pyx":404
  *                     encoding = u"utf-8"
  *             elif token.data.stream_start.encoding == YAML_UTF16LE_ENCODING:
  *                 encoding = u"utf-16-le"             # <<<<<<<<<<<<<<
@@ -4202,7 +4202,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
       __Pyx_INCREF(__pyx_kp_u_utf_16_le);
       __Pyx_DECREF_SET(__pyx_v_encoding, __pyx_kp_u_utf_16_le);
 
-      /* "_yaml.pyx":403
+      /* "_ruamel_yaml.pyx":403
  *                 if self.unicode_source == 0:
  *                     encoding = u"utf-8"
  *             elif token.data.stream_start.encoding == YAML_UTF16LE_ENCODING:             # <<<<<<<<<<<<<<
@@ -4212,7 +4212,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
       goto __pyx_L3;
     }
 
-    /* "_yaml.pyx":405
+    /* "_ruamel_yaml.pyx":405
  *             elif token.data.stream_start.encoding == YAML_UTF16LE_ENCODING:
  *                 encoding = u"utf-16-le"
  *             elif token.data.stream_start.encoding == YAML_UTF16BE_ENCODING:             # <<<<<<<<<<<<<<
@@ -4222,7 +4222,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
     __pyx_t_5 = ((__pyx_v_token->data.stream_start.encoding == YAML_UTF16BE_ENCODING) != 0);
     if (__pyx_t_5) {
 
-      /* "_yaml.pyx":406
+      /* "_ruamel_yaml.pyx":406
  *                 encoding = u"utf-16-le"
  *             elif token.data.stream_start.encoding == YAML_UTF16BE_ENCODING:
  *                 encoding = u"utf-16-be"             # <<<<<<<<<<<<<<
@@ -4232,7 +4232,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
       __Pyx_INCREF(__pyx_kp_u_utf_16_be);
       __Pyx_DECREF_SET(__pyx_v_encoding, __pyx_kp_u_utf_16_be);
 
-      /* "_yaml.pyx":405
+      /* "_ruamel_yaml.pyx":405
  *             elif token.data.stream_start.encoding == YAML_UTF16LE_ENCODING:
  *                 encoding = u"utf-16-le"
  *             elif token.data.stream_start.encoding == YAML_UTF16BE_ENCODING:             # <<<<<<<<<<<<<<
@@ -4242,7 +4242,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
     }
     __pyx_L3:;
 
-    /* "_yaml.pyx":407
+    /* "_ruamel_yaml.pyx":407
  *             elif token.data.stream_start.encoding == YAML_UTF16BE_ENCODING:
  *                 encoding = u"utf-16-be"
  *             return StreamStartToken(start_mark, end_mark, encoding)             # <<<<<<<<<<<<<<
@@ -4286,7 +4286,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
     __pyx_t_2 = 0;
     goto __pyx_L0;
 
-    /* "_yaml.pyx":398
+    /* "_ruamel_yaml.pyx":398
  *         if token.type == YAML_NO_TOKEN:
  *             return None
  *         elif token.type == YAML_STREAM_START_TOKEN:             # <<<<<<<<<<<<<<
@@ -4295,7 +4295,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
  */
     break;
 
-    /* "_yaml.pyx":408
+    /* "_ruamel_yaml.pyx":408
  *                 encoding = u"utf-16-be"
  *             return StreamStartToken(start_mark, end_mark, encoding)
  *         elif token.type == YAML_STREAM_END_TOKEN:             # <<<<<<<<<<<<<<
@@ -4304,7 +4304,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
  */
     case YAML_STREAM_END_TOKEN:
 
-    /* "_yaml.pyx":409
+    /* "_ruamel_yaml.pyx":409
  *             return StreamStartToken(start_mark, end_mark, encoding)
  *         elif token.type == YAML_STREAM_END_TOKEN:
  *             return StreamEndToken(start_mark, end_mark)             # <<<<<<<<<<<<<<
@@ -4345,7 +4345,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
     __pyx_t_2 = 0;
     goto __pyx_L0;
 
-    /* "_yaml.pyx":408
+    /* "_ruamel_yaml.pyx":408
  *                 encoding = u"utf-16-be"
  *             return StreamStartToken(start_mark, end_mark, encoding)
  *         elif token.type == YAML_STREAM_END_TOKEN:             # <<<<<<<<<<<<<<
@@ -4354,7 +4354,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
  */
     break;
 
-    /* "_yaml.pyx":410
+    /* "_ruamel_yaml.pyx":410
  *         elif token.type == YAML_STREAM_END_TOKEN:
  *             return StreamEndToken(start_mark, end_mark)
  *         elif token.type == YAML_VERSION_DIRECTIVE_TOKEN:             # <<<<<<<<<<<<<<
@@ -4363,7 +4363,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
  */
     case YAML_VERSION_DIRECTIVE_TOKEN:
 
-    /* "_yaml.pyx":411
+    /* "_ruamel_yaml.pyx":411
  *             return StreamEndToken(start_mark, end_mark)
  *         elif token.type == YAML_VERSION_DIRECTIVE_TOKEN:
  *             return DirectiveToken(u"YAML",             # <<<<<<<<<<<<<<
@@ -4374,7 +4374,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
     __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_DirectiveToken); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 411; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_1);
 
-    /* "_yaml.pyx":412
+    /* "_ruamel_yaml.pyx":412
  *         elif token.type == YAML_VERSION_DIRECTIVE_TOKEN:
  *             return DirectiveToken(u"YAML",
  *                     (token.data.version_directive.major,             # <<<<<<<<<<<<<<
@@ -4384,7 +4384,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
     __pyx_t_4 = __Pyx_PyInt_From_int(__pyx_v_token->data.version_directive.major); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 412; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_4);
 
-    /* "_yaml.pyx":413
+    /* "_ruamel_yaml.pyx":413
  *             return DirectiveToken(u"YAML",
  *                     (token.data.version_directive.major,
  *                         token.data.version_directive.minor),             # <<<<<<<<<<<<<<
@@ -4394,7 +4394,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
     __pyx_t_3 = __Pyx_PyInt_From_int(__pyx_v_token->data.version_directive.minor); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 413; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_3);
 
-    /* "_yaml.pyx":412
+    /* "_ruamel_yaml.pyx":412
  *         elif token.type == YAML_VERSION_DIRECTIVE_TOKEN:
  *             return DirectiveToken(u"YAML",
  *                     (token.data.version_directive.major,             # <<<<<<<<<<<<<<
@@ -4410,7 +4410,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
     __pyx_t_4 = 0;
     __pyx_t_3 = 0;
 
-    /* "_yaml.pyx":414
+    /* "_ruamel_yaml.pyx":414
  *                     (token.data.version_directive.major,
  *                         token.data.version_directive.minor),
  *                     start_mark, end_mark)             # <<<<<<<<<<<<<<
@@ -4454,7 +4454,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
     __pyx_t_2 = 0;
     goto __pyx_L0;
 
-    /* "_yaml.pyx":410
+    /* "_ruamel_yaml.pyx":410
  *         elif token.type == YAML_STREAM_END_TOKEN:
  *             return StreamEndToken(start_mark, end_mark)
  *         elif token.type == YAML_VERSION_DIRECTIVE_TOKEN:             # <<<<<<<<<<<<<<
@@ -4463,7 +4463,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
  */
     break;
 
-    /* "_yaml.pyx":415
+    /* "_ruamel_yaml.pyx":415
  *                         token.data.version_directive.minor),
  *                     start_mark, end_mark)
  *         elif token.type == YAML_TAG_DIRECTIVE_TOKEN:             # <<<<<<<<<<<<<<
@@ -4472,7 +4472,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
  */
     case YAML_TAG_DIRECTIVE_TOKEN:
 
-    /* "_yaml.pyx":416
+    /* "_ruamel_yaml.pyx":416
  *                     start_mark, end_mark)
  *         elif token.type == YAML_TAG_DIRECTIVE_TOKEN:
  *             handle = PyUnicode_FromString(token.data.tag_directive.handle)             # <<<<<<<<<<<<<<
@@ -4484,7 +4484,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
     __pyx_v_handle = __pyx_t_2;
     __pyx_t_2 = 0;
 
-    /* "_yaml.pyx":417
+    /* "_ruamel_yaml.pyx":417
  *         elif token.type == YAML_TAG_DIRECTIVE_TOKEN:
  *             handle = PyUnicode_FromString(token.data.tag_directive.handle)
  *             prefix = PyUnicode_FromString(token.data.tag_directive.prefix)             # <<<<<<<<<<<<<<
@@ -4496,7 +4496,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
     __pyx_v_prefix = __pyx_t_2;
     __pyx_t_2 = 0;
 
-    /* "_yaml.pyx":418
+    /* "_ruamel_yaml.pyx":418
  *             handle = PyUnicode_FromString(token.data.tag_directive.handle)
  *             prefix = PyUnicode_FromString(token.data.tag_directive.prefix)
  *             return DirectiveToken(u"TAG", (handle, prefix),             # <<<<<<<<<<<<<<
@@ -4515,7 +4515,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
     __Pyx_GIVEREF(__pyx_v_prefix);
     PyTuple_SET_ITEM(__pyx_t_4, 1, __pyx_v_prefix);
 
-    /* "_yaml.pyx":419
+    /* "_ruamel_yaml.pyx":419
  *             prefix = PyUnicode_FromString(token.data.tag_directive.prefix)
  *             return DirectiveToken(u"TAG", (handle, prefix),
  *                     start_mark, end_mark)             # <<<<<<<<<<<<<<
@@ -4559,7 +4559,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
     __pyx_t_2 = 0;
     goto __pyx_L0;
 
-    /* "_yaml.pyx":415
+    /* "_ruamel_yaml.pyx":415
  *                         token.data.version_directive.minor),
  *                     start_mark, end_mark)
  *         elif token.type == YAML_TAG_DIRECTIVE_TOKEN:             # <<<<<<<<<<<<<<
@@ -4568,7 +4568,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
  */
     break;
 
-    /* "_yaml.pyx":420
+    /* "_ruamel_yaml.pyx":420
  *             return DirectiveToken(u"TAG", (handle, prefix),
  *                     start_mark, end_mark)
  *         elif token.type == YAML_DOCUMENT_START_TOKEN:             # <<<<<<<<<<<<<<
@@ -4577,7 +4577,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
  */
     case YAML_DOCUMENT_START_TOKEN:
 
-    /* "_yaml.pyx":421
+    /* "_ruamel_yaml.pyx":421
  *                     start_mark, end_mark)
  *         elif token.type == YAML_DOCUMENT_START_TOKEN:
  *             return DocumentStartToken(start_mark, end_mark)             # <<<<<<<<<<<<<<
@@ -4618,7 +4618,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
     __pyx_t_2 = 0;
     goto __pyx_L0;
 
-    /* "_yaml.pyx":420
+    /* "_ruamel_yaml.pyx":420
  *             return DirectiveToken(u"TAG", (handle, prefix),
  *                     start_mark, end_mark)
  *         elif token.type == YAML_DOCUMENT_START_TOKEN:             # <<<<<<<<<<<<<<
@@ -4627,7 +4627,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
  */
     break;
 
-    /* "_yaml.pyx":422
+    /* "_ruamel_yaml.pyx":422
  *         elif token.type == YAML_DOCUMENT_START_TOKEN:
  *             return DocumentStartToken(start_mark, end_mark)
  *         elif token.type == YAML_DOCUMENT_END_TOKEN:             # <<<<<<<<<<<<<<
@@ -4636,7 +4636,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
  */
     case YAML_DOCUMENT_END_TOKEN:
 
-    /* "_yaml.pyx":423
+    /* "_ruamel_yaml.pyx":423
  *             return DocumentStartToken(start_mark, end_mark)
  *         elif token.type == YAML_DOCUMENT_END_TOKEN:
  *             return DocumentEndToken(start_mark, end_mark)             # <<<<<<<<<<<<<<
@@ -4677,7 +4677,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
     __pyx_t_2 = 0;
     goto __pyx_L0;
 
-    /* "_yaml.pyx":422
+    /* "_ruamel_yaml.pyx":422
  *         elif token.type == YAML_DOCUMENT_START_TOKEN:
  *             return DocumentStartToken(start_mark, end_mark)
  *         elif token.type == YAML_DOCUMENT_END_TOKEN:             # <<<<<<<<<<<<<<
@@ -4686,7 +4686,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
  */
     break;
 
-    /* "_yaml.pyx":424
+    /* "_ruamel_yaml.pyx":424
  *         elif token.type == YAML_DOCUMENT_END_TOKEN:
  *             return DocumentEndToken(start_mark, end_mark)
  *         elif token.type == YAML_BLOCK_SEQUENCE_START_TOKEN:             # <<<<<<<<<<<<<<
@@ -4695,7 +4695,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
  */
     case YAML_BLOCK_SEQUENCE_START_TOKEN:
 
-    /* "_yaml.pyx":425
+    /* "_ruamel_yaml.pyx":425
  *             return DocumentEndToken(start_mark, end_mark)
  *         elif token.type == YAML_BLOCK_SEQUENCE_START_TOKEN:
  *             return BlockSequenceStartToken(start_mark, end_mark)             # <<<<<<<<<<<<<<
@@ -4736,7 +4736,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
     __pyx_t_2 = 0;
     goto __pyx_L0;
 
-    /* "_yaml.pyx":424
+    /* "_ruamel_yaml.pyx":424
  *         elif token.type == YAML_DOCUMENT_END_TOKEN:
  *             return DocumentEndToken(start_mark, end_mark)
  *         elif token.type == YAML_BLOCK_SEQUENCE_START_TOKEN:             # <<<<<<<<<<<<<<
@@ -4745,7 +4745,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
  */
     break;
 
-    /* "_yaml.pyx":426
+    /* "_ruamel_yaml.pyx":426
  *         elif token.type == YAML_BLOCK_SEQUENCE_START_TOKEN:
  *             return BlockSequenceStartToken(start_mark, end_mark)
  *         elif token.type == YAML_BLOCK_MAPPING_START_TOKEN:             # <<<<<<<<<<<<<<
@@ -4754,7 +4754,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
  */
     case YAML_BLOCK_MAPPING_START_TOKEN:
 
-    /* "_yaml.pyx":427
+    /* "_ruamel_yaml.pyx":427
  *             return BlockSequenceStartToken(start_mark, end_mark)
  *         elif token.type == YAML_BLOCK_MAPPING_START_TOKEN:
  *             return BlockMappingStartToken(start_mark, end_mark)             # <<<<<<<<<<<<<<
@@ -4795,7 +4795,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
     __pyx_t_2 = 0;
     goto __pyx_L0;
 
-    /* "_yaml.pyx":426
+    /* "_ruamel_yaml.pyx":426
  *         elif token.type == YAML_BLOCK_SEQUENCE_START_TOKEN:
  *             return BlockSequenceStartToken(start_mark, end_mark)
  *         elif token.type == YAML_BLOCK_MAPPING_START_TOKEN:             # <<<<<<<<<<<<<<
@@ -4804,7 +4804,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
  */
     break;
 
-    /* "_yaml.pyx":428
+    /* "_ruamel_yaml.pyx":428
  *         elif token.type == YAML_BLOCK_MAPPING_START_TOKEN:
  *             return BlockMappingStartToken(start_mark, end_mark)
  *         elif token.type == YAML_BLOCK_END_TOKEN:             # <<<<<<<<<<<<<<
@@ -4813,7 +4813,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
  */
     case YAML_BLOCK_END_TOKEN:
 
-    /* "_yaml.pyx":429
+    /* "_ruamel_yaml.pyx":429
  *             return BlockMappingStartToken(start_mark, end_mark)
  *         elif token.type == YAML_BLOCK_END_TOKEN:
  *             return BlockEndToken(start_mark, end_mark)             # <<<<<<<<<<<<<<
@@ -4854,7 +4854,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
     __pyx_t_2 = 0;
     goto __pyx_L0;
 
-    /* "_yaml.pyx":428
+    /* "_ruamel_yaml.pyx":428
  *         elif token.type == YAML_BLOCK_MAPPING_START_TOKEN:
  *             return BlockMappingStartToken(start_mark, end_mark)
  *         elif token.type == YAML_BLOCK_END_TOKEN:             # <<<<<<<<<<<<<<
@@ -4863,7 +4863,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
  */
     break;
 
-    /* "_yaml.pyx":430
+    /* "_ruamel_yaml.pyx":430
  *         elif token.type == YAML_BLOCK_END_TOKEN:
  *             return BlockEndToken(start_mark, end_mark)
  *         elif token.type == YAML_FLOW_SEQUENCE_START_TOKEN:             # <<<<<<<<<<<<<<
@@ -4872,7 +4872,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
  */
     case YAML_FLOW_SEQUENCE_START_TOKEN:
 
-    /* "_yaml.pyx":431
+    /* "_ruamel_yaml.pyx":431
  *             return BlockEndToken(start_mark, end_mark)
  *         elif token.type == YAML_FLOW_SEQUENCE_START_TOKEN:
  *             return FlowSequenceStartToken(start_mark, end_mark)             # <<<<<<<<<<<<<<
@@ -4913,7 +4913,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
     __pyx_t_2 = 0;
     goto __pyx_L0;
 
-    /* "_yaml.pyx":430
+    /* "_ruamel_yaml.pyx":430
  *         elif token.type == YAML_BLOCK_END_TOKEN:
  *             return BlockEndToken(start_mark, end_mark)
  *         elif token.type == YAML_FLOW_SEQUENCE_START_TOKEN:             # <<<<<<<<<<<<<<
@@ -4922,7 +4922,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
  */
     break;
 
-    /* "_yaml.pyx":432
+    /* "_ruamel_yaml.pyx":432
  *         elif token.type == YAML_FLOW_SEQUENCE_START_TOKEN:
  *             return FlowSequenceStartToken(start_mark, end_mark)
  *         elif token.type == YAML_FLOW_SEQUENCE_END_TOKEN:             # <<<<<<<<<<<<<<
@@ -4931,7 +4931,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
  */
     case YAML_FLOW_SEQUENCE_END_TOKEN:
 
-    /* "_yaml.pyx":433
+    /* "_ruamel_yaml.pyx":433
  *             return FlowSequenceStartToken(start_mark, end_mark)
  *         elif token.type == YAML_FLOW_SEQUENCE_END_TOKEN:
  *             return FlowSequenceEndToken(start_mark, end_mark)             # <<<<<<<<<<<<<<
@@ -4972,7 +4972,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
     __pyx_t_2 = 0;
     goto __pyx_L0;
 
-    /* "_yaml.pyx":432
+    /* "_ruamel_yaml.pyx":432
  *         elif token.type == YAML_FLOW_SEQUENCE_START_TOKEN:
  *             return FlowSequenceStartToken(start_mark, end_mark)
  *         elif token.type == YAML_FLOW_SEQUENCE_END_TOKEN:             # <<<<<<<<<<<<<<
@@ -4981,7 +4981,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
  */
     break;
 
-    /* "_yaml.pyx":434
+    /* "_ruamel_yaml.pyx":434
  *         elif token.type == YAML_FLOW_SEQUENCE_END_TOKEN:
  *             return FlowSequenceEndToken(start_mark, end_mark)
  *         elif token.type == YAML_FLOW_MAPPING_START_TOKEN:             # <<<<<<<<<<<<<<
@@ -4990,7 +4990,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
  */
     case YAML_FLOW_MAPPING_START_TOKEN:
 
-    /* "_yaml.pyx":435
+    /* "_ruamel_yaml.pyx":435
  *             return FlowSequenceEndToken(start_mark, end_mark)
  *         elif token.type == YAML_FLOW_MAPPING_START_TOKEN:
  *             return FlowMappingStartToken(start_mark, end_mark)             # <<<<<<<<<<<<<<
@@ -5031,7 +5031,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
     __pyx_t_2 = 0;
     goto __pyx_L0;
 
-    /* "_yaml.pyx":434
+    /* "_ruamel_yaml.pyx":434
  *         elif token.type == YAML_FLOW_SEQUENCE_END_TOKEN:
  *             return FlowSequenceEndToken(start_mark, end_mark)
  *         elif token.type == YAML_FLOW_MAPPING_START_TOKEN:             # <<<<<<<<<<<<<<
@@ -5040,7 +5040,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
  */
     break;
 
-    /* "_yaml.pyx":436
+    /* "_ruamel_yaml.pyx":436
  *         elif token.type == YAML_FLOW_MAPPING_START_TOKEN:
  *             return FlowMappingStartToken(start_mark, end_mark)
  *         elif token.type == YAML_FLOW_MAPPING_END_TOKEN:             # <<<<<<<<<<<<<<
@@ -5049,7 +5049,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
  */
     case YAML_FLOW_MAPPING_END_TOKEN:
 
-    /* "_yaml.pyx":437
+    /* "_ruamel_yaml.pyx":437
  *             return FlowMappingStartToken(start_mark, end_mark)
  *         elif token.type == YAML_FLOW_MAPPING_END_TOKEN:
  *             return FlowMappingEndToken(start_mark, end_mark)             # <<<<<<<<<<<<<<
@@ -5090,7 +5090,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
     __pyx_t_2 = 0;
     goto __pyx_L0;
 
-    /* "_yaml.pyx":436
+    /* "_ruamel_yaml.pyx":436
  *         elif token.type == YAML_FLOW_MAPPING_START_TOKEN:
  *             return FlowMappingStartToken(start_mark, end_mark)
  *         elif token.type == YAML_FLOW_MAPPING_END_TOKEN:             # <<<<<<<<<<<<<<
@@ -5099,7 +5099,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
  */
     break;
 
-    /* "_yaml.pyx":438
+    /* "_ruamel_yaml.pyx":438
  *         elif token.type == YAML_FLOW_MAPPING_END_TOKEN:
  *             return FlowMappingEndToken(start_mark, end_mark)
  *         elif token.type == YAML_BLOCK_ENTRY_TOKEN:             # <<<<<<<<<<<<<<
@@ -5108,7 +5108,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
  */
     case YAML_BLOCK_ENTRY_TOKEN:
 
-    /* "_yaml.pyx":439
+    /* "_ruamel_yaml.pyx":439
  *             return FlowMappingEndToken(start_mark, end_mark)
  *         elif token.type == YAML_BLOCK_ENTRY_TOKEN:
  *             return BlockEntryToken(start_mark, end_mark)             # <<<<<<<<<<<<<<
@@ -5149,7 +5149,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
     __pyx_t_2 = 0;
     goto __pyx_L0;
 
-    /* "_yaml.pyx":438
+    /* "_ruamel_yaml.pyx":438
  *         elif token.type == YAML_FLOW_MAPPING_END_TOKEN:
  *             return FlowMappingEndToken(start_mark, end_mark)
  *         elif token.type == YAML_BLOCK_ENTRY_TOKEN:             # <<<<<<<<<<<<<<
@@ -5158,7 +5158,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
  */
     break;
 
-    /* "_yaml.pyx":440
+    /* "_ruamel_yaml.pyx":440
  *         elif token.type == YAML_BLOCK_ENTRY_TOKEN:
  *             return BlockEntryToken(start_mark, end_mark)
  *         elif token.type == YAML_FLOW_ENTRY_TOKEN:             # <<<<<<<<<<<<<<
@@ -5167,7 +5167,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
  */
     case YAML_FLOW_ENTRY_TOKEN:
 
-    /* "_yaml.pyx":441
+    /* "_ruamel_yaml.pyx":441
  *             return BlockEntryToken(start_mark, end_mark)
  *         elif token.type == YAML_FLOW_ENTRY_TOKEN:
  *             return FlowEntryToken(start_mark, end_mark)             # <<<<<<<<<<<<<<
@@ -5208,7 +5208,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
     __pyx_t_2 = 0;
     goto __pyx_L0;
 
-    /* "_yaml.pyx":440
+    /* "_ruamel_yaml.pyx":440
  *         elif token.type == YAML_BLOCK_ENTRY_TOKEN:
  *             return BlockEntryToken(start_mark, end_mark)
  *         elif token.type == YAML_FLOW_ENTRY_TOKEN:             # <<<<<<<<<<<<<<
@@ -5217,7 +5217,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
  */
     break;
 
-    /* "_yaml.pyx":442
+    /* "_ruamel_yaml.pyx":442
  *         elif token.type == YAML_FLOW_ENTRY_TOKEN:
  *             return FlowEntryToken(start_mark, end_mark)
  *         elif token.type == YAML_KEY_TOKEN:             # <<<<<<<<<<<<<<
@@ -5226,7 +5226,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
  */
     case YAML_KEY_TOKEN:
 
-    /* "_yaml.pyx":443
+    /* "_ruamel_yaml.pyx":443
  *             return FlowEntryToken(start_mark, end_mark)
  *         elif token.type == YAML_KEY_TOKEN:
  *             return KeyToken(start_mark, end_mark)             # <<<<<<<<<<<<<<
@@ -5267,7 +5267,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
     __pyx_t_2 = 0;
     goto __pyx_L0;
 
-    /* "_yaml.pyx":442
+    /* "_ruamel_yaml.pyx":442
  *         elif token.type == YAML_FLOW_ENTRY_TOKEN:
  *             return FlowEntryToken(start_mark, end_mark)
  *         elif token.type == YAML_KEY_TOKEN:             # <<<<<<<<<<<<<<
@@ -5276,7 +5276,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
  */
     break;
 
-    /* "_yaml.pyx":444
+    /* "_ruamel_yaml.pyx":444
  *         elif token.type == YAML_KEY_TOKEN:
  *             return KeyToken(start_mark, end_mark)
  *         elif token.type == YAML_VALUE_TOKEN:             # <<<<<<<<<<<<<<
@@ -5285,7 +5285,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
  */
     case YAML_VALUE_TOKEN:
 
-    /* "_yaml.pyx":445
+    /* "_ruamel_yaml.pyx":445
  *             return KeyToken(start_mark, end_mark)
  *         elif token.type == YAML_VALUE_TOKEN:
  *             return ValueToken(start_mark, end_mark)             # <<<<<<<<<<<<<<
@@ -5326,7 +5326,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
     __pyx_t_2 = 0;
     goto __pyx_L0;
 
-    /* "_yaml.pyx":444
+    /* "_ruamel_yaml.pyx":444
  *         elif token.type == YAML_KEY_TOKEN:
  *             return KeyToken(start_mark, end_mark)
  *         elif token.type == YAML_VALUE_TOKEN:             # <<<<<<<<<<<<<<
@@ -5335,7 +5335,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
  */
     break;
 
-    /* "_yaml.pyx":446
+    /* "_ruamel_yaml.pyx":446
  *         elif token.type == YAML_VALUE_TOKEN:
  *             return ValueToken(start_mark, end_mark)
  *         elif token.type == YAML_ALIAS_TOKEN:             # <<<<<<<<<<<<<<
@@ -5344,7 +5344,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
  */
     case YAML_ALIAS_TOKEN:
 
-    /* "_yaml.pyx":447
+    /* "_ruamel_yaml.pyx":447
  *             return ValueToken(start_mark, end_mark)
  *         elif token.type == YAML_ALIAS_TOKEN:
  *             value = PyUnicode_FromString(token.data.alias.value)             # <<<<<<<<<<<<<<
@@ -5356,7 +5356,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
     __pyx_v_value = __pyx_t_2;
     __pyx_t_2 = 0;
 
-    /* "_yaml.pyx":448
+    /* "_ruamel_yaml.pyx":448
  *         elif token.type == YAML_ALIAS_TOKEN:
  *             value = PyUnicode_FromString(token.data.alias.value)
  *             return AliasToken(value, start_mark, end_mark)             # <<<<<<<<<<<<<<
@@ -5400,7 +5400,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
     __pyx_t_2 = 0;
     goto __pyx_L0;
 
-    /* "_yaml.pyx":446
+    /* "_ruamel_yaml.pyx":446
  *         elif token.type == YAML_VALUE_TOKEN:
  *             return ValueToken(start_mark, end_mark)
  *         elif token.type == YAML_ALIAS_TOKEN:             # <<<<<<<<<<<<<<
@@ -5409,7 +5409,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
  */
     break;
 
-    /* "_yaml.pyx":449
+    /* "_ruamel_yaml.pyx":449
  *             value = PyUnicode_FromString(token.data.alias.value)
  *             return AliasToken(value, start_mark, end_mark)
  *         elif token.type == YAML_ANCHOR_TOKEN:             # <<<<<<<<<<<<<<
@@ -5418,7 +5418,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
  */
     case YAML_ANCHOR_TOKEN:
 
-    /* "_yaml.pyx":450
+    /* "_ruamel_yaml.pyx":450
  *             return AliasToken(value, start_mark, end_mark)
  *         elif token.type == YAML_ANCHOR_TOKEN:
  *             value = PyUnicode_FromString(token.data.anchor.value)             # <<<<<<<<<<<<<<
@@ -5430,7 +5430,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
     __pyx_v_value = __pyx_t_2;
     __pyx_t_2 = 0;
 
-    /* "_yaml.pyx":451
+    /* "_ruamel_yaml.pyx":451
  *         elif token.type == YAML_ANCHOR_TOKEN:
  *             value = PyUnicode_FromString(token.data.anchor.value)
  *             return AnchorToken(value, start_mark, end_mark)             # <<<<<<<<<<<<<<
@@ -5474,7 +5474,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
     __pyx_t_2 = 0;
     goto __pyx_L0;
 
-    /* "_yaml.pyx":449
+    /* "_ruamel_yaml.pyx":449
  *             value = PyUnicode_FromString(token.data.alias.value)
  *             return AliasToken(value, start_mark, end_mark)
  *         elif token.type == YAML_ANCHOR_TOKEN:             # <<<<<<<<<<<<<<
@@ -5483,7 +5483,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
  */
     break;
 
-    /* "_yaml.pyx":452
+    /* "_ruamel_yaml.pyx":452
  *             value = PyUnicode_FromString(token.data.anchor.value)
  *             return AnchorToken(value, start_mark, end_mark)
  *         elif token.type == YAML_TAG_TOKEN:             # <<<<<<<<<<<<<<
@@ -5492,7 +5492,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
  */
     case YAML_TAG_TOKEN:
 
-    /* "_yaml.pyx":453
+    /* "_ruamel_yaml.pyx":453
  *             return AnchorToken(value, start_mark, end_mark)
  *         elif token.type == YAML_TAG_TOKEN:
  *             handle = PyUnicode_FromString(token.data.tag.handle)             # <<<<<<<<<<<<<<
@@ -5504,7 +5504,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
     __pyx_v_handle = __pyx_t_2;
     __pyx_t_2 = 0;
 
-    /* "_yaml.pyx":454
+    /* "_ruamel_yaml.pyx":454
  *         elif token.type == YAML_TAG_TOKEN:
  *             handle = PyUnicode_FromString(token.data.tag.handle)
  *             suffix = PyUnicode_FromString(token.data.tag.suffix)             # <<<<<<<<<<<<<<
@@ -5516,7 +5516,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
     __pyx_v_suffix = __pyx_t_2;
     __pyx_t_2 = 0;
 
-    /* "_yaml.pyx":455
+    /* "_ruamel_yaml.pyx":455
  *             handle = PyUnicode_FromString(token.data.tag.handle)
  *             suffix = PyUnicode_FromString(token.data.tag.suffix)
  *             if not handle:             # <<<<<<<<<<<<<<
@@ -5527,7 +5527,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
     __pyx_t_8 = ((!__pyx_t_5) != 0);
     if (__pyx_t_8) {
 
-      /* "_yaml.pyx":456
+      /* "_ruamel_yaml.pyx":456
  *             suffix = PyUnicode_FromString(token.data.tag.suffix)
  *             if not handle:
  *                 handle = None             # <<<<<<<<<<<<<<
@@ -5537,7 +5537,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
       __Pyx_INCREF(Py_None);
       __Pyx_DECREF_SET(__pyx_v_handle, Py_None);
 
-      /* "_yaml.pyx":455
+      /* "_ruamel_yaml.pyx":455
  *             handle = PyUnicode_FromString(token.data.tag.handle)
  *             suffix = PyUnicode_FromString(token.data.tag.suffix)
  *             if not handle:             # <<<<<<<<<<<<<<
@@ -5546,7 +5546,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
  */
     }
 
-    /* "_yaml.pyx":457
+    /* "_ruamel_yaml.pyx":457
  *             if not handle:
  *                 handle = None
  *             return TagToken((handle, suffix), start_mark, end_mark)             # <<<<<<<<<<<<<<
@@ -5598,7 +5598,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
     __pyx_t_2 = 0;
     goto __pyx_L0;
 
-    /* "_yaml.pyx":452
+    /* "_ruamel_yaml.pyx":452
  *             value = PyUnicode_FromString(token.data.anchor.value)
  *             return AnchorToken(value, start_mark, end_mark)
  *         elif token.type == YAML_TAG_TOKEN:             # <<<<<<<<<<<<<<
@@ -5607,7 +5607,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
  */
     break;
 
-    /* "_yaml.pyx":458
+    /* "_ruamel_yaml.pyx":458
  *                 handle = None
  *             return TagToken((handle, suffix), start_mark, end_mark)
  *         elif token.type == YAML_SCALAR_TOKEN:             # <<<<<<<<<<<<<<
@@ -5616,7 +5616,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
  */
     case YAML_SCALAR_TOKEN:
 
-    /* "_yaml.pyx":459
+    /* "_ruamel_yaml.pyx":459
  *             return TagToken((handle, suffix), start_mark, end_mark)
  *         elif token.type == YAML_SCALAR_TOKEN:
  *             value = PyUnicode_DecodeUTF8(token.data.scalar.value,             # <<<<<<<<<<<<<<
@@ -5628,7 +5628,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
     __pyx_v_value = __pyx_t_2;
     __pyx_t_2 = 0;
 
-    /* "_yaml.pyx":461
+    /* "_ruamel_yaml.pyx":461
  *             value = PyUnicode_DecodeUTF8(token.data.scalar.value,
  *                     token.data.scalar.length, 'strict')
  *             plain = False             # <<<<<<<<<<<<<<
@@ -5637,7 +5637,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
  */
     __pyx_v_plain = 0;
 
-    /* "_yaml.pyx":462
+    /* "_ruamel_yaml.pyx":462
  *                     token.data.scalar.length, 'strict')
  *             plain = False
  *             style = None             # <<<<<<<<<<<<<<
@@ -5647,7 +5647,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
     __Pyx_INCREF(Py_None);
     __pyx_v_style = Py_None;
 
-    /* "_yaml.pyx":463
+    /* "_ruamel_yaml.pyx":463
  *             plain = False
  *             style = None
  *             if token.data.scalar.style == YAML_PLAIN_SCALAR_STYLE:             # <<<<<<<<<<<<<<
@@ -5657,7 +5657,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
     __pyx_t_8 = ((__pyx_v_token->data.scalar.style == YAML_PLAIN_SCALAR_STYLE) != 0);
     if (__pyx_t_8) {
 
-      /* "_yaml.pyx":464
+      /* "_ruamel_yaml.pyx":464
  *             style = None
  *             if token.data.scalar.style == YAML_PLAIN_SCALAR_STYLE:
  *                 plain = True             # <<<<<<<<<<<<<<
@@ -5666,7 +5666,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
  */
       __pyx_v_plain = 1;
 
-      /* "_yaml.pyx":465
+      /* "_ruamel_yaml.pyx":465
  *             if token.data.scalar.style == YAML_PLAIN_SCALAR_STYLE:
  *                 plain = True
  *                 style = u''             # <<<<<<<<<<<<<<
@@ -5676,7 +5676,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
       __Pyx_INCREF(__pyx_kp_u__6);
       __Pyx_DECREF_SET(__pyx_v_style, __pyx_kp_u__6);
 
-      /* "_yaml.pyx":463
+      /* "_ruamel_yaml.pyx":463
  *             plain = False
  *             style = None
  *             if token.data.scalar.style == YAML_PLAIN_SCALAR_STYLE:             # <<<<<<<<<<<<<<
@@ -5686,7 +5686,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
       goto __pyx_L6;
     }
 
-    /* "_yaml.pyx":466
+    /* "_ruamel_yaml.pyx":466
  *                 plain = True
  *                 style = u''
  *             elif token.data.scalar.style == YAML_SINGLE_QUOTED_SCALAR_STYLE:             # <<<<<<<<<<<<<<
@@ -5696,7 +5696,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
     __pyx_t_8 = ((__pyx_v_token->data.scalar.style == YAML_SINGLE_QUOTED_SCALAR_STYLE) != 0);
     if (__pyx_t_8) {
 
-      /* "_yaml.pyx":467
+      /* "_ruamel_yaml.pyx":467
  *                 style = u''
  *             elif token.data.scalar.style == YAML_SINGLE_QUOTED_SCALAR_STYLE:
  *                 style = u'\''             # <<<<<<<<<<<<<<
@@ -5706,7 +5706,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
       __Pyx_INCREF(__pyx_kp_u__7);
       __Pyx_DECREF_SET(__pyx_v_style, __pyx_kp_u__7);
 
-      /* "_yaml.pyx":466
+      /* "_ruamel_yaml.pyx":466
  *                 plain = True
  *                 style = u''
  *             elif token.data.scalar.style == YAML_SINGLE_QUOTED_SCALAR_STYLE:             # <<<<<<<<<<<<<<
@@ -5716,7 +5716,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
       goto __pyx_L6;
     }
 
-    /* "_yaml.pyx":468
+    /* "_ruamel_yaml.pyx":468
  *             elif token.data.scalar.style == YAML_SINGLE_QUOTED_SCALAR_STYLE:
  *                 style = u'\''
  *             elif token.data.scalar.style == YAML_DOUBLE_QUOTED_SCALAR_STYLE:             # <<<<<<<<<<<<<<
@@ -5726,7 +5726,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
     __pyx_t_8 = ((__pyx_v_token->data.scalar.style == YAML_DOUBLE_QUOTED_SCALAR_STYLE) != 0);
     if (__pyx_t_8) {
 
-      /* "_yaml.pyx":469
+      /* "_ruamel_yaml.pyx":469
  *                 style = u'\''
  *             elif token.data.scalar.style == YAML_DOUBLE_QUOTED_SCALAR_STYLE:
  *                 style = u'"'             # <<<<<<<<<<<<<<
@@ -5736,7 +5736,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
       __Pyx_INCREF(__pyx_kp_u__8);
       __Pyx_DECREF_SET(__pyx_v_style, __pyx_kp_u__8);
 
-      /* "_yaml.pyx":468
+      /* "_ruamel_yaml.pyx":468
  *             elif token.data.scalar.style == YAML_SINGLE_QUOTED_SCALAR_STYLE:
  *                 style = u'\''
  *             elif token.data.scalar.style == YAML_DOUBLE_QUOTED_SCALAR_STYLE:             # <<<<<<<<<<<<<<
@@ -5746,7 +5746,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
       goto __pyx_L6;
     }
 
-    /* "_yaml.pyx":470
+    /* "_ruamel_yaml.pyx":470
  *             elif token.data.scalar.style == YAML_DOUBLE_QUOTED_SCALAR_STYLE:
  *                 style = u'"'
  *             elif token.data.scalar.style == YAML_LITERAL_SCALAR_STYLE:             # <<<<<<<<<<<<<<
@@ -5756,7 +5756,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
     __pyx_t_8 = ((__pyx_v_token->data.scalar.style == YAML_LITERAL_SCALAR_STYLE) != 0);
     if (__pyx_t_8) {
 
-      /* "_yaml.pyx":471
+      /* "_ruamel_yaml.pyx":471
  *                 style = u'"'
  *             elif token.data.scalar.style == YAML_LITERAL_SCALAR_STYLE:
  *                 style = u'|'             # <<<<<<<<<<<<<<
@@ -5766,7 +5766,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
       __Pyx_INCREF(__pyx_kp_u__9);
       __Pyx_DECREF_SET(__pyx_v_style, __pyx_kp_u__9);
 
-      /* "_yaml.pyx":470
+      /* "_ruamel_yaml.pyx":470
  *             elif token.data.scalar.style == YAML_DOUBLE_QUOTED_SCALAR_STYLE:
  *                 style = u'"'
  *             elif token.data.scalar.style == YAML_LITERAL_SCALAR_STYLE:             # <<<<<<<<<<<<<<
@@ -5776,7 +5776,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
       goto __pyx_L6;
     }
 
-    /* "_yaml.pyx":472
+    /* "_ruamel_yaml.pyx":472
  *             elif token.data.scalar.style == YAML_LITERAL_SCALAR_STYLE:
  *                 style = u'|'
  *             elif token.data.scalar.style == YAML_FOLDED_SCALAR_STYLE:             # <<<<<<<<<<<<<<
@@ -5786,7 +5786,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
     __pyx_t_8 = ((__pyx_v_token->data.scalar.style == YAML_FOLDED_SCALAR_STYLE) != 0);
     if (__pyx_t_8) {
 
-      /* "_yaml.pyx":473
+      /* "_ruamel_yaml.pyx":473
  *                 style = u'|'
  *             elif token.data.scalar.style == YAML_FOLDED_SCALAR_STYLE:
  *                 style = u'>'             # <<<<<<<<<<<<<<
@@ -5796,7 +5796,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
       __Pyx_INCREF(__pyx_kp_u__10);
       __Pyx_DECREF_SET(__pyx_v_style, __pyx_kp_u__10);
 
-      /* "_yaml.pyx":472
+      /* "_ruamel_yaml.pyx":472
  *             elif token.data.scalar.style == YAML_LITERAL_SCALAR_STYLE:
  *                 style = u'|'
  *             elif token.data.scalar.style == YAML_FOLDED_SCALAR_STYLE:             # <<<<<<<<<<<<<<
@@ -5806,7 +5806,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
     }
     __pyx_L6:;
 
-    /* "_yaml.pyx":474
+    /* "_ruamel_yaml.pyx":474
  *             elif token.data.scalar.style == YAML_FOLDED_SCALAR_STYLE:
  *                 style = u'>'
  *             return ScalarToken(value, plain,             # <<<<<<<<<<<<<<
@@ -5819,7 +5819,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
     __pyx_t_7 = __Pyx_PyBool_FromLong(__pyx_v_plain); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 474; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_7);
 
-    /* "_yaml.pyx":475
+    /* "_ruamel_yaml.pyx":475
  *                 style = u'>'
  *             return ScalarToken(value, plain,
  *                     start_mark, end_mark, style)             # <<<<<<<<<<<<<<
@@ -5866,7 +5866,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
     __pyx_t_2 = 0;
     goto __pyx_L0;
 
-    /* "_yaml.pyx":458
+    /* "_ruamel_yaml.pyx":458
  *                 handle = None
  *             return TagToken((handle, suffix), start_mark, end_mark)
  *         elif token.type == YAML_SCALAR_TOKEN:             # <<<<<<<<<<<<<<
@@ -5876,7 +5876,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
     break;
     default:
 
-    /* "_yaml.pyx":477
+    /* "_ruamel_yaml.pyx":477
  *                     start_mark, end_mark, style)
  *         else:
  *             if PY_MAJOR_VERSION < 3:             # <<<<<<<<<<<<<<
@@ -5886,7 +5886,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
     __pyx_t_8 = ((PY_MAJOR_VERSION < 3) != 0);
     if (__pyx_t_8) {
 
-      /* "_yaml.pyx":478
+      /* "_ruamel_yaml.pyx":478
  *         else:
  *             if PY_MAJOR_VERSION < 3:
  *                 raise ValueError("unknown token type")             # <<<<<<<<<<<<<<
@@ -5899,7 +5899,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
       {__pyx_filename = __pyx_f[0]; __pyx_lineno = 478; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-      /* "_yaml.pyx":477
+      /* "_ruamel_yaml.pyx":477
  *                     start_mark, end_mark, style)
  *         else:
  *             if PY_MAJOR_VERSION < 3:             # <<<<<<<<<<<<<<
@@ -5908,7 +5908,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
  */
     }
 
-    /* "_yaml.pyx":480
+    /* "_ruamel_yaml.pyx":480
  *                 raise ValueError("unknown token type")
  *             else:
  *                 raise ValueError(u"unknown token type")             # <<<<<<<<<<<<<<
@@ -5925,7 +5925,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
     break;
   }
 
-  /* "_yaml.pyx":385
+  /* "_ruamel_yaml.pyx":385
  *         return token_object
  * 
  *     cdef object _token_to_object(self, yaml_token_t *token):             # <<<<<<<<<<<<<<
@@ -5940,7 +5940,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
   __Pyx_XDECREF(__pyx_t_3);
   __Pyx_XDECREF(__pyx_t_4);
   __Pyx_XDECREF(__pyx_t_7);
-  __Pyx_AddTraceback("_yaml.CParser._token_to_object", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("_ruamel_yaml.CParser._token_to_object", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = 0;
   __pyx_L0:;
   __Pyx_XDECREF((PyObject *)__pyx_v_start_mark);
@@ -5956,7 +5956,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
   return __pyx_r;
 }
 
-/* "_yaml.pyx":482
+/* "_ruamel_yaml.pyx":482
  *                 raise ValueError(u"unknown token type")
  * 
  *     def get_token(self):             # <<<<<<<<<<<<<<
@@ -5965,19 +5965,19 @@ static PyObject *__pyx_f_5_yaml_7CParser__token_to_object(struct __pyx_obj_5_yam
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_5_yaml_7CParser_9get_token(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
-static PyObject *__pyx_pw_5_yaml_7CParser_9get_token(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
+static PyObject *__pyx_pw_12_ruamel_yaml_7CParser_9get_token(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static PyObject *__pyx_pw_12_ruamel_yaml_7CParser_9get_token(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("get_token (wrapper)", 0);
-  __pyx_r = __pyx_pf_5_yaml_7CParser_8get_token(((struct __pyx_obj_5_yaml_CParser *)__pyx_v_self));
+  __pyx_r = __pyx_pf_12_ruamel_yaml_7CParser_8get_token(((struct __pyx_obj_12_ruamel_yaml_CParser *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_5_yaml_7CParser_8get_token(struct __pyx_obj_5_yaml_CParser *__pyx_v_self) {
+static PyObject *__pyx_pf_12_ruamel_yaml_7CParser_8get_token(struct __pyx_obj_12_ruamel_yaml_CParser *__pyx_v_self) {
   PyObject *__pyx_v_value = NULL;
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
@@ -5989,7 +5989,7 @@ static PyObject *__pyx_pf_5_yaml_7CParser_8get_token(struct __pyx_obj_5_yaml_CPa
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("get_token", 0);
 
-  /* "_yaml.pyx":483
+  /* "_ruamel_yaml.pyx":483
  * 
  *     def get_token(self):
  *         if self.current_token is not None:             # <<<<<<<<<<<<<<
@@ -6000,7 +6000,7 @@ static PyObject *__pyx_pf_5_yaml_7CParser_8get_token(struct __pyx_obj_5_yaml_CPa
   __pyx_t_2 = (__pyx_t_1 != 0);
   if (__pyx_t_2) {
 
-    /* "_yaml.pyx":484
+    /* "_ruamel_yaml.pyx":484
  *     def get_token(self):
  *         if self.current_token is not None:
  *             value = self.current_token             # <<<<<<<<<<<<<<
@@ -6012,7 +6012,7 @@ static PyObject *__pyx_pf_5_yaml_7CParser_8get_token(struct __pyx_obj_5_yaml_CPa
     __pyx_v_value = __pyx_t_3;
     __pyx_t_3 = 0;
 
-    /* "_yaml.pyx":485
+    /* "_ruamel_yaml.pyx":485
  *         if self.current_token is not None:
  *             value = self.current_token
  *             self.current_token = None             # <<<<<<<<<<<<<<
@@ -6025,7 +6025,7 @@ static PyObject *__pyx_pf_5_yaml_7CParser_8get_token(struct __pyx_obj_5_yaml_CPa
     __Pyx_DECREF(__pyx_v_self->current_token);
     __pyx_v_self->current_token = Py_None;
 
-    /* "_yaml.pyx":483
+    /* "_ruamel_yaml.pyx":483
  * 
  *     def get_token(self):
  *         if self.current_token is not None:             # <<<<<<<<<<<<<<
@@ -6035,7 +6035,7 @@ static PyObject *__pyx_pf_5_yaml_7CParser_8get_token(struct __pyx_obj_5_yaml_CPa
     goto __pyx_L3;
   }
 
-  /* "_yaml.pyx":487
+  /* "_ruamel_yaml.pyx":487
  *             self.current_token = None
  *         else:
  *             value = self._scan()             # <<<<<<<<<<<<<<
@@ -6043,14 +6043,14 @@ static PyObject *__pyx_pf_5_yaml_7CParser_8get_token(struct __pyx_obj_5_yaml_CPa
  * 
  */
   /*else*/ {
-    __pyx_t_3 = ((struct __pyx_vtabstruct_5_yaml_CParser *)__pyx_v_self->__pyx_vtab)->_scan(__pyx_v_self); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 487; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_3 = ((struct __pyx_vtabstruct_12_ruamel_yaml_CParser *)__pyx_v_self->__pyx_vtab)->_scan(__pyx_v_self); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 487; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_3);
     __pyx_v_value = __pyx_t_3;
     __pyx_t_3 = 0;
   }
   __pyx_L3:;
 
-  /* "_yaml.pyx":488
+  /* "_ruamel_yaml.pyx":488
  *         else:
  *             value = self._scan()
  *         return value             # <<<<<<<<<<<<<<
@@ -6062,7 +6062,7 @@ static PyObject *__pyx_pf_5_yaml_7CParser_8get_token(struct __pyx_obj_5_yaml_CPa
   __pyx_r = __pyx_v_value;
   goto __pyx_L0;
 
-  /* "_yaml.pyx":482
+  /* "_ruamel_yaml.pyx":482
  *                 raise ValueError(u"unknown token type")
  * 
  *     def get_token(self):             # <<<<<<<<<<<<<<
@@ -6073,7 +6073,7 @@ static PyObject *__pyx_pf_5_yaml_7CParser_8get_token(struct __pyx_obj_5_yaml_CPa
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_3);
-  __Pyx_AddTraceback("_yaml.CParser.get_token", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("_ruamel_yaml.CParser.get_token", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XDECREF(__pyx_v_value);
@@ -6082,7 +6082,7 @@ static PyObject *__pyx_pf_5_yaml_7CParser_8get_token(struct __pyx_obj_5_yaml_CPa
   return __pyx_r;
 }
 
-/* "_yaml.pyx":490
+/* "_ruamel_yaml.pyx":490
  *         return value
  * 
  *     def peek_token(self):             # <<<<<<<<<<<<<<
@@ -6091,19 +6091,19 @@ static PyObject *__pyx_pf_5_yaml_7CParser_8get_token(struct __pyx_obj_5_yaml_CPa
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_5_yaml_7CParser_11peek_token(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
-static PyObject *__pyx_pw_5_yaml_7CParser_11peek_token(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
+static PyObject *__pyx_pw_12_ruamel_yaml_7CParser_11peek_token(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static PyObject *__pyx_pw_12_ruamel_yaml_7CParser_11peek_token(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("peek_token (wrapper)", 0);
-  __pyx_r = __pyx_pf_5_yaml_7CParser_10peek_token(((struct __pyx_obj_5_yaml_CParser *)__pyx_v_self));
+  __pyx_r = __pyx_pf_12_ruamel_yaml_7CParser_10peek_token(((struct __pyx_obj_12_ruamel_yaml_CParser *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_5_yaml_7CParser_10peek_token(struct __pyx_obj_5_yaml_CParser *__pyx_v_self) {
+static PyObject *__pyx_pf_12_ruamel_yaml_7CParser_10peek_token(struct __pyx_obj_12_ruamel_yaml_CParser *__pyx_v_self) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   int __pyx_t_1;
@@ -6114,7 +6114,7 @@ static PyObject *__pyx_pf_5_yaml_7CParser_10peek_token(struct __pyx_obj_5_yaml_C
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("peek_token", 0);
 
-  /* "_yaml.pyx":491
+  /* "_ruamel_yaml.pyx":491
  * 
  *     def peek_token(self):
  *         if self.current_token is None:             # <<<<<<<<<<<<<<
@@ -6125,14 +6125,14 @@ static PyObject *__pyx_pf_5_yaml_7CParser_10peek_token(struct __pyx_obj_5_yaml_C
   __pyx_t_2 = (__pyx_t_1 != 0);
   if (__pyx_t_2) {
 
-    /* "_yaml.pyx":492
+    /* "_ruamel_yaml.pyx":492
  *     def peek_token(self):
  *         if self.current_token is None:
  *             self.current_token = self._scan()             # <<<<<<<<<<<<<<
  *         return self.current_token
  * 
  */
-    __pyx_t_3 = ((struct __pyx_vtabstruct_5_yaml_CParser *)__pyx_v_self->__pyx_vtab)->_scan(__pyx_v_self); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 492; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_3 = ((struct __pyx_vtabstruct_12_ruamel_yaml_CParser *)__pyx_v_self->__pyx_vtab)->_scan(__pyx_v_self); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 492; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_GIVEREF(__pyx_t_3);
     __Pyx_GOTREF(__pyx_v_self->current_token);
@@ -6140,7 +6140,7 @@ static PyObject *__pyx_pf_5_yaml_7CParser_10peek_token(struct __pyx_obj_5_yaml_C
     __pyx_v_self->current_token = __pyx_t_3;
     __pyx_t_3 = 0;
 
-    /* "_yaml.pyx":491
+    /* "_ruamel_yaml.pyx":491
  * 
  *     def peek_token(self):
  *         if self.current_token is None:             # <<<<<<<<<<<<<<
@@ -6149,7 +6149,7 @@ static PyObject *__pyx_pf_5_yaml_7CParser_10peek_token(struct __pyx_obj_5_yaml_C
  */
   }
 
-  /* "_yaml.pyx":493
+  /* "_ruamel_yaml.pyx":493
  *         if self.current_token is None:
  *             self.current_token = self._scan()
  *         return self.current_token             # <<<<<<<<<<<<<<
@@ -6161,7 +6161,7 @@ static PyObject *__pyx_pf_5_yaml_7CParser_10peek_token(struct __pyx_obj_5_yaml_C
   __pyx_r = __pyx_v_self->current_token;
   goto __pyx_L0;
 
-  /* "_yaml.pyx":490
+  /* "_ruamel_yaml.pyx":490
  *         return value
  * 
  *     def peek_token(self):             # <<<<<<<<<<<<<<
@@ -6172,7 +6172,7 @@ static PyObject *__pyx_pf_5_yaml_7CParser_10peek_token(struct __pyx_obj_5_yaml_C
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_3);
-  __Pyx_AddTraceback("_yaml.CParser.peek_token", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("_ruamel_yaml.CParser.peek_token", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -6180,7 +6180,7 @@ static PyObject *__pyx_pf_5_yaml_7CParser_10peek_token(struct __pyx_obj_5_yaml_C
   return __pyx_r;
 }
 
-/* "_yaml.pyx":495
+/* "_ruamel_yaml.pyx":495
  *         return self.current_token
  * 
  *     def check_token(self, *choices):             # <<<<<<<<<<<<<<
@@ -6189,8 +6189,8 @@ static PyObject *__pyx_pf_5_yaml_7CParser_10peek_token(struct __pyx_obj_5_yaml_C
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_5_yaml_7CParser_13check_token(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static PyObject *__pyx_pw_5_yaml_7CParser_13check_token(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+static PyObject *__pyx_pw_12_ruamel_yaml_7CParser_13check_token(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static PyObject *__pyx_pw_12_ruamel_yaml_7CParser_13check_token(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyObject *__pyx_v_choices = 0;
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
@@ -6198,7 +6198,7 @@ static PyObject *__pyx_pw_5_yaml_7CParser_13check_token(PyObject *__pyx_v_self, 
   if (unlikely(__pyx_kwds) && unlikely(PyDict_Size(__pyx_kwds) > 0) && unlikely(!__Pyx_CheckKeywordStrings(__pyx_kwds, "check_token", 0))) return NULL;
   __Pyx_INCREF(__pyx_args);
   __pyx_v_choices = __pyx_args;
-  __pyx_r = __pyx_pf_5_yaml_7CParser_12check_token(((struct __pyx_obj_5_yaml_CParser *)__pyx_v_self), __pyx_v_choices);
+  __pyx_r = __pyx_pf_12_ruamel_yaml_7CParser_12check_token(((struct __pyx_obj_12_ruamel_yaml_CParser *)__pyx_v_self), __pyx_v_choices);
 
   /* function exit code */
   __Pyx_XDECREF(__pyx_v_choices);
@@ -6206,7 +6206,7 @@ static PyObject *__pyx_pw_5_yaml_7CParser_13check_token(PyObject *__pyx_v_self, 
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_5_yaml_7CParser_12check_token(struct __pyx_obj_5_yaml_CParser *__pyx_v_self, PyObject *__pyx_v_choices) {
+static PyObject *__pyx_pf_12_ruamel_yaml_7CParser_12check_token(struct __pyx_obj_12_ruamel_yaml_CParser *__pyx_v_self, PyObject *__pyx_v_choices) {
   PyObject *__pyx_v_token_class = NULL;
   PyObject *__pyx_v_choice = NULL;
   PyObject *__pyx_r = NULL;
@@ -6221,7 +6221,7 @@ static PyObject *__pyx_pf_5_yaml_7CParser_12check_token(struct __pyx_obj_5_yaml_
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("check_token", 0);
 
-  /* "_yaml.pyx":496
+  /* "_ruamel_yaml.pyx":496
  * 
  *     def check_token(self, *choices):
  *         if self.current_token is None:             # <<<<<<<<<<<<<<
@@ -6232,14 +6232,14 @@ static PyObject *__pyx_pf_5_yaml_7CParser_12check_token(struct __pyx_obj_5_yaml_
   __pyx_t_2 = (__pyx_t_1 != 0);
   if (__pyx_t_2) {
 
-    /* "_yaml.pyx":497
+    /* "_ruamel_yaml.pyx":497
  *     def check_token(self, *choices):
  *         if self.current_token is None:
  *             self.current_token = self._scan()             # <<<<<<<<<<<<<<
  *         if self.current_token is None:
  *             return False
  */
-    __pyx_t_3 = ((struct __pyx_vtabstruct_5_yaml_CParser *)__pyx_v_self->__pyx_vtab)->_scan(__pyx_v_self); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 497; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_3 = ((struct __pyx_vtabstruct_12_ruamel_yaml_CParser *)__pyx_v_self->__pyx_vtab)->_scan(__pyx_v_self); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 497; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_GIVEREF(__pyx_t_3);
     __Pyx_GOTREF(__pyx_v_self->current_token);
@@ -6247,7 +6247,7 @@ static PyObject *__pyx_pf_5_yaml_7CParser_12check_token(struct __pyx_obj_5_yaml_
     __pyx_v_self->current_token = __pyx_t_3;
     __pyx_t_3 = 0;
 
-    /* "_yaml.pyx":496
+    /* "_ruamel_yaml.pyx":496
  * 
  *     def check_token(self, *choices):
  *         if self.current_token is None:             # <<<<<<<<<<<<<<
@@ -6256,7 +6256,7 @@ static PyObject *__pyx_pf_5_yaml_7CParser_12check_token(struct __pyx_obj_5_yaml_
  */
   }
 
-  /* "_yaml.pyx":498
+  /* "_ruamel_yaml.pyx":498
  *         if self.current_token is None:
  *             self.current_token = self._scan()
  *         if self.current_token is None:             # <<<<<<<<<<<<<<
@@ -6267,7 +6267,7 @@ static PyObject *__pyx_pf_5_yaml_7CParser_12check_token(struct __pyx_obj_5_yaml_
   __pyx_t_1 = (__pyx_t_2 != 0);
   if (__pyx_t_1) {
 
-    /* "_yaml.pyx":499
+    /* "_ruamel_yaml.pyx":499
  *             self.current_token = self._scan()
  *         if self.current_token is None:
  *             return False             # <<<<<<<<<<<<<<
@@ -6279,7 +6279,7 @@ static PyObject *__pyx_pf_5_yaml_7CParser_12check_token(struct __pyx_obj_5_yaml_
     __pyx_r = Py_False;
     goto __pyx_L0;
 
-    /* "_yaml.pyx":498
+    /* "_ruamel_yaml.pyx":498
  *         if self.current_token is None:
  *             self.current_token = self._scan()
  *         if self.current_token is None:             # <<<<<<<<<<<<<<
@@ -6288,7 +6288,7 @@ static PyObject *__pyx_pf_5_yaml_7CParser_12check_token(struct __pyx_obj_5_yaml_
  */
   }
 
-  /* "_yaml.pyx":500
+  /* "_ruamel_yaml.pyx":500
  *         if self.current_token is None:
  *             return False
  *         if not choices:             # <<<<<<<<<<<<<<
@@ -6299,7 +6299,7 @@ static PyObject *__pyx_pf_5_yaml_7CParser_12check_token(struct __pyx_obj_5_yaml_
   __pyx_t_2 = ((!__pyx_t_1) != 0);
   if (__pyx_t_2) {
 
-    /* "_yaml.pyx":501
+    /* "_ruamel_yaml.pyx":501
  *             return False
  *         if not choices:
  *             return True             # <<<<<<<<<<<<<<
@@ -6311,7 +6311,7 @@ static PyObject *__pyx_pf_5_yaml_7CParser_12check_token(struct __pyx_obj_5_yaml_
     __pyx_r = Py_True;
     goto __pyx_L0;
 
-    /* "_yaml.pyx":500
+    /* "_ruamel_yaml.pyx":500
  *         if self.current_token is None:
  *             return False
  *         if not choices:             # <<<<<<<<<<<<<<
@@ -6320,7 +6320,7 @@ static PyObject *__pyx_pf_5_yaml_7CParser_12check_token(struct __pyx_obj_5_yaml_
  */
   }
 
-  /* "_yaml.pyx":502
+  /* "_ruamel_yaml.pyx":502
  *         if not choices:
  *             return True
  *         token_class = self.current_token.__class__             # <<<<<<<<<<<<<<
@@ -6332,7 +6332,7 @@ static PyObject *__pyx_pf_5_yaml_7CParser_12check_token(struct __pyx_obj_5_yaml_
   __pyx_v_token_class = __pyx_t_3;
   __pyx_t_3 = 0;
 
-  /* "_yaml.pyx":503
+  /* "_ruamel_yaml.pyx":503
  *             return True
  *         token_class = self.current_token.__class__
  *         for choice in choices:             # <<<<<<<<<<<<<<
@@ -6351,7 +6351,7 @@ static PyObject *__pyx_pf_5_yaml_7CParser_12check_token(struct __pyx_obj_5_yaml_
     __Pyx_XDECREF_SET(__pyx_v_choice, __pyx_t_5);
     __pyx_t_5 = 0;
 
-    /* "_yaml.pyx":504
+    /* "_ruamel_yaml.pyx":504
  *         token_class = self.current_token.__class__
  *         for choice in choices:
  *             if token_class is choice:             # <<<<<<<<<<<<<<
@@ -6362,7 +6362,7 @@ static PyObject *__pyx_pf_5_yaml_7CParser_12check_token(struct __pyx_obj_5_yaml_
     __pyx_t_1 = (__pyx_t_2 != 0);
     if (__pyx_t_1) {
 
-      /* "_yaml.pyx":505
+      /* "_ruamel_yaml.pyx":505
  *         for choice in choices:
  *             if token_class is choice:
  *                 return True             # <<<<<<<<<<<<<<
@@ -6375,7 +6375,7 @@ static PyObject *__pyx_pf_5_yaml_7CParser_12check_token(struct __pyx_obj_5_yaml_
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
       goto __pyx_L0;
 
-      /* "_yaml.pyx":504
+      /* "_ruamel_yaml.pyx":504
  *         token_class = self.current_token.__class__
  *         for choice in choices:
  *             if token_class is choice:             # <<<<<<<<<<<<<<
@@ -6384,7 +6384,7 @@ static PyObject *__pyx_pf_5_yaml_7CParser_12check_token(struct __pyx_obj_5_yaml_
  */
     }
 
-    /* "_yaml.pyx":503
+    /* "_ruamel_yaml.pyx":503
  *             return True
  *         token_class = self.current_token.__class__
  *         for choice in choices:             # <<<<<<<<<<<<<<
@@ -6394,7 +6394,7 @@ static PyObject *__pyx_pf_5_yaml_7CParser_12check_token(struct __pyx_obj_5_yaml_
   }
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "_yaml.pyx":506
+  /* "_ruamel_yaml.pyx":506
  *             if token_class is choice:
  *                 return True
  *         return False             # <<<<<<<<<<<<<<
@@ -6406,7 +6406,7 @@ static PyObject *__pyx_pf_5_yaml_7CParser_12check_token(struct __pyx_obj_5_yaml_
   __pyx_r = Py_False;
   goto __pyx_L0;
 
-  /* "_yaml.pyx":495
+  /* "_ruamel_yaml.pyx":495
  *         return self.current_token
  * 
  *     def check_token(self, *choices):             # <<<<<<<<<<<<<<
@@ -6418,7 +6418,7 @@ static PyObject *__pyx_pf_5_yaml_7CParser_12check_token(struct __pyx_obj_5_yaml_
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_3);
   __Pyx_XDECREF(__pyx_t_5);
-  __Pyx_AddTraceback("_yaml.CParser.check_token", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("_ruamel_yaml.CParser.check_token", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XDECREF(__pyx_v_token_class);
@@ -6428,7 +6428,7 @@ static PyObject *__pyx_pf_5_yaml_7CParser_12check_token(struct __pyx_obj_5_yaml_
   return __pyx_r;
 }
 
-/* "_yaml.pyx":508
+/* "_ruamel_yaml.pyx":508
  *         return False
  * 
  *     def raw_parse(self):             # <<<<<<<<<<<<<<
@@ -6437,19 +6437,19 @@ static PyObject *__pyx_pf_5_yaml_7CParser_12check_token(struct __pyx_obj_5_yaml_
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_5_yaml_7CParser_15raw_parse(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
-static PyObject *__pyx_pw_5_yaml_7CParser_15raw_parse(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
+static PyObject *__pyx_pw_12_ruamel_yaml_7CParser_15raw_parse(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static PyObject *__pyx_pw_12_ruamel_yaml_7CParser_15raw_parse(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("raw_parse (wrapper)", 0);
-  __pyx_r = __pyx_pf_5_yaml_7CParser_14raw_parse(((struct __pyx_obj_5_yaml_CParser *)__pyx_v_self));
+  __pyx_r = __pyx_pf_12_ruamel_yaml_7CParser_14raw_parse(((struct __pyx_obj_12_ruamel_yaml_CParser *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_5_yaml_7CParser_14raw_parse(struct __pyx_obj_5_yaml_CParser *__pyx_v_self) {
+static PyObject *__pyx_pf_12_ruamel_yaml_7CParser_14raw_parse(struct __pyx_obj_12_ruamel_yaml_CParser *__pyx_v_self) {
   yaml_event_t __pyx_v_event;
   int __pyx_v_done;
   int __pyx_v_count;
@@ -6464,7 +6464,7 @@ static PyObject *__pyx_pf_5_yaml_7CParser_14raw_parse(struct __pyx_obj_5_yaml_CP
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("raw_parse", 0);
 
-  /* "_yaml.pyx":512
+  /* "_ruamel_yaml.pyx":512
  *         cdef int done
  *         cdef int count
  *         count = 0             # <<<<<<<<<<<<<<
@@ -6473,7 +6473,7 @@ static PyObject *__pyx_pf_5_yaml_7CParser_14raw_parse(struct __pyx_obj_5_yaml_CP
  */
   __pyx_v_count = 0;
 
-  /* "_yaml.pyx":513
+  /* "_ruamel_yaml.pyx":513
  *         cdef int count
  *         count = 0
  *         done = 0             # <<<<<<<<<<<<<<
@@ -6482,7 +6482,7 @@ static PyObject *__pyx_pf_5_yaml_7CParser_14raw_parse(struct __pyx_obj_5_yaml_CP
  */
   __pyx_v_done = 0;
 
-  /* "_yaml.pyx":514
+  /* "_ruamel_yaml.pyx":514
  *         count = 0
  *         done = 0
  *         while done == 0:             # <<<<<<<<<<<<<<
@@ -6493,7 +6493,7 @@ static PyObject *__pyx_pf_5_yaml_7CParser_14raw_parse(struct __pyx_obj_5_yaml_CP
     __pyx_t_1 = ((__pyx_v_done == 0) != 0);
     if (!__pyx_t_1) break;
 
-    /* "_yaml.pyx":515
+    /* "_ruamel_yaml.pyx":515
  *         done = 0
  *         while done == 0:
  *             if yaml_parser_parse(&self.parser, &event) == 0:             # <<<<<<<<<<<<<<
@@ -6504,19 +6504,19 @@ static PyObject *__pyx_pf_5_yaml_7CParser_14raw_parse(struct __pyx_obj_5_yaml_CP
     __pyx_t_1 = ((__pyx_t_2 == 0) != 0);
     if (__pyx_t_1) {
 
-      /* "_yaml.pyx":516
+      /* "_ruamel_yaml.pyx":516
  *         while done == 0:
  *             if yaml_parser_parse(&self.parser, &event) == 0:
  *                 error = self._parser_error()             # <<<<<<<<<<<<<<
  *                 raise error
  *             if event.type == YAML_NO_EVENT:
  */
-      __pyx_t_3 = ((struct __pyx_vtabstruct_5_yaml_CParser *)__pyx_v_self->__pyx_vtab)->_parser_error(__pyx_v_self); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 516; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_3 = ((struct __pyx_vtabstruct_12_ruamel_yaml_CParser *)__pyx_v_self->__pyx_vtab)->_parser_error(__pyx_v_self); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 516; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_3);
       __pyx_v_error = __pyx_t_3;
       __pyx_t_3 = 0;
 
-      /* "_yaml.pyx":517
+      /* "_ruamel_yaml.pyx":517
  *             if yaml_parser_parse(&self.parser, &event) == 0:
  *                 error = self._parser_error()
  *                 raise error             # <<<<<<<<<<<<<<
@@ -6526,7 +6526,7 @@ static PyObject *__pyx_pf_5_yaml_7CParser_14raw_parse(struct __pyx_obj_5_yaml_CP
       __Pyx_Raise(__pyx_v_error, 0, 0, 0);
       {__pyx_filename = __pyx_f[0]; __pyx_lineno = 517; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-      /* "_yaml.pyx":515
+      /* "_ruamel_yaml.pyx":515
  *         done = 0
  *         while done == 0:
  *             if yaml_parser_parse(&self.parser, &event) == 0:             # <<<<<<<<<<<<<<
@@ -6535,7 +6535,7 @@ static PyObject *__pyx_pf_5_yaml_7CParser_14raw_parse(struct __pyx_obj_5_yaml_CP
  */
     }
 
-    /* "_yaml.pyx":518
+    /* "_ruamel_yaml.pyx":518
  *                 error = self._parser_error()
  *                 raise error
  *             if event.type == YAML_NO_EVENT:             # <<<<<<<<<<<<<<
@@ -6545,7 +6545,7 @@ static PyObject *__pyx_pf_5_yaml_7CParser_14raw_parse(struct __pyx_obj_5_yaml_CP
     __pyx_t_1 = ((__pyx_v_event.type == YAML_NO_EVENT) != 0);
     if (__pyx_t_1) {
 
-      /* "_yaml.pyx":519
+      /* "_ruamel_yaml.pyx":519
  *                 raise error
  *             if event.type == YAML_NO_EVENT:
  *                 done = 1             # <<<<<<<<<<<<<<
@@ -6554,7 +6554,7 @@ static PyObject *__pyx_pf_5_yaml_7CParser_14raw_parse(struct __pyx_obj_5_yaml_CP
  */
       __pyx_v_done = 1;
 
-      /* "_yaml.pyx":518
+      /* "_ruamel_yaml.pyx":518
  *                 error = self._parser_error()
  *                 raise error
  *             if event.type == YAML_NO_EVENT:             # <<<<<<<<<<<<<<
@@ -6564,7 +6564,7 @@ static PyObject *__pyx_pf_5_yaml_7CParser_14raw_parse(struct __pyx_obj_5_yaml_CP
       goto __pyx_L6;
     }
 
-    /* "_yaml.pyx":521
+    /* "_ruamel_yaml.pyx":521
  *                 done = 1
  *             else:
  *                 count = count+1             # <<<<<<<<<<<<<<
@@ -6576,7 +6576,7 @@ static PyObject *__pyx_pf_5_yaml_7CParser_14raw_parse(struct __pyx_obj_5_yaml_CP
     }
     __pyx_L6:;
 
-    /* "_yaml.pyx":522
+    /* "_ruamel_yaml.pyx":522
  *             else:
  *                 count = count+1
  *             yaml_event_delete(&event)             # <<<<<<<<<<<<<<
@@ -6586,7 +6586,7 @@ static PyObject *__pyx_pf_5_yaml_7CParser_14raw_parse(struct __pyx_obj_5_yaml_CP
     yaml_event_delete((&__pyx_v_event));
   }
 
-  /* "_yaml.pyx":523
+  /* "_ruamel_yaml.pyx":523
  *                 count = count+1
  *             yaml_event_delete(&event)
  *         return count             # <<<<<<<<<<<<<<
@@ -6600,7 +6600,7 @@ static PyObject *__pyx_pf_5_yaml_7CParser_14raw_parse(struct __pyx_obj_5_yaml_CP
   __pyx_t_3 = 0;
   goto __pyx_L0;
 
-  /* "_yaml.pyx":508
+  /* "_ruamel_yaml.pyx":508
  *         return False
  * 
  *     def raw_parse(self):             # <<<<<<<<<<<<<<
@@ -6611,7 +6611,7 @@ static PyObject *__pyx_pf_5_yaml_7CParser_14raw_parse(struct __pyx_obj_5_yaml_CP
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_3);
-  __Pyx_AddTraceback("_yaml.CParser.raw_parse", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("_ruamel_yaml.CParser.raw_parse", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XDECREF(__pyx_v_error);
@@ -6620,7 +6620,7 @@ static PyObject *__pyx_pf_5_yaml_7CParser_14raw_parse(struct __pyx_obj_5_yaml_CP
   return __pyx_r;
 }
 
-/* "_yaml.pyx":525
+/* "_ruamel_yaml.pyx":525
  *         return count
  * 
  *     cdef object _parse(self):             # <<<<<<<<<<<<<<
@@ -6628,7 +6628,7 @@ static PyObject *__pyx_pf_5_yaml_7CParser_14raw_parse(struct __pyx_obj_5_yaml_CP
  *         if yaml_parser_parse(&self.parser, &event) == 0:
  */
 
-static PyObject *__pyx_f_5_yaml_7CParser__parse(struct __pyx_obj_5_yaml_CParser *__pyx_v_self) {
+static PyObject *__pyx_f_12_ruamel_yaml_7CParser__parse(struct __pyx_obj_12_ruamel_yaml_CParser *__pyx_v_self) {
   yaml_event_t __pyx_v_event;
   PyObject *__pyx_v_error = NULL;
   PyObject *__pyx_v_event_object = NULL;
@@ -6642,7 +6642,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__parse(struct __pyx_obj_5_yaml_CParser 
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("_parse", 0);
 
-  /* "_yaml.pyx":527
+  /* "_ruamel_yaml.pyx":527
  *     cdef object _parse(self):
  *         cdef yaml_event_t event
  *         if yaml_parser_parse(&self.parser, &event) == 0:             # <<<<<<<<<<<<<<
@@ -6653,19 +6653,19 @@ static PyObject *__pyx_f_5_yaml_7CParser__parse(struct __pyx_obj_5_yaml_CParser 
   __pyx_t_2 = ((__pyx_t_1 == 0) != 0);
   if (__pyx_t_2) {
 
-    /* "_yaml.pyx":528
+    /* "_ruamel_yaml.pyx":528
  *         cdef yaml_event_t event
  *         if yaml_parser_parse(&self.parser, &event) == 0:
  *             error = self._parser_error()             # <<<<<<<<<<<<<<
  *             raise error
  *         event_object = self._event_to_object(&event)
  */
-    __pyx_t_3 = ((struct __pyx_vtabstruct_5_yaml_CParser *)__pyx_v_self->__pyx_vtab)->_parser_error(__pyx_v_self); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 528; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_3 = ((struct __pyx_vtabstruct_12_ruamel_yaml_CParser *)__pyx_v_self->__pyx_vtab)->_parser_error(__pyx_v_self); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 528; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_3);
     __pyx_v_error = __pyx_t_3;
     __pyx_t_3 = 0;
 
-    /* "_yaml.pyx":529
+    /* "_ruamel_yaml.pyx":529
  *         if yaml_parser_parse(&self.parser, &event) == 0:
  *             error = self._parser_error()
  *             raise error             # <<<<<<<<<<<<<<
@@ -6675,7 +6675,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__parse(struct __pyx_obj_5_yaml_CParser 
     __Pyx_Raise(__pyx_v_error, 0, 0, 0);
     {__pyx_filename = __pyx_f[0]; __pyx_lineno = 529; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-    /* "_yaml.pyx":527
+    /* "_ruamel_yaml.pyx":527
  *     cdef object _parse(self):
  *         cdef yaml_event_t event
  *         if yaml_parser_parse(&self.parser, &event) == 0:             # <<<<<<<<<<<<<<
@@ -6684,19 +6684,19 @@ static PyObject *__pyx_f_5_yaml_7CParser__parse(struct __pyx_obj_5_yaml_CParser 
  */
   }
 
-  /* "_yaml.pyx":530
+  /* "_ruamel_yaml.pyx":530
  *             error = self._parser_error()
  *             raise error
  *         event_object = self._event_to_object(&event)             # <<<<<<<<<<<<<<
  *         yaml_event_delete(&event)
  *         return event_object
  */
-  __pyx_t_3 = ((struct __pyx_vtabstruct_5_yaml_CParser *)__pyx_v_self->__pyx_vtab)->_event_to_object(__pyx_v_self, (&__pyx_v_event)); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 530; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_3 = ((struct __pyx_vtabstruct_12_ruamel_yaml_CParser *)__pyx_v_self->__pyx_vtab)->_event_to_object(__pyx_v_self, (&__pyx_v_event)); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 530; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_3);
   __pyx_v_event_object = __pyx_t_3;
   __pyx_t_3 = 0;
 
-  /* "_yaml.pyx":531
+  /* "_ruamel_yaml.pyx":531
  *             raise error
  *         event_object = self._event_to_object(&event)
  *         yaml_event_delete(&event)             # <<<<<<<<<<<<<<
@@ -6705,7 +6705,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__parse(struct __pyx_obj_5_yaml_CParser 
  */
   yaml_event_delete((&__pyx_v_event));
 
-  /* "_yaml.pyx":532
+  /* "_ruamel_yaml.pyx":532
  *         event_object = self._event_to_object(&event)
  *         yaml_event_delete(&event)
  *         return event_object             # <<<<<<<<<<<<<<
@@ -6717,7 +6717,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__parse(struct __pyx_obj_5_yaml_CParser 
   __pyx_r = __pyx_v_event_object;
   goto __pyx_L0;
 
-  /* "_yaml.pyx":525
+  /* "_ruamel_yaml.pyx":525
  *         return count
  * 
  *     cdef object _parse(self):             # <<<<<<<<<<<<<<
@@ -6728,7 +6728,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__parse(struct __pyx_obj_5_yaml_CParser 
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_3);
-  __Pyx_AddTraceback("_yaml.CParser._parse", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("_ruamel_yaml.CParser._parse", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = 0;
   __pyx_L0:;
   __Pyx_XDECREF(__pyx_v_error);
@@ -6738,7 +6738,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__parse(struct __pyx_obj_5_yaml_CParser 
   return __pyx_r;
 }
 
-/* "_yaml.pyx":534
+/* "_ruamel_yaml.pyx":534
  *         return event_object
  * 
  *     cdef object _event_to_object(self, yaml_event_t *event):             # <<<<<<<<<<<<<<
@@ -6746,10 +6746,10 @@ static PyObject *__pyx_f_5_yaml_7CParser__parse(struct __pyx_obj_5_yaml_CParser 
  *         start_mark = Mark(self.stream_name,
  */
 
-static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yaml_CParser *__pyx_v_self, yaml_event_t *__pyx_v_event) {
+static PyObject *__pyx_f_12_ruamel_yaml_7CParser__event_to_object(struct __pyx_obj_12_ruamel_yaml_CParser *__pyx_v_self, yaml_event_t *__pyx_v_event) {
   yaml_tag_directive_t *__pyx_v_tag_directive;
-  struct __pyx_obj_5_yaml_Mark *__pyx_v_start_mark = NULL;
-  struct __pyx_obj_5_yaml_Mark *__pyx_v_end_mark = NULL;
+  struct __pyx_obj_12_ruamel_yaml_Mark *__pyx_v_start_mark = NULL;
+  struct __pyx_obj_12_ruamel_yaml_Mark *__pyx_v_end_mark = NULL;
   PyObject *__pyx_v_encoding = NULL;
   int __pyx_v_explicit;
   PyObject *__pyx_v_version = NULL;
@@ -6779,7 +6779,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("_event_to_object", 0);
 
-  /* "_yaml.pyx":537
+  /* "_ruamel_yaml.pyx":537
  *         cdef yaml_tag_directive_t *tag_directive
  *         start_mark = Mark(self.stream_name,
  *                 event.start_mark.index,             # <<<<<<<<<<<<<<
@@ -6789,7 +6789,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
   __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_event->start_mark.index); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 537; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
 
-  /* "_yaml.pyx":538
+  /* "_ruamel_yaml.pyx":538
  *         start_mark = Mark(self.stream_name,
  *                 event.start_mark.index,
  *                 event.start_mark.line,             # <<<<<<<<<<<<<<
@@ -6799,7 +6799,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
   __pyx_t_2 = __Pyx_PyInt_From_int(__pyx_v_event->start_mark.line); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 538; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
 
-  /* "_yaml.pyx":539
+  /* "_ruamel_yaml.pyx":539
  *                 event.start_mark.index,
  *                 event.start_mark.line,
  *                 event.start_mark.column,             # <<<<<<<<<<<<<<
@@ -6809,7 +6809,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
   __pyx_t_3 = __Pyx_PyInt_From_int(__pyx_v_event->start_mark.column); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 539; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_3);
 
-  /* "_yaml.pyx":536
+  /* "_ruamel_yaml.pyx":536
  *     cdef object _event_to_object(self, yaml_event_t *event):
  *         cdef yaml_tag_directive_t *tag_directive
  *         start_mark = Mark(self.stream_name,             # <<<<<<<<<<<<<<
@@ -6836,13 +6836,13 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
   __pyx_t_1 = 0;
   __pyx_t_2 = 0;
   __pyx_t_3 = 0;
-  __pyx_t_3 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_5_yaml_Mark), __pyx_t_4, NULL); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 536; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_3 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_12_ruamel_yaml_Mark), __pyx_t_4, NULL); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 536; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __pyx_v_start_mark = ((struct __pyx_obj_5_yaml_Mark *)__pyx_t_3);
+  __pyx_v_start_mark = ((struct __pyx_obj_12_ruamel_yaml_Mark *)__pyx_t_3);
   __pyx_t_3 = 0;
 
-  /* "_yaml.pyx":542
+  /* "_ruamel_yaml.pyx":542
  *                 None, None)
  *         end_mark = Mark(self.stream_name,
  *                 event.end_mark.index,             # <<<<<<<<<<<<<<
@@ -6852,7 +6852,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
   __pyx_t_3 = __Pyx_PyInt_From_int(__pyx_v_event->end_mark.index); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 542; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_3);
 
-  /* "_yaml.pyx":543
+  /* "_ruamel_yaml.pyx":543
  *         end_mark = Mark(self.stream_name,
  *                 event.end_mark.index,
  *                 event.end_mark.line,             # <<<<<<<<<<<<<<
@@ -6862,7 +6862,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
   __pyx_t_4 = __Pyx_PyInt_From_int(__pyx_v_event->end_mark.line); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 543; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_4);
 
-  /* "_yaml.pyx":544
+  /* "_ruamel_yaml.pyx":544
  *                 event.end_mark.index,
  *                 event.end_mark.line,
  *                 event.end_mark.column,             # <<<<<<<<<<<<<<
@@ -6872,7 +6872,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
   __pyx_t_2 = __Pyx_PyInt_From_int(__pyx_v_event->end_mark.column); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 544; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
 
-  /* "_yaml.pyx":541
+  /* "_ruamel_yaml.pyx":541
  *                 event.start_mark.column,
  *                 None, None)
  *         end_mark = Mark(self.stream_name,             # <<<<<<<<<<<<<<
@@ -6899,13 +6899,13 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
   __pyx_t_3 = 0;
   __pyx_t_4 = 0;
   __pyx_t_2 = 0;
-  __pyx_t_2 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_5_yaml_Mark), __pyx_t_1, NULL); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 541; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_12_ruamel_yaml_Mark), __pyx_t_1, NULL); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 541; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_v_end_mark = ((struct __pyx_obj_5_yaml_Mark *)__pyx_t_2);
+  __pyx_v_end_mark = ((struct __pyx_obj_12_ruamel_yaml_Mark *)__pyx_t_2);
   __pyx_t_2 = 0;
 
-  /* "_yaml.pyx":546
+  /* "_ruamel_yaml.pyx":546
  *                 event.end_mark.column,
  *                 None, None)
  *         if event.type == YAML_NO_EVENT:             # <<<<<<<<<<<<<<
@@ -6915,7 +6915,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
   switch (__pyx_v_event->type) {
     case YAML_NO_EVENT:
 
-    /* "_yaml.pyx":547
+    /* "_ruamel_yaml.pyx":547
  *                 None, None)
  *         if event.type == YAML_NO_EVENT:
  *             return None             # <<<<<<<<<<<<<<
@@ -6927,7 +6927,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
     __pyx_r = Py_None;
     goto __pyx_L0;
 
-    /* "_yaml.pyx":546
+    /* "_ruamel_yaml.pyx":546
  *                 event.end_mark.column,
  *                 None, None)
  *         if event.type == YAML_NO_EVENT:             # <<<<<<<<<<<<<<
@@ -6936,7 +6936,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
  */
     break;
 
-    /* "_yaml.pyx":548
+    /* "_ruamel_yaml.pyx":548
  *         if event.type == YAML_NO_EVENT:
  *             return None
  *         elif event.type == YAML_STREAM_START_EVENT:             # <<<<<<<<<<<<<<
@@ -6945,7 +6945,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
  */
     case YAML_STREAM_START_EVENT:
 
-    /* "_yaml.pyx":549
+    /* "_ruamel_yaml.pyx":549
  *             return None
  *         elif event.type == YAML_STREAM_START_EVENT:
  *             encoding = None             # <<<<<<<<<<<<<<
@@ -6955,7 +6955,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
     __Pyx_INCREF(Py_None);
     __pyx_v_encoding = Py_None;
 
-    /* "_yaml.pyx":550
+    /* "_ruamel_yaml.pyx":550
  *         elif event.type == YAML_STREAM_START_EVENT:
  *             encoding = None
  *             if event.data.stream_start.encoding == YAML_UTF8_ENCODING:             # <<<<<<<<<<<<<<
@@ -6965,7 +6965,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
     __pyx_t_5 = ((__pyx_v_event->data.stream_start.encoding == YAML_UTF8_ENCODING) != 0);
     if (__pyx_t_5) {
 
-      /* "_yaml.pyx":551
+      /* "_ruamel_yaml.pyx":551
  *             encoding = None
  *             if event.data.stream_start.encoding == YAML_UTF8_ENCODING:
  *                 if self.unicode_source == 0:             # <<<<<<<<<<<<<<
@@ -6975,7 +6975,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
       __pyx_t_5 = ((__pyx_v_self->unicode_source == 0) != 0);
       if (__pyx_t_5) {
 
-        /* "_yaml.pyx":552
+        /* "_ruamel_yaml.pyx":552
  *             if event.data.stream_start.encoding == YAML_UTF8_ENCODING:
  *                 if self.unicode_source == 0:
  *                     encoding = u"utf-8"             # <<<<<<<<<<<<<<
@@ -6985,7 +6985,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
         __Pyx_INCREF(__pyx_kp_u_utf_8);
         __Pyx_DECREF_SET(__pyx_v_encoding, __pyx_kp_u_utf_8);
 
-        /* "_yaml.pyx":551
+        /* "_ruamel_yaml.pyx":551
  *             encoding = None
  *             if event.data.stream_start.encoding == YAML_UTF8_ENCODING:
  *                 if self.unicode_source == 0:             # <<<<<<<<<<<<<<
@@ -6994,7 +6994,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
  */
       }
 
-      /* "_yaml.pyx":550
+      /* "_ruamel_yaml.pyx":550
  *         elif event.type == YAML_STREAM_START_EVENT:
  *             encoding = None
  *             if event.data.stream_start.encoding == YAML_UTF8_ENCODING:             # <<<<<<<<<<<<<<
@@ -7004,7 +7004,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
       goto __pyx_L3;
     }
 
-    /* "_yaml.pyx":553
+    /* "_ruamel_yaml.pyx":553
  *                 if self.unicode_source == 0:
  *                     encoding = u"utf-8"
  *             elif event.data.stream_start.encoding == YAML_UTF16LE_ENCODING:             # <<<<<<<<<<<<<<
@@ -7014,7 +7014,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
     __pyx_t_5 = ((__pyx_v_event->data.stream_start.encoding == YAML_UTF16LE_ENCODING) != 0);
     if (__pyx_t_5) {
 
-      /* "_yaml.pyx":554
+      /* "_ruamel_yaml.pyx":554
  *                     encoding = u"utf-8"
  *             elif event.data.stream_start.encoding == YAML_UTF16LE_ENCODING:
  *                 encoding = u"utf-16-le"             # <<<<<<<<<<<<<<
@@ -7024,7 +7024,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
       __Pyx_INCREF(__pyx_kp_u_utf_16_le);
       __Pyx_DECREF_SET(__pyx_v_encoding, __pyx_kp_u_utf_16_le);
 
-      /* "_yaml.pyx":553
+      /* "_ruamel_yaml.pyx":553
  *                 if self.unicode_source == 0:
  *                     encoding = u"utf-8"
  *             elif event.data.stream_start.encoding == YAML_UTF16LE_ENCODING:             # <<<<<<<<<<<<<<
@@ -7034,7 +7034,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
       goto __pyx_L3;
     }
 
-    /* "_yaml.pyx":555
+    /* "_ruamel_yaml.pyx":555
  *             elif event.data.stream_start.encoding == YAML_UTF16LE_ENCODING:
  *                 encoding = u"utf-16-le"
  *             elif event.data.stream_start.encoding == YAML_UTF16BE_ENCODING:             # <<<<<<<<<<<<<<
@@ -7044,7 +7044,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
     __pyx_t_5 = ((__pyx_v_event->data.stream_start.encoding == YAML_UTF16BE_ENCODING) != 0);
     if (__pyx_t_5) {
 
-      /* "_yaml.pyx":556
+      /* "_ruamel_yaml.pyx":556
  *                 encoding = u"utf-16-le"
  *             elif event.data.stream_start.encoding == YAML_UTF16BE_ENCODING:
  *                 encoding = u"utf-16-be"             # <<<<<<<<<<<<<<
@@ -7054,7 +7054,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
       __Pyx_INCREF(__pyx_kp_u_utf_16_be);
       __Pyx_DECREF_SET(__pyx_v_encoding, __pyx_kp_u_utf_16_be);
 
-      /* "_yaml.pyx":555
+      /* "_ruamel_yaml.pyx":555
  *             elif event.data.stream_start.encoding == YAML_UTF16LE_ENCODING:
  *                 encoding = u"utf-16-le"
  *             elif event.data.stream_start.encoding == YAML_UTF16BE_ENCODING:             # <<<<<<<<<<<<<<
@@ -7064,7 +7064,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
     }
     __pyx_L3:;
 
-    /* "_yaml.pyx":557
+    /* "_ruamel_yaml.pyx":557
  *             elif event.data.stream_start.encoding == YAML_UTF16BE_ENCODING:
  *                 encoding = u"utf-16-be"
  *             return StreamStartEvent(start_mark, end_mark, encoding)             # <<<<<<<<<<<<<<
@@ -7108,7 +7108,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
     __pyx_t_2 = 0;
     goto __pyx_L0;
 
-    /* "_yaml.pyx":548
+    /* "_ruamel_yaml.pyx":548
  *         if event.type == YAML_NO_EVENT:
  *             return None
  *         elif event.type == YAML_STREAM_START_EVENT:             # <<<<<<<<<<<<<<
@@ -7117,7 +7117,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
  */
     break;
 
-    /* "_yaml.pyx":558
+    /* "_ruamel_yaml.pyx":558
  *                 encoding = u"utf-16-be"
  *             return StreamStartEvent(start_mark, end_mark, encoding)
  *         elif event.type == YAML_STREAM_END_EVENT:             # <<<<<<<<<<<<<<
@@ -7126,7 +7126,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
  */
     case YAML_STREAM_END_EVENT:
 
-    /* "_yaml.pyx":559
+    /* "_ruamel_yaml.pyx":559
  *             return StreamStartEvent(start_mark, end_mark, encoding)
  *         elif event.type == YAML_STREAM_END_EVENT:
  *             return StreamEndEvent(start_mark, end_mark)             # <<<<<<<<<<<<<<
@@ -7167,7 +7167,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
     __pyx_t_2 = 0;
     goto __pyx_L0;
 
-    /* "_yaml.pyx":558
+    /* "_ruamel_yaml.pyx":558
  *                 encoding = u"utf-16-be"
  *             return StreamStartEvent(start_mark, end_mark, encoding)
  *         elif event.type == YAML_STREAM_END_EVENT:             # <<<<<<<<<<<<<<
@@ -7176,7 +7176,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
  */
     break;
 
-    /* "_yaml.pyx":560
+    /* "_ruamel_yaml.pyx":560
  *         elif event.type == YAML_STREAM_END_EVENT:
  *             return StreamEndEvent(start_mark, end_mark)
  *         elif event.type == YAML_DOCUMENT_START_EVENT:             # <<<<<<<<<<<<<<
@@ -7185,7 +7185,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
  */
     case YAML_DOCUMENT_START_EVENT:
 
-    /* "_yaml.pyx":561
+    /* "_ruamel_yaml.pyx":561
  *             return StreamEndEvent(start_mark, end_mark)
  *         elif event.type == YAML_DOCUMENT_START_EVENT:
  *             explicit = False             # <<<<<<<<<<<<<<
@@ -7194,7 +7194,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
  */
     __pyx_v_explicit = 0;
 
-    /* "_yaml.pyx":562
+    /* "_ruamel_yaml.pyx":562
  *         elif event.type == YAML_DOCUMENT_START_EVENT:
  *             explicit = False
  *             if event.data.document_start.implicit == 0:             # <<<<<<<<<<<<<<
@@ -7204,7 +7204,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
     __pyx_t_5 = ((__pyx_v_event->data.document_start.implicit == 0) != 0);
     if (__pyx_t_5) {
 
-      /* "_yaml.pyx":563
+      /* "_ruamel_yaml.pyx":563
  *             explicit = False
  *             if event.data.document_start.implicit == 0:
  *                 explicit = True             # <<<<<<<<<<<<<<
@@ -7213,7 +7213,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
  */
       __pyx_v_explicit = 1;
 
-      /* "_yaml.pyx":562
+      /* "_ruamel_yaml.pyx":562
  *         elif event.type == YAML_DOCUMENT_START_EVENT:
  *             explicit = False
  *             if event.data.document_start.implicit == 0:             # <<<<<<<<<<<<<<
@@ -7222,7 +7222,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
  */
     }
 
-    /* "_yaml.pyx":564
+    /* "_ruamel_yaml.pyx":564
  *             if event.data.document_start.implicit == 0:
  *                 explicit = True
  *             version = None             # <<<<<<<<<<<<<<
@@ -7232,7 +7232,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
     __Pyx_INCREF(Py_None);
     __pyx_v_version = Py_None;
 
-    /* "_yaml.pyx":565
+    /* "_ruamel_yaml.pyx":565
  *                 explicit = True
  *             version = None
  *             if event.data.document_start.version_directive != NULL:             # <<<<<<<<<<<<<<
@@ -7242,7 +7242,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
     __pyx_t_5 = ((__pyx_v_event->data.document_start.version_directive != NULL) != 0);
     if (__pyx_t_5) {
 
-      /* "_yaml.pyx":566
+      /* "_ruamel_yaml.pyx":566
  *             version = None
  *             if event.data.document_start.version_directive != NULL:
  *                 version = (event.data.document_start.version_directive.major,             # <<<<<<<<<<<<<<
@@ -7252,7 +7252,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
       __pyx_t_2 = __Pyx_PyInt_From_int(__pyx_v_event->data.document_start.version_directive->major); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 566; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_2);
 
-      /* "_yaml.pyx":567
+      /* "_ruamel_yaml.pyx":567
  *             if event.data.document_start.version_directive != NULL:
  *                 version = (event.data.document_start.version_directive.major,
  *                         event.data.document_start.version_directive.minor)             # <<<<<<<<<<<<<<
@@ -7262,7 +7262,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
       __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_event->data.document_start.version_directive->minor); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 567; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_1);
 
-      /* "_yaml.pyx":566
+      /* "_ruamel_yaml.pyx":566
  *             version = None
  *             if event.data.document_start.version_directive != NULL:
  *                 version = (event.data.document_start.version_directive.major,             # <<<<<<<<<<<<<<
@@ -7280,7 +7280,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
       __Pyx_DECREF_SET(__pyx_v_version, __pyx_t_4);
       __pyx_t_4 = 0;
 
-      /* "_yaml.pyx":565
+      /* "_ruamel_yaml.pyx":565
  *                 explicit = True
  *             version = None
  *             if event.data.document_start.version_directive != NULL:             # <<<<<<<<<<<<<<
@@ -7289,7 +7289,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
  */
     }
 
-    /* "_yaml.pyx":568
+    /* "_ruamel_yaml.pyx":568
  *                 version = (event.data.document_start.version_directive.major,
  *                         event.data.document_start.version_directive.minor)
  *             tags = None             # <<<<<<<<<<<<<<
@@ -7299,7 +7299,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
     __Pyx_INCREF(Py_None);
     __pyx_v_tags = Py_None;
 
-    /* "_yaml.pyx":569
+    /* "_ruamel_yaml.pyx":569
  *                         event.data.document_start.version_directive.minor)
  *             tags = None
  *             if event.data.document_start.tag_directives.start != NULL:             # <<<<<<<<<<<<<<
@@ -7309,7 +7309,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
     __pyx_t_5 = ((__pyx_v_event->data.document_start.tag_directives.start != NULL) != 0);
     if (__pyx_t_5) {
 
-      /* "_yaml.pyx":570
+      /* "_ruamel_yaml.pyx":570
  *             tags = None
  *             if event.data.document_start.tag_directives.start != NULL:
  *                 tags = {}             # <<<<<<<<<<<<<<
@@ -7321,7 +7321,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
       __Pyx_DECREF_SET(__pyx_v_tags, __pyx_t_4);
       __pyx_t_4 = 0;
 
-      /* "_yaml.pyx":571
+      /* "_ruamel_yaml.pyx":571
  *             if event.data.document_start.tag_directives.start != NULL:
  *                 tags = {}
  *                 tag_directive = event.data.document_start.tag_directives.start             # <<<<<<<<<<<<<<
@@ -7331,7 +7331,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
       __pyx_t_7 = __pyx_v_event->data.document_start.tag_directives.start;
       __pyx_v_tag_directive = __pyx_t_7;
 
-      /* "_yaml.pyx":572
+      /* "_ruamel_yaml.pyx":572
  *                 tags = {}
  *                 tag_directive = event.data.document_start.tag_directives.start
  *                 while tag_directive != event.data.document_start.tag_directives.end:             # <<<<<<<<<<<<<<
@@ -7342,7 +7342,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
         __pyx_t_5 = ((__pyx_v_tag_directive != __pyx_v_event->data.document_start.tag_directives.end) != 0);
         if (!__pyx_t_5) break;
 
-        /* "_yaml.pyx":573
+        /* "_ruamel_yaml.pyx":573
  *                 tag_directive = event.data.document_start.tag_directives.start
  *                 while tag_directive != event.data.document_start.tag_directives.end:
  *                     handle = PyUnicode_FromString(tag_directive.handle)             # <<<<<<<<<<<<<<
@@ -7354,7 +7354,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
         __Pyx_XDECREF_SET(__pyx_v_handle, __pyx_t_4);
         __pyx_t_4 = 0;
 
-        /* "_yaml.pyx":574
+        /* "_ruamel_yaml.pyx":574
  *                 while tag_directive != event.data.document_start.tag_directives.end:
  *                     handle = PyUnicode_FromString(tag_directive.handle)
  *                     prefix = PyUnicode_FromString(tag_directive.prefix)             # <<<<<<<<<<<<<<
@@ -7366,7 +7366,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
         __Pyx_XDECREF_SET(__pyx_v_prefix, __pyx_t_4);
         __pyx_t_4 = 0;
 
-        /* "_yaml.pyx":575
+        /* "_ruamel_yaml.pyx":575
  *                     handle = PyUnicode_FromString(tag_directive.handle)
  *                     prefix = PyUnicode_FromString(tag_directive.prefix)
  *                     tags[handle] = prefix             # <<<<<<<<<<<<<<
@@ -7375,7 +7375,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
  */
         if (unlikely(PyObject_SetItem(__pyx_v_tags, __pyx_v_handle, __pyx_v_prefix) < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 575; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-        /* "_yaml.pyx":576
+        /* "_ruamel_yaml.pyx":576
  *                     prefix = PyUnicode_FromString(tag_directive.prefix)
  *                     tags[handle] = prefix
  *                     tag_directive = tag_directive+1             # <<<<<<<<<<<<<<
@@ -7385,7 +7385,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
         __pyx_v_tag_directive = (__pyx_v_tag_directive + 1);
       }
 
-      /* "_yaml.pyx":569
+      /* "_ruamel_yaml.pyx":569
  *                         event.data.document_start.version_directive.minor)
  *             tags = None
  *             if event.data.document_start.tag_directives.start != NULL:             # <<<<<<<<<<<<<<
@@ -7394,7 +7394,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
  */
     }
 
-    /* "_yaml.pyx":577
+    /* "_ruamel_yaml.pyx":577
  *                     tags[handle] = prefix
  *                     tag_directive = tag_directive+1
  *             return DocumentStartEvent(start_mark, end_mark,             # <<<<<<<<<<<<<<
@@ -7405,7 +7405,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
     __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_DocumentStartEvent); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 577; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_1);
 
-    /* "_yaml.pyx":578
+    /* "_ruamel_yaml.pyx":578
  *                     tag_directive = tag_directive+1
  *             return DocumentStartEvent(start_mark, end_mark,
  *                     explicit, version, tags)             # <<<<<<<<<<<<<<
@@ -7454,7 +7454,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
     __pyx_t_4 = 0;
     goto __pyx_L0;
 
-    /* "_yaml.pyx":560
+    /* "_ruamel_yaml.pyx":560
  *         elif event.type == YAML_STREAM_END_EVENT:
  *             return StreamEndEvent(start_mark, end_mark)
  *         elif event.type == YAML_DOCUMENT_START_EVENT:             # <<<<<<<<<<<<<<
@@ -7463,7 +7463,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
  */
     break;
 
-    /* "_yaml.pyx":579
+    /* "_ruamel_yaml.pyx":579
  *             return DocumentStartEvent(start_mark, end_mark,
  *                     explicit, version, tags)
  *         elif event.type == YAML_DOCUMENT_END_EVENT:             # <<<<<<<<<<<<<<
@@ -7472,7 +7472,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
  */
     case YAML_DOCUMENT_END_EVENT:
 
-    /* "_yaml.pyx":580
+    /* "_ruamel_yaml.pyx":580
  *                     explicit, version, tags)
  *         elif event.type == YAML_DOCUMENT_END_EVENT:
  *             explicit = False             # <<<<<<<<<<<<<<
@@ -7481,7 +7481,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
  */
     __pyx_v_explicit = 0;
 
-    /* "_yaml.pyx":581
+    /* "_ruamel_yaml.pyx":581
  *         elif event.type == YAML_DOCUMENT_END_EVENT:
  *             explicit = False
  *             if event.data.document_end.implicit == 0:             # <<<<<<<<<<<<<<
@@ -7491,7 +7491,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
     __pyx_t_5 = ((__pyx_v_event->data.document_end.implicit == 0) != 0);
     if (__pyx_t_5) {
 
-      /* "_yaml.pyx":582
+      /* "_ruamel_yaml.pyx":582
  *             explicit = False
  *             if event.data.document_end.implicit == 0:
  *                 explicit = True             # <<<<<<<<<<<<<<
@@ -7500,7 +7500,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
  */
       __pyx_v_explicit = 1;
 
-      /* "_yaml.pyx":581
+      /* "_ruamel_yaml.pyx":581
  *         elif event.type == YAML_DOCUMENT_END_EVENT:
  *             explicit = False
  *             if event.data.document_end.implicit == 0:             # <<<<<<<<<<<<<<
@@ -7509,7 +7509,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
  */
     }
 
-    /* "_yaml.pyx":583
+    /* "_ruamel_yaml.pyx":583
  *             if event.data.document_end.implicit == 0:
  *                 explicit = True
  *             return DocumentEndEvent(start_mark, end_mark, explicit)             # <<<<<<<<<<<<<<
@@ -7555,7 +7555,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
     __pyx_t_4 = 0;
     goto __pyx_L0;
 
-    /* "_yaml.pyx":579
+    /* "_ruamel_yaml.pyx":579
  *             return DocumentStartEvent(start_mark, end_mark,
  *                     explicit, version, tags)
  *         elif event.type == YAML_DOCUMENT_END_EVENT:             # <<<<<<<<<<<<<<
@@ -7564,7 +7564,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
  */
     break;
 
-    /* "_yaml.pyx":584
+    /* "_ruamel_yaml.pyx":584
  *                 explicit = True
  *             return DocumentEndEvent(start_mark, end_mark, explicit)
  *         elif event.type == YAML_ALIAS_EVENT:             # <<<<<<<<<<<<<<
@@ -7573,7 +7573,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
  */
     case YAML_ALIAS_EVENT:
 
-    /* "_yaml.pyx":585
+    /* "_ruamel_yaml.pyx":585
  *             return DocumentEndEvent(start_mark, end_mark, explicit)
  *         elif event.type == YAML_ALIAS_EVENT:
  *             anchor = PyUnicode_FromString(event.data.alias.anchor)             # <<<<<<<<<<<<<<
@@ -7585,7 +7585,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
     __pyx_v_anchor = __pyx_t_4;
     __pyx_t_4 = 0;
 
-    /* "_yaml.pyx":586
+    /* "_ruamel_yaml.pyx":586
  *         elif event.type == YAML_ALIAS_EVENT:
  *             anchor = PyUnicode_FromString(event.data.alias.anchor)
  *             return AliasEvent(anchor, start_mark, end_mark)             # <<<<<<<<<<<<<<
@@ -7629,7 +7629,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
     __pyx_t_4 = 0;
     goto __pyx_L0;
 
-    /* "_yaml.pyx":584
+    /* "_ruamel_yaml.pyx":584
  *                 explicit = True
  *             return DocumentEndEvent(start_mark, end_mark, explicit)
  *         elif event.type == YAML_ALIAS_EVENT:             # <<<<<<<<<<<<<<
@@ -7638,7 +7638,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
  */
     break;
 
-    /* "_yaml.pyx":587
+    /* "_ruamel_yaml.pyx":587
  *             anchor = PyUnicode_FromString(event.data.alias.anchor)
  *             return AliasEvent(anchor, start_mark, end_mark)
  *         elif event.type == YAML_SCALAR_EVENT:             # <<<<<<<<<<<<<<
@@ -7647,7 +7647,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
  */
     case YAML_SCALAR_EVENT:
 
-    /* "_yaml.pyx":588
+    /* "_ruamel_yaml.pyx":588
  *             return AliasEvent(anchor, start_mark, end_mark)
  *         elif event.type == YAML_SCALAR_EVENT:
  *             anchor = None             # <<<<<<<<<<<<<<
@@ -7657,7 +7657,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
     __Pyx_INCREF(Py_None);
     __pyx_v_anchor = Py_None;
 
-    /* "_yaml.pyx":589
+    /* "_ruamel_yaml.pyx":589
  *         elif event.type == YAML_SCALAR_EVENT:
  *             anchor = None
  *             if event.data.scalar.anchor != NULL:             # <<<<<<<<<<<<<<
@@ -7667,7 +7667,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
     __pyx_t_5 = ((__pyx_v_event->data.scalar.anchor != NULL) != 0);
     if (__pyx_t_5) {
 
-      /* "_yaml.pyx":590
+      /* "_ruamel_yaml.pyx":590
  *             anchor = None
  *             if event.data.scalar.anchor != NULL:
  *                 anchor = PyUnicode_FromString(event.data.scalar.anchor)             # <<<<<<<<<<<<<<
@@ -7679,7 +7679,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
       __Pyx_DECREF_SET(__pyx_v_anchor, __pyx_t_4);
       __pyx_t_4 = 0;
 
-      /* "_yaml.pyx":589
+      /* "_ruamel_yaml.pyx":589
  *         elif event.type == YAML_SCALAR_EVENT:
  *             anchor = None
  *             if event.data.scalar.anchor != NULL:             # <<<<<<<<<<<<<<
@@ -7688,7 +7688,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
  */
     }
 
-    /* "_yaml.pyx":591
+    /* "_ruamel_yaml.pyx":591
  *             if event.data.scalar.anchor != NULL:
  *                 anchor = PyUnicode_FromString(event.data.scalar.anchor)
  *             tag = None             # <<<<<<<<<<<<<<
@@ -7698,7 +7698,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
     __Pyx_INCREF(Py_None);
     __pyx_v_tag = Py_None;
 
-    /* "_yaml.pyx":592
+    /* "_ruamel_yaml.pyx":592
  *                 anchor = PyUnicode_FromString(event.data.scalar.anchor)
  *             tag = None
  *             if event.data.scalar.tag != NULL:             # <<<<<<<<<<<<<<
@@ -7708,7 +7708,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
     __pyx_t_5 = ((__pyx_v_event->data.scalar.tag != NULL) != 0);
     if (__pyx_t_5) {
 
-      /* "_yaml.pyx":593
+      /* "_ruamel_yaml.pyx":593
  *             tag = None
  *             if event.data.scalar.tag != NULL:
  *                 tag = PyUnicode_FromString(event.data.scalar.tag)             # <<<<<<<<<<<<<<
@@ -7720,7 +7720,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
       __Pyx_DECREF_SET(__pyx_v_tag, __pyx_t_4);
       __pyx_t_4 = 0;
 
-      /* "_yaml.pyx":592
+      /* "_ruamel_yaml.pyx":592
  *                 anchor = PyUnicode_FromString(event.data.scalar.anchor)
  *             tag = None
  *             if event.data.scalar.tag != NULL:             # <<<<<<<<<<<<<<
@@ -7729,7 +7729,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
  */
     }
 
-    /* "_yaml.pyx":594
+    /* "_ruamel_yaml.pyx":594
  *             if event.data.scalar.tag != NULL:
  *                 tag = PyUnicode_FromString(event.data.scalar.tag)
  *             value = PyUnicode_DecodeUTF8(event.data.scalar.value,             # <<<<<<<<<<<<<<
@@ -7741,7 +7741,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
     __pyx_v_value = __pyx_t_4;
     __pyx_t_4 = 0;
 
-    /* "_yaml.pyx":596
+    /* "_ruamel_yaml.pyx":596
  *             value = PyUnicode_DecodeUTF8(event.data.scalar.value,
  *                     event.data.scalar.length, 'strict')
  *             plain_implicit = False             # <<<<<<<<<<<<<<
@@ -7750,7 +7750,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
  */
     __pyx_v_plain_implicit = 0;
 
-    /* "_yaml.pyx":597
+    /* "_ruamel_yaml.pyx":597
  *                     event.data.scalar.length, 'strict')
  *             plain_implicit = False
  *             if event.data.scalar.plain_implicit == 1:             # <<<<<<<<<<<<<<
@@ -7760,7 +7760,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
     __pyx_t_5 = ((__pyx_v_event->data.scalar.plain_implicit == 1) != 0);
     if (__pyx_t_5) {
 
-      /* "_yaml.pyx":598
+      /* "_ruamel_yaml.pyx":598
  *             plain_implicit = False
  *             if event.data.scalar.plain_implicit == 1:
  *                 plain_implicit = True             # <<<<<<<<<<<<<<
@@ -7769,7 +7769,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
  */
       __pyx_v_plain_implicit = 1;
 
-      /* "_yaml.pyx":597
+      /* "_ruamel_yaml.pyx":597
  *                     event.data.scalar.length, 'strict')
  *             plain_implicit = False
  *             if event.data.scalar.plain_implicit == 1:             # <<<<<<<<<<<<<<
@@ -7778,7 +7778,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
  */
     }
 
-    /* "_yaml.pyx":599
+    /* "_ruamel_yaml.pyx":599
  *             if event.data.scalar.plain_implicit == 1:
  *                 plain_implicit = True
  *             quoted_implicit = False             # <<<<<<<<<<<<<<
@@ -7787,7 +7787,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
  */
     __pyx_v_quoted_implicit = 0;
 
-    /* "_yaml.pyx":600
+    /* "_ruamel_yaml.pyx":600
  *                 plain_implicit = True
  *             quoted_implicit = False
  *             if event.data.scalar.quoted_implicit == 1:             # <<<<<<<<<<<<<<
@@ -7797,7 +7797,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
     __pyx_t_5 = ((__pyx_v_event->data.scalar.quoted_implicit == 1) != 0);
     if (__pyx_t_5) {
 
-      /* "_yaml.pyx":601
+      /* "_ruamel_yaml.pyx":601
  *             quoted_implicit = False
  *             if event.data.scalar.quoted_implicit == 1:
  *                 quoted_implicit = True             # <<<<<<<<<<<<<<
@@ -7806,7 +7806,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
  */
       __pyx_v_quoted_implicit = 1;
 
-      /* "_yaml.pyx":600
+      /* "_ruamel_yaml.pyx":600
  *                 plain_implicit = True
  *             quoted_implicit = False
  *             if event.data.scalar.quoted_implicit == 1:             # <<<<<<<<<<<<<<
@@ -7815,7 +7815,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
  */
     }
 
-    /* "_yaml.pyx":602
+    /* "_ruamel_yaml.pyx":602
  *             if event.data.scalar.quoted_implicit == 1:
  *                 quoted_implicit = True
  *             style = None             # <<<<<<<<<<<<<<
@@ -7825,7 +7825,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
     __Pyx_INCREF(Py_None);
     __pyx_v_style = Py_None;
 
-    /* "_yaml.pyx":603
+    /* "_ruamel_yaml.pyx":603
  *                 quoted_implicit = True
  *             style = None
  *             if event.data.scalar.style == YAML_PLAIN_SCALAR_STYLE:             # <<<<<<<<<<<<<<
@@ -7835,7 +7835,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
     __pyx_t_5 = ((__pyx_v_event->data.scalar.style == YAML_PLAIN_SCALAR_STYLE) != 0);
     if (__pyx_t_5) {
 
-      /* "_yaml.pyx":604
+      /* "_ruamel_yaml.pyx":604
  *             style = None
  *             if event.data.scalar.style == YAML_PLAIN_SCALAR_STYLE:
  *                 style = u''             # <<<<<<<<<<<<<<
@@ -7845,7 +7845,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
       __Pyx_INCREF(__pyx_kp_u__6);
       __Pyx_DECREF_SET(__pyx_v_style, __pyx_kp_u__6);
 
-      /* "_yaml.pyx":603
+      /* "_ruamel_yaml.pyx":603
  *                 quoted_implicit = True
  *             style = None
  *             if event.data.scalar.style == YAML_PLAIN_SCALAR_STYLE:             # <<<<<<<<<<<<<<
@@ -7855,7 +7855,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
       goto __pyx_L15;
     }
 
-    /* "_yaml.pyx":605
+    /* "_ruamel_yaml.pyx":605
  *             if event.data.scalar.style == YAML_PLAIN_SCALAR_STYLE:
  *                 style = u''
  *             elif event.data.scalar.style == YAML_SINGLE_QUOTED_SCALAR_STYLE:             # <<<<<<<<<<<<<<
@@ -7865,7 +7865,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
     __pyx_t_5 = ((__pyx_v_event->data.scalar.style == YAML_SINGLE_QUOTED_SCALAR_STYLE) != 0);
     if (__pyx_t_5) {
 
-      /* "_yaml.pyx":606
+      /* "_ruamel_yaml.pyx":606
  *                 style = u''
  *             elif event.data.scalar.style == YAML_SINGLE_QUOTED_SCALAR_STYLE:
  *                 style = u'\''             # <<<<<<<<<<<<<<
@@ -7875,7 +7875,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
       __Pyx_INCREF(__pyx_kp_u__7);
       __Pyx_DECREF_SET(__pyx_v_style, __pyx_kp_u__7);
 
-      /* "_yaml.pyx":605
+      /* "_ruamel_yaml.pyx":605
  *             if event.data.scalar.style == YAML_PLAIN_SCALAR_STYLE:
  *                 style = u''
  *             elif event.data.scalar.style == YAML_SINGLE_QUOTED_SCALAR_STYLE:             # <<<<<<<<<<<<<<
@@ -7885,7 +7885,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
       goto __pyx_L15;
     }
 
-    /* "_yaml.pyx":607
+    /* "_ruamel_yaml.pyx":607
  *             elif event.data.scalar.style == YAML_SINGLE_QUOTED_SCALAR_STYLE:
  *                 style = u'\''
  *             elif event.data.scalar.style == YAML_DOUBLE_QUOTED_SCALAR_STYLE:             # <<<<<<<<<<<<<<
@@ -7895,7 +7895,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
     __pyx_t_5 = ((__pyx_v_event->data.scalar.style == YAML_DOUBLE_QUOTED_SCALAR_STYLE) != 0);
     if (__pyx_t_5) {
 
-      /* "_yaml.pyx":608
+      /* "_ruamel_yaml.pyx":608
  *                 style = u'\''
  *             elif event.data.scalar.style == YAML_DOUBLE_QUOTED_SCALAR_STYLE:
  *                 style = u'"'             # <<<<<<<<<<<<<<
@@ -7905,7 +7905,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
       __Pyx_INCREF(__pyx_kp_u__8);
       __Pyx_DECREF_SET(__pyx_v_style, __pyx_kp_u__8);
 
-      /* "_yaml.pyx":607
+      /* "_ruamel_yaml.pyx":607
  *             elif event.data.scalar.style == YAML_SINGLE_QUOTED_SCALAR_STYLE:
  *                 style = u'\''
  *             elif event.data.scalar.style == YAML_DOUBLE_QUOTED_SCALAR_STYLE:             # <<<<<<<<<<<<<<
@@ -7915,7 +7915,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
       goto __pyx_L15;
     }
 
-    /* "_yaml.pyx":609
+    /* "_ruamel_yaml.pyx":609
  *             elif event.data.scalar.style == YAML_DOUBLE_QUOTED_SCALAR_STYLE:
  *                 style = u'"'
  *             elif event.data.scalar.style == YAML_LITERAL_SCALAR_STYLE:             # <<<<<<<<<<<<<<
@@ -7925,7 +7925,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
     __pyx_t_5 = ((__pyx_v_event->data.scalar.style == YAML_LITERAL_SCALAR_STYLE) != 0);
     if (__pyx_t_5) {
 
-      /* "_yaml.pyx":610
+      /* "_ruamel_yaml.pyx":610
  *                 style = u'"'
  *             elif event.data.scalar.style == YAML_LITERAL_SCALAR_STYLE:
  *                 style = u'|'             # <<<<<<<<<<<<<<
@@ -7935,7 +7935,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
       __Pyx_INCREF(__pyx_kp_u__9);
       __Pyx_DECREF_SET(__pyx_v_style, __pyx_kp_u__9);
 
-      /* "_yaml.pyx":609
+      /* "_ruamel_yaml.pyx":609
  *             elif event.data.scalar.style == YAML_DOUBLE_QUOTED_SCALAR_STYLE:
  *                 style = u'"'
  *             elif event.data.scalar.style == YAML_LITERAL_SCALAR_STYLE:             # <<<<<<<<<<<<<<
@@ -7945,7 +7945,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
       goto __pyx_L15;
     }
 
-    /* "_yaml.pyx":611
+    /* "_ruamel_yaml.pyx":611
  *             elif event.data.scalar.style == YAML_LITERAL_SCALAR_STYLE:
  *                 style = u'|'
  *             elif event.data.scalar.style == YAML_FOLDED_SCALAR_STYLE:             # <<<<<<<<<<<<<<
@@ -7955,7 +7955,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
     __pyx_t_5 = ((__pyx_v_event->data.scalar.style == YAML_FOLDED_SCALAR_STYLE) != 0);
     if (__pyx_t_5) {
 
-      /* "_yaml.pyx":612
+      /* "_ruamel_yaml.pyx":612
  *                 style = u'|'
  *             elif event.data.scalar.style == YAML_FOLDED_SCALAR_STYLE:
  *                 style = u'>'             # <<<<<<<<<<<<<<
@@ -7965,7 +7965,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
       __Pyx_INCREF(__pyx_kp_u__10);
       __Pyx_DECREF_SET(__pyx_v_style, __pyx_kp_u__10);
 
-      /* "_yaml.pyx":611
+      /* "_ruamel_yaml.pyx":611
  *             elif event.data.scalar.style == YAML_LITERAL_SCALAR_STYLE:
  *                 style = u'|'
  *             elif event.data.scalar.style == YAML_FOLDED_SCALAR_STYLE:             # <<<<<<<<<<<<<<
@@ -7975,7 +7975,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
     }
     __pyx_L15:;
 
-    /* "_yaml.pyx":613
+    /* "_ruamel_yaml.pyx":613
  *             elif event.data.scalar.style == YAML_FOLDED_SCALAR_STYLE:
  *                 style = u'>'
  *             return ScalarEvent(anchor, tag,             # <<<<<<<<<<<<<<
@@ -7986,7 +7986,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
     __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_ScalarEvent); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 613; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_1);
 
-    /* "_yaml.pyx":614
+    /* "_ruamel_yaml.pyx":614
  *                 style = u'>'
  *             return ScalarEvent(anchor, tag,
  *                     (plain_implicit, quoted_implicit),             # <<<<<<<<<<<<<<
@@ -8006,7 +8006,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
     __pyx_t_8 = 0;
     __pyx_t_3 = 0;
 
-    /* "_yaml.pyx":615
+    /* "_ruamel_yaml.pyx":615
  *             return ScalarEvent(anchor, tag,
  *                     (plain_implicit, quoted_implicit),
  *                     value, start_mark, end_mark, style)             # <<<<<<<<<<<<<<
@@ -8059,7 +8059,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
     __pyx_t_4 = 0;
     goto __pyx_L0;
 
-    /* "_yaml.pyx":587
+    /* "_ruamel_yaml.pyx":587
  *             anchor = PyUnicode_FromString(event.data.alias.anchor)
  *             return AliasEvent(anchor, start_mark, end_mark)
  *         elif event.type == YAML_SCALAR_EVENT:             # <<<<<<<<<<<<<<
@@ -8068,7 +8068,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
  */
     break;
 
-    /* "_yaml.pyx":616
+    /* "_ruamel_yaml.pyx":616
  *                     (plain_implicit, quoted_implicit),
  *                     value, start_mark, end_mark, style)
  *         elif event.type == YAML_SEQUENCE_START_EVENT:             # <<<<<<<<<<<<<<
@@ -8077,7 +8077,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
  */
     case YAML_SEQUENCE_START_EVENT:
 
-    /* "_yaml.pyx":617
+    /* "_ruamel_yaml.pyx":617
  *                     value, start_mark, end_mark, style)
  *         elif event.type == YAML_SEQUENCE_START_EVENT:
  *             anchor = None             # <<<<<<<<<<<<<<
@@ -8087,7 +8087,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
     __Pyx_INCREF(Py_None);
     __pyx_v_anchor = Py_None;
 
-    /* "_yaml.pyx":618
+    /* "_ruamel_yaml.pyx":618
  *         elif event.type == YAML_SEQUENCE_START_EVENT:
  *             anchor = None
  *             if event.data.sequence_start.anchor != NULL:             # <<<<<<<<<<<<<<
@@ -8097,7 +8097,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
     __pyx_t_5 = ((__pyx_v_event->data.sequence_start.anchor != NULL) != 0);
     if (__pyx_t_5) {
 
-      /* "_yaml.pyx":619
+      /* "_ruamel_yaml.pyx":619
  *             anchor = None
  *             if event.data.sequence_start.anchor != NULL:
  *                 anchor = PyUnicode_FromString(event.data.sequence_start.anchor)             # <<<<<<<<<<<<<<
@@ -8109,7 +8109,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
       __Pyx_DECREF_SET(__pyx_v_anchor, __pyx_t_4);
       __pyx_t_4 = 0;
 
-      /* "_yaml.pyx":618
+      /* "_ruamel_yaml.pyx":618
  *         elif event.type == YAML_SEQUENCE_START_EVENT:
  *             anchor = None
  *             if event.data.sequence_start.anchor != NULL:             # <<<<<<<<<<<<<<
@@ -8118,7 +8118,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
  */
     }
 
-    /* "_yaml.pyx":620
+    /* "_ruamel_yaml.pyx":620
  *             if event.data.sequence_start.anchor != NULL:
  *                 anchor = PyUnicode_FromString(event.data.sequence_start.anchor)
  *             tag = None             # <<<<<<<<<<<<<<
@@ -8128,7 +8128,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
     __Pyx_INCREF(Py_None);
     __pyx_v_tag = Py_None;
 
-    /* "_yaml.pyx":621
+    /* "_ruamel_yaml.pyx":621
  *                 anchor = PyUnicode_FromString(event.data.sequence_start.anchor)
  *             tag = None
  *             if event.data.sequence_start.tag != NULL:             # <<<<<<<<<<<<<<
@@ -8138,7 +8138,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
     __pyx_t_5 = ((__pyx_v_event->data.sequence_start.tag != NULL) != 0);
     if (__pyx_t_5) {
 
-      /* "_yaml.pyx":622
+      /* "_ruamel_yaml.pyx":622
  *             tag = None
  *             if event.data.sequence_start.tag != NULL:
  *                 tag = PyUnicode_FromString(event.data.sequence_start.tag)             # <<<<<<<<<<<<<<
@@ -8150,7 +8150,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
       __Pyx_DECREF_SET(__pyx_v_tag, __pyx_t_4);
       __pyx_t_4 = 0;
 
-      /* "_yaml.pyx":621
+      /* "_ruamel_yaml.pyx":621
  *                 anchor = PyUnicode_FromString(event.data.sequence_start.anchor)
  *             tag = None
  *             if event.data.sequence_start.tag != NULL:             # <<<<<<<<<<<<<<
@@ -8159,7 +8159,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
  */
     }
 
-    /* "_yaml.pyx":623
+    /* "_ruamel_yaml.pyx":623
  *             if event.data.sequence_start.tag != NULL:
  *                 tag = PyUnicode_FromString(event.data.sequence_start.tag)
  *             implicit = False             # <<<<<<<<<<<<<<
@@ -8168,7 +8168,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
  */
     __pyx_v_implicit = 0;
 
-    /* "_yaml.pyx":624
+    /* "_ruamel_yaml.pyx":624
  *                 tag = PyUnicode_FromString(event.data.sequence_start.tag)
  *             implicit = False
  *             if event.data.sequence_start.implicit == 1:             # <<<<<<<<<<<<<<
@@ -8178,7 +8178,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
     __pyx_t_5 = ((__pyx_v_event->data.sequence_start.implicit == 1) != 0);
     if (__pyx_t_5) {
 
-      /* "_yaml.pyx":625
+      /* "_ruamel_yaml.pyx":625
  *             implicit = False
  *             if event.data.sequence_start.implicit == 1:
  *                 implicit = True             # <<<<<<<<<<<<<<
@@ -8187,7 +8187,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
  */
       __pyx_v_implicit = 1;
 
-      /* "_yaml.pyx":624
+      /* "_ruamel_yaml.pyx":624
  *                 tag = PyUnicode_FromString(event.data.sequence_start.tag)
  *             implicit = False
  *             if event.data.sequence_start.implicit == 1:             # <<<<<<<<<<<<<<
@@ -8196,7 +8196,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
  */
     }
 
-    /* "_yaml.pyx":626
+    /* "_ruamel_yaml.pyx":626
  *             if event.data.sequence_start.implicit == 1:
  *                 implicit = True
  *             flow_style = None             # <<<<<<<<<<<<<<
@@ -8206,7 +8206,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
     __Pyx_INCREF(Py_None);
     __pyx_v_flow_style = Py_None;
 
-    /* "_yaml.pyx":627
+    /* "_ruamel_yaml.pyx":627
  *                 implicit = True
  *             flow_style = None
  *             if event.data.sequence_start.style == YAML_FLOW_SEQUENCE_STYLE:             # <<<<<<<<<<<<<<
@@ -8216,7 +8216,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
     __pyx_t_5 = ((__pyx_v_event->data.sequence_start.style == YAML_FLOW_SEQUENCE_STYLE) != 0);
     if (__pyx_t_5) {
 
-      /* "_yaml.pyx":628
+      /* "_ruamel_yaml.pyx":628
  *             flow_style = None
  *             if event.data.sequence_start.style == YAML_FLOW_SEQUENCE_STYLE:
  *                 flow_style = True             # <<<<<<<<<<<<<<
@@ -8226,7 +8226,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
       __Pyx_INCREF(Py_True);
       __Pyx_DECREF_SET(__pyx_v_flow_style, Py_True);
 
-      /* "_yaml.pyx":627
+      /* "_ruamel_yaml.pyx":627
  *                 implicit = True
  *             flow_style = None
  *             if event.data.sequence_start.style == YAML_FLOW_SEQUENCE_STYLE:             # <<<<<<<<<<<<<<
@@ -8236,7 +8236,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
       goto __pyx_L19;
     }
 
-    /* "_yaml.pyx":629
+    /* "_ruamel_yaml.pyx":629
  *             if event.data.sequence_start.style == YAML_FLOW_SEQUENCE_STYLE:
  *                 flow_style = True
  *             elif event.data.sequence_start.style == YAML_BLOCK_SEQUENCE_STYLE:             # <<<<<<<<<<<<<<
@@ -8246,7 +8246,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
     __pyx_t_5 = ((__pyx_v_event->data.sequence_start.style == YAML_BLOCK_SEQUENCE_STYLE) != 0);
     if (__pyx_t_5) {
 
-      /* "_yaml.pyx":630
+      /* "_ruamel_yaml.pyx":630
  *                 flow_style = True
  *             elif event.data.sequence_start.style == YAML_BLOCK_SEQUENCE_STYLE:
  *                 flow_style = False             # <<<<<<<<<<<<<<
@@ -8256,7 +8256,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
       __Pyx_INCREF(Py_False);
       __Pyx_DECREF_SET(__pyx_v_flow_style, Py_False);
 
-      /* "_yaml.pyx":629
+      /* "_ruamel_yaml.pyx":629
  *             if event.data.sequence_start.style == YAML_FLOW_SEQUENCE_STYLE:
  *                 flow_style = True
  *             elif event.data.sequence_start.style == YAML_BLOCK_SEQUENCE_STYLE:             # <<<<<<<<<<<<<<
@@ -8266,7 +8266,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
     }
     __pyx_L19:;
 
-    /* "_yaml.pyx":631
+    /* "_ruamel_yaml.pyx":631
  *             elif event.data.sequence_start.style == YAML_BLOCK_SEQUENCE_STYLE:
  *                 flow_style = False
  *             return SequenceStartEvent(anchor, tag, implicit,             # <<<<<<<<<<<<<<
@@ -8279,7 +8279,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
     __pyx_t_8 = __Pyx_PyBool_FromLong(__pyx_v_implicit); if (unlikely(!__pyx_t_8)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 631; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_8);
 
-    /* "_yaml.pyx":632
+    /* "_ruamel_yaml.pyx":632
  *                 flow_style = False
  *             return SequenceStartEvent(anchor, tag, implicit,
  *                     start_mark, end_mark, flow_style)             # <<<<<<<<<<<<<<
@@ -8329,7 +8329,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
     __pyx_t_4 = 0;
     goto __pyx_L0;
 
-    /* "_yaml.pyx":616
+    /* "_ruamel_yaml.pyx":616
  *                     (plain_implicit, quoted_implicit),
  *                     value, start_mark, end_mark, style)
  *         elif event.type == YAML_SEQUENCE_START_EVENT:             # <<<<<<<<<<<<<<
@@ -8338,7 +8338,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
  */
     break;
 
-    /* "_yaml.pyx":633
+    /* "_ruamel_yaml.pyx":633
  *             return SequenceStartEvent(anchor, tag, implicit,
  *                     start_mark, end_mark, flow_style)
  *         elif event.type == YAML_MAPPING_START_EVENT:             # <<<<<<<<<<<<<<
@@ -8347,7 +8347,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
  */
     case YAML_MAPPING_START_EVENT:
 
-    /* "_yaml.pyx":634
+    /* "_ruamel_yaml.pyx":634
  *                     start_mark, end_mark, flow_style)
  *         elif event.type == YAML_MAPPING_START_EVENT:
  *             anchor = None             # <<<<<<<<<<<<<<
@@ -8357,7 +8357,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
     __Pyx_INCREF(Py_None);
     __pyx_v_anchor = Py_None;
 
-    /* "_yaml.pyx":635
+    /* "_ruamel_yaml.pyx":635
  *         elif event.type == YAML_MAPPING_START_EVENT:
  *             anchor = None
  *             if event.data.mapping_start.anchor != NULL:             # <<<<<<<<<<<<<<
@@ -8367,7 +8367,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
     __pyx_t_5 = ((__pyx_v_event->data.mapping_start.anchor != NULL) != 0);
     if (__pyx_t_5) {
 
-      /* "_yaml.pyx":636
+      /* "_ruamel_yaml.pyx":636
  *             anchor = None
  *             if event.data.mapping_start.anchor != NULL:
  *                 anchor = PyUnicode_FromString(event.data.mapping_start.anchor)             # <<<<<<<<<<<<<<
@@ -8379,7 +8379,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
       __Pyx_DECREF_SET(__pyx_v_anchor, __pyx_t_4);
       __pyx_t_4 = 0;
 
-      /* "_yaml.pyx":635
+      /* "_ruamel_yaml.pyx":635
  *         elif event.type == YAML_MAPPING_START_EVENT:
  *             anchor = None
  *             if event.data.mapping_start.anchor != NULL:             # <<<<<<<<<<<<<<
@@ -8388,7 +8388,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
  */
     }
 
-    /* "_yaml.pyx":637
+    /* "_ruamel_yaml.pyx":637
  *             if event.data.mapping_start.anchor != NULL:
  *                 anchor = PyUnicode_FromString(event.data.mapping_start.anchor)
  *             tag = None             # <<<<<<<<<<<<<<
@@ -8398,7 +8398,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
     __Pyx_INCREF(Py_None);
     __pyx_v_tag = Py_None;
 
-    /* "_yaml.pyx":638
+    /* "_ruamel_yaml.pyx":638
  *                 anchor = PyUnicode_FromString(event.data.mapping_start.anchor)
  *             tag = None
  *             if event.data.mapping_start.tag != NULL:             # <<<<<<<<<<<<<<
@@ -8408,7 +8408,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
     __pyx_t_5 = ((__pyx_v_event->data.mapping_start.tag != NULL) != 0);
     if (__pyx_t_5) {
 
-      /* "_yaml.pyx":639
+      /* "_ruamel_yaml.pyx":639
  *             tag = None
  *             if event.data.mapping_start.tag != NULL:
  *                 tag = PyUnicode_FromString(event.data.mapping_start.tag)             # <<<<<<<<<<<<<<
@@ -8420,7 +8420,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
       __Pyx_DECREF_SET(__pyx_v_tag, __pyx_t_4);
       __pyx_t_4 = 0;
 
-      /* "_yaml.pyx":638
+      /* "_ruamel_yaml.pyx":638
  *                 anchor = PyUnicode_FromString(event.data.mapping_start.anchor)
  *             tag = None
  *             if event.data.mapping_start.tag != NULL:             # <<<<<<<<<<<<<<
@@ -8429,7 +8429,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
  */
     }
 
-    /* "_yaml.pyx":640
+    /* "_ruamel_yaml.pyx":640
  *             if event.data.mapping_start.tag != NULL:
  *                 tag = PyUnicode_FromString(event.data.mapping_start.tag)
  *             implicit = False             # <<<<<<<<<<<<<<
@@ -8438,7 +8438,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
  */
     __pyx_v_implicit = 0;
 
-    /* "_yaml.pyx":641
+    /* "_ruamel_yaml.pyx":641
  *                 tag = PyUnicode_FromString(event.data.mapping_start.tag)
  *             implicit = False
  *             if event.data.mapping_start.implicit == 1:             # <<<<<<<<<<<<<<
@@ -8448,7 +8448,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
     __pyx_t_5 = ((__pyx_v_event->data.mapping_start.implicit == 1) != 0);
     if (__pyx_t_5) {
 
-      /* "_yaml.pyx":642
+      /* "_ruamel_yaml.pyx":642
  *             implicit = False
  *             if event.data.mapping_start.implicit == 1:
  *                 implicit = True             # <<<<<<<<<<<<<<
@@ -8457,7 +8457,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
  */
       __pyx_v_implicit = 1;
 
-      /* "_yaml.pyx":641
+      /* "_ruamel_yaml.pyx":641
  *                 tag = PyUnicode_FromString(event.data.mapping_start.tag)
  *             implicit = False
  *             if event.data.mapping_start.implicit == 1:             # <<<<<<<<<<<<<<
@@ -8466,7 +8466,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
  */
     }
 
-    /* "_yaml.pyx":643
+    /* "_ruamel_yaml.pyx":643
  *             if event.data.mapping_start.implicit == 1:
  *                 implicit = True
  *             flow_style = None             # <<<<<<<<<<<<<<
@@ -8476,7 +8476,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
     __Pyx_INCREF(Py_None);
     __pyx_v_flow_style = Py_None;
 
-    /* "_yaml.pyx":644
+    /* "_ruamel_yaml.pyx":644
  *                 implicit = True
  *             flow_style = None
  *             if event.data.mapping_start.style == YAML_FLOW_MAPPING_STYLE:             # <<<<<<<<<<<<<<
@@ -8486,7 +8486,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
     __pyx_t_5 = ((__pyx_v_event->data.mapping_start.style == YAML_FLOW_MAPPING_STYLE) != 0);
     if (__pyx_t_5) {
 
-      /* "_yaml.pyx":645
+      /* "_ruamel_yaml.pyx":645
  *             flow_style = None
  *             if event.data.mapping_start.style == YAML_FLOW_MAPPING_STYLE:
  *                 flow_style = True             # <<<<<<<<<<<<<<
@@ -8496,7 +8496,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
       __Pyx_INCREF(Py_True);
       __Pyx_DECREF_SET(__pyx_v_flow_style, Py_True);
 
-      /* "_yaml.pyx":644
+      /* "_ruamel_yaml.pyx":644
  *                 implicit = True
  *             flow_style = None
  *             if event.data.mapping_start.style == YAML_FLOW_MAPPING_STYLE:             # <<<<<<<<<<<<<<
@@ -8506,7 +8506,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
       goto __pyx_L23;
     }
 
-    /* "_yaml.pyx":646
+    /* "_ruamel_yaml.pyx":646
  *             if event.data.mapping_start.style == YAML_FLOW_MAPPING_STYLE:
  *                 flow_style = True
  *             elif event.data.mapping_start.style == YAML_BLOCK_MAPPING_STYLE:             # <<<<<<<<<<<<<<
@@ -8516,7 +8516,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
     __pyx_t_5 = ((__pyx_v_event->data.mapping_start.style == YAML_BLOCK_MAPPING_STYLE) != 0);
     if (__pyx_t_5) {
 
-      /* "_yaml.pyx":647
+      /* "_ruamel_yaml.pyx":647
  *                 flow_style = True
  *             elif event.data.mapping_start.style == YAML_BLOCK_MAPPING_STYLE:
  *                 flow_style = False             # <<<<<<<<<<<<<<
@@ -8526,7 +8526,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
       __Pyx_INCREF(Py_False);
       __Pyx_DECREF_SET(__pyx_v_flow_style, Py_False);
 
-      /* "_yaml.pyx":646
+      /* "_ruamel_yaml.pyx":646
  *             if event.data.mapping_start.style == YAML_FLOW_MAPPING_STYLE:
  *                 flow_style = True
  *             elif event.data.mapping_start.style == YAML_BLOCK_MAPPING_STYLE:             # <<<<<<<<<<<<<<
@@ -8536,7 +8536,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
     }
     __pyx_L23:;
 
-    /* "_yaml.pyx":648
+    /* "_ruamel_yaml.pyx":648
  *             elif event.data.mapping_start.style == YAML_BLOCK_MAPPING_STYLE:
  *                 flow_style = False
  *             return MappingStartEvent(anchor, tag, implicit,             # <<<<<<<<<<<<<<
@@ -8549,7 +8549,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
     __pyx_t_3 = __Pyx_PyBool_FromLong(__pyx_v_implicit); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 648; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_3);
 
-    /* "_yaml.pyx":649
+    /* "_ruamel_yaml.pyx":649
  *                 flow_style = False
  *             return MappingStartEvent(anchor, tag, implicit,
  *                     start_mark, end_mark, flow_style)             # <<<<<<<<<<<<<<
@@ -8599,7 +8599,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
     __pyx_t_4 = 0;
     goto __pyx_L0;
 
-    /* "_yaml.pyx":633
+    /* "_ruamel_yaml.pyx":633
  *             return SequenceStartEvent(anchor, tag, implicit,
  *                     start_mark, end_mark, flow_style)
  *         elif event.type == YAML_MAPPING_START_EVENT:             # <<<<<<<<<<<<<<
@@ -8608,7 +8608,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
  */
     break;
 
-    /* "_yaml.pyx":650
+    /* "_ruamel_yaml.pyx":650
  *             return MappingStartEvent(anchor, tag, implicit,
  *                     start_mark, end_mark, flow_style)
  *         elif event.type == YAML_SEQUENCE_END_EVENT:             # <<<<<<<<<<<<<<
@@ -8617,7 +8617,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
  */
     case YAML_SEQUENCE_END_EVENT:
 
-    /* "_yaml.pyx":651
+    /* "_ruamel_yaml.pyx":651
  *                     start_mark, end_mark, flow_style)
  *         elif event.type == YAML_SEQUENCE_END_EVENT:
  *             return SequenceEndEvent(start_mark, end_mark)             # <<<<<<<<<<<<<<
@@ -8658,7 +8658,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
     __pyx_t_4 = 0;
     goto __pyx_L0;
 
-    /* "_yaml.pyx":650
+    /* "_ruamel_yaml.pyx":650
  *             return MappingStartEvent(anchor, tag, implicit,
  *                     start_mark, end_mark, flow_style)
  *         elif event.type == YAML_SEQUENCE_END_EVENT:             # <<<<<<<<<<<<<<
@@ -8667,7 +8667,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
  */
     break;
 
-    /* "_yaml.pyx":652
+    /* "_ruamel_yaml.pyx":652
  *         elif event.type == YAML_SEQUENCE_END_EVENT:
  *             return SequenceEndEvent(start_mark, end_mark)
  *         elif event.type == YAML_MAPPING_END_EVENT:             # <<<<<<<<<<<<<<
@@ -8676,7 +8676,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
  */
     case YAML_MAPPING_END_EVENT:
 
-    /* "_yaml.pyx":653
+    /* "_ruamel_yaml.pyx":653
  *             return SequenceEndEvent(start_mark, end_mark)
  *         elif event.type == YAML_MAPPING_END_EVENT:
  *             return MappingEndEvent(start_mark, end_mark)             # <<<<<<<<<<<<<<
@@ -8717,7 +8717,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
     __pyx_t_4 = 0;
     goto __pyx_L0;
 
-    /* "_yaml.pyx":652
+    /* "_ruamel_yaml.pyx":652
  *         elif event.type == YAML_SEQUENCE_END_EVENT:
  *             return SequenceEndEvent(start_mark, end_mark)
  *         elif event.type == YAML_MAPPING_END_EVENT:             # <<<<<<<<<<<<<<
@@ -8727,7 +8727,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
     break;
     default:
 
-    /* "_yaml.pyx":655
+    /* "_ruamel_yaml.pyx":655
  *             return MappingEndEvent(start_mark, end_mark)
  *         else:
  *             if PY_MAJOR_VERSION < 3:             # <<<<<<<<<<<<<<
@@ -8737,7 +8737,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
     __pyx_t_5 = ((PY_MAJOR_VERSION < 3) != 0);
     if (__pyx_t_5) {
 
-      /* "_yaml.pyx":656
+      /* "_ruamel_yaml.pyx":656
  *         else:
  *             if PY_MAJOR_VERSION < 3:
  *                 raise ValueError("unknown event type")             # <<<<<<<<<<<<<<
@@ -8750,7 +8750,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
       {__pyx_filename = __pyx_f[0]; __pyx_lineno = 656; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-      /* "_yaml.pyx":655
+      /* "_ruamel_yaml.pyx":655
  *             return MappingEndEvent(start_mark, end_mark)
  *         else:
  *             if PY_MAJOR_VERSION < 3:             # <<<<<<<<<<<<<<
@@ -8759,7 +8759,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
  */
     }
 
-    /* "_yaml.pyx":658
+    /* "_ruamel_yaml.pyx":658
  *                 raise ValueError("unknown event type")
  *             else:
  *                 raise ValueError(u"unknown event type")             # <<<<<<<<<<<<<<
@@ -8776,7 +8776,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
     break;
   }
 
-  /* "_yaml.pyx":534
+  /* "_ruamel_yaml.pyx":534
  *         return event_object
  * 
  *     cdef object _event_to_object(self, yaml_event_t *event):             # <<<<<<<<<<<<<<
@@ -8791,7 +8791,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
   __Pyx_XDECREF(__pyx_t_3);
   __Pyx_XDECREF(__pyx_t_4);
   __Pyx_XDECREF(__pyx_t_8);
-  __Pyx_AddTraceback("_yaml.CParser._event_to_object", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("_ruamel_yaml.CParser._event_to_object", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = 0;
   __pyx_L0:;
   __Pyx_XDECREF((PyObject *)__pyx_v_start_mark);
@@ -8811,7 +8811,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
   return __pyx_r;
 }
 
-/* "_yaml.pyx":660
+/* "_ruamel_yaml.pyx":660
  *                 raise ValueError(u"unknown event type")
  * 
  *     def get_event(self):             # <<<<<<<<<<<<<<
@@ -8820,19 +8820,19 @@ static PyObject *__pyx_f_5_yaml_7CParser__event_to_object(struct __pyx_obj_5_yam
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_5_yaml_7CParser_17get_event(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
-static PyObject *__pyx_pw_5_yaml_7CParser_17get_event(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
+static PyObject *__pyx_pw_12_ruamel_yaml_7CParser_17get_event(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static PyObject *__pyx_pw_12_ruamel_yaml_7CParser_17get_event(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("get_event (wrapper)", 0);
-  __pyx_r = __pyx_pf_5_yaml_7CParser_16get_event(((struct __pyx_obj_5_yaml_CParser *)__pyx_v_self));
+  __pyx_r = __pyx_pf_12_ruamel_yaml_7CParser_16get_event(((struct __pyx_obj_12_ruamel_yaml_CParser *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_5_yaml_7CParser_16get_event(struct __pyx_obj_5_yaml_CParser *__pyx_v_self) {
+static PyObject *__pyx_pf_12_ruamel_yaml_7CParser_16get_event(struct __pyx_obj_12_ruamel_yaml_CParser *__pyx_v_self) {
   PyObject *__pyx_v_value = NULL;
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
@@ -8844,7 +8844,7 @@ static PyObject *__pyx_pf_5_yaml_7CParser_16get_event(struct __pyx_obj_5_yaml_CP
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("get_event", 0);
 
-  /* "_yaml.pyx":661
+  /* "_ruamel_yaml.pyx":661
  * 
  *     def get_event(self):
  *         if self.current_event is not None:             # <<<<<<<<<<<<<<
@@ -8855,7 +8855,7 @@ static PyObject *__pyx_pf_5_yaml_7CParser_16get_event(struct __pyx_obj_5_yaml_CP
   __pyx_t_2 = (__pyx_t_1 != 0);
   if (__pyx_t_2) {
 
-    /* "_yaml.pyx":662
+    /* "_ruamel_yaml.pyx":662
  *     def get_event(self):
  *         if self.current_event is not None:
  *             value = self.current_event             # <<<<<<<<<<<<<<
@@ -8867,7 +8867,7 @@ static PyObject *__pyx_pf_5_yaml_7CParser_16get_event(struct __pyx_obj_5_yaml_CP
     __pyx_v_value = __pyx_t_3;
     __pyx_t_3 = 0;
 
-    /* "_yaml.pyx":663
+    /* "_ruamel_yaml.pyx":663
  *         if self.current_event is not None:
  *             value = self.current_event
  *             self.current_event = None             # <<<<<<<<<<<<<<
@@ -8880,7 +8880,7 @@ static PyObject *__pyx_pf_5_yaml_7CParser_16get_event(struct __pyx_obj_5_yaml_CP
     __Pyx_DECREF(__pyx_v_self->current_event);
     __pyx_v_self->current_event = Py_None;
 
-    /* "_yaml.pyx":661
+    /* "_ruamel_yaml.pyx":661
  * 
  *     def get_event(self):
  *         if self.current_event is not None:             # <<<<<<<<<<<<<<
@@ -8890,7 +8890,7 @@ static PyObject *__pyx_pf_5_yaml_7CParser_16get_event(struct __pyx_obj_5_yaml_CP
     goto __pyx_L3;
   }
 
-  /* "_yaml.pyx":665
+  /* "_ruamel_yaml.pyx":665
  *             self.current_event = None
  *         else:
  *             value = self._parse()             # <<<<<<<<<<<<<<
@@ -8898,14 +8898,14 @@ static PyObject *__pyx_pf_5_yaml_7CParser_16get_event(struct __pyx_obj_5_yaml_CP
  * 
  */
   /*else*/ {
-    __pyx_t_3 = ((struct __pyx_vtabstruct_5_yaml_CParser *)__pyx_v_self->__pyx_vtab)->_parse(__pyx_v_self); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 665; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_3 = ((struct __pyx_vtabstruct_12_ruamel_yaml_CParser *)__pyx_v_self->__pyx_vtab)->_parse(__pyx_v_self); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 665; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_3);
     __pyx_v_value = __pyx_t_3;
     __pyx_t_3 = 0;
   }
   __pyx_L3:;
 
-  /* "_yaml.pyx":666
+  /* "_ruamel_yaml.pyx":666
  *         else:
  *             value = self._parse()
  *         return value             # <<<<<<<<<<<<<<
@@ -8917,7 +8917,7 @@ static PyObject *__pyx_pf_5_yaml_7CParser_16get_event(struct __pyx_obj_5_yaml_CP
   __pyx_r = __pyx_v_value;
   goto __pyx_L0;
 
-  /* "_yaml.pyx":660
+  /* "_ruamel_yaml.pyx":660
  *                 raise ValueError(u"unknown event type")
  * 
  *     def get_event(self):             # <<<<<<<<<<<<<<
@@ -8928,7 +8928,7 @@ static PyObject *__pyx_pf_5_yaml_7CParser_16get_event(struct __pyx_obj_5_yaml_CP
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_3);
-  __Pyx_AddTraceback("_yaml.CParser.get_event", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("_ruamel_yaml.CParser.get_event", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XDECREF(__pyx_v_value);
@@ -8937,7 +8937,7 @@ static PyObject *__pyx_pf_5_yaml_7CParser_16get_event(struct __pyx_obj_5_yaml_CP
   return __pyx_r;
 }
 
-/* "_yaml.pyx":668
+/* "_ruamel_yaml.pyx":668
  *         return value
  * 
  *     def peek_event(self):             # <<<<<<<<<<<<<<
@@ -8946,19 +8946,19 @@ static PyObject *__pyx_pf_5_yaml_7CParser_16get_event(struct __pyx_obj_5_yaml_CP
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_5_yaml_7CParser_19peek_event(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
-static PyObject *__pyx_pw_5_yaml_7CParser_19peek_event(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
+static PyObject *__pyx_pw_12_ruamel_yaml_7CParser_19peek_event(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static PyObject *__pyx_pw_12_ruamel_yaml_7CParser_19peek_event(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("peek_event (wrapper)", 0);
-  __pyx_r = __pyx_pf_5_yaml_7CParser_18peek_event(((struct __pyx_obj_5_yaml_CParser *)__pyx_v_self));
+  __pyx_r = __pyx_pf_12_ruamel_yaml_7CParser_18peek_event(((struct __pyx_obj_12_ruamel_yaml_CParser *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_5_yaml_7CParser_18peek_event(struct __pyx_obj_5_yaml_CParser *__pyx_v_self) {
+static PyObject *__pyx_pf_12_ruamel_yaml_7CParser_18peek_event(struct __pyx_obj_12_ruamel_yaml_CParser *__pyx_v_self) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   int __pyx_t_1;
@@ -8969,7 +8969,7 @@ static PyObject *__pyx_pf_5_yaml_7CParser_18peek_event(struct __pyx_obj_5_yaml_C
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("peek_event", 0);
 
-  /* "_yaml.pyx":669
+  /* "_ruamel_yaml.pyx":669
  * 
  *     def peek_event(self):
  *         if self.current_event is None:             # <<<<<<<<<<<<<<
@@ -8980,14 +8980,14 @@ static PyObject *__pyx_pf_5_yaml_7CParser_18peek_event(struct __pyx_obj_5_yaml_C
   __pyx_t_2 = (__pyx_t_1 != 0);
   if (__pyx_t_2) {
 
-    /* "_yaml.pyx":670
+    /* "_ruamel_yaml.pyx":670
  *     def peek_event(self):
  *         if self.current_event is None:
  *             self.current_event = self._parse()             # <<<<<<<<<<<<<<
  *         return self.current_event
  * 
  */
-    __pyx_t_3 = ((struct __pyx_vtabstruct_5_yaml_CParser *)__pyx_v_self->__pyx_vtab)->_parse(__pyx_v_self); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 670; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_3 = ((struct __pyx_vtabstruct_12_ruamel_yaml_CParser *)__pyx_v_self->__pyx_vtab)->_parse(__pyx_v_self); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 670; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_GIVEREF(__pyx_t_3);
     __Pyx_GOTREF(__pyx_v_self->current_event);
@@ -8995,7 +8995,7 @@ static PyObject *__pyx_pf_5_yaml_7CParser_18peek_event(struct __pyx_obj_5_yaml_C
     __pyx_v_self->current_event = __pyx_t_3;
     __pyx_t_3 = 0;
 
-    /* "_yaml.pyx":669
+    /* "_ruamel_yaml.pyx":669
  * 
  *     def peek_event(self):
  *         if self.current_event is None:             # <<<<<<<<<<<<<<
@@ -9004,7 +9004,7 @@ static PyObject *__pyx_pf_5_yaml_7CParser_18peek_event(struct __pyx_obj_5_yaml_C
  */
   }
 
-  /* "_yaml.pyx":671
+  /* "_ruamel_yaml.pyx":671
  *         if self.current_event is None:
  *             self.current_event = self._parse()
  *         return self.current_event             # <<<<<<<<<<<<<<
@@ -9016,7 +9016,7 @@ static PyObject *__pyx_pf_5_yaml_7CParser_18peek_event(struct __pyx_obj_5_yaml_C
   __pyx_r = __pyx_v_self->current_event;
   goto __pyx_L0;
 
-  /* "_yaml.pyx":668
+  /* "_ruamel_yaml.pyx":668
  *         return value
  * 
  *     def peek_event(self):             # <<<<<<<<<<<<<<
@@ -9027,7 +9027,7 @@ static PyObject *__pyx_pf_5_yaml_7CParser_18peek_event(struct __pyx_obj_5_yaml_C
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_3);
-  __Pyx_AddTraceback("_yaml.CParser.peek_event", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("_ruamel_yaml.CParser.peek_event", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -9035,7 +9035,7 @@ static PyObject *__pyx_pf_5_yaml_7CParser_18peek_event(struct __pyx_obj_5_yaml_C
   return __pyx_r;
 }
 
-/* "_yaml.pyx":673
+/* "_ruamel_yaml.pyx":673
  *         return self.current_event
  * 
  *     def check_event(self, *choices):             # <<<<<<<<<<<<<<
@@ -9044,8 +9044,8 @@ static PyObject *__pyx_pf_5_yaml_7CParser_18peek_event(struct __pyx_obj_5_yaml_C
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_5_yaml_7CParser_21check_event(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static PyObject *__pyx_pw_5_yaml_7CParser_21check_event(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+static PyObject *__pyx_pw_12_ruamel_yaml_7CParser_21check_event(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static PyObject *__pyx_pw_12_ruamel_yaml_7CParser_21check_event(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyObject *__pyx_v_choices = 0;
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
@@ -9053,7 +9053,7 @@ static PyObject *__pyx_pw_5_yaml_7CParser_21check_event(PyObject *__pyx_v_self, 
   if (unlikely(__pyx_kwds) && unlikely(PyDict_Size(__pyx_kwds) > 0) && unlikely(!__Pyx_CheckKeywordStrings(__pyx_kwds, "check_event", 0))) return NULL;
   __Pyx_INCREF(__pyx_args);
   __pyx_v_choices = __pyx_args;
-  __pyx_r = __pyx_pf_5_yaml_7CParser_20check_event(((struct __pyx_obj_5_yaml_CParser *)__pyx_v_self), __pyx_v_choices);
+  __pyx_r = __pyx_pf_12_ruamel_yaml_7CParser_20check_event(((struct __pyx_obj_12_ruamel_yaml_CParser *)__pyx_v_self), __pyx_v_choices);
 
   /* function exit code */
   __Pyx_XDECREF(__pyx_v_choices);
@@ -9061,7 +9061,7 @@ static PyObject *__pyx_pw_5_yaml_7CParser_21check_event(PyObject *__pyx_v_self, 
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_5_yaml_7CParser_20check_event(struct __pyx_obj_5_yaml_CParser *__pyx_v_self, PyObject *__pyx_v_choices) {
+static PyObject *__pyx_pf_12_ruamel_yaml_7CParser_20check_event(struct __pyx_obj_12_ruamel_yaml_CParser *__pyx_v_self, PyObject *__pyx_v_choices) {
   PyObject *__pyx_v_event_class = NULL;
   PyObject *__pyx_v_choice = NULL;
   PyObject *__pyx_r = NULL;
@@ -9076,7 +9076,7 @@ static PyObject *__pyx_pf_5_yaml_7CParser_20check_event(struct __pyx_obj_5_yaml_
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("check_event", 0);
 
-  /* "_yaml.pyx":674
+  /* "_ruamel_yaml.pyx":674
  * 
  *     def check_event(self, *choices):
  *         if self.current_event is None:             # <<<<<<<<<<<<<<
@@ -9087,14 +9087,14 @@ static PyObject *__pyx_pf_5_yaml_7CParser_20check_event(struct __pyx_obj_5_yaml_
   __pyx_t_2 = (__pyx_t_1 != 0);
   if (__pyx_t_2) {
 
-    /* "_yaml.pyx":675
+    /* "_ruamel_yaml.pyx":675
  *     def check_event(self, *choices):
  *         if self.current_event is None:
  *             self.current_event = self._parse()             # <<<<<<<<<<<<<<
  *         if self.current_event is None:
  *             return False
  */
-    __pyx_t_3 = ((struct __pyx_vtabstruct_5_yaml_CParser *)__pyx_v_self->__pyx_vtab)->_parse(__pyx_v_self); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 675; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_3 = ((struct __pyx_vtabstruct_12_ruamel_yaml_CParser *)__pyx_v_self->__pyx_vtab)->_parse(__pyx_v_self); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 675; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_GIVEREF(__pyx_t_3);
     __Pyx_GOTREF(__pyx_v_self->current_event);
@@ -9102,7 +9102,7 @@ static PyObject *__pyx_pf_5_yaml_7CParser_20check_event(struct __pyx_obj_5_yaml_
     __pyx_v_self->current_event = __pyx_t_3;
     __pyx_t_3 = 0;
 
-    /* "_yaml.pyx":674
+    /* "_ruamel_yaml.pyx":674
  * 
  *     def check_event(self, *choices):
  *         if self.current_event is None:             # <<<<<<<<<<<<<<
@@ -9111,7 +9111,7 @@ static PyObject *__pyx_pf_5_yaml_7CParser_20check_event(struct __pyx_obj_5_yaml_
  */
   }
 
-  /* "_yaml.pyx":676
+  /* "_ruamel_yaml.pyx":676
  *         if self.current_event is None:
  *             self.current_event = self._parse()
  *         if self.current_event is None:             # <<<<<<<<<<<<<<
@@ -9122,7 +9122,7 @@ static PyObject *__pyx_pf_5_yaml_7CParser_20check_event(struct __pyx_obj_5_yaml_
   __pyx_t_1 = (__pyx_t_2 != 0);
   if (__pyx_t_1) {
 
-    /* "_yaml.pyx":677
+    /* "_ruamel_yaml.pyx":677
  *             self.current_event = self._parse()
  *         if self.current_event is None:
  *             return False             # <<<<<<<<<<<<<<
@@ -9134,7 +9134,7 @@ static PyObject *__pyx_pf_5_yaml_7CParser_20check_event(struct __pyx_obj_5_yaml_
     __pyx_r = Py_False;
     goto __pyx_L0;
 
-    /* "_yaml.pyx":676
+    /* "_ruamel_yaml.pyx":676
  *         if self.current_event is None:
  *             self.current_event = self._parse()
  *         if self.current_event is None:             # <<<<<<<<<<<<<<
@@ -9143,7 +9143,7 @@ static PyObject *__pyx_pf_5_yaml_7CParser_20check_event(struct __pyx_obj_5_yaml_
  */
   }
 
-  /* "_yaml.pyx":678
+  /* "_ruamel_yaml.pyx":678
  *         if self.current_event is None:
  *             return False
  *         if not choices:             # <<<<<<<<<<<<<<
@@ -9154,7 +9154,7 @@ static PyObject *__pyx_pf_5_yaml_7CParser_20check_event(struct __pyx_obj_5_yaml_
   __pyx_t_2 = ((!__pyx_t_1) != 0);
   if (__pyx_t_2) {
 
-    /* "_yaml.pyx":679
+    /* "_ruamel_yaml.pyx":679
  *             return False
  *         if not choices:
  *             return True             # <<<<<<<<<<<<<<
@@ -9166,7 +9166,7 @@ static PyObject *__pyx_pf_5_yaml_7CParser_20check_event(struct __pyx_obj_5_yaml_
     __pyx_r = Py_True;
     goto __pyx_L0;
 
-    /* "_yaml.pyx":678
+    /* "_ruamel_yaml.pyx":678
  *         if self.current_event is None:
  *             return False
  *         if not choices:             # <<<<<<<<<<<<<<
@@ -9175,7 +9175,7 @@ static PyObject *__pyx_pf_5_yaml_7CParser_20check_event(struct __pyx_obj_5_yaml_
  */
   }
 
-  /* "_yaml.pyx":680
+  /* "_ruamel_yaml.pyx":680
  *         if not choices:
  *             return True
  *         event_class = self.current_event.__class__             # <<<<<<<<<<<<<<
@@ -9187,7 +9187,7 @@ static PyObject *__pyx_pf_5_yaml_7CParser_20check_event(struct __pyx_obj_5_yaml_
   __pyx_v_event_class = __pyx_t_3;
   __pyx_t_3 = 0;
 
-  /* "_yaml.pyx":681
+  /* "_ruamel_yaml.pyx":681
  *             return True
  *         event_class = self.current_event.__class__
  *         for choice in choices:             # <<<<<<<<<<<<<<
@@ -9206,7 +9206,7 @@ static PyObject *__pyx_pf_5_yaml_7CParser_20check_event(struct __pyx_obj_5_yaml_
     __Pyx_XDECREF_SET(__pyx_v_choice, __pyx_t_5);
     __pyx_t_5 = 0;
 
-    /* "_yaml.pyx":682
+    /* "_ruamel_yaml.pyx":682
  *         event_class = self.current_event.__class__
  *         for choice in choices:
  *             if event_class is choice:             # <<<<<<<<<<<<<<
@@ -9217,7 +9217,7 @@ static PyObject *__pyx_pf_5_yaml_7CParser_20check_event(struct __pyx_obj_5_yaml_
     __pyx_t_1 = (__pyx_t_2 != 0);
     if (__pyx_t_1) {
 
-      /* "_yaml.pyx":683
+      /* "_ruamel_yaml.pyx":683
  *         for choice in choices:
  *             if event_class is choice:
  *                 return True             # <<<<<<<<<<<<<<
@@ -9230,7 +9230,7 @@ static PyObject *__pyx_pf_5_yaml_7CParser_20check_event(struct __pyx_obj_5_yaml_
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
       goto __pyx_L0;
 
-      /* "_yaml.pyx":682
+      /* "_ruamel_yaml.pyx":682
  *         event_class = self.current_event.__class__
  *         for choice in choices:
  *             if event_class is choice:             # <<<<<<<<<<<<<<
@@ -9239,7 +9239,7 @@ static PyObject *__pyx_pf_5_yaml_7CParser_20check_event(struct __pyx_obj_5_yaml_
  */
     }
 
-    /* "_yaml.pyx":681
+    /* "_ruamel_yaml.pyx":681
  *             return True
  *         event_class = self.current_event.__class__
  *         for choice in choices:             # <<<<<<<<<<<<<<
@@ -9249,7 +9249,7 @@ static PyObject *__pyx_pf_5_yaml_7CParser_20check_event(struct __pyx_obj_5_yaml_
   }
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "_yaml.pyx":684
+  /* "_ruamel_yaml.pyx":684
  *             if event_class is choice:
  *                 return True
  *         return False             # <<<<<<<<<<<<<<
@@ -9261,7 +9261,7 @@ static PyObject *__pyx_pf_5_yaml_7CParser_20check_event(struct __pyx_obj_5_yaml_
   __pyx_r = Py_False;
   goto __pyx_L0;
 
-  /* "_yaml.pyx":673
+  /* "_ruamel_yaml.pyx":673
  *         return self.current_event
  * 
  *     def check_event(self, *choices):             # <<<<<<<<<<<<<<
@@ -9273,7 +9273,7 @@ static PyObject *__pyx_pf_5_yaml_7CParser_20check_event(struct __pyx_obj_5_yaml_
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_3);
   __Pyx_XDECREF(__pyx_t_5);
-  __Pyx_AddTraceback("_yaml.CParser.check_event", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("_ruamel_yaml.CParser.check_event", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XDECREF(__pyx_v_event_class);
@@ -9283,7 +9283,7 @@ static PyObject *__pyx_pf_5_yaml_7CParser_20check_event(struct __pyx_obj_5_yaml_
   return __pyx_r;
 }
 
-/* "_yaml.pyx":686
+/* "_ruamel_yaml.pyx":686
  *         return False
  * 
  *     def check_node(self):             # <<<<<<<<<<<<<<
@@ -9292,19 +9292,19 @@ static PyObject *__pyx_pf_5_yaml_7CParser_20check_event(struct __pyx_obj_5_yaml_
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_5_yaml_7CParser_23check_node(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
-static PyObject *__pyx_pw_5_yaml_7CParser_23check_node(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
+static PyObject *__pyx_pw_12_ruamel_yaml_7CParser_23check_node(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static PyObject *__pyx_pw_12_ruamel_yaml_7CParser_23check_node(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("check_node (wrapper)", 0);
-  __pyx_r = __pyx_pf_5_yaml_7CParser_22check_node(((struct __pyx_obj_5_yaml_CParser *)__pyx_v_self));
+  __pyx_r = __pyx_pf_12_ruamel_yaml_7CParser_22check_node(((struct __pyx_obj_12_ruamel_yaml_CParser *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_5_yaml_7CParser_22check_node(struct __pyx_obj_5_yaml_CParser *__pyx_v_self) {
+static PyObject *__pyx_pf_12_ruamel_yaml_7CParser_22check_node(struct __pyx_obj_12_ruamel_yaml_CParser *__pyx_v_self) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   int __pyx_t_1;
@@ -9314,16 +9314,16 @@ static PyObject *__pyx_pf_5_yaml_7CParser_22check_node(struct __pyx_obj_5_yaml_C
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("check_node", 0);
 
-  /* "_yaml.pyx":687
+  /* "_ruamel_yaml.pyx":687
  * 
  *     def check_node(self):
  *         self._parse_next_event()             # <<<<<<<<<<<<<<
  *         if self.parsed_event.type == YAML_STREAM_START_EVENT:
  *             yaml_event_delete(&self.parsed_event)
  */
-  __pyx_t_1 = ((struct __pyx_vtabstruct_5_yaml_CParser *)__pyx_v_self->__pyx_vtab)->_parse_next_event(__pyx_v_self); if (unlikely(__pyx_t_1 == 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 687; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = ((struct __pyx_vtabstruct_12_ruamel_yaml_CParser *)__pyx_v_self->__pyx_vtab)->_parse_next_event(__pyx_v_self); if (unlikely(__pyx_t_1 == 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 687; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-  /* "_yaml.pyx":688
+  /* "_ruamel_yaml.pyx":688
  *     def check_node(self):
  *         self._parse_next_event()
  *         if self.parsed_event.type == YAML_STREAM_START_EVENT:             # <<<<<<<<<<<<<<
@@ -9333,7 +9333,7 @@ static PyObject *__pyx_pf_5_yaml_7CParser_22check_node(struct __pyx_obj_5_yaml_C
   __pyx_t_2 = ((__pyx_v_self->parsed_event.type == YAML_STREAM_START_EVENT) != 0);
   if (__pyx_t_2) {
 
-    /* "_yaml.pyx":689
+    /* "_ruamel_yaml.pyx":689
  *         self._parse_next_event()
  *         if self.parsed_event.type == YAML_STREAM_START_EVENT:
  *             yaml_event_delete(&self.parsed_event)             # <<<<<<<<<<<<<<
@@ -9342,16 +9342,16 @@ static PyObject *__pyx_pf_5_yaml_7CParser_22check_node(struct __pyx_obj_5_yaml_C
  */
     yaml_event_delete((&__pyx_v_self->parsed_event));
 
-    /* "_yaml.pyx":690
+    /* "_ruamel_yaml.pyx":690
  *         if self.parsed_event.type == YAML_STREAM_START_EVENT:
  *             yaml_event_delete(&self.parsed_event)
  *             self._parse_next_event()             # <<<<<<<<<<<<<<
  *         if self.parsed_event.type != YAML_STREAM_END_EVENT:
  *             return True
  */
-    __pyx_t_1 = ((struct __pyx_vtabstruct_5_yaml_CParser *)__pyx_v_self->__pyx_vtab)->_parse_next_event(__pyx_v_self); if (unlikely(__pyx_t_1 == 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 690; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_1 = ((struct __pyx_vtabstruct_12_ruamel_yaml_CParser *)__pyx_v_self->__pyx_vtab)->_parse_next_event(__pyx_v_self); if (unlikely(__pyx_t_1 == 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 690; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-    /* "_yaml.pyx":688
+    /* "_ruamel_yaml.pyx":688
  *     def check_node(self):
  *         self._parse_next_event()
  *         if self.parsed_event.type == YAML_STREAM_START_EVENT:             # <<<<<<<<<<<<<<
@@ -9360,7 +9360,7 @@ static PyObject *__pyx_pf_5_yaml_7CParser_22check_node(struct __pyx_obj_5_yaml_C
  */
   }
 
-  /* "_yaml.pyx":691
+  /* "_ruamel_yaml.pyx":691
  *             yaml_event_delete(&self.parsed_event)
  *             self._parse_next_event()
  *         if self.parsed_event.type != YAML_STREAM_END_EVENT:             # <<<<<<<<<<<<<<
@@ -9370,7 +9370,7 @@ static PyObject *__pyx_pf_5_yaml_7CParser_22check_node(struct __pyx_obj_5_yaml_C
   __pyx_t_2 = ((__pyx_v_self->parsed_event.type != YAML_STREAM_END_EVENT) != 0);
   if (__pyx_t_2) {
 
-    /* "_yaml.pyx":692
+    /* "_ruamel_yaml.pyx":692
  *             self._parse_next_event()
  *         if self.parsed_event.type != YAML_STREAM_END_EVENT:
  *             return True             # <<<<<<<<<<<<<<
@@ -9382,7 +9382,7 @@ static PyObject *__pyx_pf_5_yaml_7CParser_22check_node(struct __pyx_obj_5_yaml_C
     __pyx_r = Py_True;
     goto __pyx_L0;
 
-    /* "_yaml.pyx":691
+    /* "_ruamel_yaml.pyx":691
  *             yaml_event_delete(&self.parsed_event)
  *             self._parse_next_event()
  *         if self.parsed_event.type != YAML_STREAM_END_EVENT:             # <<<<<<<<<<<<<<
@@ -9391,7 +9391,7 @@ static PyObject *__pyx_pf_5_yaml_7CParser_22check_node(struct __pyx_obj_5_yaml_C
  */
   }
 
-  /* "_yaml.pyx":693
+  /* "_ruamel_yaml.pyx":693
  *         if self.parsed_event.type != YAML_STREAM_END_EVENT:
  *             return True
  *         return False             # <<<<<<<<<<<<<<
@@ -9403,7 +9403,7 @@ static PyObject *__pyx_pf_5_yaml_7CParser_22check_node(struct __pyx_obj_5_yaml_C
   __pyx_r = Py_False;
   goto __pyx_L0;
 
-  /* "_yaml.pyx":686
+  /* "_ruamel_yaml.pyx":686
  *         return False
  * 
  *     def check_node(self):             # <<<<<<<<<<<<<<
@@ -9413,7 +9413,7 @@ static PyObject *__pyx_pf_5_yaml_7CParser_22check_node(struct __pyx_obj_5_yaml_C
 
   /* function exit code */
   __pyx_L1_error:;
-  __Pyx_AddTraceback("_yaml.CParser.check_node", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("_ruamel_yaml.CParser.check_node", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -9421,7 +9421,7 @@ static PyObject *__pyx_pf_5_yaml_7CParser_22check_node(struct __pyx_obj_5_yaml_C
   return __pyx_r;
 }
 
-/* "_yaml.pyx":695
+/* "_ruamel_yaml.pyx":695
  *         return False
  * 
  *     def get_node(self):             # <<<<<<<<<<<<<<
@@ -9430,19 +9430,19 @@ static PyObject *__pyx_pf_5_yaml_7CParser_22check_node(struct __pyx_obj_5_yaml_C
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_5_yaml_7CParser_25get_node(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
-static PyObject *__pyx_pw_5_yaml_7CParser_25get_node(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
+static PyObject *__pyx_pw_12_ruamel_yaml_7CParser_25get_node(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static PyObject *__pyx_pw_12_ruamel_yaml_7CParser_25get_node(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("get_node (wrapper)", 0);
-  __pyx_r = __pyx_pf_5_yaml_7CParser_24get_node(((struct __pyx_obj_5_yaml_CParser *)__pyx_v_self));
+  __pyx_r = __pyx_pf_12_ruamel_yaml_7CParser_24get_node(((struct __pyx_obj_12_ruamel_yaml_CParser *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_5_yaml_7CParser_24get_node(struct __pyx_obj_5_yaml_CParser *__pyx_v_self) {
+static PyObject *__pyx_pf_12_ruamel_yaml_7CParser_24get_node(struct __pyx_obj_12_ruamel_yaml_CParser *__pyx_v_self) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   int __pyx_t_1;
@@ -9453,16 +9453,16 @@ static PyObject *__pyx_pf_5_yaml_7CParser_24get_node(struct __pyx_obj_5_yaml_CPa
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("get_node", 0);
 
-  /* "_yaml.pyx":696
+  /* "_ruamel_yaml.pyx":696
  * 
  *     def get_node(self):
  *         self._parse_next_event()             # <<<<<<<<<<<<<<
  *         if self.parsed_event.type != YAML_STREAM_END_EVENT:
  *             return self._compose_document()
  */
-  __pyx_t_1 = ((struct __pyx_vtabstruct_5_yaml_CParser *)__pyx_v_self->__pyx_vtab)->_parse_next_event(__pyx_v_self); if (unlikely(__pyx_t_1 == 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 696; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = ((struct __pyx_vtabstruct_12_ruamel_yaml_CParser *)__pyx_v_self->__pyx_vtab)->_parse_next_event(__pyx_v_self); if (unlikely(__pyx_t_1 == 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 696; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-  /* "_yaml.pyx":697
+  /* "_ruamel_yaml.pyx":697
  *     def get_node(self):
  *         self._parse_next_event()
  *         if self.parsed_event.type != YAML_STREAM_END_EVENT:             # <<<<<<<<<<<<<<
@@ -9472,7 +9472,7 @@ static PyObject *__pyx_pf_5_yaml_7CParser_24get_node(struct __pyx_obj_5_yaml_CPa
   __pyx_t_2 = ((__pyx_v_self->parsed_event.type != YAML_STREAM_END_EVENT) != 0);
   if (__pyx_t_2) {
 
-    /* "_yaml.pyx":698
+    /* "_ruamel_yaml.pyx":698
  *         self._parse_next_event()
  *         if self.parsed_event.type != YAML_STREAM_END_EVENT:
  *             return self._compose_document()             # <<<<<<<<<<<<<<
@@ -9480,13 +9480,13 @@ static PyObject *__pyx_pf_5_yaml_7CParser_24get_node(struct __pyx_obj_5_yaml_CPa
  *     def get_single_node(self):
  */
     __Pyx_XDECREF(__pyx_r);
-    __pyx_t_3 = ((struct __pyx_vtabstruct_5_yaml_CParser *)__pyx_v_self->__pyx_vtab)->_compose_document(__pyx_v_self); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 698; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_3 = ((struct __pyx_vtabstruct_12_ruamel_yaml_CParser *)__pyx_v_self->__pyx_vtab)->_compose_document(__pyx_v_self); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 698; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_3);
     __pyx_r = __pyx_t_3;
     __pyx_t_3 = 0;
     goto __pyx_L0;
 
-    /* "_yaml.pyx":697
+    /* "_ruamel_yaml.pyx":697
  *     def get_node(self):
  *         self._parse_next_event()
  *         if self.parsed_event.type != YAML_STREAM_END_EVENT:             # <<<<<<<<<<<<<<
@@ -9495,7 +9495,7 @@ static PyObject *__pyx_pf_5_yaml_7CParser_24get_node(struct __pyx_obj_5_yaml_CPa
  */
   }
 
-  /* "_yaml.pyx":695
+  /* "_ruamel_yaml.pyx":695
  *         return False
  * 
  *     def get_node(self):             # <<<<<<<<<<<<<<
@@ -9508,7 +9508,7 @@ static PyObject *__pyx_pf_5_yaml_7CParser_24get_node(struct __pyx_obj_5_yaml_CPa
   goto __pyx_L0;
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_3);
-  __Pyx_AddTraceback("_yaml.CParser.get_node", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("_ruamel_yaml.CParser.get_node", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -9516,7 +9516,7 @@ static PyObject *__pyx_pf_5_yaml_7CParser_24get_node(struct __pyx_obj_5_yaml_CPa
   return __pyx_r;
 }
 
-/* "_yaml.pyx":700
+/* "_ruamel_yaml.pyx":700
  *             return self._compose_document()
  * 
  *     def get_single_node(self):             # <<<<<<<<<<<<<<
@@ -9525,21 +9525,21 @@ static PyObject *__pyx_pf_5_yaml_7CParser_24get_node(struct __pyx_obj_5_yaml_CPa
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_5_yaml_7CParser_27get_single_node(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
-static PyObject *__pyx_pw_5_yaml_7CParser_27get_single_node(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
+static PyObject *__pyx_pw_12_ruamel_yaml_7CParser_27get_single_node(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static PyObject *__pyx_pw_12_ruamel_yaml_7CParser_27get_single_node(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("get_single_node (wrapper)", 0);
-  __pyx_r = __pyx_pf_5_yaml_7CParser_26get_single_node(((struct __pyx_obj_5_yaml_CParser *)__pyx_v_self));
+  __pyx_r = __pyx_pf_12_ruamel_yaml_7CParser_26get_single_node(((struct __pyx_obj_12_ruamel_yaml_CParser *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_5_yaml_7CParser_26get_single_node(struct __pyx_obj_5_yaml_CParser *__pyx_v_self) {
+static PyObject *__pyx_pf_12_ruamel_yaml_7CParser_26get_single_node(struct __pyx_obj_12_ruamel_yaml_CParser *__pyx_v_self) {
   PyObject *__pyx_v_document = NULL;
-  struct __pyx_obj_5_yaml_Mark *__pyx_v_mark = NULL;
+  struct __pyx_obj_12_ruamel_yaml_Mark *__pyx_v_mark = NULL;
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   int __pyx_t_1;
@@ -9555,16 +9555,16 @@ static PyObject *__pyx_pf_5_yaml_7CParser_26get_single_node(struct __pyx_obj_5_y
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("get_single_node", 0);
 
-  /* "_yaml.pyx":701
+  /* "_ruamel_yaml.pyx":701
  * 
  *     def get_single_node(self):
  *         self._parse_next_event()             # <<<<<<<<<<<<<<
  *         yaml_event_delete(&self.parsed_event)
  *         self._parse_next_event()
  */
-  __pyx_t_1 = ((struct __pyx_vtabstruct_5_yaml_CParser *)__pyx_v_self->__pyx_vtab)->_parse_next_event(__pyx_v_self); if (unlikely(__pyx_t_1 == 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 701; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = ((struct __pyx_vtabstruct_12_ruamel_yaml_CParser *)__pyx_v_self->__pyx_vtab)->_parse_next_event(__pyx_v_self); if (unlikely(__pyx_t_1 == 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 701; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-  /* "_yaml.pyx":702
+  /* "_ruamel_yaml.pyx":702
  *     def get_single_node(self):
  *         self._parse_next_event()
  *         yaml_event_delete(&self.parsed_event)             # <<<<<<<<<<<<<<
@@ -9573,16 +9573,16 @@ static PyObject *__pyx_pf_5_yaml_7CParser_26get_single_node(struct __pyx_obj_5_y
  */
   yaml_event_delete((&__pyx_v_self->parsed_event));
 
-  /* "_yaml.pyx":703
+  /* "_ruamel_yaml.pyx":703
  *         self._parse_next_event()
  *         yaml_event_delete(&self.parsed_event)
  *         self._parse_next_event()             # <<<<<<<<<<<<<<
  *         document = None
  *         if self.parsed_event.type != YAML_STREAM_END_EVENT:
  */
-  __pyx_t_1 = ((struct __pyx_vtabstruct_5_yaml_CParser *)__pyx_v_self->__pyx_vtab)->_parse_next_event(__pyx_v_self); if (unlikely(__pyx_t_1 == 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 703; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = ((struct __pyx_vtabstruct_12_ruamel_yaml_CParser *)__pyx_v_self->__pyx_vtab)->_parse_next_event(__pyx_v_self); if (unlikely(__pyx_t_1 == 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 703; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-  /* "_yaml.pyx":704
+  /* "_ruamel_yaml.pyx":704
  *         yaml_event_delete(&self.parsed_event)
  *         self._parse_next_event()
  *         document = None             # <<<<<<<<<<<<<<
@@ -9592,7 +9592,7 @@ static PyObject *__pyx_pf_5_yaml_7CParser_26get_single_node(struct __pyx_obj_5_y
   __Pyx_INCREF(Py_None);
   __pyx_v_document = Py_None;
 
-  /* "_yaml.pyx":705
+  /* "_ruamel_yaml.pyx":705
  *         self._parse_next_event()
  *         document = None
  *         if self.parsed_event.type != YAML_STREAM_END_EVENT:             # <<<<<<<<<<<<<<
@@ -9602,19 +9602,19 @@ static PyObject *__pyx_pf_5_yaml_7CParser_26get_single_node(struct __pyx_obj_5_y
   __pyx_t_2 = ((__pyx_v_self->parsed_event.type != YAML_STREAM_END_EVENT) != 0);
   if (__pyx_t_2) {
 
-    /* "_yaml.pyx":706
+    /* "_ruamel_yaml.pyx":706
  *         document = None
  *         if self.parsed_event.type != YAML_STREAM_END_EVENT:
  *             document = self._compose_document()             # <<<<<<<<<<<<<<
  *         self._parse_next_event()
  *         if self.parsed_event.type != YAML_STREAM_END_EVENT:
  */
-    __pyx_t_3 = ((struct __pyx_vtabstruct_5_yaml_CParser *)__pyx_v_self->__pyx_vtab)->_compose_document(__pyx_v_self); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 706; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_3 = ((struct __pyx_vtabstruct_12_ruamel_yaml_CParser *)__pyx_v_self->__pyx_vtab)->_compose_document(__pyx_v_self); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 706; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF_SET(__pyx_v_document, __pyx_t_3);
     __pyx_t_3 = 0;
 
-    /* "_yaml.pyx":705
+    /* "_ruamel_yaml.pyx":705
  *         self._parse_next_event()
  *         document = None
  *         if self.parsed_event.type != YAML_STREAM_END_EVENT:             # <<<<<<<<<<<<<<
@@ -9623,16 +9623,16 @@ static PyObject *__pyx_pf_5_yaml_7CParser_26get_single_node(struct __pyx_obj_5_y
  */
   }
 
-  /* "_yaml.pyx":707
+  /* "_ruamel_yaml.pyx":707
  *         if self.parsed_event.type != YAML_STREAM_END_EVENT:
  *             document = self._compose_document()
  *         self._parse_next_event()             # <<<<<<<<<<<<<<
  *         if self.parsed_event.type != YAML_STREAM_END_EVENT:
  *             mark = Mark(self.stream_name,
  */
-  __pyx_t_1 = ((struct __pyx_vtabstruct_5_yaml_CParser *)__pyx_v_self->__pyx_vtab)->_parse_next_event(__pyx_v_self); if (unlikely(__pyx_t_1 == 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 707; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = ((struct __pyx_vtabstruct_12_ruamel_yaml_CParser *)__pyx_v_self->__pyx_vtab)->_parse_next_event(__pyx_v_self); if (unlikely(__pyx_t_1 == 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 707; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-  /* "_yaml.pyx":708
+  /* "_ruamel_yaml.pyx":708
  *             document = self._compose_document()
  *         self._parse_next_event()
  *         if self.parsed_event.type != YAML_STREAM_END_EVENT:             # <<<<<<<<<<<<<<
@@ -9642,7 +9642,7 @@ static PyObject *__pyx_pf_5_yaml_7CParser_26get_single_node(struct __pyx_obj_5_y
   __pyx_t_2 = ((__pyx_v_self->parsed_event.type != YAML_STREAM_END_EVENT) != 0);
   if (__pyx_t_2) {
 
-    /* "_yaml.pyx":710
+    /* "_ruamel_yaml.pyx":710
  *         if self.parsed_event.type != YAML_STREAM_END_EVENT:
  *             mark = Mark(self.stream_name,
  *                     self.parsed_event.start_mark.index,             # <<<<<<<<<<<<<<
@@ -9652,7 +9652,7 @@ static PyObject *__pyx_pf_5_yaml_7CParser_26get_single_node(struct __pyx_obj_5_y
     __pyx_t_3 = __Pyx_PyInt_From_int(__pyx_v_self->parsed_event.start_mark.index); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 710; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_3);
 
-    /* "_yaml.pyx":711
+    /* "_ruamel_yaml.pyx":711
  *             mark = Mark(self.stream_name,
  *                     self.parsed_event.start_mark.index,
  *                     self.parsed_event.start_mark.line,             # <<<<<<<<<<<<<<
@@ -9662,7 +9662,7 @@ static PyObject *__pyx_pf_5_yaml_7CParser_26get_single_node(struct __pyx_obj_5_y
     __pyx_t_4 = __Pyx_PyInt_From_int(__pyx_v_self->parsed_event.start_mark.line); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 711; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_4);
 
-    /* "_yaml.pyx":712
+    /* "_ruamel_yaml.pyx":712
  *                     self.parsed_event.start_mark.index,
  *                     self.parsed_event.start_mark.line,
  *                     self.parsed_event.start_mark.column,             # <<<<<<<<<<<<<<
@@ -9672,7 +9672,7 @@ static PyObject *__pyx_pf_5_yaml_7CParser_26get_single_node(struct __pyx_obj_5_y
     __pyx_t_5 = __Pyx_PyInt_From_int(__pyx_v_self->parsed_event.start_mark.column); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 712; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_5);
 
-    /* "_yaml.pyx":709
+    /* "_ruamel_yaml.pyx":709
  *         self._parse_next_event()
  *         if self.parsed_event.type != YAML_STREAM_END_EVENT:
  *             mark = Mark(self.stream_name,             # <<<<<<<<<<<<<<
@@ -9699,13 +9699,13 @@ static PyObject *__pyx_pf_5_yaml_7CParser_26get_single_node(struct __pyx_obj_5_y
     __pyx_t_3 = 0;
     __pyx_t_4 = 0;
     __pyx_t_5 = 0;
-    __pyx_t_5 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_5_yaml_Mark), __pyx_t_6, NULL); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 709; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_5 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_12_ruamel_yaml_Mark), __pyx_t_6, NULL); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 709; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-    __pyx_v_mark = ((struct __pyx_obj_5_yaml_Mark *)__pyx_t_5);
+    __pyx_v_mark = ((struct __pyx_obj_12_ruamel_yaml_Mark *)__pyx_t_5);
     __pyx_t_5 = 0;
 
-    /* "_yaml.pyx":714
+    /* "_ruamel_yaml.pyx":714
  *                     self.parsed_event.start_mark.column,
  *                     None, None)
  *             if PY_MAJOR_VERSION < 3:             # <<<<<<<<<<<<<<
@@ -9715,7 +9715,7 @@ static PyObject *__pyx_pf_5_yaml_7CParser_26get_single_node(struct __pyx_obj_5_y
     __pyx_t_2 = ((PY_MAJOR_VERSION < 3) != 0);
     if (__pyx_t_2) {
 
-      /* "_yaml.pyx":715
+      /* "_ruamel_yaml.pyx":715
  *                     None, None)
  *             if PY_MAJOR_VERSION < 3:
  *                 raise ComposerError("expected a single document in the stream",             # <<<<<<<<<<<<<<
@@ -9725,7 +9725,7 @@ static PyObject *__pyx_pf_5_yaml_7CParser_26get_single_node(struct __pyx_obj_5_y
       __pyx_t_6 = __Pyx_GetModuleGlobalName(__pyx_n_s_ComposerError); if (unlikely(!__pyx_t_6)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 715; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_6);
 
-      /* "_yaml.pyx":716
+      /* "_ruamel_yaml.pyx":716
  *             if PY_MAJOR_VERSION < 3:
  *                 raise ComposerError("expected a single document in the stream",
  *                         document.start_mark, "but found another document", mark)             # <<<<<<<<<<<<<<
@@ -9771,7 +9771,7 @@ static PyObject *__pyx_pf_5_yaml_7CParser_26get_single_node(struct __pyx_obj_5_y
       __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
       {__pyx_filename = __pyx_f[0]; __pyx_lineno = 715; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-      /* "_yaml.pyx":714
+      /* "_ruamel_yaml.pyx":714
  *                     self.parsed_event.start_mark.column,
  *                     None, None)
  *             if PY_MAJOR_VERSION < 3:             # <<<<<<<<<<<<<<
@@ -9780,7 +9780,7 @@ static PyObject *__pyx_pf_5_yaml_7CParser_26get_single_node(struct __pyx_obj_5_y
  */
     }
 
-    /* "_yaml.pyx":718
+    /* "_ruamel_yaml.pyx":718
  *                         document.start_mark, "but found another document", mark)
  *             else:
  *                 raise ComposerError(u"expected a single document in the stream",             # <<<<<<<<<<<<<<
@@ -9791,7 +9791,7 @@ static PyObject *__pyx_pf_5_yaml_7CParser_26get_single_node(struct __pyx_obj_5_y
       __pyx_t_6 = __Pyx_GetModuleGlobalName(__pyx_n_s_ComposerError); if (unlikely(!__pyx_t_6)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 718; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_6);
 
-      /* "_yaml.pyx":719
+      /* "_ruamel_yaml.pyx":719
  *             else:
  *                 raise ComposerError(u"expected a single document in the stream",
  *                         document.start_mark, u"but found another document", mark)             # <<<<<<<<<<<<<<
@@ -9838,7 +9838,7 @@ static PyObject *__pyx_pf_5_yaml_7CParser_26get_single_node(struct __pyx_obj_5_y
       {__pyx_filename = __pyx_f[0]; __pyx_lineno = 718; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     }
 
-    /* "_yaml.pyx":708
+    /* "_ruamel_yaml.pyx":708
  *             document = self._compose_document()
  *         self._parse_next_event()
  *         if self.parsed_event.type != YAML_STREAM_END_EVENT:             # <<<<<<<<<<<<<<
@@ -9847,7 +9847,7 @@ static PyObject *__pyx_pf_5_yaml_7CParser_26get_single_node(struct __pyx_obj_5_y
  */
   }
 
-  /* "_yaml.pyx":720
+  /* "_ruamel_yaml.pyx":720
  *                 raise ComposerError(u"expected a single document in the stream",
  *                         document.start_mark, u"but found another document", mark)
  *         return document             # <<<<<<<<<<<<<<
@@ -9859,7 +9859,7 @@ static PyObject *__pyx_pf_5_yaml_7CParser_26get_single_node(struct __pyx_obj_5_y
   __pyx_r = __pyx_v_document;
   goto __pyx_L0;
 
-  /* "_yaml.pyx":700
+  /* "_ruamel_yaml.pyx":700
  *             return self._compose_document()
  * 
  *     def get_single_node(self):             # <<<<<<<<<<<<<<
@@ -9874,7 +9874,7 @@ static PyObject *__pyx_pf_5_yaml_7CParser_26get_single_node(struct __pyx_obj_5_y
   __Pyx_XDECREF(__pyx_t_5);
   __Pyx_XDECREF(__pyx_t_6);
   __Pyx_XDECREF(__pyx_t_8);
-  __Pyx_AddTraceback("_yaml.CParser.get_single_node", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("_ruamel_yaml.CParser.get_single_node", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XDECREF(__pyx_v_document);
@@ -9884,7 +9884,7 @@ static PyObject *__pyx_pf_5_yaml_7CParser_26get_single_node(struct __pyx_obj_5_y
   return __pyx_r;
 }
 
-/* "_yaml.pyx":722
+/* "_ruamel_yaml.pyx":722
  *         return document
  * 
  *     cdef object _compose_document(self):             # <<<<<<<<<<<<<<
@@ -9892,7 +9892,7 @@ static PyObject *__pyx_pf_5_yaml_7CParser_26get_single_node(struct __pyx_obj_5_y
  *         node = self._compose_node(None, None)
  */
 
-static PyObject *__pyx_f_5_yaml_7CParser__compose_document(struct __pyx_obj_5_yaml_CParser *__pyx_v_self) {
+static PyObject *__pyx_f_12_ruamel_yaml_7CParser__compose_document(struct __pyx_obj_12_ruamel_yaml_CParser *__pyx_v_self) {
   PyObject *__pyx_v_node = NULL;
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
@@ -9903,7 +9903,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_document(struct __pyx_obj_5_ya
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("_compose_document", 0);
 
-  /* "_yaml.pyx":723
+  /* "_ruamel_yaml.pyx":723
  * 
  *     cdef object _compose_document(self):
  *         yaml_event_delete(&self.parsed_event)             # <<<<<<<<<<<<<<
@@ -9912,28 +9912,28 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_document(struct __pyx_obj_5_ya
  */
   yaml_event_delete((&__pyx_v_self->parsed_event));
 
-  /* "_yaml.pyx":724
+  /* "_ruamel_yaml.pyx":724
  *     cdef object _compose_document(self):
  *         yaml_event_delete(&self.parsed_event)
  *         node = self._compose_node(None, None)             # <<<<<<<<<<<<<<
  *         self._parse_next_event()
  *         yaml_event_delete(&self.parsed_event)
  */
-  __pyx_t_1 = ((struct __pyx_vtabstruct_5_yaml_CParser *)__pyx_v_self->__pyx_vtab)->_compose_node(__pyx_v_self, Py_None, Py_None); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 724; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = ((struct __pyx_vtabstruct_12_ruamel_yaml_CParser *)__pyx_v_self->__pyx_vtab)->_compose_node(__pyx_v_self, Py_None, Py_None); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 724; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_node = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "_yaml.pyx":725
+  /* "_ruamel_yaml.pyx":725
  *         yaml_event_delete(&self.parsed_event)
  *         node = self._compose_node(None, None)
  *         self._parse_next_event()             # <<<<<<<<<<<<<<
  *         yaml_event_delete(&self.parsed_event)
  *         self.anchors = {}
  */
-  __pyx_t_2 = ((struct __pyx_vtabstruct_5_yaml_CParser *)__pyx_v_self->__pyx_vtab)->_parse_next_event(__pyx_v_self); if (unlikely(__pyx_t_2 == 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 725; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = ((struct __pyx_vtabstruct_12_ruamel_yaml_CParser *)__pyx_v_self->__pyx_vtab)->_parse_next_event(__pyx_v_self); if (unlikely(__pyx_t_2 == 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 725; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-  /* "_yaml.pyx":726
+  /* "_ruamel_yaml.pyx":726
  *         node = self._compose_node(None, None)
  *         self._parse_next_event()
  *         yaml_event_delete(&self.parsed_event)             # <<<<<<<<<<<<<<
@@ -9942,7 +9942,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_document(struct __pyx_obj_5_ya
  */
   yaml_event_delete((&__pyx_v_self->parsed_event));
 
-  /* "_yaml.pyx":727
+  /* "_ruamel_yaml.pyx":727
  *         self._parse_next_event()
  *         yaml_event_delete(&self.parsed_event)
  *         self.anchors = {}             # <<<<<<<<<<<<<<
@@ -9957,7 +9957,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_document(struct __pyx_obj_5_ya
   __pyx_v_self->anchors = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "_yaml.pyx":728
+  /* "_ruamel_yaml.pyx":728
  *         yaml_event_delete(&self.parsed_event)
  *         self.anchors = {}
  *         return node             # <<<<<<<<<<<<<<
@@ -9969,7 +9969,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_document(struct __pyx_obj_5_ya
   __pyx_r = __pyx_v_node;
   goto __pyx_L0;
 
-  /* "_yaml.pyx":722
+  /* "_ruamel_yaml.pyx":722
  *         return document
  * 
  *     cdef object _compose_document(self):             # <<<<<<<<<<<<<<
@@ -9980,7 +9980,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_document(struct __pyx_obj_5_ya
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("_yaml.CParser._compose_document", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("_ruamel_yaml.CParser._compose_document", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = 0;
   __pyx_L0:;
   __Pyx_XDECREF(__pyx_v_node);
@@ -9989,7 +9989,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_document(struct __pyx_obj_5_ya
   return __pyx_r;
 }
 
-/* "_yaml.pyx":730
+/* "_ruamel_yaml.pyx":730
  *         return node
  * 
  *     cdef object _compose_node(self, object parent, object index):             # <<<<<<<<<<<<<<
@@ -9997,9 +9997,9 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_document(struct __pyx_obj_5_ya
  *         if self.parsed_event.type == YAML_ALIAS_EVENT:
  */
 
-static PyObject *__pyx_f_5_yaml_7CParser__compose_node(struct __pyx_obj_5_yaml_CParser *__pyx_v_self, PyObject *__pyx_v_parent, PyObject *__pyx_v_index) {
+static PyObject *__pyx_f_12_ruamel_yaml_7CParser__compose_node(struct __pyx_obj_12_ruamel_yaml_CParser *__pyx_v_self, PyObject *__pyx_v_parent, PyObject *__pyx_v_index) {
   PyObject *__pyx_v_anchor = NULL;
-  struct __pyx_obj_5_yaml_Mark *__pyx_v_mark = NULL;
+  struct __pyx_obj_12_ruamel_yaml_Mark *__pyx_v_mark = NULL;
   PyObject *__pyx_v_node = NULL;
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
@@ -10017,16 +10017,16 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_node(struct __pyx_obj_5_yaml_C
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("_compose_node", 0);
 
-  /* "_yaml.pyx":731
+  /* "_ruamel_yaml.pyx":731
  * 
  *     cdef object _compose_node(self, object parent, object index):
  *         self._parse_next_event()             # <<<<<<<<<<<<<<
  *         if self.parsed_event.type == YAML_ALIAS_EVENT:
  *             anchor = PyUnicode_FromString(self.parsed_event.data.alias.anchor)
  */
-  __pyx_t_1 = ((struct __pyx_vtabstruct_5_yaml_CParser *)__pyx_v_self->__pyx_vtab)->_parse_next_event(__pyx_v_self); if (unlikely(__pyx_t_1 == 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 731; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = ((struct __pyx_vtabstruct_12_ruamel_yaml_CParser *)__pyx_v_self->__pyx_vtab)->_parse_next_event(__pyx_v_self); if (unlikely(__pyx_t_1 == 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 731; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-  /* "_yaml.pyx":732
+  /* "_ruamel_yaml.pyx":732
  *     cdef object _compose_node(self, object parent, object index):
  *         self._parse_next_event()
  *         if self.parsed_event.type == YAML_ALIAS_EVENT:             # <<<<<<<<<<<<<<
@@ -10036,7 +10036,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_node(struct __pyx_obj_5_yaml_C
   __pyx_t_2 = ((__pyx_v_self->parsed_event.type == YAML_ALIAS_EVENT) != 0);
   if (__pyx_t_2) {
 
-    /* "_yaml.pyx":733
+    /* "_ruamel_yaml.pyx":733
  *         self._parse_next_event()
  *         if self.parsed_event.type == YAML_ALIAS_EVENT:
  *             anchor = PyUnicode_FromString(self.parsed_event.data.alias.anchor)             # <<<<<<<<<<<<<<
@@ -10048,7 +10048,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_node(struct __pyx_obj_5_yaml_C
     __pyx_v_anchor = __pyx_t_3;
     __pyx_t_3 = 0;
 
-    /* "_yaml.pyx":734
+    /* "_ruamel_yaml.pyx":734
  *         if self.parsed_event.type == YAML_ALIAS_EVENT:
  *             anchor = PyUnicode_FromString(self.parsed_event.data.alias.anchor)
  *             if anchor not in self.anchors:             # <<<<<<<<<<<<<<
@@ -10059,7 +10059,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_node(struct __pyx_obj_5_yaml_C
     __pyx_t_4 = (__pyx_t_2 != 0);
     if (__pyx_t_4) {
 
-      /* "_yaml.pyx":736
+      /* "_ruamel_yaml.pyx":736
  *             if anchor not in self.anchors:
  *                 mark = Mark(self.stream_name,
  *                         self.parsed_event.start_mark.index,             # <<<<<<<<<<<<<<
@@ -10069,7 +10069,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_node(struct __pyx_obj_5_yaml_C
       __pyx_t_3 = __Pyx_PyInt_From_int(__pyx_v_self->parsed_event.start_mark.index); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 736; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_3);
 
-      /* "_yaml.pyx":737
+      /* "_ruamel_yaml.pyx":737
  *                 mark = Mark(self.stream_name,
  *                         self.parsed_event.start_mark.index,
  *                         self.parsed_event.start_mark.line,             # <<<<<<<<<<<<<<
@@ -10079,7 +10079,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_node(struct __pyx_obj_5_yaml_C
       __pyx_t_5 = __Pyx_PyInt_From_int(__pyx_v_self->parsed_event.start_mark.line); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 737; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_5);
 
-      /* "_yaml.pyx":738
+      /* "_ruamel_yaml.pyx":738
  *                         self.parsed_event.start_mark.index,
  *                         self.parsed_event.start_mark.line,
  *                         self.parsed_event.start_mark.column,             # <<<<<<<<<<<<<<
@@ -10089,7 +10089,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_node(struct __pyx_obj_5_yaml_C
       __pyx_t_6 = __Pyx_PyInt_From_int(__pyx_v_self->parsed_event.start_mark.column); if (unlikely(!__pyx_t_6)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 738; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_6);
 
-      /* "_yaml.pyx":735
+      /* "_ruamel_yaml.pyx":735
  *             anchor = PyUnicode_FromString(self.parsed_event.data.alias.anchor)
  *             if anchor not in self.anchors:
  *                 mark = Mark(self.stream_name,             # <<<<<<<<<<<<<<
@@ -10116,13 +10116,13 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_node(struct __pyx_obj_5_yaml_C
       __pyx_t_3 = 0;
       __pyx_t_5 = 0;
       __pyx_t_6 = 0;
-      __pyx_t_6 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_5_yaml_Mark), __pyx_t_7, NULL); if (unlikely(!__pyx_t_6)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 735; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_6 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_12_ruamel_yaml_Mark), __pyx_t_7, NULL); if (unlikely(!__pyx_t_6)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 735; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_6);
       __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-      __pyx_v_mark = ((struct __pyx_obj_5_yaml_Mark *)__pyx_t_6);
+      __pyx_v_mark = ((struct __pyx_obj_12_ruamel_yaml_Mark *)__pyx_t_6);
       __pyx_t_6 = 0;
 
-      /* "_yaml.pyx":740
+      /* "_ruamel_yaml.pyx":740
  *                         self.parsed_event.start_mark.column,
  *                         None, None)
  *                 if PY_MAJOR_VERSION < 3:             # <<<<<<<<<<<<<<
@@ -10132,7 +10132,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_node(struct __pyx_obj_5_yaml_C
       __pyx_t_4 = ((PY_MAJOR_VERSION < 3) != 0);
       if (__pyx_t_4) {
 
-        /* "_yaml.pyx":741
+        /* "_ruamel_yaml.pyx":741
  *                         None, None)
  *                 if PY_MAJOR_VERSION < 3:
  *                     raise ComposerError(None, None, "found undefined alias", mark)             # <<<<<<<<<<<<<<
@@ -10178,7 +10178,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_node(struct __pyx_obj_5_yaml_C
         __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
         {__pyx_filename = __pyx_f[0]; __pyx_lineno = 741; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-        /* "_yaml.pyx":740
+        /* "_ruamel_yaml.pyx":740
  *                         self.parsed_event.start_mark.column,
  *                         None, None)
  *                 if PY_MAJOR_VERSION < 3:             # <<<<<<<<<<<<<<
@@ -10187,7 +10187,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_node(struct __pyx_obj_5_yaml_C
  */
       }
 
-      /* "_yaml.pyx":743
+      /* "_ruamel_yaml.pyx":743
  *                     raise ComposerError(None, None, "found undefined alias", mark)
  *                 else:
  *                     raise ComposerError(None, None, u"found undefined alias", mark)             # <<<<<<<<<<<<<<
@@ -10235,7 +10235,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_node(struct __pyx_obj_5_yaml_C
         {__pyx_filename = __pyx_f[0]; __pyx_lineno = 743; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       }
 
-      /* "_yaml.pyx":734
+      /* "_ruamel_yaml.pyx":734
  *         if self.parsed_event.type == YAML_ALIAS_EVENT:
  *             anchor = PyUnicode_FromString(self.parsed_event.data.alias.anchor)
  *             if anchor not in self.anchors:             # <<<<<<<<<<<<<<
@@ -10244,7 +10244,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_node(struct __pyx_obj_5_yaml_C
  */
     }
 
-    /* "_yaml.pyx":744
+    /* "_ruamel_yaml.pyx":744
  *                 else:
  *                     raise ComposerError(None, None, u"found undefined alias", mark)
  *             yaml_event_delete(&self.parsed_event)             # <<<<<<<<<<<<<<
@@ -10253,7 +10253,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_node(struct __pyx_obj_5_yaml_C
  */
     yaml_event_delete((&__pyx_v_self->parsed_event));
 
-    /* "_yaml.pyx":745
+    /* "_ruamel_yaml.pyx":745
  *                     raise ComposerError(None, None, u"found undefined alias", mark)
  *             yaml_event_delete(&self.parsed_event)
  *             return self.anchors[anchor]             # <<<<<<<<<<<<<<
@@ -10267,7 +10267,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_node(struct __pyx_obj_5_yaml_C
     __pyx_t_6 = 0;
     goto __pyx_L0;
 
-    /* "_yaml.pyx":732
+    /* "_ruamel_yaml.pyx":732
  *     cdef object _compose_node(self, object parent, object index):
  *         self._parse_next_event()
  *         if self.parsed_event.type == YAML_ALIAS_EVENT:             # <<<<<<<<<<<<<<
@@ -10276,7 +10276,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_node(struct __pyx_obj_5_yaml_C
  */
   }
 
-  /* "_yaml.pyx":746
+  /* "_ruamel_yaml.pyx":746
  *             yaml_event_delete(&self.parsed_event)
  *             return self.anchors[anchor]
  *         anchor = None             # <<<<<<<<<<<<<<
@@ -10286,7 +10286,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_node(struct __pyx_obj_5_yaml_C
   __Pyx_INCREF(Py_None);
   __pyx_v_anchor = Py_None;
 
-  /* "_yaml.pyx":747
+  /* "_ruamel_yaml.pyx":747
  *             return self.anchors[anchor]
  *         anchor = None
  *         if self.parsed_event.type == YAML_SCALAR_EVENT  \             # <<<<<<<<<<<<<<
@@ -10300,7 +10300,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_node(struct __pyx_obj_5_yaml_C
     goto __pyx_L7_bool_binop_done;
   }
 
-  /* "_yaml.pyx":748
+  /* "_ruamel_yaml.pyx":748
  *         anchor = None
  *         if self.parsed_event.type == YAML_SCALAR_EVENT  \
  *                 and self.parsed_event.data.scalar.anchor != NULL:             # <<<<<<<<<<<<<<
@@ -10311,7 +10311,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_node(struct __pyx_obj_5_yaml_C
   __pyx_t_4 = __pyx_t_2;
   __pyx_L7_bool_binop_done:;
 
-  /* "_yaml.pyx":747
+  /* "_ruamel_yaml.pyx":747
  *             return self.anchors[anchor]
  *         anchor = None
  *         if self.parsed_event.type == YAML_SCALAR_EVENT  \             # <<<<<<<<<<<<<<
@@ -10320,7 +10320,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_node(struct __pyx_obj_5_yaml_C
  */
   if (__pyx_t_4) {
 
-    /* "_yaml.pyx":749
+    /* "_ruamel_yaml.pyx":749
  *         if self.parsed_event.type == YAML_SCALAR_EVENT  \
  *                 and self.parsed_event.data.scalar.anchor != NULL:
  *             anchor = PyUnicode_FromString(self.parsed_event.data.scalar.anchor)             # <<<<<<<<<<<<<<
@@ -10332,7 +10332,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_node(struct __pyx_obj_5_yaml_C
     __Pyx_DECREF_SET(__pyx_v_anchor, __pyx_t_6);
     __pyx_t_6 = 0;
 
-    /* "_yaml.pyx":747
+    /* "_ruamel_yaml.pyx":747
  *             return self.anchors[anchor]
  *         anchor = None
  *         if self.parsed_event.type == YAML_SCALAR_EVENT  \             # <<<<<<<<<<<<<<
@@ -10342,7 +10342,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_node(struct __pyx_obj_5_yaml_C
     goto __pyx_L6;
   }
 
-  /* "_yaml.pyx":750
+  /* "_ruamel_yaml.pyx":750
  *                 and self.parsed_event.data.scalar.anchor != NULL:
  *             anchor = PyUnicode_FromString(self.parsed_event.data.scalar.anchor)
  *         elif self.parsed_event.type == YAML_SEQUENCE_START_EVENT    \             # <<<<<<<<<<<<<<
@@ -10356,7 +10356,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_node(struct __pyx_obj_5_yaml_C
     goto __pyx_L9_bool_binop_done;
   }
 
-  /* "_yaml.pyx":751
+  /* "_ruamel_yaml.pyx":751
  *             anchor = PyUnicode_FromString(self.parsed_event.data.scalar.anchor)
  *         elif self.parsed_event.type == YAML_SEQUENCE_START_EVENT    \
  *                 and self.parsed_event.data.sequence_start.anchor != NULL:             # <<<<<<<<<<<<<<
@@ -10367,7 +10367,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_node(struct __pyx_obj_5_yaml_C
   __pyx_t_4 = __pyx_t_2;
   __pyx_L9_bool_binop_done:;
 
-  /* "_yaml.pyx":750
+  /* "_ruamel_yaml.pyx":750
  *                 and self.parsed_event.data.scalar.anchor != NULL:
  *             anchor = PyUnicode_FromString(self.parsed_event.data.scalar.anchor)
  *         elif self.parsed_event.type == YAML_SEQUENCE_START_EVENT    \             # <<<<<<<<<<<<<<
@@ -10376,7 +10376,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_node(struct __pyx_obj_5_yaml_C
  */
   if (__pyx_t_4) {
 
-    /* "_yaml.pyx":752
+    /* "_ruamel_yaml.pyx":752
  *         elif self.parsed_event.type == YAML_SEQUENCE_START_EVENT    \
  *                 and self.parsed_event.data.sequence_start.anchor != NULL:
  *             anchor = PyUnicode_FromString(self.parsed_event.data.sequence_start.anchor)             # <<<<<<<<<<<<<<
@@ -10388,7 +10388,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_node(struct __pyx_obj_5_yaml_C
     __Pyx_DECREF_SET(__pyx_v_anchor, __pyx_t_6);
     __pyx_t_6 = 0;
 
-    /* "_yaml.pyx":750
+    /* "_ruamel_yaml.pyx":750
  *                 and self.parsed_event.data.scalar.anchor != NULL:
  *             anchor = PyUnicode_FromString(self.parsed_event.data.scalar.anchor)
  *         elif self.parsed_event.type == YAML_SEQUENCE_START_EVENT    \             # <<<<<<<<<<<<<<
@@ -10398,7 +10398,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_node(struct __pyx_obj_5_yaml_C
     goto __pyx_L6;
   }
 
-  /* "_yaml.pyx":753
+  /* "_ruamel_yaml.pyx":753
  *                 and self.parsed_event.data.sequence_start.anchor != NULL:
  *             anchor = PyUnicode_FromString(self.parsed_event.data.sequence_start.anchor)
  *         elif self.parsed_event.type == YAML_MAPPING_START_EVENT    \             # <<<<<<<<<<<<<<
@@ -10412,7 +10412,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_node(struct __pyx_obj_5_yaml_C
     goto __pyx_L11_bool_binop_done;
   }
 
-  /* "_yaml.pyx":754
+  /* "_ruamel_yaml.pyx":754
  *             anchor = PyUnicode_FromString(self.parsed_event.data.sequence_start.anchor)
  *         elif self.parsed_event.type == YAML_MAPPING_START_EVENT    \
  *                 and self.parsed_event.data.mapping_start.anchor != NULL:             # <<<<<<<<<<<<<<
@@ -10423,7 +10423,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_node(struct __pyx_obj_5_yaml_C
   __pyx_t_4 = __pyx_t_2;
   __pyx_L11_bool_binop_done:;
 
-  /* "_yaml.pyx":753
+  /* "_ruamel_yaml.pyx":753
  *                 and self.parsed_event.data.sequence_start.anchor != NULL:
  *             anchor = PyUnicode_FromString(self.parsed_event.data.sequence_start.anchor)
  *         elif self.parsed_event.type == YAML_MAPPING_START_EVENT    \             # <<<<<<<<<<<<<<
@@ -10432,7 +10432,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_node(struct __pyx_obj_5_yaml_C
  */
   if (__pyx_t_4) {
 
-    /* "_yaml.pyx":755
+    /* "_ruamel_yaml.pyx":755
  *         elif self.parsed_event.type == YAML_MAPPING_START_EVENT    \
  *                 and self.parsed_event.data.mapping_start.anchor != NULL:
  *             anchor = PyUnicode_FromString(self.parsed_event.data.mapping_start.anchor)             # <<<<<<<<<<<<<<
@@ -10444,7 +10444,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_node(struct __pyx_obj_5_yaml_C
     __Pyx_DECREF_SET(__pyx_v_anchor, __pyx_t_6);
     __pyx_t_6 = 0;
 
-    /* "_yaml.pyx":753
+    /* "_ruamel_yaml.pyx":753
  *                 and self.parsed_event.data.sequence_start.anchor != NULL:
  *             anchor = PyUnicode_FromString(self.parsed_event.data.sequence_start.anchor)
  *         elif self.parsed_event.type == YAML_MAPPING_START_EVENT    \             # <<<<<<<<<<<<<<
@@ -10454,7 +10454,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_node(struct __pyx_obj_5_yaml_C
   }
   __pyx_L6:;
 
-  /* "_yaml.pyx":756
+  /* "_ruamel_yaml.pyx":756
  *                 and self.parsed_event.data.mapping_start.anchor != NULL:
  *             anchor = PyUnicode_FromString(self.parsed_event.data.mapping_start.anchor)
  *         if anchor is not None:             # <<<<<<<<<<<<<<
@@ -10465,7 +10465,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_node(struct __pyx_obj_5_yaml_C
   __pyx_t_2 = (__pyx_t_4 != 0);
   if (__pyx_t_2) {
 
-    /* "_yaml.pyx":757
+    /* "_ruamel_yaml.pyx":757
  *             anchor = PyUnicode_FromString(self.parsed_event.data.mapping_start.anchor)
  *         if anchor is not None:
  *             if anchor in self.anchors:             # <<<<<<<<<<<<<<
@@ -10476,7 +10476,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_node(struct __pyx_obj_5_yaml_C
     __pyx_t_4 = (__pyx_t_2 != 0);
     if (__pyx_t_4) {
 
-      /* "_yaml.pyx":759
+      /* "_ruamel_yaml.pyx":759
  *             if anchor in self.anchors:
  *                 mark = Mark(self.stream_name,
  *                         self.parsed_event.start_mark.index,             # <<<<<<<<<<<<<<
@@ -10486,7 +10486,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_node(struct __pyx_obj_5_yaml_C
       __pyx_t_6 = __Pyx_PyInt_From_int(__pyx_v_self->parsed_event.start_mark.index); if (unlikely(!__pyx_t_6)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 759; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_6);
 
-      /* "_yaml.pyx":760
+      /* "_ruamel_yaml.pyx":760
  *                 mark = Mark(self.stream_name,
  *                         self.parsed_event.start_mark.index,
  *                         self.parsed_event.start_mark.line,             # <<<<<<<<<<<<<<
@@ -10496,7 +10496,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_node(struct __pyx_obj_5_yaml_C
       __pyx_t_7 = __Pyx_PyInt_From_int(__pyx_v_self->parsed_event.start_mark.line); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 760; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_7);
 
-      /* "_yaml.pyx":761
+      /* "_ruamel_yaml.pyx":761
  *                         self.parsed_event.start_mark.index,
  *                         self.parsed_event.start_mark.line,
  *                         self.parsed_event.start_mark.column,             # <<<<<<<<<<<<<<
@@ -10506,7 +10506,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_node(struct __pyx_obj_5_yaml_C
       __pyx_t_5 = __Pyx_PyInt_From_int(__pyx_v_self->parsed_event.start_mark.column); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 761; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_5);
 
-      /* "_yaml.pyx":758
+      /* "_ruamel_yaml.pyx":758
  *         if anchor is not None:
  *             if anchor in self.anchors:
  *                 mark = Mark(self.stream_name,             # <<<<<<<<<<<<<<
@@ -10533,13 +10533,13 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_node(struct __pyx_obj_5_yaml_C
       __pyx_t_6 = 0;
       __pyx_t_7 = 0;
       __pyx_t_5 = 0;
-      __pyx_t_5 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_5_yaml_Mark), __pyx_t_3, NULL); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 758; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_5 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_12_ruamel_yaml_Mark), __pyx_t_3, NULL); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 758; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_5);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-      __pyx_v_mark = ((struct __pyx_obj_5_yaml_Mark *)__pyx_t_5);
+      __pyx_v_mark = ((struct __pyx_obj_12_ruamel_yaml_Mark *)__pyx_t_5);
       __pyx_t_5 = 0;
 
-      /* "_yaml.pyx":763
+      /* "_ruamel_yaml.pyx":763
  *                         self.parsed_event.start_mark.column,
  *                         None, None)
  *                 if PY_MAJOR_VERSION < 3:             # <<<<<<<<<<<<<<
@@ -10549,7 +10549,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_node(struct __pyx_obj_5_yaml_C
       __pyx_t_4 = ((PY_MAJOR_VERSION < 3) != 0);
       if (__pyx_t_4) {
 
-        /* "_yaml.pyx":764
+        /* "_ruamel_yaml.pyx":764
  *                         None, None)
  *                 if PY_MAJOR_VERSION < 3:
  *                     raise ComposerError("found duplicate anchor; first occurence",             # <<<<<<<<<<<<<<
@@ -10559,7 +10559,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_node(struct __pyx_obj_5_yaml_C
         __pyx_t_3 = __Pyx_GetModuleGlobalName(__pyx_n_s_ComposerError); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 764; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         __Pyx_GOTREF(__pyx_t_3);
 
-        /* "_yaml.pyx":765
+        /* "_ruamel_yaml.pyx":765
  *                 if PY_MAJOR_VERSION < 3:
  *                     raise ComposerError("found duplicate anchor; first occurence",
  *                             self.anchors[anchor].start_mark, "second occurence", mark)             # <<<<<<<<<<<<<<
@@ -10608,7 +10608,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_node(struct __pyx_obj_5_yaml_C
         __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
         {__pyx_filename = __pyx_f[0]; __pyx_lineno = 764; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-        /* "_yaml.pyx":763
+        /* "_ruamel_yaml.pyx":763
  *                         self.parsed_event.start_mark.column,
  *                         None, None)
  *                 if PY_MAJOR_VERSION < 3:             # <<<<<<<<<<<<<<
@@ -10617,7 +10617,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_node(struct __pyx_obj_5_yaml_C
  */
       }
 
-      /* "_yaml.pyx":767
+      /* "_ruamel_yaml.pyx":767
  *                             self.anchors[anchor].start_mark, "second occurence", mark)
  *                 else:
  *                     raise ComposerError(u"found duplicate anchor; first occurence",             # <<<<<<<<<<<<<<
@@ -10628,7 +10628,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_node(struct __pyx_obj_5_yaml_C
         __pyx_t_3 = __Pyx_GetModuleGlobalName(__pyx_n_s_ComposerError); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 767; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         __Pyx_GOTREF(__pyx_t_3);
 
-        /* "_yaml.pyx":768
+        /* "_ruamel_yaml.pyx":768
  *                 else:
  *                     raise ComposerError(u"found duplicate anchor; first occurence",
  *                             self.anchors[anchor].start_mark, u"second occurence", mark)             # <<<<<<<<<<<<<<
@@ -10678,7 +10678,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_node(struct __pyx_obj_5_yaml_C
         {__pyx_filename = __pyx_f[0]; __pyx_lineno = 767; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       }
 
-      /* "_yaml.pyx":757
+      /* "_ruamel_yaml.pyx":757
  *             anchor = PyUnicode_FromString(self.parsed_event.data.mapping_start.anchor)
  *         if anchor is not None:
  *             if anchor in self.anchors:             # <<<<<<<<<<<<<<
@@ -10687,7 +10687,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_node(struct __pyx_obj_5_yaml_C
  */
     }
 
-    /* "_yaml.pyx":756
+    /* "_ruamel_yaml.pyx":756
  *                 and self.parsed_event.data.mapping_start.anchor != NULL:
  *             anchor = PyUnicode_FromString(self.parsed_event.data.mapping_start.anchor)
  *         if anchor is not None:             # <<<<<<<<<<<<<<
@@ -10696,7 +10696,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_node(struct __pyx_obj_5_yaml_C
  */
   }
 
-  /* "_yaml.pyx":769
+  /* "_ruamel_yaml.pyx":769
  *                     raise ComposerError(u"found duplicate anchor; first occurence",
  *                             self.anchors[anchor].start_mark, u"second occurence", mark)
  *         self.descend_resolver(parent, index)             # <<<<<<<<<<<<<<
@@ -10734,7 +10734,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_node(struct __pyx_obj_5_yaml_C
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
 
-  /* "_yaml.pyx":770
+  /* "_ruamel_yaml.pyx":770
  *                             self.anchors[anchor].start_mark, u"second occurence", mark)
  *         self.descend_resolver(parent, index)
  *         if self.parsed_event.type == YAML_SCALAR_EVENT:             # <<<<<<<<<<<<<<
@@ -10744,19 +10744,19 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_node(struct __pyx_obj_5_yaml_C
   switch (__pyx_v_self->parsed_event.type) {
     case YAML_SCALAR_EVENT:
 
-    /* "_yaml.pyx":771
+    /* "_ruamel_yaml.pyx":771
  *         self.descend_resolver(parent, index)
  *         if self.parsed_event.type == YAML_SCALAR_EVENT:
  *             node = self._compose_scalar_node(anchor)             # <<<<<<<<<<<<<<
  *         elif self.parsed_event.type == YAML_SEQUENCE_START_EVENT:
  *             node = self._compose_sequence_node(anchor)
  */
-    __pyx_t_5 = ((struct __pyx_vtabstruct_5_yaml_CParser *)__pyx_v_self->__pyx_vtab)->_compose_scalar_node(__pyx_v_self, __pyx_v_anchor); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 771; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_5 = ((struct __pyx_vtabstruct_12_ruamel_yaml_CParser *)__pyx_v_self->__pyx_vtab)->_compose_scalar_node(__pyx_v_self, __pyx_v_anchor); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 771; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_5);
     __pyx_v_node = __pyx_t_5;
     __pyx_t_5 = 0;
 
-    /* "_yaml.pyx":770
+    /* "_ruamel_yaml.pyx":770
  *                             self.anchors[anchor].start_mark, u"second occurence", mark)
  *         self.descend_resolver(parent, index)
  *         if self.parsed_event.type == YAML_SCALAR_EVENT:             # <<<<<<<<<<<<<<
@@ -10765,7 +10765,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_node(struct __pyx_obj_5_yaml_C
  */
     break;
 
-    /* "_yaml.pyx":772
+    /* "_ruamel_yaml.pyx":772
  *         if self.parsed_event.type == YAML_SCALAR_EVENT:
  *             node = self._compose_scalar_node(anchor)
  *         elif self.parsed_event.type == YAML_SEQUENCE_START_EVENT:             # <<<<<<<<<<<<<<
@@ -10774,19 +10774,19 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_node(struct __pyx_obj_5_yaml_C
  */
     case YAML_SEQUENCE_START_EVENT:
 
-    /* "_yaml.pyx":773
+    /* "_ruamel_yaml.pyx":773
  *             node = self._compose_scalar_node(anchor)
  *         elif self.parsed_event.type == YAML_SEQUENCE_START_EVENT:
  *             node = self._compose_sequence_node(anchor)             # <<<<<<<<<<<<<<
  *         elif self.parsed_event.type == YAML_MAPPING_START_EVENT:
  *             node = self._compose_mapping_node(anchor)
  */
-    __pyx_t_5 = ((struct __pyx_vtabstruct_5_yaml_CParser *)__pyx_v_self->__pyx_vtab)->_compose_sequence_node(__pyx_v_self, __pyx_v_anchor); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 773; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_5 = ((struct __pyx_vtabstruct_12_ruamel_yaml_CParser *)__pyx_v_self->__pyx_vtab)->_compose_sequence_node(__pyx_v_self, __pyx_v_anchor); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 773; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_5);
     __pyx_v_node = __pyx_t_5;
     __pyx_t_5 = 0;
 
-    /* "_yaml.pyx":772
+    /* "_ruamel_yaml.pyx":772
  *         if self.parsed_event.type == YAML_SCALAR_EVENT:
  *             node = self._compose_scalar_node(anchor)
  *         elif self.parsed_event.type == YAML_SEQUENCE_START_EVENT:             # <<<<<<<<<<<<<<
@@ -10795,7 +10795,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_node(struct __pyx_obj_5_yaml_C
  */
     break;
 
-    /* "_yaml.pyx":774
+    /* "_ruamel_yaml.pyx":774
  *         elif self.parsed_event.type == YAML_SEQUENCE_START_EVENT:
  *             node = self._compose_sequence_node(anchor)
  *         elif self.parsed_event.type == YAML_MAPPING_START_EVENT:             # <<<<<<<<<<<<<<
@@ -10804,19 +10804,19 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_node(struct __pyx_obj_5_yaml_C
  */
     case YAML_MAPPING_START_EVENT:
 
-    /* "_yaml.pyx":775
+    /* "_ruamel_yaml.pyx":775
  *             node = self._compose_sequence_node(anchor)
  *         elif self.parsed_event.type == YAML_MAPPING_START_EVENT:
  *             node = self._compose_mapping_node(anchor)             # <<<<<<<<<<<<<<
  *         self.ascend_resolver()
  *         return node
  */
-    __pyx_t_5 = ((struct __pyx_vtabstruct_5_yaml_CParser *)__pyx_v_self->__pyx_vtab)->_compose_mapping_node(__pyx_v_self, __pyx_v_anchor); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 775; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_5 = ((struct __pyx_vtabstruct_12_ruamel_yaml_CParser *)__pyx_v_self->__pyx_vtab)->_compose_mapping_node(__pyx_v_self, __pyx_v_anchor); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 775; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_5);
     __pyx_v_node = __pyx_t_5;
     __pyx_t_5 = 0;
 
-    /* "_yaml.pyx":774
+    /* "_ruamel_yaml.pyx":774
  *         elif self.parsed_event.type == YAML_SEQUENCE_START_EVENT:
  *             node = self._compose_sequence_node(anchor)
  *         elif self.parsed_event.type == YAML_MAPPING_START_EVENT:             # <<<<<<<<<<<<<<
@@ -10827,7 +10827,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_node(struct __pyx_obj_5_yaml_C
     default: break;
   }
 
-  /* "_yaml.pyx":776
+  /* "_ruamel_yaml.pyx":776
  *         elif self.parsed_event.type == YAML_MAPPING_START_EVENT:
  *             node = self._compose_mapping_node(anchor)
  *         self.ascend_resolver()             # <<<<<<<<<<<<<<
@@ -10856,7 +10856,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_node(struct __pyx_obj_5_yaml_C
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
 
-  /* "_yaml.pyx":777
+  /* "_ruamel_yaml.pyx":777
  *             node = self._compose_mapping_node(anchor)
  *         self.ascend_resolver()
  *         return node             # <<<<<<<<<<<<<<
@@ -10869,7 +10869,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_node(struct __pyx_obj_5_yaml_C
   __pyx_r = __pyx_v_node;
   goto __pyx_L0;
 
-  /* "_yaml.pyx":730
+  /* "_ruamel_yaml.pyx":730
  *         return node
  * 
  *     cdef object _compose_node(self, object parent, object index):             # <<<<<<<<<<<<<<
@@ -10884,7 +10884,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_node(struct __pyx_obj_5_yaml_C
   __Pyx_XDECREF(__pyx_t_6);
   __Pyx_XDECREF(__pyx_t_7);
   __Pyx_XDECREF(__pyx_t_9);
-  __Pyx_AddTraceback("_yaml.CParser._compose_node", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("_ruamel_yaml.CParser._compose_node", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = 0;
   __pyx_L0:;
   __Pyx_XDECREF(__pyx_v_anchor);
@@ -10895,7 +10895,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_node(struct __pyx_obj_5_yaml_C
   return __pyx_r;
 }
 
-/* "_yaml.pyx":779
+/* "_ruamel_yaml.pyx":779
  *         return node
  * 
  *     cdef _compose_scalar_node(self, object anchor):             # <<<<<<<<<<<<<<
@@ -10903,9 +10903,9 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_node(struct __pyx_obj_5_yaml_C
  *                 self.parsed_event.start_mark.index,
  */
 
-static PyObject *__pyx_f_5_yaml_7CParser__compose_scalar_node(struct __pyx_obj_5_yaml_CParser *__pyx_v_self, PyObject *__pyx_v_anchor) {
-  struct __pyx_obj_5_yaml_Mark *__pyx_v_start_mark = NULL;
-  struct __pyx_obj_5_yaml_Mark *__pyx_v_end_mark = NULL;
+static PyObject *__pyx_f_12_ruamel_yaml_7CParser__compose_scalar_node(struct __pyx_obj_12_ruamel_yaml_CParser *__pyx_v_self, PyObject *__pyx_v_anchor) {
+  struct __pyx_obj_12_ruamel_yaml_Mark *__pyx_v_start_mark = NULL;
+  struct __pyx_obj_12_ruamel_yaml_Mark *__pyx_v_end_mark = NULL;
   PyObject *__pyx_v_value = NULL;
   int __pyx_v_plain_implicit;
   int __pyx_v_quoted_implicit;
@@ -10928,7 +10928,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_scalar_node(struct __pyx_obj_5
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("_compose_scalar_node", 0);
 
-  /* "_yaml.pyx":781
+  /* "_ruamel_yaml.pyx":781
  *     cdef _compose_scalar_node(self, object anchor):
  *         start_mark = Mark(self.stream_name,
  *                 self.parsed_event.start_mark.index,             # <<<<<<<<<<<<<<
@@ -10938,7 +10938,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_scalar_node(struct __pyx_obj_5
   __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_self->parsed_event.start_mark.index); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 781; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
 
-  /* "_yaml.pyx":782
+  /* "_ruamel_yaml.pyx":782
  *         start_mark = Mark(self.stream_name,
  *                 self.parsed_event.start_mark.index,
  *                 self.parsed_event.start_mark.line,             # <<<<<<<<<<<<<<
@@ -10948,7 +10948,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_scalar_node(struct __pyx_obj_5
   __pyx_t_2 = __Pyx_PyInt_From_int(__pyx_v_self->parsed_event.start_mark.line); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 782; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
 
-  /* "_yaml.pyx":783
+  /* "_ruamel_yaml.pyx":783
  *                 self.parsed_event.start_mark.index,
  *                 self.parsed_event.start_mark.line,
  *                 self.parsed_event.start_mark.column,             # <<<<<<<<<<<<<<
@@ -10958,7 +10958,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_scalar_node(struct __pyx_obj_5
   __pyx_t_3 = __Pyx_PyInt_From_int(__pyx_v_self->parsed_event.start_mark.column); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 783; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_3);
 
-  /* "_yaml.pyx":780
+  /* "_ruamel_yaml.pyx":780
  * 
  *     cdef _compose_scalar_node(self, object anchor):
  *         start_mark = Mark(self.stream_name,             # <<<<<<<<<<<<<<
@@ -10985,13 +10985,13 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_scalar_node(struct __pyx_obj_5
   __pyx_t_1 = 0;
   __pyx_t_2 = 0;
   __pyx_t_3 = 0;
-  __pyx_t_3 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_5_yaml_Mark), __pyx_t_4, NULL); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 780; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_3 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_12_ruamel_yaml_Mark), __pyx_t_4, NULL); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 780; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __pyx_v_start_mark = ((struct __pyx_obj_5_yaml_Mark *)__pyx_t_3);
+  __pyx_v_start_mark = ((struct __pyx_obj_12_ruamel_yaml_Mark *)__pyx_t_3);
   __pyx_t_3 = 0;
 
-  /* "_yaml.pyx":786
+  /* "_ruamel_yaml.pyx":786
  *                 None, None)
  *         end_mark = Mark(self.stream_name,
  *                 self.parsed_event.end_mark.index,             # <<<<<<<<<<<<<<
@@ -11001,7 +11001,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_scalar_node(struct __pyx_obj_5
   __pyx_t_3 = __Pyx_PyInt_From_int(__pyx_v_self->parsed_event.end_mark.index); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 786; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_3);
 
-  /* "_yaml.pyx":787
+  /* "_ruamel_yaml.pyx":787
  *         end_mark = Mark(self.stream_name,
  *                 self.parsed_event.end_mark.index,
  *                 self.parsed_event.end_mark.line,             # <<<<<<<<<<<<<<
@@ -11011,7 +11011,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_scalar_node(struct __pyx_obj_5
   __pyx_t_4 = __Pyx_PyInt_From_int(__pyx_v_self->parsed_event.end_mark.line); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 787; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_4);
 
-  /* "_yaml.pyx":788
+  /* "_ruamel_yaml.pyx":788
  *                 self.parsed_event.end_mark.index,
  *                 self.parsed_event.end_mark.line,
  *                 self.parsed_event.end_mark.column,             # <<<<<<<<<<<<<<
@@ -11021,7 +11021,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_scalar_node(struct __pyx_obj_5
   __pyx_t_2 = __Pyx_PyInt_From_int(__pyx_v_self->parsed_event.end_mark.column); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 788; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
 
-  /* "_yaml.pyx":785
+  /* "_ruamel_yaml.pyx":785
  *                 self.parsed_event.start_mark.column,
  *                 None, None)
  *         end_mark = Mark(self.stream_name,             # <<<<<<<<<<<<<<
@@ -11048,13 +11048,13 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_scalar_node(struct __pyx_obj_5
   __pyx_t_3 = 0;
   __pyx_t_4 = 0;
   __pyx_t_2 = 0;
-  __pyx_t_2 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_5_yaml_Mark), __pyx_t_1, NULL); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 785; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_12_ruamel_yaml_Mark), __pyx_t_1, NULL); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 785; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_v_end_mark = ((struct __pyx_obj_5_yaml_Mark *)__pyx_t_2);
+  __pyx_v_end_mark = ((struct __pyx_obj_12_ruamel_yaml_Mark *)__pyx_t_2);
   __pyx_t_2 = 0;
 
-  /* "_yaml.pyx":790
+  /* "_ruamel_yaml.pyx":790
  *                 self.parsed_event.end_mark.column,
  *                 None, None)
  *         value = PyUnicode_DecodeUTF8(self.parsed_event.data.scalar.value,             # <<<<<<<<<<<<<<
@@ -11066,7 +11066,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_scalar_node(struct __pyx_obj_5
   __pyx_v_value = __pyx_t_2;
   __pyx_t_2 = 0;
 
-  /* "_yaml.pyx":792
+  /* "_ruamel_yaml.pyx":792
  *         value = PyUnicode_DecodeUTF8(self.parsed_event.data.scalar.value,
  *                 self.parsed_event.data.scalar.length, 'strict')
  *         plain_implicit = False             # <<<<<<<<<<<<<<
@@ -11075,7 +11075,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_scalar_node(struct __pyx_obj_5
  */
   __pyx_v_plain_implicit = 0;
 
-  /* "_yaml.pyx":793
+  /* "_ruamel_yaml.pyx":793
  *                 self.parsed_event.data.scalar.length, 'strict')
  *         plain_implicit = False
  *         if self.parsed_event.data.scalar.plain_implicit == 1:             # <<<<<<<<<<<<<<
@@ -11085,7 +11085,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_scalar_node(struct __pyx_obj_5
   __pyx_t_5 = ((__pyx_v_self->parsed_event.data.scalar.plain_implicit == 1) != 0);
   if (__pyx_t_5) {
 
-    /* "_yaml.pyx":794
+    /* "_ruamel_yaml.pyx":794
  *         plain_implicit = False
  *         if self.parsed_event.data.scalar.plain_implicit == 1:
  *             plain_implicit = True             # <<<<<<<<<<<<<<
@@ -11094,7 +11094,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_scalar_node(struct __pyx_obj_5
  */
     __pyx_v_plain_implicit = 1;
 
-    /* "_yaml.pyx":793
+    /* "_ruamel_yaml.pyx":793
  *                 self.parsed_event.data.scalar.length, 'strict')
  *         plain_implicit = False
  *         if self.parsed_event.data.scalar.plain_implicit == 1:             # <<<<<<<<<<<<<<
@@ -11103,7 +11103,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_scalar_node(struct __pyx_obj_5
  */
   }
 
-  /* "_yaml.pyx":795
+  /* "_ruamel_yaml.pyx":795
  *         if self.parsed_event.data.scalar.plain_implicit == 1:
  *             plain_implicit = True
  *         quoted_implicit = False             # <<<<<<<<<<<<<<
@@ -11112,7 +11112,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_scalar_node(struct __pyx_obj_5
  */
   __pyx_v_quoted_implicit = 0;
 
-  /* "_yaml.pyx":796
+  /* "_ruamel_yaml.pyx":796
  *             plain_implicit = True
  *         quoted_implicit = False
  *         if self.parsed_event.data.scalar.quoted_implicit == 1:             # <<<<<<<<<<<<<<
@@ -11122,7 +11122,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_scalar_node(struct __pyx_obj_5
   __pyx_t_5 = ((__pyx_v_self->parsed_event.data.scalar.quoted_implicit == 1) != 0);
   if (__pyx_t_5) {
 
-    /* "_yaml.pyx":797
+    /* "_ruamel_yaml.pyx":797
  *         quoted_implicit = False
  *         if self.parsed_event.data.scalar.quoted_implicit == 1:
  *             quoted_implicit = True             # <<<<<<<<<<<<<<
@@ -11131,7 +11131,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_scalar_node(struct __pyx_obj_5
  */
     __pyx_v_quoted_implicit = 1;
 
-    /* "_yaml.pyx":796
+    /* "_ruamel_yaml.pyx":796
  *             plain_implicit = True
  *         quoted_implicit = False
  *         if self.parsed_event.data.scalar.quoted_implicit == 1:             # <<<<<<<<<<<<<<
@@ -11140,7 +11140,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_scalar_node(struct __pyx_obj_5
  */
   }
 
-  /* "_yaml.pyx":798
+  /* "_ruamel_yaml.pyx":798
  *         if self.parsed_event.data.scalar.quoted_implicit == 1:
  *             quoted_implicit = True
  *         if self.parsed_event.data.scalar.tag == NULL    \             # <<<<<<<<<<<<<<
@@ -11154,7 +11154,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_scalar_node(struct __pyx_obj_5
     goto __pyx_L6_bool_binop_done;
   }
 
-  /* "_yaml.pyx":799
+  /* "_ruamel_yaml.pyx":799
  *             quoted_implicit = True
  *         if self.parsed_event.data.scalar.tag == NULL    \
  *                 or (self.parsed_event.data.scalar.tag[0] == c'!'             # <<<<<<<<<<<<<<
@@ -11168,7 +11168,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_scalar_node(struct __pyx_obj_5
     goto __pyx_L6_bool_binop_done;
   }
 
-  /* "_yaml.pyx":800
+  /* "_ruamel_yaml.pyx":800
  *         if self.parsed_event.data.scalar.tag == NULL    \
  *                 or (self.parsed_event.data.scalar.tag[0] == c'!'
  *                         and self.parsed_event.data.scalar.tag[1] == c'\0'):             # <<<<<<<<<<<<<<
@@ -11179,7 +11179,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_scalar_node(struct __pyx_obj_5
   __pyx_t_5 = __pyx_t_6;
   __pyx_L6_bool_binop_done:;
 
-  /* "_yaml.pyx":798
+  /* "_ruamel_yaml.pyx":798
  *         if self.parsed_event.data.scalar.quoted_implicit == 1:
  *             quoted_implicit = True
  *         if self.parsed_event.data.scalar.tag == NULL    \             # <<<<<<<<<<<<<<
@@ -11188,7 +11188,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_scalar_node(struct __pyx_obj_5
  */
   if (__pyx_t_5) {
 
-    /* "_yaml.pyx":801
+    /* "_ruamel_yaml.pyx":801
  *                 or (self.parsed_event.data.scalar.tag[0] == c'!'
  *                         and self.parsed_event.data.scalar.tag[1] == c'\0'):
  *             tag = self.resolve(ScalarNode, value, (plain_implicit, quoted_implicit))             # <<<<<<<<<<<<<<
@@ -11244,7 +11244,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_scalar_node(struct __pyx_obj_5
     __pyx_v_tag = __pyx_t_2;
     __pyx_t_2 = 0;
 
-    /* "_yaml.pyx":798
+    /* "_ruamel_yaml.pyx":798
  *         if self.parsed_event.data.scalar.quoted_implicit == 1:
  *             quoted_implicit = True
  *         if self.parsed_event.data.scalar.tag == NULL    \             # <<<<<<<<<<<<<<
@@ -11254,7 +11254,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_scalar_node(struct __pyx_obj_5
     goto __pyx_L5;
   }
 
-  /* "_yaml.pyx":803
+  /* "_ruamel_yaml.pyx":803
  *             tag = self.resolve(ScalarNode, value, (plain_implicit, quoted_implicit))
  *         else:
  *             tag = PyUnicode_FromString(self.parsed_event.data.scalar.tag)             # <<<<<<<<<<<<<<
@@ -11269,7 +11269,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_scalar_node(struct __pyx_obj_5
   }
   __pyx_L5:;
 
-  /* "_yaml.pyx":804
+  /* "_ruamel_yaml.pyx":804
  *         else:
  *             tag = PyUnicode_FromString(self.parsed_event.data.scalar.tag)
  *         style = None             # <<<<<<<<<<<<<<
@@ -11279,7 +11279,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_scalar_node(struct __pyx_obj_5
   __Pyx_INCREF(Py_None);
   __pyx_v_style = Py_None;
 
-  /* "_yaml.pyx":805
+  /* "_ruamel_yaml.pyx":805
  *             tag = PyUnicode_FromString(self.parsed_event.data.scalar.tag)
  *         style = None
  *         if self.parsed_event.data.scalar.style == YAML_PLAIN_SCALAR_STYLE:             # <<<<<<<<<<<<<<
@@ -11289,7 +11289,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_scalar_node(struct __pyx_obj_5
   switch (__pyx_v_self->parsed_event.data.scalar.style) {
     case YAML_PLAIN_SCALAR_STYLE:
 
-    /* "_yaml.pyx":806
+    /* "_ruamel_yaml.pyx":806
  *         style = None
  *         if self.parsed_event.data.scalar.style == YAML_PLAIN_SCALAR_STYLE:
  *             style = u''             # <<<<<<<<<<<<<<
@@ -11299,7 +11299,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_scalar_node(struct __pyx_obj_5
     __Pyx_INCREF(__pyx_kp_u__6);
     __Pyx_DECREF_SET(__pyx_v_style, __pyx_kp_u__6);
 
-    /* "_yaml.pyx":805
+    /* "_ruamel_yaml.pyx":805
  *             tag = PyUnicode_FromString(self.parsed_event.data.scalar.tag)
  *         style = None
  *         if self.parsed_event.data.scalar.style == YAML_PLAIN_SCALAR_STYLE:             # <<<<<<<<<<<<<<
@@ -11308,7 +11308,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_scalar_node(struct __pyx_obj_5
  */
     break;
 
-    /* "_yaml.pyx":807
+    /* "_ruamel_yaml.pyx":807
  *         if self.parsed_event.data.scalar.style == YAML_PLAIN_SCALAR_STYLE:
  *             style = u''
  *         elif self.parsed_event.data.scalar.style == YAML_SINGLE_QUOTED_SCALAR_STYLE:             # <<<<<<<<<<<<<<
@@ -11317,7 +11317,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_scalar_node(struct __pyx_obj_5
  */
     case YAML_SINGLE_QUOTED_SCALAR_STYLE:
 
-    /* "_yaml.pyx":808
+    /* "_ruamel_yaml.pyx":808
  *             style = u''
  *         elif self.parsed_event.data.scalar.style == YAML_SINGLE_QUOTED_SCALAR_STYLE:
  *             style = u'\''             # <<<<<<<<<<<<<<
@@ -11327,7 +11327,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_scalar_node(struct __pyx_obj_5
     __Pyx_INCREF(__pyx_kp_u__7);
     __Pyx_DECREF_SET(__pyx_v_style, __pyx_kp_u__7);
 
-    /* "_yaml.pyx":807
+    /* "_ruamel_yaml.pyx":807
  *         if self.parsed_event.data.scalar.style == YAML_PLAIN_SCALAR_STYLE:
  *             style = u''
  *         elif self.parsed_event.data.scalar.style == YAML_SINGLE_QUOTED_SCALAR_STYLE:             # <<<<<<<<<<<<<<
@@ -11336,7 +11336,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_scalar_node(struct __pyx_obj_5
  */
     break;
 
-    /* "_yaml.pyx":809
+    /* "_ruamel_yaml.pyx":809
  *         elif self.parsed_event.data.scalar.style == YAML_SINGLE_QUOTED_SCALAR_STYLE:
  *             style = u'\''
  *         elif self.parsed_event.data.scalar.style == YAML_DOUBLE_QUOTED_SCALAR_STYLE:             # <<<<<<<<<<<<<<
@@ -11345,7 +11345,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_scalar_node(struct __pyx_obj_5
  */
     case YAML_DOUBLE_QUOTED_SCALAR_STYLE:
 
-    /* "_yaml.pyx":810
+    /* "_ruamel_yaml.pyx":810
  *             style = u'\''
  *         elif self.parsed_event.data.scalar.style == YAML_DOUBLE_QUOTED_SCALAR_STYLE:
  *             style = u'"'             # <<<<<<<<<<<<<<
@@ -11355,7 +11355,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_scalar_node(struct __pyx_obj_5
     __Pyx_INCREF(__pyx_kp_u__8);
     __Pyx_DECREF_SET(__pyx_v_style, __pyx_kp_u__8);
 
-    /* "_yaml.pyx":809
+    /* "_ruamel_yaml.pyx":809
  *         elif self.parsed_event.data.scalar.style == YAML_SINGLE_QUOTED_SCALAR_STYLE:
  *             style = u'\''
  *         elif self.parsed_event.data.scalar.style == YAML_DOUBLE_QUOTED_SCALAR_STYLE:             # <<<<<<<<<<<<<<
@@ -11364,7 +11364,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_scalar_node(struct __pyx_obj_5
  */
     break;
 
-    /* "_yaml.pyx":811
+    /* "_ruamel_yaml.pyx":811
  *         elif self.parsed_event.data.scalar.style == YAML_DOUBLE_QUOTED_SCALAR_STYLE:
  *             style = u'"'
  *         elif self.parsed_event.data.scalar.style == YAML_LITERAL_SCALAR_STYLE:             # <<<<<<<<<<<<<<
@@ -11373,7 +11373,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_scalar_node(struct __pyx_obj_5
  */
     case YAML_LITERAL_SCALAR_STYLE:
 
-    /* "_yaml.pyx":812
+    /* "_ruamel_yaml.pyx":812
  *             style = u'"'
  *         elif self.parsed_event.data.scalar.style == YAML_LITERAL_SCALAR_STYLE:
  *             style = u'|'             # <<<<<<<<<<<<<<
@@ -11383,7 +11383,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_scalar_node(struct __pyx_obj_5
     __Pyx_INCREF(__pyx_kp_u__9);
     __Pyx_DECREF_SET(__pyx_v_style, __pyx_kp_u__9);
 
-    /* "_yaml.pyx":811
+    /* "_ruamel_yaml.pyx":811
  *         elif self.parsed_event.data.scalar.style == YAML_DOUBLE_QUOTED_SCALAR_STYLE:
  *             style = u'"'
  *         elif self.parsed_event.data.scalar.style == YAML_LITERAL_SCALAR_STYLE:             # <<<<<<<<<<<<<<
@@ -11392,7 +11392,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_scalar_node(struct __pyx_obj_5
  */
     break;
 
-    /* "_yaml.pyx":813
+    /* "_ruamel_yaml.pyx":813
  *         elif self.parsed_event.data.scalar.style == YAML_LITERAL_SCALAR_STYLE:
  *             style = u'|'
  *         elif self.parsed_event.data.scalar.style == YAML_FOLDED_SCALAR_STYLE:             # <<<<<<<<<<<<<<
@@ -11401,7 +11401,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_scalar_node(struct __pyx_obj_5
  */
     case YAML_FOLDED_SCALAR_STYLE:
 
-    /* "_yaml.pyx":814
+    /* "_ruamel_yaml.pyx":814
  *             style = u'|'
  *         elif self.parsed_event.data.scalar.style == YAML_FOLDED_SCALAR_STYLE:
  *             style = u'>'             # <<<<<<<<<<<<<<
@@ -11411,7 +11411,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_scalar_node(struct __pyx_obj_5
     __Pyx_INCREF(__pyx_kp_u__10);
     __Pyx_DECREF_SET(__pyx_v_style, __pyx_kp_u__10);
 
-    /* "_yaml.pyx":813
+    /* "_ruamel_yaml.pyx":813
  *         elif self.parsed_event.data.scalar.style == YAML_LITERAL_SCALAR_STYLE:
  *             style = u'|'
  *         elif self.parsed_event.data.scalar.style == YAML_FOLDED_SCALAR_STYLE:             # <<<<<<<<<<<<<<
@@ -11422,7 +11422,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_scalar_node(struct __pyx_obj_5
     default: break;
   }
 
-  /* "_yaml.pyx":815
+  /* "_ruamel_yaml.pyx":815
  *         elif self.parsed_event.data.scalar.style == YAML_FOLDED_SCALAR_STYLE:
  *             style = u'>'
  *         node = ScalarNode(tag, value, start_mark, end_mark, style)             # <<<<<<<<<<<<<<
@@ -11470,7 +11470,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_scalar_node(struct __pyx_obj_5
   __pyx_v_node = __pyx_t_2;
   __pyx_t_2 = 0;
 
-  /* "_yaml.pyx":816
+  /* "_ruamel_yaml.pyx":816
  *             style = u'>'
  *         node = ScalarNode(tag, value, start_mark, end_mark, style)
  *         if anchor is not None:             # <<<<<<<<<<<<<<
@@ -11481,7 +11481,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_scalar_node(struct __pyx_obj_5
   __pyx_t_6 = (__pyx_t_5 != 0);
   if (__pyx_t_6) {
 
-    /* "_yaml.pyx":817
+    /* "_ruamel_yaml.pyx":817
  *         node = ScalarNode(tag, value, start_mark, end_mark, style)
  *         if anchor is not None:
  *             self.anchors[anchor] = node             # <<<<<<<<<<<<<<
@@ -11490,7 +11490,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_scalar_node(struct __pyx_obj_5
  */
     if (unlikely(PyObject_SetItem(__pyx_v_self->anchors, __pyx_v_anchor, __pyx_v_node) < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 817; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-    /* "_yaml.pyx":816
+    /* "_ruamel_yaml.pyx":816
  *             style = u'>'
  *         node = ScalarNode(tag, value, start_mark, end_mark, style)
  *         if anchor is not None:             # <<<<<<<<<<<<<<
@@ -11499,7 +11499,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_scalar_node(struct __pyx_obj_5
  */
   }
 
-  /* "_yaml.pyx":818
+  /* "_ruamel_yaml.pyx":818
  *         if anchor is not None:
  *             self.anchors[anchor] = node
  *         yaml_event_delete(&self.parsed_event)             # <<<<<<<<<<<<<<
@@ -11508,7 +11508,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_scalar_node(struct __pyx_obj_5
  */
   yaml_event_delete((&__pyx_v_self->parsed_event));
 
-  /* "_yaml.pyx":819
+  /* "_ruamel_yaml.pyx":819
  *             self.anchors[anchor] = node
  *         yaml_event_delete(&self.parsed_event)
  *         return node             # <<<<<<<<<<<<<<
@@ -11520,7 +11520,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_scalar_node(struct __pyx_obj_5
   __pyx_r = __pyx_v_node;
   goto __pyx_L0;
 
-  /* "_yaml.pyx":779
+  /* "_ruamel_yaml.pyx":779
  *         return node
  * 
  *     cdef _compose_scalar_node(self, object anchor):             # <<<<<<<<<<<<<<
@@ -11536,7 +11536,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_scalar_node(struct __pyx_obj_5
   __Pyx_XDECREF(__pyx_t_4);
   __Pyx_XDECREF(__pyx_t_7);
   __Pyx_XDECREF(__pyx_t_8);
-  __Pyx_AddTraceback("_yaml.CParser._compose_scalar_node", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("_ruamel_yaml.CParser._compose_scalar_node", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = 0;
   __pyx_L0:;
   __Pyx_XDECREF((PyObject *)__pyx_v_start_mark);
@@ -11550,7 +11550,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_scalar_node(struct __pyx_obj_5
   return __pyx_r;
 }
 
-/* "_yaml.pyx":821
+/* "_ruamel_yaml.pyx":821
  *         return node
  * 
  *     cdef _compose_sequence_node(self, object anchor):             # <<<<<<<<<<<<<<
@@ -11558,9 +11558,9 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_scalar_node(struct __pyx_obj_5
  *         start_mark = Mark(self.stream_name,
  */
 
-static PyObject *__pyx_f_5_yaml_7CParser__compose_sequence_node(struct __pyx_obj_5_yaml_CParser *__pyx_v_self, PyObject *__pyx_v_anchor) {
+static PyObject *__pyx_f_12_ruamel_yaml_7CParser__compose_sequence_node(struct __pyx_obj_12_ruamel_yaml_CParser *__pyx_v_self, PyObject *__pyx_v_anchor) {
   int __pyx_v_index;
-  struct __pyx_obj_5_yaml_Mark *__pyx_v_start_mark = NULL;
+  struct __pyx_obj_12_ruamel_yaml_Mark *__pyx_v_start_mark = NULL;
   int __pyx_v_implicit;
   PyObject *__pyx_v_tag = NULL;
   PyObject *__pyx_v_flow_style = NULL;
@@ -11584,7 +11584,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_sequence_node(struct __pyx_obj
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("_compose_sequence_node", 0);
 
-  /* "_yaml.pyx":824
+  /* "_ruamel_yaml.pyx":824
  *         cdef int index
  *         start_mark = Mark(self.stream_name,
  *                 self.parsed_event.start_mark.index,             # <<<<<<<<<<<<<<
@@ -11594,7 +11594,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_sequence_node(struct __pyx_obj
   __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_self->parsed_event.start_mark.index); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 824; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
 
-  /* "_yaml.pyx":825
+  /* "_ruamel_yaml.pyx":825
  *         start_mark = Mark(self.stream_name,
  *                 self.parsed_event.start_mark.index,
  *                 self.parsed_event.start_mark.line,             # <<<<<<<<<<<<<<
@@ -11604,7 +11604,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_sequence_node(struct __pyx_obj
   __pyx_t_2 = __Pyx_PyInt_From_int(__pyx_v_self->parsed_event.start_mark.line); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 825; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
 
-  /* "_yaml.pyx":826
+  /* "_ruamel_yaml.pyx":826
  *                 self.parsed_event.start_mark.index,
  *                 self.parsed_event.start_mark.line,
  *                 self.parsed_event.start_mark.column,             # <<<<<<<<<<<<<<
@@ -11614,7 +11614,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_sequence_node(struct __pyx_obj
   __pyx_t_3 = __Pyx_PyInt_From_int(__pyx_v_self->parsed_event.start_mark.column); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 826; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_3);
 
-  /* "_yaml.pyx":823
+  /* "_ruamel_yaml.pyx":823
  *     cdef _compose_sequence_node(self, object anchor):
  *         cdef int index
  *         start_mark = Mark(self.stream_name,             # <<<<<<<<<<<<<<
@@ -11641,13 +11641,13 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_sequence_node(struct __pyx_obj
   __pyx_t_1 = 0;
   __pyx_t_2 = 0;
   __pyx_t_3 = 0;
-  __pyx_t_3 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_5_yaml_Mark), __pyx_t_4, NULL); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 823; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_3 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_12_ruamel_yaml_Mark), __pyx_t_4, NULL); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 823; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __pyx_v_start_mark = ((struct __pyx_obj_5_yaml_Mark *)__pyx_t_3);
+  __pyx_v_start_mark = ((struct __pyx_obj_12_ruamel_yaml_Mark *)__pyx_t_3);
   __pyx_t_3 = 0;
 
-  /* "_yaml.pyx":828
+  /* "_ruamel_yaml.pyx":828
  *                 self.parsed_event.start_mark.column,
  *                 None, None)
  *         implicit = False             # <<<<<<<<<<<<<<
@@ -11656,7 +11656,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_sequence_node(struct __pyx_obj
  */
   __pyx_v_implicit = 0;
 
-  /* "_yaml.pyx":829
+  /* "_ruamel_yaml.pyx":829
  *                 None, None)
  *         implicit = False
  *         if self.parsed_event.data.sequence_start.implicit == 1:             # <<<<<<<<<<<<<<
@@ -11666,7 +11666,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_sequence_node(struct __pyx_obj
   __pyx_t_5 = ((__pyx_v_self->parsed_event.data.sequence_start.implicit == 1) != 0);
   if (__pyx_t_5) {
 
-    /* "_yaml.pyx":830
+    /* "_ruamel_yaml.pyx":830
  *         implicit = False
  *         if self.parsed_event.data.sequence_start.implicit == 1:
  *             implicit = True             # <<<<<<<<<<<<<<
@@ -11675,7 +11675,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_sequence_node(struct __pyx_obj
  */
     __pyx_v_implicit = 1;
 
-    /* "_yaml.pyx":829
+    /* "_ruamel_yaml.pyx":829
  *                 None, None)
  *         implicit = False
  *         if self.parsed_event.data.sequence_start.implicit == 1:             # <<<<<<<<<<<<<<
@@ -11684,7 +11684,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_sequence_node(struct __pyx_obj
  */
   }
 
-  /* "_yaml.pyx":831
+  /* "_ruamel_yaml.pyx":831
  *         if self.parsed_event.data.sequence_start.implicit == 1:
  *             implicit = True
  *         if self.parsed_event.data.sequence_start.tag == NULL    \             # <<<<<<<<<<<<<<
@@ -11698,7 +11698,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_sequence_node(struct __pyx_obj
     goto __pyx_L5_bool_binop_done;
   }
 
-  /* "_yaml.pyx":832
+  /* "_ruamel_yaml.pyx":832
  *             implicit = True
  *         if self.parsed_event.data.sequence_start.tag == NULL    \
  *                 or (self.parsed_event.data.sequence_start.tag[0] == c'!'             # <<<<<<<<<<<<<<
@@ -11712,7 +11712,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_sequence_node(struct __pyx_obj
     goto __pyx_L5_bool_binop_done;
   }
 
-  /* "_yaml.pyx":833
+  /* "_ruamel_yaml.pyx":833
  *         if self.parsed_event.data.sequence_start.tag == NULL    \
  *                 or (self.parsed_event.data.sequence_start.tag[0] == c'!'
  *                         and self.parsed_event.data.sequence_start.tag[1] == c'\0'):             # <<<<<<<<<<<<<<
@@ -11723,7 +11723,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_sequence_node(struct __pyx_obj
   __pyx_t_5 = __pyx_t_6;
   __pyx_L5_bool_binop_done:;
 
-  /* "_yaml.pyx":831
+  /* "_ruamel_yaml.pyx":831
  *         if self.parsed_event.data.sequence_start.implicit == 1:
  *             implicit = True
  *         if self.parsed_event.data.sequence_start.tag == NULL    \             # <<<<<<<<<<<<<<
@@ -11732,7 +11732,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_sequence_node(struct __pyx_obj
  */
   if (__pyx_t_5) {
 
-    /* "_yaml.pyx":834
+    /* "_ruamel_yaml.pyx":834
  *                 or (self.parsed_event.data.sequence_start.tag[0] == c'!'
  *                         and self.parsed_event.data.sequence_start.tag[1] == c'\0'):
  *             tag = self.resolve(SequenceNode, None, implicit)             # <<<<<<<<<<<<<<
@@ -11778,7 +11778,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_sequence_node(struct __pyx_obj
     __pyx_v_tag = __pyx_t_3;
     __pyx_t_3 = 0;
 
-    /* "_yaml.pyx":831
+    /* "_ruamel_yaml.pyx":831
  *         if self.parsed_event.data.sequence_start.implicit == 1:
  *             implicit = True
  *         if self.parsed_event.data.sequence_start.tag == NULL    \             # <<<<<<<<<<<<<<
@@ -11788,7 +11788,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_sequence_node(struct __pyx_obj
     goto __pyx_L4;
   }
 
-  /* "_yaml.pyx":836
+  /* "_ruamel_yaml.pyx":836
  *             tag = self.resolve(SequenceNode, None, implicit)
  *         else:
  *             tag = PyUnicode_FromString(self.parsed_event.data.sequence_start.tag)             # <<<<<<<<<<<<<<
@@ -11803,7 +11803,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_sequence_node(struct __pyx_obj
   }
   __pyx_L4:;
 
-  /* "_yaml.pyx":837
+  /* "_ruamel_yaml.pyx":837
  *         else:
  *             tag = PyUnicode_FromString(self.parsed_event.data.sequence_start.tag)
  *         flow_style = None             # <<<<<<<<<<<<<<
@@ -11813,7 +11813,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_sequence_node(struct __pyx_obj
   __Pyx_INCREF(Py_None);
   __pyx_v_flow_style = Py_None;
 
-  /* "_yaml.pyx":838
+  /* "_ruamel_yaml.pyx":838
  *             tag = PyUnicode_FromString(self.parsed_event.data.sequence_start.tag)
  *         flow_style = None
  *         if self.parsed_event.data.sequence_start.style == YAML_FLOW_SEQUENCE_STYLE:             # <<<<<<<<<<<<<<
@@ -11823,7 +11823,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_sequence_node(struct __pyx_obj
   switch (__pyx_v_self->parsed_event.data.sequence_start.style) {
     case YAML_FLOW_SEQUENCE_STYLE:
 
-    /* "_yaml.pyx":839
+    /* "_ruamel_yaml.pyx":839
  *         flow_style = None
  *         if self.parsed_event.data.sequence_start.style == YAML_FLOW_SEQUENCE_STYLE:
  *             flow_style = True             # <<<<<<<<<<<<<<
@@ -11833,7 +11833,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_sequence_node(struct __pyx_obj
     __Pyx_INCREF(Py_True);
     __Pyx_DECREF_SET(__pyx_v_flow_style, Py_True);
 
-    /* "_yaml.pyx":838
+    /* "_ruamel_yaml.pyx":838
  *             tag = PyUnicode_FromString(self.parsed_event.data.sequence_start.tag)
  *         flow_style = None
  *         if self.parsed_event.data.sequence_start.style == YAML_FLOW_SEQUENCE_STYLE:             # <<<<<<<<<<<<<<
@@ -11842,7 +11842,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_sequence_node(struct __pyx_obj
  */
     break;
 
-    /* "_yaml.pyx":840
+    /* "_ruamel_yaml.pyx":840
  *         if self.parsed_event.data.sequence_start.style == YAML_FLOW_SEQUENCE_STYLE:
  *             flow_style = True
  *         elif self.parsed_event.data.sequence_start.style == YAML_BLOCK_SEQUENCE_STYLE:             # <<<<<<<<<<<<<<
@@ -11851,7 +11851,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_sequence_node(struct __pyx_obj
  */
     case YAML_BLOCK_SEQUENCE_STYLE:
 
-    /* "_yaml.pyx":841
+    /* "_ruamel_yaml.pyx":841
  *             flow_style = True
  *         elif self.parsed_event.data.sequence_start.style == YAML_BLOCK_SEQUENCE_STYLE:
  *             flow_style = False             # <<<<<<<<<<<<<<
@@ -11861,7 +11861,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_sequence_node(struct __pyx_obj
     __Pyx_INCREF(Py_False);
     __Pyx_DECREF_SET(__pyx_v_flow_style, Py_False);
 
-    /* "_yaml.pyx":840
+    /* "_ruamel_yaml.pyx":840
  *         if self.parsed_event.data.sequence_start.style == YAML_FLOW_SEQUENCE_STYLE:
  *             flow_style = True
  *         elif self.parsed_event.data.sequence_start.style == YAML_BLOCK_SEQUENCE_STYLE:             # <<<<<<<<<<<<<<
@@ -11872,7 +11872,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_sequence_node(struct __pyx_obj
     default: break;
   }
 
-  /* "_yaml.pyx":842
+  /* "_ruamel_yaml.pyx":842
  *         elif self.parsed_event.data.sequence_start.style == YAML_BLOCK_SEQUENCE_STYLE:
  *             flow_style = False
  *         value = []             # <<<<<<<<<<<<<<
@@ -11884,7 +11884,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_sequence_node(struct __pyx_obj
   __pyx_v_value = ((PyObject*)__pyx_t_3);
   __pyx_t_3 = 0;
 
-  /* "_yaml.pyx":843
+  /* "_ruamel_yaml.pyx":843
  *             flow_style = False
  *         value = []
  *         node = SequenceNode(tag, value, start_mark, None, flow_style)             # <<<<<<<<<<<<<<
@@ -11932,7 +11932,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_sequence_node(struct __pyx_obj
   __pyx_v_node = __pyx_t_3;
   __pyx_t_3 = 0;
 
-  /* "_yaml.pyx":844
+  /* "_ruamel_yaml.pyx":844
  *         value = []
  *         node = SequenceNode(tag, value, start_mark, None, flow_style)
  *         if anchor is not None:             # <<<<<<<<<<<<<<
@@ -11943,7 +11943,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_sequence_node(struct __pyx_obj
   __pyx_t_6 = (__pyx_t_5 != 0);
   if (__pyx_t_6) {
 
-    /* "_yaml.pyx":845
+    /* "_ruamel_yaml.pyx":845
  *         node = SequenceNode(tag, value, start_mark, None, flow_style)
  *         if anchor is not None:
  *             self.anchors[anchor] = node             # <<<<<<<<<<<<<<
@@ -11952,7 +11952,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_sequence_node(struct __pyx_obj
  */
     if (unlikely(PyObject_SetItem(__pyx_v_self->anchors, __pyx_v_anchor, __pyx_v_node) < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 845; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-    /* "_yaml.pyx":844
+    /* "_ruamel_yaml.pyx":844
  *         value = []
  *         node = SequenceNode(tag, value, start_mark, None, flow_style)
  *         if anchor is not None:             # <<<<<<<<<<<<<<
@@ -11961,7 +11961,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_sequence_node(struct __pyx_obj
  */
   }
 
-  /* "_yaml.pyx":846
+  /* "_ruamel_yaml.pyx":846
  *         if anchor is not None:
  *             self.anchors[anchor] = node
  *         yaml_event_delete(&self.parsed_event)             # <<<<<<<<<<<<<<
@@ -11970,7 +11970,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_sequence_node(struct __pyx_obj
  */
   yaml_event_delete((&__pyx_v_self->parsed_event));
 
-  /* "_yaml.pyx":847
+  /* "_ruamel_yaml.pyx":847
  *             self.anchors[anchor] = node
  *         yaml_event_delete(&self.parsed_event)
  *         index = 0             # <<<<<<<<<<<<<<
@@ -11979,16 +11979,16 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_sequence_node(struct __pyx_obj
  */
   __pyx_v_index = 0;
 
-  /* "_yaml.pyx":848
+  /* "_ruamel_yaml.pyx":848
  *         yaml_event_delete(&self.parsed_event)
  *         index = 0
  *         self._parse_next_event()             # <<<<<<<<<<<<<<
  *         while self.parsed_event.type != YAML_SEQUENCE_END_EVENT:
  *             value.append(self._compose_node(node, index))
  */
-  __pyx_t_10 = ((struct __pyx_vtabstruct_5_yaml_CParser *)__pyx_v_self->__pyx_vtab)->_parse_next_event(__pyx_v_self); if (unlikely(__pyx_t_10 == 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 848; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_10 = ((struct __pyx_vtabstruct_12_ruamel_yaml_CParser *)__pyx_v_self->__pyx_vtab)->_parse_next_event(__pyx_v_self); if (unlikely(__pyx_t_10 == 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 848; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-  /* "_yaml.pyx":849
+  /* "_ruamel_yaml.pyx":849
  *         index = 0
  *         self._parse_next_event()
  *         while self.parsed_event.type != YAML_SEQUENCE_END_EVENT:             # <<<<<<<<<<<<<<
@@ -11999,7 +11999,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_sequence_node(struct __pyx_obj
     __pyx_t_6 = ((__pyx_v_self->parsed_event.type != YAML_SEQUENCE_END_EVENT) != 0);
     if (!__pyx_t_6) break;
 
-    /* "_yaml.pyx":850
+    /* "_ruamel_yaml.pyx":850
  *         self._parse_next_event()
  *         while self.parsed_event.type != YAML_SEQUENCE_END_EVENT:
  *             value.append(self._compose_node(node, index))             # <<<<<<<<<<<<<<
@@ -12008,13 +12008,13 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_sequence_node(struct __pyx_obj
  */
     __pyx_t_3 = __Pyx_PyInt_From_int(__pyx_v_index); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 850; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_4 = ((struct __pyx_vtabstruct_5_yaml_CParser *)__pyx_v_self->__pyx_vtab)->_compose_node(__pyx_v_self, __pyx_v_node, __pyx_t_3); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 850; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_4 = ((struct __pyx_vtabstruct_12_ruamel_yaml_CParser *)__pyx_v_self->__pyx_vtab)->_compose_node(__pyx_v_self, __pyx_v_node, __pyx_t_3); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 850; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_4);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     __pyx_t_11 = __Pyx_PyList_Append(__pyx_v_value, __pyx_t_4); if (unlikely(__pyx_t_11 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 850; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-    /* "_yaml.pyx":851
+    /* "_ruamel_yaml.pyx":851
  *         while self.parsed_event.type != YAML_SEQUENCE_END_EVENT:
  *             value.append(self._compose_node(node, index))
  *             index = index+1             # <<<<<<<<<<<<<<
@@ -12023,17 +12023,17 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_sequence_node(struct __pyx_obj
  */
     __pyx_v_index = (__pyx_v_index + 1);
 
-    /* "_yaml.pyx":852
+    /* "_ruamel_yaml.pyx":852
  *             value.append(self._compose_node(node, index))
  *             index = index+1
  *             self._parse_next_event()             # <<<<<<<<<<<<<<
  *         node.end_mark = Mark(self.stream_name,
  *                 self.parsed_event.end_mark.index,
  */
-    __pyx_t_10 = ((struct __pyx_vtabstruct_5_yaml_CParser *)__pyx_v_self->__pyx_vtab)->_parse_next_event(__pyx_v_self); if (unlikely(__pyx_t_10 == 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 852; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_10 = ((struct __pyx_vtabstruct_12_ruamel_yaml_CParser *)__pyx_v_self->__pyx_vtab)->_parse_next_event(__pyx_v_self); if (unlikely(__pyx_t_10 == 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 852; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   }
 
-  /* "_yaml.pyx":854
+  /* "_ruamel_yaml.pyx":854
  *             self._parse_next_event()
  *         node.end_mark = Mark(self.stream_name,
  *                 self.parsed_event.end_mark.index,             # <<<<<<<<<<<<<<
@@ -12043,7 +12043,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_sequence_node(struct __pyx_obj
   __pyx_t_4 = __Pyx_PyInt_From_int(__pyx_v_self->parsed_event.end_mark.index); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 854; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_4);
 
-  /* "_yaml.pyx":855
+  /* "_ruamel_yaml.pyx":855
  *         node.end_mark = Mark(self.stream_name,
  *                 self.parsed_event.end_mark.index,
  *                 self.parsed_event.end_mark.line,             # <<<<<<<<<<<<<<
@@ -12053,7 +12053,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_sequence_node(struct __pyx_obj
   __pyx_t_3 = __Pyx_PyInt_From_int(__pyx_v_self->parsed_event.end_mark.line); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 855; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_3);
 
-  /* "_yaml.pyx":856
+  /* "_ruamel_yaml.pyx":856
  *                 self.parsed_event.end_mark.index,
  *                 self.parsed_event.end_mark.line,
  *                 self.parsed_event.end_mark.column,             # <<<<<<<<<<<<<<
@@ -12063,7 +12063,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_sequence_node(struct __pyx_obj
   __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_self->parsed_event.end_mark.column); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 856; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
 
-  /* "_yaml.pyx":853
+  /* "_ruamel_yaml.pyx":853
  *             index = index+1
  *             self._parse_next_event()
  *         node.end_mark = Mark(self.stream_name,             # <<<<<<<<<<<<<<
@@ -12090,13 +12090,13 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_sequence_node(struct __pyx_obj
   __pyx_t_4 = 0;
   __pyx_t_3 = 0;
   __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_5_yaml_Mark), __pyx_t_9, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 853; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_12_ruamel_yaml_Mark), __pyx_t_9, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 853; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
   if (__Pyx_PyObject_SetAttrStr(__pyx_v_node, __pyx_n_s_end_mark, __pyx_t_1) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 853; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "_yaml.pyx":858
+  /* "_ruamel_yaml.pyx":858
  *                 self.parsed_event.end_mark.column,
  *                 None, None)
  *         yaml_event_delete(&self.parsed_event)             # <<<<<<<<<<<<<<
@@ -12105,7 +12105,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_sequence_node(struct __pyx_obj
  */
   yaml_event_delete((&__pyx_v_self->parsed_event));
 
-  /* "_yaml.pyx":859
+  /* "_ruamel_yaml.pyx":859
  *                 None, None)
  *         yaml_event_delete(&self.parsed_event)
  *         return node             # <<<<<<<<<<<<<<
@@ -12117,7 +12117,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_sequence_node(struct __pyx_obj
   __pyx_r = __pyx_v_node;
   goto __pyx_L0;
 
-  /* "_yaml.pyx":821
+  /* "_ruamel_yaml.pyx":821
  *         return node
  * 
  *     cdef _compose_sequence_node(self, object anchor):             # <<<<<<<<<<<<<<
@@ -12133,7 +12133,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_sequence_node(struct __pyx_obj
   __Pyx_XDECREF(__pyx_t_4);
   __Pyx_XDECREF(__pyx_t_7);
   __Pyx_XDECREF(__pyx_t_9);
-  __Pyx_AddTraceback("_yaml.CParser._compose_sequence_node", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("_ruamel_yaml.CParser._compose_sequence_node", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = 0;
   __pyx_L0:;
   __Pyx_XDECREF((PyObject *)__pyx_v_start_mark);
@@ -12146,7 +12146,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_sequence_node(struct __pyx_obj
   return __pyx_r;
 }
 
-/* "_yaml.pyx":861
+/* "_ruamel_yaml.pyx":861
  *         return node
  * 
  *     cdef _compose_mapping_node(self, object anchor):             # <<<<<<<<<<<<<<
@@ -12154,8 +12154,8 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_sequence_node(struct __pyx_obj
  *                 self.parsed_event.start_mark.index,
  */
 
-static PyObject *__pyx_f_5_yaml_7CParser__compose_mapping_node(struct __pyx_obj_5_yaml_CParser *__pyx_v_self, PyObject *__pyx_v_anchor) {
-  struct __pyx_obj_5_yaml_Mark *__pyx_v_start_mark = NULL;
+static PyObject *__pyx_f_12_ruamel_yaml_7CParser__compose_mapping_node(struct __pyx_obj_12_ruamel_yaml_CParser *__pyx_v_self, PyObject *__pyx_v_anchor) {
+  struct __pyx_obj_12_ruamel_yaml_Mark *__pyx_v_start_mark = NULL;
   int __pyx_v_implicit;
   PyObject *__pyx_v_tag = NULL;
   PyObject *__pyx_v_flow_style = NULL;
@@ -12181,7 +12181,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_mapping_node(struct __pyx_obj_
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("_compose_mapping_node", 0);
 
-  /* "_yaml.pyx":863
+  /* "_ruamel_yaml.pyx":863
  *     cdef _compose_mapping_node(self, object anchor):
  *         start_mark = Mark(self.stream_name,
  *                 self.parsed_event.start_mark.index,             # <<<<<<<<<<<<<<
@@ -12191,7 +12191,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_mapping_node(struct __pyx_obj_
   __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_self->parsed_event.start_mark.index); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 863; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
 
-  /* "_yaml.pyx":864
+  /* "_ruamel_yaml.pyx":864
  *         start_mark = Mark(self.stream_name,
  *                 self.parsed_event.start_mark.index,
  *                 self.parsed_event.start_mark.line,             # <<<<<<<<<<<<<<
@@ -12201,7 +12201,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_mapping_node(struct __pyx_obj_
   __pyx_t_2 = __Pyx_PyInt_From_int(__pyx_v_self->parsed_event.start_mark.line); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 864; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
 
-  /* "_yaml.pyx":865
+  /* "_ruamel_yaml.pyx":865
  *                 self.parsed_event.start_mark.index,
  *                 self.parsed_event.start_mark.line,
  *                 self.parsed_event.start_mark.column,             # <<<<<<<<<<<<<<
@@ -12211,7 +12211,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_mapping_node(struct __pyx_obj_
   __pyx_t_3 = __Pyx_PyInt_From_int(__pyx_v_self->parsed_event.start_mark.column); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 865; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_3);
 
-  /* "_yaml.pyx":862
+  /* "_ruamel_yaml.pyx":862
  * 
  *     cdef _compose_mapping_node(self, object anchor):
  *         start_mark = Mark(self.stream_name,             # <<<<<<<<<<<<<<
@@ -12238,13 +12238,13 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_mapping_node(struct __pyx_obj_
   __pyx_t_1 = 0;
   __pyx_t_2 = 0;
   __pyx_t_3 = 0;
-  __pyx_t_3 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_5_yaml_Mark), __pyx_t_4, NULL); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 862; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_3 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_12_ruamel_yaml_Mark), __pyx_t_4, NULL); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 862; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __pyx_v_start_mark = ((struct __pyx_obj_5_yaml_Mark *)__pyx_t_3);
+  __pyx_v_start_mark = ((struct __pyx_obj_12_ruamel_yaml_Mark *)__pyx_t_3);
   __pyx_t_3 = 0;
 
-  /* "_yaml.pyx":867
+  /* "_ruamel_yaml.pyx":867
  *                 self.parsed_event.start_mark.column,
  *                 None, None)
  *         implicit = False             # <<<<<<<<<<<<<<
@@ -12253,7 +12253,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_mapping_node(struct __pyx_obj_
  */
   __pyx_v_implicit = 0;
 
-  /* "_yaml.pyx":868
+  /* "_ruamel_yaml.pyx":868
  *                 None, None)
  *         implicit = False
  *         if self.parsed_event.data.mapping_start.implicit == 1:             # <<<<<<<<<<<<<<
@@ -12263,7 +12263,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_mapping_node(struct __pyx_obj_
   __pyx_t_5 = ((__pyx_v_self->parsed_event.data.mapping_start.implicit == 1) != 0);
   if (__pyx_t_5) {
 
-    /* "_yaml.pyx":869
+    /* "_ruamel_yaml.pyx":869
  *         implicit = False
  *         if self.parsed_event.data.mapping_start.implicit == 1:
  *             implicit = True             # <<<<<<<<<<<<<<
@@ -12272,7 +12272,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_mapping_node(struct __pyx_obj_
  */
     __pyx_v_implicit = 1;
 
-    /* "_yaml.pyx":868
+    /* "_ruamel_yaml.pyx":868
  *                 None, None)
  *         implicit = False
  *         if self.parsed_event.data.mapping_start.implicit == 1:             # <<<<<<<<<<<<<<
@@ -12281,7 +12281,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_mapping_node(struct __pyx_obj_
  */
   }
 
-  /* "_yaml.pyx":870
+  /* "_ruamel_yaml.pyx":870
  *         if self.parsed_event.data.mapping_start.implicit == 1:
  *             implicit = True
  *         if self.parsed_event.data.mapping_start.tag == NULL    \             # <<<<<<<<<<<<<<
@@ -12295,7 +12295,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_mapping_node(struct __pyx_obj_
     goto __pyx_L5_bool_binop_done;
   }
 
-  /* "_yaml.pyx":871
+  /* "_ruamel_yaml.pyx":871
  *             implicit = True
  *         if self.parsed_event.data.mapping_start.tag == NULL    \
  *                 or (self.parsed_event.data.mapping_start.tag[0] == c'!'             # <<<<<<<<<<<<<<
@@ -12309,7 +12309,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_mapping_node(struct __pyx_obj_
     goto __pyx_L5_bool_binop_done;
   }
 
-  /* "_yaml.pyx":872
+  /* "_ruamel_yaml.pyx":872
  *         if self.parsed_event.data.mapping_start.tag == NULL    \
  *                 or (self.parsed_event.data.mapping_start.tag[0] == c'!'
  *                         and self.parsed_event.data.mapping_start.tag[1] == c'\0'):             # <<<<<<<<<<<<<<
@@ -12320,7 +12320,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_mapping_node(struct __pyx_obj_
   __pyx_t_5 = __pyx_t_6;
   __pyx_L5_bool_binop_done:;
 
-  /* "_yaml.pyx":870
+  /* "_ruamel_yaml.pyx":870
  *         if self.parsed_event.data.mapping_start.implicit == 1:
  *             implicit = True
  *         if self.parsed_event.data.mapping_start.tag == NULL    \             # <<<<<<<<<<<<<<
@@ -12329,7 +12329,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_mapping_node(struct __pyx_obj_
  */
   if (__pyx_t_5) {
 
-    /* "_yaml.pyx":873
+    /* "_ruamel_yaml.pyx":873
  *                 or (self.parsed_event.data.mapping_start.tag[0] == c'!'
  *                         and self.parsed_event.data.mapping_start.tag[1] == c'\0'):
  *             tag = self.resolve(MappingNode, None, implicit)             # <<<<<<<<<<<<<<
@@ -12375,7 +12375,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_mapping_node(struct __pyx_obj_
     __pyx_v_tag = __pyx_t_3;
     __pyx_t_3 = 0;
 
-    /* "_yaml.pyx":870
+    /* "_ruamel_yaml.pyx":870
  *         if self.parsed_event.data.mapping_start.implicit == 1:
  *             implicit = True
  *         if self.parsed_event.data.mapping_start.tag == NULL    \             # <<<<<<<<<<<<<<
@@ -12385,7 +12385,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_mapping_node(struct __pyx_obj_
     goto __pyx_L4;
   }
 
-  /* "_yaml.pyx":875
+  /* "_ruamel_yaml.pyx":875
  *             tag = self.resolve(MappingNode, None, implicit)
  *         else:
  *             tag = PyUnicode_FromString(self.parsed_event.data.mapping_start.tag)             # <<<<<<<<<<<<<<
@@ -12400,7 +12400,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_mapping_node(struct __pyx_obj_
   }
   __pyx_L4:;
 
-  /* "_yaml.pyx":876
+  /* "_ruamel_yaml.pyx":876
  *         else:
  *             tag = PyUnicode_FromString(self.parsed_event.data.mapping_start.tag)
  *         flow_style = None             # <<<<<<<<<<<<<<
@@ -12410,7 +12410,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_mapping_node(struct __pyx_obj_
   __Pyx_INCREF(Py_None);
   __pyx_v_flow_style = Py_None;
 
-  /* "_yaml.pyx":877
+  /* "_ruamel_yaml.pyx":877
  *             tag = PyUnicode_FromString(self.parsed_event.data.mapping_start.tag)
  *         flow_style = None
  *         if self.parsed_event.data.mapping_start.style == YAML_FLOW_MAPPING_STYLE:             # <<<<<<<<<<<<<<
@@ -12420,7 +12420,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_mapping_node(struct __pyx_obj_
   switch (__pyx_v_self->parsed_event.data.mapping_start.style) {
     case YAML_FLOW_MAPPING_STYLE:
 
-    /* "_yaml.pyx":878
+    /* "_ruamel_yaml.pyx":878
  *         flow_style = None
  *         if self.parsed_event.data.mapping_start.style == YAML_FLOW_MAPPING_STYLE:
  *             flow_style = True             # <<<<<<<<<<<<<<
@@ -12430,7 +12430,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_mapping_node(struct __pyx_obj_
     __Pyx_INCREF(Py_True);
     __Pyx_DECREF_SET(__pyx_v_flow_style, Py_True);
 
-    /* "_yaml.pyx":877
+    /* "_ruamel_yaml.pyx":877
  *             tag = PyUnicode_FromString(self.parsed_event.data.mapping_start.tag)
  *         flow_style = None
  *         if self.parsed_event.data.mapping_start.style == YAML_FLOW_MAPPING_STYLE:             # <<<<<<<<<<<<<<
@@ -12439,7 +12439,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_mapping_node(struct __pyx_obj_
  */
     break;
 
-    /* "_yaml.pyx":879
+    /* "_ruamel_yaml.pyx":879
  *         if self.parsed_event.data.mapping_start.style == YAML_FLOW_MAPPING_STYLE:
  *             flow_style = True
  *         elif self.parsed_event.data.mapping_start.style == YAML_BLOCK_MAPPING_STYLE:             # <<<<<<<<<<<<<<
@@ -12448,7 +12448,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_mapping_node(struct __pyx_obj_
  */
     case YAML_BLOCK_MAPPING_STYLE:
 
-    /* "_yaml.pyx":880
+    /* "_ruamel_yaml.pyx":880
  *             flow_style = True
  *         elif self.parsed_event.data.mapping_start.style == YAML_BLOCK_MAPPING_STYLE:
  *             flow_style = False             # <<<<<<<<<<<<<<
@@ -12458,7 +12458,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_mapping_node(struct __pyx_obj_
     __Pyx_INCREF(Py_False);
     __Pyx_DECREF_SET(__pyx_v_flow_style, Py_False);
 
-    /* "_yaml.pyx":879
+    /* "_ruamel_yaml.pyx":879
  *         if self.parsed_event.data.mapping_start.style == YAML_FLOW_MAPPING_STYLE:
  *             flow_style = True
  *         elif self.parsed_event.data.mapping_start.style == YAML_BLOCK_MAPPING_STYLE:             # <<<<<<<<<<<<<<
@@ -12469,7 +12469,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_mapping_node(struct __pyx_obj_
     default: break;
   }
 
-  /* "_yaml.pyx":881
+  /* "_ruamel_yaml.pyx":881
  *         elif self.parsed_event.data.mapping_start.style == YAML_BLOCK_MAPPING_STYLE:
  *             flow_style = False
  *         value = []             # <<<<<<<<<<<<<<
@@ -12481,7 +12481,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_mapping_node(struct __pyx_obj_
   __pyx_v_value = ((PyObject*)__pyx_t_3);
   __pyx_t_3 = 0;
 
-  /* "_yaml.pyx":882
+  /* "_ruamel_yaml.pyx":882
  *             flow_style = False
  *         value = []
  *         node = MappingNode(tag, value, start_mark, None, flow_style)             # <<<<<<<<<<<<<<
@@ -12529,7 +12529,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_mapping_node(struct __pyx_obj_
   __pyx_v_node = __pyx_t_3;
   __pyx_t_3 = 0;
 
-  /* "_yaml.pyx":883
+  /* "_ruamel_yaml.pyx":883
  *         value = []
  *         node = MappingNode(tag, value, start_mark, None, flow_style)
  *         if anchor is not None:             # <<<<<<<<<<<<<<
@@ -12540,7 +12540,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_mapping_node(struct __pyx_obj_
   __pyx_t_6 = (__pyx_t_5 != 0);
   if (__pyx_t_6) {
 
-    /* "_yaml.pyx":884
+    /* "_ruamel_yaml.pyx":884
  *         node = MappingNode(tag, value, start_mark, None, flow_style)
  *         if anchor is not None:
  *             self.anchors[anchor] = node             # <<<<<<<<<<<<<<
@@ -12549,7 +12549,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_mapping_node(struct __pyx_obj_
  */
     if (unlikely(PyObject_SetItem(__pyx_v_self->anchors, __pyx_v_anchor, __pyx_v_node) < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 884; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-    /* "_yaml.pyx":883
+    /* "_ruamel_yaml.pyx":883
  *         value = []
  *         node = MappingNode(tag, value, start_mark, None, flow_style)
  *         if anchor is not None:             # <<<<<<<<<<<<<<
@@ -12558,7 +12558,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_mapping_node(struct __pyx_obj_
  */
   }
 
-  /* "_yaml.pyx":885
+  /* "_ruamel_yaml.pyx":885
  *         if anchor is not None:
  *             self.anchors[anchor] = node
  *         yaml_event_delete(&self.parsed_event)             # <<<<<<<<<<<<<<
@@ -12567,16 +12567,16 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_mapping_node(struct __pyx_obj_
  */
   yaml_event_delete((&__pyx_v_self->parsed_event));
 
-  /* "_yaml.pyx":886
+  /* "_ruamel_yaml.pyx":886
  *             self.anchors[anchor] = node
  *         yaml_event_delete(&self.parsed_event)
  *         self._parse_next_event()             # <<<<<<<<<<<<<<
  *         while self.parsed_event.type != YAML_MAPPING_END_EVENT:
  *             item_key = self._compose_node(node, None)
  */
-  __pyx_t_10 = ((struct __pyx_vtabstruct_5_yaml_CParser *)__pyx_v_self->__pyx_vtab)->_parse_next_event(__pyx_v_self); if (unlikely(__pyx_t_10 == 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 886; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_10 = ((struct __pyx_vtabstruct_12_ruamel_yaml_CParser *)__pyx_v_self->__pyx_vtab)->_parse_next_event(__pyx_v_self); if (unlikely(__pyx_t_10 == 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 886; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-  /* "_yaml.pyx":887
+  /* "_ruamel_yaml.pyx":887
  *         yaml_event_delete(&self.parsed_event)
  *         self._parse_next_event()
  *         while self.parsed_event.type != YAML_MAPPING_END_EVENT:             # <<<<<<<<<<<<<<
@@ -12587,31 +12587,31 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_mapping_node(struct __pyx_obj_
     __pyx_t_6 = ((__pyx_v_self->parsed_event.type != YAML_MAPPING_END_EVENT) != 0);
     if (!__pyx_t_6) break;
 
-    /* "_yaml.pyx":888
+    /* "_ruamel_yaml.pyx":888
  *         self._parse_next_event()
  *         while self.parsed_event.type != YAML_MAPPING_END_EVENT:
  *             item_key = self._compose_node(node, None)             # <<<<<<<<<<<<<<
  *             item_value = self._compose_node(node, item_key)
  *             value.append((item_key, item_value))
  */
-    __pyx_t_3 = ((struct __pyx_vtabstruct_5_yaml_CParser *)__pyx_v_self->__pyx_vtab)->_compose_node(__pyx_v_self, __pyx_v_node, Py_None); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 888; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_3 = ((struct __pyx_vtabstruct_12_ruamel_yaml_CParser *)__pyx_v_self->__pyx_vtab)->_compose_node(__pyx_v_self, __pyx_v_node, Py_None); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 888; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_XDECREF_SET(__pyx_v_item_key, __pyx_t_3);
     __pyx_t_3 = 0;
 
-    /* "_yaml.pyx":889
+    /* "_ruamel_yaml.pyx":889
  *         while self.parsed_event.type != YAML_MAPPING_END_EVENT:
  *             item_key = self._compose_node(node, None)
  *             item_value = self._compose_node(node, item_key)             # <<<<<<<<<<<<<<
  *             value.append((item_key, item_value))
  *             self._parse_next_event()
  */
-    __pyx_t_3 = ((struct __pyx_vtabstruct_5_yaml_CParser *)__pyx_v_self->__pyx_vtab)->_compose_node(__pyx_v_self, __pyx_v_node, __pyx_v_item_key); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 889; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_3 = ((struct __pyx_vtabstruct_12_ruamel_yaml_CParser *)__pyx_v_self->__pyx_vtab)->_compose_node(__pyx_v_self, __pyx_v_node, __pyx_v_item_key); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 889; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_XDECREF_SET(__pyx_v_item_value, __pyx_t_3);
     __pyx_t_3 = 0;
 
-    /* "_yaml.pyx":890
+    /* "_ruamel_yaml.pyx":890
  *             item_key = self._compose_node(node, None)
  *             item_value = self._compose_node(node, item_key)
  *             value.append((item_key, item_value))             # <<<<<<<<<<<<<<
@@ -12629,17 +12629,17 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_mapping_node(struct __pyx_obj_
     __pyx_t_11 = __Pyx_PyList_Append(__pyx_v_value, __pyx_t_3); if (unlikely(__pyx_t_11 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 890; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-    /* "_yaml.pyx":891
+    /* "_ruamel_yaml.pyx":891
  *             item_value = self._compose_node(node, item_key)
  *             value.append((item_key, item_value))
  *             self._parse_next_event()             # <<<<<<<<<<<<<<
  *         node.end_mark = Mark(self.stream_name,
  *                 self.parsed_event.end_mark.index,
  */
-    __pyx_t_10 = ((struct __pyx_vtabstruct_5_yaml_CParser *)__pyx_v_self->__pyx_vtab)->_parse_next_event(__pyx_v_self); if (unlikely(__pyx_t_10 == 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 891; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_10 = ((struct __pyx_vtabstruct_12_ruamel_yaml_CParser *)__pyx_v_self->__pyx_vtab)->_parse_next_event(__pyx_v_self); if (unlikely(__pyx_t_10 == 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 891; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   }
 
-  /* "_yaml.pyx":893
+  /* "_ruamel_yaml.pyx":893
  *             self._parse_next_event()
  *         node.end_mark = Mark(self.stream_name,
  *                 self.parsed_event.end_mark.index,             # <<<<<<<<<<<<<<
@@ -12649,7 +12649,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_mapping_node(struct __pyx_obj_
   __pyx_t_3 = __Pyx_PyInt_From_int(__pyx_v_self->parsed_event.end_mark.index); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 893; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_3);
 
-  /* "_yaml.pyx":894
+  /* "_ruamel_yaml.pyx":894
  *         node.end_mark = Mark(self.stream_name,
  *                 self.parsed_event.end_mark.index,
  *                 self.parsed_event.end_mark.line,             # <<<<<<<<<<<<<<
@@ -12659,7 +12659,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_mapping_node(struct __pyx_obj_
   __pyx_t_4 = __Pyx_PyInt_From_int(__pyx_v_self->parsed_event.end_mark.line); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 894; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_4);
 
-  /* "_yaml.pyx":895
+  /* "_ruamel_yaml.pyx":895
  *                 self.parsed_event.end_mark.index,
  *                 self.parsed_event.end_mark.line,
  *                 self.parsed_event.end_mark.column,             # <<<<<<<<<<<<<<
@@ -12669,7 +12669,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_mapping_node(struct __pyx_obj_
   __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_self->parsed_event.end_mark.column); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 895; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
 
-  /* "_yaml.pyx":892
+  /* "_ruamel_yaml.pyx":892
  *             value.append((item_key, item_value))
  *             self._parse_next_event()
  *         node.end_mark = Mark(self.stream_name,             # <<<<<<<<<<<<<<
@@ -12696,13 +12696,13 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_mapping_node(struct __pyx_obj_
   __pyx_t_3 = 0;
   __pyx_t_4 = 0;
   __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_5_yaml_Mark), __pyx_t_9, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 892; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_12_ruamel_yaml_Mark), __pyx_t_9, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 892; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
   if (__Pyx_PyObject_SetAttrStr(__pyx_v_node, __pyx_n_s_end_mark, __pyx_t_1) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 892; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "_yaml.pyx":897
+  /* "_ruamel_yaml.pyx":897
  *                 self.parsed_event.end_mark.column,
  *                 None, None)
  *         yaml_event_delete(&self.parsed_event)             # <<<<<<<<<<<<<<
@@ -12711,7 +12711,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_mapping_node(struct __pyx_obj_
  */
   yaml_event_delete((&__pyx_v_self->parsed_event));
 
-  /* "_yaml.pyx":898
+  /* "_ruamel_yaml.pyx":898
  *                 None, None)
  *         yaml_event_delete(&self.parsed_event)
  *         return node             # <<<<<<<<<<<<<<
@@ -12723,7 +12723,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_mapping_node(struct __pyx_obj_
   __pyx_r = __pyx_v_node;
   goto __pyx_L0;
 
-  /* "_yaml.pyx":861
+  /* "_ruamel_yaml.pyx":861
  *         return node
  * 
  *     cdef _compose_mapping_node(self, object anchor):             # <<<<<<<<<<<<<<
@@ -12739,7 +12739,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_mapping_node(struct __pyx_obj_
   __Pyx_XDECREF(__pyx_t_4);
   __Pyx_XDECREF(__pyx_t_7);
   __Pyx_XDECREF(__pyx_t_9);
-  __Pyx_AddTraceback("_yaml.CParser._compose_mapping_node", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("_ruamel_yaml.CParser._compose_mapping_node", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = 0;
   __pyx_L0:;
   __Pyx_XDECREF((PyObject *)__pyx_v_start_mark);
@@ -12754,7 +12754,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_mapping_node(struct __pyx_obj_
   return __pyx_r;
 }
 
-/* "_yaml.pyx":900
+/* "_ruamel_yaml.pyx":900
  *         return node
  * 
  *     cdef int _parse_next_event(self) except 0:             # <<<<<<<<<<<<<<
@@ -12762,7 +12762,7 @@ static PyObject *__pyx_f_5_yaml_7CParser__compose_mapping_node(struct __pyx_obj_
  *             if yaml_parser_parse(&self.parser, &self.parsed_event) == 0:
  */
 
-static int __pyx_f_5_yaml_7CParser__parse_next_event(struct __pyx_obj_5_yaml_CParser *__pyx_v_self) {
+static int __pyx_f_12_ruamel_yaml_7CParser__parse_next_event(struct __pyx_obj_12_ruamel_yaml_CParser *__pyx_v_self) {
   PyObject *__pyx_v_error = NULL;
   int __pyx_r;
   __Pyx_RefNannyDeclarations
@@ -12774,7 +12774,7 @@ static int __pyx_f_5_yaml_7CParser__parse_next_event(struct __pyx_obj_5_yaml_CPa
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("_parse_next_event", 0);
 
-  /* "_yaml.pyx":901
+  /* "_ruamel_yaml.pyx":901
  * 
  *     cdef int _parse_next_event(self) except 0:
  *         if self.parsed_event.type == YAML_NO_EVENT:             # <<<<<<<<<<<<<<
@@ -12784,7 +12784,7 @@ static int __pyx_f_5_yaml_7CParser__parse_next_event(struct __pyx_obj_5_yaml_CPa
   __pyx_t_1 = ((__pyx_v_self->parsed_event.type == YAML_NO_EVENT) != 0);
   if (__pyx_t_1) {
 
-    /* "_yaml.pyx":902
+    /* "_ruamel_yaml.pyx":902
  *     cdef int _parse_next_event(self) except 0:
  *         if self.parsed_event.type == YAML_NO_EVENT:
  *             if yaml_parser_parse(&self.parser, &self.parsed_event) == 0:             # <<<<<<<<<<<<<<
@@ -12795,19 +12795,19 @@ static int __pyx_f_5_yaml_7CParser__parse_next_event(struct __pyx_obj_5_yaml_CPa
     __pyx_t_1 = ((__pyx_t_2 == 0) != 0);
     if (__pyx_t_1) {
 
-      /* "_yaml.pyx":903
+      /* "_ruamel_yaml.pyx":903
  *         if self.parsed_event.type == YAML_NO_EVENT:
  *             if yaml_parser_parse(&self.parser, &self.parsed_event) == 0:
  *                 error = self._parser_error()             # <<<<<<<<<<<<<<
  *                 raise error
  *         return 1
  */
-      __pyx_t_3 = ((struct __pyx_vtabstruct_5_yaml_CParser *)__pyx_v_self->__pyx_vtab)->_parser_error(__pyx_v_self); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 903; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_3 = ((struct __pyx_vtabstruct_12_ruamel_yaml_CParser *)__pyx_v_self->__pyx_vtab)->_parser_error(__pyx_v_self); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 903; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_3);
       __pyx_v_error = __pyx_t_3;
       __pyx_t_3 = 0;
 
-      /* "_yaml.pyx":904
+      /* "_ruamel_yaml.pyx":904
  *             if yaml_parser_parse(&self.parser, &self.parsed_event) == 0:
  *                 error = self._parser_error()
  *                 raise error             # <<<<<<<<<<<<<<
@@ -12817,7 +12817,7 @@ static int __pyx_f_5_yaml_7CParser__parse_next_event(struct __pyx_obj_5_yaml_CPa
       __Pyx_Raise(__pyx_v_error, 0, 0, 0);
       {__pyx_filename = __pyx_f[0]; __pyx_lineno = 904; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-      /* "_yaml.pyx":902
+      /* "_ruamel_yaml.pyx":902
  *     cdef int _parse_next_event(self) except 0:
  *         if self.parsed_event.type == YAML_NO_EVENT:
  *             if yaml_parser_parse(&self.parser, &self.parsed_event) == 0:             # <<<<<<<<<<<<<<
@@ -12826,7 +12826,7 @@ static int __pyx_f_5_yaml_7CParser__parse_next_event(struct __pyx_obj_5_yaml_CPa
  */
     }
 
-    /* "_yaml.pyx":901
+    /* "_ruamel_yaml.pyx":901
  * 
  *     cdef int _parse_next_event(self) except 0:
  *         if self.parsed_event.type == YAML_NO_EVENT:             # <<<<<<<<<<<<<<
@@ -12835,7 +12835,7 @@ static int __pyx_f_5_yaml_7CParser__parse_next_event(struct __pyx_obj_5_yaml_CPa
  */
   }
 
-  /* "_yaml.pyx":905
+  /* "_ruamel_yaml.pyx":905
  *                 error = self._parser_error()
  *                 raise error
  *         return 1             # <<<<<<<<<<<<<<
@@ -12845,7 +12845,7 @@ static int __pyx_f_5_yaml_7CParser__parse_next_event(struct __pyx_obj_5_yaml_CPa
   __pyx_r = 1;
   goto __pyx_L0;
 
-  /* "_yaml.pyx":900
+  /* "_ruamel_yaml.pyx":900
  *         return node
  * 
  *     cdef int _parse_next_event(self) except 0:             # <<<<<<<<<<<<<<
@@ -12856,7 +12856,7 @@ static int __pyx_f_5_yaml_7CParser__parse_next_event(struct __pyx_obj_5_yaml_CPa
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_3);
-  __Pyx_AddTraceback("_yaml.CParser._parse_next_event", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("_ruamel_yaml.CParser._parse_next_event", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = 0;
   __pyx_L0:;
   __Pyx_XDECREF(__pyx_v_error);
@@ -12864,7 +12864,7 @@ static int __pyx_f_5_yaml_7CParser__parse_next_event(struct __pyx_obj_5_yaml_CPa
   return __pyx_r;
 }
 
-/* "_yaml.pyx":907
+/* "_ruamel_yaml.pyx":907
  *         return 1
  * 
  * cdef int input_handler(void *data, char *buffer, int size, int *read) except 0:             # <<<<<<<<<<<<<<
@@ -12872,8 +12872,8 @@ static int __pyx_f_5_yaml_7CParser__parse_next_event(struct __pyx_obj_5_yaml_CPa
  *     parser = <CParser>data
  */
 
-static int __pyx_f_5_yaml_input_handler(void *__pyx_v_data, char *__pyx_v_buffer, int __pyx_v_size, int *__pyx_v_read) {
-  struct __pyx_obj_5_yaml_CParser *__pyx_v_parser = 0;
+static int __pyx_f_12_ruamel_yaml_input_handler(void *__pyx_v_data, char *__pyx_v_buffer, int __pyx_v_size, int *__pyx_v_read) {
+  struct __pyx_obj_12_ruamel_yaml_CParser *__pyx_v_parser = 0;
   PyObject *__pyx_v_value = NULL;
   int __pyx_r;
   __Pyx_RefNannyDeclarations
@@ -12889,7 +12889,7 @@ static int __pyx_f_5_yaml_input_handler(void *__pyx_v_data, char *__pyx_v_buffer
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("input_handler", 0);
 
-  /* "_yaml.pyx":909
+  /* "_ruamel_yaml.pyx":909
  * cdef int input_handler(void *data, char *buffer, int size, int *read) except 0:
  *     cdef CParser parser
  *     parser = <CParser>data             # <<<<<<<<<<<<<<
@@ -12898,10 +12898,10 @@ static int __pyx_f_5_yaml_input_handler(void *__pyx_v_data, char *__pyx_v_buffer
  */
   __pyx_t_1 = ((PyObject *)__pyx_v_data);
   __Pyx_INCREF(__pyx_t_1);
-  __pyx_v_parser = ((struct __pyx_obj_5_yaml_CParser *)__pyx_t_1);
+  __pyx_v_parser = ((struct __pyx_obj_12_ruamel_yaml_CParser *)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "_yaml.pyx":910
+  /* "_ruamel_yaml.pyx":910
  *     cdef CParser parser
  *     parser = <CParser>data
  *     if parser.stream_cache is None:             # <<<<<<<<<<<<<<
@@ -12912,7 +12912,7 @@ static int __pyx_f_5_yaml_input_handler(void *__pyx_v_data, char *__pyx_v_buffer
   __pyx_t_3 = (__pyx_t_2 != 0);
   if (__pyx_t_3) {
 
-    /* "_yaml.pyx":911
+    /* "_ruamel_yaml.pyx":911
  *     parser = <CParser>data
  *     if parser.stream_cache is None:
  *         value = parser.stream.read(size)             # <<<<<<<<<<<<<<
@@ -12952,7 +12952,7 @@ static int __pyx_f_5_yaml_input_handler(void *__pyx_v_data, char *__pyx_v_buffer
     __pyx_v_value = __pyx_t_1;
     __pyx_t_1 = 0;
 
-    /* "_yaml.pyx":912
+    /* "_ruamel_yaml.pyx":912
  *     if parser.stream_cache is None:
  *         value = parser.stream.read(size)
  *         if PyUnicode_CheckExact(value) != 0:             # <<<<<<<<<<<<<<
@@ -12962,7 +12962,7 @@ static int __pyx_f_5_yaml_input_handler(void *__pyx_v_data, char *__pyx_v_buffer
     __pyx_t_3 = ((PyUnicode_CheckExact(__pyx_v_value) != 0) != 0);
     if (__pyx_t_3) {
 
-      /* "_yaml.pyx":913
+      /* "_ruamel_yaml.pyx":913
  *         value = parser.stream.read(size)
  *         if PyUnicode_CheckExact(value) != 0:
  *             value = PyUnicode_AsUTF8String(value)             # <<<<<<<<<<<<<<
@@ -12974,7 +12974,7 @@ static int __pyx_f_5_yaml_input_handler(void *__pyx_v_data, char *__pyx_v_buffer
       __Pyx_DECREF_SET(__pyx_v_value, __pyx_t_1);
       __pyx_t_1 = 0;
 
-      /* "_yaml.pyx":914
+      /* "_ruamel_yaml.pyx":914
  *         if PyUnicode_CheckExact(value) != 0:
  *             value = PyUnicode_AsUTF8String(value)
  *             parser.unicode_source = 1             # <<<<<<<<<<<<<<
@@ -12983,7 +12983,7 @@ static int __pyx_f_5_yaml_input_handler(void *__pyx_v_data, char *__pyx_v_buffer
  */
       __pyx_v_parser->unicode_source = 1;
 
-      /* "_yaml.pyx":912
+      /* "_ruamel_yaml.pyx":912
  *     if parser.stream_cache is None:
  *         value = parser.stream.read(size)
  *         if PyUnicode_CheckExact(value) != 0:             # <<<<<<<<<<<<<<
@@ -12992,7 +12992,7 @@ static int __pyx_f_5_yaml_input_handler(void *__pyx_v_data, char *__pyx_v_buffer
  */
     }
 
-    /* "_yaml.pyx":915
+    /* "_ruamel_yaml.pyx":915
  *             value = PyUnicode_AsUTF8String(value)
  *             parser.unicode_source = 1
  *         if PyString_CheckExact(value) == 0:             # <<<<<<<<<<<<<<
@@ -13002,7 +13002,7 @@ static int __pyx_f_5_yaml_input_handler(void *__pyx_v_data, char *__pyx_v_buffer
     __pyx_t_3 = ((PyString_CheckExact(__pyx_v_value) == 0) != 0);
     if (__pyx_t_3) {
 
-      /* "_yaml.pyx":916
+      /* "_ruamel_yaml.pyx":916
  *             parser.unicode_source = 1
  *         if PyString_CheckExact(value) == 0:
  *             if PY_MAJOR_VERSION < 3:             # <<<<<<<<<<<<<<
@@ -13012,7 +13012,7 @@ static int __pyx_f_5_yaml_input_handler(void *__pyx_v_data, char *__pyx_v_buffer
       __pyx_t_3 = ((PY_MAJOR_VERSION < 3) != 0);
       if (__pyx_t_3) {
 
-        /* "_yaml.pyx":917
+        /* "_ruamel_yaml.pyx":917
  *         if PyString_CheckExact(value) == 0:
  *             if PY_MAJOR_VERSION < 3:
  *                 raise TypeError("a string value is expected")             # <<<<<<<<<<<<<<
@@ -13025,7 +13025,7 @@ static int __pyx_f_5_yaml_input_handler(void *__pyx_v_data, char *__pyx_v_buffer
         __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
         {__pyx_filename = __pyx_f[0]; __pyx_lineno = 917; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-        /* "_yaml.pyx":916
+        /* "_ruamel_yaml.pyx":916
  *             parser.unicode_source = 1
  *         if PyString_CheckExact(value) == 0:
  *             if PY_MAJOR_VERSION < 3:             # <<<<<<<<<<<<<<
@@ -13034,7 +13034,7 @@ static int __pyx_f_5_yaml_input_handler(void *__pyx_v_data, char *__pyx_v_buffer
  */
       }
 
-      /* "_yaml.pyx":919
+      /* "_ruamel_yaml.pyx":919
  *                 raise TypeError("a string value is expected")
  *             else:
  *                 raise TypeError(u"a string value is expected")             # <<<<<<<<<<<<<<
@@ -13049,7 +13049,7 @@ static int __pyx_f_5_yaml_input_handler(void *__pyx_v_data, char *__pyx_v_buffer
         {__pyx_filename = __pyx_f[0]; __pyx_lineno = 919; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       }
 
-      /* "_yaml.pyx":915
+      /* "_ruamel_yaml.pyx":915
  *             value = PyUnicode_AsUTF8String(value)
  *             parser.unicode_source = 1
  *         if PyString_CheckExact(value) == 0:             # <<<<<<<<<<<<<<
@@ -13058,7 +13058,7 @@ static int __pyx_f_5_yaml_input_handler(void *__pyx_v_data, char *__pyx_v_buffer
  */
     }
 
-    /* "_yaml.pyx":920
+    /* "_ruamel_yaml.pyx":920
  *             else:
  *                 raise TypeError(u"a string value is expected")
  *         parser.stream_cache = value             # <<<<<<<<<<<<<<
@@ -13071,7 +13071,7 @@ static int __pyx_f_5_yaml_input_handler(void *__pyx_v_data, char *__pyx_v_buffer
     __Pyx_DECREF(__pyx_v_parser->stream_cache);
     __pyx_v_parser->stream_cache = __pyx_v_value;
 
-    /* "_yaml.pyx":921
+    /* "_ruamel_yaml.pyx":921
  *                 raise TypeError(u"a string value is expected")
  *         parser.stream_cache = value
  *         parser.stream_cache_pos = 0             # <<<<<<<<<<<<<<
@@ -13080,7 +13080,7 @@ static int __pyx_f_5_yaml_input_handler(void *__pyx_v_data, char *__pyx_v_buffer
  */
     __pyx_v_parser->stream_cache_pos = 0;
 
-    /* "_yaml.pyx":922
+    /* "_ruamel_yaml.pyx":922
  *         parser.stream_cache = value
  *         parser.stream_cache_pos = 0
  *         parser.stream_cache_len = PyString_GET_SIZE(value)             # <<<<<<<<<<<<<<
@@ -13089,7 +13089,7 @@ static int __pyx_f_5_yaml_input_handler(void *__pyx_v_data, char *__pyx_v_buffer
  */
     __pyx_v_parser->stream_cache_len = PyString_GET_SIZE(__pyx_v_value);
 
-    /* "_yaml.pyx":910
+    /* "_ruamel_yaml.pyx":910
  *     cdef CParser parser
  *     parser = <CParser>data
  *     if parser.stream_cache is None:             # <<<<<<<<<<<<<<
@@ -13098,7 +13098,7 @@ static int __pyx_f_5_yaml_input_handler(void *__pyx_v_data, char *__pyx_v_buffer
  */
   }
 
-  /* "_yaml.pyx":923
+  /* "_ruamel_yaml.pyx":923
  *         parser.stream_cache_pos = 0
  *         parser.stream_cache_len = PyString_GET_SIZE(value)
  *     if (parser.stream_cache_len - parser.stream_cache_pos) < size:             # <<<<<<<<<<<<<<
@@ -13108,7 +13108,7 @@ static int __pyx_f_5_yaml_input_handler(void *__pyx_v_data, char *__pyx_v_buffer
   __pyx_t_3 = (((__pyx_v_parser->stream_cache_len - __pyx_v_parser->stream_cache_pos) < __pyx_v_size) != 0);
   if (__pyx_t_3) {
 
-    /* "_yaml.pyx":924
+    /* "_ruamel_yaml.pyx":924
  *         parser.stream_cache_len = PyString_GET_SIZE(value)
  *     if (parser.stream_cache_len - parser.stream_cache_pos) < size:
  *         size = parser.stream_cache_len - parser.stream_cache_pos             # <<<<<<<<<<<<<<
@@ -13117,7 +13117,7 @@ static int __pyx_f_5_yaml_input_handler(void *__pyx_v_data, char *__pyx_v_buffer
  */
     __pyx_v_size = (__pyx_v_parser->stream_cache_len - __pyx_v_parser->stream_cache_pos);
 
-    /* "_yaml.pyx":923
+    /* "_ruamel_yaml.pyx":923
  *         parser.stream_cache_pos = 0
  *         parser.stream_cache_len = PyString_GET_SIZE(value)
  *     if (parser.stream_cache_len - parser.stream_cache_pos) < size:             # <<<<<<<<<<<<<<
@@ -13126,7 +13126,7 @@ static int __pyx_f_5_yaml_input_handler(void *__pyx_v_data, char *__pyx_v_buffer
  */
   }
 
-  /* "_yaml.pyx":925
+  /* "_ruamel_yaml.pyx":925
  *     if (parser.stream_cache_len - parser.stream_cache_pos) < size:
  *         size = parser.stream_cache_len - parser.stream_cache_pos
  *     if size > 0:             # <<<<<<<<<<<<<<
@@ -13136,7 +13136,7 @@ static int __pyx_f_5_yaml_input_handler(void *__pyx_v_data, char *__pyx_v_buffer
   __pyx_t_3 = ((__pyx_v_size > 0) != 0);
   if (__pyx_t_3) {
 
-    /* "_yaml.pyx":926
+    /* "_ruamel_yaml.pyx":926
  *         size = parser.stream_cache_len - parser.stream_cache_pos
  *     if size > 0:
  *         memcpy(buffer, PyString_AS_STRING(parser.stream_cache)             # <<<<<<<<<<<<<<
@@ -13146,7 +13146,7 @@ static int __pyx_f_5_yaml_input_handler(void *__pyx_v_data, char *__pyx_v_buffer
     __pyx_t_1 = __pyx_v_parser->stream_cache;
     __Pyx_INCREF(__pyx_t_1);
 
-    /* "_yaml.pyx":927
+    /* "_ruamel_yaml.pyx":927
  *     if size > 0:
  *         memcpy(buffer, PyString_AS_STRING(parser.stream_cache)
  *                             + parser.stream_cache_pos, size)             # <<<<<<<<<<<<<<
@@ -13156,7 +13156,7 @@ static int __pyx_f_5_yaml_input_handler(void *__pyx_v_data, char *__pyx_v_buffer
     memcpy(__pyx_v_buffer, (PyString_AS_STRING(__pyx_t_1) + __pyx_v_parser->stream_cache_pos), __pyx_v_size);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-    /* "_yaml.pyx":925
+    /* "_ruamel_yaml.pyx":925
  *     if (parser.stream_cache_len - parser.stream_cache_pos) < size:
  *         size = parser.stream_cache_len - parser.stream_cache_pos
  *     if size > 0:             # <<<<<<<<<<<<<<
@@ -13165,7 +13165,7 @@ static int __pyx_f_5_yaml_input_handler(void *__pyx_v_data, char *__pyx_v_buffer
  */
   }
 
-  /* "_yaml.pyx":928
+  /* "_ruamel_yaml.pyx":928
  *         memcpy(buffer, PyString_AS_STRING(parser.stream_cache)
  *                             + parser.stream_cache_pos, size)
  *     read[0] = size             # <<<<<<<<<<<<<<
@@ -13174,7 +13174,7 @@ static int __pyx_f_5_yaml_input_handler(void *__pyx_v_data, char *__pyx_v_buffer
  */
   (__pyx_v_read[0]) = __pyx_v_size;
 
-  /* "_yaml.pyx":929
+  /* "_ruamel_yaml.pyx":929
  *                             + parser.stream_cache_pos, size)
  *     read[0] = size
  *     parser.stream_cache_pos += size             # <<<<<<<<<<<<<<
@@ -13183,7 +13183,7 @@ static int __pyx_f_5_yaml_input_handler(void *__pyx_v_data, char *__pyx_v_buffer
  */
   __pyx_v_parser->stream_cache_pos = (__pyx_v_parser->stream_cache_pos + __pyx_v_size);
 
-  /* "_yaml.pyx":930
+  /* "_ruamel_yaml.pyx":930
  *     read[0] = size
  *     parser.stream_cache_pos += size
  *     if parser.stream_cache_pos == parser.stream_cache_len:             # <<<<<<<<<<<<<<
@@ -13193,7 +13193,7 @@ static int __pyx_f_5_yaml_input_handler(void *__pyx_v_data, char *__pyx_v_buffer
   __pyx_t_3 = ((__pyx_v_parser->stream_cache_pos == __pyx_v_parser->stream_cache_len) != 0);
   if (__pyx_t_3) {
 
-    /* "_yaml.pyx":931
+    /* "_ruamel_yaml.pyx":931
  *     parser.stream_cache_pos += size
  *     if parser.stream_cache_pos == parser.stream_cache_len:
  *         parser.stream_cache = None             # <<<<<<<<<<<<<<
@@ -13206,7 +13206,7 @@ static int __pyx_f_5_yaml_input_handler(void *__pyx_v_data, char *__pyx_v_buffer
     __Pyx_DECREF(__pyx_v_parser->stream_cache);
     __pyx_v_parser->stream_cache = Py_None;
 
-    /* "_yaml.pyx":930
+    /* "_ruamel_yaml.pyx":930
  *     read[0] = size
  *     parser.stream_cache_pos += size
  *     if parser.stream_cache_pos == parser.stream_cache_len:             # <<<<<<<<<<<<<<
@@ -13215,7 +13215,7 @@ static int __pyx_f_5_yaml_input_handler(void *__pyx_v_data, char *__pyx_v_buffer
  */
   }
 
-  /* "_yaml.pyx":932
+  /* "_ruamel_yaml.pyx":932
  *     if parser.stream_cache_pos == parser.stream_cache_len:
  *         parser.stream_cache = None
  *     return 1             # <<<<<<<<<<<<<<
@@ -13225,7 +13225,7 @@ static int __pyx_f_5_yaml_input_handler(void *__pyx_v_data, char *__pyx_v_buffer
   __pyx_r = 1;
   goto __pyx_L0;
 
-  /* "_yaml.pyx":907
+  /* "_ruamel_yaml.pyx":907
  *         return 1
  * 
  * cdef int input_handler(void *data, char *buffer, int size, int *read) except 0:             # <<<<<<<<<<<<<<
@@ -13240,7 +13240,7 @@ static int __pyx_f_5_yaml_input_handler(void *__pyx_v_data, char *__pyx_v_buffer
   __Pyx_XDECREF(__pyx_t_5);
   __Pyx_XDECREF(__pyx_t_6);
   __Pyx_XDECREF(__pyx_t_7);
-  __Pyx_AddTraceback("_yaml.input_handler", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("_ruamel_yaml.input_handler", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = 0;
   __pyx_L0:;
   __Pyx_XDECREF((PyObject *)__pyx_v_parser);
@@ -13249,7 +13249,7 @@ static int __pyx_f_5_yaml_input_handler(void *__pyx_v_data, char *__pyx_v_buffer
   return __pyx_r;
 }
 
-/* "_yaml.pyx":952
+/* "_ruamel_yaml.pyx":952
  *     cdef object use_encoding
  * 
  *     def __init__(self, stream, canonical=None, indent=None, width=None,             # <<<<<<<<<<<<<<
@@ -13258,8 +13258,8 @@ static int __pyx_f_5_yaml_input_handler(void *__pyx_v_data, char *__pyx_v_buffer
  */
 
 /* Python wrapper */
-static int __pyx_pw_5_yaml_8CEmitter_1__init__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static int __pyx_pw_5_yaml_8CEmitter_1__init__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+static int __pyx_pw_12_ruamel_yaml_8CEmitter_1__init__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static int __pyx_pw_12_ruamel_yaml_8CEmitter_1__init__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyObject *__pyx_v_stream = 0;
   PyObject *__pyx_v_canonical = 0;
   PyObject *__pyx_v_indent = 0;
@@ -13284,7 +13284,7 @@ static int __pyx_pw_5_yaml_8CEmitter_1__init__(PyObject *__pyx_v_self, PyObject 
     values[2] = ((PyObject *)Py_None);
     values[3] = ((PyObject *)Py_None);
 
-    /* "_yaml.pyx":953
+    /* "_ruamel_yaml.pyx":953
  * 
  *     def __init__(self, stream, canonical=None, indent=None, width=None,
  *             allow_unicode=None, line_break=None, encoding=None,             # <<<<<<<<<<<<<<
@@ -13295,7 +13295,7 @@ static int __pyx_pw_5_yaml_8CEmitter_1__init__(PyObject *__pyx_v_self, PyObject 
     values[5] = ((PyObject *)Py_None);
     values[6] = ((PyObject *)Py_None);
 
-    /* "_yaml.pyx":954
+    /* "_ruamel_yaml.pyx":954
  *     def __init__(self, stream, canonical=None, indent=None, width=None,
  *             allow_unicode=None, line_break=None, encoding=None,
  *             explicit_start=None, explicit_end=None, version=None, tags=None):             # <<<<<<<<<<<<<<
@@ -13416,13 +13416,13 @@ static int __pyx_pw_5_yaml_8CEmitter_1__init__(PyObject *__pyx_v_self, PyObject 
   __pyx_L5_argtuple_error:;
   __Pyx_RaiseArgtupleInvalid("__init__", 0, 1, 11, PyTuple_GET_SIZE(__pyx_args)); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 952; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
   __pyx_L3_error:;
-  __Pyx_AddTraceback("_yaml.CEmitter.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("_ruamel_yaml.CEmitter.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return -1;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_5_yaml_8CEmitter___init__(((struct __pyx_obj_5_yaml_CEmitter *)__pyx_v_self), __pyx_v_stream, __pyx_v_canonical, __pyx_v_indent, __pyx_v_width, __pyx_v_allow_unicode, __pyx_v_line_break, __pyx_v_encoding, __pyx_v_explicit_start, __pyx_v_explicit_end, __pyx_v_version, __pyx_v_tags);
+  __pyx_r = __pyx_pf_12_ruamel_yaml_8CEmitter___init__(((struct __pyx_obj_12_ruamel_yaml_CEmitter *)__pyx_v_self), __pyx_v_stream, __pyx_v_canonical, __pyx_v_indent, __pyx_v_width, __pyx_v_allow_unicode, __pyx_v_line_break, __pyx_v_encoding, __pyx_v_explicit_start, __pyx_v_explicit_end, __pyx_v_version, __pyx_v_tags);
 
-  /* "_yaml.pyx":952
+  /* "_ruamel_yaml.pyx":952
  *     cdef object use_encoding
  * 
  *     def __init__(self, stream, canonical=None, indent=None, width=None,             # <<<<<<<<<<<<<<
@@ -13435,7 +13435,7 @@ static int __pyx_pw_5_yaml_8CEmitter_1__init__(PyObject *__pyx_v_self, PyObject 
   return __pyx_r;
 }
 
-static int __pyx_pf_5_yaml_8CEmitter___init__(struct __pyx_obj_5_yaml_CEmitter *__pyx_v_self, PyObject *__pyx_v_stream, PyObject *__pyx_v_canonical, PyObject *__pyx_v_indent, PyObject *__pyx_v_width, PyObject *__pyx_v_allow_unicode, PyObject *__pyx_v_line_break, PyObject *__pyx_v_encoding, PyObject *__pyx_v_explicit_start, PyObject *__pyx_v_explicit_end, PyObject *__pyx_v_version, PyObject *__pyx_v_tags) {
+static int __pyx_pf_12_ruamel_yaml_8CEmitter___init__(struct __pyx_obj_12_ruamel_yaml_CEmitter *__pyx_v_self, PyObject *__pyx_v_stream, PyObject *__pyx_v_canonical, PyObject *__pyx_v_indent, PyObject *__pyx_v_width, PyObject *__pyx_v_allow_unicode, PyObject *__pyx_v_line_break, PyObject *__pyx_v_encoding, PyObject *__pyx_v_explicit_start, PyObject *__pyx_v_explicit_end, PyObject *__pyx_v_version, PyObject *__pyx_v_tags) {
   int __pyx_r;
   __Pyx_RefNannyDeclarations
   int __pyx_t_1;
@@ -13447,7 +13447,7 @@ static int __pyx_pf_5_yaml_8CEmitter___init__(struct __pyx_obj_5_yaml_CEmitter *
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__init__", 0);
 
-  /* "_yaml.pyx":955
+  /* "_ruamel_yaml.pyx":955
  *             allow_unicode=None, line_break=None, encoding=None,
  *             explicit_start=None, explicit_end=None, version=None, tags=None):
  *         if yaml_emitter_initialize(&self.emitter) == 0:             # <<<<<<<<<<<<<<
@@ -13457,7 +13457,7 @@ static int __pyx_pf_5_yaml_8CEmitter___init__(struct __pyx_obj_5_yaml_CEmitter *
   __pyx_t_1 = ((yaml_emitter_initialize((&__pyx_v_self->emitter)) == 0) != 0);
   if (__pyx_t_1) {
 
-    /* "_yaml.pyx":956
+    /* "_ruamel_yaml.pyx":956
  *             explicit_start=None, explicit_end=None, version=None, tags=None):
  *         if yaml_emitter_initialize(&self.emitter) == 0:
  *             raise MemoryError             # <<<<<<<<<<<<<<
@@ -13466,7 +13466,7 @@ static int __pyx_pf_5_yaml_8CEmitter___init__(struct __pyx_obj_5_yaml_CEmitter *
  */
     PyErr_NoMemory(); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 956; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-    /* "_yaml.pyx":955
+    /* "_ruamel_yaml.pyx":955
  *             allow_unicode=None, line_break=None, encoding=None,
  *             explicit_start=None, explicit_end=None, version=None, tags=None):
  *         if yaml_emitter_initialize(&self.emitter) == 0:             # <<<<<<<<<<<<<<
@@ -13475,7 +13475,7 @@ static int __pyx_pf_5_yaml_8CEmitter___init__(struct __pyx_obj_5_yaml_CEmitter *
  */
   }
 
-  /* "_yaml.pyx":957
+  /* "_ruamel_yaml.pyx":957
  *         if yaml_emitter_initialize(&self.emitter) == 0:
  *             raise MemoryError
  *         self.stream = stream             # <<<<<<<<<<<<<<
@@ -13488,7 +13488,7 @@ static int __pyx_pf_5_yaml_8CEmitter___init__(struct __pyx_obj_5_yaml_CEmitter *
   __Pyx_DECREF(__pyx_v_self->stream);
   __pyx_v_self->stream = __pyx_v_stream;
 
-  /* "_yaml.pyx":958
+  /* "_ruamel_yaml.pyx":958
  *             raise MemoryError
  *         self.stream = stream
  *         self.dump_unicode = 0             # <<<<<<<<<<<<<<
@@ -13497,7 +13497,7 @@ static int __pyx_pf_5_yaml_8CEmitter___init__(struct __pyx_obj_5_yaml_CEmitter *
  */
   __pyx_v_self->dump_unicode = 0;
 
-  /* "_yaml.pyx":959
+  /* "_ruamel_yaml.pyx":959
  *         self.stream = stream
  *         self.dump_unicode = 0
  *         if PY_MAJOR_VERSION < 3:             # <<<<<<<<<<<<<<
@@ -13507,7 +13507,7 @@ static int __pyx_pf_5_yaml_8CEmitter___init__(struct __pyx_obj_5_yaml_CEmitter *
   __pyx_t_1 = ((PY_MAJOR_VERSION < 3) != 0);
   if (__pyx_t_1) {
 
-    /* "_yaml.pyx":960
+    /* "_ruamel_yaml.pyx":960
  *         self.dump_unicode = 0
  *         if PY_MAJOR_VERSION < 3:
  *             if getattr3(stream, 'encoding', None):             # <<<<<<<<<<<<<<
@@ -13520,7 +13520,7 @@ static int __pyx_pf_5_yaml_8CEmitter___init__(struct __pyx_obj_5_yaml_CEmitter *
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     if (__pyx_t_1) {
 
-      /* "_yaml.pyx":961
+      /* "_ruamel_yaml.pyx":961
  *         if PY_MAJOR_VERSION < 3:
  *             if getattr3(stream, 'encoding', None):
  *                 self.dump_unicode = 1             # <<<<<<<<<<<<<<
@@ -13529,7 +13529,7 @@ static int __pyx_pf_5_yaml_8CEmitter___init__(struct __pyx_obj_5_yaml_CEmitter *
  */
       __pyx_v_self->dump_unicode = 1;
 
-      /* "_yaml.pyx":960
+      /* "_ruamel_yaml.pyx":960
  *         self.dump_unicode = 0
  *         if PY_MAJOR_VERSION < 3:
  *             if getattr3(stream, 'encoding', None):             # <<<<<<<<<<<<<<
@@ -13538,7 +13538,7 @@ static int __pyx_pf_5_yaml_8CEmitter___init__(struct __pyx_obj_5_yaml_CEmitter *
  */
     }
 
-    /* "_yaml.pyx":959
+    /* "_ruamel_yaml.pyx":959
  *         self.stream = stream
  *         self.dump_unicode = 0
  *         if PY_MAJOR_VERSION < 3:             # <<<<<<<<<<<<<<
@@ -13548,7 +13548,7 @@ static int __pyx_pf_5_yaml_8CEmitter___init__(struct __pyx_obj_5_yaml_CEmitter *
     goto __pyx_L4;
   }
 
-  /* "_yaml.pyx":963
+  /* "_ruamel_yaml.pyx":963
  *                 self.dump_unicode = 1
  *         else:
  *             if hasattr(stream, u'encoding'):             # <<<<<<<<<<<<<<
@@ -13560,7 +13560,7 @@ static int __pyx_pf_5_yaml_8CEmitter___init__(struct __pyx_obj_5_yaml_CEmitter *
     __pyx_t_3 = (__pyx_t_1 != 0);
     if (__pyx_t_3) {
 
-      /* "_yaml.pyx":964
+      /* "_ruamel_yaml.pyx":964
  *         else:
  *             if hasattr(stream, u'encoding'):
  *                 self.dump_unicode = 1             # <<<<<<<<<<<<<<
@@ -13569,7 +13569,7 @@ static int __pyx_pf_5_yaml_8CEmitter___init__(struct __pyx_obj_5_yaml_CEmitter *
  */
       __pyx_v_self->dump_unicode = 1;
 
-      /* "_yaml.pyx":963
+      /* "_ruamel_yaml.pyx":963
  *                 self.dump_unicode = 1
  *         else:
  *             if hasattr(stream, u'encoding'):             # <<<<<<<<<<<<<<
@@ -13580,7 +13580,7 @@ static int __pyx_pf_5_yaml_8CEmitter___init__(struct __pyx_obj_5_yaml_CEmitter *
   }
   __pyx_L4:;
 
-  /* "_yaml.pyx":965
+  /* "_ruamel_yaml.pyx":965
  *             if hasattr(stream, u'encoding'):
  *                 self.dump_unicode = 1
  *         self.use_encoding = encoding             # <<<<<<<<<<<<<<
@@ -13593,16 +13593,16 @@ static int __pyx_pf_5_yaml_8CEmitter___init__(struct __pyx_obj_5_yaml_CEmitter *
   __Pyx_DECREF(__pyx_v_self->use_encoding);
   __pyx_v_self->use_encoding = __pyx_v_encoding;
 
-  /* "_yaml.pyx":966
+  /* "_ruamel_yaml.pyx":966
  *                 self.dump_unicode = 1
  *         self.use_encoding = encoding
  *         yaml_emitter_set_output(&self.emitter, output_handler, <void *>self)             # <<<<<<<<<<<<<<
  *         if canonical:
  *             yaml_emitter_set_canonical(&self.emitter, 1)
  */
-  yaml_emitter_set_output((&__pyx_v_self->emitter), __pyx_f_5_yaml_output_handler, ((void *)__pyx_v_self));
+  yaml_emitter_set_output((&__pyx_v_self->emitter), __pyx_f_12_ruamel_yaml_output_handler, ((void *)__pyx_v_self));
 
-  /* "_yaml.pyx":967
+  /* "_ruamel_yaml.pyx":967
  *         self.use_encoding = encoding
  *         yaml_emitter_set_output(&self.emitter, output_handler, <void *>self)
  *         if canonical:             # <<<<<<<<<<<<<<
@@ -13612,7 +13612,7 @@ static int __pyx_pf_5_yaml_8CEmitter___init__(struct __pyx_obj_5_yaml_CEmitter *
   __pyx_t_3 = __Pyx_PyObject_IsTrue(__pyx_v_canonical); if (unlikely(__pyx_t_3 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 967; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   if (__pyx_t_3) {
 
-    /* "_yaml.pyx":968
+    /* "_ruamel_yaml.pyx":968
  *         yaml_emitter_set_output(&self.emitter, output_handler, <void *>self)
  *         if canonical:
  *             yaml_emitter_set_canonical(&self.emitter, 1)             # <<<<<<<<<<<<<<
@@ -13621,7 +13621,7 @@ static int __pyx_pf_5_yaml_8CEmitter___init__(struct __pyx_obj_5_yaml_CEmitter *
  */
     yaml_emitter_set_canonical((&__pyx_v_self->emitter), 1);
 
-    /* "_yaml.pyx":967
+    /* "_ruamel_yaml.pyx":967
  *         self.use_encoding = encoding
  *         yaml_emitter_set_output(&self.emitter, output_handler, <void *>self)
  *         if canonical:             # <<<<<<<<<<<<<<
@@ -13630,7 +13630,7 @@ static int __pyx_pf_5_yaml_8CEmitter___init__(struct __pyx_obj_5_yaml_CEmitter *
  */
   }
 
-  /* "_yaml.pyx":969
+  /* "_ruamel_yaml.pyx":969
  *         if canonical:
  *             yaml_emitter_set_canonical(&self.emitter, 1)
  *         if indent is not None:             # <<<<<<<<<<<<<<
@@ -13641,7 +13641,7 @@ static int __pyx_pf_5_yaml_8CEmitter___init__(struct __pyx_obj_5_yaml_CEmitter *
   __pyx_t_1 = (__pyx_t_3 != 0);
   if (__pyx_t_1) {
 
-    /* "_yaml.pyx":970
+    /* "_ruamel_yaml.pyx":970
  *             yaml_emitter_set_canonical(&self.emitter, 1)
  *         if indent is not None:
  *             yaml_emitter_set_indent(&self.emitter, indent)             # <<<<<<<<<<<<<<
@@ -13651,7 +13651,7 @@ static int __pyx_pf_5_yaml_8CEmitter___init__(struct __pyx_obj_5_yaml_CEmitter *
     __pyx_t_4 = __Pyx_PyInt_As_int(__pyx_v_indent); if (unlikely((__pyx_t_4 == (int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 970; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     yaml_emitter_set_indent((&__pyx_v_self->emitter), __pyx_t_4);
 
-    /* "_yaml.pyx":969
+    /* "_ruamel_yaml.pyx":969
  *         if canonical:
  *             yaml_emitter_set_canonical(&self.emitter, 1)
  *         if indent is not None:             # <<<<<<<<<<<<<<
@@ -13660,7 +13660,7 @@ static int __pyx_pf_5_yaml_8CEmitter___init__(struct __pyx_obj_5_yaml_CEmitter *
  */
   }
 
-  /* "_yaml.pyx":971
+  /* "_ruamel_yaml.pyx":971
  *         if indent is not None:
  *             yaml_emitter_set_indent(&self.emitter, indent)
  *         if width is not None:             # <<<<<<<<<<<<<<
@@ -13671,7 +13671,7 @@ static int __pyx_pf_5_yaml_8CEmitter___init__(struct __pyx_obj_5_yaml_CEmitter *
   __pyx_t_3 = (__pyx_t_1 != 0);
   if (__pyx_t_3) {
 
-    /* "_yaml.pyx":972
+    /* "_ruamel_yaml.pyx":972
  *             yaml_emitter_set_indent(&self.emitter, indent)
  *         if width is not None:
  *             yaml_emitter_set_width(&self.emitter, width)             # <<<<<<<<<<<<<<
@@ -13681,7 +13681,7 @@ static int __pyx_pf_5_yaml_8CEmitter___init__(struct __pyx_obj_5_yaml_CEmitter *
     __pyx_t_4 = __Pyx_PyInt_As_int(__pyx_v_width); if (unlikely((__pyx_t_4 == (int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 972; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     yaml_emitter_set_width((&__pyx_v_self->emitter), __pyx_t_4);
 
-    /* "_yaml.pyx":971
+    /* "_ruamel_yaml.pyx":971
  *         if indent is not None:
  *             yaml_emitter_set_indent(&self.emitter, indent)
  *         if width is not None:             # <<<<<<<<<<<<<<
@@ -13690,7 +13690,7 @@ static int __pyx_pf_5_yaml_8CEmitter___init__(struct __pyx_obj_5_yaml_CEmitter *
  */
   }
 
-  /* "_yaml.pyx":973
+  /* "_ruamel_yaml.pyx":973
  *         if width is not None:
  *             yaml_emitter_set_width(&self.emitter, width)
  *         if allow_unicode:             # <<<<<<<<<<<<<<
@@ -13700,7 +13700,7 @@ static int __pyx_pf_5_yaml_8CEmitter___init__(struct __pyx_obj_5_yaml_CEmitter *
   __pyx_t_3 = __Pyx_PyObject_IsTrue(__pyx_v_allow_unicode); if (unlikely(__pyx_t_3 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 973; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   if (__pyx_t_3) {
 
-    /* "_yaml.pyx":974
+    /* "_ruamel_yaml.pyx":974
  *             yaml_emitter_set_width(&self.emitter, width)
  *         if allow_unicode:
  *             yaml_emitter_set_unicode(&self.emitter, 1)             # <<<<<<<<<<<<<<
@@ -13709,7 +13709,7 @@ static int __pyx_pf_5_yaml_8CEmitter___init__(struct __pyx_obj_5_yaml_CEmitter *
  */
     yaml_emitter_set_unicode((&__pyx_v_self->emitter), 1);
 
-    /* "_yaml.pyx":973
+    /* "_ruamel_yaml.pyx":973
  *         if width is not None:
  *             yaml_emitter_set_width(&self.emitter, width)
  *         if allow_unicode:             # <<<<<<<<<<<<<<
@@ -13718,7 +13718,7 @@ static int __pyx_pf_5_yaml_8CEmitter___init__(struct __pyx_obj_5_yaml_CEmitter *
  */
   }
 
-  /* "_yaml.pyx":975
+  /* "_ruamel_yaml.pyx":975
  *         if allow_unicode:
  *             yaml_emitter_set_unicode(&self.emitter, 1)
  *         if line_break is not None:             # <<<<<<<<<<<<<<
@@ -13729,7 +13729,7 @@ static int __pyx_pf_5_yaml_8CEmitter___init__(struct __pyx_obj_5_yaml_CEmitter *
   __pyx_t_1 = (__pyx_t_3 != 0);
   if (__pyx_t_1) {
 
-    /* "_yaml.pyx":976
+    /* "_ruamel_yaml.pyx":976
  *             yaml_emitter_set_unicode(&self.emitter, 1)
  *         if line_break is not None:
  *             if line_break == '\r':             # <<<<<<<<<<<<<<
@@ -13739,7 +13739,7 @@ static int __pyx_pf_5_yaml_8CEmitter___init__(struct __pyx_obj_5_yaml_CEmitter *
     __pyx_t_1 = (__Pyx_PyString_Equals(__pyx_v_line_break, __pyx_kp_s__17, Py_EQ)); if (unlikely(__pyx_t_1 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 976; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     if (__pyx_t_1) {
 
-      /* "_yaml.pyx":977
+      /* "_ruamel_yaml.pyx":977
  *         if line_break is not None:
  *             if line_break == '\r':
  *                 yaml_emitter_set_break(&self.emitter, YAML_CR_BREAK)             # <<<<<<<<<<<<<<
@@ -13748,7 +13748,7 @@ static int __pyx_pf_5_yaml_8CEmitter___init__(struct __pyx_obj_5_yaml_CEmitter *
  */
       yaml_emitter_set_break((&__pyx_v_self->emitter), YAML_CR_BREAK);
 
-      /* "_yaml.pyx":976
+      /* "_ruamel_yaml.pyx":976
  *             yaml_emitter_set_unicode(&self.emitter, 1)
  *         if line_break is not None:
  *             if line_break == '\r':             # <<<<<<<<<<<<<<
@@ -13758,7 +13758,7 @@ static int __pyx_pf_5_yaml_8CEmitter___init__(struct __pyx_obj_5_yaml_CEmitter *
       goto __pyx_L12;
     }
 
-    /* "_yaml.pyx":978
+    /* "_ruamel_yaml.pyx":978
  *             if line_break == '\r':
  *                 yaml_emitter_set_break(&self.emitter, YAML_CR_BREAK)
  *             elif line_break == '\n':             # <<<<<<<<<<<<<<
@@ -13768,7 +13768,7 @@ static int __pyx_pf_5_yaml_8CEmitter___init__(struct __pyx_obj_5_yaml_CEmitter *
     __pyx_t_1 = (__Pyx_PyString_Equals(__pyx_v_line_break, __pyx_kp_s__18, Py_EQ)); if (unlikely(__pyx_t_1 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 978; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     if (__pyx_t_1) {
 
-      /* "_yaml.pyx":979
+      /* "_ruamel_yaml.pyx":979
  *                 yaml_emitter_set_break(&self.emitter, YAML_CR_BREAK)
  *             elif line_break == '\n':
  *                 yaml_emitter_set_break(&self.emitter, YAML_LN_BREAK)             # <<<<<<<<<<<<<<
@@ -13777,7 +13777,7 @@ static int __pyx_pf_5_yaml_8CEmitter___init__(struct __pyx_obj_5_yaml_CEmitter *
  */
       yaml_emitter_set_break((&__pyx_v_self->emitter), YAML_LN_BREAK);
 
-      /* "_yaml.pyx":978
+      /* "_ruamel_yaml.pyx":978
  *             if line_break == '\r':
  *                 yaml_emitter_set_break(&self.emitter, YAML_CR_BREAK)
  *             elif line_break == '\n':             # <<<<<<<<<<<<<<
@@ -13787,7 +13787,7 @@ static int __pyx_pf_5_yaml_8CEmitter___init__(struct __pyx_obj_5_yaml_CEmitter *
       goto __pyx_L12;
     }
 
-    /* "_yaml.pyx":980
+    /* "_ruamel_yaml.pyx":980
  *             elif line_break == '\n':
  *                 yaml_emitter_set_break(&self.emitter, YAML_LN_BREAK)
  *             elif line_break == '\r\n':             # <<<<<<<<<<<<<<
@@ -13797,7 +13797,7 @@ static int __pyx_pf_5_yaml_8CEmitter___init__(struct __pyx_obj_5_yaml_CEmitter *
     __pyx_t_1 = (__Pyx_PyString_Equals(__pyx_v_line_break, __pyx_kp_s__19, Py_EQ)); if (unlikely(__pyx_t_1 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 980; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     if (__pyx_t_1) {
 
-      /* "_yaml.pyx":981
+      /* "_ruamel_yaml.pyx":981
  *                 yaml_emitter_set_break(&self.emitter, YAML_LN_BREAK)
  *             elif line_break == '\r\n':
  *                 yaml_emitter_set_break(&self.emitter, YAML_CRLN_BREAK)             # <<<<<<<<<<<<<<
@@ -13806,7 +13806,7 @@ static int __pyx_pf_5_yaml_8CEmitter___init__(struct __pyx_obj_5_yaml_CEmitter *
  */
       yaml_emitter_set_break((&__pyx_v_self->emitter), YAML_CRLN_BREAK);
 
-      /* "_yaml.pyx":980
+      /* "_ruamel_yaml.pyx":980
  *             elif line_break == '\n':
  *                 yaml_emitter_set_break(&self.emitter, YAML_LN_BREAK)
  *             elif line_break == '\r\n':             # <<<<<<<<<<<<<<
@@ -13816,7 +13816,7 @@ static int __pyx_pf_5_yaml_8CEmitter___init__(struct __pyx_obj_5_yaml_CEmitter *
     }
     __pyx_L12:;
 
-    /* "_yaml.pyx":975
+    /* "_ruamel_yaml.pyx":975
  *         if allow_unicode:
  *             yaml_emitter_set_unicode(&self.emitter, 1)
  *         if line_break is not None:             # <<<<<<<<<<<<<<
@@ -13825,7 +13825,7 @@ static int __pyx_pf_5_yaml_8CEmitter___init__(struct __pyx_obj_5_yaml_CEmitter *
  */
   }
 
-  /* "_yaml.pyx":982
+  /* "_ruamel_yaml.pyx":982
  *             elif line_break == '\r\n':
  *                 yaml_emitter_set_break(&self.emitter, YAML_CRLN_BREAK)
  *         self.document_start_implicit = 1             # <<<<<<<<<<<<<<
@@ -13834,7 +13834,7 @@ static int __pyx_pf_5_yaml_8CEmitter___init__(struct __pyx_obj_5_yaml_CEmitter *
  */
   __pyx_v_self->document_start_implicit = 1;
 
-  /* "_yaml.pyx":983
+  /* "_ruamel_yaml.pyx":983
  *                 yaml_emitter_set_break(&self.emitter, YAML_CRLN_BREAK)
  *         self.document_start_implicit = 1
  *         if explicit_start:             # <<<<<<<<<<<<<<
@@ -13844,7 +13844,7 @@ static int __pyx_pf_5_yaml_8CEmitter___init__(struct __pyx_obj_5_yaml_CEmitter *
   __pyx_t_1 = __Pyx_PyObject_IsTrue(__pyx_v_explicit_start); if (unlikely(__pyx_t_1 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 983; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   if (__pyx_t_1) {
 
-    /* "_yaml.pyx":984
+    /* "_ruamel_yaml.pyx":984
  *         self.document_start_implicit = 1
  *         if explicit_start:
  *             self.document_start_implicit = 0             # <<<<<<<<<<<<<<
@@ -13853,7 +13853,7 @@ static int __pyx_pf_5_yaml_8CEmitter___init__(struct __pyx_obj_5_yaml_CEmitter *
  */
     __pyx_v_self->document_start_implicit = 0;
 
-    /* "_yaml.pyx":983
+    /* "_ruamel_yaml.pyx":983
  *                 yaml_emitter_set_break(&self.emitter, YAML_CRLN_BREAK)
  *         self.document_start_implicit = 1
  *         if explicit_start:             # <<<<<<<<<<<<<<
@@ -13862,7 +13862,7 @@ static int __pyx_pf_5_yaml_8CEmitter___init__(struct __pyx_obj_5_yaml_CEmitter *
  */
   }
 
-  /* "_yaml.pyx":985
+  /* "_ruamel_yaml.pyx":985
  *         if explicit_start:
  *             self.document_start_implicit = 0
  *         self.document_end_implicit = 1             # <<<<<<<<<<<<<<
@@ -13871,7 +13871,7 @@ static int __pyx_pf_5_yaml_8CEmitter___init__(struct __pyx_obj_5_yaml_CEmitter *
  */
   __pyx_v_self->document_end_implicit = 1;
 
-  /* "_yaml.pyx":986
+  /* "_ruamel_yaml.pyx":986
  *             self.document_start_implicit = 0
  *         self.document_end_implicit = 1
  *         if explicit_end:             # <<<<<<<<<<<<<<
@@ -13881,7 +13881,7 @@ static int __pyx_pf_5_yaml_8CEmitter___init__(struct __pyx_obj_5_yaml_CEmitter *
   __pyx_t_1 = __Pyx_PyObject_IsTrue(__pyx_v_explicit_end); if (unlikely(__pyx_t_1 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 986; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   if (__pyx_t_1) {
 
-    /* "_yaml.pyx":987
+    /* "_ruamel_yaml.pyx":987
  *         self.document_end_implicit = 1
  *         if explicit_end:
  *             self.document_end_implicit = 0             # <<<<<<<<<<<<<<
@@ -13890,7 +13890,7 @@ static int __pyx_pf_5_yaml_8CEmitter___init__(struct __pyx_obj_5_yaml_CEmitter *
  */
     __pyx_v_self->document_end_implicit = 0;
 
-    /* "_yaml.pyx":986
+    /* "_ruamel_yaml.pyx":986
  *             self.document_start_implicit = 0
  *         self.document_end_implicit = 1
  *         if explicit_end:             # <<<<<<<<<<<<<<
@@ -13899,7 +13899,7 @@ static int __pyx_pf_5_yaml_8CEmitter___init__(struct __pyx_obj_5_yaml_CEmitter *
  */
   }
 
-  /* "_yaml.pyx":988
+  /* "_ruamel_yaml.pyx":988
  *         if explicit_end:
  *             self.document_end_implicit = 0
  *         self.use_version = version             # <<<<<<<<<<<<<<
@@ -13912,7 +13912,7 @@ static int __pyx_pf_5_yaml_8CEmitter___init__(struct __pyx_obj_5_yaml_CEmitter *
   __Pyx_DECREF(__pyx_v_self->use_version);
   __pyx_v_self->use_version = __pyx_v_version;
 
-  /* "_yaml.pyx":989
+  /* "_ruamel_yaml.pyx":989
  *             self.document_end_implicit = 0
  *         self.use_version = version
  *         self.use_tags = tags             # <<<<<<<<<<<<<<
@@ -13925,7 +13925,7 @@ static int __pyx_pf_5_yaml_8CEmitter___init__(struct __pyx_obj_5_yaml_CEmitter *
   __Pyx_DECREF(__pyx_v_self->use_tags);
   __pyx_v_self->use_tags = __pyx_v_tags;
 
-  /* "_yaml.pyx":990
+  /* "_ruamel_yaml.pyx":990
  *         self.use_version = version
  *         self.use_tags = tags
  *         self.serialized_nodes = {}             # <<<<<<<<<<<<<<
@@ -13940,7 +13940,7 @@ static int __pyx_pf_5_yaml_8CEmitter___init__(struct __pyx_obj_5_yaml_CEmitter *
   __pyx_v_self->serialized_nodes = __pyx_t_2;
   __pyx_t_2 = 0;
 
-  /* "_yaml.pyx":991
+  /* "_ruamel_yaml.pyx":991
  *         self.use_tags = tags
  *         self.serialized_nodes = {}
  *         self.anchors = {}             # <<<<<<<<<<<<<<
@@ -13955,7 +13955,7 @@ static int __pyx_pf_5_yaml_8CEmitter___init__(struct __pyx_obj_5_yaml_CEmitter *
   __pyx_v_self->anchors = __pyx_t_2;
   __pyx_t_2 = 0;
 
-  /* "_yaml.pyx":992
+  /* "_ruamel_yaml.pyx":992
  *         self.serialized_nodes = {}
  *         self.anchors = {}
  *         self.last_alias_id = 0             # <<<<<<<<<<<<<<
@@ -13964,7 +13964,7 @@ static int __pyx_pf_5_yaml_8CEmitter___init__(struct __pyx_obj_5_yaml_CEmitter *
  */
   __pyx_v_self->last_alias_id = 0;
 
-  /* "_yaml.pyx":993
+  /* "_ruamel_yaml.pyx":993
  *         self.anchors = {}
  *         self.last_alias_id = 0
  *         self.closed = -1             # <<<<<<<<<<<<<<
@@ -13973,7 +13973,7 @@ static int __pyx_pf_5_yaml_8CEmitter___init__(struct __pyx_obj_5_yaml_CEmitter *
  */
   __pyx_v_self->closed = -1;
 
-  /* "_yaml.pyx":952
+  /* "_ruamel_yaml.pyx":952
  *     cdef object use_encoding
  * 
  *     def __init__(self, stream, canonical=None, indent=None, width=None,             # <<<<<<<<<<<<<<
@@ -13986,14 +13986,14 @@ static int __pyx_pf_5_yaml_8CEmitter___init__(struct __pyx_obj_5_yaml_CEmitter *
   goto __pyx_L0;
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_2);
-  __Pyx_AddTraceback("_yaml.CEmitter.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("_ruamel_yaml.CEmitter.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = -1;
   __pyx_L0:;
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-/* "_yaml.pyx":995
+/* "_ruamel_yaml.pyx":995
  *         self.closed = -1
  * 
  *     def __dealloc__(self):             # <<<<<<<<<<<<<<
@@ -14002,21 +14002,21 @@ static int __pyx_pf_5_yaml_8CEmitter___init__(struct __pyx_obj_5_yaml_CEmitter *
  */
 
 /* Python wrapper */
-static void __pyx_pw_5_yaml_8CEmitter_3__dealloc__(PyObject *__pyx_v_self); /*proto*/
-static void __pyx_pw_5_yaml_8CEmitter_3__dealloc__(PyObject *__pyx_v_self) {
+static void __pyx_pw_12_ruamel_yaml_8CEmitter_3__dealloc__(PyObject *__pyx_v_self); /*proto*/
+static void __pyx_pw_12_ruamel_yaml_8CEmitter_3__dealloc__(PyObject *__pyx_v_self) {
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__dealloc__ (wrapper)", 0);
-  __pyx_pf_5_yaml_8CEmitter_2__dealloc__(((struct __pyx_obj_5_yaml_CEmitter *)__pyx_v_self));
+  __pyx_pf_12_ruamel_yaml_8CEmitter_2__dealloc__(((struct __pyx_obj_12_ruamel_yaml_CEmitter *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
 }
 
-static void __pyx_pf_5_yaml_8CEmitter_2__dealloc__(struct __pyx_obj_5_yaml_CEmitter *__pyx_v_self) {
+static void __pyx_pf_12_ruamel_yaml_8CEmitter_2__dealloc__(struct __pyx_obj_12_ruamel_yaml_CEmitter *__pyx_v_self) {
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__dealloc__", 0);
 
-  /* "_yaml.pyx":996
+  /* "_ruamel_yaml.pyx":996
  * 
  *     def __dealloc__(self):
  *         yaml_emitter_delete(&self.emitter)             # <<<<<<<<<<<<<<
@@ -14025,7 +14025,7 @@ static void __pyx_pf_5_yaml_8CEmitter_2__dealloc__(struct __pyx_obj_5_yaml_CEmit
  */
   yaml_emitter_delete((&__pyx_v_self->emitter));
 
-  /* "_yaml.pyx":995
+  /* "_ruamel_yaml.pyx":995
  *         self.closed = -1
  * 
  *     def __dealloc__(self):             # <<<<<<<<<<<<<<
@@ -14037,7 +14037,7 @@ static void __pyx_pf_5_yaml_8CEmitter_2__dealloc__(struct __pyx_obj_5_yaml_CEmit
   __Pyx_RefNannyFinishContext();
 }
 
-/* "_yaml.pyx":998
+/* "_ruamel_yaml.pyx":998
  *         yaml_emitter_delete(&self.emitter)
  * 
  *     def dispose(self):             # <<<<<<<<<<<<<<
@@ -14046,19 +14046,19 @@ static void __pyx_pf_5_yaml_8CEmitter_2__dealloc__(struct __pyx_obj_5_yaml_CEmit
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_5_yaml_8CEmitter_5dispose(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
-static PyObject *__pyx_pw_5_yaml_8CEmitter_5dispose(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
+static PyObject *__pyx_pw_12_ruamel_yaml_8CEmitter_5dispose(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static PyObject *__pyx_pw_12_ruamel_yaml_8CEmitter_5dispose(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("dispose (wrapper)", 0);
-  __pyx_r = __pyx_pf_5_yaml_8CEmitter_4dispose(((struct __pyx_obj_5_yaml_CEmitter *)__pyx_v_self));
+  __pyx_r = __pyx_pf_12_ruamel_yaml_8CEmitter_4dispose(((struct __pyx_obj_12_ruamel_yaml_CEmitter *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_5_yaml_8CEmitter_4dispose(CYTHON_UNUSED struct __pyx_obj_5_yaml_CEmitter *__pyx_v_self) {
+static PyObject *__pyx_pf_12_ruamel_yaml_8CEmitter_4dispose(CYTHON_UNUSED struct __pyx_obj_12_ruamel_yaml_CEmitter *__pyx_v_self) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("dispose", 0);
@@ -14070,7 +14070,7 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_4dispose(CYTHON_UNUSED struct __pyx_o
   return __pyx_r;
 }
 
-/* "_yaml.pyx":1001
+/* "_ruamel_yaml.pyx":1001
  *         pass
  * 
  *     cdef object _emitter_error(self):             # <<<<<<<<<<<<<<
@@ -14078,7 +14078,7 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_4dispose(CYTHON_UNUSED struct __pyx_o
  *             return MemoryError
  */
 
-static PyObject *__pyx_f_5_yaml_8CEmitter__emitter_error(struct __pyx_obj_5_yaml_CEmitter *__pyx_v_self) {
+static PyObject *__pyx_f_12_ruamel_yaml_8CEmitter__emitter_error(struct __pyx_obj_12_ruamel_yaml_CEmitter *__pyx_v_self) {
   PyObject *__pyx_v_problem = NULL;
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
@@ -14092,7 +14092,7 @@ static PyObject *__pyx_f_5_yaml_8CEmitter__emitter_error(struct __pyx_obj_5_yaml
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("_emitter_error", 0);
 
-  /* "_yaml.pyx":1002
+  /* "_ruamel_yaml.pyx":1002
  * 
  *     cdef object _emitter_error(self):
  *         if self.emitter.error == YAML_MEMORY_ERROR:             # <<<<<<<<<<<<<<
@@ -14102,7 +14102,7 @@ static PyObject *__pyx_f_5_yaml_8CEmitter__emitter_error(struct __pyx_obj_5_yaml
   switch (__pyx_v_self->emitter.error) {
     case YAML_MEMORY_ERROR:
 
-    /* "_yaml.pyx":1003
+    /* "_ruamel_yaml.pyx":1003
  *     cdef object _emitter_error(self):
  *         if self.emitter.error == YAML_MEMORY_ERROR:
  *             return MemoryError             # <<<<<<<<<<<<<<
@@ -14114,7 +14114,7 @@ static PyObject *__pyx_f_5_yaml_8CEmitter__emitter_error(struct __pyx_obj_5_yaml
     __pyx_r = __pyx_builtin_MemoryError;
     goto __pyx_L0;
 
-    /* "_yaml.pyx":1002
+    /* "_ruamel_yaml.pyx":1002
  * 
  *     cdef object _emitter_error(self):
  *         if self.emitter.error == YAML_MEMORY_ERROR:             # <<<<<<<<<<<<<<
@@ -14123,7 +14123,7 @@ static PyObject *__pyx_f_5_yaml_8CEmitter__emitter_error(struct __pyx_obj_5_yaml
  */
     break;
 
-    /* "_yaml.pyx":1004
+    /* "_ruamel_yaml.pyx":1004
  *         if self.emitter.error == YAML_MEMORY_ERROR:
  *             return MemoryError
  *         elif self.emitter.error == YAML_EMITTER_ERROR:             # <<<<<<<<<<<<<<
@@ -14132,7 +14132,7 @@ static PyObject *__pyx_f_5_yaml_8CEmitter__emitter_error(struct __pyx_obj_5_yaml
  */
     case YAML_EMITTER_ERROR:
 
-    /* "_yaml.pyx":1005
+    /* "_ruamel_yaml.pyx":1005
  *             return MemoryError
  *         elif self.emitter.error == YAML_EMITTER_ERROR:
  *             if PY_MAJOR_VERSION < 3:             # <<<<<<<<<<<<<<
@@ -14142,7 +14142,7 @@ static PyObject *__pyx_f_5_yaml_8CEmitter__emitter_error(struct __pyx_obj_5_yaml
     __pyx_t_1 = ((PY_MAJOR_VERSION < 3) != 0);
     if (__pyx_t_1) {
 
-      /* "_yaml.pyx":1006
+      /* "_ruamel_yaml.pyx":1006
  *         elif self.emitter.error == YAML_EMITTER_ERROR:
  *             if PY_MAJOR_VERSION < 3:
  *                 problem = self.emitter.problem             # <<<<<<<<<<<<<<
@@ -14154,7 +14154,7 @@ static PyObject *__pyx_f_5_yaml_8CEmitter__emitter_error(struct __pyx_obj_5_yaml
       __pyx_v_problem = __pyx_t_2;
       __pyx_t_2 = 0;
 
-      /* "_yaml.pyx":1005
+      /* "_ruamel_yaml.pyx":1005
  *             return MemoryError
  *         elif self.emitter.error == YAML_EMITTER_ERROR:
  *             if PY_MAJOR_VERSION < 3:             # <<<<<<<<<<<<<<
@@ -14164,7 +14164,7 @@ static PyObject *__pyx_f_5_yaml_8CEmitter__emitter_error(struct __pyx_obj_5_yaml
       goto __pyx_L3;
     }
 
-    /* "_yaml.pyx":1008
+    /* "_ruamel_yaml.pyx":1008
  *                 problem = self.emitter.problem
  *             else:
  *                 problem = PyUnicode_FromString(self.emitter.problem)             # <<<<<<<<<<<<<<
@@ -14179,7 +14179,7 @@ static PyObject *__pyx_f_5_yaml_8CEmitter__emitter_error(struct __pyx_obj_5_yaml
     }
     __pyx_L3:;
 
-    /* "_yaml.pyx":1009
+    /* "_ruamel_yaml.pyx":1009
  *             else:
  *                 problem = PyUnicode_FromString(self.emitter.problem)
  *             return EmitterError(problem)             # <<<<<<<<<<<<<<
@@ -14218,7 +14218,7 @@ static PyObject *__pyx_f_5_yaml_8CEmitter__emitter_error(struct __pyx_obj_5_yaml
     __pyx_t_2 = 0;
     goto __pyx_L0;
 
-    /* "_yaml.pyx":1004
+    /* "_ruamel_yaml.pyx":1004
  *         if self.emitter.error == YAML_MEMORY_ERROR:
  *             return MemoryError
  *         elif self.emitter.error == YAML_EMITTER_ERROR:             # <<<<<<<<<<<<<<
@@ -14229,7 +14229,7 @@ static PyObject *__pyx_f_5_yaml_8CEmitter__emitter_error(struct __pyx_obj_5_yaml
     default: break;
   }
 
-  /* "_yaml.pyx":1010
+  /* "_ruamel_yaml.pyx":1010
  *                 problem = PyUnicode_FromString(self.emitter.problem)
  *             return EmitterError(problem)
  *         if PY_MAJOR_VERSION < 3:             # <<<<<<<<<<<<<<
@@ -14239,7 +14239,7 @@ static PyObject *__pyx_f_5_yaml_8CEmitter__emitter_error(struct __pyx_obj_5_yaml
   __pyx_t_1 = ((PY_MAJOR_VERSION < 3) != 0);
   if (__pyx_t_1) {
 
-    /* "_yaml.pyx":1011
+    /* "_ruamel_yaml.pyx":1011
  *             return EmitterError(problem)
  *         if PY_MAJOR_VERSION < 3:
  *             raise ValueError("no emitter error")             # <<<<<<<<<<<<<<
@@ -14252,7 +14252,7 @@ static PyObject *__pyx_f_5_yaml_8CEmitter__emitter_error(struct __pyx_obj_5_yaml
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1011; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-    /* "_yaml.pyx":1010
+    /* "_ruamel_yaml.pyx":1010
  *                 problem = PyUnicode_FromString(self.emitter.problem)
  *             return EmitterError(problem)
  *         if PY_MAJOR_VERSION < 3:             # <<<<<<<<<<<<<<
@@ -14261,7 +14261,7 @@ static PyObject *__pyx_f_5_yaml_8CEmitter__emitter_error(struct __pyx_obj_5_yaml
  */
   }
 
-  /* "_yaml.pyx":1013
+  /* "_ruamel_yaml.pyx":1013
  *             raise ValueError("no emitter error")
  *         else:
  *             raise ValueError(u"no emitter error")             # <<<<<<<<<<<<<<
@@ -14276,7 +14276,7 @@ static PyObject *__pyx_f_5_yaml_8CEmitter__emitter_error(struct __pyx_obj_5_yaml
     {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1013; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   }
 
-  /* "_yaml.pyx":1001
+  /* "_ruamel_yaml.pyx":1001
  *         pass
  * 
  *     cdef object _emitter_error(self):             # <<<<<<<<<<<<<<
@@ -14290,7 +14290,7 @@ static PyObject *__pyx_f_5_yaml_8CEmitter__emitter_error(struct __pyx_obj_5_yaml
   __Pyx_XDECREF(__pyx_t_3);
   __Pyx_XDECREF(__pyx_t_4);
   __Pyx_XDECREF(__pyx_t_5);
-  __Pyx_AddTraceback("_yaml.CEmitter._emitter_error", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("_ruamel_yaml.CEmitter._emitter_error", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = 0;
   __pyx_L0:;
   __Pyx_XDECREF(__pyx_v_problem);
@@ -14299,7 +14299,7 @@ static PyObject *__pyx_f_5_yaml_8CEmitter__emitter_error(struct __pyx_obj_5_yaml
   return __pyx_r;
 }
 
-/* "_yaml.pyx":1015
+/* "_ruamel_yaml.pyx":1015
  *             raise ValueError(u"no emitter error")
  * 
  *     cdef int _object_to_event(self, object event_object, yaml_event_t *event) except 0:             # <<<<<<<<<<<<<<
@@ -14307,7 +14307,7 @@ static PyObject *__pyx_f_5_yaml_8CEmitter__emitter_error(struct __pyx_obj_5_yaml
  *         cdef yaml_version_directive_t version_directive_value
  */
 
-static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEmitter *__pyx_v_self, PyObject *__pyx_v_event_object, yaml_event_t *__pyx_v_event) {
+static int __pyx_f_12_ruamel_yaml_8CEmitter__object_to_event(struct __pyx_obj_12_ruamel_yaml_CEmitter *__pyx_v_self, PyObject *__pyx_v_event_object, yaml_event_t *__pyx_v_event) {
   yaml_encoding_t __pyx_v_encoding;
   yaml_version_directive_t __pyx_v_version_directive_value;
   yaml_version_directive_t *__pyx_v_version_directive;
@@ -14348,7 +14348,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("_object_to_event", 0);
 
-  /* "_yaml.pyx":1032
+  /* "_ruamel_yaml.pyx":1032
  *         cdef yaml_sequence_style_t sequence_style
  *         cdef yaml_mapping_style_t mapping_style
  *         event_class = event_object.__class__             # <<<<<<<<<<<<<<
@@ -14360,7 +14360,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
   __pyx_v_event_class = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "_yaml.pyx":1033
+  /* "_ruamel_yaml.pyx":1033
  *         cdef yaml_mapping_style_t mapping_style
  *         event_class = event_object.__class__
  *         if event_class is StreamStartEvent:             # <<<<<<<<<<<<<<
@@ -14374,7 +14374,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
   __pyx_t_3 = (__pyx_t_2 != 0);
   if (__pyx_t_3) {
 
-    /* "_yaml.pyx":1034
+    /* "_ruamel_yaml.pyx":1034
  *         event_class = event_object.__class__
  *         if event_class is StreamStartEvent:
  *             encoding = YAML_UTF8_ENCODING             # <<<<<<<<<<<<<<
@@ -14383,7 +14383,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
  */
     __pyx_v_encoding = YAML_UTF8_ENCODING;
 
-    /* "_yaml.pyx":1035
+    /* "_ruamel_yaml.pyx":1035
  *         if event_class is StreamStartEvent:
  *             encoding = YAML_UTF8_ENCODING
  *             if event_object.encoding == u'utf-16-le' or event_object.encoding == 'utf-16-le':             # <<<<<<<<<<<<<<
@@ -14407,7 +14407,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
     __pyx_L5_bool_binop_done:;
     if (__pyx_t_3) {
 
-      /* "_yaml.pyx":1036
+      /* "_ruamel_yaml.pyx":1036
  *             encoding = YAML_UTF8_ENCODING
  *             if event_object.encoding == u'utf-16-le' or event_object.encoding == 'utf-16-le':
  *                 encoding = YAML_UTF16LE_ENCODING             # <<<<<<<<<<<<<<
@@ -14416,7 +14416,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
  */
       __pyx_v_encoding = YAML_UTF16LE_ENCODING;
 
-      /* "_yaml.pyx":1035
+      /* "_ruamel_yaml.pyx":1035
  *         if event_class is StreamStartEvent:
  *             encoding = YAML_UTF8_ENCODING
  *             if event_object.encoding == u'utf-16-le' or event_object.encoding == 'utf-16-le':             # <<<<<<<<<<<<<<
@@ -14426,7 +14426,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
       goto __pyx_L4;
     }
 
-    /* "_yaml.pyx":1037
+    /* "_ruamel_yaml.pyx":1037
  *             if event_object.encoding == u'utf-16-le' or event_object.encoding == 'utf-16-le':
  *                 encoding = YAML_UTF16LE_ENCODING
  *             elif event_object.encoding == u'utf-16-be' or event_object.encoding == 'utf-16-be':             # <<<<<<<<<<<<<<
@@ -14450,7 +14450,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
     __pyx_L7_bool_binop_done:;
     if (__pyx_t_3) {
 
-      /* "_yaml.pyx":1038
+      /* "_ruamel_yaml.pyx":1038
  *                 encoding = YAML_UTF16LE_ENCODING
  *             elif event_object.encoding == u'utf-16-be' or event_object.encoding == 'utf-16-be':
  *                 encoding = YAML_UTF16BE_ENCODING             # <<<<<<<<<<<<<<
@@ -14459,7 +14459,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
  */
       __pyx_v_encoding = YAML_UTF16BE_ENCODING;
 
-      /* "_yaml.pyx":1037
+      /* "_ruamel_yaml.pyx":1037
  *             if event_object.encoding == u'utf-16-le' or event_object.encoding == 'utf-16-le':
  *                 encoding = YAML_UTF16LE_ENCODING
  *             elif event_object.encoding == u'utf-16-be' or event_object.encoding == 'utf-16-be':             # <<<<<<<<<<<<<<
@@ -14469,7 +14469,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
     }
     __pyx_L4:;
 
-    /* "_yaml.pyx":1039
+    /* "_ruamel_yaml.pyx":1039
  *             elif event_object.encoding == u'utf-16-be' or event_object.encoding == 'utf-16-be':
  *                 encoding = YAML_UTF16BE_ENCODING
  *             if event_object.encoding is None:             # <<<<<<<<<<<<<<
@@ -14483,7 +14483,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
     __pyx_t_2 = (__pyx_t_3 != 0);
     if (__pyx_t_2) {
 
-      /* "_yaml.pyx":1040
+      /* "_ruamel_yaml.pyx":1040
  *                 encoding = YAML_UTF16BE_ENCODING
  *             if event_object.encoding is None:
  *                 self.dump_unicode = 1             # <<<<<<<<<<<<<<
@@ -14492,7 +14492,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
  */
       __pyx_v_self->dump_unicode = 1;
 
-      /* "_yaml.pyx":1039
+      /* "_ruamel_yaml.pyx":1039
  *             elif event_object.encoding == u'utf-16-be' or event_object.encoding == 'utf-16-be':
  *                 encoding = YAML_UTF16BE_ENCODING
  *             if event_object.encoding is None:             # <<<<<<<<<<<<<<
@@ -14501,7 +14501,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
  */
     }
 
-    /* "_yaml.pyx":1041
+    /* "_ruamel_yaml.pyx":1041
  *             if event_object.encoding is None:
  *                 self.dump_unicode = 1
  *             if self.dump_unicode == 1:             # <<<<<<<<<<<<<<
@@ -14511,7 +14511,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
     __pyx_t_2 = ((__pyx_v_self->dump_unicode == 1) != 0);
     if (__pyx_t_2) {
 
-      /* "_yaml.pyx":1042
+      /* "_ruamel_yaml.pyx":1042
  *                 self.dump_unicode = 1
  *             if self.dump_unicode == 1:
  *                 encoding = YAML_UTF8_ENCODING             # <<<<<<<<<<<<<<
@@ -14520,7 +14520,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
  */
       __pyx_v_encoding = YAML_UTF8_ENCODING;
 
-      /* "_yaml.pyx":1041
+      /* "_ruamel_yaml.pyx":1041
  *             if event_object.encoding is None:
  *                 self.dump_unicode = 1
  *             if self.dump_unicode == 1:             # <<<<<<<<<<<<<<
@@ -14529,7 +14529,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
  */
     }
 
-    /* "_yaml.pyx":1043
+    /* "_ruamel_yaml.pyx":1043
  *             if self.dump_unicode == 1:
  *                 encoding = YAML_UTF8_ENCODING
  *             yaml_stream_start_event_initialize(event, encoding)             # <<<<<<<<<<<<<<
@@ -14538,7 +14538,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
  */
     yaml_stream_start_event_initialize(__pyx_v_event, __pyx_v_encoding);
 
-    /* "_yaml.pyx":1033
+    /* "_ruamel_yaml.pyx":1033
  *         cdef yaml_mapping_style_t mapping_style
  *         event_class = event_object.__class__
  *         if event_class is StreamStartEvent:             # <<<<<<<<<<<<<<
@@ -14548,7 +14548,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
     goto __pyx_L3;
   }
 
-  /* "_yaml.pyx":1044
+  /* "_ruamel_yaml.pyx":1044
  *                 encoding = YAML_UTF8_ENCODING
  *             yaml_stream_start_event_initialize(event, encoding)
  *         elif event_class is StreamEndEvent:             # <<<<<<<<<<<<<<
@@ -14562,7 +14562,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
   __pyx_t_3 = (__pyx_t_2 != 0);
   if (__pyx_t_3) {
 
-    /* "_yaml.pyx":1045
+    /* "_ruamel_yaml.pyx":1045
  *             yaml_stream_start_event_initialize(event, encoding)
  *         elif event_class is StreamEndEvent:
  *             yaml_stream_end_event_initialize(event)             # <<<<<<<<<<<<<<
@@ -14571,7 +14571,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
  */
     yaml_stream_end_event_initialize(__pyx_v_event);
 
-    /* "_yaml.pyx":1044
+    /* "_ruamel_yaml.pyx":1044
  *                 encoding = YAML_UTF8_ENCODING
  *             yaml_stream_start_event_initialize(event, encoding)
  *         elif event_class is StreamEndEvent:             # <<<<<<<<<<<<<<
@@ -14581,7 +14581,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
     goto __pyx_L3;
   }
 
-  /* "_yaml.pyx":1046
+  /* "_ruamel_yaml.pyx":1046
  *         elif event_class is StreamEndEvent:
  *             yaml_stream_end_event_initialize(event)
  *         elif event_class is DocumentStartEvent:             # <<<<<<<<<<<<<<
@@ -14595,7 +14595,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
   __pyx_t_2 = (__pyx_t_3 != 0);
   if (__pyx_t_2) {
 
-    /* "_yaml.pyx":1047
+    /* "_ruamel_yaml.pyx":1047
  *             yaml_stream_end_event_initialize(event)
  *         elif event_class is DocumentStartEvent:
  *             version_directive = NULL             # <<<<<<<<<<<<<<
@@ -14604,7 +14604,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
  */
     __pyx_v_version_directive = NULL;
 
-    /* "_yaml.pyx":1048
+    /* "_ruamel_yaml.pyx":1048
  *         elif event_class is DocumentStartEvent:
  *             version_directive = NULL
  *             if event_object.version:             # <<<<<<<<<<<<<<
@@ -14617,7 +14617,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
     if (__pyx_t_2) {
 
-      /* "_yaml.pyx":1049
+      /* "_ruamel_yaml.pyx":1049
  *             version_directive = NULL
  *             if event_object.version:
  *                 version_directive_value.major = event_object.version[0]             # <<<<<<<<<<<<<<
@@ -14633,7 +14633,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
       __pyx_v_version_directive_value.major = __pyx_t_5;
 
-      /* "_yaml.pyx":1050
+      /* "_ruamel_yaml.pyx":1050
  *             if event_object.version:
  *                 version_directive_value.major = event_object.version[0]
  *                 version_directive_value.minor = event_object.version[1]             # <<<<<<<<<<<<<<
@@ -14649,7 +14649,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
       __pyx_v_version_directive_value.minor = __pyx_t_5;
 
-      /* "_yaml.pyx":1051
+      /* "_ruamel_yaml.pyx":1051
  *                 version_directive_value.major = event_object.version[0]
  *                 version_directive_value.minor = event_object.version[1]
  *                 version_directive = &version_directive_value             # <<<<<<<<<<<<<<
@@ -14658,7 +14658,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
  */
       __pyx_v_version_directive = (&__pyx_v_version_directive_value);
 
-      /* "_yaml.pyx":1048
+      /* "_ruamel_yaml.pyx":1048
  *         elif event_class is DocumentStartEvent:
  *             version_directive = NULL
  *             if event_object.version:             # <<<<<<<<<<<<<<
@@ -14667,7 +14667,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
  */
     }
 
-    /* "_yaml.pyx":1052
+    /* "_ruamel_yaml.pyx":1052
  *                 version_directive_value.minor = event_object.version[1]
  *                 version_directive = &version_directive_value
  *             tag_directives_start = NULL             # <<<<<<<<<<<<<<
@@ -14676,7 +14676,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
  */
     __pyx_v_tag_directives_start = NULL;
 
-    /* "_yaml.pyx":1053
+    /* "_ruamel_yaml.pyx":1053
  *                 version_directive = &version_directive_value
  *             tag_directives_start = NULL
  *             tag_directives_end = NULL             # <<<<<<<<<<<<<<
@@ -14685,7 +14685,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
  */
     __pyx_v_tag_directives_end = NULL;
 
-    /* "_yaml.pyx":1054
+    /* "_ruamel_yaml.pyx":1054
  *             tag_directives_start = NULL
  *             tag_directives_end = NULL
  *             if event_object.tags:             # <<<<<<<<<<<<<<
@@ -14698,7 +14698,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
     if (__pyx_t_2) {
 
-      /* "_yaml.pyx":1055
+      /* "_ruamel_yaml.pyx":1055
  *             tag_directives_end = NULL
  *             if event_object.tags:
  *                 if len(event_object.tags) > 128:             # <<<<<<<<<<<<<<
@@ -14712,7 +14712,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
       __pyx_t_2 = ((__pyx_t_6 > 0x80) != 0);
       if (__pyx_t_2) {
 
-        /* "_yaml.pyx":1056
+        /* "_ruamel_yaml.pyx":1056
  *             if event_object.tags:
  *                 if len(event_object.tags) > 128:
  *                     if PY_MAJOR_VERSION < 3:             # <<<<<<<<<<<<<<
@@ -14722,7 +14722,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
         __pyx_t_2 = ((PY_MAJOR_VERSION < 3) != 0);
         if (__pyx_t_2) {
 
-          /* "_yaml.pyx":1057
+          /* "_ruamel_yaml.pyx":1057
  *                 if len(event_object.tags) > 128:
  *                     if PY_MAJOR_VERSION < 3:
  *                         raise ValueError("too many tags")             # <<<<<<<<<<<<<<
@@ -14735,7 +14735,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
           __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
           {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1057; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-          /* "_yaml.pyx":1056
+          /* "_ruamel_yaml.pyx":1056
  *             if event_object.tags:
  *                 if len(event_object.tags) > 128:
  *                     if PY_MAJOR_VERSION < 3:             # <<<<<<<<<<<<<<
@@ -14744,7 +14744,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
  */
         }
 
-        /* "_yaml.pyx":1059
+        /* "_ruamel_yaml.pyx":1059
  *                         raise ValueError("too many tags")
  *                     else:
  *                         raise ValueError(u"too many tags")             # <<<<<<<<<<<<<<
@@ -14759,7 +14759,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
           {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1059; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         }
 
-        /* "_yaml.pyx":1055
+        /* "_ruamel_yaml.pyx":1055
  *             tag_directives_end = NULL
  *             if event_object.tags:
  *                 if len(event_object.tags) > 128:             # <<<<<<<<<<<<<<
@@ -14768,7 +14768,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
  */
       }
 
-      /* "_yaml.pyx":1060
+      /* "_ruamel_yaml.pyx":1060
  *                     else:
  *                         raise ValueError(u"too many tags")
  *                 tag_directives_start = tag_directives_value             # <<<<<<<<<<<<<<
@@ -14777,7 +14777,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
  */
       __pyx_v_tag_directives_start = __pyx_v_tag_directives_value;
 
-      /* "_yaml.pyx":1061
+      /* "_ruamel_yaml.pyx":1061
  *                         raise ValueError(u"too many tags")
  *                 tag_directives_start = tag_directives_value
  *                 tag_directives_end = tag_directives_value             # <<<<<<<<<<<<<<
@@ -14786,7 +14786,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
  */
       __pyx_v_tag_directives_end = __pyx_v_tag_directives_value;
 
-      /* "_yaml.pyx":1062
+      /* "_ruamel_yaml.pyx":1062
  *                 tag_directives_start = tag_directives_value
  *                 tag_directives_end = tag_directives_value
  *                 cache = []             # <<<<<<<<<<<<<<
@@ -14798,7 +14798,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
       __pyx_v_cache = ((PyObject*)__pyx_t_1);
       __pyx_t_1 = 0;
 
-      /* "_yaml.pyx":1063
+      /* "_ruamel_yaml.pyx":1063
  *                 tag_directives_end = tag_directives_value
  *                 cache = []
  *                 for handle in event_object.tags:             # <<<<<<<<<<<<<<
@@ -14850,7 +14850,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
         __Pyx_XDECREF_SET(__pyx_v_handle, __pyx_t_1);
         __pyx_t_1 = 0;
 
-        /* "_yaml.pyx":1064
+        /* "_ruamel_yaml.pyx":1064
  *                 cache = []
  *                 for handle in event_object.tags:
  *                     prefix = event_object.tags[handle]             # <<<<<<<<<<<<<<
@@ -14865,7 +14865,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
         __Pyx_XDECREF_SET(__pyx_v_prefix, __pyx_t_8);
         __pyx_t_8 = 0;
 
-        /* "_yaml.pyx":1065
+        /* "_ruamel_yaml.pyx":1065
  *                 for handle in event_object.tags:
  *                     prefix = event_object.tags[handle]
  *                     if PyUnicode_CheckExact(handle):             # <<<<<<<<<<<<<<
@@ -14875,7 +14875,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
         __pyx_t_2 = (PyUnicode_CheckExact(__pyx_v_handle) != 0);
         if (__pyx_t_2) {
 
-          /* "_yaml.pyx":1066
+          /* "_ruamel_yaml.pyx":1066
  *                     prefix = event_object.tags[handle]
  *                     if PyUnicode_CheckExact(handle):
  *                         handle = PyUnicode_AsUTF8String(handle)             # <<<<<<<<<<<<<<
@@ -14887,7 +14887,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
           __Pyx_DECREF_SET(__pyx_v_handle, __pyx_t_8);
           __pyx_t_8 = 0;
 
-          /* "_yaml.pyx":1067
+          /* "_ruamel_yaml.pyx":1067
  *                     if PyUnicode_CheckExact(handle):
  *                         handle = PyUnicode_AsUTF8String(handle)
  *                         cache.append(handle)             # <<<<<<<<<<<<<<
@@ -14896,7 +14896,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
  */
           __pyx_t_9 = __Pyx_PyList_Append(__pyx_v_cache, __pyx_v_handle); if (unlikely(__pyx_t_9 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1067; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-          /* "_yaml.pyx":1065
+          /* "_ruamel_yaml.pyx":1065
  *                 for handle in event_object.tags:
  *                     prefix = event_object.tags[handle]
  *                     if PyUnicode_CheckExact(handle):             # <<<<<<<<<<<<<<
@@ -14905,7 +14905,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
  */
         }
 
-        /* "_yaml.pyx":1068
+        /* "_ruamel_yaml.pyx":1068
  *                         handle = PyUnicode_AsUTF8String(handle)
  *                         cache.append(handle)
  *                     if not PyString_CheckExact(handle):             # <<<<<<<<<<<<<<
@@ -14915,7 +14915,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
         __pyx_t_2 = ((!(PyString_CheckExact(__pyx_v_handle) != 0)) != 0);
         if (__pyx_t_2) {
 
-          /* "_yaml.pyx":1069
+          /* "_ruamel_yaml.pyx":1069
  *                         cache.append(handle)
  *                     if not PyString_CheckExact(handle):
  *                         if PY_MAJOR_VERSION < 3:             # <<<<<<<<<<<<<<
@@ -14925,7 +14925,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
           __pyx_t_2 = ((PY_MAJOR_VERSION < 3) != 0);
           if (__pyx_t_2) {
 
-            /* "_yaml.pyx":1070
+            /* "_ruamel_yaml.pyx":1070
  *                     if not PyString_CheckExact(handle):
  *                         if PY_MAJOR_VERSION < 3:
  *                             raise TypeError("tag handle must be a string")             # <<<<<<<<<<<<<<
@@ -14938,7 +14938,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
             __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
             {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1070; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-            /* "_yaml.pyx":1069
+            /* "_ruamel_yaml.pyx":1069
  *                         cache.append(handle)
  *                     if not PyString_CheckExact(handle):
  *                         if PY_MAJOR_VERSION < 3:             # <<<<<<<<<<<<<<
@@ -14947,7 +14947,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
  */
           }
 
-          /* "_yaml.pyx":1072
+          /* "_ruamel_yaml.pyx":1072
  *                             raise TypeError("tag handle must be a string")
  *                         else:
  *                             raise TypeError(u"tag handle must be a string")             # <<<<<<<<<<<<<<
@@ -14962,7 +14962,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
             {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1072; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
           }
 
-          /* "_yaml.pyx":1068
+          /* "_ruamel_yaml.pyx":1068
  *                         handle = PyUnicode_AsUTF8String(handle)
  *                         cache.append(handle)
  *                     if not PyString_CheckExact(handle):             # <<<<<<<<<<<<<<
@@ -14971,7 +14971,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
  */
         }
 
-        /* "_yaml.pyx":1073
+        /* "_ruamel_yaml.pyx":1073
  *                         else:
  *                             raise TypeError(u"tag handle must be a string")
  *                     tag_directives_end.handle = PyString_AS_STRING(handle)             # <<<<<<<<<<<<<<
@@ -14980,7 +14980,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
  */
         __pyx_v_tag_directives_end->handle = PyString_AS_STRING(__pyx_v_handle);
 
-        /* "_yaml.pyx":1074
+        /* "_ruamel_yaml.pyx":1074
  *                             raise TypeError(u"tag handle must be a string")
  *                     tag_directives_end.handle = PyString_AS_STRING(handle)
  *                     if PyUnicode_CheckExact(prefix):             # <<<<<<<<<<<<<<
@@ -14990,7 +14990,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
         __pyx_t_2 = (PyUnicode_CheckExact(__pyx_v_prefix) != 0);
         if (__pyx_t_2) {
 
-          /* "_yaml.pyx":1075
+          /* "_ruamel_yaml.pyx":1075
  *                     tag_directives_end.handle = PyString_AS_STRING(handle)
  *                     if PyUnicode_CheckExact(prefix):
  *                         prefix = PyUnicode_AsUTF8String(prefix)             # <<<<<<<<<<<<<<
@@ -15002,7 +15002,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
           __Pyx_DECREF_SET(__pyx_v_prefix, __pyx_t_8);
           __pyx_t_8 = 0;
 
-          /* "_yaml.pyx":1076
+          /* "_ruamel_yaml.pyx":1076
  *                     if PyUnicode_CheckExact(prefix):
  *                         prefix = PyUnicode_AsUTF8String(prefix)
  *                         cache.append(prefix)             # <<<<<<<<<<<<<<
@@ -15011,7 +15011,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
  */
           __pyx_t_9 = __Pyx_PyList_Append(__pyx_v_cache, __pyx_v_prefix); if (unlikely(__pyx_t_9 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1076; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-          /* "_yaml.pyx":1074
+          /* "_ruamel_yaml.pyx":1074
  *                             raise TypeError(u"tag handle must be a string")
  *                     tag_directives_end.handle = PyString_AS_STRING(handle)
  *                     if PyUnicode_CheckExact(prefix):             # <<<<<<<<<<<<<<
@@ -15020,7 +15020,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
  */
         }
 
-        /* "_yaml.pyx":1077
+        /* "_ruamel_yaml.pyx":1077
  *                         prefix = PyUnicode_AsUTF8String(prefix)
  *                         cache.append(prefix)
  *                     if not PyString_CheckExact(prefix):             # <<<<<<<<<<<<<<
@@ -15030,7 +15030,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
         __pyx_t_2 = ((!(PyString_CheckExact(__pyx_v_prefix) != 0)) != 0);
         if (__pyx_t_2) {
 
-          /* "_yaml.pyx":1078
+          /* "_ruamel_yaml.pyx":1078
  *                         cache.append(prefix)
  *                     if not PyString_CheckExact(prefix):
  *                         if PY_MAJOR_VERSION < 3:             # <<<<<<<<<<<<<<
@@ -15040,7 +15040,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
           __pyx_t_2 = ((PY_MAJOR_VERSION < 3) != 0);
           if (__pyx_t_2) {
 
-            /* "_yaml.pyx":1079
+            /* "_ruamel_yaml.pyx":1079
  *                     if not PyString_CheckExact(prefix):
  *                         if PY_MAJOR_VERSION < 3:
  *                             raise TypeError("tag prefix must be a string")             # <<<<<<<<<<<<<<
@@ -15053,7 +15053,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
             __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
             {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1079; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-            /* "_yaml.pyx":1078
+            /* "_ruamel_yaml.pyx":1078
  *                         cache.append(prefix)
  *                     if not PyString_CheckExact(prefix):
  *                         if PY_MAJOR_VERSION < 3:             # <<<<<<<<<<<<<<
@@ -15062,7 +15062,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
  */
           }
 
-          /* "_yaml.pyx":1081
+          /* "_ruamel_yaml.pyx":1081
  *                             raise TypeError("tag prefix must be a string")
  *                         else:
  *                             raise TypeError(u"tag prefix must be a string")             # <<<<<<<<<<<<<<
@@ -15077,7 +15077,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
             {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1081; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
           }
 
-          /* "_yaml.pyx":1077
+          /* "_ruamel_yaml.pyx":1077
  *                         prefix = PyUnicode_AsUTF8String(prefix)
  *                         cache.append(prefix)
  *                     if not PyString_CheckExact(prefix):             # <<<<<<<<<<<<<<
@@ -15086,7 +15086,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
  */
         }
 
-        /* "_yaml.pyx":1082
+        /* "_ruamel_yaml.pyx":1082
  *                         else:
  *                             raise TypeError(u"tag prefix must be a string")
  *                     tag_directives_end.prefix = PyString_AS_STRING(prefix)             # <<<<<<<<<<<<<<
@@ -15095,7 +15095,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
  */
         __pyx_v_tag_directives_end->prefix = PyString_AS_STRING(__pyx_v_prefix);
 
-        /* "_yaml.pyx":1083
+        /* "_ruamel_yaml.pyx":1083
  *                             raise TypeError(u"tag prefix must be a string")
  *                     tag_directives_end.prefix = PyString_AS_STRING(prefix)
  *                     tag_directives_end = tag_directives_end+1             # <<<<<<<<<<<<<<
@@ -15104,7 +15104,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
  */
         __pyx_v_tag_directives_end = (__pyx_v_tag_directives_end + 1);
 
-        /* "_yaml.pyx":1063
+        /* "_ruamel_yaml.pyx":1063
  *                 tag_directives_end = tag_directives_value
  *                 cache = []
  *                 for handle in event_object.tags:             # <<<<<<<<<<<<<<
@@ -15114,7 +15114,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
       }
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-      /* "_yaml.pyx":1054
+      /* "_ruamel_yaml.pyx":1054
  *             tag_directives_start = NULL
  *             tag_directives_end = NULL
  *             if event_object.tags:             # <<<<<<<<<<<<<<
@@ -15123,7 +15123,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
  */
     }
 
-    /* "_yaml.pyx":1084
+    /* "_ruamel_yaml.pyx":1084
  *                     tag_directives_end.prefix = PyString_AS_STRING(prefix)
  *                     tag_directives_end = tag_directives_end+1
  *             implicit = 1             # <<<<<<<<<<<<<<
@@ -15132,7 +15132,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
  */
     __pyx_v_implicit = 1;
 
-    /* "_yaml.pyx":1085
+    /* "_ruamel_yaml.pyx":1085
  *                     tag_directives_end = tag_directives_end+1
  *             implicit = 1
  *             if event_object.explicit:             # <<<<<<<<<<<<<<
@@ -15145,7 +15145,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     if (__pyx_t_2) {
 
-      /* "_yaml.pyx":1086
+      /* "_ruamel_yaml.pyx":1086
  *             implicit = 1
  *             if event_object.explicit:
  *                 implicit = 0             # <<<<<<<<<<<<<<
@@ -15154,7 +15154,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
  */
       __pyx_v_implicit = 0;
 
-      /* "_yaml.pyx":1085
+      /* "_ruamel_yaml.pyx":1085
  *                     tag_directives_end = tag_directives_end+1
  *             implicit = 1
  *             if event_object.explicit:             # <<<<<<<<<<<<<<
@@ -15163,7 +15163,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
  */
     }
 
-    /* "_yaml.pyx":1088
+    /* "_ruamel_yaml.pyx":1088
  *                 implicit = 0
  *             if yaml_document_start_event_initialize(event, version_directive,
  *                     tag_directives_start, tag_directives_end, implicit) == 0:             # <<<<<<<<<<<<<<
@@ -15172,7 +15172,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
  */
     __pyx_t_2 = ((yaml_document_start_event_initialize(__pyx_v_event, __pyx_v_version_directive, __pyx_v_tag_directives_start, __pyx_v_tag_directives_end, __pyx_v_implicit) == 0) != 0);
 
-    /* "_yaml.pyx":1087
+    /* "_ruamel_yaml.pyx":1087
  *             if event_object.explicit:
  *                 implicit = 0
  *             if yaml_document_start_event_initialize(event, version_directive,             # <<<<<<<<<<<<<<
@@ -15181,7 +15181,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
  */
     if (__pyx_t_2) {
 
-      /* "_yaml.pyx":1089
+      /* "_ruamel_yaml.pyx":1089
  *             if yaml_document_start_event_initialize(event, version_directive,
  *                     tag_directives_start, tag_directives_end, implicit) == 0:
  *                 raise MemoryError             # <<<<<<<<<<<<<<
@@ -15190,7 +15190,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
  */
       PyErr_NoMemory(); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1089; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-      /* "_yaml.pyx":1087
+      /* "_ruamel_yaml.pyx":1087
  *             if event_object.explicit:
  *                 implicit = 0
  *             if yaml_document_start_event_initialize(event, version_directive,             # <<<<<<<<<<<<<<
@@ -15199,7 +15199,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
  */
     }
 
-    /* "_yaml.pyx":1046
+    /* "_ruamel_yaml.pyx":1046
  *         elif event_class is StreamEndEvent:
  *             yaml_stream_end_event_initialize(event)
  *         elif event_class is DocumentStartEvent:             # <<<<<<<<<<<<<<
@@ -15209,7 +15209,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
     goto __pyx_L3;
   }
 
-  /* "_yaml.pyx":1090
+  /* "_ruamel_yaml.pyx":1090
  *                     tag_directives_start, tag_directives_end, implicit) == 0:
  *                 raise MemoryError
  *         elif event_class is DocumentEndEvent:             # <<<<<<<<<<<<<<
@@ -15223,7 +15223,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
   __pyx_t_3 = (__pyx_t_2 != 0);
   if (__pyx_t_3) {
 
-    /* "_yaml.pyx":1091
+    /* "_ruamel_yaml.pyx":1091
  *                 raise MemoryError
  *         elif event_class is DocumentEndEvent:
  *             implicit = 1             # <<<<<<<<<<<<<<
@@ -15232,7 +15232,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
  */
     __pyx_v_implicit = 1;
 
-    /* "_yaml.pyx":1092
+    /* "_ruamel_yaml.pyx":1092
  *         elif event_class is DocumentEndEvent:
  *             implicit = 1
  *             if event_object.explicit:             # <<<<<<<<<<<<<<
@@ -15245,7 +15245,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     if (__pyx_t_3) {
 
-      /* "_yaml.pyx":1093
+      /* "_ruamel_yaml.pyx":1093
  *             implicit = 1
  *             if event_object.explicit:
  *                 implicit = 0             # <<<<<<<<<<<<<<
@@ -15254,7 +15254,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
  */
       __pyx_v_implicit = 0;
 
-      /* "_yaml.pyx":1092
+      /* "_ruamel_yaml.pyx":1092
  *         elif event_class is DocumentEndEvent:
  *             implicit = 1
  *             if event_object.explicit:             # <<<<<<<<<<<<<<
@@ -15263,7 +15263,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
  */
     }
 
-    /* "_yaml.pyx":1094
+    /* "_ruamel_yaml.pyx":1094
  *             if event_object.explicit:
  *                 implicit = 0
  *             yaml_document_end_event_initialize(event, implicit)             # <<<<<<<<<<<<<<
@@ -15272,7 +15272,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
  */
     yaml_document_end_event_initialize(__pyx_v_event, __pyx_v_implicit);
 
-    /* "_yaml.pyx":1090
+    /* "_ruamel_yaml.pyx":1090
  *                     tag_directives_start, tag_directives_end, implicit) == 0:
  *                 raise MemoryError
  *         elif event_class is DocumentEndEvent:             # <<<<<<<<<<<<<<
@@ -15282,7 +15282,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
     goto __pyx_L3;
   }
 
-  /* "_yaml.pyx":1095
+  /* "_ruamel_yaml.pyx":1095
  *                 implicit = 0
  *             yaml_document_end_event_initialize(event, implicit)
  *         elif event_class is AliasEvent:             # <<<<<<<<<<<<<<
@@ -15296,7 +15296,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
   __pyx_t_2 = (__pyx_t_3 != 0);
   if (__pyx_t_2) {
 
-    /* "_yaml.pyx":1096
+    /* "_ruamel_yaml.pyx":1096
  *             yaml_document_end_event_initialize(event, implicit)
  *         elif event_class is AliasEvent:
  *             anchor = NULL             # <<<<<<<<<<<<<<
@@ -15305,7 +15305,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
  */
     __pyx_v_anchor = NULL;
 
-    /* "_yaml.pyx":1097
+    /* "_ruamel_yaml.pyx":1097
  *         elif event_class is AliasEvent:
  *             anchor = NULL
  *             anchor_object = event_object.anchor             # <<<<<<<<<<<<<<
@@ -15317,7 +15317,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
     __pyx_v_anchor_object = __pyx_t_4;
     __pyx_t_4 = 0;
 
-    /* "_yaml.pyx":1098
+    /* "_ruamel_yaml.pyx":1098
  *             anchor = NULL
  *             anchor_object = event_object.anchor
  *             if PyUnicode_CheckExact(anchor_object):             # <<<<<<<<<<<<<<
@@ -15327,7 +15327,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
     __pyx_t_2 = (PyUnicode_CheckExact(__pyx_v_anchor_object) != 0);
     if (__pyx_t_2) {
 
-      /* "_yaml.pyx":1099
+      /* "_ruamel_yaml.pyx":1099
  *             anchor_object = event_object.anchor
  *             if PyUnicode_CheckExact(anchor_object):
  *                 anchor_object = PyUnicode_AsUTF8String(anchor_object)             # <<<<<<<<<<<<<<
@@ -15339,7 +15339,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
       __Pyx_DECREF_SET(__pyx_v_anchor_object, __pyx_t_4);
       __pyx_t_4 = 0;
 
-      /* "_yaml.pyx":1098
+      /* "_ruamel_yaml.pyx":1098
  *             anchor = NULL
  *             anchor_object = event_object.anchor
  *             if PyUnicode_CheckExact(anchor_object):             # <<<<<<<<<<<<<<
@@ -15348,7 +15348,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
  */
     }
 
-    /* "_yaml.pyx":1100
+    /* "_ruamel_yaml.pyx":1100
  *             if PyUnicode_CheckExact(anchor_object):
  *                 anchor_object = PyUnicode_AsUTF8String(anchor_object)
  *             if not PyString_CheckExact(anchor_object):             # <<<<<<<<<<<<<<
@@ -15358,7 +15358,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
     __pyx_t_2 = ((!(PyString_CheckExact(__pyx_v_anchor_object) != 0)) != 0);
     if (__pyx_t_2) {
 
-      /* "_yaml.pyx":1101
+      /* "_ruamel_yaml.pyx":1101
  *                 anchor_object = PyUnicode_AsUTF8String(anchor_object)
  *             if not PyString_CheckExact(anchor_object):
  *                 if PY_MAJOR_VERSION < 3:             # <<<<<<<<<<<<<<
@@ -15368,7 +15368,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
       __pyx_t_2 = ((PY_MAJOR_VERSION < 3) != 0);
       if (__pyx_t_2) {
 
-        /* "_yaml.pyx":1102
+        /* "_ruamel_yaml.pyx":1102
  *             if not PyString_CheckExact(anchor_object):
  *                 if PY_MAJOR_VERSION < 3:
  *                     raise TypeError("anchor must be a string")             # <<<<<<<<<<<<<<
@@ -15381,7 +15381,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
         __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
         {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1102; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-        /* "_yaml.pyx":1101
+        /* "_ruamel_yaml.pyx":1101
  *                 anchor_object = PyUnicode_AsUTF8String(anchor_object)
  *             if not PyString_CheckExact(anchor_object):
  *                 if PY_MAJOR_VERSION < 3:             # <<<<<<<<<<<<<<
@@ -15390,7 +15390,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
  */
       }
 
-      /* "_yaml.pyx":1104
+      /* "_ruamel_yaml.pyx":1104
  *                     raise TypeError("anchor must be a string")
  *                 else:
  *                     raise TypeError(u"anchor must be a string")             # <<<<<<<<<<<<<<
@@ -15405,7 +15405,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
         {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1104; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       }
 
-      /* "_yaml.pyx":1100
+      /* "_ruamel_yaml.pyx":1100
  *             if PyUnicode_CheckExact(anchor_object):
  *                 anchor_object = PyUnicode_AsUTF8String(anchor_object)
  *             if not PyString_CheckExact(anchor_object):             # <<<<<<<<<<<<<<
@@ -15414,7 +15414,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
  */
     }
 
-    /* "_yaml.pyx":1105
+    /* "_ruamel_yaml.pyx":1105
  *                 else:
  *                     raise TypeError(u"anchor must be a string")
  *             anchor = PyString_AS_STRING(anchor_object)             # <<<<<<<<<<<<<<
@@ -15423,7 +15423,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
  */
     __pyx_v_anchor = PyString_AS_STRING(__pyx_v_anchor_object);
 
-    /* "_yaml.pyx":1106
+    /* "_ruamel_yaml.pyx":1106
  *                     raise TypeError(u"anchor must be a string")
  *             anchor = PyString_AS_STRING(anchor_object)
  *             if yaml_alias_event_initialize(event, anchor) == 0:             # <<<<<<<<<<<<<<
@@ -15433,7 +15433,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
     __pyx_t_2 = ((yaml_alias_event_initialize(__pyx_v_event, __pyx_v_anchor) == 0) != 0);
     if (__pyx_t_2) {
 
-      /* "_yaml.pyx":1107
+      /* "_ruamel_yaml.pyx":1107
  *             anchor = PyString_AS_STRING(anchor_object)
  *             if yaml_alias_event_initialize(event, anchor) == 0:
  *                 raise MemoryError             # <<<<<<<<<<<<<<
@@ -15442,7 +15442,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
  */
       PyErr_NoMemory(); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1107; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-      /* "_yaml.pyx":1106
+      /* "_ruamel_yaml.pyx":1106
  *                     raise TypeError(u"anchor must be a string")
  *             anchor = PyString_AS_STRING(anchor_object)
  *             if yaml_alias_event_initialize(event, anchor) == 0:             # <<<<<<<<<<<<<<
@@ -15451,7 +15451,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
  */
     }
 
-    /* "_yaml.pyx":1095
+    /* "_ruamel_yaml.pyx":1095
  *                 implicit = 0
  *             yaml_document_end_event_initialize(event, implicit)
  *         elif event_class is AliasEvent:             # <<<<<<<<<<<<<<
@@ -15461,7 +15461,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
     goto __pyx_L3;
   }
 
-  /* "_yaml.pyx":1108
+  /* "_ruamel_yaml.pyx":1108
  *             if yaml_alias_event_initialize(event, anchor) == 0:
  *                 raise MemoryError
  *         elif event_class is ScalarEvent:             # <<<<<<<<<<<<<<
@@ -15475,7 +15475,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
   __pyx_t_3 = (__pyx_t_2 != 0);
   if (__pyx_t_3) {
 
-    /* "_yaml.pyx":1109
+    /* "_ruamel_yaml.pyx":1109
  *                 raise MemoryError
  *         elif event_class is ScalarEvent:
  *             anchor = NULL             # <<<<<<<<<<<<<<
@@ -15484,7 +15484,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
  */
     __pyx_v_anchor = NULL;
 
-    /* "_yaml.pyx":1110
+    /* "_ruamel_yaml.pyx":1110
  *         elif event_class is ScalarEvent:
  *             anchor = NULL
  *             anchor_object = event_object.anchor             # <<<<<<<<<<<<<<
@@ -15496,7 +15496,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
     __pyx_v_anchor_object = __pyx_t_4;
     __pyx_t_4 = 0;
 
-    /* "_yaml.pyx":1111
+    /* "_ruamel_yaml.pyx":1111
  *             anchor = NULL
  *             anchor_object = event_object.anchor
  *             if anchor_object is not None:             # <<<<<<<<<<<<<<
@@ -15507,7 +15507,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
     __pyx_t_2 = (__pyx_t_3 != 0);
     if (__pyx_t_2) {
 
-      /* "_yaml.pyx":1112
+      /* "_ruamel_yaml.pyx":1112
  *             anchor_object = event_object.anchor
  *             if anchor_object is not None:
  *                 if PyUnicode_CheckExact(anchor_object):             # <<<<<<<<<<<<<<
@@ -15517,7 +15517,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
       __pyx_t_2 = (PyUnicode_CheckExact(__pyx_v_anchor_object) != 0);
       if (__pyx_t_2) {
 
-        /* "_yaml.pyx":1113
+        /* "_ruamel_yaml.pyx":1113
  *             if anchor_object is not None:
  *                 if PyUnicode_CheckExact(anchor_object):
  *                     anchor_object = PyUnicode_AsUTF8String(anchor_object)             # <<<<<<<<<<<<<<
@@ -15529,7 +15529,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
         __Pyx_DECREF_SET(__pyx_v_anchor_object, __pyx_t_4);
         __pyx_t_4 = 0;
 
-        /* "_yaml.pyx":1112
+        /* "_ruamel_yaml.pyx":1112
  *             anchor_object = event_object.anchor
  *             if anchor_object is not None:
  *                 if PyUnicode_CheckExact(anchor_object):             # <<<<<<<<<<<<<<
@@ -15538,7 +15538,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
  */
       }
 
-      /* "_yaml.pyx":1114
+      /* "_ruamel_yaml.pyx":1114
  *                 if PyUnicode_CheckExact(anchor_object):
  *                     anchor_object = PyUnicode_AsUTF8String(anchor_object)
  *                 if not PyString_CheckExact(anchor_object):             # <<<<<<<<<<<<<<
@@ -15548,7 +15548,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
       __pyx_t_2 = ((!(PyString_CheckExact(__pyx_v_anchor_object) != 0)) != 0);
       if (__pyx_t_2) {
 
-        /* "_yaml.pyx":1115
+        /* "_ruamel_yaml.pyx":1115
  *                     anchor_object = PyUnicode_AsUTF8String(anchor_object)
  *                 if not PyString_CheckExact(anchor_object):
  *                     if PY_MAJOR_VERSION < 3:             # <<<<<<<<<<<<<<
@@ -15558,7 +15558,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
         __pyx_t_2 = ((PY_MAJOR_VERSION < 3) != 0);
         if (__pyx_t_2) {
 
-          /* "_yaml.pyx":1116
+          /* "_ruamel_yaml.pyx":1116
  *                 if not PyString_CheckExact(anchor_object):
  *                     if PY_MAJOR_VERSION < 3:
  *                         raise TypeError("anchor must be a string")             # <<<<<<<<<<<<<<
@@ -15571,7 +15571,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
           __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
           {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1116; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-          /* "_yaml.pyx":1115
+          /* "_ruamel_yaml.pyx":1115
  *                     anchor_object = PyUnicode_AsUTF8String(anchor_object)
  *                 if not PyString_CheckExact(anchor_object):
  *                     if PY_MAJOR_VERSION < 3:             # <<<<<<<<<<<<<<
@@ -15580,7 +15580,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
  */
         }
 
-        /* "_yaml.pyx":1118
+        /* "_ruamel_yaml.pyx":1118
  *                         raise TypeError("anchor must be a string")
  *                     else:
  *                         raise TypeError(u"anchor must be a string")             # <<<<<<<<<<<<<<
@@ -15595,7 +15595,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
           {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1118; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         }
 
-        /* "_yaml.pyx":1114
+        /* "_ruamel_yaml.pyx":1114
  *                 if PyUnicode_CheckExact(anchor_object):
  *                     anchor_object = PyUnicode_AsUTF8String(anchor_object)
  *                 if not PyString_CheckExact(anchor_object):             # <<<<<<<<<<<<<<
@@ -15604,7 +15604,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
  */
       }
 
-      /* "_yaml.pyx":1119
+      /* "_ruamel_yaml.pyx":1119
  *                     else:
  *                         raise TypeError(u"anchor must be a string")
  *                 anchor = PyString_AS_STRING(anchor_object)             # <<<<<<<<<<<<<<
@@ -15613,7 +15613,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
  */
       __pyx_v_anchor = PyString_AS_STRING(__pyx_v_anchor_object);
 
-      /* "_yaml.pyx":1111
+      /* "_ruamel_yaml.pyx":1111
  *             anchor = NULL
  *             anchor_object = event_object.anchor
  *             if anchor_object is not None:             # <<<<<<<<<<<<<<
@@ -15622,7 +15622,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
  */
     }
 
-    /* "_yaml.pyx":1120
+    /* "_ruamel_yaml.pyx":1120
  *                         raise TypeError(u"anchor must be a string")
  *                 anchor = PyString_AS_STRING(anchor_object)
  *             tag = NULL             # <<<<<<<<<<<<<<
@@ -15631,7 +15631,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
  */
     __pyx_v_tag = NULL;
 
-    /* "_yaml.pyx":1121
+    /* "_ruamel_yaml.pyx":1121
  *                 anchor = PyString_AS_STRING(anchor_object)
  *             tag = NULL
  *             tag_object = event_object.tag             # <<<<<<<<<<<<<<
@@ -15643,7 +15643,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
     __pyx_v_tag_object = __pyx_t_4;
     __pyx_t_4 = 0;
 
-    /* "_yaml.pyx":1122
+    /* "_ruamel_yaml.pyx":1122
  *             tag = NULL
  *             tag_object = event_object.tag
  *             if tag_object is not None:             # <<<<<<<<<<<<<<
@@ -15654,7 +15654,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
     __pyx_t_3 = (__pyx_t_2 != 0);
     if (__pyx_t_3) {
 
-      /* "_yaml.pyx":1123
+      /* "_ruamel_yaml.pyx":1123
  *             tag_object = event_object.tag
  *             if tag_object is not None:
  *                 if PyUnicode_CheckExact(tag_object):             # <<<<<<<<<<<<<<
@@ -15664,7 +15664,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
       __pyx_t_3 = (PyUnicode_CheckExact(__pyx_v_tag_object) != 0);
       if (__pyx_t_3) {
 
-        /* "_yaml.pyx":1124
+        /* "_ruamel_yaml.pyx":1124
  *             if tag_object is not None:
  *                 if PyUnicode_CheckExact(tag_object):
  *                     tag_object = PyUnicode_AsUTF8String(tag_object)             # <<<<<<<<<<<<<<
@@ -15676,7 +15676,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
         __Pyx_DECREF_SET(__pyx_v_tag_object, __pyx_t_4);
         __pyx_t_4 = 0;
 
-        /* "_yaml.pyx":1123
+        /* "_ruamel_yaml.pyx":1123
  *             tag_object = event_object.tag
  *             if tag_object is not None:
  *                 if PyUnicode_CheckExact(tag_object):             # <<<<<<<<<<<<<<
@@ -15685,7 +15685,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
  */
       }
 
-      /* "_yaml.pyx":1125
+      /* "_ruamel_yaml.pyx":1125
  *                 if PyUnicode_CheckExact(tag_object):
  *                     tag_object = PyUnicode_AsUTF8String(tag_object)
  *                 if not PyString_CheckExact(tag_object):             # <<<<<<<<<<<<<<
@@ -15695,7 +15695,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
       __pyx_t_3 = ((!(PyString_CheckExact(__pyx_v_tag_object) != 0)) != 0);
       if (__pyx_t_3) {
 
-        /* "_yaml.pyx":1126
+        /* "_ruamel_yaml.pyx":1126
  *                     tag_object = PyUnicode_AsUTF8String(tag_object)
  *                 if not PyString_CheckExact(tag_object):
  *                     if PY_MAJOR_VERSION < 3:             # <<<<<<<<<<<<<<
@@ -15705,7 +15705,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
         __pyx_t_3 = ((PY_MAJOR_VERSION < 3) != 0);
         if (__pyx_t_3) {
 
-          /* "_yaml.pyx":1127
+          /* "_ruamel_yaml.pyx":1127
  *                 if not PyString_CheckExact(tag_object):
  *                     if PY_MAJOR_VERSION < 3:
  *                         raise TypeError("tag must be a string")             # <<<<<<<<<<<<<<
@@ -15718,7 +15718,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
           __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
           {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1127; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-          /* "_yaml.pyx":1126
+          /* "_ruamel_yaml.pyx":1126
  *                     tag_object = PyUnicode_AsUTF8String(tag_object)
  *                 if not PyString_CheckExact(tag_object):
  *                     if PY_MAJOR_VERSION < 3:             # <<<<<<<<<<<<<<
@@ -15727,7 +15727,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
  */
         }
 
-        /* "_yaml.pyx":1129
+        /* "_ruamel_yaml.pyx":1129
  *                         raise TypeError("tag must be a string")
  *                     else:
  *                         raise TypeError(u"tag must be a string")             # <<<<<<<<<<<<<<
@@ -15742,7 +15742,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
           {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1129; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         }
 
-        /* "_yaml.pyx":1125
+        /* "_ruamel_yaml.pyx":1125
  *                 if PyUnicode_CheckExact(tag_object):
  *                     tag_object = PyUnicode_AsUTF8String(tag_object)
  *                 if not PyString_CheckExact(tag_object):             # <<<<<<<<<<<<<<
@@ -15751,7 +15751,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
  */
       }
 
-      /* "_yaml.pyx":1130
+      /* "_ruamel_yaml.pyx":1130
  *                     else:
  *                         raise TypeError(u"tag must be a string")
  *                 tag = PyString_AS_STRING(tag_object)             # <<<<<<<<<<<<<<
@@ -15760,7 +15760,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
  */
       __pyx_v_tag = PyString_AS_STRING(__pyx_v_tag_object);
 
-      /* "_yaml.pyx":1122
+      /* "_ruamel_yaml.pyx":1122
  *             tag = NULL
  *             tag_object = event_object.tag
  *             if tag_object is not None:             # <<<<<<<<<<<<<<
@@ -15769,7 +15769,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
  */
     }
 
-    /* "_yaml.pyx":1131
+    /* "_ruamel_yaml.pyx":1131
  *                         raise TypeError(u"tag must be a string")
  *                 tag = PyString_AS_STRING(tag_object)
  *             value_object = event_object.value             # <<<<<<<<<<<<<<
@@ -15781,7 +15781,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
     __pyx_v_value_object = __pyx_t_4;
     __pyx_t_4 = 0;
 
-    /* "_yaml.pyx":1132
+    /* "_ruamel_yaml.pyx":1132
  *                 tag = PyString_AS_STRING(tag_object)
  *             value_object = event_object.value
  *             if PyUnicode_CheckExact(value_object):             # <<<<<<<<<<<<<<
@@ -15791,7 +15791,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
     __pyx_t_3 = (PyUnicode_CheckExact(__pyx_v_value_object) != 0);
     if (__pyx_t_3) {
 
-      /* "_yaml.pyx":1133
+      /* "_ruamel_yaml.pyx":1133
  *             value_object = event_object.value
  *             if PyUnicode_CheckExact(value_object):
  *                 value_object = PyUnicode_AsUTF8String(value_object)             # <<<<<<<<<<<<<<
@@ -15803,7 +15803,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
       __Pyx_DECREF_SET(__pyx_v_value_object, __pyx_t_4);
       __pyx_t_4 = 0;
 
-      /* "_yaml.pyx":1132
+      /* "_ruamel_yaml.pyx":1132
  *                 tag = PyString_AS_STRING(tag_object)
  *             value_object = event_object.value
  *             if PyUnicode_CheckExact(value_object):             # <<<<<<<<<<<<<<
@@ -15812,7 +15812,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
  */
     }
 
-    /* "_yaml.pyx":1134
+    /* "_ruamel_yaml.pyx":1134
  *             if PyUnicode_CheckExact(value_object):
  *                 value_object = PyUnicode_AsUTF8String(value_object)
  *             if not PyString_CheckExact(value_object):             # <<<<<<<<<<<<<<
@@ -15822,7 +15822,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
     __pyx_t_3 = ((!(PyString_CheckExact(__pyx_v_value_object) != 0)) != 0);
     if (__pyx_t_3) {
 
-      /* "_yaml.pyx":1135
+      /* "_ruamel_yaml.pyx":1135
  *                 value_object = PyUnicode_AsUTF8String(value_object)
  *             if not PyString_CheckExact(value_object):
  *                 if PY_MAJOR_VERSION < 3:             # <<<<<<<<<<<<<<
@@ -15832,7 +15832,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
       __pyx_t_3 = ((PY_MAJOR_VERSION < 3) != 0);
       if (__pyx_t_3) {
 
-        /* "_yaml.pyx":1136
+        /* "_ruamel_yaml.pyx":1136
  *             if not PyString_CheckExact(value_object):
  *                 if PY_MAJOR_VERSION < 3:
  *                     raise TypeError("value must be a string")             # <<<<<<<<<<<<<<
@@ -15845,7 +15845,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
         __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
         {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1136; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-        /* "_yaml.pyx":1135
+        /* "_ruamel_yaml.pyx":1135
  *                 value_object = PyUnicode_AsUTF8String(value_object)
  *             if not PyString_CheckExact(value_object):
  *                 if PY_MAJOR_VERSION < 3:             # <<<<<<<<<<<<<<
@@ -15854,7 +15854,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
  */
       }
 
-      /* "_yaml.pyx":1138
+      /* "_ruamel_yaml.pyx":1138
  *                     raise TypeError("value must be a string")
  *                 else:
  *                     raise TypeError(u"value must be a string")             # <<<<<<<<<<<<<<
@@ -15869,7 +15869,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
         {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1138; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       }
 
-      /* "_yaml.pyx":1134
+      /* "_ruamel_yaml.pyx":1134
  *             if PyUnicode_CheckExact(value_object):
  *                 value_object = PyUnicode_AsUTF8String(value_object)
  *             if not PyString_CheckExact(value_object):             # <<<<<<<<<<<<<<
@@ -15878,7 +15878,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
  */
     }
 
-    /* "_yaml.pyx":1139
+    /* "_ruamel_yaml.pyx":1139
  *                 else:
  *                     raise TypeError(u"value must be a string")
  *             value = PyString_AS_STRING(value_object)             # <<<<<<<<<<<<<<
@@ -15887,7 +15887,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
  */
     __pyx_v_value = PyString_AS_STRING(__pyx_v_value_object);
 
-    /* "_yaml.pyx":1140
+    /* "_ruamel_yaml.pyx":1140
  *                     raise TypeError(u"value must be a string")
  *             value = PyString_AS_STRING(value_object)
  *             length = PyString_GET_SIZE(value_object)             # <<<<<<<<<<<<<<
@@ -15896,7 +15896,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
  */
     __pyx_v_length = PyString_GET_SIZE(__pyx_v_value_object);
 
-    /* "_yaml.pyx":1141
+    /* "_ruamel_yaml.pyx":1141
  *             value = PyString_AS_STRING(value_object)
  *             length = PyString_GET_SIZE(value_object)
  *             plain_implicit = 0             # <<<<<<<<<<<<<<
@@ -15905,7 +15905,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
  */
     __pyx_v_plain_implicit = 0;
 
-    /* "_yaml.pyx":1142
+    /* "_ruamel_yaml.pyx":1142
  *             length = PyString_GET_SIZE(value_object)
  *             plain_implicit = 0
  *             quoted_implicit = 0             # <<<<<<<<<<<<<<
@@ -15914,7 +15914,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
  */
     __pyx_v_quoted_implicit = 0;
 
-    /* "_yaml.pyx":1143
+    /* "_ruamel_yaml.pyx":1143
  *             plain_implicit = 0
  *             quoted_implicit = 0
  *             if event_object.implicit is not None:             # <<<<<<<<<<<<<<
@@ -15928,7 +15928,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
     __pyx_t_2 = (__pyx_t_3 != 0);
     if (__pyx_t_2) {
 
-      /* "_yaml.pyx":1144
+      /* "_ruamel_yaml.pyx":1144
  *             quoted_implicit = 0
  *             if event_object.implicit is not None:
  *                 plain_implicit = event_object.implicit[0]             # <<<<<<<<<<<<<<
@@ -15944,7 +15944,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
       __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
       __pyx_v_plain_implicit = __pyx_t_5;
 
-      /* "_yaml.pyx":1145
+      /* "_ruamel_yaml.pyx":1145
  *             if event_object.implicit is not None:
  *                 plain_implicit = event_object.implicit[0]
  *                 quoted_implicit = event_object.implicit[1]             # <<<<<<<<<<<<<<
@@ -15960,7 +15960,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
       __pyx_v_quoted_implicit = __pyx_t_5;
 
-      /* "_yaml.pyx":1143
+      /* "_ruamel_yaml.pyx":1143
  *             plain_implicit = 0
  *             quoted_implicit = 0
  *             if event_object.implicit is not None:             # <<<<<<<<<<<<<<
@@ -15969,7 +15969,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
  */
     }
 
-    /* "_yaml.pyx":1146
+    /* "_ruamel_yaml.pyx":1146
  *                 plain_implicit = event_object.implicit[0]
  *                 quoted_implicit = event_object.implicit[1]
  *             style_object = event_object.style             # <<<<<<<<<<<<<<
@@ -15981,7 +15981,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
     __pyx_v_style_object = __pyx_t_4;
     __pyx_t_4 = 0;
 
-    /* "_yaml.pyx":1147
+    /* "_ruamel_yaml.pyx":1147
  *                 quoted_implicit = event_object.implicit[1]
  *             style_object = event_object.style
  *             scalar_style = YAML_PLAIN_SCALAR_STYLE             # <<<<<<<<<<<<<<
@@ -15990,7 +15990,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
  */
     __pyx_v_scalar_style = YAML_PLAIN_SCALAR_STYLE;
 
-    /* "_yaml.pyx":1148
+    /* "_ruamel_yaml.pyx":1148
  *             style_object = event_object.style
  *             scalar_style = YAML_PLAIN_SCALAR_STYLE
  *             if style_object == "'" or style_object == u"'":             # <<<<<<<<<<<<<<
@@ -16008,7 +16008,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
     __pyx_L43_bool_binop_done:;
     if (__pyx_t_2) {
 
-      /* "_yaml.pyx":1149
+      /* "_ruamel_yaml.pyx":1149
  *             scalar_style = YAML_PLAIN_SCALAR_STYLE
  *             if style_object == "'" or style_object == u"'":
  *                 scalar_style = YAML_SINGLE_QUOTED_SCALAR_STYLE             # <<<<<<<<<<<<<<
@@ -16017,7 +16017,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
  */
       __pyx_v_scalar_style = YAML_SINGLE_QUOTED_SCALAR_STYLE;
 
-      /* "_yaml.pyx":1148
+      /* "_ruamel_yaml.pyx":1148
  *             style_object = event_object.style
  *             scalar_style = YAML_PLAIN_SCALAR_STYLE
  *             if style_object == "'" or style_object == u"'":             # <<<<<<<<<<<<<<
@@ -16027,7 +16027,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
       goto __pyx_L42;
     }
 
-    /* "_yaml.pyx":1150
+    /* "_ruamel_yaml.pyx":1150
  *             if style_object == "'" or style_object == u"'":
  *                 scalar_style = YAML_SINGLE_QUOTED_SCALAR_STYLE
  *             elif style_object == "\"" or style_object == u"\"":             # <<<<<<<<<<<<<<
@@ -16045,7 +16045,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
     __pyx_L45_bool_binop_done:;
     if (__pyx_t_2) {
 
-      /* "_yaml.pyx":1151
+      /* "_ruamel_yaml.pyx":1151
  *                 scalar_style = YAML_SINGLE_QUOTED_SCALAR_STYLE
  *             elif style_object == "\"" or style_object == u"\"":
  *                 scalar_style = YAML_DOUBLE_QUOTED_SCALAR_STYLE             # <<<<<<<<<<<<<<
@@ -16054,7 +16054,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
  */
       __pyx_v_scalar_style = YAML_DOUBLE_QUOTED_SCALAR_STYLE;
 
-      /* "_yaml.pyx":1150
+      /* "_ruamel_yaml.pyx":1150
  *             if style_object == "'" or style_object == u"'":
  *                 scalar_style = YAML_SINGLE_QUOTED_SCALAR_STYLE
  *             elif style_object == "\"" or style_object == u"\"":             # <<<<<<<<<<<<<<
@@ -16064,7 +16064,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
       goto __pyx_L42;
     }
 
-    /* "_yaml.pyx":1152
+    /* "_ruamel_yaml.pyx":1152
  *             elif style_object == "\"" or style_object == u"\"":
  *                 scalar_style = YAML_DOUBLE_QUOTED_SCALAR_STYLE
  *             elif style_object == "|" or style_object == u"|":             # <<<<<<<<<<<<<<
@@ -16082,7 +16082,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
     __pyx_L47_bool_binop_done:;
     if (__pyx_t_2) {
 
-      /* "_yaml.pyx":1153
+      /* "_ruamel_yaml.pyx":1153
  *                 scalar_style = YAML_DOUBLE_QUOTED_SCALAR_STYLE
  *             elif style_object == "|" or style_object == u"|":
  *                 scalar_style = YAML_LITERAL_SCALAR_STYLE             # <<<<<<<<<<<<<<
@@ -16091,7 +16091,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
  */
       __pyx_v_scalar_style = YAML_LITERAL_SCALAR_STYLE;
 
-      /* "_yaml.pyx":1152
+      /* "_ruamel_yaml.pyx":1152
  *             elif style_object == "\"" or style_object == u"\"":
  *                 scalar_style = YAML_DOUBLE_QUOTED_SCALAR_STYLE
  *             elif style_object == "|" or style_object == u"|":             # <<<<<<<<<<<<<<
@@ -16101,7 +16101,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
       goto __pyx_L42;
     }
 
-    /* "_yaml.pyx":1154
+    /* "_ruamel_yaml.pyx":1154
  *             elif style_object == "|" or style_object == u"|":
  *                 scalar_style = YAML_LITERAL_SCALAR_STYLE
  *             elif style_object == ">" or style_object == u">":             # <<<<<<<<<<<<<<
@@ -16119,7 +16119,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
     __pyx_L49_bool_binop_done:;
     if (__pyx_t_2) {
 
-      /* "_yaml.pyx":1155
+      /* "_ruamel_yaml.pyx":1155
  *                 scalar_style = YAML_LITERAL_SCALAR_STYLE
  *             elif style_object == ">" or style_object == u">":
  *                 scalar_style = YAML_FOLDED_SCALAR_STYLE             # <<<<<<<<<<<<<<
@@ -16128,7 +16128,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
  */
       __pyx_v_scalar_style = YAML_FOLDED_SCALAR_STYLE;
 
-      /* "_yaml.pyx":1154
+      /* "_ruamel_yaml.pyx":1154
  *             elif style_object == "|" or style_object == u"|":
  *                 scalar_style = YAML_LITERAL_SCALAR_STYLE
  *             elif style_object == ">" or style_object == u">":             # <<<<<<<<<<<<<<
@@ -16138,7 +16138,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
     }
     __pyx_L42:;
 
-    /* "_yaml.pyx":1157
+    /* "_ruamel_yaml.pyx":1157
  *                 scalar_style = YAML_FOLDED_SCALAR_STYLE
  *             if yaml_scalar_event_initialize(event, anchor, tag, value, length,
  *                     plain_implicit, quoted_implicit, scalar_style) == 0:             # <<<<<<<<<<<<<<
@@ -16147,7 +16147,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
  */
     __pyx_t_2 = ((yaml_scalar_event_initialize(__pyx_v_event, __pyx_v_anchor, __pyx_v_tag, __pyx_v_value, __pyx_v_length, __pyx_v_plain_implicit, __pyx_v_quoted_implicit, __pyx_v_scalar_style) == 0) != 0);
 
-    /* "_yaml.pyx":1156
+    /* "_ruamel_yaml.pyx":1156
  *             elif style_object == ">" or style_object == u">":
  *                 scalar_style = YAML_FOLDED_SCALAR_STYLE
  *             if yaml_scalar_event_initialize(event, anchor, tag, value, length,             # <<<<<<<<<<<<<<
@@ -16156,7 +16156,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
  */
     if (__pyx_t_2) {
 
-      /* "_yaml.pyx":1158
+      /* "_ruamel_yaml.pyx":1158
  *             if yaml_scalar_event_initialize(event, anchor, tag, value, length,
  *                     plain_implicit, quoted_implicit, scalar_style) == 0:
  *                 raise MemoryError             # <<<<<<<<<<<<<<
@@ -16165,7 +16165,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
  */
       PyErr_NoMemory(); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1158; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-      /* "_yaml.pyx":1156
+      /* "_ruamel_yaml.pyx":1156
  *             elif style_object == ">" or style_object == u">":
  *                 scalar_style = YAML_FOLDED_SCALAR_STYLE
  *             if yaml_scalar_event_initialize(event, anchor, tag, value, length,             # <<<<<<<<<<<<<<
@@ -16174,7 +16174,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
  */
     }
 
-    /* "_yaml.pyx":1108
+    /* "_ruamel_yaml.pyx":1108
  *             if yaml_alias_event_initialize(event, anchor) == 0:
  *                 raise MemoryError
  *         elif event_class is ScalarEvent:             # <<<<<<<<<<<<<<
@@ -16184,7 +16184,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
     goto __pyx_L3;
   }
 
-  /* "_yaml.pyx":1159
+  /* "_ruamel_yaml.pyx":1159
  *                     plain_implicit, quoted_implicit, scalar_style) == 0:
  *                 raise MemoryError
  *         elif event_class is SequenceStartEvent:             # <<<<<<<<<<<<<<
@@ -16198,7 +16198,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
   __pyx_t_3 = (__pyx_t_2 != 0);
   if (__pyx_t_3) {
 
-    /* "_yaml.pyx":1160
+    /* "_ruamel_yaml.pyx":1160
  *                 raise MemoryError
  *         elif event_class is SequenceStartEvent:
  *             anchor = NULL             # <<<<<<<<<<<<<<
@@ -16207,7 +16207,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
  */
     __pyx_v_anchor = NULL;
 
-    /* "_yaml.pyx":1161
+    /* "_ruamel_yaml.pyx":1161
  *         elif event_class is SequenceStartEvent:
  *             anchor = NULL
  *             anchor_object = event_object.anchor             # <<<<<<<<<<<<<<
@@ -16219,7 +16219,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
     __pyx_v_anchor_object = __pyx_t_4;
     __pyx_t_4 = 0;
 
-    /* "_yaml.pyx":1162
+    /* "_ruamel_yaml.pyx":1162
  *             anchor = NULL
  *             anchor_object = event_object.anchor
  *             if anchor_object is not None:             # <<<<<<<<<<<<<<
@@ -16230,7 +16230,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
     __pyx_t_2 = (__pyx_t_3 != 0);
     if (__pyx_t_2) {
 
-      /* "_yaml.pyx":1163
+      /* "_ruamel_yaml.pyx":1163
  *             anchor_object = event_object.anchor
  *             if anchor_object is not None:
  *                 if PyUnicode_CheckExact(anchor_object):             # <<<<<<<<<<<<<<
@@ -16240,7 +16240,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
       __pyx_t_2 = (PyUnicode_CheckExact(__pyx_v_anchor_object) != 0);
       if (__pyx_t_2) {
 
-        /* "_yaml.pyx":1164
+        /* "_ruamel_yaml.pyx":1164
  *             if anchor_object is not None:
  *                 if PyUnicode_CheckExact(anchor_object):
  *                     anchor_object = PyUnicode_AsUTF8String(anchor_object)             # <<<<<<<<<<<<<<
@@ -16252,7 +16252,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
         __Pyx_DECREF_SET(__pyx_v_anchor_object, __pyx_t_4);
         __pyx_t_4 = 0;
 
-        /* "_yaml.pyx":1163
+        /* "_ruamel_yaml.pyx":1163
  *             anchor_object = event_object.anchor
  *             if anchor_object is not None:
  *                 if PyUnicode_CheckExact(anchor_object):             # <<<<<<<<<<<<<<
@@ -16261,7 +16261,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
  */
       }
 
-      /* "_yaml.pyx":1165
+      /* "_ruamel_yaml.pyx":1165
  *                 if PyUnicode_CheckExact(anchor_object):
  *                     anchor_object = PyUnicode_AsUTF8String(anchor_object)
  *                 if not PyString_CheckExact(anchor_object):             # <<<<<<<<<<<<<<
@@ -16271,7 +16271,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
       __pyx_t_2 = ((!(PyString_CheckExact(__pyx_v_anchor_object) != 0)) != 0);
       if (__pyx_t_2) {
 
-        /* "_yaml.pyx":1166
+        /* "_ruamel_yaml.pyx":1166
  *                     anchor_object = PyUnicode_AsUTF8String(anchor_object)
  *                 if not PyString_CheckExact(anchor_object):
  *                     if PY_MAJOR_VERSION < 3:             # <<<<<<<<<<<<<<
@@ -16281,7 +16281,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
         __pyx_t_2 = ((PY_MAJOR_VERSION < 3) != 0);
         if (__pyx_t_2) {
 
-          /* "_yaml.pyx":1167
+          /* "_ruamel_yaml.pyx":1167
  *                 if not PyString_CheckExact(anchor_object):
  *                     if PY_MAJOR_VERSION < 3:
  *                         raise TypeError("anchor must be a string")             # <<<<<<<<<<<<<<
@@ -16294,7 +16294,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
           __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
           {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1167; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-          /* "_yaml.pyx":1166
+          /* "_ruamel_yaml.pyx":1166
  *                     anchor_object = PyUnicode_AsUTF8String(anchor_object)
  *                 if not PyString_CheckExact(anchor_object):
  *                     if PY_MAJOR_VERSION < 3:             # <<<<<<<<<<<<<<
@@ -16303,7 +16303,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
  */
         }
 
-        /* "_yaml.pyx":1169
+        /* "_ruamel_yaml.pyx":1169
  *                         raise TypeError("anchor must be a string")
  *                     else:
  *                         raise TypeError(u"anchor must be a string")             # <<<<<<<<<<<<<<
@@ -16318,7 +16318,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
           {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1169; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         }
 
-        /* "_yaml.pyx":1165
+        /* "_ruamel_yaml.pyx":1165
  *                 if PyUnicode_CheckExact(anchor_object):
  *                     anchor_object = PyUnicode_AsUTF8String(anchor_object)
  *                 if not PyString_CheckExact(anchor_object):             # <<<<<<<<<<<<<<
@@ -16327,7 +16327,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
  */
       }
 
-      /* "_yaml.pyx":1170
+      /* "_ruamel_yaml.pyx":1170
  *                     else:
  *                         raise TypeError(u"anchor must be a string")
  *                 anchor = PyString_AS_STRING(anchor_object)             # <<<<<<<<<<<<<<
@@ -16336,7 +16336,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
  */
       __pyx_v_anchor = PyString_AS_STRING(__pyx_v_anchor_object);
 
-      /* "_yaml.pyx":1162
+      /* "_ruamel_yaml.pyx":1162
  *             anchor = NULL
  *             anchor_object = event_object.anchor
  *             if anchor_object is not None:             # <<<<<<<<<<<<<<
@@ -16345,7 +16345,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
  */
     }
 
-    /* "_yaml.pyx":1171
+    /* "_ruamel_yaml.pyx":1171
  *                         raise TypeError(u"anchor must be a string")
  *                 anchor = PyString_AS_STRING(anchor_object)
  *             tag = NULL             # <<<<<<<<<<<<<<
@@ -16354,7 +16354,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
  */
     __pyx_v_tag = NULL;
 
-    /* "_yaml.pyx":1172
+    /* "_ruamel_yaml.pyx":1172
  *                 anchor = PyString_AS_STRING(anchor_object)
  *             tag = NULL
  *             tag_object = event_object.tag             # <<<<<<<<<<<<<<
@@ -16366,7 +16366,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
     __pyx_v_tag_object = __pyx_t_4;
     __pyx_t_4 = 0;
 
-    /* "_yaml.pyx":1173
+    /* "_ruamel_yaml.pyx":1173
  *             tag = NULL
  *             tag_object = event_object.tag
  *             if tag_object is not None:             # <<<<<<<<<<<<<<
@@ -16377,7 +16377,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
     __pyx_t_3 = (__pyx_t_2 != 0);
     if (__pyx_t_3) {
 
-      /* "_yaml.pyx":1174
+      /* "_ruamel_yaml.pyx":1174
  *             tag_object = event_object.tag
  *             if tag_object is not None:
  *                 if PyUnicode_CheckExact(tag_object):             # <<<<<<<<<<<<<<
@@ -16387,7 +16387,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
       __pyx_t_3 = (PyUnicode_CheckExact(__pyx_v_tag_object) != 0);
       if (__pyx_t_3) {
 
-        /* "_yaml.pyx":1175
+        /* "_ruamel_yaml.pyx":1175
  *             if tag_object is not None:
  *                 if PyUnicode_CheckExact(tag_object):
  *                     tag_object = PyUnicode_AsUTF8String(tag_object)             # <<<<<<<<<<<<<<
@@ -16399,7 +16399,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
         __Pyx_DECREF_SET(__pyx_v_tag_object, __pyx_t_4);
         __pyx_t_4 = 0;
 
-        /* "_yaml.pyx":1174
+        /* "_ruamel_yaml.pyx":1174
  *             tag_object = event_object.tag
  *             if tag_object is not None:
  *                 if PyUnicode_CheckExact(tag_object):             # <<<<<<<<<<<<<<
@@ -16408,7 +16408,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
  */
       }
 
-      /* "_yaml.pyx":1176
+      /* "_ruamel_yaml.pyx":1176
  *                 if PyUnicode_CheckExact(tag_object):
  *                     tag_object = PyUnicode_AsUTF8String(tag_object)
  *                 if not PyString_CheckExact(tag_object):             # <<<<<<<<<<<<<<
@@ -16418,7 +16418,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
       __pyx_t_3 = ((!(PyString_CheckExact(__pyx_v_tag_object) != 0)) != 0);
       if (__pyx_t_3) {
 
-        /* "_yaml.pyx":1177
+        /* "_ruamel_yaml.pyx":1177
  *                     tag_object = PyUnicode_AsUTF8String(tag_object)
  *                 if not PyString_CheckExact(tag_object):
  *                     if PY_MAJOR_VERSION < 3:             # <<<<<<<<<<<<<<
@@ -16428,7 +16428,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
         __pyx_t_3 = ((PY_MAJOR_VERSION < 3) != 0);
         if (__pyx_t_3) {
 
-          /* "_yaml.pyx":1178
+          /* "_ruamel_yaml.pyx":1178
  *                 if not PyString_CheckExact(tag_object):
  *                     if PY_MAJOR_VERSION < 3:
  *                         raise TypeError("tag must be a string")             # <<<<<<<<<<<<<<
@@ -16441,7 +16441,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
           __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
           {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1178; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-          /* "_yaml.pyx":1177
+          /* "_ruamel_yaml.pyx":1177
  *                     tag_object = PyUnicode_AsUTF8String(tag_object)
  *                 if not PyString_CheckExact(tag_object):
  *                     if PY_MAJOR_VERSION < 3:             # <<<<<<<<<<<<<<
@@ -16450,7 +16450,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
  */
         }
 
-        /* "_yaml.pyx":1180
+        /* "_ruamel_yaml.pyx":1180
  *                         raise TypeError("tag must be a string")
  *                     else:
  *                         raise TypeError(u"tag must be a string")             # <<<<<<<<<<<<<<
@@ -16465,7 +16465,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
           {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1180; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         }
 
-        /* "_yaml.pyx":1176
+        /* "_ruamel_yaml.pyx":1176
  *                 if PyUnicode_CheckExact(tag_object):
  *                     tag_object = PyUnicode_AsUTF8String(tag_object)
  *                 if not PyString_CheckExact(tag_object):             # <<<<<<<<<<<<<<
@@ -16474,7 +16474,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
  */
       }
 
-      /* "_yaml.pyx":1181
+      /* "_ruamel_yaml.pyx":1181
  *                     else:
  *                         raise TypeError(u"tag must be a string")
  *                 tag = PyString_AS_STRING(tag_object)             # <<<<<<<<<<<<<<
@@ -16483,7 +16483,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
  */
       __pyx_v_tag = PyString_AS_STRING(__pyx_v_tag_object);
 
-      /* "_yaml.pyx":1173
+      /* "_ruamel_yaml.pyx":1173
  *             tag = NULL
  *             tag_object = event_object.tag
  *             if tag_object is not None:             # <<<<<<<<<<<<<<
@@ -16492,7 +16492,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
  */
     }
 
-    /* "_yaml.pyx":1182
+    /* "_ruamel_yaml.pyx":1182
  *                         raise TypeError(u"tag must be a string")
  *                 tag = PyString_AS_STRING(tag_object)
  *             implicit = 0             # <<<<<<<<<<<<<<
@@ -16501,7 +16501,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
  */
     __pyx_v_implicit = 0;
 
-    /* "_yaml.pyx":1183
+    /* "_ruamel_yaml.pyx":1183
  *                 tag = PyString_AS_STRING(tag_object)
  *             implicit = 0
  *             if event_object.implicit:             # <<<<<<<<<<<<<<
@@ -16514,7 +16514,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     if (__pyx_t_3) {
 
-      /* "_yaml.pyx":1184
+      /* "_ruamel_yaml.pyx":1184
  *             implicit = 0
  *             if event_object.implicit:
  *                 implicit = 1             # <<<<<<<<<<<<<<
@@ -16523,7 +16523,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
  */
       __pyx_v_implicit = 1;
 
-      /* "_yaml.pyx":1183
+      /* "_ruamel_yaml.pyx":1183
  *                 tag = PyString_AS_STRING(tag_object)
  *             implicit = 0
  *             if event_object.implicit:             # <<<<<<<<<<<<<<
@@ -16532,7 +16532,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
  */
     }
 
-    /* "_yaml.pyx":1185
+    /* "_ruamel_yaml.pyx":1185
  *             if event_object.implicit:
  *                 implicit = 1
  *             sequence_style = YAML_BLOCK_SEQUENCE_STYLE             # <<<<<<<<<<<<<<
@@ -16541,7 +16541,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
  */
     __pyx_v_sequence_style = YAML_BLOCK_SEQUENCE_STYLE;
 
-    /* "_yaml.pyx":1186
+    /* "_ruamel_yaml.pyx":1186
  *                 implicit = 1
  *             sequence_style = YAML_BLOCK_SEQUENCE_STYLE
  *             if event_object.flow_style:             # <<<<<<<<<<<<<<
@@ -16554,7 +16554,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     if (__pyx_t_3) {
 
-      /* "_yaml.pyx":1187
+      /* "_ruamel_yaml.pyx":1187
  *             sequence_style = YAML_BLOCK_SEQUENCE_STYLE
  *             if event_object.flow_style:
  *                 sequence_style = YAML_FLOW_SEQUENCE_STYLE             # <<<<<<<<<<<<<<
@@ -16563,7 +16563,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
  */
       __pyx_v_sequence_style = YAML_FLOW_SEQUENCE_STYLE;
 
-      /* "_yaml.pyx":1186
+      /* "_ruamel_yaml.pyx":1186
  *                 implicit = 1
  *             sequence_style = YAML_BLOCK_SEQUENCE_STYLE
  *             if event_object.flow_style:             # <<<<<<<<<<<<<<
@@ -16572,7 +16572,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
  */
     }
 
-    /* "_yaml.pyx":1189
+    /* "_ruamel_yaml.pyx":1189
  *                 sequence_style = YAML_FLOW_SEQUENCE_STYLE
  *             if yaml_sequence_start_event_initialize(event, anchor, tag,
  *                     implicit, sequence_style) == 0:             # <<<<<<<<<<<<<<
@@ -16581,7 +16581,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
  */
     __pyx_t_3 = ((yaml_sequence_start_event_initialize(__pyx_v_event, __pyx_v_anchor, __pyx_v_tag, __pyx_v_implicit, __pyx_v_sequence_style) == 0) != 0);
 
-    /* "_yaml.pyx":1188
+    /* "_ruamel_yaml.pyx":1188
  *             if event_object.flow_style:
  *                 sequence_style = YAML_FLOW_SEQUENCE_STYLE
  *             if yaml_sequence_start_event_initialize(event, anchor, tag,             # <<<<<<<<<<<<<<
@@ -16590,7 +16590,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
  */
     if (__pyx_t_3) {
 
-      /* "_yaml.pyx":1190
+      /* "_ruamel_yaml.pyx":1190
  *             if yaml_sequence_start_event_initialize(event, anchor, tag,
  *                     implicit, sequence_style) == 0:
  *                 raise MemoryError             # <<<<<<<<<<<<<<
@@ -16599,7 +16599,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
  */
       PyErr_NoMemory(); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1190; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-      /* "_yaml.pyx":1188
+      /* "_ruamel_yaml.pyx":1188
  *             if event_object.flow_style:
  *                 sequence_style = YAML_FLOW_SEQUENCE_STYLE
  *             if yaml_sequence_start_event_initialize(event, anchor, tag,             # <<<<<<<<<<<<<<
@@ -16608,7 +16608,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
  */
     }
 
-    /* "_yaml.pyx":1159
+    /* "_ruamel_yaml.pyx":1159
  *                     plain_implicit, quoted_implicit, scalar_style) == 0:
  *                 raise MemoryError
  *         elif event_class is SequenceStartEvent:             # <<<<<<<<<<<<<<
@@ -16618,7 +16618,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
     goto __pyx_L3;
   }
 
-  /* "_yaml.pyx":1191
+  /* "_ruamel_yaml.pyx":1191
  *                     implicit, sequence_style) == 0:
  *                 raise MemoryError
  *         elif event_class is MappingStartEvent:             # <<<<<<<<<<<<<<
@@ -16632,7 +16632,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
   __pyx_t_2 = (__pyx_t_3 != 0);
   if (__pyx_t_2) {
 
-    /* "_yaml.pyx":1192
+    /* "_ruamel_yaml.pyx":1192
  *                 raise MemoryError
  *         elif event_class is MappingStartEvent:
  *             anchor = NULL             # <<<<<<<<<<<<<<
@@ -16641,7 +16641,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
  */
     __pyx_v_anchor = NULL;
 
-    /* "_yaml.pyx":1193
+    /* "_ruamel_yaml.pyx":1193
  *         elif event_class is MappingStartEvent:
  *             anchor = NULL
  *             anchor_object = event_object.anchor             # <<<<<<<<<<<<<<
@@ -16653,7 +16653,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
     __pyx_v_anchor_object = __pyx_t_4;
     __pyx_t_4 = 0;
 
-    /* "_yaml.pyx":1194
+    /* "_ruamel_yaml.pyx":1194
  *             anchor = NULL
  *             anchor_object = event_object.anchor
  *             if anchor_object is not None:             # <<<<<<<<<<<<<<
@@ -16664,7 +16664,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
     __pyx_t_3 = (__pyx_t_2 != 0);
     if (__pyx_t_3) {
 
-      /* "_yaml.pyx":1195
+      /* "_ruamel_yaml.pyx":1195
  *             anchor_object = event_object.anchor
  *             if anchor_object is not None:
  *                 if PyUnicode_CheckExact(anchor_object):             # <<<<<<<<<<<<<<
@@ -16674,7 +16674,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
       __pyx_t_3 = (PyUnicode_CheckExact(__pyx_v_anchor_object) != 0);
       if (__pyx_t_3) {
 
-        /* "_yaml.pyx":1196
+        /* "_ruamel_yaml.pyx":1196
  *             if anchor_object is not None:
  *                 if PyUnicode_CheckExact(anchor_object):
  *                     anchor_object = PyUnicode_AsUTF8String(anchor_object)             # <<<<<<<<<<<<<<
@@ -16686,7 +16686,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
         __Pyx_DECREF_SET(__pyx_v_anchor_object, __pyx_t_4);
         __pyx_t_4 = 0;
 
-        /* "_yaml.pyx":1195
+        /* "_ruamel_yaml.pyx":1195
  *             anchor_object = event_object.anchor
  *             if anchor_object is not None:
  *                 if PyUnicode_CheckExact(anchor_object):             # <<<<<<<<<<<<<<
@@ -16695,7 +16695,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
  */
       }
 
-      /* "_yaml.pyx":1197
+      /* "_ruamel_yaml.pyx":1197
  *                 if PyUnicode_CheckExact(anchor_object):
  *                     anchor_object = PyUnicode_AsUTF8String(anchor_object)
  *                 if not PyString_CheckExact(anchor_object):             # <<<<<<<<<<<<<<
@@ -16705,7 +16705,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
       __pyx_t_3 = ((!(PyString_CheckExact(__pyx_v_anchor_object) != 0)) != 0);
       if (__pyx_t_3) {
 
-        /* "_yaml.pyx":1198
+        /* "_ruamel_yaml.pyx":1198
  *                     anchor_object = PyUnicode_AsUTF8String(anchor_object)
  *                 if not PyString_CheckExact(anchor_object):
  *                     if PY_MAJOR_VERSION < 3:             # <<<<<<<<<<<<<<
@@ -16715,7 +16715,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
         __pyx_t_3 = ((PY_MAJOR_VERSION < 3) != 0);
         if (__pyx_t_3) {
 
-          /* "_yaml.pyx":1199
+          /* "_ruamel_yaml.pyx":1199
  *                 if not PyString_CheckExact(anchor_object):
  *                     if PY_MAJOR_VERSION < 3:
  *                         raise TypeError("anchor must be a string")             # <<<<<<<<<<<<<<
@@ -16728,7 +16728,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
           __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
           {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1199; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-          /* "_yaml.pyx":1198
+          /* "_ruamel_yaml.pyx":1198
  *                     anchor_object = PyUnicode_AsUTF8String(anchor_object)
  *                 if not PyString_CheckExact(anchor_object):
  *                     if PY_MAJOR_VERSION < 3:             # <<<<<<<<<<<<<<
@@ -16737,7 +16737,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
  */
         }
 
-        /* "_yaml.pyx":1201
+        /* "_ruamel_yaml.pyx":1201
  *                         raise TypeError("anchor must be a string")
  *                     else:
  *                         raise TypeError(u"anchor must be a string")             # <<<<<<<<<<<<<<
@@ -16752,7 +16752,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
           {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1201; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         }
 
-        /* "_yaml.pyx":1197
+        /* "_ruamel_yaml.pyx":1197
  *                 if PyUnicode_CheckExact(anchor_object):
  *                     anchor_object = PyUnicode_AsUTF8String(anchor_object)
  *                 if not PyString_CheckExact(anchor_object):             # <<<<<<<<<<<<<<
@@ -16761,7 +16761,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
  */
       }
 
-      /* "_yaml.pyx":1202
+      /* "_ruamel_yaml.pyx":1202
  *                     else:
  *                         raise TypeError(u"anchor must be a string")
  *                 anchor = PyString_AS_STRING(anchor_object)             # <<<<<<<<<<<<<<
@@ -16770,7 +16770,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
  */
       __pyx_v_anchor = PyString_AS_STRING(__pyx_v_anchor_object);
 
-      /* "_yaml.pyx":1194
+      /* "_ruamel_yaml.pyx":1194
  *             anchor = NULL
  *             anchor_object = event_object.anchor
  *             if anchor_object is not None:             # <<<<<<<<<<<<<<
@@ -16779,7 +16779,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
  */
     }
 
-    /* "_yaml.pyx":1203
+    /* "_ruamel_yaml.pyx":1203
  *                         raise TypeError(u"anchor must be a string")
  *                 anchor = PyString_AS_STRING(anchor_object)
  *             tag = NULL             # <<<<<<<<<<<<<<
@@ -16788,7 +16788,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
  */
     __pyx_v_tag = NULL;
 
-    /* "_yaml.pyx":1204
+    /* "_ruamel_yaml.pyx":1204
  *                 anchor = PyString_AS_STRING(anchor_object)
  *             tag = NULL
  *             tag_object = event_object.tag             # <<<<<<<<<<<<<<
@@ -16800,7 +16800,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
     __pyx_v_tag_object = __pyx_t_4;
     __pyx_t_4 = 0;
 
-    /* "_yaml.pyx":1205
+    /* "_ruamel_yaml.pyx":1205
  *             tag = NULL
  *             tag_object = event_object.tag
  *             if tag_object is not None:             # <<<<<<<<<<<<<<
@@ -16811,7 +16811,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
     __pyx_t_2 = (__pyx_t_3 != 0);
     if (__pyx_t_2) {
 
-      /* "_yaml.pyx":1206
+      /* "_ruamel_yaml.pyx":1206
  *             tag_object = event_object.tag
  *             if tag_object is not None:
  *                 if PyUnicode_CheckExact(tag_object):             # <<<<<<<<<<<<<<
@@ -16821,7 +16821,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
       __pyx_t_2 = (PyUnicode_CheckExact(__pyx_v_tag_object) != 0);
       if (__pyx_t_2) {
 
-        /* "_yaml.pyx":1207
+        /* "_ruamel_yaml.pyx":1207
  *             if tag_object is not None:
  *                 if PyUnicode_CheckExact(tag_object):
  *                     tag_object = PyUnicode_AsUTF8String(tag_object)             # <<<<<<<<<<<<<<
@@ -16833,7 +16833,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
         __Pyx_DECREF_SET(__pyx_v_tag_object, __pyx_t_4);
         __pyx_t_4 = 0;
 
-        /* "_yaml.pyx":1206
+        /* "_ruamel_yaml.pyx":1206
  *             tag_object = event_object.tag
  *             if tag_object is not None:
  *                 if PyUnicode_CheckExact(tag_object):             # <<<<<<<<<<<<<<
@@ -16842,7 +16842,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
  */
       }
 
-      /* "_yaml.pyx":1208
+      /* "_ruamel_yaml.pyx":1208
  *                 if PyUnicode_CheckExact(tag_object):
  *                     tag_object = PyUnicode_AsUTF8String(tag_object)
  *                 if not PyString_CheckExact(tag_object):             # <<<<<<<<<<<<<<
@@ -16852,7 +16852,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
       __pyx_t_2 = ((!(PyString_CheckExact(__pyx_v_tag_object) != 0)) != 0);
       if (__pyx_t_2) {
 
-        /* "_yaml.pyx":1209
+        /* "_ruamel_yaml.pyx":1209
  *                     tag_object = PyUnicode_AsUTF8String(tag_object)
  *                 if not PyString_CheckExact(tag_object):
  *                     if PY_MAJOR_VERSION < 3:             # <<<<<<<<<<<<<<
@@ -16862,7 +16862,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
         __pyx_t_2 = ((PY_MAJOR_VERSION < 3) != 0);
         if (__pyx_t_2) {
 
-          /* "_yaml.pyx":1210
+          /* "_ruamel_yaml.pyx":1210
  *                 if not PyString_CheckExact(tag_object):
  *                     if PY_MAJOR_VERSION < 3:
  *                         raise TypeError("tag must be a string")             # <<<<<<<<<<<<<<
@@ -16875,7 +16875,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
           __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
           {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1210; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-          /* "_yaml.pyx":1209
+          /* "_ruamel_yaml.pyx":1209
  *                     tag_object = PyUnicode_AsUTF8String(tag_object)
  *                 if not PyString_CheckExact(tag_object):
  *                     if PY_MAJOR_VERSION < 3:             # <<<<<<<<<<<<<<
@@ -16884,7 +16884,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
  */
         }
 
-        /* "_yaml.pyx":1212
+        /* "_ruamel_yaml.pyx":1212
  *                         raise TypeError("tag must be a string")
  *                     else:
  *                         raise TypeError(u"tag must be a string")             # <<<<<<<<<<<<<<
@@ -16899,7 +16899,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
           {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1212; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         }
 
-        /* "_yaml.pyx":1208
+        /* "_ruamel_yaml.pyx":1208
  *                 if PyUnicode_CheckExact(tag_object):
  *                     tag_object = PyUnicode_AsUTF8String(tag_object)
  *                 if not PyString_CheckExact(tag_object):             # <<<<<<<<<<<<<<
@@ -16908,7 +16908,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
  */
       }
 
-      /* "_yaml.pyx":1213
+      /* "_ruamel_yaml.pyx":1213
  *                     else:
  *                         raise TypeError(u"tag must be a string")
  *                 tag = PyString_AS_STRING(tag_object)             # <<<<<<<<<<<<<<
@@ -16917,7 +16917,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
  */
       __pyx_v_tag = PyString_AS_STRING(__pyx_v_tag_object);
 
-      /* "_yaml.pyx":1205
+      /* "_ruamel_yaml.pyx":1205
  *             tag = NULL
  *             tag_object = event_object.tag
  *             if tag_object is not None:             # <<<<<<<<<<<<<<
@@ -16926,7 +16926,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
  */
     }
 
-    /* "_yaml.pyx":1214
+    /* "_ruamel_yaml.pyx":1214
  *                         raise TypeError(u"tag must be a string")
  *                 tag = PyString_AS_STRING(tag_object)
  *             implicit = 0             # <<<<<<<<<<<<<<
@@ -16935,7 +16935,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
  */
     __pyx_v_implicit = 0;
 
-    /* "_yaml.pyx":1215
+    /* "_ruamel_yaml.pyx":1215
  *                 tag = PyString_AS_STRING(tag_object)
  *             implicit = 0
  *             if event_object.implicit:             # <<<<<<<<<<<<<<
@@ -16948,7 +16948,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     if (__pyx_t_2) {
 
-      /* "_yaml.pyx":1216
+      /* "_ruamel_yaml.pyx":1216
  *             implicit = 0
  *             if event_object.implicit:
  *                 implicit = 1             # <<<<<<<<<<<<<<
@@ -16957,7 +16957,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
  */
       __pyx_v_implicit = 1;
 
-      /* "_yaml.pyx":1215
+      /* "_ruamel_yaml.pyx":1215
  *                 tag = PyString_AS_STRING(tag_object)
  *             implicit = 0
  *             if event_object.implicit:             # <<<<<<<<<<<<<<
@@ -16966,7 +16966,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
  */
     }
 
-    /* "_yaml.pyx":1217
+    /* "_ruamel_yaml.pyx":1217
  *             if event_object.implicit:
  *                 implicit = 1
  *             mapping_style = YAML_BLOCK_MAPPING_STYLE             # <<<<<<<<<<<<<<
@@ -16975,7 +16975,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
  */
     __pyx_v_mapping_style = YAML_BLOCK_MAPPING_STYLE;
 
-    /* "_yaml.pyx":1218
+    /* "_ruamel_yaml.pyx":1218
  *                 implicit = 1
  *             mapping_style = YAML_BLOCK_MAPPING_STYLE
  *             if event_object.flow_style:             # <<<<<<<<<<<<<<
@@ -16988,7 +16988,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     if (__pyx_t_2) {
 
-      /* "_yaml.pyx":1219
+      /* "_ruamel_yaml.pyx":1219
  *             mapping_style = YAML_BLOCK_MAPPING_STYLE
  *             if event_object.flow_style:
  *                 mapping_style = YAML_FLOW_MAPPING_STYLE             # <<<<<<<<<<<<<<
@@ -16997,7 +16997,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
  */
       __pyx_v_mapping_style = YAML_FLOW_MAPPING_STYLE;
 
-      /* "_yaml.pyx":1218
+      /* "_ruamel_yaml.pyx":1218
  *                 implicit = 1
  *             mapping_style = YAML_BLOCK_MAPPING_STYLE
  *             if event_object.flow_style:             # <<<<<<<<<<<<<<
@@ -17006,7 +17006,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
  */
     }
 
-    /* "_yaml.pyx":1221
+    /* "_ruamel_yaml.pyx":1221
  *                 mapping_style = YAML_FLOW_MAPPING_STYLE
  *             if yaml_mapping_start_event_initialize(event, anchor, tag,
  *                     implicit, mapping_style) == 0:             # <<<<<<<<<<<<<<
@@ -17015,7 +17015,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
  */
     __pyx_t_2 = ((yaml_mapping_start_event_initialize(__pyx_v_event, __pyx_v_anchor, __pyx_v_tag, __pyx_v_implicit, __pyx_v_mapping_style) == 0) != 0);
 
-    /* "_yaml.pyx":1220
+    /* "_ruamel_yaml.pyx":1220
  *             if event_object.flow_style:
  *                 mapping_style = YAML_FLOW_MAPPING_STYLE
  *             if yaml_mapping_start_event_initialize(event, anchor, tag,             # <<<<<<<<<<<<<<
@@ -17024,7 +17024,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
  */
     if (__pyx_t_2) {
 
-      /* "_yaml.pyx":1222
+      /* "_ruamel_yaml.pyx":1222
  *             if yaml_mapping_start_event_initialize(event, anchor, tag,
  *                     implicit, mapping_style) == 0:
  *                 raise MemoryError             # <<<<<<<<<<<<<<
@@ -17033,7 +17033,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
  */
       PyErr_NoMemory(); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1222; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-      /* "_yaml.pyx":1220
+      /* "_ruamel_yaml.pyx":1220
  *             if event_object.flow_style:
  *                 mapping_style = YAML_FLOW_MAPPING_STYLE
  *             if yaml_mapping_start_event_initialize(event, anchor, tag,             # <<<<<<<<<<<<<<
@@ -17042,7 +17042,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
  */
     }
 
-    /* "_yaml.pyx":1191
+    /* "_ruamel_yaml.pyx":1191
  *                     implicit, sequence_style) == 0:
  *                 raise MemoryError
  *         elif event_class is MappingStartEvent:             # <<<<<<<<<<<<<<
@@ -17052,7 +17052,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
     goto __pyx_L3;
   }
 
-  /* "_yaml.pyx":1223
+  /* "_ruamel_yaml.pyx":1223
  *                     implicit, mapping_style) == 0:
  *                 raise MemoryError
  *         elif event_class is SequenceEndEvent:             # <<<<<<<<<<<<<<
@@ -17066,7 +17066,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
   __pyx_t_3 = (__pyx_t_2 != 0);
   if (__pyx_t_3) {
 
-    /* "_yaml.pyx":1224
+    /* "_ruamel_yaml.pyx":1224
  *                 raise MemoryError
  *         elif event_class is SequenceEndEvent:
  *             yaml_sequence_end_event_initialize(event)             # <<<<<<<<<<<<<<
@@ -17075,7 +17075,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
  */
     yaml_sequence_end_event_initialize(__pyx_v_event);
 
-    /* "_yaml.pyx":1223
+    /* "_ruamel_yaml.pyx":1223
  *                     implicit, mapping_style) == 0:
  *                 raise MemoryError
  *         elif event_class is SequenceEndEvent:             # <<<<<<<<<<<<<<
@@ -17085,7 +17085,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
     goto __pyx_L3;
   }
 
-  /* "_yaml.pyx":1225
+  /* "_ruamel_yaml.pyx":1225
  *         elif event_class is SequenceEndEvent:
  *             yaml_sequence_end_event_initialize(event)
  *         elif event_class is MappingEndEvent:             # <<<<<<<<<<<<<<
@@ -17099,7 +17099,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
   __pyx_t_2 = (__pyx_t_3 != 0);
   if (__pyx_t_2) {
 
-    /* "_yaml.pyx":1226
+    /* "_ruamel_yaml.pyx":1226
  *             yaml_sequence_end_event_initialize(event)
  *         elif event_class is MappingEndEvent:
  *             yaml_mapping_end_event_initialize(event)             # <<<<<<<<<<<<<<
@@ -17108,7 +17108,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
  */
     yaml_mapping_end_event_initialize(__pyx_v_event);
 
-    /* "_yaml.pyx":1225
+    /* "_ruamel_yaml.pyx":1225
  *         elif event_class is SequenceEndEvent:
  *             yaml_sequence_end_event_initialize(event)
  *         elif event_class is MappingEndEvent:             # <<<<<<<<<<<<<<
@@ -17118,7 +17118,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
     goto __pyx_L3;
   }
 
-  /* "_yaml.pyx":1228
+  /* "_ruamel_yaml.pyx":1228
  *             yaml_mapping_end_event_initialize(event)
  *         else:
  *             if PY_MAJOR_VERSION < 3:             # <<<<<<<<<<<<<<
@@ -17129,7 +17129,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
     __pyx_t_2 = ((PY_MAJOR_VERSION < 3) != 0);
     if (__pyx_t_2) {
 
-      /* "_yaml.pyx":1229
+      /* "_ruamel_yaml.pyx":1229
  *         else:
  *             if PY_MAJOR_VERSION < 3:
  *                 raise TypeError("invalid event %s" % event_object)             # <<<<<<<<<<<<<<
@@ -17150,7 +17150,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
       {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1229; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-      /* "_yaml.pyx":1228
+      /* "_ruamel_yaml.pyx":1228
  *             yaml_mapping_end_event_initialize(event)
  *         else:
  *             if PY_MAJOR_VERSION < 3:             # <<<<<<<<<<<<<<
@@ -17159,7 +17159,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
  */
     }
 
-    /* "_yaml.pyx":1231
+    /* "_ruamel_yaml.pyx":1231
  *                 raise TypeError("invalid event %s" % event_object)
  *             else:
  *                 raise TypeError(u"invalid event %s" % event_object)             # <<<<<<<<<<<<<<
@@ -17184,7 +17184,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
   }
   __pyx_L3:;
 
-  /* "_yaml.pyx":1232
+  /* "_ruamel_yaml.pyx":1232
  *             else:
  *                 raise TypeError(u"invalid event %s" % event_object)
  *         return 1             # <<<<<<<<<<<<<<
@@ -17194,7 +17194,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
   __pyx_r = 1;
   goto __pyx_L0;
 
-  /* "_yaml.pyx":1015
+  /* "_ruamel_yaml.pyx":1015
  *             raise ValueError(u"no emitter error")
  * 
  *     cdef int _object_to_event(self, object event_object, yaml_event_t *event) except 0:             # <<<<<<<<<<<<<<
@@ -17207,7 +17207,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
   __Pyx_XDECREF(__pyx_t_1);
   __Pyx_XDECREF(__pyx_t_4);
   __Pyx_XDECREF(__pyx_t_8);
-  __Pyx_AddTraceback("_yaml.CEmitter._object_to_event", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("_ruamel_yaml.CEmitter._object_to_event", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = 0;
   __pyx_L0:;
   __Pyx_XDECREF(__pyx_v_event_class);
@@ -17222,7 +17222,7 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
   return __pyx_r;
 }
 
-/* "_yaml.pyx":1234
+/* "_ruamel_yaml.pyx":1234
  *         return 1
  * 
  *     def emit(self, event_object):             # <<<<<<<<<<<<<<
@@ -17231,19 +17231,19 @@ static int __pyx_f_5_yaml_8CEmitter__object_to_event(struct __pyx_obj_5_yaml_CEm
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_5_yaml_8CEmitter_7emit(PyObject *__pyx_v_self, PyObject *__pyx_v_event_object); /*proto*/
-static PyObject *__pyx_pw_5_yaml_8CEmitter_7emit(PyObject *__pyx_v_self, PyObject *__pyx_v_event_object) {
+static PyObject *__pyx_pw_12_ruamel_yaml_8CEmitter_7emit(PyObject *__pyx_v_self, PyObject *__pyx_v_event_object); /*proto*/
+static PyObject *__pyx_pw_12_ruamel_yaml_8CEmitter_7emit(PyObject *__pyx_v_self, PyObject *__pyx_v_event_object) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("emit (wrapper)", 0);
-  __pyx_r = __pyx_pf_5_yaml_8CEmitter_6emit(((struct __pyx_obj_5_yaml_CEmitter *)__pyx_v_self), ((PyObject *)__pyx_v_event_object));
+  __pyx_r = __pyx_pf_12_ruamel_yaml_8CEmitter_6emit(((struct __pyx_obj_12_ruamel_yaml_CEmitter *)__pyx_v_self), ((PyObject *)__pyx_v_event_object));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_5_yaml_8CEmitter_6emit(struct __pyx_obj_5_yaml_CEmitter *__pyx_v_self, PyObject *__pyx_v_event_object) {
+static PyObject *__pyx_pf_12_ruamel_yaml_8CEmitter_6emit(struct __pyx_obj_12_ruamel_yaml_CEmitter *__pyx_v_self, PyObject *__pyx_v_event_object) {
   yaml_event_t __pyx_v_event;
   PyObject *__pyx_v_error = NULL;
   PyObject *__pyx_r = NULL;
@@ -17256,16 +17256,16 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_6emit(struct __pyx_obj_5_yaml_CEmitte
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("emit", 0);
 
-  /* "_yaml.pyx":1236
+  /* "_ruamel_yaml.pyx":1236
  *     def emit(self, event_object):
  *         cdef yaml_event_t event
  *         self._object_to_event(event_object, &event)             # <<<<<<<<<<<<<<
  *         if yaml_emitter_emit(&self.emitter, &event) == 0:
  *             error = self._emitter_error()
  */
-  __pyx_t_1 = ((struct __pyx_vtabstruct_5_yaml_CEmitter *)__pyx_v_self->__pyx_vtab)->_object_to_event(__pyx_v_self, __pyx_v_event_object, (&__pyx_v_event)); if (unlikely(__pyx_t_1 == 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1236; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = ((struct __pyx_vtabstruct_12_ruamel_yaml_CEmitter *)__pyx_v_self->__pyx_vtab)->_object_to_event(__pyx_v_self, __pyx_v_event_object, (&__pyx_v_event)); if (unlikely(__pyx_t_1 == 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1236; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-  /* "_yaml.pyx":1237
+  /* "_ruamel_yaml.pyx":1237
  *         cdef yaml_event_t event
  *         self._object_to_event(event_object, &event)
  *         if yaml_emitter_emit(&self.emitter, &event) == 0:             # <<<<<<<<<<<<<<
@@ -17276,19 +17276,19 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_6emit(struct __pyx_obj_5_yaml_CEmitte
   __pyx_t_2 = ((__pyx_t_1 == 0) != 0);
   if (__pyx_t_2) {
 
-    /* "_yaml.pyx":1238
+    /* "_ruamel_yaml.pyx":1238
  *         self._object_to_event(event_object, &event)
  *         if yaml_emitter_emit(&self.emitter, &event) == 0:
  *             error = self._emitter_error()             # <<<<<<<<<<<<<<
  *             raise error
  * 
  */
-    __pyx_t_3 = ((struct __pyx_vtabstruct_5_yaml_CEmitter *)__pyx_v_self->__pyx_vtab)->_emitter_error(__pyx_v_self); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1238; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_3 = ((struct __pyx_vtabstruct_12_ruamel_yaml_CEmitter *)__pyx_v_self->__pyx_vtab)->_emitter_error(__pyx_v_self); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1238; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_3);
     __pyx_v_error = __pyx_t_3;
     __pyx_t_3 = 0;
 
-    /* "_yaml.pyx":1239
+    /* "_ruamel_yaml.pyx":1239
  *         if yaml_emitter_emit(&self.emitter, &event) == 0:
  *             error = self._emitter_error()
  *             raise error             # <<<<<<<<<<<<<<
@@ -17298,7 +17298,7 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_6emit(struct __pyx_obj_5_yaml_CEmitte
     __Pyx_Raise(__pyx_v_error, 0, 0, 0);
     {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1239; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-    /* "_yaml.pyx":1237
+    /* "_ruamel_yaml.pyx":1237
  *         cdef yaml_event_t event
  *         self._object_to_event(event_object, &event)
  *         if yaml_emitter_emit(&self.emitter, &event) == 0:             # <<<<<<<<<<<<<<
@@ -17307,7 +17307,7 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_6emit(struct __pyx_obj_5_yaml_CEmitte
  */
   }
 
-  /* "_yaml.pyx":1234
+  /* "_ruamel_yaml.pyx":1234
  *         return 1
  * 
  *     def emit(self, event_object):             # <<<<<<<<<<<<<<
@@ -17320,7 +17320,7 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_6emit(struct __pyx_obj_5_yaml_CEmitte
   goto __pyx_L0;
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_3);
-  __Pyx_AddTraceback("_yaml.CEmitter.emit", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("_ruamel_yaml.CEmitter.emit", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XDECREF(__pyx_v_error);
@@ -17329,7 +17329,7 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_6emit(struct __pyx_obj_5_yaml_CEmitte
   return __pyx_r;
 }
 
-/* "_yaml.pyx":1241
+/* "_ruamel_yaml.pyx":1241
  *             raise error
  * 
  *     def open(self):             # <<<<<<<<<<<<<<
@@ -17338,19 +17338,19 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_6emit(struct __pyx_obj_5_yaml_CEmitte
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_5_yaml_8CEmitter_9open(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
-static PyObject *__pyx_pw_5_yaml_8CEmitter_9open(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
+static PyObject *__pyx_pw_12_ruamel_yaml_8CEmitter_9open(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static PyObject *__pyx_pw_12_ruamel_yaml_8CEmitter_9open(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("open (wrapper)", 0);
-  __pyx_r = __pyx_pf_5_yaml_8CEmitter_8open(((struct __pyx_obj_5_yaml_CEmitter *)__pyx_v_self));
+  __pyx_r = __pyx_pf_12_ruamel_yaml_8CEmitter_8open(((struct __pyx_obj_12_ruamel_yaml_CEmitter *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_5_yaml_8CEmitter_8open(struct __pyx_obj_5_yaml_CEmitter *__pyx_v_self) {
+static PyObject *__pyx_pf_12_ruamel_yaml_8CEmitter_8open(struct __pyx_obj_12_ruamel_yaml_CEmitter *__pyx_v_self) {
   yaml_event_t __pyx_v_event;
   yaml_encoding_t __pyx_v_encoding;
   PyObject *__pyx_v_error = NULL;
@@ -17366,7 +17366,7 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_8open(struct __pyx_obj_5_yaml_CEmitte
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("open", 0);
 
-  /* "_yaml.pyx":1244
+  /* "_ruamel_yaml.pyx":1244
  *         cdef yaml_event_t event
  *         cdef yaml_encoding_t encoding
  *         if self.closed == -1:             # <<<<<<<<<<<<<<
@@ -17376,7 +17376,7 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_8open(struct __pyx_obj_5_yaml_CEmitte
   switch (__pyx_v_self->closed) {
     case -1:
 
-    /* "_yaml.pyx":1245
+    /* "_ruamel_yaml.pyx":1245
  *         cdef yaml_encoding_t encoding
  *         if self.closed == -1:
  *             if self.use_encoding == u'utf-16-le' or self.use_encoding == 'utf-16-le':             # <<<<<<<<<<<<<<
@@ -17394,7 +17394,7 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_8open(struct __pyx_obj_5_yaml_CEmitte
     __pyx_L4_bool_binop_done:;
     if (__pyx_t_1) {
 
-      /* "_yaml.pyx":1246
+      /* "_ruamel_yaml.pyx":1246
  *         if self.closed == -1:
  *             if self.use_encoding == u'utf-16-le' or self.use_encoding == 'utf-16-le':
  *                 encoding = YAML_UTF16LE_ENCODING             # <<<<<<<<<<<<<<
@@ -17403,7 +17403,7 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_8open(struct __pyx_obj_5_yaml_CEmitte
  */
       __pyx_v_encoding = YAML_UTF16LE_ENCODING;
 
-      /* "_yaml.pyx":1245
+      /* "_ruamel_yaml.pyx":1245
  *         cdef yaml_encoding_t encoding
  *         if self.closed == -1:
  *             if self.use_encoding == u'utf-16-le' or self.use_encoding == 'utf-16-le':             # <<<<<<<<<<<<<<
@@ -17413,7 +17413,7 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_8open(struct __pyx_obj_5_yaml_CEmitte
       goto __pyx_L3;
     }
 
-    /* "_yaml.pyx":1247
+    /* "_ruamel_yaml.pyx":1247
  *             if self.use_encoding == u'utf-16-le' or self.use_encoding == 'utf-16-le':
  *                 encoding = YAML_UTF16LE_ENCODING
  *             elif self.use_encoding == u'utf-16-be' or self.use_encoding == 'utf-16-be':             # <<<<<<<<<<<<<<
@@ -17431,7 +17431,7 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_8open(struct __pyx_obj_5_yaml_CEmitte
     __pyx_L6_bool_binop_done:;
     if (__pyx_t_1) {
 
-      /* "_yaml.pyx":1248
+      /* "_ruamel_yaml.pyx":1248
  *                 encoding = YAML_UTF16LE_ENCODING
  *             elif self.use_encoding == u'utf-16-be' or self.use_encoding == 'utf-16-be':
  *                 encoding = YAML_UTF16BE_ENCODING             # <<<<<<<<<<<<<<
@@ -17440,7 +17440,7 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_8open(struct __pyx_obj_5_yaml_CEmitte
  */
       __pyx_v_encoding = YAML_UTF16BE_ENCODING;
 
-      /* "_yaml.pyx":1247
+      /* "_ruamel_yaml.pyx":1247
  *             if self.use_encoding == u'utf-16-le' or self.use_encoding == 'utf-16-le':
  *                 encoding = YAML_UTF16LE_ENCODING
  *             elif self.use_encoding == u'utf-16-be' or self.use_encoding == 'utf-16-be':             # <<<<<<<<<<<<<<
@@ -17450,7 +17450,7 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_8open(struct __pyx_obj_5_yaml_CEmitte
       goto __pyx_L3;
     }
 
-    /* "_yaml.pyx":1250
+    /* "_ruamel_yaml.pyx":1250
  *                 encoding = YAML_UTF16BE_ENCODING
  *             else:
  *                 encoding = YAML_UTF8_ENCODING             # <<<<<<<<<<<<<<
@@ -17462,7 +17462,7 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_8open(struct __pyx_obj_5_yaml_CEmitte
     }
     __pyx_L3:;
 
-    /* "_yaml.pyx":1251
+    /* "_ruamel_yaml.pyx":1251
  *             else:
  *                 encoding = YAML_UTF8_ENCODING
  *             if self.use_encoding is None:             # <<<<<<<<<<<<<<
@@ -17473,7 +17473,7 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_8open(struct __pyx_obj_5_yaml_CEmitte
     __pyx_t_2 = (__pyx_t_1 != 0);
     if (__pyx_t_2) {
 
-      /* "_yaml.pyx":1252
+      /* "_ruamel_yaml.pyx":1252
  *                 encoding = YAML_UTF8_ENCODING
  *             if self.use_encoding is None:
  *                 self.dump_unicode = 1             # <<<<<<<<<<<<<<
@@ -17482,7 +17482,7 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_8open(struct __pyx_obj_5_yaml_CEmitte
  */
       __pyx_v_self->dump_unicode = 1;
 
-      /* "_yaml.pyx":1251
+      /* "_ruamel_yaml.pyx":1251
  *             else:
  *                 encoding = YAML_UTF8_ENCODING
  *             if self.use_encoding is None:             # <<<<<<<<<<<<<<
@@ -17491,7 +17491,7 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_8open(struct __pyx_obj_5_yaml_CEmitte
  */
     }
 
-    /* "_yaml.pyx":1253
+    /* "_ruamel_yaml.pyx":1253
  *             if self.use_encoding is None:
  *                 self.dump_unicode = 1
  *             if self.dump_unicode == 1:             # <<<<<<<<<<<<<<
@@ -17501,7 +17501,7 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_8open(struct __pyx_obj_5_yaml_CEmitte
     __pyx_t_2 = ((__pyx_v_self->dump_unicode == 1) != 0);
     if (__pyx_t_2) {
 
-      /* "_yaml.pyx":1254
+      /* "_ruamel_yaml.pyx":1254
  *                 self.dump_unicode = 1
  *             if self.dump_unicode == 1:
  *                 encoding = YAML_UTF8_ENCODING             # <<<<<<<<<<<<<<
@@ -17510,7 +17510,7 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_8open(struct __pyx_obj_5_yaml_CEmitte
  */
       __pyx_v_encoding = YAML_UTF8_ENCODING;
 
-      /* "_yaml.pyx":1253
+      /* "_ruamel_yaml.pyx":1253
  *             if self.use_encoding is None:
  *                 self.dump_unicode = 1
  *             if self.dump_unicode == 1:             # <<<<<<<<<<<<<<
@@ -17519,7 +17519,7 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_8open(struct __pyx_obj_5_yaml_CEmitte
  */
     }
 
-    /* "_yaml.pyx":1255
+    /* "_ruamel_yaml.pyx":1255
  *             if self.dump_unicode == 1:
  *                 encoding = YAML_UTF8_ENCODING
  *             yaml_stream_start_event_initialize(&event, encoding)             # <<<<<<<<<<<<<<
@@ -17528,7 +17528,7 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_8open(struct __pyx_obj_5_yaml_CEmitte
  */
     yaml_stream_start_event_initialize((&__pyx_v_event), __pyx_v_encoding);
 
-    /* "_yaml.pyx":1256
+    /* "_ruamel_yaml.pyx":1256
  *                 encoding = YAML_UTF8_ENCODING
  *             yaml_stream_start_event_initialize(&event, encoding)
  *             if yaml_emitter_emit(&self.emitter, &event) == 0:             # <<<<<<<<<<<<<<
@@ -17539,19 +17539,19 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_8open(struct __pyx_obj_5_yaml_CEmitte
     __pyx_t_2 = ((__pyx_t_3 == 0) != 0);
     if (__pyx_t_2) {
 
-      /* "_yaml.pyx":1257
+      /* "_ruamel_yaml.pyx":1257
  *             yaml_stream_start_event_initialize(&event, encoding)
  *             if yaml_emitter_emit(&self.emitter, &event) == 0:
  *                 error = self._emitter_error()             # <<<<<<<<<<<<<<
  *                 raise error
  *             self.closed = 0
  */
-      __pyx_t_4 = ((struct __pyx_vtabstruct_5_yaml_CEmitter *)__pyx_v_self->__pyx_vtab)->_emitter_error(__pyx_v_self); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1257; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_4 = ((struct __pyx_vtabstruct_12_ruamel_yaml_CEmitter *)__pyx_v_self->__pyx_vtab)->_emitter_error(__pyx_v_self); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1257; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_4);
       __pyx_v_error = __pyx_t_4;
       __pyx_t_4 = 0;
 
-      /* "_yaml.pyx":1258
+      /* "_ruamel_yaml.pyx":1258
  *             if yaml_emitter_emit(&self.emitter, &event) == 0:
  *                 error = self._emitter_error()
  *                 raise error             # <<<<<<<<<<<<<<
@@ -17561,7 +17561,7 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_8open(struct __pyx_obj_5_yaml_CEmitte
       __Pyx_Raise(__pyx_v_error, 0, 0, 0);
       {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1258; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-      /* "_yaml.pyx":1256
+      /* "_ruamel_yaml.pyx":1256
  *                 encoding = YAML_UTF8_ENCODING
  *             yaml_stream_start_event_initialize(&event, encoding)
  *             if yaml_emitter_emit(&self.emitter, &event) == 0:             # <<<<<<<<<<<<<<
@@ -17570,7 +17570,7 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_8open(struct __pyx_obj_5_yaml_CEmitte
  */
     }
 
-    /* "_yaml.pyx":1259
+    /* "_ruamel_yaml.pyx":1259
  *                 error = self._emitter_error()
  *                 raise error
  *             self.closed = 0             # <<<<<<<<<<<<<<
@@ -17579,7 +17579,7 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_8open(struct __pyx_obj_5_yaml_CEmitte
  */
     __pyx_v_self->closed = 0;
 
-    /* "_yaml.pyx":1244
+    /* "_ruamel_yaml.pyx":1244
  *         cdef yaml_event_t event
  *         cdef yaml_encoding_t encoding
  *         if self.closed == -1:             # <<<<<<<<<<<<<<
@@ -17588,7 +17588,7 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_8open(struct __pyx_obj_5_yaml_CEmitte
  */
     break;
 
-    /* "_yaml.pyx":1260
+    /* "_ruamel_yaml.pyx":1260
  *                 raise error
  *             self.closed = 0
  *         elif self.closed == 1:             # <<<<<<<<<<<<<<
@@ -17597,7 +17597,7 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_8open(struct __pyx_obj_5_yaml_CEmitte
  */
     case 1:
 
-    /* "_yaml.pyx":1261
+    /* "_ruamel_yaml.pyx":1261
  *             self.closed = 0
  *         elif self.closed == 1:
  *             if PY_MAJOR_VERSION < 3:             # <<<<<<<<<<<<<<
@@ -17607,7 +17607,7 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_8open(struct __pyx_obj_5_yaml_CEmitte
     __pyx_t_2 = ((PY_MAJOR_VERSION < 3) != 0);
     if (__pyx_t_2) {
 
-      /* "_yaml.pyx":1262
+      /* "_ruamel_yaml.pyx":1262
  *         elif self.closed == 1:
  *             if PY_MAJOR_VERSION < 3:
  *                 raise SerializerError("serializer is closed")             # <<<<<<<<<<<<<<
@@ -17623,7 +17623,7 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_8open(struct __pyx_obj_5_yaml_CEmitte
       __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
       {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1262; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-      /* "_yaml.pyx":1261
+      /* "_ruamel_yaml.pyx":1261
  *             self.closed = 0
  *         elif self.closed == 1:
  *             if PY_MAJOR_VERSION < 3:             # <<<<<<<<<<<<<<
@@ -17632,7 +17632,7 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_8open(struct __pyx_obj_5_yaml_CEmitte
  */
     }
 
-    /* "_yaml.pyx":1264
+    /* "_ruamel_yaml.pyx":1264
  *                 raise SerializerError("serializer is closed")
  *             else:
  *                 raise SerializerError(u"serializer is closed")             # <<<<<<<<<<<<<<
@@ -17650,7 +17650,7 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_8open(struct __pyx_obj_5_yaml_CEmitte
       {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1264; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     }
 
-    /* "_yaml.pyx":1260
+    /* "_ruamel_yaml.pyx":1260
  *                 raise error
  *             self.closed = 0
  *         elif self.closed == 1:             # <<<<<<<<<<<<<<
@@ -17660,7 +17660,7 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_8open(struct __pyx_obj_5_yaml_CEmitte
     break;
     default:
 
-    /* "_yaml.pyx":1266
+    /* "_ruamel_yaml.pyx":1266
  *                 raise SerializerError(u"serializer is closed")
  *         else:
  *             if PY_MAJOR_VERSION < 3:             # <<<<<<<<<<<<<<
@@ -17670,7 +17670,7 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_8open(struct __pyx_obj_5_yaml_CEmitte
     __pyx_t_2 = ((PY_MAJOR_VERSION < 3) != 0);
     if (__pyx_t_2) {
 
-      /* "_yaml.pyx":1267
+      /* "_ruamel_yaml.pyx":1267
  *         else:
  *             if PY_MAJOR_VERSION < 3:
  *                 raise SerializerError("serializer is already opened")             # <<<<<<<<<<<<<<
@@ -17686,7 +17686,7 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_8open(struct __pyx_obj_5_yaml_CEmitte
       __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
       {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1267; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-      /* "_yaml.pyx":1266
+      /* "_ruamel_yaml.pyx":1266
  *                 raise SerializerError(u"serializer is closed")
  *         else:
  *             if PY_MAJOR_VERSION < 3:             # <<<<<<<<<<<<<<
@@ -17695,7 +17695,7 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_8open(struct __pyx_obj_5_yaml_CEmitte
  */
     }
 
-    /* "_yaml.pyx":1269
+    /* "_ruamel_yaml.pyx":1269
  *                 raise SerializerError("serializer is already opened")
  *             else:
  *                 raise SerializerError(u"serializer is already opened")             # <<<<<<<<<<<<<<
@@ -17715,7 +17715,7 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_8open(struct __pyx_obj_5_yaml_CEmitte
     break;
   }
 
-  /* "_yaml.pyx":1241
+  /* "_ruamel_yaml.pyx":1241
  *             raise error
  * 
  *     def open(self):             # <<<<<<<<<<<<<<
@@ -17729,7 +17729,7 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_8open(struct __pyx_obj_5_yaml_CEmitte
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_4);
   __Pyx_XDECREF(__pyx_t_5);
-  __Pyx_AddTraceback("_yaml.CEmitter.open", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("_ruamel_yaml.CEmitter.open", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XDECREF(__pyx_v_error);
@@ -17738,7 +17738,7 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_8open(struct __pyx_obj_5_yaml_CEmitte
   return __pyx_r;
 }
 
-/* "_yaml.pyx":1271
+/* "_ruamel_yaml.pyx":1271
  *                 raise SerializerError(u"serializer is already opened")
  * 
  *     def close(self):             # <<<<<<<<<<<<<<
@@ -17747,19 +17747,19 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_8open(struct __pyx_obj_5_yaml_CEmitte
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_5_yaml_8CEmitter_11close(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
-static PyObject *__pyx_pw_5_yaml_8CEmitter_11close(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
+static PyObject *__pyx_pw_12_ruamel_yaml_8CEmitter_11close(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static PyObject *__pyx_pw_12_ruamel_yaml_8CEmitter_11close(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("close (wrapper)", 0);
-  __pyx_r = __pyx_pf_5_yaml_8CEmitter_10close(((struct __pyx_obj_5_yaml_CEmitter *)__pyx_v_self));
+  __pyx_r = __pyx_pf_12_ruamel_yaml_8CEmitter_10close(((struct __pyx_obj_12_ruamel_yaml_CEmitter *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_5_yaml_8CEmitter_10close(struct __pyx_obj_5_yaml_CEmitter *__pyx_v_self) {
+static PyObject *__pyx_pf_12_ruamel_yaml_8CEmitter_10close(struct __pyx_obj_12_ruamel_yaml_CEmitter *__pyx_v_self) {
   yaml_event_t __pyx_v_event;
   PyObject *__pyx_v_error = NULL;
   PyObject *__pyx_r = NULL;
@@ -17773,7 +17773,7 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_10close(struct __pyx_obj_5_yaml_CEmit
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("close", 0);
 
-  /* "_yaml.pyx":1273
+  /* "_ruamel_yaml.pyx":1273
  *     def close(self):
  *         cdef yaml_event_t event
  *         if self.closed == -1:             # <<<<<<<<<<<<<<
@@ -17783,7 +17783,7 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_10close(struct __pyx_obj_5_yaml_CEmit
   switch (__pyx_v_self->closed) {
     case -1:
 
-    /* "_yaml.pyx":1274
+    /* "_ruamel_yaml.pyx":1274
  *         cdef yaml_event_t event
  *         if self.closed == -1:
  *             if PY_MAJOR_VERSION < 3:             # <<<<<<<<<<<<<<
@@ -17793,7 +17793,7 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_10close(struct __pyx_obj_5_yaml_CEmit
     __pyx_t_1 = ((PY_MAJOR_VERSION < 3) != 0);
     if (__pyx_t_1) {
 
-      /* "_yaml.pyx":1275
+      /* "_ruamel_yaml.pyx":1275
  *         if self.closed == -1:
  *             if PY_MAJOR_VERSION < 3:
  *                 raise SerializerError("serializer is not opened")             # <<<<<<<<<<<<<<
@@ -17809,7 +17809,7 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_10close(struct __pyx_obj_5_yaml_CEmit
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
       {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1275; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-      /* "_yaml.pyx":1274
+      /* "_ruamel_yaml.pyx":1274
  *         cdef yaml_event_t event
  *         if self.closed == -1:
  *             if PY_MAJOR_VERSION < 3:             # <<<<<<<<<<<<<<
@@ -17818,7 +17818,7 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_10close(struct __pyx_obj_5_yaml_CEmit
  */
     }
 
-    /* "_yaml.pyx":1277
+    /* "_ruamel_yaml.pyx":1277
  *                 raise SerializerError("serializer is not opened")
  *             else:
  *                 raise SerializerError(u"serializer is not opened")             # <<<<<<<<<<<<<<
@@ -17836,7 +17836,7 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_10close(struct __pyx_obj_5_yaml_CEmit
       {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1277; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     }
 
-    /* "_yaml.pyx":1273
+    /* "_ruamel_yaml.pyx":1273
  *     def close(self):
  *         cdef yaml_event_t event
  *         if self.closed == -1:             # <<<<<<<<<<<<<<
@@ -17845,7 +17845,7 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_10close(struct __pyx_obj_5_yaml_CEmit
  */
     break;
 
-    /* "_yaml.pyx":1278
+    /* "_ruamel_yaml.pyx":1278
  *             else:
  *                 raise SerializerError(u"serializer is not opened")
  *         elif self.closed == 0:             # <<<<<<<<<<<<<<
@@ -17854,7 +17854,7 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_10close(struct __pyx_obj_5_yaml_CEmit
  */
     case 0:
 
-    /* "_yaml.pyx":1279
+    /* "_ruamel_yaml.pyx":1279
  *                 raise SerializerError(u"serializer is not opened")
  *         elif self.closed == 0:
  *             yaml_stream_end_event_initialize(&event)             # <<<<<<<<<<<<<<
@@ -17863,7 +17863,7 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_10close(struct __pyx_obj_5_yaml_CEmit
  */
     yaml_stream_end_event_initialize((&__pyx_v_event));
 
-    /* "_yaml.pyx":1280
+    /* "_ruamel_yaml.pyx":1280
  *         elif self.closed == 0:
  *             yaml_stream_end_event_initialize(&event)
  *             if yaml_emitter_emit(&self.emitter, &event) == 0:             # <<<<<<<<<<<<<<
@@ -17874,19 +17874,19 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_10close(struct __pyx_obj_5_yaml_CEmit
     __pyx_t_1 = ((__pyx_t_4 == 0) != 0);
     if (__pyx_t_1) {
 
-      /* "_yaml.pyx":1281
+      /* "_ruamel_yaml.pyx":1281
  *             yaml_stream_end_event_initialize(&event)
  *             if yaml_emitter_emit(&self.emitter, &event) == 0:
  *                 error = self._emitter_error()             # <<<<<<<<<<<<<<
  *                 raise error
  *             self.closed = 1
  */
-      __pyx_t_2 = ((struct __pyx_vtabstruct_5_yaml_CEmitter *)__pyx_v_self->__pyx_vtab)->_emitter_error(__pyx_v_self); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1281; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_2 = ((struct __pyx_vtabstruct_12_ruamel_yaml_CEmitter *)__pyx_v_self->__pyx_vtab)->_emitter_error(__pyx_v_self); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1281; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_2);
       __pyx_v_error = __pyx_t_2;
       __pyx_t_2 = 0;
 
-      /* "_yaml.pyx":1282
+      /* "_ruamel_yaml.pyx":1282
  *             if yaml_emitter_emit(&self.emitter, &event) == 0:
  *                 error = self._emitter_error()
  *                 raise error             # <<<<<<<<<<<<<<
@@ -17896,7 +17896,7 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_10close(struct __pyx_obj_5_yaml_CEmit
       __Pyx_Raise(__pyx_v_error, 0, 0, 0);
       {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1282; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-      /* "_yaml.pyx":1280
+      /* "_ruamel_yaml.pyx":1280
  *         elif self.closed == 0:
  *             yaml_stream_end_event_initialize(&event)
  *             if yaml_emitter_emit(&self.emitter, &event) == 0:             # <<<<<<<<<<<<<<
@@ -17905,7 +17905,7 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_10close(struct __pyx_obj_5_yaml_CEmit
  */
     }
 
-    /* "_yaml.pyx":1283
+    /* "_ruamel_yaml.pyx":1283
  *                 error = self._emitter_error()
  *                 raise error
  *             self.closed = 1             # <<<<<<<<<<<<<<
@@ -17914,7 +17914,7 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_10close(struct __pyx_obj_5_yaml_CEmit
  */
     __pyx_v_self->closed = 1;
 
-    /* "_yaml.pyx":1278
+    /* "_ruamel_yaml.pyx":1278
  *             else:
  *                 raise SerializerError(u"serializer is not opened")
  *         elif self.closed == 0:             # <<<<<<<<<<<<<<
@@ -17925,7 +17925,7 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_10close(struct __pyx_obj_5_yaml_CEmit
     default: break;
   }
 
-  /* "_yaml.pyx":1271
+  /* "_ruamel_yaml.pyx":1271
  *                 raise SerializerError(u"serializer is already opened")
  * 
  *     def close(self):             # <<<<<<<<<<<<<<
@@ -17939,7 +17939,7 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_10close(struct __pyx_obj_5_yaml_CEmit
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_2);
   __Pyx_XDECREF(__pyx_t_3);
-  __Pyx_AddTraceback("_yaml.CEmitter.close", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("_ruamel_yaml.CEmitter.close", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XDECREF(__pyx_v_error);
@@ -17948,7 +17948,7 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_10close(struct __pyx_obj_5_yaml_CEmit
   return __pyx_r;
 }
 
-/* "_yaml.pyx":1285
+/* "_ruamel_yaml.pyx":1285
  *             self.closed = 1
  * 
  *     def serialize(self, node):             # <<<<<<<<<<<<<<
@@ -17957,19 +17957,19 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_10close(struct __pyx_obj_5_yaml_CEmit
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_5_yaml_8CEmitter_13serialize(PyObject *__pyx_v_self, PyObject *__pyx_v_node); /*proto*/
-static PyObject *__pyx_pw_5_yaml_8CEmitter_13serialize(PyObject *__pyx_v_self, PyObject *__pyx_v_node) {
+static PyObject *__pyx_pw_12_ruamel_yaml_8CEmitter_13serialize(PyObject *__pyx_v_self, PyObject *__pyx_v_node); /*proto*/
+static PyObject *__pyx_pw_12_ruamel_yaml_8CEmitter_13serialize(PyObject *__pyx_v_self, PyObject *__pyx_v_node) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("serialize (wrapper)", 0);
-  __pyx_r = __pyx_pf_5_yaml_8CEmitter_12serialize(((struct __pyx_obj_5_yaml_CEmitter *)__pyx_v_self), ((PyObject *)__pyx_v_node));
+  __pyx_r = __pyx_pf_12_ruamel_yaml_8CEmitter_12serialize(((struct __pyx_obj_12_ruamel_yaml_CEmitter *)__pyx_v_self), ((PyObject *)__pyx_v_node));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_5_yaml_8CEmitter_12serialize(struct __pyx_obj_5_yaml_CEmitter *__pyx_v_self, PyObject *__pyx_v_node) {
+static PyObject *__pyx_pf_12_ruamel_yaml_8CEmitter_12serialize(struct __pyx_obj_12_ruamel_yaml_CEmitter *__pyx_v_self, PyObject *__pyx_v_node) {
   yaml_event_t __pyx_v_event;
   yaml_version_directive_t __pyx_v_version_directive_value;
   yaml_version_directive_t *__pyx_v_version_directive;
@@ -17994,7 +17994,7 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_12serialize(struct __pyx_obj_5_yaml_C
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("serialize", 0);
 
-  /* "_yaml.pyx":1292
+  /* "_ruamel_yaml.pyx":1292
  *         cdef yaml_tag_directive_t *tag_directives_start
  *         cdef yaml_tag_directive_t *tag_directives_end
  *         if self.closed == -1:             # <<<<<<<<<<<<<<
@@ -18004,7 +18004,7 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_12serialize(struct __pyx_obj_5_yaml_C
   switch (__pyx_v_self->closed) {
     case -1:
 
-    /* "_yaml.pyx":1293
+    /* "_ruamel_yaml.pyx":1293
  *         cdef yaml_tag_directive_t *tag_directives_end
  *         if self.closed == -1:
  *             if PY_MAJOR_VERSION < 3:             # <<<<<<<<<<<<<<
@@ -18014,7 +18014,7 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_12serialize(struct __pyx_obj_5_yaml_C
     __pyx_t_1 = ((PY_MAJOR_VERSION < 3) != 0);
     if (__pyx_t_1) {
 
-      /* "_yaml.pyx":1294
+      /* "_ruamel_yaml.pyx":1294
  *         if self.closed == -1:
  *             if PY_MAJOR_VERSION < 3:
  *                 raise SerializerError("serializer is not opened")             # <<<<<<<<<<<<<<
@@ -18030,7 +18030,7 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_12serialize(struct __pyx_obj_5_yaml_C
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
       {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1294; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-      /* "_yaml.pyx":1293
+      /* "_ruamel_yaml.pyx":1293
  *         cdef yaml_tag_directive_t *tag_directives_end
  *         if self.closed == -1:
  *             if PY_MAJOR_VERSION < 3:             # <<<<<<<<<<<<<<
@@ -18039,7 +18039,7 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_12serialize(struct __pyx_obj_5_yaml_C
  */
     }
 
-    /* "_yaml.pyx":1296
+    /* "_ruamel_yaml.pyx":1296
  *                 raise SerializerError("serializer is not opened")
  *             else:
  *                 raise SerializerError(u"serializer is not opened")             # <<<<<<<<<<<<<<
@@ -18057,7 +18057,7 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_12serialize(struct __pyx_obj_5_yaml_C
       {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1296; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     }
 
-    /* "_yaml.pyx":1292
+    /* "_ruamel_yaml.pyx":1292
  *         cdef yaml_tag_directive_t *tag_directives_start
  *         cdef yaml_tag_directive_t *tag_directives_end
  *         if self.closed == -1:             # <<<<<<<<<<<<<<
@@ -18066,7 +18066,7 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_12serialize(struct __pyx_obj_5_yaml_C
  */
     break;
 
-    /* "_yaml.pyx":1297
+    /* "_ruamel_yaml.pyx":1297
  *             else:
  *                 raise SerializerError(u"serializer is not opened")
  *         elif self.closed == 1:             # <<<<<<<<<<<<<<
@@ -18075,7 +18075,7 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_12serialize(struct __pyx_obj_5_yaml_C
  */
     case 1:
 
-    /* "_yaml.pyx":1298
+    /* "_ruamel_yaml.pyx":1298
  *                 raise SerializerError(u"serializer is not opened")
  *         elif self.closed == 1:
  *             if PY_MAJOR_VERSION < 3:             # <<<<<<<<<<<<<<
@@ -18085,7 +18085,7 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_12serialize(struct __pyx_obj_5_yaml_C
     __pyx_t_1 = ((PY_MAJOR_VERSION < 3) != 0);
     if (__pyx_t_1) {
 
-      /* "_yaml.pyx":1299
+      /* "_ruamel_yaml.pyx":1299
  *         elif self.closed == 1:
  *             if PY_MAJOR_VERSION < 3:
  *                 raise SerializerError("serializer is closed")             # <<<<<<<<<<<<<<
@@ -18101,7 +18101,7 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_12serialize(struct __pyx_obj_5_yaml_C
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
       {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1299; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-      /* "_yaml.pyx":1298
+      /* "_ruamel_yaml.pyx":1298
  *                 raise SerializerError(u"serializer is not opened")
  *         elif self.closed == 1:
  *             if PY_MAJOR_VERSION < 3:             # <<<<<<<<<<<<<<
@@ -18110,7 +18110,7 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_12serialize(struct __pyx_obj_5_yaml_C
  */
     }
 
-    /* "_yaml.pyx":1301
+    /* "_ruamel_yaml.pyx":1301
  *                 raise SerializerError("serializer is closed")
  *             else:
  *                 raise SerializerError(u"serializer is closed")             # <<<<<<<<<<<<<<
@@ -18128,7 +18128,7 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_12serialize(struct __pyx_obj_5_yaml_C
       {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1301; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     }
 
-    /* "_yaml.pyx":1297
+    /* "_ruamel_yaml.pyx":1297
  *             else:
  *                 raise SerializerError(u"serializer is not opened")
  *         elif self.closed == 1:             # <<<<<<<<<<<<<<
@@ -18139,7 +18139,7 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_12serialize(struct __pyx_obj_5_yaml_C
     default: break;
   }
 
-  /* "_yaml.pyx":1302
+  /* "_ruamel_yaml.pyx":1302
  *             else:
  *                 raise SerializerError(u"serializer is closed")
  *         cache = []             # <<<<<<<<<<<<<<
@@ -18151,7 +18151,7 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_12serialize(struct __pyx_obj_5_yaml_C
   __pyx_v_cache = ((PyObject*)__pyx_t_2);
   __pyx_t_2 = 0;
 
-  /* "_yaml.pyx":1303
+  /* "_ruamel_yaml.pyx":1303
  *                 raise SerializerError(u"serializer is closed")
  *         cache = []
  *         version_directive = NULL             # <<<<<<<<<<<<<<
@@ -18160,7 +18160,7 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_12serialize(struct __pyx_obj_5_yaml_C
  */
   __pyx_v_version_directive = NULL;
 
-  /* "_yaml.pyx":1304
+  /* "_ruamel_yaml.pyx":1304
  *         cache = []
  *         version_directive = NULL
  *         if self.use_version:             # <<<<<<<<<<<<<<
@@ -18170,7 +18170,7 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_12serialize(struct __pyx_obj_5_yaml_C
   __pyx_t_1 = __Pyx_PyObject_IsTrue(__pyx_v_self->use_version); if (unlikely(__pyx_t_1 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1304; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   if (__pyx_t_1) {
 
-    /* "_yaml.pyx":1305
+    /* "_ruamel_yaml.pyx":1305
  *         version_directive = NULL
  *         if self.use_version:
  *             version_directive_value.major = self.use_version[0]             # <<<<<<<<<<<<<<
@@ -18183,7 +18183,7 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_12serialize(struct __pyx_obj_5_yaml_C
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     __pyx_v_version_directive_value.major = __pyx_t_4;
 
-    /* "_yaml.pyx":1306
+    /* "_ruamel_yaml.pyx":1306
  *         if self.use_version:
  *             version_directive_value.major = self.use_version[0]
  *             version_directive_value.minor = self.use_version[1]             # <<<<<<<<<<<<<<
@@ -18196,7 +18196,7 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_12serialize(struct __pyx_obj_5_yaml_C
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     __pyx_v_version_directive_value.minor = __pyx_t_4;
 
-    /* "_yaml.pyx":1307
+    /* "_ruamel_yaml.pyx":1307
  *             version_directive_value.major = self.use_version[0]
  *             version_directive_value.minor = self.use_version[1]
  *             version_directive = &version_directive_value             # <<<<<<<<<<<<<<
@@ -18205,7 +18205,7 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_12serialize(struct __pyx_obj_5_yaml_C
  */
     __pyx_v_version_directive = (&__pyx_v_version_directive_value);
 
-    /* "_yaml.pyx":1304
+    /* "_ruamel_yaml.pyx":1304
  *         cache = []
  *         version_directive = NULL
  *         if self.use_version:             # <<<<<<<<<<<<<<
@@ -18214,7 +18214,7 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_12serialize(struct __pyx_obj_5_yaml_C
  */
   }
 
-  /* "_yaml.pyx":1308
+  /* "_ruamel_yaml.pyx":1308
  *             version_directive_value.minor = self.use_version[1]
  *             version_directive = &version_directive_value
  *         tag_directives_start = NULL             # <<<<<<<<<<<<<<
@@ -18223,7 +18223,7 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_12serialize(struct __pyx_obj_5_yaml_C
  */
   __pyx_v_tag_directives_start = NULL;
 
-  /* "_yaml.pyx":1309
+  /* "_ruamel_yaml.pyx":1309
  *             version_directive = &version_directive_value
  *         tag_directives_start = NULL
  *         tag_directives_end = NULL             # <<<<<<<<<<<<<<
@@ -18232,7 +18232,7 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_12serialize(struct __pyx_obj_5_yaml_C
  */
   __pyx_v_tag_directives_end = NULL;
 
-  /* "_yaml.pyx":1310
+  /* "_ruamel_yaml.pyx":1310
  *         tag_directives_start = NULL
  *         tag_directives_end = NULL
  *         if self.use_tags:             # <<<<<<<<<<<<<<
@@ -18242,7 +18242,7 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_12serialize(struct __pyx_obj_5_yaml_C
   __pyx_t_1 = __Pyx_PyObject_IsTrue(__pyx_v_self->use_tags); if (unlikely(__pyx_t_1 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1310; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   if (__pyx_t_1) {
 
-    /* "_yaml.pyx":1311
+    /* "_ruamel_yaml.pyx":1311
  *         tag_directives_end = NULL
  *         if self.use_tags:
  *             if len(self.use_tags) > 128:             # <<<<<<<<<<<<<<
@@ -18256,7 +18256,7 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_12serialize(struct __pyx_obj_5_yaml_C
     __pyx_t_1 = ((__pyx_t_5 > 0x80) != 0);
     if (__pyx_t_1) {
 
-      /* "_yaml.pyx":1312
+      /* "_ruamel_yaml.pyx":1312
  *         if self.use_tags:
  *             if len(self.use_tags) > 128:
  *                 if PY_MAJOR_VERSION < 3:             # <<<<<<<<<<<<<<
@@ -18266,7 +18266,7 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_12serialize(struct __pyx_obj_5_yaml_C
       __pyx_t_1 = ((PY_MAJOR_VERSION < 3) != 0);
       if (__pyx_t_1) {
 
-        /* "_yaml.pyx":1313
+        /* "_ruamel_yaml.pyx":1313
  *             if len(self.use_tags) > 128:
  *                 if PY_MAJOR_VERSION < 3:
  *                     raise ValueError("too many tags")             # <<<<<<<<<<<<<<
@@ -18279,7 +18279,7 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_12serialize(struct __pyx_obj_5_yaml_C
         __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
         {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1313; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-        /* "_yaml.pyx":1312
+        /* "_ruamel_yaml.pyx":1312
  *         if self.use_tags:
  *             if len(self.use_tags) > 128:
  *                 if PY_MAJOR_VERSION < 3:             # <<<<<<<<<<<<<<
@@ -18288,7 +18288,7 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_12serialize(struct __pyx_obj_5_yaml_C
  */
       }
 
-      /* "_yaml.pyx":1315
+      /* "_ruamel_yaml.pyx":1315
  *                     raise ValueError("too many tags")
  *                 else:
  *                     raise ValueError(u"too many tags")             # <<<<<<<<<<<<<<
@@ -18303,7 +18303,7 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_12serialize(struct __pyx_obj_5_yaml_C
         {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1315; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       }
 
-      /* "_yaml.pyx":1311
+      /* "_ruamel_yaml.pyx":1311
  *         tag_directives_end = NULL
  *         if self.use_tags:
  *             if len(self.use_tags) > 128:             # <<<<<<<<<<<<<<
@@ -18312,7 +18312,7 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_12serialize(struct __pyx_obj_5_yaml_C
  */
     }
 
-    /* "_yaml.pyx":1316
+    /* "_ruamel_yaml.pyx":1316
  *                 else:
  *                     raise ValueError(u"too many tags")
  *             tag_directives_start = tag_directives_value             # <<<<<<<<<<<<<<
@@ -18321,7 +18321,7 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_12serialize(struct __pyx_obj_5_yaml_C
  */
     __pyx_v_tag_directives_start = __pyx_v_tag_directives_value;
 
-    /* "_yaml.pyx":1317
+    /* "_ruamel_yaml.pyx":1317
  *                     raise ValueError(u"too many tags")
  *             tag_directives_start = tag_directives_value
  *             tag_directives_end = tag_directives_value             # <<<<<<<<<<<<<<
@@ -18330,7 +18330,7 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_12serialize(struct __pyx_obj_5_yaml_C
  */
     __pyx_v_tag_directives_end = __pyx_v_tag_directives_value;
 
-    /* "_yaml.pyx":1318
+    /* "_ruamel_yaml.pyx":1318
  *             tag_directives_start = tag_directives_value
  *             tag_directives_end = tag_directives_value
  *             for handle in self.use_tags:             # <<<<<<<<<<<<<<
@@ -18379,7 +18379,7 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_12serialize(struct __pyx_obj_5_yaml_C
       __Pyx_XDECREF_SET(__pyx_v_handle, __pyx_t_3);
       __pyx_t_3 = 0;
 
-      /* "_yaml.pyx":1319
+      /* "_ruamel_yaml.pyx":1319
  *             tag_directives_end = tag_directives_value
  *             for handle in self.use_tags:
  *                 prefix = self.use_tags[handle]             # <<<<<<<<<<<<<<
@@ -18391,7 +18391,7 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_12serialize(struct __pyx_obj_5_yaml_C
       __Pyx_XDECREF_SET(__pyx_v_prefix, __pyx_t_3);
       __pyx_t_3 = 0;
 
-      /* "_yaml.pyx":1320
+      /* "_ruamel_yaml.pyx":1320
  *             for handle in self.use_tags:
  *                 prefix = self.use_tags[handle]
  *                 if PyUnicode_CheckExact(handle):             # <<<<<<<<<<<<<<
@@ -18401,7 +18401,7 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_12serialize(struct __pyx_obj_5_yaml_C
       __pyx_t_1 = (PyUnicode_CheckExact(__pyx_v_handle) != 0);
       if (__pyx_t_1) {
 
-        /* "_yaml.pyx":1321
+        /* "_ruamel_yaml.pyx":1321
  *                 prefix = self.use_tags[handle]
  *                 if PyUnicode_CheckExact(handle):
  *                     handle = PyUnicode_AsUTF8String(handle)             # <<<<<<<<<<<<<<
@@ -18413,7 +18413,7 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_12serialize(struct __pyx_obj_5_yaml_C
         __Pyx_DECREF_SET(__pyx_v_handle, __pyx_t_3);
         __pyx_t_3 = 0;
 
-        /* "_yaml.pyx":1322
+        /* "_ruamel_yaml.pyx":1322
  *                 if PyUnicode_CheckExact(handle):
  *                     handle = PyUnicode_AsUTF8String(handle)
  *                     cache.append(handle)             # <<<<<<<<<<<<<<
@@ -18422,7 +18422,7 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_12serialize(struct __pyx_obj_5_yaml_C
  */
         __pyx_t_7 = __Pyx_PyList_Append(__pyx_v_cache, __pyx_v_handle); if (unlikely(__pyx_t_7 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1322; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-        /* "_yaml.pyx":1320
+        /* "_ruamel_yaml.pyx":1320
  *             for handle in self.use_tags:
  *                 prefix = self.use_tags[handle]
  *                 if PyUnicode_CheckExact(handle):             # <<<<<<<<<<<<<<
@@ -18431,7 +18431,7 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_12serialize(struct __pyx_obj_5_yaml_C
  */
       }
 
-      /* "_yaml.pyx":1323
+      /* "_ruamel_yaml.pyx":1323
  *                     handle = PyUnicode_AsUTF8String(handle)
  *                     cache.append(handle)
  *                 if not PyString_CheckExact(handle):             # <<<<<<<<<<<<<<
@@ -18441,7 +18441,7 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_12serialize(struct __pyx_obj_5_yaml_C
       __pyx_t_1 = ((!(PyString_CheckExact(__pyx_v_handle) != 0)) != 0);
       if (__pyx_t_1) {
 
-        /* "_yaml.pyx":1324
+        /* "_ruamel_yaml.pyx":1324
  *                     cache.append(handle)
  *                 if not PyString_CheckExact(handle):
  *                     if PY_MAJOR_VERSION < 3:             # <<<<<<<<<<<<<<
@@ -18451,7 +18451,7 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_12serialize(struct __pyx_obj_5_yaml_C
         __pyx_t_1 = ((PY_MAJOR_VERSION < 3) != 0);
         if (__pyx_t_1) {
 
-          /* "_yaml.pyx":1325
+          /* "_ruamel_yaml.pyx":1325
  *                 if not PyString_CheckExact(handle):
  *                     if PY_MAJOR_VERSION < 3:
  *                         raise TypeError("tag handle must be a string")             # <<<<<<<<<<<<<<
@@ -18464,7 +18464,7 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_12serialize(struct __pyx_obj_5_yaml_C
           __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
           {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1325; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-          /* "_yaml.pyx":1324
+          /* "_ruamel_yaml.pyx":1324
  *                     cache.append(handle)
  *                 if not PyString_CheckExact(handle):
  *                     if PY_MAJOR_VERSION < 3:             # <<<<<<<<<<<<<<
@@ -18473,7 +18473,7 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_12serialize(struct __pyx_obj_5_yaml_C
  */
         }
 
-        /* "_yaml.pyx":1327
+        /* "_ruamel_yaml.pyx":1327
  *                         raise TypeError("tag handle must be a string")
  *                     else:
  *                         raise TypeError(u"tag handle must be a string")             # <<<<<<<<<<<<<<
@@ -18488,7 +18488,7 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_12serialize(struct __pyx_obj_5_yaml_C
           {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1327; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         }
 
-        /* "_yaml.pyx":1323
+        /* "_ruamel_yaml.pyx":1323
  *                     handle = PyUnicode_AsUTF8String(handle)
  *                     cache.append(handle)
  *                 if not PyString_CheckExact(handle):             # <<<<<<<<<<<<<<
@@ -18497,7 +18497,7 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_12serialize(struct __pyx_obj_5_yaml_C
  */
       }
 
-      /* "_yaml.pyx":1328
+      /* "_ruamel_yaml.pyx":1328
  *                     else:
  *                         raise TypeError(u"tag handle must be a string")
  *                 tag_directives_end.handle = PyString_AS_STRING(handle)             # <<<<<<<<<<<<<<
@@ -18506,7 +18506,7 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_12serialize(struct __pyx_obj_5_yaml_C
  */
       __pyx_v_tag_directives_end->handle = PyString_AS_STRING(__pyx_v_handle);
 
-      /* "_yaml.pyx":1329
+      /* "_ruamel_yaml.pyx":1329
  *                         raise TypeError(u"tag handle must be a string")
  *                 tag_directives_end.handle = PyString_AS_STRING(handle)
  *                 if PyUnicode_CheckExact(prefix):             # <<<<<<<<<<<<<<
@@ -18516,7 +18516,7 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_12serialize(struct __pyx_obj_5_yaml_C
       __pyx_t_1 = (PyUnicode_CheckExact(__pyx_v_prefix) != 0);
       if (__pyx_t_1) {
 
-        /* "_yaml.pyx":1330
+        /* "_ruamel_yaml.pyx":1330
  *                 tag_directives_end.handle = PyString_AS_STRING(handle)
  *                 if PyUnicode_CheckExact(prefix):
  *                     prefix = PyUnicode_AsUTF8String(prefix)             # <<<<<<<<<<<<<<
@@ -18528,7 +18528,7 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_12serialize(struct __pyx_obj_5_yaml_C
         __Pyx_DECREF_SET(__pyx_v_prefix, __pyx_t_3);
         __pyx_t_3 = 0;
 
-        /* "_yaml.pyx":1331
+        /* "_ruamel_yaml.pyx":1331
  *                 if PyUnicode_CheckExact(prefix):
  *                     prefix = PyUnicode_AsUTF8String(prefix)
  *                     cache.append(prefix)             # <<<<<<<<<<<<<<
@@ -18537,7 +18537,7 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_12serialize(struct __pyx_obj_5_yaml_C
  */
         __pyx_t_7 = __Pyx_PyList_Append(__pyx_v_cache, __pyx_v_prefix); if (unlikely(__pyx_t_7 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1331; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-        /* "_yaml.pyx":1329
+        /* "_ruamel_yaml.pyx":1329
  *                         raise TypeError(u"tag handle must be a string")
  *                 tag_directives_end.handle = PyString_AS_STRING(handle)
  *                 if PyUnicode_CheckExact(prefix):             # <<<<<<<<<<<<<<
@@ -18546,7 +18546,7 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_12serialize(struct __pyx_obj_5_yaml_C
  */
       }
 
-      /* "_yaml.pyx":1332
+      /* "_ruamel_yaml.pyx":1332
  *                     prefix = PyUnicode_AsUTF8String(prefix)
  *                     cache.append(prefix)
  *                 if not PyString_CheckExact(prefix):             # <<<<<<<<<<<<<<
@@ -18556,7 +18556,7 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_12serialize(struct __pyx_obj_5_yaml_C
       __pyx_t_1 = ((!(PyString_CheckExact(__pyx_v_prefix) != 0)) != 0);
       if (__pyx_t_1) {
 
-        /* "_yaml.pyx":1333
+        /* "_ruamel_yaml.pyx":1333
  *                     cache.append(prefix)
  *                 if not PyString_CheckExact(prefix):
  *                     if PY_MAJOR_VERSION < 3:             # <<<<<<<<<<<<<<
@@ -18566,7 +18566,7 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_12serialize(struct __pyx_obj_5_yaml_C
         __pyx_t_1 = ((PY_MAJOR_VERSION < 3) != 0);
         if (__pyx_t_1) {
 
-          /* "_yaml.pyx":1334
+          /* "_ruamel_yaml.pyx":1334
  *                 if not PyString_CheckExact(prefix):
  *                     if PY_MAJOR_VERSION < 3:
  *                         raise TypeError("tag prefix must be a string")             # <<<<<<<<<<<<<<
@@ -18579,7 +18579,7 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_12serialize(struct __pyx_obj_5_yaml_C
           __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
           {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1334; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-          /* "_yaml.pyx":1333
+          /* "_ruamel_yaml.pyx":1333
  *                     cache.append(prefix)
  *                 if not PyString_CheckExact(prefix):
  *                     if PY_MAJOR_VERSION < 3:             # <<<<<<<<<<<<<<
@@ -18588,7 +18588,7 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_12serialize(struct __pyx_obj_5_yaml_C
  */
         }
 
-        /* "_yaml.pyx":1336
+        /* "_ruamel_yaml.pyx":1336
  *                         raise TypeError("tag prefix must be a string")
  *                     else:
  *                         raise TypeError(u"tag prefix must be a string")             # <<<<<<<<<<<<<<
@@ -18603,7 +18603,7 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_12serialize(struct __pyx_obj_5_yaml_C
           {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1336; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         }
 
-        /* "_yaml.pyx":1332
+        /* "_ruamel_yaml.pyx":1332
  *                     prefix = PyUnicode_AsUTF8String(prefix)
  *                     cache.append(prefix)
  *                 if not PyString_CheckExact(prefix):             # <<<<<<<<<<<<<<
@@ -18612,7 +18612,7 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_12serialize(struct __pyx_obj_5_yaml_C
  */
       }
 
-      /* "_yaml.pyx":1337
+      /* "_ruamel_yaml.pyx":1337
  *                     else:
  *                         raise TypeError(u"tag prefix must be a string")
  *                 tag_directives_end.prefix = PyString_AS_STRING(prefix)             # <<<<<<<<<<<<<<
@@ -18621,7 +18621,7 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_12serialize(struct __pyx_obj_5_yaml_C
  */
       __pyx_v_tag_directives_end->prefix = PyString_AS_STRING(__pyx_v_prefix);
 
-      /* "_yaml.pyx":1338
+      /* "_ruamel_yaml.pyx":1338
  *                         raise TypeError(u"tag prefix must be a string")
  *                 tag_directives_end.prefix = PyString_AS_STRING(prefix)
  *                 tag_directives_end = tag_directives_end+1             # <<<<<<<<<<<<<<
@@ -18630,7 +18630,7 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_12serialize(struct __pyx_obj_5_yaml_C
  */
       __pyx_v_tag_directives_end = (__pyx_v_tag_directives_end + 1);
 
-      /* "_yaml.pyx":1318
+      /* "_ruamel_yaml.pyx":1318
  *             tag_directives_start = tag_directives_value
  *             tag_directives_end = tag_directives_value
  *             for handle in self.use_tags:             # <<<<<<<<<<<<<<
@@ -18640,7 +18640,7 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_12serialize(struct __pyx_obj_5_yaml_C
     }
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-    /* "_yaml.pyx":1310
+    /* "_ruamel_yaml.pyx":1310
  *         tag_directives_start = NULL
  *         tag_directives_end = NULL
  *         if self.use_tags:             # <<<<<<<<<<<<<<
@@ -18649,7 +18649,7 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_12serialize(struct __pyx_obj_5_yaml_C
  */
   }
 
-  /* "_yaml.pyx":1341
+  /* "_ruamel_yaml.pyx":1341
  *         if yaml_document_start_event_initialize(&event, version_directive,
  *                 tag_directives_start, tag_directives_end,
  *                 self.document_start_implicit) == 0:             # <<<<<<<<<<<<<<
@@ -18658,7 +18658,7 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_12serialize(struct __pyx_obj_5_yaml_C
  */
   __pyx_t_1 = ((yaml_document_start_event_initialize((&__pyx_v_event), __pyx_v_version_directive, __pyx_v_tag_directives_start, __pyx_v_tag_directives_end, __pyx_v_self->document_start_implicit) == 0) != 0);
 
-  /* "_yaml.pyx":1339
+  /* "_ruamel_yaml.pyx":1339
  *                 tag_directives_end.prefix = PyString_AS_STRING(prefix)
  *                 tag_directives_end = tag_directives_end+1
  *         if yaml_document_start_event_initialize(&event, version_directive,             # <<<<<<<<<<<<<<
@@ -18667,7 +18667,7 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_12serialize(struct __pyx_obj_5_yaml_C
  */
   if (__pyx_t_1) {
 
-    /* "_yaml.pyx":1342
+    /* "_ruamel_yaml.pyx":1342
  *                 tag_directives_start, tag_directives_end,
  *                 self.document_start_implicit) == 0:
  *             raise MemoryError             # <<<<<<<<<<<<<<
@@ -18676,7 +18676,7 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_12serialize(struct __pyx_obj_5_yaml_C
  */
     PyErr_NoMemory(); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1342; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-    /* "_yaml.pyx":1339
+    /* "_ruamel_yaml.pyx":1339
  *                 tag_directives_end.prefix = PyString_AS_STRING(prefix)
  *                 tag_directives_end = tag_directives_end+1
  *         if yaml_document_start_event_initialize(&event, version_directive,             # <<<<<<<<<<<<<<
@@ -18685,7 +18685,7 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_12serialize(struct __pyx_obj_5_yaml_C
  */
   }
 
-  /* "_yaml.pyx":1343
+  /* "_ruamel_yaml.pyx":1343
  *                 self.document_start_implicit) == 0:
  *             raise MemoryError
  *         if yaml_emitter_emit(&self.emitter, &event) == 0:             # <<<<<<<<<<<<<<
@@ -18696,19 +18696,19 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_12serialize(struct __pyx_obj_5_yaml_C
   __pyx_t_1 = ((__pyx_t_4 == 0) != 0);
   if (__pyx_t_1) {
 
-    /* "_yaml.pyx":1344
+    /* "_ruamel_yaml.pyx":1344
  *             raise MemoryError
  *         if yaml_emitter_emit(&self.emitter, &event) == 0:
  *             error = self._emitter_error()             # <<<<<<<<<<<<<<
  *             raise error
  *         self._anchor_node(node)
  */
-    __pyx_t_2 = ((struct __pyx_vtabstruct_5_yaml_CEmitter *)__pyx_v_self->__pyx_vtab)->_emitter_error(__pyx_v_self); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1344; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_2 = ((struct __pyx_vtabstruct_12_ruamel_yaml_CEmitter *)__pyx_v_self->__pyx_vtab)->_emitter_error(__pyx_v_self); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1344; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_2);
     __pyx_v_error = __pyx_t_2;
     __pyx_t_2 = 0;
 
-    /* "_yaml.pyx":1345
+    /* "_ruamel_yaml.pyx":1345
  *         if yaml_emitter_emit(&self.emitter, &event) == 0:
  *             error = self._emitter_error()
  *             raise error             # <<<<<<<<<<<<<<
@@ -18718,7 +18718,7 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_12serialize(struct __pyx_obj_5_yaml_C
     __Pyx_Raise(__pyx_v_error, 0, 0, 0);
     {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1345; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-    /* "_yaml.pyx":1343
+    /* "_ruamel_yaml.pyx":1343
  *                 self.document_start_implicit) == 0:
  *             raise MemoryError
  *         if yaml_emitter_emit(&self.emitter, &event) == 0:             # <<<<<<<<<<<<<<
@@ -18727,25 +18727,25 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_12serialize(struct __pyx_obj_5_yaml_C
  */
   }
 
-  /* "_yaml.pyx":1346
+  /* "_ruamel_yaml.pyx":1346
  *             error = self._emitter_error()
  *             raise error
  *         self._anchor_node(node)             # <<<<<<<<<<<<<<
  *         self._serialize_node(node, None, None)
  *         yaml_document_end_event_initialize(&event, self.document_end_implicit)
  */
-  __pyx_t_4 = ((struct __pyx_vtabstruct_5_yaml_CEmitter *)__pyx_v_self->__pyx_vtab)->_anchor_node(__pyx_v_self, __pyx_v_node); if (unlikely(__pyx_t_4 == 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1346; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_4 = ((struct __pyx_vtabstruct_12_ruamel_yaml_CEmitter *)__pyx_v_self->__pyx_vtab)->_anchor_node(__pyx_v_self, __pyx_v_node); if (unlikely(__pyx_t_4 == 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1346; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-  /* "_yaml.pyx":1347
+  /* "_ruamel_yaml.pyx":1347
  *             raise error
  *         self._anchor_node(node)
  *         self._serialize_node(node, None, None)             # <<<<<<<<<<<<<<
  *         yaml_document_end_event_initialize(&event, self.document_end_implicit)
  *         if yaml_emitter_emit(&self.emitter, &event) == 0:
  */
-  __pyx_t_4 = ((struct __pyx_vtabstruct_5_yaml_CEmitter *)__pyx_v_self->__pyx_vtab)->_serialize_node(__pyx_v_self, __pyx_v_node, Py_None, Py_None); if (unlikely(__pyx_t_4 == 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1347; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_4 = ((struct __pyx_vtabstruct_12_ruamel_yaml_CEmitter *)__pyx_v_self->__pyx_vtab)->_serialize_node(__pyx_v_self, __pyx_v_node, Py_None, Py_None); if (unlikely(__pyx_t_4 == 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1347; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-  /* "_yaml.pyx":1348
+  /* "_ruamel_yaml.pyx":1348
  *         self._anchor_node(node)
  *         self._serialize_node(node, None, None)
  *         yaml_document_end_event_initialize(&event, self.document_end_implicit)             # <<<<<<<<<<<<<<
@@ -18754,7 +18754,7 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_12serialize(struct __pyx_obj_5_yaml_C
  */
   yaml_document_end_event_initialize((&__pyx_v_event), __pyx_v_self->document_end_implicit);
 
-  /* "_yaml.pyx":1349
+  /* "_ruamel_yaml.pyx":1349
  *         self._serialize_node(node, None, None)
  *         yaml_document_end_event_initialize(&event, self.document_end_implicit)
  *         if yaml_emitter_emit(&self.emitter, &event) == 0:             # <<<<<<<<<<<<<<
@@ -18765,19 +18765,19 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_12serialize(struct __pyx_obj_5_yaml_C
   __pyx_t_1 = ((__pyx_t_4 == 0) != 0);
   if (__pyx_t_1) {
 
-    /* "_yaml.pyx":1350
+    /* "_ruamel_yaml.pyx":1350
  *         yaml_document_end_event_initialize(&event, self.document_end_implicit)
  *         if yaml_emitter_emit(&self.emitter, &event) == 0:
  *             error = self._emitter_error()             # <<<<<<<<<<<<<<
  *             raise error
  *         self.serialized_nodes = {}
  */
-    __pyx_t_2 = ((struct __pyx_vtabstruct_5_yaml_CEmitter *)__pyx_v_self->__pyx_vtab)->_emitter_error(__pyx_v_self); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1350; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_2 = ((struct __pyx_vtabstruct_12_ruamel_yaml_CEmitter *)__pyx_v_self->__pyx_vtab)->_emitter_error(__pyx_v_self); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1350; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_2);
     __pyx_v_error = __pyx_t_2;
     __pyx_t_2 = 0;
 
-    /* "_yaml.pyx":1351
+    /* "_ruamel_yaml.pyx":1351
  *         if yaml_emitter_emit(&self.emitter, &event) == 0:
  *             error = self._emitter_error()
  *             raise error             # <<<<<<<<<<<<<<
@@ -18787,7 +18787,7 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_12serialize(struct __pyx_obj_5_yaml_C
     __Pyx_Raise(__pyx_v_error, 0, 0, 0);
     {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1351; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-    /* "_yaml.pyx":1349
+    /* "_ruamel_yaml.pyx":1349
  *         self._serialize_node(node, None, None)
  *         yaml_document_end_event_initialize(&event, self.document_end_implicit)
  *         if yaml_emitter_emit(&self.emitter, &event) == 0:             # <<<<<<<<<<<<<<
@@ -18796,7 +18796,7 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_12serialize(struct __pyx_obj_5_yaml_C
  */
   }
 
-  /* "_yaml.pyx":1352
+  /* "_ruamel_yaml.pyx":1352
  *             error = self._emitter_error()
  *             raise error
  *         self.serialized_nodes = {}             # <<<<<<<<<<<<<<
@@ -18811,7 +18811,7 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_12serialize(struct __pyx_obj_5_yaml_C
   __pyx_v_self->serialized_nodes = __pyx_t_2;
   __pyx_t_2 = 0;
 
-  /* "_yaml.pyx":1353
+  /* "_ruamel_yaml.pyx":1353
  *             raise error
  *         self.serialized_nodes = {}
  *         self.anchors = {}             # <<<<<<<<<<<<<<
@@ -18826,7 +18826,7 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_12serialize(struct __pyx_obj_5_yaml_C
   __pyx_v_self->anchors = __pyx_t_2;
   __pyx_t_2 = 0;
 
-  /* "_yaml.pyx":1354
+  /* "_ruamel_yaml.pyx":1354
  *         self.serialized_nodes = {}
  *         self.anchors = {}
  *         self.last_alias_id = 0             # <<<<<<<<<<<<<<
@@ -18835,7 +18835,7 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_12serialize(struct __pyx_obj_5_yaml_C
  */
   __pyx_v_self->last_alias_id = 0;
 
-  /* "_yaml.pyx":1285
+  /* "_ruamel_yaml.pyx":1285
  *             self.closed = 1
  * 
  *     def serialize(self, node):             # <<<<<<<<<<<<<<
@@ -18849,7 +18849,7 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_12serialize(struct __pyx_obj_5_yaml_C
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_2);
   __Pyx_XDECREF(__pyx_t_3);
-  __Pyx_AddTraceback("_yaml.CEmitter.serialize", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("_ruamel_yaml.CEmitter.serialize", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XDECREF(__pyx_v_cache);
@@ -18861,7 +18861,7 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_12serialize(struct __pyx_obj_5_yaml_C
   return __pyx_r;
 }
 
-/* "_yaml.pyx":1356
+/* "_ruamel_yaml.pyx":1356
  *         self.last_alias_id = 0
  * 
  *     cdef int _anchor_node(self, object node) except 0:             # <<<<<<<<<<<<<<
@@ -18869,7 +18869,7 @@ static PyObject *__pyx_pf_5_yaml_8CEmitter_12serialize(struct __pyx_obj_5_yaml_C
  *             if self.anchors[node] is None:
  */
 
-static int __pyx_f_5_yaml_8CEmitter__anchor_node(struct __pyx_obj_5_yaml_CEmitter *__pyx_v_self, PyObject *__pyx_v_node) {
+static int __pyx_f_12_ruamel_yaml_8CEmitter__anchor_node(struct __pyx_obj_12_ruamel_yaml_CEmitter *__pyx_v_self, PyObject *__pyx_v_node) {
   PyObject *__pyx_v_node_class = NULL;
   PyObject *__pyx_v_item = NULL;
   PyObject *__pyx_v_key = NULL;
@@ -18892,7 +18892,7 @@ static int __pyx_f_5_yaml_8CEmitter__anchor_node(struct __pyx_obj_5_yaml_CEmitte
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("_anchor_node", 0);
 
-  /* "_yaml.pyx":1357
+  /* "_ruamel_yaml.pyx":1357
  * 
  *     cdef int _anchor_node(self, object node) except 0:
  *         if node in self.anchors:             # <<<<<<<<<<<<<<
@@ -18903,7 +18903,7 @@ static int __pyx_f_5_yaml_8CEmitter__anchor_node(struct __pyx_obj_5_yaml_CEmitte
   __pyx_t_2 = (__pyx_t_1 != 0);
   if (__pyx_t_2) {
 
-    /* "_yaml.pyx":1358
+    /* "_ruamel_yaml.pyx":1358
  *     cdef int _anchor_node(self, object node) except 0:
  *         if node in self.anchors:
  *             if self.anchors[node] is None:             # <<<<<<<<<<<<<<
@@ -18917,7 +18917,7 @@ static int __pyx_f_5_yaml_8CEmitter__anchor_node(struct __pyx_obj_5_yaml_CEmitte
     __pyx_t_1 = (__pyx_t_2 != 0);
     if (__pyx_t_1) {
 
-      /* "_yaml.pyx":1359
+      /* "_ruamel_yaml.pyx":1359
  *         if node in self.anchors:
  *             if self.anchors[node] is None:
  *                 self.last_alias_id = self.last_alias_id+1             # <<<<<<<<<<<<<<
@@ -18926,7 +18926,7 @@ static int __pyx_f_5_yaml_8CEmitter__anchor_node(struct __pyx_obj_5_yaml_CEmitte
  */
       __pyx_v_self->last_alias_id = (__pyx_v_self->last_alias_id + 1);
 
-      /* "_yaml.pyx":1360
+      /* "_ruamel_yaml.pyx":1360
  *             if self.anchors[node] is None:
  *                 self.last_alias_id = self.last_alias_id+1
  *                 self.anchors[node] = u"id%03d" % self.last_alias_id             # <<<<<<<<<<<<<<
@@ -18941,7 +18941,7 @@ static int __pyx_f_5_yaml_8CEmitter__anchor_node(struct __pyx_obj_5_yaml_CEmitte
       if (unlikely(PyObject_SetItem(__pyx_v_self->anchors, __pyx_v_node, __pyx_t_4) < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1360; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-      /* "_yaml.pyx":1358
+      /* "_ruamel_yaml.pyx":1358
  *     cdef int _anchor_node(self, object node) except 0:
  *         if node in self.anchors:
  *             if self.anchors[node] is None:             # <<<<<<<<<<<<<<
@@ -18950,7 +18950,7 @@ static int __pyx_f_5_yaml_8CEmitter__anchor_node(struct __pyx_obj_5_yaml_CEmitte
  */
     }
 
-    /* "_yaml.pyx":1357
+    /* "_ruamel_yaml.pyx":1357
  * 
  *     cdef int _anchor_node(self, object node) except 0:
  *         if node in self.anchors:             # <<<<<<<<<<<<<<
@@ -18960,7 +18960,7 @@ static int __pyx_f_5_yaml_8CEmitter__anchor_node(struct __pyx_obj_5_yaml_CEmitte
     goto __pyx_L3;
   }
 
-  /* "_yaml.pyx":1362
+  /* "_ruamel_yaml.pyx":1362
  *                 self.anchors[node] = u"id%03d" % self.last_alias_id
  *         else:
  *             self.anchors[node] = None             # <<<<<<<<<<<<<<
@@ -18970,7 +18970,7 @@ static int __pyx_f_5_yaml_8CEmitter__anchor_node(struct __pyx_obj_5_yaml_CEmitte
   /*else*/ {
     if (unlikely(PyObject_SetItem(__pyx_v_self->anchors, __pyx_v_node, Py_None) < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1362; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-    /* "_yaml.pyx":1363
+    /* "_ruamel_yaml.pyx":1363
  *         else:
  *             self.anchors[node] = None
  *             node_class = node.__class__             # <<<<<<<<<<<<<<
@@ -18982,7 +18982,7 @@ static int __pyx_f_5_yaml_8CEmitter__anchor_node(struct __pyx_obj_5_yaml_CEmitte
     __pyx_v_node_class = __pyx_t_4;
     __pyx_t_4 = 0;
 
-    /* "_yaml.pyx":1364
+    /* "_ruamel_yaml.pyx":1364
  *             self.anchors[node] = None
  *             node_class = node.__class__
  *             if node_class is SequenceNode:             # <<<<<<<<<<<<<<
@@ -18996,7 +18996,7 @@ static int __pyx_f_5_yaml_8CEmitter__anchor_node(struct __pyx_obj_5_yaml_CEmitte
     __pyx_t_2 = (__pyx_t_1 != 0);
     if (__pyx_t_2) {
 
-      /* "_yaml.pyx":1365
+      /* "_ruamel_yaml.pyx":1365
  *             node_class = node.__class__
  *             if node_class is SequenceNode:
  *                 for item in node.value:             # <<<<<<<<<<<<<<
@@ -19048,16 +19048,16 @@ static int __pyx_f_5_yaml_8CEmitter__anchor_node(struct __pyx_obj_5_yaml_CEmitte
         __Pyx_XDECREF_SET(__pyx_v_item, __pyx_t_4);
         __pyx_t_4 = 0;
 
-        /* "_yaml.pyx":1366
+        /* "_ruamel_yaml.pyx":1366
  *             if node_class is SequenceNode:
  *                 for item in node.value:
  *                     self._anchor_node(item)             # <<<<<<<<<<<<<<
  *             elif node_class is MappingNode:
  *                 for key, value in node.value:
  */
-        __pyx_t_7 = ((struct __pyx_vtabstruct_5_yaml_CEmitter *)__pyx_v_self->__pyx_vtab)->_anchor_node(__pyx_v_self, __pyx_v_item); if (unlikely(__pyx_t_7 == 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1366; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_7 = ((struct __pyx_vtabstruct_12_ruamel_yaml_CEmitter *)__pyx_v_self->__pyx_vtab)->_anchor_node(__pyx_v_self, __pyx_v_item); if (unlikely(__pyx_t_7 == 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1366; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-        /* "_yaml.pyx":1365
+        /* "_ruamel_yaml.pyx":1365
  *             node_class = node.__class__
  *             if node_class is SequenceNode:
  *                 for item in node.value:             # <<<<<<<<<<<<<<
@@ -19067,7 +19067,7 @@ static int __pyx_f_5_yaml_8CEmitter__anchor_node(struct __pyx_obj_5_yaml_CEmitte
       }
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-      /* "_yaml.pyx":1364
+      /* "_ruamel_yaml.pyx":1364
  *             self.anchors[node] = None
  *             node_class = node.__class__
  *             if node_class is SequenceNode:             # <<<<<<<<<<<<<<
@@ -19077,7 +19077,7 @@ static int __pyx_f_5_yaml_8CEmitter__anchor_node(struct __pyx_obj_5_yaml_CEmitte
       goto __pyx_L5;
     }
 
-    /* "_yaml.pyx":1367
+    /* "_ruamel_yaml.pyx":1367
  *                 for item in node.value:
  *                     self._anchor_node(item)
  *             elif node_class is MappingNode:             # <<<<<<<<<<<<<<
@@ -19091,7 +19091,7 @@ static int __pyx_f_5_yaml_8CEmitter__anchor_node(struct __pyx_obj_5_yaml_CEmitte
     __pyx_t_1 = (__pyx_t_2 != 0);
     if (__pyx_t_1) {
 
-      /* "_yaml.pyx":1368
+      /* "_ruamel_yaml.pyx":1368
  *                     self._anchor_node(item)
  *             elif node_class is MappingNode:
  *                 for key, value in node.value:             # <<<<<<<<<<<<<<
@@ -19195,25 +19195,25 @@ static int __pyx_f_5_yaml_8CEmitter__anchor_node(struct __pyx_obj_5_yaml_CEmitte
         __Pyx_XDECREF_SET(__pyx_v_value, __pyx_t_9);
         __pyx_t_9 = 0;
 
-        /* "_yaml.pyx":1369
+        /* "_ruamel_yaml.pyx":1369
  *             elif node_class is MappingNode:
  *                 for key, value in node.value:
  *                     self._anchor_node(key)             # <<<<<<<<<<<<<<
  *                     self._anchor_node(value)
  *         return 1
  */
-        __pyx_t_7 = ((struct __pyx_vtabstruct_5_yaml_CEmitter *)__pyx_v_self->__pyx_vtab)->_anchor_node(__pyx_v_self, __pyx_v_key); if (unlikely(__pyx_t_7 == 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1369; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_7 = ((struct __pyx_vtabstruct_12_ruamel_yaml_CEmitter *)__pyx_v_self->__pyx_vtab)->_anchor_node(__pyx_v_self, __pyx_v_key); if (unlikely(__pyx_t_7 == 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1369; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-        /* "_yaml.pyx":1370
+        /* "_ruamel_yaml.pyx":1370
  *                 for key, value in node.value:
  *                     self._anchor_node(key)
  *                     self._anchor_node(value)             # <<<<<<<<<<<<<<
  *         return 1
  * 
  */
-        __pyx_t_7 = ((struct __pyx_vtabstruct_5_yaml_CEmitter *)__pyx_v_self->__pyx_vtab)->_anchor_node(__pyx_v_self, __pyx_v_value); if (unlikely(__pyx_t_7 == 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1370; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_7 = ((struct __pyx_vtabstruct_12_ruamel_yaml_CEmitter *)__pyx_v_self->__pyx_vtab)->_anchor_node(__pyx_v_self, __pyx_v_value); if (unlikely(__pyx_t_7 == 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1370; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-        /* "_yaml.pyx":1368
+        /* "_ruamel_yaml.pyx":1368
  *                     self._anchor_node(item)
  *             elif node_class is MappingNode:
  *                 for key, value in node.value:             # <<<<<<<<<<<<<<
@@ -19223,7 +19223,7 @@ static int __pyx_f_5_yaml_8CEmitter__anchor_node(struct __pyx_obj_5_yaml_CEmitte
       }
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-      /* "_yaml.pyx":1367
+      /* "_ruamel_yaml.pyx":1367
  *                 for item in node.value:
  *                     self._anchor_node(item)
  *             elif node_class is MappingNode:             # <<<<<<<<<<<<<<
@@ -19235,7 +19235,7 @@ static int __pyx_f_5_yaml_8CEmitter__anchor_node(struct __pyx_obj_5_yaml_CEmitte
   }
   __pyx_L3:;
 
-  /* "_yaml.pyx":1371
+  /* "_ruamel_yaml.pyx":1371
  *                     self._anchor_node(key)
  *                     self._anchor_node(value)
  *         return 1             # <<<<<<<<<<<<<<
@@ -19245,7 +19245,7 @@ static int __pyx_f_5_yaml_8CEmitter__anchor_node(struct __pyx_obj_5_yaml_CEmitte
   __pyx_r = 1;
   goto __pyx_L0;
 
-  /* "_yaml.pyx":1356
+  /* "_ruamel_yaml.pyx":1356
  *         self.last_alias_id = 0
  * 
  *     cdef int _anchor_node(self, object node) except 0:             # <<<<<<<<<<<<<<
@@ -19260,7 +19260,7 @@ static int __pyx_f_5_yaml_8CEmitter__anchor_node(struct __pyx_obj_5_yaml_CEmitte
   __Pyx_XDECREF(__pyx_t_8);
   __Pyx_XDECREF(__pyx_t_9);
   __Pyx_XDECREF(__pyx_t_10);
-  __Pyx_AddTraceback("_yaml.CEmitter._anchor_node", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("_ruamel_yaml.CEmitter._anchor_node", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = 0;
   __pyx_L0:;
   __Pyx_XDECREF(__pyx_v_node_class);
@@ -19271,7 +19271,7 @@ static int __pyx_f_5_yaml_8CEmitter__anchor_node(struct __pyx_obj_5_yaml_CEmitte
   return __pyx_r;
 }
 
-/* "_yaml.pyx":1373
+/* "_ruamel_yaml.pyx":1373
  *         return 1
  * 
  *     cdef int _serialize_node(self, object node, object parent, object index) except 0:             # <<<<<<<<<<<<<<
@@ -19279,7 +19279,7 @@ static int __pyx_f_5_yaml_8CEmitter__anchor_node(struct __pyx_obj_5_yaml_CEmitte
  *         cdef int implicit
  */
 
-static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmitter *__pyx_v_self, PyObject *__pyx_v_node, PyObject *__pyx_v_parent, PyObject *__pyx_v_index) {
+static int __pyx_f_12_ruamel_yaml_8CEmitter__serialize_node(struct __pyx_obj_12_ruamel_yaml_CEmitter *__pyx_v_self, PyObject *__pyx_v_node, PyObject *__pyx_v_parent, PyObject *__pyx_v_index) {
   yaml_event_t __pyx_v_event;
   int __pyx_v_implicit;
   int __pyx_v_plain_implicit;
@@ -19320,7 +19320,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("_serialize_node", 0);
 
-  /* "_yaml.pyx":1386
+  /* "_ruamel_yaml.pyx":1386
  *         cdef yaml_sequence_style_t sequence_style
  *         cdef yaml_mapping_style_t mapping_style
  *         anchor_object = self.anchors[node]             # <<<<<<<<<<<<<<
@@ -19332,7 +19332,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
   __pyx_v_anchor_object = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "_yaml.pyx":1387
+  /* "_ruamel_yaml.pyx":1387
  *         cdef yaml_mapping_style_t mapping_style
  *         anchor_object = self.anchors[node]
  *         anchor = NULL             # <<<<<<<<<<<<<<
@@ -19341,7 +19341,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
  */
   __pyx_v_anchor = NULL;
 
-  /* "_yaml.pyx":1388
+  /* "_ruamel_yaml.pyx":1388
  *         anchor_object = self.anchors[node]
  *         anchor = NULL
  *         if anchor_object is not None:             # <<<<<<<<<<<<<<
@@ -19352,7 +19352,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
   __pyx_t_3 = (__pyx_t_2 != 0);
   if (__pyx_t_3) {
 
-    /* "_yaml.pyx":1389
+    /* "_ruamel_yaml.pyx":1389
  *         anchor = NULL
  *         if anchor_object is not None:
  *             if PyUnicode_CheckExact(anchor_object):             # <<<<<<<<<<<<<<
@@ -19362,7 +19362,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
     __pyx_t_3 = (PyUnicode_CheckExact(__pyx_v_anchor_object) != 0);
     if (__pyx_t_3) {
 
-      /* "_yaml.pyx":1390
+      /* "_ruamel_yaml.pyx":1390
  *         if anchor_object is not None:
  *             if PyUnicode_CheckExact(anchor_object):
  *                 anchor_object = PyUnicode_AsUTF8String(anchor_object)             # <<<<<<<<<<<<<<
@@ -19374,7 +19374,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
       __Pyx_DECREF_SET(__pyx_v_anchor_object, __pyx_t_1);
       __pyx_t_1 = 0;
 
-      /* "_yaml.pyx":1389
+      /* "_ruamel_yaml.pyx":1389
  *         anchor = NULL
  *         if anchor_object is not None:
  *             if PyUnicode_CheckExact(anchor_object):             # <<<<<<<<<<<<<<
@@ -19383,7 +19383,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
  */
     }
 
-    /* "_yaml.pyx":1391
+    /* "_ruamel_yaml.pyx":1391
  *             if PyUnicode_CheckExact(anchor_object):
  *                 anchor_object = PyUnicode_AsUTF8String(anchor_object)
  *             if not PyString_CheckExact(anchor_object):             # <<<<<<<<<<<<<<
@@ -19393,7 +19393,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
     __pyx_t_3 = ((!(PyString_CheckExact(__pyx_v_anchor_object) != 0)) != 0);
     if (__pyx_t_3) {
 
-      /* "_yaml.pyx":1392
+      /* "_ruamel_yaml.pyx":1392
  *                 anchor_object = PyUnicode_AsUTF8String(anchor_object)
  *             if not PyString_CheckExact(anchor_object):
  *                 if PY_MAJOR_VERSION < 3:             # <<<<<<<<<<<<<<
@@ -19403,7 +19403,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
       __pyx_t_3 = ((PY_MAJOR_VERSION < 3) != 0);
       if (__pyx_t_3) {
 
-        /* "_yaml.pyx":1393
+        /* "_ruamel_yaml.pyx":1393
  *             if not PyString_CheckExact(anchor_object):
  *                 if PY_MAJOR_VERSION < 3:
  *                     raise TypeError("anchor must be a string")             # <<<<<<<<<<<<<<
@@ -19416,7 +19416,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
         __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
         {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1393; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-        /* "_yaml.pyx":1392
+        /* "_ruamel_yaml.pyx":1392
  *                 anchor_object = PyUnicode_AsUTF8String(anchor_object)
  *             if not PyString_CheckExact(anchor_object):
  *                 if PY_MAJOR_VERSION < 3:             # <<<<<<<<<<<<<<
@@ -19425,7 +19425,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
  */
       }
 
-      /* "_yaml.pyx":1395
+      /* "_ruamel_yaml.pyx":1395
  *                     raise TypeError("anchor must be a string")
  *                 else:
  *                     raise TypeError(u"anchor must be a string")             # <<<<<<<<<<<<<<
@@ -19440,7 +19440,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
         {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1395; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       }
 
-      /* "_yaml.pyx":1391
+      /* "_ruamel_yaml.pyx":1391
  *             if PyUnicode_CheckExact(anchor_object):
  *                 anchor_object = PyUnicode_AsUTF8String(anchor_object)
  *             if not PyString_CheckExact(anchor_object):             # <<<<<<<<<<<<<<
@@ -19449,7 +19449,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
  */
     }
 
-    /* "_yaml.pyx":1396
+    /* "_ruamel_yaml.pyx":1396
  *                 else:
  *                     raise TypeError(u"anchor must be a string")
  *             anchor = PyString_AS_STRING(anchor_object)             # <<<<<<<<<<<<<<
@@ -19458,7 +19458,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
  */
     __pyx_v_anchor = PyString_AS_STRING(__pyx_v_anchor_object);
 
-    /* "_yaml.pyx":1388
+    /* "_ruamel_yaml.pyx":1388
  *         anchor_object = self.anchors[node]
  *         anchor = NULL
  *         if anchor_object is not None:             # <<<<<<<<<<<<<<
@@ -19467,7 +19467,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
  */
   }
 
-  /* "_yaml.pyx":1397
+  /* "_ruamel_yaml.pyx":1397
  *                     raise TypeError(u"anchor must be a string")
  *             anchor = PyString_AS_STRING(anchor_object)
  *         if node in self.serialized_nodes:             # <<<<<<<<<<<<<<
@@ -19478,7 +19478,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
   __pyx_t_2 = (__pyx_t_3 != 0);
   if (__pyx_t_2) {
 
-    /* "_yaml.pyx":1398
+    /* "_ruamel_yaml.pyx":1398
  *             anchor = PyString_AS_STRING(anchor_object)
  *         if node in self.serialized_nodes:
  *             if yaml_alias_event_initialize(&event, anchor) == 0:             # <<<<<<<<<<<<<<
@@ -19488,7 +19488,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
     __pyx_t_2 = ((yaml_alias_event_initialize((&__pyx_v_event), __pyx_v_anchor) == 0) != 0);
     if (__pyx_t_2) {
 
-      /* "_yaml.pyx":1399
+      /* "_ruamel_yaml.pyx":1399
  *         if node in self.serialized_nodes:
  *             if yaml_alias_event_initialize(&event, anchor) == 0:
  *                 raise MemoryError             # <<<<<<<<<<<<<<
@@ -19497,7 +19497,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
  */
       PyErr_NoMemory(); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1399; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-      /* "_yaml.pyx":1398
+      /* "_ruamel_yaml.pyx":1398
  *             anchor = PyString_AS_STRING(anchor_object)
  *         if node in self.serialized_nodes:
  *             if yaml_alias_event_initialize(&event, anchor) == 0:             # <<<<<<<<<<<<<<
@@ -19506,7 +19506,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
  */
     }
 
-    /* "_yaml.pyx":1400
+    /* "_ruamel_yaml.pyx":1400
  *             if yaml_alias_event_initialize(&event, anchor) == 0:
  *                 raise MemoryError
  *             if yaml_emitter_emit(&self.emitter, &event) == 0:             # <<<<<<<<<<<<<<
@@ -19517,19 +19517,19 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
     __pyx_t_2 = ((__pyx_t_4 == 0) != 0);
     if (__pyx_t_2) {
 
-      /* "_yaml.pyx":1401
+      /* "_ruamel_yaml.pyx":1401
  *                 raise MemoryError
  *             if yaml_emitter_emit(&self.emitter, &event) == 0:
  *                 error = self._emitter_error()             # <<<<<<<<<<<<<<
  *                 raise error
  *         else:
  */
-      __pyx_t_1 = ((struct __pyx_vtabstruct_5_yaml_CEmitter *)__pyx_v_self->__pyx_vtab)->_emitter_error(__pyx_v_self); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1401; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_1 = ((struct __pyx_vtabstruct_12_ruamel_yaml_CEmitter *)__pyx_v_self->__pyx_vtab)->_emitter_error(__pyx_v_self); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1401; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_1);
       __pyx_v_error = __pyx_t_1;
       __pyx_t_1 = 0;
 
-      /* "_yaml.pyx":1402
+      /* "_ruamel_yaml.pyx":1402
  *             if yaml_emitter_emit(&self.emitter, &event) == 0:
  *                 error = self._emitter_error()
  *                 raise error             # <<<<<<<<<<<<<<
@@ -19539,7 +19539,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
       __Pyx_Raise(__pyx_v_error, 0, 0, 0);
       {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1402; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-      /* "_yaml.pyx":1400
+      /* "_ruamel_yaml.pyx":1400
  *             if yaml_alias_event_initialize(&event, anchor) == 0:
  *                 raise MemoryError
  *             if yaml_emitter_emit(&self.emitter, &event) == 0:             # <<<<<<<<<<<<<<
@@ -19548,7 +19548,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
  */
     }
 
-    /* "_yaml.pyx":1397
+    /* "_ruamel_yaml.pyx":1397
  *                     raise TypeError(u"anchor must be a string")
  *             anchor = PyString_AS_STRING(anchor_object)
  *         if node in self.serialized_nodes:             # <<<<<<<<<<<<<<
@@ -19558,7 +19558,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
     goto __pyx_L7;
   }
 
-  /* "_yaml.pyx":1404
+  /* "_ruamel_yaml.pyx":1404
  *                 raise error
  *         else:
  *             node_class = node.__class__             # <<<<<<<<<<<<<<
@@ -19571,7 +19571,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
     __pyx_v_node_class = __pyx_t_1;
     __pyx_t_1 = 0;
 
-    /* "_yaml.pyx":1405
+    /* "_ruamel_yaml.pyx":1405
  *         else:
  *             node_class = node.__class__
  *             self.serialized_nodes[node] = True             # <<<<<<<<<<<<<<
@@ -19580,7 +19580,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
  */
     if (unlikely(PyObject_SetItem(__pyx_v_self->serialized_nodes, __pyx_v_node, Py_True) < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1405; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-    /* "_yaml.pyx":1406
+    /* "_ruamel_yaml.pyx":1406
  *             node_class = node.__class__
  *             self.serialized_nodes[node] = True
  *             self.descend_resolver(parent, index)             # <<<<<<<<<<<<<<
@@ -19618,7 +19618,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-    /* "_yaml.pyx":1407
+    /* "_ruamel_yaml.pyx":1407
  *             self.serialized_nodes[node] = True
  *             self.descend_resolver(parent, index)
  *             if node_class is ScalarNode:             # <<<<<<<<<<<<<<
@@ -19632,7 +19632,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
     __pyx_t_3 = (__pyx_t_2 != 0);
     if (__pyx_t_3) {
 
-      /* "_yaml.pyx":1408
+      /* "_ruamel_yaml.pyx":1408
  *             self.descend_resolver(parent, index)
  *             if node_class is ScalarNode:
  *                 plain_implicit = 0             # <<<<<<<<<<<<<<
@@ -19641,7 +19641,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
  */
       __pyx_v_plain_implicit = 0;
 
-      /* "_yaml.pyx":1409
+      /* "_ruamel_yaml.pyx":1409
  *             if node_class is ScalarNode:
  *                 plain_implicit = 0
  *                 quoted_implicit = 0             # <<<<<<<<<<<<<<
@@ -19650,7 +19650,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
  */
       __pyx_v_quoted_implicit = 0;
 
-      /* "_yaml.pyx":1410
+      /* "_ruamel_yaml.pyx":1410
  *                 plain_implicit = 0
  *                 quoted_implicit = 0
  *                 tag_object = node.tag             # <<<<<<<<<<<<<<
@@ -19662,7 +19662,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
       __pyx_v_tag_object = __pyx_t_1;
       __pyx_t_1 = 0;
 
-      /* "_yaml.pyx":1411
+      /* "_ruamel_yaml.pyx":1411
  *                 quoted_implicit = 0
  *                 tag_object = node.tag
  *                 if self.resolve(ScalarNode, node.value, (True, False)) == tag_object:             # <<<<<<<<<<<<<<
@@ -19711,7 +19711,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
       __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
       if (__pyx_t_3) {
 
-        /* "_yaml.pyx":1412
+        /* "_ruamel_yaml.pyx":1412
  *                 tag_object = node.tag
  *                 if self.resolve(ScalarNode, node.value, (True, False)) == tag_object:
  *                     plain_implicit = 1             # <<<<<<<<<<<<<<
@@ -19720,7 +19720,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
  */
         __pyx_v_plain_implicit = 1;
 
-        /* "_yaml.pyx":1411
+        /* "_ruamel_yaml.pyx":1411
  *                 quoted_implicit = 0
  *                 tag_object = node.tag
  *                 if self.resolve(ScalarNode, node.value, (True, False)) == tag_object:             # <<<<<<<<<<<<<<
@@ -19729,7 +19729,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
  */
       }
 
-      /* "_yaml.pyx":1413
+      /* "_ruamel_yaml.pyx":1413
  *                 if self.resolve(ScalarNode, node.value, (True, False)) == tag_object:
  *                     plain_implicit = 1
  *                 if self.resolve(ScalarNode, node.value, (False, True)) == tag_object:             # <<<<<<<<<<<<<<
@@ -19778,7 +19778,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
       if (__pyx_t_3) {
 
-        /* "_yaml.pyx":1414
+        /* "_ruamel_yaml.pyx":1414
  *                     plain_implicit = 1
  *                 if self.resolve(ScalarNode, node.value, (False, True)) == tag_object:
  *                     quoted_implicit = 1             # <<<<<<<<<<<<<<
@@ -19787,7 +19787,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
  */
         __pyx_v_quoted_implicit = 1;
 
-        /* "_yaml.pyx":1413
+        /* "_ruamel_yaml.pyx":1413
  *                 if self.resolve(ScalarNode, node.value, (True, False)) == tag_object:
  *                     plain_implicit = 1
  *                 if self.resolve(ScalarNode, node.value, (False, True)) == tag_object:             # <<<<<<<<<<<<<<
@@ -19796,7 +19796,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
  */
       }
 
-      /* "_yaml.pyx":1415
+      /* "_ruamel_yaml.pyx":1415
  *                 if self.resolve(ScalarNode, node.value, (False, True)) == tag_object:
  *                     quoted_implicit = 1
  *                 tag = NULL             # <<<<<<<<<<<<<<
@@ -19805,7 +19805,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
  */
       __pyx_v_tag = NULL;
 
-      /* "_yaml.pyx":1416
+      /* "_ruamel_yaml.pyx":1416
  *                     quoted_implicit = 1
  *                 tag = NULL
  *                 if tag_object is not None:             # <<<<<<<<<<<<<<
@@ -19816,7 +19816,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
       __pyx_t_2 = (__pyx_t_3 != 0);
       if (__pyx_t_2) {
 
-        /* "_yaml.pyx":1417
+        /* "_ruamel_yaml.pyx":1417
  *                 tag = NULL
  *                 if tag_object is not None:
  *                     if PyUnicode_CheckExact(tag_object):             # <<<<<<<<<<<<<<
@@ -19826,7 +19826,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
         __pyx_t_2 = (PyUnicode_CheckExact(__pyx_v_tag_object) != 0);
         if (__pyx_t_2) {
 
-          /* "_yaml.pyx":1418
+          /* "_ruamel_yaml.pyx":1418
  *                 if tag_object is not None:
  *                     if PyUnicode_CheckExact(tag_object):
  *                         tag_object = PyUnicode_AsUTF8String(tag_object)             # <<<<<<<<<<<<<<
@@ -19838,7 +19838,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
           __Pyx_DECREF_SET(__pyx_v_tag_object, __pyx_t_1);
           __pyx_t_1 = 0;
 
-          /* "_yaml.pyx":1417
+          /* "_ruamel_yaml.pyx":1417
  *                 tag = NULL
  *                 if tag_object is not None:
  *                     if PyUnicode_CheckExact(tag_object):             # <<<<<<<<<<<<<<
@@ -19847,7 +19847,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
  */
         }
 
-        /* "_yaml.pyx":1419
+        /* "_ruamel_yaml.pyx":1419
  *                     if PyUnicode_CheckExact(tag_object):
  *                         tag_object = PyUnicode_AsUTF8String(tag_object)
  *                     if not PyString_CheckExact(tag_object):             # <<<<<<<<<<<<<<
@@ -19857,7 +19857,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
         __pyx_t_2 = ((!(PyString_CheckExact(__pyx_v_tag_object) != 0)) != 0);
         if (__pyx_t_2) {
 
-          /* "_yaml.pyx":1420
+          /* "_ruamel_yaml.pyx":1420
  *                         tag_object = PyUnicode_AsUTF8String(tag_object)
  *                     if not PyString_CheckExact(tag_object):
  *                         if PY_MAJOR_VERSION < 3:             # <<<<<<<<<<<<<<
@@ -19867,7 +19867,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
           __pyx_t_2 = ((PY_MAJOR_VERSION < 3) != 0);
           if (__pyx_t_2) {
 
-            /* "_yaml.pyx":1421
+            /* "_ruamel_yaml.pyx":1421
  *                     if not PyString_CheckExact(tag_object):
  *                         if PY_MAJOR_VERSION < 3:
  *                             raise TypeError("tag must be a string")             # <<<<<<<<<<<<<<
@@ -19880,7 +19880,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
             __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
             {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1421; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-            /* "_yaml.pyx":1420
+            /* "_ruamel_yaml.pyx":1420
  *                         tag_object = PyUnicode_AsUTF8String(tag_object)
  *                     if not PyString_CheckExact(tag_object):
  *                         if PY_MAJOR_VERSION < 3:             # <<<<<<<<<<<<<<
@@ -19889,7 +19889,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
  */
           }
 
-          /* "_yaml.pyx":1423
+          /* "_ruamel_yaml.pyx":1423
  *                             raise TypeError("tag must be a string")
  *                         else:
  *                             raise TypeError(u"tag must be a string")             # <<<<<<<<<<<<<<
@@ -19904,7 +19904,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
             {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1423; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
           }
 
-          /* "_yaml.pyx":1419
+          /* "_ruamel_yaml.pyx":1419
  *                     if PyUnicode_CheckExact(tag_object):
  *                         tag_object = PyUnicode_AsUTF8String(tag_object)
  *                     if not PyString_CheckExact(tag_object):             # <<<<<<<<<<<<<<
@@ -19913,7 +19913,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
  */
         }
 
-        /* "_yaml.pyx":1424
+        /* "_ruamel_yaml.pyx":1424
  *                         else:
  *                             raise TypeError(u"tag must be a string")
  *                     tag = PyString_AS_STRING(tag_object)             # <<<<<<<<<<<<<<
@@ -19922,7 +19922,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
  */
         __pyx_v_tag = PyString_AS_STRING(__pyx_v_tag_object);
 
-        /* "_yaml.pyx":1416
+        /* "_ruamel_yaml.pyx":1416
  *                     quoted_implicit = 1
  *                 tag = NULL
  *                 if tag_object is not None:             # <<<<<<<<<<<<<<
@@ -19931,7 +19931,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
  */
       }
 
-      /* "_yaml.pyx":1425
+      /* "_ruamel_yaml.pyx":1425
  *                             raise TypeError(u"tag must be a string")
  *                     tag = PyString_AS_STRING(tag_object)
  *                 value_object = node.value             # <<<<<<<<<<<<<<
@@ -19943,7 +19943,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
       __pyx_v_value_object = __pyx_t_1;
       __pyx_t_1 = 0;
 
-      /* "_yaml.pyx":1426
+      /* "_ruamel_yaml.pyx":1426
  *                     tag = PyString_AS_STRING(tag_object)
  *                 value_object = node.value
  *                 if PyUnicode_CheckExact(value_object):             # <<<<<<<<<<<<<<
@@ -19953,7 +19953,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
       __pyx_t_2 = (PyUnicode_CheckExact(__pyx_v_value_object) != 0);
       if (__pyx_t_2) {
 
-        /* "_yaml.pyx":1427
+        /* "_ruamel_yaml.pyx":1427
  *                 value_object = node.value
  *                 if PyUnicode_CheckExact(value_object):
  *                     value_object = PyUnicode_AsUTF8String(value_object)             # <<<<<<<<<<<<<<
@@ -19965,7 +19965,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
         __Pyx_DECREF_SET(__pyx_v_value_object, __pyx_t_1);
         __pyx_t_1 = 0;
 
-        /* "_yaml.pyx":1426
+        /* "_ruamel_yaml.pyx":1426
  *                     tag = PyString_AS_STRING(tag_object)
  *                 value_object = node.value
  *                 if PyUnicode_CheckExact(value_object):             # <<<<<<<<<<<<<<
@@ -19974,7 +19974,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
  */
       }
 
-      /* "_yaml.pyx":1428
+      /* "_ruamel_yaml.pyx":1428
  *                 if PyUnicode_CheckExact(value_object):
  *                     value_object = PyUnicode_AsUTF8String(value_object)
  *                 if not PyString_CheckExact(value_object):             # <<<<<<<<<<<<<<
@@ -19984,7 +19984,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
       __pyx_t_2 = ((!(PyString_CheckExact(__pyx_v_value_object) != 0)) != 0);
       if (__pyx_t_2) {
 
-        /* "_yaml.pyx":1429
+        /* "_ruamel_yaml.pyx":1429
  *                     value_object = PyUnicode_AsUTF8String(value_object)
  *                 if not PyString_CheckExact(value_object):
  *                     if PY_MAJOR_VERSION < 3:             # <<<<<<<<<<<<<<
@@ -19994,7 +19994,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
         __pyx_t_2 = ((PY_MAJOR_VERSION < 3) != 0);
         if (__pyx_t_2) {
 
-          /* "_yaml.pyx":1430
+          /* "_ruamel_yaml.pyx":1430
  *                 if not PyString_CheckExact(value_object):
  *                     if PY_MAJOR_VERSION < 3:
  *                         raise TypeError("value must be a string")             # <<<<<<<<<<<<<<
@@ -20007,7 +20007,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
           __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
           {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1430; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-          /* "_yaml.pyx":1429
+          /* "_ruamel_yaml.pyx":1429
  *                     value_object = PyUnicode_AsUTF8String(value_object)
  *                 if not PyString_CheckExact(value_object):
  *                     if PY_MAJOR_VERSION < 3:             # <<<<<<<<<<<<<<
@@ -20016,7 +20016,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
  */
         }
 
-        /* "_yaml.pyx":1432
+        /* "_ruamel_yaml.pyx":1432
  *                         raise TypeError("value must be a string")
  *                     else:
  *                         raise TypeError(u"value must be a string")             # <<<<<<<<<<<<<<
@@ -20031,7 +20031,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
           {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1432; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         }
 
-        /* "_yaml.pyx":1428
+        /* "_ruamel_yaml.pyx":1428
  *                 if PyUnicode_CheckExact(value_object):
  *                     value_object = PyUnicode_AsUTF8String(value_object)
  *                 if not PyString_CheckExact(value_object):             # <<<<<<<<<<<<<<
@@ -20040,7 +20040,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
  */
       }
 
-      /* "_yaml.pyx":1433
+      /* "_ruamel_yaml.pyx":1433
  *                     else:
  *                         raise TypeError(u"value must be a string")
  *                 value = PyString_AS_STRING(value_object)             # <<<<<<<<<<<<<<
@@ -20049,7 +20049,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
  */
       __pyx_v_value = PyString_AS_STRING(__pyx_v_value_object);
 
-      /* "_yaml.pyx":1434
+      /* "_ruamel_yaml.pyx":1434
  *                         raise TypeError(u"value must be a string")
  *                 value = PyString_AS_STRING(value_object)
  *                 length = PyString_GET_SIZE(value_object)             # <<<<<<<<<<<<<<
@@ -20058,7 +20058,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
  */
       __pyx_v_length = PyString_GET_SIZE(__pyx_v_value_object);
 
-      /* "_yaml.pyx":1435
+      /* "_ruamel_yaml.pyx":1435
  *                 value = PyString_AS_STRING(value_object)
  *                 length = PyString_GET_SIZE(value_object)
  *                 style_object = node.style             # <<<<<<<<<<<<<<
@@ -20070,7 +20070,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
       __pyx_v_style_object = __pyx_t_1;
       __pyx_t_1 = 0;
 
-      /* "_yaml.pyx":1436
+      /* "_ruamel_yaml.pyx":1436
  *                 length = PyString_GET_SIZE(value_object)
  *                 style_object = node.style
  *                 scalar_style = YAML_PLAIN_SCALAR_STYLE             # <<<<<<<<<<<<<<
@@ -20079,7 +20079,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
  */
       __pyx_v_scalar_style = YAML_PLAIN_SCALAR_STYLE;
 
-      /* "_yaml.pyx":1437
+      /* "_ruamel_yaml.pyx":1437
  *                 style_object = node.style
  *                 scalar_style = YAML_PLAIN_SCALAR_STYLE
  *                 if style_object == "'" or style_object == u"'":             # <<<<<<<<<<<<<<
@@ -20097,7 +20097,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
       __pyx_L21_bool_binop_done:;
       if (__pyx_t_2) {
 
-        /* "_yaml.pyx":1438
+        /* "_ruamel_yaml.pyx":1438
  *                 scalar_style = YAML_PLAIN_SCALAR_STYLE
  *                 if style_object == "'" or style_object == u"'":
  *                     scalar_style = YAML_SINGLE_QUOTED_SCALAR_STYLE             # <<<<<<<<<<<<<<
@@ -20106,7 +20106,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
  */
         __pyx_v_scalar_style = YAML_SINGLE_QUOTED_SCALAR_STYLE;
 
-        /* "_yaml.pyx":1437
+        /* "_ruamel_yaml.pyx":1437
  *                 style_object = node.style
  *                 scalar_style = YAML_PLAIN_SCALAR_STYLE
  *                 if style_object == "'" or style_object == u"'":             # <<<<<<<<<<<<<<
@@ -20116,7 +20116,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
         goto __pyx_L20;
       }
 
-      /* "_yaml.pyx":1439
+      /* "_ruamel_yaml.pyx":1439
  *                 if style_object == "'" or style_object == u"'":
  *                     scalar_style = YAML_SINGLE_QUOTED_SCALAR_STYLE
  *                 elif style_object == "\"" or style_object == u"\"":             # <<<<<<<<<<<<<<
@@ -20134,7 +20134,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
       __pyx_L23_bool_binop_done:;
       if (__pyx_t_2) {
 
-        /* "_yaml.pyx":1440
+        /* "_ruamel_yaml.pyx":1440
  *                     scalar_style = YAML_SINGLE_QUOTED_SCALAR_STYLE
  *                 elif style_object == "\"" or style_object == u"\"":
  *                     scalar_style = YAML_DOUBLE_QUOTED_SCALAR_STYLE             # <<<<<<<<<<<<<<
@@ -20143,7 +20143,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
  */
         __pyx_v_scalar_style = YAML_DOUBLE_QUOTED_SCALAR_STYLE;
 
-        /* "_yaml.pyx":1439
+        /* "_ruamel_yaml.pyx":1439
  *                 if style_object == "'" or style_object == u"'":
  *                     scalar_style = YAML_SINGLE_QUOTED_SCALAR_STYLE
  *                 elif style_object == "\"" or style_object == u"\"":             # <<<<<<<<<<<<<<
@@ -20153,7 +20153,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
         goto __pyx_L20;
       }
 
-      /* "_yaml.pyx":1441
+      /* "_ruamel_yaml.pyx":1441
  *                 elif style_object == "\"" or style_object == u"\"":
  *                     scalar_style = YAML_DOUBLE_QUOTED_SCALAR_STYLE
  *                 elif style_object == "|" or style_object == u"|":             # <<<<<<<<<<<<<<
@@ -20171,7 +20171,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
       __pyx_L25_bool_binop_done:;
       if (__pyx_t_2) {
 
-        /* "_yaml.pyx":1442
+        /* "_ruamel_yaml.pyx":1442
  *                     scalar_style = YAML_DOUBLE_QUOTED_SCALAR_STYLE
  *                 elif style_object == "|" or style_object == u"|":
  *                     scalar_style = YAML_LITERAL_SCALAR_STYLE             # <<<<<<<<<<<<<<
@@ -20180,7 +20180,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
  */
         __pyx_v_scalar_style = YAML_LITERAL_SCALAR_STYLE;
 
-        /* "_yaml.pyx":1441
+        /* "_ruamel_yaml.pyx":1441
  *                 elif style_object == "\"" or style_object == u"\"":
  *                     scalar_style = YAML_DOUBLE_QUOTED_SCALAR_STYLE
  *                 elif style_object == "|" or style_object == u"|":             # <<<<<<<<<<<<<<
@@ -20190,7 +20190,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
         goto __pyx_L20;
       }
 
-      /* "_yaml.pyx":1443
+      /* "_ruamel_yaml.pyx":1443
  *                 elif style_object == "|" or style_object == u"|":
  *                     scalar_style = YAML_LITERAL_SCALAR_STYLE
  *                 elif style_object == ">" or style_object == u">":             # <<<<<<<<<<<<<<
@@ -20208,7 +20208,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
       __pyx_L27_bool_binop_done:;
       if (__pyx_t_2) {
 
-        /* "_yaml.pyx":1444
+        /* "_ruamel_yaml.pyx":1444
  *                     scalar_style = YAML_LITERAL_SCALAR_STYLE
  *                 elif style_object == ">" or style_object == u">":
  *                     scalar_style = YAML_FOLDED_SCALAR_STYLE             # <<<<<<<<<<<<<<
@@ -20217,7 +20217,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
  */
         __pyx_v_scalar_style = YAML_FOLDED_SCALAR_STYLE;
 
-        /* "_yaml.pyx":1443
+        /* "_ruamel_yaml.pyx":1443
  *                 elif style_object == "|" or style_object == u"|":
  *                     scalar_style = YAML_LITERAL_SCALAR_STYLE
  *                 elif style_object == ">" or style_object == u">":             # <<<<<<<<<<<<<<
@@ -20227,7 +20227,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
       }
       __pyx_L20:;
 
-      /* "_yaml.pyx":1446
+      /* "_ruamel_yaml.pyx":1446
  *                     scalar_style = YAML_FOLDED_SCALAR_STYLE
  *                 if yaml_scalar_event_initialize(&event, anchor, tag, value, length,
  *                         plain_implicit, quoted_implicit, scalar_style) == 0:             # <<<<<<<<<<<<<<
@@ -20236,7 +20236,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
  */
       __pyx_t_2 = ((yaml_scalar_event_initialize((&__pyx_v_event), __pyx_v_anchor, __pyx_v_tag, __pyx_v_value, __pyx_v_length, __pyx_v_plain_implicit, __pyx_v_quoted_implicit, __pyx_v_scalar_style) == 0) != 0);
 
-      /* "_yaml.pyx":1445
+      /* "_ruamel_yaml.pyx":1445
  *                 elif style_object == ">" or style_object == u">":
  *                     scalar_style = YAML_FOLDED_SCALAR_STYLE
  *                 if yaml_scalar_event_initialize(&event, anchor, tag, value, length,             # <<<<<<<<<<<<<<
@@ -20245,7 +20245,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
  */
       if (__pyx_t_2) {
 
-        /* "_yaml.pyx":1447
+        /* "_ruamel_yaml.pyx":1447
  *                 if yaml_scalar_event_initialize(&event, anchor, tag, value, length,
  *                         plain_implicit, quoted_implicit, scalar_style) == 0:
  *                     raise MemoryError             # <<<<<<<<<<<<<<
@@ -20254,7 +20254,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
  */
         PyErr_NoMemory(); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1447; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-        /* "_yaml.pyx":1445
+        /* "_ruamel_yaml.pyx":1445
  *                 elif style_object == ">" or style_object == u">":
  *                     scalar_style = YAML_FOLDED_SCALAR_STYLE
  *                 if yaml_scalar_event_initialize(&event, anchor, tag, value, length,             # <<<<<<<<<<<<<<
@@ -20263,7 +20263,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
  */
       }
 
-      /* "_yaml.pyx":1448
+      /* "_ruamel_yaml.pyx":1448
  *                         plain_implicit, quoted_implicit, scalar_style) == 0:
  *                     raise MemoryError
  *                 if yaml_emitter_emit(&self.emitter, &event) == 0:             # <<<<<<<<<<<<<<
@@ -20274,19 +20274,19 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
       __pyx_t_2 = ((__pyx_t_4 == 0) != 0);
       if (__pyx_t_2) {
 
-        /* "_yaml.pyx":1449
+        /* "_ruamel_yaml.pyx":1449
  *                     raise MemoryError
  *                 if yaml_emitter_emit(&self.emitter, &event) == 0:
  *                     error = self._emitter_error()             # <<<<<<<<<<<<<<
  *                     raise error
  *             elif node_class is SequenceNode:
  */
-        __pyx_t_1 = ((struct __pyx_vtabstruct_5_yaml_CEmitter *)__pyx_v_self->__pyx_vtab)->_emitter_error(__pyx_v_self); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1449; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_1 = ((struct __pyx_vtabstruct_12_ruamel_yaml_CEmitter *)__pyx_v_self->__pyx_vtab)->_emitter_error(__pyx_v_self); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1449; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         __Pyx_GOTREF(__pyx_t_1);
         __pyx_v_error = __pyx_t_1;
         __pyx_t_1 = 0;
 
-        /* "_yaml.pyx":1450
+        /* "_ruamel_yaml.pyx":1450
  *                 if yaml_emitter_emit(&self.emitter, &event) == 0:
  *                     error = self._emitter_error()
  *                     raise error             # <<<<<<<<<<<<<<
@@ -20296,7 +20296,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
         __Pyx_Raise(__pyx_v_error, 0, 0, 0);
         {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1450; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-        /* "_yaml.pyx":1448
+        /* "_ruamel_yaml.pyx":1448
  *                         plain_implicit, quoted_implicit, scalar_style) == 0:
  *                     raise MemoryError
  *                 if yaml_emitter_emit(&self.emitter, &event) == 0:             # <<<<<<<<<<<<<<
@@ -20305,7 +20305,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
  */
       }
 
-      /* "_yaml.pyx":1407
+      /* "_ruamel_yaml.pyx":1407
  *             self.serialized_nodes[node] = True
  *             self.descend_resolver(parent, index)
  *             if node_class is ScalarNode:             # <<<<<<<<<<<<<<
@@ -20315,7 +20315,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
       goto __pyx_L10;
     }
 
-    /* "_yaml.pyx":1451
+    /* "_ruamel_yaml.pyx":1451
  *                     error = self._emitter_error()
  *                     raise error
  *             elif node_class is SequenceNode:             # <<<<<<<<<<<<<<
@@ -20329,7 +20329,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
     __pyx_t_3 = (__pyx_t_2 != 0);
     if (__pyx_t_3) {
 
-      /* "_yaml.pyx":1452
+      /* "_ruamel_yaml.pyx":1452
  *                     raise error
  *             elif node_class is SequenceNode:
  *                 implicit = 0             # <<<<<<<<<<<<<<
@@ -20338,7 +20338,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
  */
       __pyx_v_implicit = 0;
 
-      /* "_yaml.pyx":1453
+      /* "_ruamel_yaml.pyx":1453
  *             elif node_class is SequenceNode:
  *                 implicit = 0
  *                 tag_object = node.tag             # <<<<<<<<<<<<<<
@@ -20350,7 +20350,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
       __pyx_v_tag_object = __pyx_t_1;
       __pyx_t_1 = 0;
 
-      /* "_yaml.pyx":1454
+      /* "_ruamel_yaml.pyx":1454
  *                 implicit = 0
  *                 tag_object = node.tag
  *                 if self.resolve(SequenceNode, node.value, True) == tag_object:             # <<<<<<<<<<<<<<
@@ -20399,7 +20399,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
       __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
       if (__pyx_t_3) {
 
-        /* "_yaml.pyx":1455
+        /* "_ruamel_yaml.pyx":1455
  *                 tag_object = node.tag
  *                 if self.resolve(SequenceNode, node.value, True) == tag_object:
  *                     implicit = 1             # <<<<<<<<<<<<<<
@@ -20408,7 +20408,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
  */
         __pyx_v_implicit = 1;
 
-        /* "_yaml.pyx":1454
+        /* "_ruamel_yaml.pyx":1454
  *                 implicit = 0
  *                 tag_object = node.tag
  *                 if self.resolve(SequenceNode, node.value, True) == tag_object:             # <<<<<<<<<<<<<<
@@ -20417,7 +20417,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
  */
       }
 
-      /* "_yaml.pyx":1456
+      /* "_ruamel_yaml.pyx":1456
  *                 if self.resolve(SequenceNode, node.value, True) == tag_object:
  *                     implicit = 1
  *                 tag = NULL             # <<<<<<<<<<<<<<
@@ -20426,7 +20426,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
  */
       __pyx_v_tag = NULL;
 
-      /* "_yaml.pyx":1457
+      /* "_ruamel_yaml.pyx":1457
  *                     implicit = 1
  *                 tag = NULL
  *                 if tag_object is not None:             # <<<<<<<<<<<<<<
@@ -20437,7 +20437,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
       __pyx_t_2 = (__pyx_t_3 != 0);
       if (__pyx_t_2) {
 
-        /* "_yaml.pyx":1458
+        /* "_ruamel_yaml.pyx":1458
  *                 tag = NULL
  *                 if tag_object is not None:
  *                     if PyUnicode_CheckExact(tag_object):             # <<<<<<<<<<<<<<
@@ -20447,7 +20447,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
         __pyx_t_2 = (PyUnicode_CheckExact(__pyx_v_tag_object) != 0);
         if (__pyx_t_2) {
 
-          /* "_yaml.pyx":1459
+          /* "_ruamel_yaml.pyx":1459
  *                 if tag_object is not None:
  *                     if PyUnicode_CheckExact(tag_object):
  *                         tag_object = PyUnicode_AsUTF8String(tag_object)             # <<<<<<<<<<<<<<
@@ -20459,7 +20459,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
           __Pyx_DECREF_SET(__pyx_v_tag_object, __pyx_t_5);
           __pyx_t_5 = 0;
 
-          /* "_yaml.pyx":1458
+          /* "_ruamel_yaml.pyx":1458
  *                 tag = NULL
  *                 if tag_object is not None:
  *                     if PyUnicode_CheckExact(tag_object):             # <<<<<<<<<<<<<<
@@ -20468,7 +20468,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
  */
         }
 
-        /* "_yaml.pyx":1460
+        /* "_ruamel_yaml.pyx":1460
  *                     if PyUnicode_CheckExact(tag_object):
  *                         tag_object = PyUnicode_AsUTF8String(tag_object)
  *                     if not PyString_CheckExact(tag_object):             # <<<<<<<<<<<<<<
@@ -20478,7 +20478,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
         __pyx_t_2 = ((!(PyString_CheckExact(__pyx_v_tag_object) != 0)) != 0);
         if (__pyx_t_2) {
 
-          /* "_yaml.pyx":1461
+          /* "_ruamel_yaml.pyx":1461
  *                         tag_object = PyUnicode_AsUTF8String(tag_object)
  *                     if not PyString_CheckExact(tag_object):
  *                         if PY_MAJOR_VERSION < 3:             # <<<<<<<<<<<<<<
@@ -20488,7 +20488,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
           __pyx_t_2 = ((PY_MAJOR_VERSION < 3) != 0);
           if (__pyx_t_2) {
 
-            /* "_yaml.pyx":1462
+            /* "_ruamel_yaml.pyx":1462
  *                     if not PyString_CheckExact(tag_object):
  *                         if PY_MAJOR_VERSION < 3:
  *                             raise TypeError("tag must be a string")             # <<<<<<<<<<<<<<
@@ -20501,7 +20501,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
             __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
             {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1462; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-            /* "_yaml.pyx":1461
+            /* "_ruamel_yaml.pyx":1461
  *                         tag_object = PyUnicode_AsUTF8String(tag_object)
  *                     if not PyString_CheckExact(tag_object):
  *                         if PY_MAJOR_VERSION < 3:             # <<<<<<<<<<<<<<
@@ -20510,7 +20510,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
  */
           }
 
-          /* "_yaml.pyx":1464
+          /* "_ruamel_yaml.pyx":1464
  *                             raise TypeError("tag must be a string")
  *                         else:
  *                             raise TypeError(u"tag must be a string")             # <<<<<<<<<<<<<<
@@ -20525,7 +20525,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
             {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1464; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
           }
 
-          /* "_yaml.pyx":1460
+          /* "_ruamel_yaml.pyx":1460
  *                     if PyUnicode_CheckExact(tag_object):
  *                         tag_object = PyUnicode_AsUTF8String(tag_object)
  *                     if not PyString_CheckExact(tag_object):             # <<<<<<<<<<<<<<
@@ -20534,7 +20534,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
  */
         }
 
-        /* "_yaml.pyx":1465
+        /* "_ruamel_yaml.pyx":1465
  *                         else:
  *                             raise TypeError(u"tag must be a string")
  *                     tag = PyString_AS_STRING(tag_object)             # <<<<<<<<<<<<<<
@@ -20543,7 +20543,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
  */
         __pyx_v_tag = PyString_AS_STRING(__pyx_v_tag_object);
 
-        /* "_yaml.pyx":1457
+        /* "_ruamel_yaml.pyx":1457
  *                     implicit = 1
  *                 tag = NULL
  *                 if tag_object is not None:             # <<<<<<<<<<<<<<
@@ -20552,7 +20552,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
  */
       }
 
-      /* "_yaml.pyx":1466
+      /* "_ruamel_yaml.pyx":1466
  *                             raise TypeError(u"tag must be a string")
  *                     tag = PyString_AS_STRING(tag_object)
  *                 sequence_style = YAML_BLOCK_SEQUENCE_STYLE             # <<<<<<<<<<<<<<
@@ -20561,7 +20561,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
  */
       __pyx_v_sequence_style = YAML_BLOCK_SEQUENCE_STYLE;
 
-      /* "_yaml.pyx":1467
+      /* "_ruamel_yaml.pyx":1467
  *                     tag = PyString_AS_STRING(tag_object)
  *                 sequence_style = YAML_BLOCK_SEQUENCE_STYLE
  *                 if node.flow_style:             # <<<<<<<<<<<<<<
@@ -20574,7 +20574,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
       __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
       if (__pyx_t_2) {
 
-        /* "_yaml.pyx":1468
+        /* "_ruamel_yaml.pyx":1468
  *                 sequence_style = YAML_BLOCK_SEQUENCE_STYLE
  *                 if node.flow_style:
  *                     sequence_style = YAML_FLOW_SEQUENCE_STYLE             # <<<<<<<<<<<<<<
@@ -20583,7 +20583,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
  */
         __pyx_v_sequence_style = YAML_FLOW_SEQUENCE_STYLE;
 
-        /* "_yaml.pyx":1467
+        /* "_ruamel_yaml.pyx":1467
  *                     tag = PyString_AS_STRING(tag_object)
  *                 sequence_style = YAML_BLOCK_SEQUENCE_STYLE
  *                 if node.flow_style:             # <<<<<<<<<<<<<<
@@ -20592,7 +20592,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
  */
       }
 
-      /* "_yaml.pyx":1470
+      /* "_ruamel_yaml.pyx":1470
  *                     sequence_style = YAML_FLOW_SEQUENCE_STYLE
  *                 if yaml_sequence_start_event_initialize(&event, anchor, tag,
  *                         implicit, sequence_style) == 0:             # <<<<<<<<<<<<<<
@@ -20601,7 +20601,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
  */
       __pyx_t_2 = ((yaml_sequence_start_event_initialize((&__pyx_v_event), __pyx_v_anchor, __pyx_v_tag, __pyx_v_implicit, __pyx_v_sequence_style) == 0) != 0);
 
-      /* "_yaml.pyx":1469
+      /* "_ruamel_yaml.pyx":1469
  *                 if node.flow_style:
  *                     sequence_style = YAML_FLOW_SEQUENCE_STYLE
  *                 if yaml_sequence_start_event_initialize(&event, anchor, tag,             # <<<<<<<<<<<<<<
@@ -20610,7 +20610,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
  */
       if (__pyx_t_2) {
 
-        /* "_yaml.pyx":1471
+        /* "_ruamel_yaml.pyx":1471
  *                 if yaml_sequence_start_event_initialize(&event, anchor, tag,
  *                         implicit, sequence_style) == 0:
  *                     raise MemoryError             # <<<<<<<<<<<<<<
@@ -20619,7 +20619,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
  */
         PyErr_NoMemory(); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1471; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-        /* "_yaml.pyx":1469
+        /* "_ruamel_yaml.pyx":1469
  *                 if node.flow_style:
  *                     sequence_style = YAML_FLOW_SEQUENCE_STYLE
  *                 if yaml_sequence_start_event_initialize(&event, anchor, tag,             # <<<<<<<<<<<<<<
@@ -20628,7 +20628,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
  */
       }
 
-      /* "_yaml.pyx":1472
+      /* "_ruamel_yaml.pyx":1472
  *                         implicit, sequence_style) == 0:
  *                     raise MemoryError
  *                 if yaml_emitter_emit(&self.emitter, &event) == 0:             # <<<<<<<<<<<<<<
@@ -20639,19 +20639,19 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
       __pyx_t_2 = ((__pyx_t_4 == 0) != 0);
       if (__pyx_t_2) {
 
-        /* "_yaml.pyx":1473
+        /* "_ruamel_yaml.pyx":1473
  *                     raise MemoryError
  *                 if yaml_emitter_emit(&self.emitter, &event) == 0:
  *                     error = self._emitter_error()             # <<<<<<<<<<<<<<
  *                     raise error
  *                 item_index = 0
  */
-        __pyx_t_5 = ((struct __pyx_vtabstruct_5_yaml_CEmitter *)__pyx_v_self->__pyx_vtab)->_emitter_error(__pyx_v_self); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1473; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_5 = ((struct __pyx_vtabstruct_12_ruamel_yaml_CEmitter *)__pyx_v_self->__pyx_vtab)->_emitter_error(__pyx_v_self); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1473; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         __Pyx_GOTREF(__pyx_t_5);
         __pyx_v_error = __pyx_t_5;
         __pyx_t_5 = 0;
 
-        /* "_yaml.pyx":1474
+        /* "_ruamel_yaml.pyx":1474
  *                 if yaml_emitter_emit(&self.emitter, &event) == 0:
  *                     error = self._emitter_error()
  *                     raise error             # <<<<<<<<<<<<<<
@@ -20661,7 +20661,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
         __Pyx_Raise(__pyx_v_error, 0, 0, 0);
         {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1474; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-        /* "_yaml.pyx":1472
+        /* "_ruamel_yaml.pyx":1472
  *                         implicit, sequence_style) == 0:
  *                     raise MemoryError
  *                 if yaml_emitter_emit(&self.emitter, &event) == 0:             # <<<<<<<<<<<<<<
@@ -20670,7 +20670,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
  */
       }
 
-      /* "_yaml.pyx":1475
+      /* "_ruamel_yaml.pyx":1475
  *                     error = self._emitter_error()
  *                     raise error
  *                 item_index = 0             # <<<<<<<<<<<<<<
@@ -20679,7 +20679,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
  */
       __pyx_v_item_index = 0;
 
-      /* "_yaml.pyx":1476
+      /* "_ruamel_yaml.pyx":1476
  *                     raise error
  *                 item_index = 0
  *                 for item in node.value:             # <<<<<<<<<<<<<<
@@ -20731,7 +20731,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
         __Pyx_XDECREF_SET(__pyx_v_item, __pyx_t_5);
         __pyx_t_5 = 0;
 
-        /* "_yaml.pyx":1477
+        /* "_ruamel_yaml.pyx":1477
  *                 item_index = 0
  *                 for item in node.value:
  *                     self._serialize_node(item, node, item_index)             # <<<<<<<<<<<<<<
@@ -20740,10 +20740,10 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
  */
         __pyx_t_5 = __Pyx_PyInt_From_int(__pyx_v_item_index); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1477; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         __Pyx_GOTREF(__pyx_t_5);
-        __pyx_t_4 = ((struct __pyx_vtabstruct_5_yaml_CEmitter *)__pyx_v_self->__pyx_vtab)->_serialize_node(__pyx_v_self, __pyx_v_item, __pyx_v_node, __pyx_t_5); if (unlikely(__pyx_t_4 == 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1477; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_4 = ((struct __pyx_vtabstruct_12_ruamel_yaml_CEmitter *)__pyx_v_self->__pyx_vtab)->_serialize_node(__pyx_v_self, __pyx_v_item, __pyx_v_node, __pyx_t_5); if (unlikely(__pyx_t_4 == 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1477; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
 
-        /* "_yaml.pyx":1478
+        /* "_ruamel_yaml.pyx":1478
  *                 for item in node.value:
  *                     self._serialize_node(item, node, item_index)
  *                     item_index = item_index+1             # <<<<<<<<<<<<<<
@@ -20752,7 +20752,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
  */
         __pyx_v_item_index = (__pyx_v_item_index + 1);
 
-        /* "_yaml.pyx":1476
+        /* "_ruamel_yaml.pyx":1476
  *                     raise error
  *                 item_index = 0
  *                 for item in node.value:             # <<<<<<<<<<<<<<
@@ -20762,7 +20762,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
       }
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-      /* "_yaml.pyx":1479
+      /* "_ruamel_yaml.pyx":1479
  *                     self._serialize_node(item, node, item_index)
  *                     item_index = item_index+1
  *                 yaml_sequence_end_event_initialize(&event)             # <<<<<<<<<<<<<<
@@ -20771,7 +20771,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
  */
       yaml_sequence_end_event_initialize((&__pyx_v_event));
 
-      /* "_yaml.pyx":1480
+      /* "_ruamel_yaml.pyx":1480
  *                     item_index = item_index+1
  *                 yaml_sequence_end_event_initialize(&event)
  *                 if yaml_emitter_emit(&self.emitter, &event) == 0:             # <<<<<<<<<<<<<<
@@ -20782,19 +20782,19 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
       __pyx_t_2 = ((__pyx_t_4 == 0) != 0);
       if (__pyx_t_2) {
 
-        /* "_yaml.pyx":1481
+        /* "_ruamel_yaml.pyx":1481
  *                 yaml_sequence_end_event_initialize(&event)
  *                 if yaml_emitter_emit(&self.emitter, &event) == 0:
  *                     error = self._emitter_error()             # <<<<<<<<<<<<<<
  *                     raise error
  *             elif node_class is MappingNode:
  */
-        __pyx_t_1 = ((struct __pyx_vtabstruct_5_yaml_CEmitter *)__pyx_v_self->__pyx_vtab)->_emitter_error(__pyx_v_self); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1481; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_1 = ((struct __pyx_vtabstruct_12_ruamel_yaml_CEmitter *)__pyx_v_self->__pyx_vtab)->_emitter_error(__pyx_v_self); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1481; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         __Pyx_GOTREF(__pyx_t_1);
         __pyx_v_error = __pyx_t_1;
         __pyx_t_1 = 0;
 
-        /* "_yaml.pyx":1482
+        /* "_ruamel_yaml.pyx":1482
  *                 if yaml_emitter_emit(&self.emitter, &event) == 0:
  *                     error = self._emitter_error()
  *                     raise error             # <<<<<<<<<<<<<<
@@ -20804,7 +20804,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
         __Pyx_Raise(__pyx_v_error, 0, 0, 0);
         {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1482; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-        /* "_yaml.pyx":1480
+        /* "_ruamel_yaml.pyx":1480
  *                     item_index = item_index+1
  *                 yaml_sequence_end_event_initialize(&event)
  *                 if yaml_emitter_emit(&self.emitter, &event) == 0:             # <<<<<<<<<<<<<<
@@ -20813,7 +20813,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
  */
       }
 
-      /* "_yaml.pyx":1451
+      /* "_ruamel_yaml.pyx":1451
  *                     error = self._emitter_error()
  *                     raise error
  *             elif node_class is SequenceNode:             # <<<<<<<<<<<<<<
@@ -20823,7 +20823,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
       goto __pyx_L10;
     }
 
-    /* "_yaml.pyx":1483
+    /* "_ruamel_yaml.pyx":1483
  *                     error = self._emitter_error()
  *                     raise error
  *             elif node_class is MappingNode:             # <<<<<<<<<<<<<<
@@ -20837,7 +20837,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
     __pyx_t_3 = (__pyx_t_2 != 0);
     if (__pyx_t_3) {
 
-      /* "_yaml.pyx":1484
+      /* "_ruamel_yaml.pyx":1484
  *                     raise error
  *             elif node_class is MappingNode:
  *                 implicit = 0             # <<<<<<<<<<<<<<
@@ -20846,7 +20846,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
  */
       __pyx_v_implicit = 0;
 
-      /* "_yaml.pyx":1485
+      /* "_ruamel_yaml.pyx":1485
  *             elif node_class is MappingNode:
  *                 implicit = 0
  *                 tag_object = node.tag             # <<<<<<<<<<<<<<
@@ -20858,7 +20858,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
       __pyx_v_tag_object = __pyx_t_1;
       __pyx_t_1 = 0;
 
-      /* "_yaml.pyx":1486
+      /* "_ruamel_yaml.pyx":1486
  *                 implicit = 0
  *                 tag_object = node.tag
  *                 if self.resolve(MappingNode, node.value, True) == tag_object:             # <<<<<<<<<<<<<<
@@ -20907,7 +20907,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
       __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
       if (__pyx_t_3) {
 
-        /* "_yaml.pyx":1487
+        /* "_ruamel_yaml.pyx":1487
  *                 tag_object = node.tag
  *                 if self.resolve(MappingNode, node.value, True) == tag_object:
  *                     implicit = 1             # <<<<<<<<<<<<<<
@@ -20916,7 +20916,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
  */
         __pyx_v_implicit = 1;
 
-        /* "_yaml.pyx":1486
+        /* "_ruamel_yaml.pyx":1486
  *                 implicit = 0
  *                 tag_object = node.tag
  *                 if self.resolve(MappingNode, node.value, True) == tag_object:             # <<<<<<<<<<<<<<
@@ -20925,7 +20925,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
  */
       }
 
-      /* "_yaml.pyx":1488
+      /* "_ruamel_yaml.pyx":1488
  *                 if self.resolve(MappingNode, node.value, True) == tag_object:
  *                     implicit = 1
  *                 tag = NULL             # <<<<<<<<<<<<<<
@@ -20934,7 +20934,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
  */
       __pyx_v_tag = NULL;
 
-      /* "_yaml.pyx":1489
+      /* "_ruamel_yaml.pyx":1489
  *                     implicit = 1
  *                 tag = NULL
  *                 if tag_object is not None:             # <<<<<<<<<<<<<<
@@ -20945,7 +20945,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
       __pyx_t_2 = (__pyx_t_3 != 0);
       if (__pyx_t_2) {
 
-        /* "_yaml.pyx":1490
+        /* "_ruamel_yaml.pyx":1490
  *                 tag = NULL
  *                 if tag_object is not None:
  *                     if PyUnicode_CheckExact(tag_object):             # <<<<<<<<<<<<<<
@@ -20955,7 +20955,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
         __pyx_t_2 = (PyUnicode_CheckExact(__pyx_v_tag_object) != 0);
         if (__pyx_t_2) {
 
-          /* "_yaml.pyx":1491
+          /* "_ruamel_yaml.pyx":1491
  *                 if tag_object is not None:
  *                     if PyUnicode_CheckExact(tag_object):
  *                         tag_object = PyUnicode_AsUTF8String(tag_object)             # <<<<<<<<<<<<<<
@@ -20967,7 +20967,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
           __Pyx_DECREF_SET(__pyx_v_tag_object, __pyx_t_5);
           __pyx_t_5 = 0;
 
-          /* "_yaml.pyx":1490
+          /* "_ruamel_yaml.pyx":1490
  *                 tag = NULL
  *                 if tag_object is not None:
  *                     if PyUnicode_CheckExact(tag_object):             # <<<<<<<<<<<<<<
@@ -20976,7 +20976,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
  */
         }
 
-        /* "_yaml.pyx":1492
+        /* "_ruamel_yaml.pyx":1492
  *                     if PyUnicode_CheckExact(tag_object):
  *                         tag_object = PyUnicode_AsUTF8String(tag_object)
  *                     if not PyString_CheckExact(tag_object):             # <<<<<<<<<<<<<<
@@ -20986,7 +20986,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
         __pyx_t_2 = ((!(PyString_CheckExact(__pyx_v_tag_object) != 0)) != 0);
         if (__pyx_t_2) {
 
-          /* "_yaml.pyx":1493
+          /* "_ruamel_yaml.pyx":1493
  *                         tag_object = PyUnicode_AsUTF8String(tag_object)
  *                     if not PyString_CheckExact(tag_object):
  *                         if PY_MAJOR_VERSION < 3:             # <<<<<<<<<<<<<<
@@ -20996,7 +20996,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
           __pyx_t_2 = ((PY_MAJOR_VERSION < 3) != 0);
           if (__pyx_t_2) {
 
-            /* "_yaml.pyx":1494
+            /* "_ruamel_yaml.pyx":1494
  *                     if not PyString_CheckExact(tag_object):
  *                         if PY_MAJOR_VERSION < 3:
  *                             raise TypeError("tag must be a string")             # <<<<<<<<<<<<<<
@@ -21009,7 +21009,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
             __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
             {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1494; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-            /* "_yaml.pyx":1493
+            /* "_ruamel_yaml.pyx":1493
  *                         tag_object = PyUnicode_AsUTF8String(tag_object)
  *                     if not PyString_CheckExact(tag_object):
  *                         if PY_MAJOR_VERSION < 3:             # <<<<<<<<<<<<<<
@@ -21018,7 +21018,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
  */
           }
 
-          /* "_yaml.pyx":1496
+          /* "_ruamel_yaml.pyx":1496
  *                             raise TypeError("tag must be a string")
  *                         else:
  *                             raise TypeError(u"tag must be a string")             # <<<<<<<<<<<<<<
@@ -21033,7 +21033,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
             {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1496; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
           }
 
-          /* "_yaml.pyx":1492
+          /* "_ruamel_yaml.pyx":1492
  *                     if PyUnicode_CheckExact(tag_object):
  *                         tag_object = PyUnicode_AsUTF8String(tag_object)
  *                     if not PyString_CheckExact(tag_object):             # <<<<<<<<<<<<<<
@@ -21042,7 +21042,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
  */
         }
 
-        /* "_yaml.pyx":1497
+        /* "_ruamel_yaml.pyx":1497
  *                         else:
  *                             raise TypeError(u"tag must be a string")
  *                     tag = PyString_AS_STRING(tag_object)             # <<<<<<<<<<<<<<
@@ -21051,7 +21051,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
  */
         __pyx_v_tag = PyString_AS_STRING(__pyx_v_tag_object);
 
-        /* "_yaml.pyx":1489
+        /* "_ruamel_yaml.pyx":1489
  *                     implicit = 1
  *                 tag = NULL
  *                 if tag_object is not None:             # <<<<<<<<<<<<<<
@@ -21060,7 +21060,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
  */
       }
 
-      /* "_yaml.pyx":1498
+      /* "_ruamel_yaml.pyx":1498
  *                             raise TypeError(u"tag must be a string")
  *                     tag = PyString_AS_STRING(tag_object)
  *                 mapping_style = YAML_BLOCK_MAPPING_STYLE             # <<<<<<<<<<<<<<
@@ -21069,7 +21069,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
  */
       __pyx_v_mapping_style = YAML_BLOCK_MAPPING_STYLE;
 
-      /* "_yaml.pyx":1499
+      /* "_ruamel_yaml.pyx":1499
  *                     tag = PyString_AS_STRING(tag_object)
  *                 mapping_style = YAML_BLOCK_MAPPING_STYLE
  *                 if node.flow_style:             # <<<<<<<<<<<<<<
@@ -21082,7 +21082,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
       __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
       if (__pyx_t_2) {
 
-        /* "_yaml.pyx":1500
+        /* "_ruamel_yaml.pyx":1500
  *                 mapping_style = YAML_BLOCK_MAPPING_STYLE
  *                 if node.flow_style:
  *                     mapping_style = YAML_FLOW_MAPPING_STYLE             # <<<<<<<<<<<<<<
@@ -21091,7 +21091,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
  */
         __pyx_v_mapping_style = YAML_FLOW_MAPPING_STYLE;
 
-        /* "_yaml.pyx":1499
+        /* "_ruamel_yaml.pyx":1499
  *                     tag = PyString_AS_STRING(tag_object)
  *                 mapping_style = YAML_BLOCK_MAPPING_STYLE
  *                 if node.flow_style:             # <<<<<<<<<<<<<<
@@ -21100,7 +21100,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
  */
       }
 
-      /* "_yaml.pyx":1502
+      /* "_ruamel_yaml.pyx":1502
  *                     mapping_style = YAML_FLOW_MAPPING_STYLE
  *                 if yaml_mapping_start_event_initialize(&event, anchor, tag,
  *                         implicit, mapping_style) == 0:             # <<<<<<<<<<<<<<
@@ -21109,7 +21109,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
  */
       __pyx_t_2 = ((yaml_mapping_start_event_initialize((&__pyx_v_event), __pyx_v_anchor, __pyx_v_tag, __pyx_v_implicit, __pyx_v_mapping_style) == 0) != 0);
 
-      /* "_yaml.pyx":1501
+      /* "_ruamel_yaml.pyx":1501
  *                 if node.flow_style:
  *                     mapping_style = YAML_FLOW_MAPPING_STYLE
  *                 if yaml_mapping_start_event_initialize(&event, anchor, tag,             # <<<<<<<<<<<<<<
@@ -21118,7 +21118,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
  */
       if (__pyx_t_2) {
 
-        /* "_yaml.pyx":1503
+        /* "_ruamel_yaml.pyx":1503
  *                 if yaml_mapping_start_event_initialize(&event, anchor, tag,
  *                         implicit, mapping_style) == 0:
  *                     raise MemoryError             # <<<<<<<<<<<<<<
@@ -21127,7 +21127,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
  */
         PyErr_NoMemory(); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1503; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-        /* "_yaml.pyx":1501
+        /* "_ruamel_yaml.pyx":1501
  *                 if node.flow_style:
  *                     mapping_style = YAML_FLOW_MAPPING_STYLE
  *                 if yaml_mapping_start_event_initialize(&event, anchor, tag,             # <<<<<<<<<<<<<<
@@ -21136,7 +21136,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
  */
       }
 
-      /* "_yaml.pyx":1504
+      /* "_ruamel_yaml.pyx":1504
  *                         implicit, mapping_style) == 0:
  *                     raise MemoryError
  *                 if yaml_emitter_emit(&self.emitter, &event) == 0:             # <<<<<<<<<<<<<<
@@ -21147,19 +21147,19 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
       __pyx_t_2 = ((__pyx_t_4 == 0) != 0);
       if (__pyx_t_2) {
 
-        /* "_yaml.pyx":1505
+        /* "_ruamel_yaml.pyx":1505
  *                     raise MemoryError
  *                 if yaml_emitter_emit(&self.emitter, &event) == 0:
  *                     error = self._emitter_error()             # <<<<<<<<<<<<<<
  *                     raise error
  *                 for item_key, item_value in node.value:
  */
-        __pyx_t_5 = ((struct __pyx_vtabstruct_5_yaml_CEmitter *)__pyx_v_self->__pyx_vtab)->_emitter_error(__pyx_v_self); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1505; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_5 = ((struct __pyx_vtabstruct_12_ruamel_yaml_CEmitter *)__pyx_v_self->__pyx_vtab)->_emitter_error(__pyx_v_self); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1505; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         __Pyx_GOTREF(__pyx_t_5);
         __pyx_v_error = __pyx_t_5;
         __pyx_t_5 = 0;
 
-        /* "_yaml.pyx":1506
+        /* "_ruamel_yaml.pyx":1506
  *                 if yaml_emitter_emit(&self.emitter, &event) == 0:
  *                     error = self._emitter_error()
  *                     raise error             # <<<<<<<<<<<<<<
@@ -21169,7 +21169,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
         __Pyx_Raise(__pyx_v_error, 0, 0, 0);
         {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1506; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-        /* "_yaml.pyx":1504
+        /* "_ruamel_yaml.pyx":1504
  *                         implicit, mapping_style) == 0:
  *                     raise MemoryError
  *                 if yaml_emitter_emit(&self.emitter, &event) == 0:             # <<<<<<<<<<<<<<
@@ -21178,7 +21178,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
  */
       }
 
-      /* "_yaml.pyx":1507
+      /* "_ruamel_yaml.pyx":1507
  *                     error = self._emitter_error()
  *                     raise error
  *                 for item_key, item_value in node.value:             # <<<<<<<<<<<<<<
@@ -21282,25 +21282,25 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
         __Pyx_XDECREF_SET(__pyx_v_item_value, __pyx_t_6);
         __pyx_t_6 = 0;
 
-        /* "_yaml.pyx":1508
+        /* "_ruamel_yaml.pyx":1508
  *                     raise error
  *                 for item_key, item_value in node.value:
  *                     self._serialize_node(item_key, node, None)             # <<<<<<<<<<<<<<
  *                     self._serialize_node(item_value, node, item_key)
  *                 yaml_mapping_end_event_initialize(&event)
  */
-        __pyx_t_4 = ((struct __pyx_vtabstruct_5_yaml_CEmitter *)__pyx_v_self->__pyx_vtab)->_serialize_node(__pyx_v_self, __pyx_v_item_key, __pyx_v_node, Py_None); if (unlikely(__pyx_t_4 == 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1508; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_4 = ((struct __pyx_vtabstruct_12_ruamel_yaml_CEmitter *)__pyx_v_self->__pyx_vtab)->_serialize_node(__pyx_v_self, __pyx_v_item_key, __pyx_v_node, Py_None); if (unlikely(__pyx_t_4 == 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1508; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-        /* "_yaml.pyx":1509
+        /* "_ruamel_yaml.pyx":1509
  *                 for item_key, item_value in node.value:
  *                     self._serialize_node(item_key, node, None)
  *                     self._serialize_node(item_value, node, item_key)             # <<<<<<<<<<<<<<
  *                 yaml_mapping_end_event_initialize(&event)
  *                 if yaml_emitter_emit(&self.emitter, &event) == 0:
  */
-        __pyx_t_4 = ((struct __pyx_vtabstruct_5_yaml_CEmitter *)__pyx_v_self->__pyx_vtab)->_serialize_node(__pyx_v_self, __pyx_v_item_value, __pyx_v_node, __pyx_v_item_key); if (unlikely(__pyx_t_4 == 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1509; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_4 = ((struct __pyx_vtabstruct_12_ruamel_yaml_CEmitter *)__pyx_v_self->__pyx_vtab)->_serialize_node(__pyx_v_self, __pyx_v_item_value, __pyx_v_node, __pyx_v_item_key); if (unlikely(__pyx_t_4 == 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1509; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-        /* "_yaml.pyx":1507
+        /* "_ruamel_yaml.pyx":1507
  *                     error = self._emitter_error()
  *                     raise error
  *                 for item_key, item_value in node.value:             # <<<<<<<<<<<<<<
@@ -21310,7 +21310,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
       }
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-      /* "_yaml.pyx":1510
+      /* "_ruamel_yaml.pyx":1510
  *                     self._serialize_node(item_key, node, None)
  *                     self._serialize_node(item_value, node, item_key)
  *                 yaml_mapping_end_event_initialize(&event)             # <<<<<<<<<<<<<<
@@ -21319,7 +21319,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
  */
       yaml_mapping_end_event_initialize((&__pyx_v_event));
 
-      /* "_yaml.pyx":1511
+      /* "_ruamel_yaml.pyx":1511
  *                     self._serialize_node(item_value, node, item_key)
  *                 yaml_mapping_end_event_initialize(&event)
  *                 if yaml_emitter_emit(&self.emitter, &event) == 0:             # <<<<<<<<<<<<<<
@@ -21330,19 +21330,19 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
       __pyx_t_2 = ((__pyx_t_4 == 0) != 0);
       if (__pyx_t_2) {
 
-        /* "_yaml.pyx":1512
+        /* "_ruamel_yaml.pyx":1512
  *                 yaml_mapping_end_event_initialize(&event)
  *                 if yaml_emitter_emit(&self.emitter, &event) == 0:
  *                     error = self._emitter_error()             # <<<<<<<<<<<<<<
  *                     raise error
  *             self.ascend_resolver()
  */
-        __pyx_t_1 = ((struct __pyx_vtabstruct_5_yaml_CEmitter *)__pyx_v_self->__pyx_vtab)->_emitter_error(__pyx_v_self); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1512; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_1 = ((struct __pyx_vtabstruct_12_ruamel_yaml_CEmitter *)__pyx_v_self->__pyx_vtab)->_emitter_error(__pyx_v_self); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1512; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         __Pyx_GOTREF(__pyx_t_1);
         __pyx_v_error = __pyx_t_1;
         __pyx_t_1 = 0;
 
-        /* "_yaml.pyx":1513
+        /* "_ruamel_yaml.pyx":1513
  *                 if yaml_emitter_emit(&self.emitter, &event) == 0:
  *                     error = self._emitter_error()
  *                     raise error             # <<<<<<<<<<<<<<
@@ -21352,7 +21352,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
         __Pyx_Raise(__pyx_v_error, 0, 0, 0);
         {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1513; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-        /* "_yaml.pyx":1511
+        /* "_ruamel_yaml.pyx":1511
  *                     self._serialize_node(item_value, node, item_key)
  *                 yaml_mapping_end_event_initialize(&event)
  *                 if yaml_emitter_emit(&self.emitter, &event) == 0:             # <<<<<<<<<<<<<<
@@ -21361,7 +21361,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
  */
       }
 
-      /* "_yaml.pyx":1483
+      /* "_ruamel_yaml.pyx":1483
  *                     error = self._emitter_error()
  *                     raise error
  *             elif node_class is MappingNode:             # <<<<<<<<<<<<<<
@@ -21371,7 +21371,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
     }
     __pyx_L10:;
 
-    /* "_yaml.pyx":1514
+    /* "_ruamel_yaml.pyx":1514
  *                     error = self._emitter_error()
  *                     raise error
  *             self.ascend_resolver()             # <<<<<<<<<<<<<<
@@ -21402,7 +21402,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
   }
   __pyx_L7:;
 
-  /* "_yaml.pyx":1515
+  /* "_ruamel_yaml.pyx":1515
  *                     raise error
  *             self.ascend_resolver()
  *         return 1             # <<<<<<<<<<<<<<
@@ -21412,7 +21412,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
   __pyx_r = 1;
   goto __pyx_L0;
 
-  /* "_yaml.pyx":1373
+  /* "_ruamel_yaml.pyx":1373
  *         return 1
  * 
  *     cdef int _serialize_node(self, object node, object parent, object index) except 0:             # <<<<<<<<<<<<<<
@@ -21428,7 +21428,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
   __Pyx_XDECREF(__pyx_t_8);
   __Pyx_XDECREF(__pyx_t_9);
   __Pyx_XDECREF(__pyx_t_10);
-  __Pyx_AddTraceback("_yaml.CEmitter._serialize_node", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("_ruamel_yaml.CEmitter._serialize_node", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = 0;
   __pyx_L0:;
   __Pyx_XDECREF(__pyx_v_anchor_object);
@@ -21444,7 +21444,7 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
   return __pyx_r;
 }
 
-/* "_yaml.pyx":1517
+/* "_ruamel_yaml.pyx":1517
  *         return 1
  * 
  * cdef int output_handler(void *data, char *buffer, int size) except 0:             # <<<<<<<<<<<<<<
@@ -21452,8 +21452,8 @@ static int __pyx_f_5_yaml_8CEmitter__serialize_node(struct __pyx_obj_5_yaml_CEmi
  *     emitter = <CEmitter>data
  */
 
-static int __pyx_f_5_yaml_output_handler(void *__pyx_v_data, char *__pyx_v_buffer, int __pyx_v_size) {
-  struct __pyx_obj_5_yaml_CEmitter *__pyx_v_emitter = 0;
+static int __pyx_f_12_ruamel_yaml_output_handler(void *__pyx_v_data, char *__pyx_v_buffer, int __pyx_v_size) {
+  struct __pyx_obj_12_ruamel_yaml_CEmitter *__pyx_v_emitter = 0;
   PyObject *__pyx_v_value = NULL;
   int __pyx_r;
   __Pyx_RefNannyDeclarations
@@ -21467,7 +21467,7 @@ static int __pyx_f_5_yaml_output_handler(void *__pyx_v_data, char *__pyx_v_buffe
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("output_handler", 0);
 
-  /* "_yaml.pyx":1519
+  /* "_ruamel_yaml.pyx":1519
  * cdef int output_handler(void *data, char *buffer, int size) except 0:
  *     cdef CEmitter emitter
  *     emitter = <CEmitter>data             # <<<<<<<<<<<<<<
@@ -21476,10 +21476,10 @@ static int __pyx_f_5_yaml_output_handler(void *__pyx_v_data, char *__pyx_v_buffe
  */
   __pyx_t_1 = ((PyObject *)__pyx_v_data);
   __Pyx_INCREF(__pyx_t_1);
-  __pyx_v_emitter = ((struct __pyx_obj_5_yaml_CEmitter *)__pyx_t_1);
+  __pyx_v_emitter = ((struct __pyx_obj_12_ruamel_yaml_CEmitter *)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "_yaml.pyx":1520
+  /* "_ruamel_yaml.pyx":1520
  *     cdef CEmitter emitter
  *     emitter = <CEmitter>data
  *     if emitter.dump_unicode == 0:             # <<<<<<<<<<<<<<
@@ -21489,7 +21489,7 @@ static int __pyx_f_5_yaml_output_handler(void *__pyx_v_data, char *__pyx_v_buffe
   __pyx_t_2 = ((__pyx_v_emitter->dump_unicode == 0) != 0);
   if (__pyx_t_2) {
 
-    /* "_yaml.pyx":1521
+    /* "_ruamel_yaml.pyx":1521
  *     emitter = <CEmitter>data
  *     if emitter.dump_unicode == 0:
  *         value = PyString_FromStringAndSize(buffer, size)             # <<<<<<<<<<<<<<
@@ -21501,7 +21501,7 @@ static int __pyx_f_5_yaml_output_handler(void *__pyx_v_data, char *__pyx_v_buffe
     __pyx_v_value = __pyx_t_1;
     __pyx_t_1 = 0;
 
-    /* "_yaml.pyx":1520
+    /* "_ruamel_yaml.pyx":1520
  *     cdef CEmitter emitter
  *     emitter = <CEmitter>data
  *     if emitter.dump_unicode == 0:             # <<<<<<<<<<<<<<
@@ -21511,7 +21511,7 @@ static int __pyx_f_5_yaml_output_handler(void *__pyx_v_data, char *__pyx_v_buffe
     goto __pyx_L3;
   }
 
-  /* "_yaml.pyx":1523
+  /* "_ruamel_yaml.pyx":1523
  *         value = PyString_FromStringAndSize(buffer, size)
  *     else:
  *         value = PyUnicode_DecodeUTF8(buffer, size, 'strict')             # <<<<<<<<<<<<<<
@@ -21526,7 +21526,7 @@ static int __pyx_f_5_yaml_output_handler(void *__pyx_v_data, char *__pyx_v_buffe
   }
   __pyx_L3:;
 
-  /* "_yaml.pyx":1524
+  /* "_ruamel_yaml.pyx":1524
  *     else:
  *         value = PyUnicode_DecodeUTF8(buffer, size, 'strict')
  *     emitter.stream.write(value)             # <<<<<<<<<<<<<<
@@ -21562,7 +21562,7 @@ static int __pyx_f_5_yaml_output_handler(void *__pyx_v_data, char *__pyx_v_buffe
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "_yaml.pyx":1525
+  /* "_ruamel_yaml.pyx":1525
  *         value = PyUnicode_DecodeUTF8(buffer, size, 'strict')
  *     emitter.stream.write(value)
  *     return 1             # <<<<<<<<<<<<<<
@@ -21571,7 +21571,7 @@ static int __pyx_f_5_yaml_output_handler(void *__pyx_v_data, char *__pyx_v_buffe
   __pyx_r = 1;
   goto __pyx_L0;
 
-  /* "_yaml.pyx":1517
+  /* "_ruamel_yaml.pyx":1517
  *         return 1
  * 
  * cdef int output_handler(void *data, char *buffer, int size) except 0:             # <<<<<<<<<<<<<<
@@ -21585,7 +21585,7 @@ static int __pyx_f_5_yaml_output_handler(void *__pyx_v_data, char *__pyx_v_buffe
   __Pyx_XDECREF(__pyx_t_3);
   __Pyx_XDECREF(__pyx_t_4);
   __Pyx_XDECREF(__pyx_t_5);
-  __Pyx_AddTraceback("_yaml.output_handler", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("_ruamel_yaml.output_handler", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = 0;
   __pyx_L0:;
   __Pyx_XDECREF((PyObject *)__pyx_v_emitter);
@@ -21594,8 +21594,8 @@ static int __pyx_f_5_yaml_output_handler(void *__pyx_v_data, char *__pyx_v_buffe
   return __pyx_r;
 }
 
-static PyObject *__pyx_tp_new_5_yaml_Mark(PyTypeObject *t, CYTHON_UNUSED PyObject *a, CYTHON_UNUSED PyObject *k) {
-  struct __pyx_obj_5_yaml_Mark *p;
+static PyObject *__pyx_tp_new_12_ruamel_yaml_Mark(PyTypeObject *t, CYTHON_UNUSED PyObject *a, CYTHON_UNUSED PyObject *k) {
+  struct __pyx_obj_12_ruamel_yaml_Mark *p;
   PyObject *o;
   if (likely((t->tp_flags & Py_TPFLAGS_IS_ABSTRACT) == 0)) {
     o = (*t->tp_alloc)(t, 0);
@@ -21603,15 +21603,15 @@ static PyObject *__pyx_tp_new_5_yaml_Mark(PyTypeObject *t, CYTHON_UNUSED PyObjec
     o = (PyObject *) PyBaseObject_Type.tp_new(t, __pyx_empty_tuple, 0);
   }
   if (unlikely(!o)) return 0;
-  p = ((struct __pyx_obj_5_yaml_Mark *)o);
+  p = ((struct __pyx_obj_12_ruamel_yaml_Mark *)o);
   p->name = Py_None; Py_INCREF(Py_None);
   p->buffer = Py_None; Py_INCREF(Py_None);
   p->pointer = Py_None; Py_INCREF(Py_None);
   return o;
 }
 
-static void __pyx_tp_dealloc_5_yaml_Mark(PyObject *o) {
-  struct __pyx_obj_5_yaml_Mark *p = (struct __pyx_obj_5_yaml_Mark *)o;
+static void __pyx_tp_dealloc_12_ruamel_yaml_Mark(PyObject *o) {
+  struct __pyx_obj_12_ruamel_yaml_Mark *p = (struct __pyx_obj_12_ruamel_yaml_Mark *)o;
   #if PY_VERSION_HEX >= 0x030400a1
   if (unlikely(Py_TYPE(o)->tp_finalize) && !_PyGC_FINALIZED(o)) {
     if (PyObject_CallFinalizerFromDealloc(o)) return;
@@ -21624,9 +21624,9 @@ static void __pyx_tp_dealloc_5_yaml_Mark(PyObject *o) {
   (*Py_TYPE(o)->tp_free)(o);
 }
 
-static int __pyx_tp_traverse_5_yaml_Mark(PyObject *o, visitproc v, void *a) {
+static int __pyx_tp_traverse_12_ruamel_yaml_Mark(PyObject *o, visitproc v, void *a) {
   int e;
-  struct __pyx_obj_5_yaml_Mark *p = (struct __pyx_obj_5_yaml_Mark *)o;
+  struct __pyx_obj_12_ruamel_yaml_Mark *p = (struct __pyx_obj_12_ruamel_yaml_Mark *)o;
   if (p->name) {
     e = (*v)(p->name, a); if (e) return e;
   }
@@ -21639,9 +21639,9 @@ static int __pyx_tp_traverse_5_yaml_Mark(PyObject *o, visitproc v, void *a) {
   return 0;
 }
 
-static int __pyx_tp_clear_5_yaml_Mark(PyObject *o) {
+static int __pyx_tp_clear_12_ruamel_yaml_Mark(PyObject *o) {
   PyObject* tmp;
-  struct __pyx_obj_5_yaml_Mark *p = (struct __pyx_obj_5_yaml_Mark *)o;
+  struct __pyx_obj_12_ruamel_yaml_Mark *p = (struct __pyx_obj_12_ruamel_yaml_Mark *)o;
   tmp = ((PyObject*)p->name);
   p->name = Py_None; Py_INCREF(Py_None);
   Py_XDECREF(tmp);
@@ -21654,51 +21654,51 @@ static int __pyx_tp_clear_5_yaml_Mark(PyObject *o) {
   return 0;
 }
 
-static PyObject *__pyx_getprop_5_yaml_4Mark_name(PyObject *o, CYTHON_UNUSED void *x) {
-  return __pyx_pw_5_yaml_4Mark_4name_1__get__(o);
+static PyObject *__pyx_getprop_12_ruamel_yaml_4Mark_name(PyObject *o, CYTHON_UNUSED void *x) {
+  return __pyx_pw_12_ruamel_yaml_4Mark_4name_1__get__(o);
 }
 
-static PyObject *__pyx_getprop_5_yaml_4Mark_index(PyObject *o, CYTHON_UNUSED void *x) {
-  return __pyx_pw_5_yaml_4Mark_5index_1__get__(o);
+static PyObject *__pyx_getprop_12_ruamel_yaml_4Mark_index(PyObject *o, CYTHON_UNUSED void *x) {
+  return __pyx_pw_12_ruamel_yaml_4Mark_5index_1__get__(o);
 }
 
-static PyObject *__pyx_getprop_5_yaml_4Mark_line(PyObject *o, CYTHON_UNUSED void *x) {
-  return __pyx_pw_5_yaml_4Mark_4line_1__get__(o);
+static PyObject *__pyx_getprop_12_ruamel_yaml_4Mark_line(PyObject *o, CYTHON_UNUSED void *x) {
+  return __pyx_pw_12_ruamel_yaml_4Mark_4line_1__get__(o);
 }
 
-static PyObject *__pyx_getprop_5_yaml_4Mark_column(PyObject *o, CYTHON_UNUSED void *x) {
-  return __pyx_pw_5_yaml_4Mark_6column_1__get__(o);
+static PyObject *__pyx_getprop_12_ruamel_yaml_4Mark_column(PyObject *o, CYTHON_UNUSED void *x) {
+  return __pyx_pw_12_ruamel_yaml_4Mark_6column_1__get__(o);
 }
 
-static PyObject *__pyx_getprop_5_yaml_4Mark_buffer(PyObject *o, CYTHON_UNUSED void *x) {
-  return __pyx_pw_5_yaml_4Mark_6buffer_1__get__(o);
+static PyObject *__pyx_getprop_12_ruamel_yaml_4Mark_buffer(PyObject *o, CYTHON_UNUSED void *x) {
+  return __pyx_pw_12_ruamel_yaml_4Mark_6buffer_1__get__(o);
 }
 
-static PyObject *__pyx_getprop_5_yaml_4Mark_pointer(PyObject *o, CYTHON_UNUSED void *x) {
-  return __pyx_pw_5_yaml_4Mark_7pointer_1__get__(o);
+static PyObject *__pyx_getprop_12_ruamel_yaml_4Mark_pointer(PyObject *o, CYTHON_UNUSED void *x) {
+  return __pyx_pw_12_ruamel_yaml_4Mark_7pointer_1__get__(o);
 }
 
-static PyMethodDef __pyx_methods_5_yaml_Mark[] = {
-  {"get_snippet", (PyCFunction)__pyx_pw_5_yaml_4Mark_3get_snippet, METH_NOARGS, 0},
+static PyMethodDef __pyx_methods_12_ruamel_yaml_Mark[] = {
+  {"get_snippet", (PyCFunction)__pyx_pw_12_ruamel_yaml_4Mark_3get_snippet, METH_NOARGS, 0},
   {0, 0, 0, 0}
 };
 
-static struct PyGetSetDef __pyx_getsets_5_yaml_Mark[] = {
-  {(char *)"name", __pyx_getprop_5_yaml_4Mark_name, 0, 0, 0},
-  {(char *)"index", __pyx_getprop_5_yaml_4Mark_index, 0, 0, 0},
-  {(char *)"line", __pyx_getprop_5_yaml_4Mark_line, 0, 0, 0},
-  {(char *)"column", __pyx_getprop_5_yaml_4Mark_column, 0, 0, 0},
-  {(char *)"buffer", __pyx_getprop_5_yaml_4Mark_buffer, 0, 0, 0},
-  {(char *)"pointer", __pyx_getprop_5_yaml_4Mark_pointer, 0, 0, 0},
+static struct PyGetSetDef __pyx_getsets_12_ruamel_yaml_Mark[] = {
+  {(char *)"name", __pyx_getprop_12_ruamel_yaml_4Mark_name, 0, 0, 0},
+  {(char *)"index", __pyx_getprop_12_ruamel_yaml_4Mark_index, 0, 0, 0},
+  {(char *)"line", __pyx_getprop_12_ruamel_yaml_4Mark_line, 0, 0, 0},
+  {(char *)"column", __pyx_getprop_12_ruamel_yaml_4Mark_column, 0, 0, 0},
+  {(char *)"buffer", __pyx_getprop_12_ruamel_yaml_4Mark_buffer, 0, 0, 0},
+  {(char *)"pointer", __pyx_getprop_12_ruamel_yaml_4Mark_pointer, 0, 0, 0},
   {0, 0, 0, 0, 0}
 };
 
-static PyTypeObject __pyx_type_5_yaml_Mark = {
+static PyTypeObject __pyx_type_12_ruamel_yaml_Mark = {
   PyVarObject_HEAD_INIT(0, 0)
-  "_yaml.Mark", /*tp_name*/
-  sizeof(struct __pyx_obj_5_yaml_Mark), /*tp_basicsize*/
+  "_ruamel_yaml.Mark", /*tp_name*/
+  sizeof(struct __pyx_obj_12_ruamel_yaml_Mark), /*tp_basicsize*/
   0, /*tp_itemsize*/
-  __pyx_tp_dealloc_5_yaml_Mark, /*tp_dealloc*/
+  __pyx_tp_dealloc_12_ruamel_yaml_Mark, /*tp_dealloc*/
   0, /*tp_print*/
   0, /*tp_getattr*/
   0, /*tp_setattr*/
@@ -21714,29 +21714,29 @@ static PyTypeObject __pyx_type_5_yaml_Mark = {
   0, /*tp_as_mapping*/
   0, /*tp_hash*/
   0, /*tp_call*/
-  __pyx_pw_5_yaml_4Mark_5__str__, /*tp_str*/
+  __pyx_pw_12_ruamel_yaml_4Mark_5__str__, /*tp_str*/
   0, /*tp_getattro*/
   0, /*tp_setattro*/
   0, /*tp_as_buffer*/
   Py_TPFLAGS_DEFAULT|Py_TPFLAGS_HAVE_VERSION_TAG|Py_TPFLAGS_CHECKTYPES|Py_TPFLAGS_HAVE_NEWBUFFER|Py_TPFLAGS_BASETYPE|Py_TPFLAGS_HAVE_GC, /*tp_flags*/
   0, /*tp_doc*/
-  __pyx_tp_traverse_5_yaml_Mark, /*tp_traverse*/
-  __pyx_tp_clear_5_yaml_Mark, /*tp_clear*/
+  __pyx_tp_traverse_12_ruamel_yaml_Mark, /*tp_traverse*/
+  __pyx_tp_clear_12_ruamel_yaml_Mark, /*tp_clear*/
   0, /*tp_richcompare*/
   0, /*tp_weaklistoffset*/
   0, /*tp_iter*/
   0, /*tp_iternext*/
-  __pyx_methods_5_yaml_Mark, /*tp_methods*/
+  __pyx_methods_12_ruamel_yaml_Mark, /*tp_methods*/
   0, /*tp_members*/
-  __pyx_getsets_5_yaml_Mark, /*tp_getset*/
+  __pyx_getsets_12_ruamel_yaml_Mark, /*tp_getset*/
   0, /*tp_base*/
   0, /*tp_dict*/
   0, /*tp_descr_get*/
   0, /*tp_descr_set*/
   0, /*tp_dictoffset*/
-  __pyx_pw_5_yaml_4Mark_1__init__, /*tp_init*/
+  __pyx_pw_12_ruamel_yaml_4Mark_1__init__, /*tp_init*/
   0, /*tp_alloc*/
-  __pyx_tp_new_5_yaml_Mark, /*tp_new*/
+  __pyx_tp_new_12_ruamel_yaml_Mark, /*tp_new*/
   0, /*tp_free*/
   0, /*tp_is_gc*/
   0, /*tp_bases*/
@@ -21750,10 +21750,10 @@ static PyTypeObject __pyx_type_5_yaml_Mark = {
   0, /*tp_finalize*/
   #endif
 };
-static struct __pyx_vtabstruct_5_yaml_CParser __pyx_vtable_5_yaml_CParser;
+static struct __pyx_vtabstruct_12_ruamel_yaml_CParser __pyx_vtable_12_ruamel_yaml_CParser;
 
-static PyObject *__pyx_tp_new_5_yaml_CParser(PyTypeObject *t, CYTHON_UNUSED PyObject *a, CYTHON_UNUSED PyObject *k) {
-  struct __pyx_obj_5_yaml_CParser *p;
+static PyObject *__pyx_tp_new_12_ruamel_yaml_CParser(PyTypeObject *t, CYTHON_UNUSED PyObject *a, CYTHON_UNUSED PyObject *k) {
+  struct __pyx_obj_12_ruamel_yaml_CParser *p;
   PyObject *o;
   if (likely((t->tp_flags & Py_TPFLAGS_IS_ABSTRACT) == 0)) {
     o = (*t->tp_alloc)(t, 0);
@@ -21761,8 +21761,8 @@ static PyObject *__pyx_tp_new_5_yaml_CParser(PyTypeObject *t, CYTHON_UNUSED PyOb
     o = (PyObject *) PyBaseObject_Type.tp_new(t, __pyx_empty_tuple, 0);
   }
   if (unlikely(!o)) return 0;
-  p = ((struct __pyx_obj_5_yaml_CParser *)o);
-  p->__pyx_vtab = __pyx_vtabptr_5_yaml_CParser;
+  p = ((struct __pyx_obj_12_ruamel_yaml_CParser *)o);
+  p->__pyx_vtab = __pyx_vtabptr_12_ruamel_yaml_CParser;
   p->stream = Py_None; Py_INCREF(Py_None);
   p->stream_name = Py_None; Py_INCREF(Py_None);
   p->current_token = Py_None; Py_INCREF(Py_None);
@@ -21772,8 +21772,8 @@ static PyObject *__pyx_tp_new_5_yaml_CParser(PyTypeObject *t, CYTHON_UNUSED PyOb
   return o;
 }
 
-static void __pyx_tp_dealloc_5_yaml_CParser(PyObject *o) {
-  struct __pyx_obj_5_yaml_CParser *p = (struct __pyx_obj_5_yaml_CParser *)o;
+static void __pyx_tp_dealloc_12_ruamel_yaml_CParser(PyObject *o) {
+  struct __pyx_obj_12_ruamel_yaml_CParser *p = (struct __pyx_obj_12_ruamel_yaml_CParser *)o;
   #if PY_VERSION_HEX >= 0x030400a1
   if (unlikely(Py_TYPE(o)->tp_finalize) && !_PyGC_FINALIZED(o)) {
     if (PyObject_CallFinalizerFromDealloc(o)) return;
@@ -21784,7 +21784,7 @@ static void __pyx_tp_dealloc_5_yaml_CParser(PyObject *o) {
     PyObject *etype, *eval, *etb;
     PyErr_Fetch(&etype, &eval, &etb);
     ++Py_REFCNT(o);
-    __pyx_pw_5_yaml_7CParser_3__dealloc__(o);
+    __pyx_pw_12_ruamel_yaml_7CParser_3__dealloc__(o);
     --Py_REFCNT(o);
     PyErr_Restore(etype, eval, etb);
   }
@@ -21797,9 +21797,9 @@ static void __pyx_tp_dealloc_5_yaml_CParser(PyObject *o) {
   (*Py_TYPE(o)->tp_free)(o);
 }
 
-static int __pyx_tp_traverse_5_yaml_CParser(PyObject *o, visitproc v, void *a) {
+static int __pyx_tp_traverse_12_ruamel_yaml_CParser(PyObject *o, visitproc v, void *a) {
   int e;
-  struct __pyx_obj_5_yaml_CParser *p = (struct __pyx_obj_5_yaml_CParser *)o;
+  struct __pyx_obj_12_ruamel_yaml_CParser *p = (struct __pyx_obj_12_ruamel_yaml_CParser *)o;
   if (p->stream) {
     e = (*v)(p->stream, a); if (e) return e;
   }
@@ -21821,9 +21821,9 @@ static int __pyx_tp_traverse_5_yaml_CParser(PyObject *o, visitproc v, void *a) {
   return 0;
 }
 
-static int __pyx_tp_clear_5_yaml_CParser(PyObject *o) {
+static int __pyx_tp_clear_12_ruamel_yaml_CParser(PyObject *o) {
   PyObject* tmp;
-  struct __pyx_obj_5_yaml_CParser *p = (struct __pyx_obj_5_yaml_CParser *)o;
+  struct __pyx_obj_12_ruamel_yaml_CParser *p = (struct __pyx_obj_12_ruamel_yaml_CParser *)o;
   tmp = ((PyObject*)p->stream);
   p->stream = Py_None; Py_INCREF(Py_None);
   Py_XDECREF(tmp);
@@ -21845,28 +21845,28 @@ static int __pyx_tp_clear_5_yaml_CParser(PyObject *o) {
   return 0;
 }
 
-static PyMethodDef __pyx_methods_5_yaml_CParser[] = {
-  {"dispose", (PyCFunction)__pyx_pw_5_yaml_7CParser_5dispose, METH_NOARGS, 0},
-  {"raw_scan", (PyCFunction)__pyx_pw_5_yaml_7CParser_7raw_scan, METH_NOARGS, 0},
-  {"get_token", (PyCFunction)__pyx_pw_5_yaml_7CParser_9get_token, METH_NOARGS, 0},
-  {"peek_token", (PyCFunction)__pyx_pw_5_yaml_7CParser_11peek_token, METH_NOARGS, 0},
-  {"check_token", (PyCFunction)__pyx_pw_5_yaml_7CParser_13check_token, METH_VARARGS|METH_KEYWORDS, 0},
-  {"raw_parse", (PyCFunction)__pyx_pw_5_yaml_7CParser_15raw_parse, METH_NOARGS, 0},
-  {"get_event", (PyCFunction)__pyx_pw_5_yaml_7CParser_17get_event, METH_NOARGS, 0},
-  {"peek_event", (PyCFunction)__pyx_pw_5_yaml_7CParser_19peek_event, METH_NOARGS, 0},
-  {"check_event", (PyCFunction)__pyx_pw_5_yaml_7CParser_21check_event, METH_VARARGS|METH_KEYWORDS, 0},
-  {"check_node", (PyCFunction)__pyx_pw_5_yaml_7CParser_23check_node, METH_NOARGS, 0},
-  {"get_node", (PyCFunction)__pyx_pw_5_yaml_7CParser_25get_node, METH_NOARGS, 0},
-  {"get_single_node", (PyCFunction)__pyx_pw_5_yaml_7CParser_27get_single_node, METH_NOARGS, 0},
+static PyMethodDef __pyx_methods_12_ruamel_yaml_CParser[] = {
+  {"dispose", (PyCFunction)__pyx_pw_12_ruamel_yaml_7CParser_5dispose, METH_NOARGS, 0},
+  {"raw_scan", (PyCFunction)__pyx_pw_12_ruamel_yaml_7CParser_7raw_scan, METH_NOARGS, 0},
+  {"get_token", (PyCFunction)__pyx_pw_12_ruamel_yaml_7CParser_9get_token, METH_NOARGS, 0},
+  {"peek_token", (PyCFunction)__pyx_pw_12_ruamel_yaml_7CParser_11peek_token, METH_NOARGS, 0},
+  {"check_token", (PyCFunction)__pyx_pw_12_ruamel_yaml_7CParser_13check_token, METH_VARARGS|METH_KEYWORDS, 0},
+  {"raw_parse", (PyCFunction)__pyx_pw_12_ruamel_yaml_7CParser_15raw_parse, METH_NOARGS, 0},
+  {"get_event", (PyCFunction)__pyx_pw_12_ruamel_yaml_7CParser_17get_event, METH_NOARGS, 0},
+  {"peek_event", (PyCFunction)__pyx_pw_12_ruamel_yaml_7CParser_19peek_event, METH_NOARGS, 0},
+  {"check_event", (PyCFunction)__pyx_pw_12_ruamel_yaml_7CParser_21check_event, METH_VARARGS|METH_KEYWORDS, 0},
+  {"check_node", (PyCFunction)__pyx_pw_12_ruamel_yaml_7CParser_23check_node, METH_NOARGS, 0},
+  {"get_node", (PyCFunction)__pyx_pw_12_ruamel_yaml_7CParser_25get_node, METH_NOARGS, 0},
+  {"get_single_node", (PyCFunction)__pyx_pw_12_ruamel_yaml_7CParser_27get_single_node, METH_NOARGS, 0},
   {0, 0, 0, 0}
 };
 
-static PyTypeObject __pyx_type_5_yaml_CParser = {
+static PyTypeObject __pyx_type_12_ruamel_yaml_CParser = {
   PyVarObject_HEAD_INIT(0, 0)
-  "_yaml.CParser", /*tp_name*/
-  sizeof(struct __pyx_obj_5_yaml_CParser), /*tp_basicsize*/
+  "_ruamel_yaml.CParser", /*tp_name*/
+  sizeof(struct __pyx_obj_12_ruamel_yaml_CParser), /*tp_basicsize*/
   0, /*tp_itemsize*/
-  __pyx_tp_dealloc_5_yaml_CParser, /*tp_dealloc*/
+  __pyx_tp_dealloc_12_ruamel_yaml_CParser, /*tp_dealloc*/
   0, /*tp_print*/
   0, /*tp_getattr*/
   0, /*tp_setattr*/
@@ -21888,13 +21888,13 @@ static PyTypeObject __pyx_type_5_yaml_CParser = {
   0, /*tp_as_buffer*/
   Py_TPFLAGS_DEFAULT|Py_TPFLAGS_HAVE_VERSION_TAG|Py_TPFLAGS_CHECKTYPES|Py_TPFLAGS_HAVE_NEWBUFFER|Py_TPFLAGS_BASETYPE|Py_TPFLAGS_HAVE_GC, /*tp_flags*/
   0, /*tp_doc*/
-  __pyx_tp_traverse_5_yaml_CParser, /*tp_traverse*/
-  __pyx_tp_clear_5_yaml_CParser, /*tp_clear*/
+  __pyx_tp_traverse_12_ruamel_yaml_CParser, /*tp_traverse*/
+  __pyx_tp_clear_12_ruamel_yaml_CParser, /*tp_clear*/
   0, /*tp_richcompare*/
   0, /*tp_weaklistoffset*/
   0, /*tp_iter*/
   0, /*tp_iternext*/
-  __pyx_methods_5_yaml_CParser, /*tp_methods*/
+  __pyx_methods_12_ruamel_yaml_CParser, /*tp_methods*/
   0, /*tp_members*/
   0, /*tp_getset*/
   0, /*tp_base*/
@@ -21902,9 +21902,9 @@ static PyTypeObject __pyx_type_5_yaml_CParser = {
   0, /*tp_descr_get*/
   0, /*tp_descr_set*/
   0, /*tp_dictoffset*/
-  __pyx_pw_5_yaml_7CParser_1__init__, /*tp_init*/
+  __pyx_pw_12_ruamel_yaml_7CParser_1__init__, /*tp_init*/
   0, /*tp_alloc*/
-  __pyx_tp_new_5_yaml_CParser, /*tp_new*/
+  __pyx_tp_new_12_ruamel_yaml_CParser, /*tp_new*/
   0, /*tp_free*/
   0, /*tp_is_gc*/
   0, /*tp_bases*/
@@ -21918,10 +21918,10 @@ static PyTypeObject __pyx_type_5_yaml_CParser = {
   0, /*tp_finalize*/
   #endif
 };
-static struct __pyx_vtabstruct_5_yaml_CEmitter __pyx_vtable_5_yaml_CEmitter;
+static struct __pyx_vtabstruct_12_ruamel_yaml_CEmitter __pyx_vtable_12_ruamel_yaml_CEmitter;
 
-static PyObject *__pyx_tp_new_5_yaml_CEmitter(PyTypeObject *t, CYTHON_UNUSED PyObject *a, CYTHON_UNUSED PyObject *k) {
-  struct __pyx_obj_5_yaml_CEmitter *p;
+static PyObject *__pyx_tp_new_12_ruamel_yaml_CEmitter(PyTypeObject *t, CYTHON_UNUSED PyObject *a, CYTHON_UNUSED PyObject *k) {
+  struct __pyx_obj_12_ruamel_yaml_CEmitter *p;
   PyObject *o;
   if (likely((t->tp_flags & Py_TPFLAGS_IS_ABSTRACT) == 0)) {
     o = (*t->tp_alloc)(t, 0);
@@ -21929,8 +21929,8 @@ static PyObject *__pyx_tp_new_5_yaml_CEmitter(PyTypeObject *t, CYTHON_UNUSED PyO
     o = (PyObject *) PyBaseObject_Type.tp_new(t, __pyx_empty_tuple, 0);
   }
   if (unlikely(!o)) return 0;
-  p = ((struct __pyx_obj_5_yaml_CEmitter *)o);
-  p->__pyx_vtab = __pyx_vtabptr_5_yaml_CEmitter;
+  p = ((struct __pyx_obj_12_ruamel_yaml_CEmitter *)o);
+  p->__pyx_vtab = __pyx_vtabptr_12_ruamel_yaml_CEmitter;
   p->stream = Py_None; Py_INCREF(Py_None);
   p->use_version = Py_None; Py_INCREF(Py_None);
   p->use_tags = Py_None; Py_INCREF(Py_None);
@@ -21940,8 +21940,8 @@ static PyObject *__pyx_tp_new_5_yaml_CEmitter(PyTypeObject *t, CYTHON_UNUSED PyO
   return o;
 }
 
-static void __pyx_tp_dealloc_5_yaml_CEmitter(PyObject *o) {
-  struct __pyx_obj_5_yaml_CEmitter *p = (struct __pyx_obj_5_yaml_CEmitter *)o;
+static void __pyx_tp_dealloc_12_ruamel_yaml_CEmitter(PyObject *o) {
+  struct __pyx_obj_12_ruamel_yaml_CEmitter *p = (struct __pyx_obj_12_ruamel_yaml_CEmitter *)o;
   #if PY_VERSION_HEX >= 0x030400a1
   if (unlikely(Py_TYPE(o)->tp_finalize) && !_PyGC_FINALIZED(o)) {
     if (PyObject_CallFinalizerFromDealloc(o)) return;
@@ -21952,7 +21952,7 @@ static void __pyx_tp_dealloc_5_yaml_CEmitter(PyObject *o) {
     PyObject *etype, *eval, *etb;
     PyErr_Fetch(&etype, &eval, &etb);
     ++Py_REFCNT(o);
-    __pyx_pw_5_yaml_8CEmitter_3__dealloc__(o);
+    __pyx_pw_12_ruamel_yaml_8CEmitter_3__dealloc__(o);
     --Py_REFCNT(o);
     PyErr_Restore(etype, eval, etb);
   }
@@ -21965,9 +21965,9 @@ static void __pyx_tp_dealloc_5_yaml_CEmitter(PyObject *o) {
   (*Py_TYPE(o)->tp_free)(o);
 }
 
-static int __pyx_tp_traverse_5_yaml_CEmitter(PyObject *o, visitproc v, void *a) {
+static int __pyx_tp_traverse_12_ruamel_yaml_CEmitter(PyObject *o, visitproc v, void *a) {
   int e;
-  struct __pyx_obj_5_yaml_CEmitter *p = (struct __pyx_obj_5_yaml_CEmitter *)o;
+  struct __pyx_obj_12_ruamel_yaml_CEmitter *p = (struct __pyx_obj_12_ruamel_yaml_CEmitter *)o;
   if (p->stream) {
     e = (*v)(p->stream, a); if (e) return e;
   }
@@ -21989,9 +21989,9 @@ static int __pyx_tp_traverse_5_yaml_CEmitter(PyObject *o, visitproc v, void *a) 
   return 0;
 }
 
-static int __pyx_tp_clear_5_yaml_CEmitter(PyObject *o) {
+static int __pyx_tp_clear_12_ruamel_yaml_CEmitter(PyObject *o) {
   PyObject* tmp;
-  struct __pyx_obj_5_yaml_CEmitter *p = (struct __pyx_obj_5_yaml_CEmitter *)o;
+  struct __pyx_obj_12_ruamel_yaml_CEmitter *p = (struct __pyx_obj_12_ruamel_yaml_CEmitter *)o;
   tmp = ((PyObject*)p->stream);
   p->stream = Py_None; Py_INCREF(Py_None);
   Py_XDECREF(tmp);
@@ -22013,21 +22013,21 @@ static int __pyx_tp_clear_5_yaml_CEmitter(PyObject *o) {
   return 0;
 }
 
-static PyMethodDef __pyx_methods_5_yaml_CEmitter[] = {
-  {"dispose", (PyCFunction)__pyx_pw_5_yaml_8CEmitter_5dispose, METH_NOARGS, 0},
-  {"emit", (PyCFunction)__pyx_pw_5_yaml_8CEmitter_7emit, METH_O, 0},
-  {"open", (PyCFunction)__pyx_pw_5_yaml_8CEmitter_9open, METH_NOARGS, 0},
-  {"close", (PyCFunction)__pyx_pw_5_yaml_8CEmitter_11close, METH_NOARGS, 0},
-  {"serialize", (PyCFunction)__pyx_pw_5_yaml_8CEmitter_13serialize, METH_O, 0},
+static PyMethodDef __pyx_methods_12_ruamel_yaml_CEmitter[] = {
+  {"dispose", (PyCFunction)__pyx_pw_12_ruamel_yaml_8CEmitter_5dispose, METH_NOARGS, 0},
+  {"emit", (PyCFunction)__pyx_pw_12_ruamel_yaml_8CEmitter_7emit, METH_O, 0},
+  {"open", (PyCFunction)__pyx_pw_12_ruamel_yaml_8CEmitter_9open, METH_NOARGS, 0},
+  {"close", (PyCFunction)__pyx_pw_12_ruamel_yaml_8CEmitter_11close, METH_NOARGS, 0},
+  {"serialize", (PyCFunction)__pyx_pw_12_ruamel_yaml_8CEmitter_13serialize, METH_O, 0},
   {0, 0, 0, 0}
 };
 
-static PyTypeObject __pyx_type_5_yaml_CEmitter = {
+static PyTypeObject __pyx_type_12_ruamel_yaml_CEmitter = {
   PyVarObject_HEAD_INIT(0, 0)
-  "_yaml.CEmitter", /*tp_name*/
-  sizeof(struct __pyx_obj_5_yaml_CEmitter), /*tp_basicsize*/
+  "_ruamel_yaml.CEmitter", /*tp_name*/
+  sizeof(struct __pyx_obj_12_ruamel_yaml_CEmitter), /*tp_basicsize*/
   0, /*tp_itemsize*/
-  __pyx_tp_dealloc_5_yaml_CEmitter, /*tp_dealloc*/
+  __pyx_tp_dealloc_12_ruamel_yaml_CEmitter, /*tp_dealloc*/
   0, /*tp_print*/
   0, /*tp_getattr*/
   0, /*tp_setattr*/
@@ -22049,13 +22049,13 @@ static PyTypeObject __pyx_type_5_yaml_CEmitter = {
   0, /*tp_as_buffer*/
   Py_TPFLAGS_DEFAULT|Py_TPFLAGS_HAVE_VERSION_TAG|Py_TPFLAGS_CHECKTYPES|Py_TPFLAGS_HAVE_NEWBUFFER|Py_TPFLAGS_BASETYPE|Py_TPFLAGS_HAVE_GC, /*tp_flags*/
   0, /*tp_doc*/
-  __pyx_tp_traverse_5_yaml_CEmitter, /*tp_traverse*/
-  __pyx_tp_clear_5_yaml_CEmitter, /*tp_clear*/
+  __pyx_tp_traverse_12_ruamel_yaml_CEmitter, /*tp_traverse*/
+  __pyx_tp_clear_12_ruamel_yaml_CEmitter, /*tp_clear*/
   0, /*tp_richcompare*/
   0, /*tp_weaklistoffset*/
   0, /*tp_iter*/
   0, /*tp_iternext*/
-  __pyx_methods_5_yaml_CEmitter, /*tp_methods*/
+  __pyx_methods_12_ruamel_yaml_CEmitter, /*tp_methods*/
   0, /*tp_members*/
   0, /*tp_getset*/
   0, /*tp_base*/
@@ -22063,9 +22063,9 @@ static PyTypeObject __pyx_type_5_yaml_CEmitter = {
   0, /*tp_descr_get*/
   0, /*tp_descr_set*/
   0, /*tp_dictoffset*/
-  __pyx_pw_5_yaml_8CEmitter_1__init__, /*tp_init*/
+  __pyx_pw_12_ruamel_yaml_8CEmitter_1__init__, /*tp_init*/
   0, /*tp_alloc*/
-  __pyx_tp_new_5_yaml_CEmitter, /*tp_new*/
+  __pyx_tp_new_12_ruamel_yaml_CEmitter, /*tp_new*/
   0, /*tp_free*/
   0, /*tp_is_gc*/
   0, /*tp_bases*/
@@ -22091,7 +22091,7 @@ static struct PyModuleDef __pyx_moduledef = {
   #else
     PyModuleDef_HEAD_INIT,
   #endif
-    "_yaml",
+    "_ruamel_yaml",
     0, /* m_doc */
     -1, /* m_size */
     __pyx_methods /* m_methods */,
@@ -22224,6 +22224,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_pyx_vtable, __pyx_k_pyx_vtable, sizeof(__pyx_k_pyx_vtable), 0, 0, 1, 1},
   {&__pyx_n_s_read, __pyx_k_read, sizeof(__pyx_k_read), 0, 0, 1, 1},
   {&__pyx_n_s_resolve, __pyx_k_resolve, sizeof(__pyx_k_resolve), 0, 0, 1, 1},
+  {&__pyx_n_s_ruamel_yaml, __pyx_k_ruamel_yaml, sizeof(__pyx_k_ruamel_yaml), 0, 0, 1, 1},
   {&__pyx_n_s_ruamel_yaml_composer, __pyx_k_ruamel_yaml_composer, sizeof(__pyx_k_ruamel_yaml_composer), 0, 0, 1, 1},
   {&__pyx_n_s_ruamel_yaml_constructor, __pyx_k_ruamel_yaml_constructor, sizeof(__pyx_k_ruamel_yaml_constructor), 0, 0, 1, 1},
   {&__pyx_n_s_ruamel_yaml_emitter, __pyx_k_ruamel_yaml_emitter, sizeof(__pyx_k_ruamel_yaml_emitter), 0, 0, 1, 1},
@@ -22275,7 +22276,6 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_version, __pyx_k_version, sizeof(__pyx_k_version), 0, 0, 1, 1},
   {&__pyx_n_s_width, __pyx_k_width, sizeof(__pyx_k_width), 0, 0, 1, 1},
   {&__pyx_n_s_write, __pyx_k_write, sizeof(__pyx_k_write), 0, 0, 1, 1},
-  {&__pyx_n_s_yaml, __pyx_k_yaml, sizeof(__pyx_k_yaml), 0, 0, 1, 1},
   {0, 0, 0, 0, 0, 0, 0}
 };
 static int __Pyx_InitCachedBuiltins(void) {
@@ -22292,7 +22292,7 @@ static int __Pyx_InitCachedConstants(void) {
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__Pyx_InitCachedConstants", 0);
 
-  /* "_yaml.pyx":300
+  /* "_ruamel_yaml.pyx":300
  *             if PyString_CheckExact(stream) == 0:
  *                 if PY_MAJOR_VERSION < 3:
  *                     raise TypeError("a string or stream input is required")             # <<<<<<<<<<<<<<
@@ -22303,7 +22303,7 @@ static int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple_);
   __Pyx_GIVEREF(__pyx_tuple_);
 
-  /* "_yaml.pyx":302
+  /* "_ruamel_yaml.pyx":302
  *                     raise TypeError("a string or stream input is required")
  *                 else:
  *                     raise TypeError(u"a string or stream input is required")             # <<<<<<<<<<<<<<
@@ -22314,7 +22314,7 @@ static int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__2);
   __Pyx_GIVEREF(__pyx_tuple__2);
 
-  /* "_yaml.pyx":355
+  /* "_ruamel_yaml.pyx":355
  *                 return ParserError(context, context_mark, problem, problem_mark)
  *         if PY_MAJOR_VERSION < 3:
  *             raise ValueError("no parser error")             # <<<<<<<<<<<<<<
@@ -22325,7 +22325,7 @@ static int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__4);
   __Pyx_GIVEREF(__pyx_tuple__4);
 
-  /* "_yaml.pyx":357
+  /* "_ruamel_yaml.pyx":357
  *             raise ValueError("no parser error")
  *         else:
  *             raise ValueError(u"no parser error")             # <<<<<<<<<<<<<<
@@ -22336,7 +22336,7 @@ static int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__5);
   __Pyx_GIVEREF(__pyx_tuple__5);
 
-  /* "_yaml.pyx":478
+  /* "_ruamel_yaml.pyx":478
  *         else:
  *             if PY_MAJOR_VERSION < 3:
  *                 raise ValueError("unknown token type")             # <<<<<<<<<<<<<<
@@ -22347,7 +22347,7 @@ static int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__11);
   __Pyx_GIVEREF(__pyx_tuple__11);
 
-  /* "_yaml.pyx":480
+  /* "_ruamel_yaml.pyx":480
  *                 raise ValueError("unknown token type")
  *             else:
  *                 raise ValueError(u"unknown token type")             # <<<<<<<<<<<<<<
@@ -22358,7 +22358,7 @@ static int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__12);
   __Pyx_GIVEREF(__pyx_tuple__12);
 
-  /* "_yaml.pyx":656
+  /* "_ruamel_yaml.pyx":656
  *         else:
  *             if PY_MAJOR_VERSION < 3:
  *                 raise ValueError("unknown event type")             # <<<<<<<<<<<<<<
@@ -22369,7 +22369,7 @@ static int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__13);
   __Pyx_GIVEREF(__pyx_tuple__13);
 
-  /* "_yaml.pyx":658
+  /* "_ruamel_yaml.pyx":658
  *                 raise ValueError("unknown event type")
  *             else:
  *                 raise ValueError(u"unknown event type")             # <<<<<<<<<<<<<<
@@ -22380,7 +22380,7 @@ static int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__14);
   __Pyx_GIVEREF(__pyx_tuple__14);
 
-  /* "_yaml.pyx":917
+  /* "_ruamel_yaml.pyx":917
  *         if PyString_CheckExact(value) == 0:
  *             if PY_MAJOR_VERSION < 3:
  *                 raise TypeError("a string value is expected")             # <<<<<<<<<<<<<<
@@ -22391,7 +22391,7 @@ static int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__15);
   __Pyx_GIVEREF(__pyx_tuple__15);
 
-  /* "_yaml.pyx":919
+  /* "_ruamel_yaml.pyx":919
  *                 raise TypeError("a string value is expected")
  *             else:
  *                 raise TypeError(u"a string value is expected")             # <<<<<<<<<<<<<<
@@ -22402,7 +22402,7 @@ static int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__16);
   __Pyx_GIVEREF(__pyx_tuple__16);
 
-  /* "_yaml.pyx":1011
+  /* "_ruamel_yaml.pyx":1011
  *             return EmitterError(problem)
  *         if PY_MAJOR_VERSION < 3:
  *             raise ValueError("no emitter error")             # <<<<<<<<<<<<<<
@@ -22413,7 +22413,7 @@ static int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__20);
   __Pyx_GIVEREF(__pyx_tuple__20);
 
-  /* "_yaml.pyx":1013
+  /* "_ruamel_yaml.pyx":1013
  *             raise ValueError("no emitter error")
  *         else:
  *             raise ValueError(u"no emitter error")             # <<<<<<<<<<<<<<
@@ -22424,7 +22424,7 @@ static int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__21);
   __Pyx_GIVEREF(__pyx_tuple__21);
 
-  /* "_yaml.pyx":1057
+  /* "_ruamel_yaml.pyx":1057
  *                 if len(event_object.tags) > 128:
  *                     if PY_MAJOR_VERSION < 3:
  *                         raise ValueError("too many tags")             # <<<<<<<<<<<<<<
@@ -22435,7 +22435,7 @@ static int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__22);
   __Pyx_GIVEREF(__pyx_tuple__22);
 
-  /* "_yaml.pyx":1059
+  /* "_ruamel_yaml.pyx":1059
  *                         raise ValueError("too many tags")
  *                     else:
  *                         raise ValueError(u"too many tags")             # <<<<<<<<<<<<<<
@@ -22446,7 +22446,7 @@ static int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__23);
   __Pyx_GIVEREF(__pyx_tuple__23);
 
-  /* "_yaml.pyx":1070
+  /* "_ruamel_yaml.pyx":1070
  *                     if not PyString_CheckExact(handle):
  *                         if PY_MAJOR_VERSION < 3:
  *                             raise TypeError("tag handle must be a string")             # <<<<<<<<<<<<<<
@@ -22457,7 +22457,7 @@ static int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__24);
   __Pyx_GIVEREF(__pyx_tuple__24);
 
-  /* "_yaml.pyx":1072
+  /* "_ruamel_yaml.pyx":1072
  *                             raise TypeError("tag handle must be a string")
  *                         else:
  *                             raise TypeError(u"tag handle must be a string")             # <<<<<<<<<<<<<<
@@ -22468,7 +22468,7 @@ static int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__25);
   __Pyx_GIVEREF(__pyx_tuple__25);
 
-  /* "_yaml.pyx":1079
+  /* "_ruamel_yaml.pyx":1079
  *                     if not PyString_CheckExact(prefix):
  *                         if PY_MAJOR_VERSION < 3:
  *                             raise TypeError("tag prefix must be a string")             # <<<<<<<<<<<<<<
@@ -22479,7 +22479,7 @@ static int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__26);
   __Pyx_GIVEREF(__pyx_tuple__26);
 
-  /* "_yaml.pyx":1081
+  /* "_ruamel_yaml.pyx":1081
  *                             raise TypeError("tag prefix must be a string")
  *                         else:
  *                             raise TypeError(u"tag prefix must be a string")             # <<<<<<<<<<<<<<
@@ -22490,7 +22490,7 @@ static int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__27);
   __Pyx_GIVEREF(__pyx_tuple__27);
 
-  /* "_yaml.pyx":1102
+  /* "_ruamel_yaml.pyx":1102
  *             if not PyString_CheckExact(anchor_object):
  *                 if PY_MAJOR_VERSION < 3:
  *                     raise TypeError("anchor must be a string")             # <<<<<<<<<<<<<<
@@ -22501,7 +22501,7 @@ static int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__28);
   __Pyx_GIVEREF(__pyx_tuple__28);
 
-  /* "_yaml.pyx":1104
+  /* "_ruamel_yaml.pyx":1104
  *                     raise TypeError("anchor must be a string")
  *                 else:
  *                     raise TypeError(u"anchor must be a string")             # <<<<<<<<<<<<<<
@@ -22512,7 +22512,7 @@ static int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__29);
   __Pyx_GIVEREF(__pyx_tuple__29);
 
-  /* "_yaml.pyx":1116
+  /* "_ruamel_yaml.pyx":1116
  *                 if not PyString_CheckExact(anchor_object):
  *                     if PY_MAJOR_VERSION < 3:
  *                         raise TypeError("anchor must be a string")             # <<<<<<<<<<<<<<
@@ -22523,7 +22523,7 @@ static int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__30);
   __Pyx_GIVEREF(__pyx_tuple__30);
 
-  /* "_yaml.pyx":1118
+  /* "_ruamel_yaml.pyx":1118
  *                         raise TypeError("anchor must be a string")
  *                     else:
  *                         raise TypeError(u"anchor must be a string")             # <<<<<<<<<<<<<<
@@ -22534,7 +22534,7 @@ static int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__31);
   __Pyx_GIVEREF(__pyx_tuple__31);
 
-  /* "_yaml.pyx":1127
+  /* "_ruamel_yaml.pyx":1127
  *                 if not PyString_CheckExact(tag_object):
  *                     if PY_MAJOR_VERSION < 3:
  *                         raise TypeError("tag must be a string")             # <<<<<<<<<<<<<<
@@ -22545,7 +22545,7 @@ static int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__32);
   __Pyx_GIVEREF(__pyx_tuple__32);
 
-  /* "_yaml.pyx":1129
+  /* "_ruamel_yaml.pyx":1129
  *                         raise TypeError("tag must be a string")
  *                     else:
  *                         raise TypeError(u"tag must be a string")             # <<<<<<<<<<<<<<
@@ -22556,7 +22556,7 @@ static int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__33);
   __Pyx_GIVEREF(__pyx_tuple__33);
 
-  /* "_yaml.pyx":1136
+  /* "_ruamel_yaml.pyx":1136
  *             if not PyString_CheckExact(value_object):
  *                 if PY_MAJOR_VERSION < 3:
  *                     raise TypeError("value must be a string")             # <<<<<<<<<<<<<<
@@ -22567,7 +22567,7 @@ static int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__34);
   __Pyx_GIVEREF(__pyx_tuple__34);
 
-  /* "_yaml.pyx":1138
+  /* "_ruamel_yaml.pyx":1138
  *                     raise TypeError("value must be a string")
  *                 else:
  *                     raise TypeError(u"value must be a string")             # <<<<<<<<<<<<<<
@@ -22578,7 +22578,7 @@ static int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__35);
   __Pyx_GIVEREF(__pyx_tuple__35);
 
-  /* "_yaml.pyx":1167
+  /* "_ruamel_yaml.pyx":1167
  *                 if not PyString_CheckExact(anchor_object):
  *                     if PY_MAJOR_VERSION < 3:
  *                         raise TypeError("anchor must be a string")             # <<<<<<<<<<<<<<
@@ -22589,7 +22589,7 @@ static int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__36);
   __Pyx_GIVEREF(__pyx_tuple__36);
 
-  /* "_yaml.pyx":1169
+  /* "_ruamel_yaml.pyx":1169
  *                         raise TypeError("anchor must be a string")
  *                     else:
  *                         raise TypeError(u"anchor must be a string")             # <<<<<<<<<<<<<<
@@ -22600,7 +22600,7 @@ static int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__37);
   __Pyx_GIVEREF(__pyx_tuple__37);
 
-  /* "_yaml.pyx":1178
+  /* "_ruamel_yaml.pyx":1178
  *                 if not PyString_CheckExact(tag_object):
  *                     if PY_MAJOR_VERSION < 3:
  *                         raise TypeError("tag must be a string")             # <<<<<<<<<<<<<<
@@ -22611,7 +22611,7 @@ static int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__38);
   __Pyx_GIVEREF(__pyx_tuple__38);
 
-  /* "_yaml.pyx":1180
+  /* "_ruamel_yaml.pyx":1180
  *                         raise TypeError("tag must be a string")
  *                     else:
  *                         raise TypeError(u"tag must be a string")             # <<<<<<<<<<<<<<
@@ -22622,7 +22622,7 @@ static int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__39);
   __Pyx_GIVEREF(__pyx_tuple__39);
 
-  /* "_yaml.pyx":1199
+  /* "_ruamel_yaml.pyx":1199
  *                 if not PyString_CheckExact(anchor_object):
  *                     if PY_MAJOR_VERSION < 3:
  *                         raise TypeError("anchor must be a string")             # <<<<<<<<<<<<<<
@@ -22633,7 +22633,7 @@ static int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__40);
   __Pyx_GIVEREF(__pyx_tuple__40);
 
-  /* "_yaml.pyx":1201
+  /* "_ruamel_yaml.pyx":1201
  *                         raise TypeError("anchor must be a string")
  *                     else:
  *                         raise TypeError(u"anchor must be a string")             # <<<<<<<<<<<<<<
@@ -22644,7 +22644,7 @@ static int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__41);
   __Pyx_GIVEREF(__pyx_tuple__41);
 
-  /* "_yaml.pyx":1210
+  /* "_ruamel_yaml.pyx":1210
  *                 if not PyString_CheckExact(tag_object):
  *                     if PY_MAJOR_VERSION < 3:
  *                         raise TypeError("tag must be a string")             # <<<<<<<<<<<<<<
@@ -22655,7 +22655,7 @@ static int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__42);
   __Pyx_GIVEREF(__pyx_tuple__42);
 
-  /* "_yaml.pyx":1212
+  /* "_ruamel_yaml.pyx":1212
  *                         raise TypeError("tag must be a string")
  *                     else:
  *                         raise TypeError(u"tag must be a string")             # <<<<<<<<<<<<<<
@@ -22666,7 +22666,7 @@ static int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__43);
   __Pyx_GIVEREF(__pyx_tuple__43);
 
-  /* "_yaml.pyx":1262
+  /* "_ruamel_yaml.pyx":1262
  *         elif self.closed == 1:
  *             if PY_MAJOR_VERSION < 3:
  *                 raise SerializerError("serializer is closed")             # <<<<<<<<<<<<<<
@@ -22677,7 +22677,7 @@ static int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__44);
   __Pyx_GIVEREF(__pyx_tuple__44);
 
-  /* "_yaml.pyx":1264
+  /* "_ruamel_yaml.pyx":1264
  *                 raise SerializerError("serializer is closed")
  *             else:
  *                 raise SerializerError(u"serializer is closed")             # <<<<<<<<<<<<<<
@@ -22688,7 +22688,7 @@ static int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__45);
   __Pyx_GIVEREF(__pyx_tuple__45);
 
-  /* "_yaml.pyx":1267
+  /* "_ruamel_yaml.pyx":1267
  *         else:
  *             if PY_MAJOR_VERSION < 3:
  *                 raise SerializerError("serializer is already opened")             # <<<<<<<<<<<<<<
@@ -22699,7 +22699,7 @@ static int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__46);
   __Pyx_GIVEREF(__pyx_tuple__46);
 
-  /* "_yaml.pyx":1269
+  /* "_ruamel_yaml.pyx":1269
  *                 raise SerializerError("serializer is already opened")
  *             else:
  *                 raise SerializerError(u"serializer is already opened")             # <<<<<<<<<<<<<<
@@ -22710,7 +22710,7 @@ static int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__47);
   __Pyx_GIVEREF(__pyx_tuple__47);
 
-  /* "_yaml.pyx":1275
+  /* "_ruamel_yaml.pyx":1275
  *         if self.closed == -1:
  *             if PY_MAJOR_VERSION < 3:
  *                 raise SerializerError("serializer is not opened")             # <<<<<<<<<<<<<<
@@ -22721,7 +22721,7 @@ static int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__48);
   __Pyx_GIVEREF(__pyx_tuple__48);
 
-  /* "_yaml.pyx":1277
+  /* "_ruamel_yaml.pyx":1277
  *                 raise SerializerError("serializer is not opened")
  *             else:
  *                 raise SerializerError(u"serializer is not opened")             # <<<<<<<<<<<<<<
@@ -22732,7 +22732,7 @@ static int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__49);
   __Pyx_GIVEREF(__pyx_tuple__49);
 
-  /* "_yaml.pyx":1294
+  /* "_ruamel_yaml.pyx":1294
  *         if self.closed == -1:
  *             if PY_MAJOR_VERSION < 3:
  *                 raise SerializerError("serializer is not opened")             # <<<<<<<<<<<<<<
@@ -22743,7 +22743,7 @@ static int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__50);
   __Pyx_GIVEREF(__pyx_tuple__50);
 
-  /* "_yaml.pyx":1296
+  /* "_ruamel_yaml.pyx":1296
  *                 raise SerializerError("serializer is not opened")
  *             else:
  *                 raise SerializerError(u"serializer is not opened")             # <<<<<<<<<<<<<<
@@ -22754,7 +22754,7 @@ static int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__51);
   __Pyx_GIVEREF(__pyx_tuple__51);
 
-  /* "_yaml.pyx":1299
+  /* "_ruamel_yaml.pyx":1299
  *         elif self.closed == 1:
  *             if PY_MAJOR_VERSION < 3:
  *                 raise SerializerError("serializer is closed")             # <<<<<<<<<<<<<<
@@ -22765,7 +22765,7 @@ static int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__52);
   __Pyx_GIVEREF(__pyx_tuple__52);
 
-  /* "_yaml.pyx":1301
+  /* "_ruamel_yaml.pyx":1301
  *                 raise SerializerError("serializer is closed")
  *             else:
  *                 raise SerializerError(u"serializer is closed")             # <<<<<<<<<<<<<<
@@ -22776,7 +22776,7 @@ static int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__53);
   __Pyx_GIVEREF(__pyx_tuple__53);
 
-  /* "_yaml.pyx":1313
+  /* "_ruamel_yaml.pyx":1313
  *             if len(self.use_tags) > 128:
  *                 if PY_MAJOR_VERSION < 3:
  *                     raise ValueError("too many tags")             # <<<<<<<<<<<<<<
@@ -22787,7 +22787,7 @@ static int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__54);
   __Pyx_GIVEREF(__pyx_tuple__54);
 
-  /* "_yaml.pyx":1315
+  /* "_ruamel_yaml.pyx":1315
  *                     raise ValueError("too many tags")
  *                 else:
  *                     raise ValueError(u"too many tags")             # <<<<<<<<<<<<<<
@@ -22798,7 +22798,7 @@ static int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__55);
   __Pyx_GIVEREF(__pyx_tuple__55);
 
-  /* "_yaml.pyx":1325
+  /* "_ruamel_yaml.pyx":1325
  *                 if not PyString_CheckExact(handle):
  *                     if PY_MAJOR_VERSION < 3:
  *                         raise TypeError("tag handle must be a string")             # <<<<<<<<<<<<<<
@@ -22809,7 +22809,7 @@ static int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__56);
   __Pyx_GIVEREF(__pyx_tuple__56);
 
-  /* "_yaml.pyx":1327
+  /* "_ruamel_yaml.pyx":1327
  *                         raise TypeError("tag handle must be a string")
  *                     else:
  *                         raise TypeError(u"tag handle must be a string")             # <<<<<<<<<<<<<<
@@ -22820,7 +22820,7 @@ static int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__57);
   __Pyx_GIVEREF(__pyx_tuple__57);
 
-  /* "_yaml.pyx":1334
+  /* "_ruamel_yaml.pyx":1334
  *                 if not PyString_CheckExact(prefix):
  *                     if PY_MAJOR_VERSION < 3:
  *                         raise TypeError("tag prefix must be a string")             # <<<<<<<<<<<<<<
@@ -22831,7 +22831,7 @@ static int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__58);
   __Pyx_GIVEREF(__pyx_tuple__58);
 
-  /* "_yaml.pyx":1336
+  /* "_ruamel_yaml.pyx":1336
  *                         raise TypeError("tag prefix must be a string")
  *                     else:
  *                         raise TypeError(u"tag prefix must be a string")             # <<<<<<<<<<<<<<
@@ -22842,7 +22842,7 @@ static int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__59);
   __Pyx_GIVEREF(__pyx_tuple__59);
 
-  /* "_yaml.pyx":1393
+  /* "_ruamel_yaml.pyx":1393
  *             if not PyString_CheckExact(anchor_object):
  *                 if PY_MAJOR_VERSION < 3:
  *                     raise TypeError("anchor must be a string")             # <<<<<<<<<<<<<<
@@ -22853,7 +22853,7 @@ static int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__60);
   __Pyx_GIVEREF(__pyx_tuple__60);
 
-  /* "_yaml.pyx":1395
+  /* "_ruamel_yaml.pyx":1395
  *                     raise TypeError("anchor must be a string")
  *                 else:
  *                     raise TypeError(u"anchor must be a string")             # <<<<<<<<<<<<<<
@@ -22864,7 +22864,7 @@ static int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__61);
   __Pyx_GIVEREF(__pyx_tuple__61);
 
-  /* "_yaml.pyx":1411
+  /* "_ruamel_yaml.pyx":1411
  *                 quoted_implicit = 0
  *                 tag_object = node.tag
  *                 if self.resolve(ScalarNode, node.value, (True, False)) == tag_object:             # <<<<<<<<<<<<<<
@@ -22875,7 +22875,7 @@ static int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__62);
   __Pyx_GIVEREF(__pyx_tuple__62);
 
-  /* "_yaml.pyx":1413
+  /* "_ruamel_yaml.pyx":1413
  *                 if self.resolve(ScalarNode, node.value, (True, False)) == tag_object:
  *                     plain_implicit = 1
  *                 if self.resolve(ScalarNode, node.value, (False, True)) == tag_object:             # <<<<<<<<<<<<<<
@@ -22886,7 +22886,7 @@ static int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__63);
   __Pyx_GIVEREF(__pyx_tuple__63);
 
-  /* "_yaml.pyx":1421
+  /* "_ruamel_yaml.pyx":1421
  *                     if not PyString_CheckExact(tag_object):
  *                         if PY_MAJOR_VERSION < 3:
  *                             raise TypeError("tag must be a string")             # <<<<<<<<<<<<<<
@@ -22897,7 +22897,7 @@ static int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__64);
   __Pyx_GIVEREF(__pyx_tuple__64);
 
-  /* "_yaml.pyx":1423
+  /* "_ruamel_yaml.pyx":1423
  *                             raise TypeError("tag must be a string")
  *                         else:
  *                             raise TypeError(u"tag must be a string")             # <<<<<<<<<<<<<<
@@ -22908,7 +22908,7 @@ static int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__65);
   __Pyx_GIVEREF(__pyx_tuple__65);
 
-  /* "_yaml.pyx":1430
+  /* "_ruamel_yaml.pyx":1430
  *                 if not PyString_CheckExact(value_object):
  *                     if PY_MAJOR_VERSION < 3:
  *                         raise TypeError("value must be a string")             # <<<<<<<<<<<<<<
@@ -22919,7 +22919,7 @@ static int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__66);
   __Pyx_GIVEREF(__pyx_tuple__66);
 
-  /* "_yaml.pyx":1432
+  /* "_ruamel_yaml.pyx":1432
  *                         raise TypeError("value must be a string")
  *                     else:
  *                         raise TypeError(u"value must be a string")             # <<<<<<<<<<<<<<
@@ -22930,7 +22930,7 @@ static int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__67);
   __Pyx_GIVEREF(__pyx_tuple__67);
 
-  /* "_yaml.pyx":1462
+  /* "_ruamel_yaml.pyx":1462
  *                     if not PyString_CheckExact(tag_object):
  *                         if PY_MAJOR_VERSION < 3:
  *                             raise TypeError("tag must be a string")             # <<<<<<<<<<<<<<
@@ -22941,7 +22941,7 @@ static int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__68);
   __Pyx_GIVEREF(__pyx_tuple__68);
 
-  /* "_yaml.pyx":1464
+  /* "_ruamel_yaml.pyx":1464
  *                             raise TypeError("tag must be a string")
  *                         else:
  *                             raise TypeError(u"tag must be a string")             # <<<<<<<<<<<<<<
@@ -22952,7 +22952,7 @@ static int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__69);
   __Pyx_GIVEREF(__pyx_tuple__69);
 
-  /* "_yaml.pyx":1494
+  /* "_ruamel_yaml.pyx":1494
  *                     if not PyString_CheckExact(tag_object):
  *                         if PY_MAJOR_VERSION < 3:
  *                             raise TypeError("tag must be a string")             # <<<<<<<<<<<<<<
@@ -22963,7 +22963,7 @@ static int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__70);
   __Pyx_GIVEREF(__pyx_tuple__70);
 
-  /* "_yaml.pyx":1496
+  /* "_ruamel_yaml.pyx":1496
  *                             raise TypeError("tag must be a string")
  *                         else:
  *                             raise TypeError(u"tag must be a string")             # <<<<<<<<<<<<<<
@@ -22974,7 +22974,7 @@ static int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__71);
   __Pyx_GIVEREF(__pyx_tuple__71);
 
-  /* "_yaml.pyx":3
+  /* "_ruamel_yaml.pyx":3
  * 
  * 
  * def get_version_string():             # <<<<<<<<<<<<<<
@@ -22986,7 +22986,7 @@ static int __Pyx_InitCachedConstants(void) {
   __Pyx_GIVEREF(__pyx_tuple__72);
   __pyx_codeobj__73 = (PyObject*)__Pyx_PyCode_New(0, 0, 1, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__72, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_home_avdndata_hg_ruamel_eu_src, __pyx_n_s_get_version_string, 3, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__73)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 3; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-  /* "_yaml.pyx":11
+  /* "_ruamel_yaml.pyx":11
  *         return PyUnicode_FromString(value)
  * 
  * def get_version():             # <<<<<<<<<<<<<<
@@ -23014,11 +23014,11 @@ static int __Pyx_InitGlobals(void) {
 }
 
 #if PY_MAJOR_VERSION < 3
-PyMODINIT_FUNC init_yaml(void); /*proto*/
-PyMODINIT_FUNC init_yaml(void)
+PyMODINIT_FUNC init_ruamel_yaml(void); /*proto*/
+PyMODINIT_FUNC init_ruamel_yaml(void)
 #else
-PyMODINIT_FUNC PyInit__yaml(void); /*proto*/
-PyMODINIT_FUNC PyInit__yaml(void)
+PyMODINIT_FUNC PyInit__ruamel_yaml(void); /*proto*/
+PyMODINIT_FUNC PyInit__ruamel_yaml(void)
 #endif
 {
   PyObject *__pyx_t_1 = NULL;
@@ -23036,7 +23036,7 @@ PyMODINIT_FUNC PyInit__yaml(void)
           Py_FatalError("failed to import 'refnanny' module");
   }
   #endif
-  __Pyx_RefNannySetupContext("PyMODINIT_FUNC PyInit__yaml(void)", 0);
+  __Pyx_RefNannySetupContext("PyMODINIT_FUNC PyInit__ruamel_yaml(void)", 0);
   if (__Pyx_check_binary_version() < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 3; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __pyx_empty_tuple = PyTuple_New(0); if (unlikely(!__pyx_empty_tuple)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 3; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __pyx_empty_bytes = PyBytes_FromStringAndSize("", 0); if (unlikely(!__pyx_empty_bytes)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 3; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
@@ -23064,7 +23064,7 @@ PyMODINIT_FUNC PyInit__yaml(void)
   #endif
   /*--- Module creation code ---*/
   #if PY_MAJOR_VERSION < 3
-  __pyx_m = Py_InitModule4("_yaml", __pyx_methods, 0, 0, PYTHON_API_VERSION); Py_XINCREF(__pyx_m);
+  __pyx_m = Py_InitModule4("_ruamel_yaml", __pyx_methods, 0, 0, PYTHON_API_VERSION); Py_XINCREF(__pyx_m);
   #else
   __pyx_m = PyModule_Create(&__pyx_moduledef);
   #endif
@@ -23081,14 +23081,14 @@ PyMODINIT_FUNC PyInit__yaml(void)
   #if PY_MAJOR_VERSION < 3 && (__PYX_DEFAULT_STRING_ENCODING_IS_ASCII || __PYX_DEFAULT_STRING_ENCODING_IS_DEFAULT)
   if (__Pyx_init_sys_getdefaultencoding_params() < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 3; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   #endif
-  if (__pyx_module_is_main__yaml) {
+  if (__pyx_module_is_main__ruamel_yaml) {
     if (PyObject_SetAttrString(__pyx_m, "__name__", __pyx_n_s_main) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 3; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   }
   #if PY_MAJOR_VERSION >= 3
   {
     PyObject *modules = PyImport_GetModuleDict(); if (unlikely(!modules)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 3; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-    if (!PyDict_GetItemString(modules, "_yaml")) {
-      if (unlikely(PyDict_SetItemString(modules, "_yaml", __pyx_m) < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 3; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    if (!PyDict_GetItemString(modules, "_ruamel_yaml")) {
+      if (unlikely(PyDict_SetItemString(modules, "_ruamel_yaml", __pyx_m) < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 3; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     }
   }
   #endif
@@ -23100,37 +23100,37 @@ PyMODINIT_FUNC PyInit__yaml(void)
   /*--- Variable export code ---*/
   /*--- Function export code ---*/
   /*--- Type init code ---*/
-  if (PyType_Ready(&__pyx_type_5_yaml_Mark) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 63; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __pyx_type_5_yaml_Mark.tp_print = 0;
-  if (PyObject_SetAttrString(__pyx_m, "Mark", (PyObject *)&__pyx_type_5_yaml_Mark) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 63; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __pyx_ptype_5_yaml_Mark = &__pyx_type_5_yaml_Mark;
-  __pyx_vtabptr_5_yaml_CParser = &__pyx_vtable_5_yaml_CParser;
-  __pyx_vtable_5_yaml_CParser._parser_error = (PyObject *(*)(struct __pyx_obj_5_yaml_CParser *))__pyx_f_5_yaml_7CParser__parser_error;
-  __pyx_vtable_5_yaml_CParser._scan = (PyObject *(*)(struct __pyx_obj_5_yaml_CParser *))__pyx_f_5_yaml_7CParser__scan;
-  __pyx_vtable_5_yaml_CParser._token_to_object = (PyObject *(*)(struct __pyx_obj_5_yaml_CParser *, yaml_token_t *))__pyx_f_5_yaml_7CParser__token_to_object;
-  __pyx_vtable_5_yaml_CParser._parse = (PyObject *(*)(struct __pyx_obj_5_yaml_CParser *))__pyx_f_5_yaml_7CParser__parse;
-  __pyx_vtable_5_yaml_CParser._event_to_object = (PyObject *(*)(struct __pyx_obj_5_yaml_CParser *, yaml_event_t *))__pyx_f_5_yaml_7CParser__event_to_object;
-  __pyx_vtable_5_yaml_CParser._compose_document = (PyObject *(*)(struct __pyx_obj_5_yaml_CParser *))__pyx_f_5_yaml_7CParser__compose_document;
-  __pyx_vtable_5_yaml_CParser._compose_node = (PyObject *(*)(struct __pyx_obj_5_yaml_CParser *, PyObject *, PyObject *))__pyx_f_5_yaml_7CParser__compose_node;
-  __pyx_vtable_5_yaml_CParser._compose_scalar_node = (PyObject *(*)(struct __pyx_obj_5_yaml_CParser *, PyObject *))__pyx_f_5_yaml_7CParser__compose_scalar_node;
-  __pyx_vtable_5_yaml_CParser._compose_sequence_node = (PyObject *(*)(struct __pyx_obj_5_yaml_CParser *, PyObject *))__pyx_f_5_yaml_7CParser__compose_sequence_node;
-  __pyx_vtable_5_yaml_CParser._compose_mapping_node = (PyObject *(*)(struct __pyx_obj_5_yaml_CParser *, PyObject *))__pyx_f_5_yaml_7CParser__compose_mapping_node;
-  __pyx_vtable_5_yaml_CParser._parse_next_event = (int (*)(struct __pyx_obj_5_yaml_CParser *))__pyx_f_5_yaml_7CParser__parse_next_event;
-  if (PyType_Ready(&__pyx_type_5_yaml_CParser) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 246; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __pyx_type_5_yaml_CParser.tp_print = 0;
-  if (__Pyx_SetVtable(__pyx_type_5_yaml_CParser.tp_dict, __pyx_vtabptr_5_yaml_CParser) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 246; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  if (PyObject_SetAttrString(__pyx_m, "CParser", (PyObject *)&__pyx_type_5_yaml_CParser) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 246; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __pyx_ptype_5_yaml_CParser = &__pyx_type_5_yaml_CParser;
-  __pyx_vtabptr_5_yaml_CEmitter = &__pyx_vtable_5_yaml_CEmitter;
-  __pyx_vtable_5_yaml_CEmitter._emitter_error = (PyObject *(*)(struct __pyx_obj_5_yaml_CEmitter *))__pyx_f_5_yaml_8CEmitter__emitter_error;
-  __pyx_vtable_5_yaml_CEmitter._object_to_event = (int (*)(struct __pyx_obj_5_yaml_CEmitter *, PyObject *, yaml_event_t *))__pyx_f_5_yaml_8CEmitter__object_to_event;
-  __pyx_vtable_5_yaml_CEmitter._anchor_node = (int (*)(struct __pyx_obj_5_yaml_CEmitter *, PyObject *))__pyx_f_5_yaml_8CEmitter__anchor_node;
-  __pyx_vtable_5_yaml_CEmitter._serialize_node = (int (*)(struct __pyx_obj_5_yaml_CEmitter *, PyObject *, PyObject *, PyObject *))__pyx_f_5_yaml_8CEmitter__serialize_node;
-  if (PyType_Ready(&__pyx_type_5_yaml_CEmitter) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 934; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __pyx_type_5_yaml_CEmitter.tp_print = 0;
-  if (__Pyx_SetVtable(__pyx_type_5_yaml_CEmitter.tp_dict, __pyx_vtabptr_5_yaml_CEmitter) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 934; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  if (PyObject_SetAttrString(__pyx_m, "CEmitter", (PyObject *)&__pyx_type_5_yaml_CEmitter) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 934; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __pyx_ptype_5_yaml_CEmitter = &__pyx_type_5_yaml_CEmitter;
+  if (PyType_Ready(&__pyx_type_12_ruamel_yaml_Mark) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 63; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_type_12_ruamel_yaml_Mark.tp_print = 0;
+  if (PyObject_SetAttrString(__pyx_m, "Mark", (PyObject *)&__pyx_type_12_ruamel_yaml_Mark) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 63; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_ptype_12_ruamel_yaml_Mark = &__pyx_type_12_ruamel_yaml_Mark;
+  __pyx_vtabptr_12_ruamel_yaml_CParser = &__pyx_vtable_12_ruamel_yaml_CParser;
+  __pyx_vtable_12_ruamel_yaml_CParser._parser_error = (PyObject *(*)(struct __pyx_obj_12_ruamel_yaml_CParser *))__pyx_f_12_ruamel_yaml_7CParser__parser_error;
+  __pyx_vtable_12_ruamel_yaml_CParser._scan = (PyObject *(*)(struct __pyx_obj_12_ruamel_yaml_CParser *))__pyx_f_12_ruamel_yaml_7CParser__scan;
+  __pyx_vtable_12_ruamel_yaml_CParser._token_to_object = (PyObject *(*)(struct __pyx_obj_12_ruamel_yaml_CParser *, yaml_token_t *))__pyx_f_12_ruamel_yaml_7CParser__token_to_object;
+  __pyx_vtable_12_ruamel_yaml_CParser._parse = (PyObject *(*)(struct __pyx_obj_12_ruamel_yaml_CParser *))__pyx_f_12_ruamel_yaml_7CParser__parse;
+  __pyx_vtable_12_ruamel_yaml_CParser._event_to_object = (PyObject *(*)(struct __pyx_obj_12_ruamel_yaml_CParser *, yaml_event_t *))__pyx_f_12_ruamel_yaml_7CParser__event_to_object;
+  __pyx_vtable_12_ruamel_yaml_CParser._compose_document = (PyObject *(*)(struct __pyx_obj_12_ruamel_yaml_CParser *))__pyx_f_12_ruamel_yaml_7CParser__compose_document;
+  __pyx_vtable_12_ruamel_yaml_CParser._compose_node = (PyObject *(*)(struct __pyx_obj_12_ruamel_yaml_CParser *, PyObject *, PyObject *))__pyx_f_12_ruamel_yaml_7CParser__compose_node;
+  __pyx_vtable_12_ruamel_yaml_CParser._compose_scalar_node = (PyObject *(*)(struct __pyx_obj_12_ruamel_yaml_CParser *, PyObject *))__pyx_f_12_ruamel_yaml_7CParser__compose_scalar_node;
+  __pyx_vtable_12_ruamel_yaml_CParser._compose_sequence_node = (PyObject *(*)(struct __pyx_obj_12_ruamel_yaml_CParser *, PyObject *))__pyx_f_12_ruamel_yaml_7CParser__compose_sequence_node;
+  __pyx_vtable_12_ruamel_yaml_CParser._compose_mapping_node = (PyObject *(*)(struct __pyx_obj_12_ruamel_yaml_CParser *, PyObject *))__pyx_f_12_ruamel_yaml_7CParser__compose_mapping_node;
+  __pyx_vtable_12_ruamel_yaml_CParser._parse_next_event = (int (*)(struct __pyx_obj_12_ruamel_yaml_CParser *))__pyx_f_12_ruamel_yaml_7CParser__parse_next_event;
+  if (PyType_Ready(&__pyx_type_12_ruamel_yaml_CParser) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 246; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_type_12_ruamel_yaml_CParser.tp_print = 0;
+  if (__Pyx_SetVtable(__pyx_type_12_ruamel_yaml_CParser.tp_dict, __pyx_vtabptr_12_ruamel_yaml_CParser) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 246; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (PyObject_SetAttrString(__pyx_m, "CParser", (PyObject *)&__pyx_type_12_ruamel_yaml_CParser) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 246; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_ptype_12_ruamel_yaml_CParser = &__pyx_type_12_ruamel_yaml_CParser;
+  __pyx_vtabptr_12_ruamel_yaml_CEmitter = &__pyx_vtable_12_ruamel_yaml_CEmitter;
+  __pyx_vtable_12_ruamel_yaml_CEmitter._emitter_error = (PyObject *(*)(struct __pyx_obj_12_ruamel_yaml_CEmitter *))__pyx_f_12_ruamel_yaml_8CEmitter__emitter_error;
+  __pyx_vtable_12_ruamel_yaml_CEmitter._object_to_event = (int (*)(struct __pyx_obj_12_ruamel_yaml_CEmitter *, PyObject *, yaml_event_t *))__pyx_f_12_ruamel_yaml_8CEmitter__object_to_event;
+  __pyx_vtable_12_ruamel_yaml_CEmitter._anchor_node = (int (*)(struct __pyx_obj_12_ruamel_yaml_CEmitter *, PyObject *))__pyx_f_12_ruamel_yaml_8CEmitter__anchor_node;
+  __pyx_vtable_12_ruamel_yaml_CEmitter._serialize_node = (int (*)(struct __pyx_obj_12_ruamel_yaml_CEmitter *, PyObject *, PyObject *, PyObject *))__pyx_f_12_ruamel_yaml_8CEmitter__serialize_node;
+  if (PyType_Ready(&__pyx_type_12_ruamel_yaml_CEmitter) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 934; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_type_12_ruamel_yaml_CEmitter.tp_print = 0;
+  if (__Pyx_SetVtable(__pyx_type_12_ruamel_yaml_CEmitter.tp_dict, __pyx_vtabptr_12_ruamel_yaml_CEmitter) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 934; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (PyObject_SetAttrString(__pyx_m, "CEmitter", (PyObject *)&__pyx_type_12_ruamel_yaml_CEmitter) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 934; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_ptype_12_ruamel_yaml_CEmitter = &__pyx_type_12_ruamel_yaml_CEmitter;
   /*--- Type import code ---*/
   /*--- Variable import code ---*/
   /*--- Function import code ---*/
@@ -23139,31 +23139,31 @@ PyMODINIT_FUNC PyInit__yaml(void)
   if (__Pyx_patch_abc() < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 3; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   #endif
 
-  /* "_yaml.pyx":3
+  /* "_ruamel_yaml.pyx":3
  * 
  * 
  * def get_version_string():             # <<<<<<<<<<<<<<
  *     cdef char *value
  *     value = yaml_get_version_string()
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_5_yaml_1get_version_string, NULL, __pyx_n_s_yaml); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 3; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_12_ruamel_yaml_1get_version_string, NULL, __pyx_n_s_ruamel_yaml); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 3; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_get_version_string, __pyx_t_1) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 3; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "_yaml.pyx":11
+  /* "_ruamel_yaml.pyx":11
  *         return PyUnicode_FromString(value)
  * 
  * def get_version():             # <<<<<<<<<<<<<<
  *     cdef int major, minor, patch
  *     yaml_get_version(&major, &minor, &patch)
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_5_yaml_3get_version, NULL, __pyx_n_s_yaml); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 11; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_12_ruamel_yaml_3get_version, NULL, __pyx_n_s_ruamel_yaml); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 11; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_get_version, __pyx_t_1) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 11; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "_yaml.pyx":17
+  /* "_ruamel_yaml.pyx":17
  * 
  * #Mark = yaml.error.Mark
  * from ruamel.yaml.error import YAMLError             # <<<<<<<<<<<<<<
@@ -23184,7 +23184,7 @@ PyMODINIT_FUNC PyInit__yaml(void)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "_yaml.pyx":18
+  /* "_ruamel_yaml.pyx":18
  * #Mark = yaml.error.Mark
  * from ruamel.yaml.error import YAMLError
  * from ruamel.yaml.reader import ReaderError             # <<<<<<<<<<<<<<
@@ -23205,7 +23205,7 @@ PyMODINIT_FUNC PyInit__yaml(void)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "_yaml.pyx":19
+  /* "_ruamel_yaml.pyx":19
  * from ruamel.yaml.error import YAMLError
  * from ruamel.yaml.reader import ReaderError
  * from ruamel.yaml.scanner import ScannerError             # <<<<<<<<<<<<<<
@@ -23226,7 +23226,7 @@ PyMODINIT_FUNC PyInit__yaml(void)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "_yaml.pyx":20
+  /* "_ruamel_yaml.pyx":20
  * from ruamel.yaml.reader import ReaderError
  * from ruamel.yaml.scanner import ScannerError
  * from ruamel.yaml.parser_ import ParserError             # <<<<<<<<<<<<<<
@@ -23247,7 +23247,7 @@ PyMODINIT_FUNC PyInit__yaml(void)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "_yaml.pyx":21
+  /* "_ruamel_yaml.pyx":21
  * from ruamel.yaml.scanner import ScannerError
  * from ruamel.yaml.parser_ import ParserError
  * from ruamel.yaml.composer import ComposerError             # <<<<<<<<<<<<<<
@@ -23268,7 +23268,7 @@ PyMODINIT_FUNC PyInit__yaml(void)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "_yaml.pyx":22
+  /* "_ruamel_yaml.pyx":22
  * from ruamel.yaml.parser_ import ParserError
  * from ruamel.yaml.composer import ComposerError
  * from ruamel.yaml.constructor import ConstructorError             # <<<<<<<<<<<<<<
@@ -23289,7 +23289,7 @@ PyMODINIT_FUNC PyInit__yaml(void)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "_yaml.pyx":23
+  /* "_ruamel_yaml.pyx":23
  * from ruamel.yaml.composer import ComposerError
  * from ruamel.yaml.constructor import ConstructorError
  * from ruamel.yaml.emitter import EmitterError             # <<<<<<<<<<<<<<
@@ -23310,7 +23310,7 @@ PyMODINIT_FUNC PyInit__yaml(void)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "_yaml.pyx":24
+  /* "_ruamel_yaml.pyx":24
  * from ruamel.yaml.constructor import ConstructorError
  * from ruamel.yaml.emitter import EmitterError
  * from ruamel.yaml.serializer import SerializerError             # <<<<<<<<<<<<<<
@@ -23331,7 +23331,7 @@ PyMODINIT_FUNC PyInit__yaml(void)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "_yaml.pyx":25
+  /* "_ruamel_yaml.pyx":25
  * from ruamel.yaml.emitter import EmitterError
  * from ruamel.yaml.serializer import SerializerError
  * from ruamel.yaml.representer import RepresenterError             # <<<<<<<<<<<<<<
@@ -23352,7 +23352,7 @@ PyMODINIT_FUNC PyInit__yaml(void)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "_yaml.pyx":27
+  /* "_ruamel_yaml.pyx":27
  * from ruamel.yaml.representer import RepresenterError
  * 
  * from ruamel.yaml.tokens import StreamStartToken             # <<<<<<<<<<<<<<
@@ -23373,7 +23373,7 @@ PyMODINIT_FUNC PyInit__yaml(void)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "_yaml.pyx":28
+  /* "_ruamel_yaml.pyx":28
  * 
  * from ruamel.yaml.tokens import StreamStartToken
  * from ruamel.yaml.tokens import StreamEndToken             # <<<<<<<<<<<<<<
@@ -23394,7 +23394,7 @@ PyMODINIT_FUNC PyInit__yaml(void)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "_yaml.pyx":29
+  /* "_ruamel_yaml.pyx":29
  * from ruamel.yaml.tokens import StreamStartToken
  * from ruamel.yaml.tokens import StreamEndToken
  * from ruamel.yaml.tokens import DirectiveToken             # <<<<<<<<<<<<<<
@@ -23415,7 +23415,7 @@ PyMODINIT_FUNC PyInit__yaml(void)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "_yaml.pyx":30
+  /* "_ruamel_yaml.pyx":30
  * from ruamel.yaml.tokens import StreamEndToken
  * from ruamel.yaml.tokens import DirectiveToken
  * from ruamel.yaml.tokens import DocumentStartToken             # <<<<<<<<<<<<<<
@@ -23436,7 +23436,7 @@ PyMODINIT_FUNC PyInit__yaml(void)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "_yaml.pyx":31
+  /* "_ruamel_yaml.pyx":31
  * from ruamel.yaml.tokens import DirectiveToken
  * from ruamel.yaml.tokens import DocumentStartToken
  * from ruamel.yaml.tokens import DocumentEndToken             # <<<<<<<<<<<<<<
@@ -23457,7 +23457,7 @@ PyMODINIT_FUNC PyInit__yaml(void)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "_yaml.pyx":32
+  /* "_ruamel_yaml.pyx":32
  * from ruamel.yaml.tokens import DocumentStartToken
  * from ruamel.yaml.tokens import DocumentEndToken
  * from ruamel.yaml.tokens import BlockSequenceStartToken             # <<<<<<<<<<<<<<
@@ -23478,7 +23478,7 @@ PyMODINIT_FUNC PyInit__yaml(void)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "_yaml.pyx":33
+  /* "_ruamel_yaml.pyx":33
  * from ruamel.yaml.tokens import DocumentEndToken
  * from ruamel.yaml.tokens import BlockSequenceStartToken
  * from ruamel.yaml.tokens import BlockMappingStartToken             # <<<<<<<<<<<<<<
@@ -23499,7 +23499,7 @@ PyMODINIT_FUNC PyInit__yaml(void)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "_yaml.pyx":34
+  /* "_ruamel_yaml.pyx":34
  * from ruamel.yaml.tokens import BlockSequenceStartToken
  * from ruamel.yaml.tokens import BlockMappingStartToken
  * from ruamel.yaml.tokens import BlockEndToken             # <<<<<<<<<<<<<<
@@ -23520,7 +23520,7 @@ PyMODINIT_FUNC PyInit__yaml(void)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "_yaml.pyx":35
+  /* "_ruamel_yaml.pyx":35
  * from ruamel.yaml.tokens import BlockMappingStartToken
  * from ruamel.yaml.tokens import BlockEndToken
  * from ruamel.yaml.tokens import FlowSequenceStartToken             # <<<<<<<<<<<<<<
@@ -23541,7 +23541,7 @@ PyMODINIT_FUNC PyInit__yaml(void)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "_yaml.pyx":36
+  /* "_ruamel_yaml.pyx":36
  * from ruamel.yaml.tokens import BlockEndToken
  * from ruamel.yaml.tokens import FlowSequenceStartToken
  * from ruamel.yaml.tokens import FlowMappingStartToken             # <<<<<<<<<<<<<<
@@ -23562,7 +23562,7 @@ PyMODINIT_FUNC PyInit__yaml(void)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "_yaml.pyx":37
+  /* "_ruamel_yaml.pyx":37
  * from ruamel.yaml.tokens import FlowSequenceStartToken
  * from ruamel.yaml.tokens import FlowMappingStartToken
  * from ruamel.yaml.tokens import FlowSequenceEndToken             # <<<<<<<<<<<<<<
@@ -23583,7 +23583,7 @@ PyMODINIT_FUNC PyInit__yaml(void)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "_yaml.pyx":38
+  /* "_ruamel_yaml.pyx":38
  * from ruamel.yaml.tokens import FlowMappingStartToken
  * from ruamel.yaml.tokens import FlowSequenceEndToken
  * from ruamel.yaml.tokens import FlowMappingEndToken             # <<<<<<<<<<<<<<
@@ -23604,7 +23604,7 @@ PyMODINIT_FUNC PyInit__yaml(void)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "_yaml.pyx":39
+  /* "_ruamel_yaml.pyx":39
  * from ruamel.yaml.tokens import FlowSequenceEndToken
  * from ruamel.yaml.tokens import FlowMappingEndToken
  * from ruamel.yaml.tokens import KeyToken             # <<<<<<<<<<<<<<
@@ -23625,7 +23625,7 @@ PyMODINIT_FUNC PyInit__yaml(void)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "_yaml.pyx":40
+  /* "_ruamel_yaml.pyx":40
  * from ruamel.yaml.tokens import FlowMappingEndToken
  * from ruamel.yaml.tokens import KeyToken
  * from ruamel.yaml.tokens import ValueToken             # <<<<<<<<<<<<<<
@@ -23646,7 +23646,7 @@ PyMODINIT_FUNC PyInit__yaml(void)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "_yaml.pyx":41
+  /* "_ruamel_yaml.pyx":41
  * from ruamel.yaml.tokens import KeyToken
  * from ruamel.yaml.tokens import ValueToken
  * from ruamel.yaml.tokens import BlockEntryToken             # <<<<<<<<<<<<<<
@@ -23667,7 +23667,7 @@ PyMODINIT_FUNC PyInit__yaml(void)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "_yaml.pyx":42
+  /* "_ruamel_yaml.pyx":42
  * from ruamel.yaml.tokens import ValueToken
  * from ruamel.yaml.tokens import BlockEntryToken
  * from ruamel.yaml.tokens import FlowEntryToken             # <<<<<<<<<<<<<<
@@ -23688,7 +23688,7 @@ PyMODINIT_FUNC PyInit__yaml(void)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "_yaml.pyx":43
+  /* "_ruamel_yaml.pyx":43
  * from ruamel.yaml.tokens import BlockEntryToken
  * from ruamel.yaml.tokens import FlowEntryToken
  * from ruamel.yaml.tokens import AliasToken             # <<<<<<<<<<<<<<
@@ -23709,7 +23709,7 @@ PyMODINIT_FUNC PyInit__yaml(void)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "_yaml.pyx":44
+  /* "_ruamel_yaml.pyx":44
  * from ruamel.yaml.tokens import FlowEntryToken
  * from ruamel.yaml.tokens import AliasToken
  * from ruamel.yaml.tokens import AnchorToken             # <<<<<<<<<<<<<<
@@ -23730,7 +23730,7 @@ PyMODINIT_FUNC PyInit__yaml(void)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "_yaml.pyx":45
+  /* "_ruamel_yaml.pyx":45
  * from ruamel.yaml.tokens import AliasToken
  * from ruamel.yaml.tokens import AnchorToken
  * from ruamel.yaml.tokens import TagToken             # <<<<<<<<<<<<<<
@@ -23751,7 +23751,7 @@ PyMODINIT_FUNC PyInit__yaml(void)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "_yaml.pyx":46
+  /* "_ruamel_yaml.pyx":46
  * from ruamel.yaml.tokens import AnchorToken
  * from ruamel.yaml.tokens import TagToken
  * from ruamel.yaml.tokens import ScalarToken             # <<<<<<<<<<<<<<
@@ -23772,7 +23772,7 @@ PyMODINIT_FUNC PyInit__yaml(void)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "_yaml.pyx":48
+  /* "_ruamel_yaml.pyx":48
  * from ruamel.yaml.tokens import ScalarToken
  * 
  * from ruamel.yaml.events import StreamStartEvent             # <<<<<<<<<<<<<<
@@ -23793,7 +23793,7 @@ PyMODINIT_FUNC PyInit__yaml(void)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "_yaml.pyx":49
+  /* "_ruamel_yaml.pyx":49
  * 
  * from ruamel.yaml.events import StreamStartEvent
  * from ruamel.yaml.events import StreamEndEvent             # <<<<<<<<<<<<<<
@@ -23814,7 +23814,7 @@ PyMODINIT_FUNC PyInit__yaml(void)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "_yaml.pyx":50
+  /* "_ruamel_yaml.pyx":50
  * from ruamel.yaml.events import StreamStartEvent
  * from ruamel.yaml.events import StreamEndEvent
  * from ruamel.yaml.events import DocumentStartEvent             # <<<<<<<<<<<<<<
@@ -23835,7 +23835,7 @@ PyMODINIT_FUNC PyInit__yaml(void)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "_yaml.pyx":51
+  /* "_ruamel_yaml.pyx":51
  * from ruamel.yaml.events import StreamEndEvent
  * from ruamel.yaml.events import DocumentStartEvent
  * from ruamel.yaml.events import DocumentEndEvent             # <<<<<<<<<<<<<<
@@ -23856,7 +23856,7 @@ PyMODINIT_FUNC PyInit__yaml(void)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "_yaml.pyx":52
+  /* "_ruamel_yaml.pyx":52
  * from ruamel.yaml.events import DocumentStartEvent
  * from ruamel.yaml.events import DocumentEndEvent
  * from ruamel.yaml.events import AliasEvent             # <<<<<<<<<<<<<<
@@ -23877,7 +23877,7 @@ PyMODINIT_FUNC PyInit__yaml(void)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "_yaml.pyx":53
+  /* "_ruamel_yaml.pyx":53
  * from ruamel.yaml.events import DocumentEndEvent
  * from ruamel.yaml.events import AliasEvent
  * from ruamel.yaml.events import ScalarEvent             # <<<<<<<<<<<<<<
@@ -23898,7 +23898,7 @@ PyMODINIT_FUNC PyInit__yaml(void)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "_yaml.pyx":54
+  /* "_ruamel_yaml.pyx":54
  * from ruamel.yaml.events import AliasEvent
  * from ruamel.yaml.events import ScalarEvent
  * from ruamel.yaml.events import SequenceStartEvent             # <<<<<<<<<<<<<<
@@ -23919,7 +23919,7 @@ PyMODINIT_FUNC PyInit__yaml(void)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "_yaml.pyx":55
+  /* "_ruamel_yaml.pyx":55
  * from ruamel.yaml.events import ScalarEvent
  * from ruamel.yaml.events import SequenceStartEvent
  * from ruamel.yaml.events import SequenceEndEvent             # <<<<<<<<<<<<<<
@@ -23940,7 +23940,7 @@ PyMODINIT_FUNC PyInit__yaml(void)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "_yaml.pyx":56
+  /* "_ruamel_yaml.pyx":56
  * from ruamel.yaml.events import SequenceStartEvent
  * from ruamel.yaml.events import SequenceEndEvent
  * from ruamel.yaml.events import MappingStartEvent             # <<<<<<<<<<<<<<
@@ -23961,7 +23961,7 @@ PyMODINIT_FUNC PyInit__yaml(void)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "_yaml.pyx":57
+  /* "_ruamel_yaml.pyx":57
  * from ruamel.yaml.events import SequenceEndEvent
  * from ruamel.yaml.events import MappingStartEvent
  * from ruamel.yaml.events import MappingEndEvent             # <<<<<<<<<<<<<<
@@ -23982,7 +23982,7 @@ PyMODINIT_FUNC PyInit__yaml(void)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "_yaml.pyx":59
+  /* "_ruamel_yaml.pyx":59
  * from ruamel.yaml.events import MappingEndEvent
  * 
  * from ruamel.yaml.nodes import ScalarNode             # <<<<<<<<<<<<<<
@@ -24003,7 +24003,7 @@ PyMODINIT_FUNC PyInit__yaml(void)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "_yaml.pyx":60
+  /* "_ruamel_yaml.pyx":60
  * 
  * from ruamel.yaml.nodes import ScalarNode
  * from ruamel.yaml.nodes import SequenceNode             # <<<<<<<<<<<<<<
@@ -24024,7 +24024,7 @@ PyMODINIT_FUNC PyInit__yaml(void)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "_yaml.pyx":61
+  /* "_ruamel_yaml.pyx":61
  * from ruamel.yaml.nodes import ScalarNode
  * from ruamel.yaml.nodes import SequenceNode
  * from ruamel.yaml.nodes import MappingNode             # <<<<<<<<<<<<<<
@@ -24045,7 +24045,7 @@ PyMODINIT_FUNC PyInit__yaml(void)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "_yaml.pyx":3
+  /* "_ruamel_yaml.pyx":3
  * 
  * 
  * def get_version_string():             # <<<<<<<<<<<<<<
@@ -24065,11 +24065,11 @@ PyMODINIT_FUNC PyInit__yaml(void)
   __Pyx_XDECREF(__pyx_t_2);
   if (__pyx_m) {
     if (__pyx_d) {
-      __Pyx_AddTraceback("init _yaml", __pyx_clineno, __pyx_lineno, __pyx_filename);
+      __Pyx_AddTraceback("init _ruamel_yaml", __pyx_clineno, __pyx_lineno, __pyx_filename);
     }
     Py_DECREF(__pyx_m); __pyx_m = 0;
   } else if (!PyErr_Occurred()) {
-    PyErr_SetString(PyExc_ImportError, "init _yaml");
+    PyErr_SetString(PyExc_ImportError, "init _ruamel_yaml");
   }
   __pyx_L0:;
   __Pyx_RefNannyFinishContext();
