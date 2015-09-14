@@ -650,7 +650,14 @@ class RoundTripRepresenter(SafeRepresenter):
         try:
             comment = getattr(mapping, comment_attrib)
             node.comment = comment.comment
+            if node.comment and node.comment[1]:
+                for ct in node.comment[1]:
+                    ct.reset()
             item_comments = comment.items
+            for v in item_comments.values():
+                if v and v[1]:
+                    for ct in v[1]:
+                        ct.reset()
             try:
                 node.comment.append(comment.end)
             except AttributeError:
@@ -711,7 +718,14 @@ class RoundTripRepresenter(SafeRepresenter):
         try:
             comment = getattr(omap, comment_attrib)
             node.comment = comment.comment
+            if node.comment and node.comment[1]:
+                for ct in node.comment[1]:
+                    ct.reset()
             item_comments = comment.items
+            for v in item_comments.values():
+                if v and v[1]:
+                    for ct in v[1]:
+                        ct.reset()
             try:
                 node.comment.append(comment.end)
             except AttributeError:
@@ -763,7 +777,14 @@ class RoundTripRepresenter(SafeRepresenter):
         try:
             comment = getattr(setting, comment_attrib)
             node.comment = comment.comment
+            if node.comment and node.comment[1]:
+                for ct in node.comment[1]:
+                    ct.reset()
             item_comments = comment.items
+            for v in item_comments.values():
+                if v and v[1]:
+                    for ct in v[1]:
+                        ct.reset()
             try:
                 node.comment.append(comment.end)
             except AttributeError:
