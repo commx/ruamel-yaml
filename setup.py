@@ -10,70 +10,135 @@ if __name__ != '__main__':
 
 full_package_name = None
 
+# # __init__.py parser
 
-# parses python ( "= dict( )" ) or json ( "= {  # JSON" )
+import sys
+from _ast import *       # NOQA
+from ast import parse
+
+
+if sys.version_info < (3, ):
+    string_type = basestring
+else:
+    string_type = str
+
+
+if sys.version_info < (3, 4):
+    class Bytes():
+        pass
+
+    class NameConstant:
+        pass
+
+if sys.version_info < (2, 7):
+    class Set():
+        pass
+
+
+def literal_eval(node_or_string):
+    """
+    Safely evaluate an expression node or a string containing a Python
+    expression.  The string or node provided may only consist of the following
+    Python literal structures: strings, bytes, numbers, tuples, lists, dicts,
+    sets, booleans, and None.
+    """
+    _safe_names = {'None': None, 'True': True, 'False': False}
+    if isinstance(node_or_string, string_type):
+        node_or_string = parse(node_or_string, mode='eval')
+    if isinstance(node_or_string, Expression):
+        node_or_string = node_or_string.body
+
+    def _convert(node):
+        if isinstance(node, (Str, Bytes)):
+            return node.s
+        elif isinstance(node, Num):
+            return node.n
+        elif isinstance(node, Tuple):
+            return tuple(map(_convert, node.elts))
+        elif isinstance(node, List):
+            return list(map(_convert, node.elts))
+        elif isinstance(node, Set):
+            return set(map(_convert, node.elts))
+        elif isinstance(node, Dict):
+            return dict((_convert(k), _convert(v)) for k, v
+                        in zip(node.keys, node.values))
+        elif isinstance(node, NameConstant):
+            return node.value
+        elif sys.version_info < (3, 4) and isinstance(node, Name):
+            if node.id in _safe_names:
+                return _safe_names[node.id]
+        elif isinstance(node, UnaryOp) and \
+             isinstance(node.op, (UAdd, USub)) and \
+             isinstance(node.operand, (Num, UnaryOp, BinOp)):  # NOQA
+            operand = _convert(node.operand)
+            if isinstance(node.op, UAdd):
+                return + operand
+            else:
+                return - operand
+        elif isinstance(node, BinOp) and \
+             isinstance(node.op, (Add, Sub)) and \
+             isinstance(node.right, (Num, UnaryOp, BinOp)) and \
+             isinstance(node.left, (Num, UnaryOp, BinOp)):  # NOQA
+            left = _convert(node.left)
+            right = _convert(node.right)
+            if isinstance(node.op, Add):
+                return left + right
+            else:
+                return left - right
+        elif isinstance(node, Call) and node.func.id == 'dict':
+            return dict((k.arg, _convert(k.value)) for k in node.keywords)
+        elif isinstance(node, Call) and node.func.id == 'set':
+            return set(_convert(k) for k in node.args)
+        err = SyntaxError('malformed node or string: ' + repr(node))
+        err.filename = '<string>'
+        err.lineno = node.lineno
+        err.offset = node.col_offset
+        err.text = repr(node)
+        err.node = node
+        raise err
+    return _convert(node_or_string)
+
+
+# parses python ( "= dict( )" ) or ( "= {" )
 def _package_data(fn):
     data = {}
     with open(fn) as fp:
         parsing = False
         lines = []
         for line in fp.readlines():
-            if line.startswith('_package_data'):
+            if sys.version_info < (3,):
+                line = line.decode('utf-8')
+            if line.startswith(u'_package_data'):
                 if 'dict(' in line:
                     parsing = 'python'
-                elif '# JSON' in line:
-                    parsing = 'json'
-                    lines.append('{\n')
+                    lines.append(u'dict(\n')
+                elif line.endswith(u'= {\n'):
+                    parsing = 'python'
+                    lines.append(u'{\n')
                 else:
                     raise NotImplementedError
                 continue
             if not parsing:
                 continue
-            if parsing == 'json':
-                x = line.rsplit("# ", 1)
-                if len(x) > 1:
-                    if x[1].startswith('JSON'):
-                        lines.append(x[0]+'\n')
-                        import json
-                        try:
-                            data = json.loads(''.join(lines))
-                        except ValueError:
-                            w = len(str(len(lines)))
-                            for i, line in enumerate(lines):
-                                print('{0:{1}}: {2}'.format(
-                                    i+1, w, line), end='')
-                            raise
-                        break
-                    elif not x[0].strip():
-                        continue  # empty line can have any comment
-                    elif '"' not in x[1] and "'" not in x[1]:
-                        # can't deal with quotes might be # in string
-                        line = x[0] + '\n'
-                lines.append(line)
-            elif parsing == 'python':
-                if line.startswith(')'):
+            if parsing == 'python':
+                if line.startswith(u')') or line.startswith(u'}'):
+                    lines.append(line)
+                    try:
+                        data = literal_eval(u''.join(lines))
+                    except SyntaxError as e:
+                        context = 2
+                        from_line = e.lineno - (context + 1)
+                        to_line = e.lineno + (context - 1)
+                        w = len(str(to_line))
+                        for index, line in enumerate(lines):
+                            if from_line <= index <= to_line:
+                                print(u"{:{}}: {}".format(index, w, line), end=u'')
+                                if index == e.lineno - 1:
+                                    print(u"{:{}}  {}^--- {}".format(
+                                        u' ', w, u' ' * e.offset, e.node))
+                        raise
                     break
-                if '# NOQA' in line:
-                    line = line.split('# NOQA', 1)[0].rstrip()
-                k, v = [x.strip() for x in line.split('=', 1)]
-                if v[-1] == ',':
-                    v = v[:-1]
-                if v[0] in '\'"' and v[0] == v[-1]:
-                    data[k] = v[1:-1]
-                elif v == 'None':
-                    data[k] = None
-                elif v == 'True':
-                    data[k] = True
-                elif v == 'False':
-                    data[k] = False
-                elif v[0] == '(' and v[-1] == ')':
-                    data[k] = tuple([x.strip()[1:-1] if x[0] in '\'"' else
-                                     int(x) for x in v[1:-1].split(', ')])
-                elif v[0] == '[' and v[-1] == ']':
-                    data[k] = [x.strip()[1:-1] if x[0] in '\'"' else int(x)
-                               for x in v[1:-1].split(', ')]
-                else:
-                    print('Unknown: >>>>> {0!r} {1!r}'.format(k, v))
+                lines.append(line)
             else:
                 raise NotImplementedError
     return data
@@ -370,14 +435,20 @@ class NameSpacePackager(object):
     @property
     def _analyse_packages(self):
         """gather from configuration, names starting with * need
-        to be installed explicitly as they are not on PyPI"""
+        to be installed explicitly as they are not on PyPI
+        install_requires should be  dict, with keys 'any', 'py27' etc
+        or a list (which is as if only 'any' was defined
+        """
         if self._pkg[0] is None:
             self._pkg[0] = []
             self._pkg[1] = []
 
-        ir = self._pkg_data.get('install_requires', [])
+        ir = self._pkg_data.get('install_requires')
+        if ir is None:
+            return self._pkg  # these will be both empty at this point
         if isinstance(ir, list):
-            return ir
+            self._pkg[0] = ir
+            return self._pkg
         # 'any' for all builds, 'py27' etc for specifics versions
         packages = ir.get('any', [])
         implementation = platform.python_implementation()
