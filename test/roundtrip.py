@@ -49,3 +49,6 @@ def round_trip(inp, outp=None, extra=None, intermediate=None):
     res = round_trip_dump(data)
     print('roundtrip data:\n', res, sep='')
     assert res == doutp
+    res = round_trip_dump(data)
+    print('roundtrip second round data:\n', res, sep='')
+    assert res == doutp
