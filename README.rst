@@ -40,7 +40,9 @@ Major differences with PyYAML 3.11:
 - adding/replacing of comments on block style sequences and mappings
   with smart column positioning
 - collection objects (when read in via RoundTripParser) have an ``lc``
-  property that contains line and column info ``lc.line`` and ``lc.col``
+  property that contains line and column info ``lc.line`` and ``lc.col``.
+  Individual positions for mappings and sequences can also be retrieved
+  (``lc.key('a')``, ``lc.value('a')`` resp. ``lc.item(3)``)
 - preservation of whitelines after block scalars. Contributed by Sam Thursfield.
 
 Round trip including comments

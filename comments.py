@@ -98,6 +98,35 @@ class LineCol(object):
     def __init__(self):
         self.line = None
         self.col = None
+        self.data = None
+
+    def add_kv_line_col(self, key, data):
+        if self.data is None:
+            self.data = {}
+        self.data[key] = data
+
+    def key(self, k):
+        return self._kv(k, 0, 1)
+
+    def value(self, k):
+        return self._kv(k, 2, 3)
+
+    def _kv(self, k, x0, x1):
+        if self.data is None:
+            return None
+        data = self.data[k]
+        return data[x0], data[x1]
+
+    def item(self, idx):
+        if self.data is None:
+            return None
+        return self.data[idx]
+
+    def add_idx_line_col(self, key, data):
+        if self.data is None:
+            self.data = {}
+        self.data[key] = data
+
 
 class Anchor(object):
     attrib = anchor_attrib
@@ -186,6 +215,12 @@ class CommentedBase(object):
     def _yaml_set_line_col(self, line, col):
         self.lc.line = line
         self.lc.col = col
+
+    def _yaml_set_kv_line_col(self, key, data):
+        self.lc.add_kv_line_col(key, data)
+
+    def _yaml_set_idx_line_col(self, key, data):
+        self.lc.add_idx_line_col(key, data)
 
     @property
     def anchor(self):

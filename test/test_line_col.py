@@ -68,3 +68,26 @@ class TestLineCol:
         assert data[0].lc.col == 2
         assert data[1].lc.line == 4
         assert data[1].lc.col == 2
+
+    def test_pos_mapping(self):
+        data = load("""
+        a: 1
+        b: 2
+        c: 3
+        # comment
+        klm: 42
+        d: 4
+        """)
+        assert data.lc.key('klm') == (4, 0)
+        assert data.lc.value('klm') == (4, 5)
+
+    def test_pos_sequence(self):
+        data = load("""
+        - a
+        - b
+        - c
+        # next one!
+        - klm
+        - d
+        """)
+        assert data.lc.key(3) == (4, 2)

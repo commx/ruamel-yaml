@@ -843,6 +843,8 @@ class RoundTripConstructor(SafeConstructor):
             ret_val.append(self.construct_object(child, deep=deep))
             if child.comment:
                 seqtyp._yaml_add_comment(child.comment, key=idx)
+            seqtyp._yaml_set_idx_line_col(
+                idx, [child.start_mark.line, child.start_mark.column])
         return ret_val
 
     def flatten_mapping(self, node):
@@ -951,6 +953,9 @@ class RoundTripConstructor(SafeConstructor):
                 maptyp._yaml_add_comment(key_node.comment, key=key)
             if value_node.comment:
                 maptyp._yaml_add_comment(value_node.comment, value=key)
+            maptyp._yaml_set_kv_line_col(
+                key, [key_node.start_mark.line, key_node.start_mark.column,
+                value_node.start_mark.line, value_node.start_mark.column])
             maptyp[key] = value
 
     def construct_setting(self, node, typ, deep=False):
