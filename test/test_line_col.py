@@ -90,4 +90,4 @@ class TestLineCol:
         - klm
         - d
         """)
-        assert data.lc.key(3) == (4, 2)
+        assert data.lc.item(3) == (4, 2)

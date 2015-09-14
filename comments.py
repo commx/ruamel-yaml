@@ -120,7 +120,7 @@ class LineCol(object):
     def item(self, idx):
         if self.data is None:
             return None
-        return self.data[idx]
+        return self.data[idx][0], self.data[idx][1]
 
     def add_idx_line_col(self, key, data):
         if self.data is None:
