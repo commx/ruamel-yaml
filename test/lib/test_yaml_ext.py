@@ -153,14 +153,18 @@ def _compare_scanners(py_data, c_data, verbose):
             pprint.pprint(c_tokens)
 
 def test_c_scanner(data_filename, canonical_filename, verbose=False):
-    _compare_scanners(open(data_filename, 'rb'),
-            open(data_filename, 'rb'), verbose)
-    _compare_scanners(open(data_filename, 'rb').read(),
-            open(data_filename, 'rb').read(), verbose)
-    _compare_scanners(open(canonical_filename, 'rb'),
-            open(canonical_filename, 'rb'), verbose)
-    _compare_scanners(open(canonical_filename, 'rb').read(),
-            open(canonical_filename, 'rb').read(), verbose)
+    with open(data_filename, 'rb') as fp0:
+        with open(data_filename, 'rb') as fp1:
+            _compare_scanners(fp0, fp1, verbose)
+    with open(data_filename, 'rb') as fp0:
+        with open(data_filename, 'rb') as fp1:
+            _compare_scanners(fp0.read(), fp1.read(), verbose)
+    with open(canonical_filename, 'rb') as fp0:
+        with open(canonical_filename, 'rb') as fp1:
+            _compare_scanners(fp0, fp1, verbose)
+    with open(canonical_filename, 'rb') as fp0:
+        with open(canonical_filename, 'rb') as fp1:
+            _compare_scanners(fp0.read(), fp1.read(), verbose)
 
 test_c_scanner.unittest = ['.data', '.canonical']
 test_c_scanner.skip = ['.skip-ext']
@@ -186,14 +190,18 @@ def _compare_parsers(py_data, c_data, verbose):
             pprint.pprint(c_events)
 
 def test_c_parser(data_filename, canonical_filename, verbose=False):
-    _compare_parsers(open(data_filename, 'rb'),
-            open(data_filename, 'rb'), verbose)
-    _compare_parsers(open(data_filename, 'rb').read(),
-            open(data_filename, 'rb').read(), verbose)
-    _compare_parsers(open(canonical_filename, 'rb'),
-            open(canonical_filename, 'rb'), verbose)
-    _compare_parsers(open(canonical_filename, 'rb').read(),
-            open(canonical_filename, 'rb').read(), verbose)
+    with open(data_filename, 'rb') as fp0:
+        with open(data_filename, 'rb') as fp1:
+            _compare_parsers(fp0, fp1, verbose)
+    with open(data_filename, 'rb') as fp0:
+        with open(data_filename, 'rb') as fp1:
+            _compare_parsers(fp0.read(), fp1.read(), verbose)
+    with open(canonical_filename, 'rb') as fp0:
+        with open(canonical_filename, 'rb') as fp1:
+            _compare_parsers(fp0, fp1, verbose)
+    with open(canonical_filename, 'rb') as fp0:
+        with open(canonical_filename, 'rb') as fp1:
+            _compare_parsers(fp0.read(), fp1.read(), verbose)
 
 test_c_parser.unittest = ['.data', '.canonical']
 test_c_parser.skip = ['.skip-ext']
@@ -231,8 +239,10 @@ def _compare_emitters(data, verbose):
             pprint.pprint(c_events)
 
 def test_c_emitter(data_filename, canonical_filename, verbose=False):
-    _compare_emitters(open(data_filename, 'rb').read(), verbose)
-    _compare_emitters(open(canonical_filename, 'rb').read(), verbose)
+    with open(data_filename, 'rb') as fp0:
+        _compare_emitters(fp0.read(), verbose)
+    with open(canonical_filename, 'rb') as fp0:
+        _compare_emitters(fp0.read(), verbose)
 
 test_c_emitter.unittest = ['.data', '.canonical']
 test_c_emitter.skip = ['.skip-ext']

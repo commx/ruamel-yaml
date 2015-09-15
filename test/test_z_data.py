@@ -24,9 +24,6 @@ def test_data():
 # @pytest.mark.skipif(not ruamel.yaml.__with_libyaml__,
 #                     reason="no libyaml")
 
-@pytest.mark.skipif(
-    platform.python_implementation() == "PyPy",
-    reason="too many open filehandles, old PyYAML tests rely on garbage collection")
 def test_data_ext():
     collections = []
     if ruamel.yaml.__with_libyaml__:

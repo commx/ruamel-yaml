@@ -136,18 +136,18 @@ class TestAnchorsAliases:
         - x: 1
           y: 2
           r: 10
-          label: center/big
+          label: center/small
         # Merge one map
         - <<: *CENTER
           r: 10
-          label: center/big
+          label: center/medium
         # Merge multiple maps
         - <<: [*CENTER, *BIG]
           label: center/big
         # Override
         - <<: [*BIG, *LEFT, *SMALL]
           x: 1
-          label: center/big
+          label: center/huge
         """)
 
     def test_merge_00(self):
@@ -156,7 +156,12 @@ class TestAnchorsAliases:
         ok = True
         for k in d:
             for o in [5, 6, 7]:
-                if d.get(k) != data[o].get(k):
+                x = d.get(k)
+                y = data[o].get(k)
+                if not isinstance(x, int):
+                    x = x.split('/')[0]
+                    y = y.split('/')[0]
+                if x != y:
                     ok = False
                     print('key', k, d.get(k), data[o].get(k))
         assert ok

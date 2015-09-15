@@ -26,7 +26,8 @@ class AnInstanceWithState(AnInstance):
 
 def test_recursive(recursive_filename, verbose=False):
     context = globals().copy()
-    exec(open(recursive_filename, 'rb').read(), context)
+    with open(recursive_filename, 'rb') as fp0:
+        exec(fp0.read(), context)
     value1 = context['value']
     output1 = None
     value2 = None

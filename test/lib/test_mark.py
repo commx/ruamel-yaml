@@ -5,8 +5,8 @@ import ruamel.yaml as yaml
 from ruamel.yaml.compat import text_type, PY3
 
 def test_marks(marks_filename, verbose=False):
-    inputs = open(marks_filename, 'r' if PY3 else 'rb').read(
-        ).split('---\n')[1:]
+    with open(marks_filename, 'r' if PY3 else 'rb') as fp0:
+        inputs = fp0.read().split('---\n')[1:]
     for input in inputs:
         index = 0
         line = 0

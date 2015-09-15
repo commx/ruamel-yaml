@@ -262,10 +262,12 @@ def test_constructor_types(data_filename, code_filename, verbose=False):
     native1 = None
     native2 = None
     try:
-        native1 = list(yaml.load_all(open(data_filename, 'rb'), Loader=MyLoader))
+        with open(data_filename, 'rb') as fp0:
+            native1 = list(yaml.load_all(fp0, Loader=MyLoader))
         if len(native1) == 1:
             native1 = native1[0]
-        native2 = _load_code(open(code_filename, 'rb').read())
+        with open(code_filename, 'rb') as fp0:
+            native2 = _load_code(fp0.read())
         try:
             if native1 == native2:
                 return
@@ -289,7 +291,8 @@ test_constructor_types.unittest = ['.data', '.code']
 
 def test_roundtrip_data(code_filename, roundtrip_filename, verbose=False):
     _make_objects()
-    value1 = open(code_filename, 'rb').read()
+    with open(code_filename, 'rb')  as fp0:
+        value1 = fp0 .read()
     native2 = list(yaml.load_all(value1, Loader=MyLoader))
     if len(native2) == 1:
         native2 = native2[0]

@@ -183,27 +183,29 @@ def test_file_output(unicode_filename, verbose=False):
             stream = BytesIO()
             yaml.dump(data, stream, encoding='utf-16-le', allow_unicode=True)
             data2 = stream.getvalue().decode('utf-16-le')[1:]
-            stream = open(filename, 'w', encoding='utf-16-le')
-            yaml.dump(data, stream, allow_unicode=True)
-            stream.close()
-            data3 = open(filename, 'r', encoding='utf-16-le').read()
-            stream = open(filename, 'wb')
-            yaml.dump(data, stream, encoding='utf-8', allow_unicode=True)
-            stream.close()
-            data4 = open(filename, 'r', encoding='utf-8').read()
+            with open(filename, 'w', encoding='utf-16-le') as stream:
+                yaml.dump(data, stream, allow_unicode=True)
+            with open(filename, 'r', encoding='utf-16-le') as fp0:
+                data3 = fp0.read()
+            with open(filename, 'wb') as stream:
+                yaml.dump(data, stream, encoding='utf-8', allow_unicode=True)
+            with open(filename, 'r', encoding='utf-8') as fp0:
+                data4 = fp0.read()
         else:
-            stream = open(filename, 'wb')
-            yaml.dump(data, stream, allow_unicode=True)
-            stream.close()
-            data2 = open(filename, 'rb').read()
-            stream = open(filename, 'wb')
-            yaml.dump(data, stream, encoding='utf-16-le', allow_unicode=True)
-            stream.close()
-            data3 = open(filename, 'rb').read().decode('utf-16-le')[1:].encode('utf-8')
+            with open(filename, 'wb') as stream:
+                yaml.dump(data, stream, allow_unicode=True)
+            with open(filename, 'rb') as fp0:
+                data2 = fp0.read()
+            with open(filename, 'wb') as stream:
+                yaml.dump(data, stream, encoding='utf-16-le', 
+                          allow_unicode=True)
+            with open(filename, 'rb') as fp0:
+                data3 = fp0.read().decode('utf-16-le')[1:].encode('utf-8')
             stream = _unicode_open(open(filename, 'wb'), 'utf-8')
             yaml.dump(data, stream, allow_unicode=True)
             stream.close()
-            data4 = open(filename, 'rb').read()
+            with open(filename, 'rb') as fp0:
+                data4 = fp0.read()
         assert data1 == data2, (data1, data2)
         assert data1 == data3, (data1, data3)
         assert data1 == data4, (data1, data4)
