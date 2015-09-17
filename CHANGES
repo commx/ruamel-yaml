@@ -1,3 +1,16 @@
+0.10.11: 2015-09-17
+- Fix issue 13: dependency on libyaml to be installed for yaml.h
+
+0.10.10: 2015-09-15
+- Python 3.5 tested with tox
+- pypy full test (old PyYAML tests failed on too many open file handles)
+
+0.10.6-0.10.9: 2015-09-14
+- Fix for issue 9
+- Fix for issue 11: double dump losing comments
+- Include libyaml code
+- move code from 'py' subdir for proper namespace packaging.
+
 0.10.5: 2015-08-25
 - preservation of newlines after block scalars. Contributed by Sam Thursfield.
 

@@ -47,6 +47,8 @@ def literal_eval(node_or_string):
         node_or_string = parse(node_or_string, mode='eval')
     if isinstance(node_or_string, Expression):
         node_or_string = node_or_string.body
+    else:
+        raise TypeError("only string or AST nodes supported")
 
     def _convert(node):
         if isinstance(node, (Str, Bytes)):
@@ -85,10 +87,16 @@ def literal_eval(node_or_string):
                 return left + right
             else:
                 return left - right
-        elif isinstance(node, Call) and node.func.id == 'dict':
-            return dict((k.arg, _convert(k.value)) for k in node.keywords)
-        elif isinstance(node, Call) and node.func.id == 'set':
-            return set(_convert(k) for k in node.args)
+        elif isinstance(node, Call):
+            func_id = getattr(node.func, 'id', None)
+            if func_id == 'dict':
+                return dict((k.arg, _convert(k.value)) for k in node.keywords)
+            elif func_id == 'set':
+                return set(_convert(node.args[0]))
+            elif func_id == 'date':
+                return datetime.date(*[_convert(k) for k in node.args])
+            elif func_id == 'datetime':
+                return datetime.datetime(*[_convert(k) for k in node.args])
         err = SyntaxError('malformed node or string: ' + repr(node))
         err.filename = '<string>'
         err.lineno = node.lineno
@@ -289,15 +297,19 @@ class NameSpacePackager(object):
 
     @property
     def package_dir(self):
-        return {
+        d = {
             # don't specify empty dir, clashes with package_data spec
             self.full_package_name: '.',
-            self.split[0]: self.namespace_directories(1)[0],
         }
+        if len(self.split) > 1:  # only if package namespace
+            d[self.split[0]] = self.namespace_directories(1)[0]
+        return d
 
     def create_dirs(self):
         """create the directories necessary for namespace packaging"""
         directories = self.namespace_directories(self.depth)
+        if not directories:
+            return
         if not os.path.exists(directories[0]):
             for d in directories:
                 os.mkdir(d)
@@ -374,8 +386,11 @@ class NameSpacePackager(object):
 
     @property
     def url(self):
-        return 'https://bitbucket.org/{0}/{1}'.format(
-            *self.full_package_name.split('.', 1))
+        if self.full_package_name.startswith('ruamel.'):
+            sp = self.full_package_name.split('.', 1)
+        else:
+            sp = ['ruamel', self.full_package_name]
+        return 'https://bitbucket.org/{0}/{1}'.format(*sp)
 
     @property
     def author(self):
