@@ -5,12 +5,16 @@ __all__ = ['CBaseLoader', 'CSafeLoader', 'CLoader',
 
 from _ruamel_yaml import CParser, CEmitter
 
-from .constructor import *
-
-from .serializer import *
-from .representer import *
-
-from .resolver import *
+try:
+    from .constructor import *
+    from .serializer import *
+    from .representer import *
+    from .resolver import *
+except (ImportError, ValueError):  # for Jython
+    from ruamel.yaml.constructor import *
+    from ruamel.yaml.serializer import *
+    from ruamel.yaml.representer import *
+    from ruamel.yaml.resolver import *
 
 
 class CBaseLoader(CParser, BaseConstructor, BaseResolver):

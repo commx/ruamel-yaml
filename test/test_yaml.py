@@ -6,6 +6,7 @@ various test cases for YAML files
 """
 
 import pytest
+import platform
 
 import ruamel.yaml
 from ruamel.yaml.compat import ordereddict
@@ -90,6 +91,8 @@ class TestYAML:
         - baz
         """)
 
+    @pytest.mark.skipif(platform.python_implementation() == 'Jython',
+                    reason="Jython throws RepresenterError")
     def test_blank_line_after_literal_chip(self):
         s = """
         c:
@@ -111,6 +114,8 @@ class TestYAML:
         assert d['c'][0].split('it.')[1] == '\n'
         assert d['c'][1].split('line.')[1] == '\n'
 
+    @pytest.mark.skipif(platform.python_implementation() == 'Jython',
+                    reason="Jython throws RepresenterError")
     def test_blank_line_after_literal_keep(self):
         """ have to insert an eof marker in YAML to test this"""
         s = """
@@ -134,6 +139,8 @@ class TestYAML:
         assert d['c'][0].split('it.')[1] == '\n\n'
         assert d['c'][1].split('line.')[1] == '\n\n\n'
 
+    @pytest.mark.skipif(platform.python_implementation() == 'Jython',
+                    reason="Jython throws RepresenterError")
     def test_blank_line_after_literal_strip(self):
         s = """
         c:

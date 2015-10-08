@@ -13,6 +13,7 @@ full_package_name = None
 # # __init__.py parser
 
 import sys
+import platform
 from _ast import *       # NOQA
 from ast import parse
 
@@ -30,7 +31,7 @@ if sys.version_info < (3, 4):
     class NameConstant:
         pass
 
-if sys.version_info < (2, 7):
+if sys.version_info < (2, 7) or platform.python_implementation() == 'Jython':
     class Set():
         pass
 
@@ -160,8 +161,6 @@ exclude_files = [
 
 # # imports
 import os
-import sys
-import platform
 
 from setuptools import setup, Extension, Distribution  # NOQA
 from setuptools.command import install_lib
@@ -231,7 +230,7 @@ class NameSpacePackager(object):
         self._pkg = [None, None]  # required and pre-installable packages
         if sys.argv[0] == 'setup.py' and sys.argv[1] == 'install' and \
            '--single-version-externally-managed' not in sys.argv:
-            print('error: have to install with "pip install ."')
+            print('error: you have to install with "pip install ."')
             sys.exit(1)
         # If you only support an extension module on Linux, Windows thinks it
         # is pure. That way you would get pure python .whl files that take
@@ -471,6 +470,8 @@ class NameSpacePackager(object):
             pyver = 'py{0}{1}'.format(*sys.version_info)
         elif implementation == 'PyPy':
             pyver = 'pypy' if sys.version_info < (3, ) else 'pypy3'
+        elif implementation == 'Jython':
+            pyver = 'jython'
         packages.extend(ir.get(pyver, []))
         for p in packages:
             # package name starting with * means use local source tree,  non-published
@@ -510,8 +511,10 @@ class NameSpacePackager(object):
             return self._ext_modules
         if '--version' in sys.argv:
             return None
-        # if sys.platform == "win32":
-        #     return None
+        if platform.python_implementation() == 'Jython':
+            return None
+        if sys.platform == "win32":
+            return None
         import tempfile
         import shutil
         from textwrap import dedent

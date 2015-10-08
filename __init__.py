@@ -9,7 +9,7 @@ from __future__ import absolute_import
 
 _package_data = dict(
     full_package_name="ruamel.yaml",
-    version_info=[0, 10, 11],
+    version_info=(0, 10, 12),
     author="Anthon van der Neut",
     author_email="a.van.der.neut@ruamel.eu",
     description="ruamel.yaml is a YAML parser/emitter that supports roundtrip preservation of comments, seq/map flow style, and map key order",  # NOQA
@@ -33,8 +33,10 @@ _package_data = dict(
         "Programming Language :: Python :: 2.7",
         "Programming Language :: Python :: 3.3",
         "Programming Language :: Python :: 3.4",
+        "Programming Language :: Python :: 3.5",
         "Programming Language :: Python :: Implementation :: CPython",
         "Programming Language :: Python :: Implementation :: PyPy",
+        "Programming Language :: Python :: Implementation :: Jython",
         "Topic :: Software Development :: Libraries :: Python Modules",
         "Topic :: Text Processing :: Markup"
     ]
@@ -69,12 +71,15 @@ del _convert_version
 try:
     from .cyaml import *
     __with_libyaml__ = True
-except ImportError:
+except (ImportError, ValueError):  # for Jython
     __with_libyaml__ = False
 
 import sys
 
 # body extracted to main.py
-from .main import *
+try:
+    from .main import *
+except ImportError:
+    from ruamel.yaml.main import *
 
 

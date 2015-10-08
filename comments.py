@@ -14,7 +14,10 @@ a separate base
 
 from collections import MutableSet
 
-from .compat import ordereddict
+try:
+    from .compat import ordereddict
+except ImportError:
+    from ruamel.yaml.compat import ordereddict
 
 comment_attrib = '_yaml_comment'
 format_attrib = '_yaml_format'
@@ -182,6 +185,9 @@ class CommentedBase(object):
 
     @property
     def fa(self):
+        """format attribute
+
+        set_flow_style()/set_block_style()"""
         if not hasattr(self, Format.attrib):
             setattr(self, Format.attrib, Format())
         return getattr(self, Format.attrib)

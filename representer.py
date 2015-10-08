@@ -4,11 +4,19 @@ from __future__ import print_function
 __all__ = ['BaseRepresenter', 'SafeRepresenter', 'Representer',
            'RepresenterError', 'RoundTripRepresenter']
 
-from .error import *
-from .nodes import *
-from .compat import text_type, binary_type, to_unicode, PY2, PY3, \
-    ordereddict, nprint
-from .scalarstring import *
+try:
+    from .error import *
+    from .nodes import *
+    from .compat import text_type, binary_type, to_unicode, PY2, PY3, \
+                        ordereddict, nprint
+    from .scalarstring import *
+except (ImportError, ValueError):  # for Jython
+    from ruamel.yaml.error import *
+    from ruamel.yaml.nodes import *
+    from ruamel.yaml.compat import text_type, binary_type, to_unicode, PY2, \
+                        PY3, ordereddict, nprint
+    from ruamel.yaml.scalarstring import *
+
 
 import datetime
 import sys
@@ -566,8 +574,13 @@ Representer.add_multi_representer(object,
                                   Representer.represent_object)
 
 
-from .comments import CommentedMap, CommentedOrderedMap, CommentedSeq, \
+try:
+    from .comments import CommentedMap, CommentedOrderedMap, CommentedSeq, \
     CommentedSet, comment_attrib, merge_attrib
+except ImportError:  # for Jython
+    from ruamel.yaml.comments import CommentedMap, CommentedOrderedMap, \
+           CommentedSeq, CommentedSet, comment_attrib, merge_attrib
+
 
 
 class RoundTripRepresenter(SafeRepresenter):

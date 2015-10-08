@@ -31,9 +31,15 @@ from __future__ import print_function
 
 __all__ = ['Scanner', 'RoundTripScanner', 'ScannerError']
 
-from .error import MarkedYAMLError
-from .tokens import *
-from .compat import utf8, unichr, PY3
+try:
+    from .error import MarkedYAMLError
+    from .tokens import *
+    from .compat import utf8, unichr, PY3
+except (ImportError, ValueError):  # for Jython
+    from ruamel.yaml.error import MarkedYAMLError
+    from ruamel.yaml.tokens import *
+    from ruamel.yaml.compat import utf8, unichr, PY3
+
 
 
 class ScannerError(MarkedYAMLError):

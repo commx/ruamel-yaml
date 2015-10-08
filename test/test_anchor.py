@@ -6,6 +6,7 @@ testing of anchors and the aliases referring to them
 
 import pytest
 from textwrap import dedent
+import platform
 
 import ruamel.yaml
 from roundtrip import round_trip, dedent, round_trip_load, round_trip_dump
@@ -95,6 +96,8 @@ class TestAnchorsAliases:
         f: *etemplate
         """)
 
+    @pytest.mark.skipif(platform.python_implementation() == 'Jython',
+                        reason="Jython throws RepresenterError")
     def test_alias_before_anchor(self):
         from ruamel.yaml.composer import ComposerError
         with pytest.raises(ComposerError):

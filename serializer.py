@@ -4,11 +4,17 @@ __all__ = ['Serializer', 'SerializerError']
 
 import re
 
-from .error import YAMLError
-from .events import *
-from .nodes import *
+try:
+    from .error import YAMLError
+    from .events import *
+    from .nodes import *
+    from .compat import nprint, DBG_NODE, dbg
+except (ImportError, ValueError):  # for Jython
+    from ruamel.yaml.error import YAMLError
+    from ruamel.yaml.events import *
+    from ruamel.yaml.nodes import *
+    from ruamel.yaml.compat import nprint, DBG_NODE, dbg
 
-from .compat import nprint, DBG_NODE, dbg
 
 
 class SerializerError(YAMLError):

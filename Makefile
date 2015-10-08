@@ -10,6 +10,7 @@ gen_win_whl:
 	@python make_win_whl.py dist/$(PKGNAME)-$(VERSION)-*-none-any.whl
 
 clean:	clean_common
+	find . -name "*py.class" -exec rm {} +
 
 cython:	ext/_yaml.c
 

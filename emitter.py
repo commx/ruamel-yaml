@@ -10,9 +10,15 @@ from __future__ import print_function
 
 __all__ = ['Emitter', 'EmitterError']
 
-from .error import YAMLError
-from .events import *
-from .compat import utf8, text_type, PY2, nprint, dbg, DBG_EVENT
+try:
+    from .error import YAMLError
+    from .events import *
+    from .compat import utf8, text_type, PY2, nprint, dbg, DBG_EVENT
+except (ImportError, ValueError):  # for Jython
+    from ruamel.yaml.error import YAMLError
+    from ruamel.yaml.events import *
+    from ruamel.yaml.compat import utf8, text_type, PY2, nprint, dbg, DBG_EVENT
+
 
 
 class EmitterError(YAMLError):

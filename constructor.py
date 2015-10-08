@@ -12,12 +12,20 @@ import re
 import sys
 import types
 
-from .error import *
-from .nodes import *
-from .compat import (utf8, builtins_module, to_str, PY2, PY3, ordereddict,
-                     text_type)
-from .comments import *
-from .scalarstring import *
+try:
+    from .error import *
+    from .nodes import *
+    from .compat import (utf8, builtins_module, to_str, PY2, PY3, ordereddict,
+                         text_type)
+    from .comments import *
+    from .scalarstring import *
+except (ImportError, ValueError):  # for Jython
+    from ruamel.yaml.error import *
+    from ruamel.yaml.nodes import *
+    from ruamel.yaml.compat import (utf8, builtins_module, to_str, PY2, PY3, 
+                                    ordereddict, text_type)
+    from ruamel.yaml.comments import *
+    from ruamel.yaml.scalarstring import *
 
 
 class ConstructorError(MarkedYAMLError):

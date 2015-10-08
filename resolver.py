@@ -2,9 +2,15 @@ from __future__ import absolute_import
 
 __all__ = ['BaseResolver', 'Resolver']
 
-from .error import *
-from .nodes import *
-from .compat import string_types
+try:
+    from .error import *
+    from .nodes import *
+    from .compat import string_types
+except (ImportError, ValueError):  # for Jython
+    from ruamel.yaml.error import *
+    from ruamel.yaml.nodes import *
+    from ruamel.yaml.compat import string_types
+
 
 import re
 

@@ -71,11 +71,19 @@ from __future__ import absolute_import
 
 __all__ = ['Parser', 'ParserError']
 
-from .error import MarkedYAMLError
-from .tokens import *
-from .events import *
-from .scanner import *
-from .compat import utf8
+try:
+    from .error import MarkedYAMLError
+    from .tokens import *
+    from .events import *
+    from .scanner import *
+    from .compat import utf8
+except (ImportError, ValueError):  # for Jython
+    from ruamel.yaml.error import MarkedYAMLError
+    from ruamel.yaml.tokens import *
+    from ruamel.yaml.events import *
+    from ruamel.yaml.scanner import *
+    from ruamel.yaml.compat import utf8
+
 
 
 class ParserError(MarkedYAMLError):
