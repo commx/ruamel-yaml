@@ -2,10 +2,10 @@
 ruamel.yaml
 ===========
 
-Starting with 0.10.7 the package has been reorganise and the
-commandline utility is in its own package ``ruamel.yaml.cmd`` (so
-installing ``ruamel.yaml`` doesn't pull in possible irrelevant modules
-only used in the commandline utility)
+Starting with 0.10.7 the package has been reorganised and the
+command line utility is in its own package ``ruamel.yaml.cmd`` (so
+installing ``ruamel.yaml`` doesn't pull in possibly irrelevant modules
+only used in the command line utility)
 
 ``ruamel.yaml`` is a YAML package for Python. It is a derivative
 of Kirill Simonov's `PyYAML 3.11 <https://bitbucket.org/xi/pyyaml>`_
@@ -13,10 +13,10 @@ which supports YAML1.1
 
 Major differences with PyYAML 3.11:
 
-- intergrated Python 2 and 3 sources, running on Python 2.6, 2.7 (CPython,
+- integrated Python 2 and 3 sources, running on Python 2.6, 2.7 (CPython,
   PyPy), 3.3 and 3.4.
 - round trip mode that **includes comments** (block mode, key ordering kept)
-- support for simple lists as mapping keys by transformation to tuples
+- support for simple lists as mapping keys by transforming these to tuples
 - ``!!omap`` generates ordereddict (C) on Python 2, collections.OrderedDict
   on Python 3, and ``!!omap`` is generated for these types.
 - some `YAML 1.2 <http://yaml.org/spec/1.2/spec.html>`_ enhancements
@@ -25,7 +25,7 @@ Major differences with PyYAML 3.11:
 - tox and py.test based testing
 - Tests whether the C yaml library is installed as well as the header
   files. That library  doesn't generate CommentTokens, so it cannot be used to
-  do round trip editing on comments. It can be used for speeded up normal
+  do round trip editing on comments. It can be used to speed up normal
   processing (so you don't need to install ``ruamel.yaml`` and ``PyYaml``).
   See the section *Optional requirements*.
 - Basic support for multiline strings with preserved newlines and
@@ -35,9 +35,9 @@ Major differences with PyYAML 3.11:
   parent container, like comments).
 - RoundTrip preservation of flow style sequences ( 'a: b, c, d') (based
   on request and test by Anthony Sottile)
-- anchors names that are hand-crafted (not of the form``idNNN``), are preserved
+- anchors names that are hand-crafted (not of the form``idNNN``) are preserved
 - `merges <http://yaml.org/type/merge.html>`_ in dictionaries are preserved
-- adding/replacing of comments on block style sequences and mappings
+- adding/replacing comments on block-style sequences and mappings
   with smart column positioning
 - collection objects (when read in via RoundTripParser) have an ``lc``
   property that contains line and column info ``lc.line`` and ``lc.col``.
@@ -103,7 +103,7 @@ Resulting in::
 .. example output add_comment.py
 
 
-If the comment doesn't start with '#', this will be added. The key is is
+If the comment doesn't start with '#', this will be added. The key is
 the element index for list, the actual key for dictionaries. As can be seen
 from the example, the column to choose for a comment is derived
 from the previous, next or preceding comment column (picking the first one
@@ -113,7 +113,7 @@ Config file formats
 ===================
 
 There are only a few configuration file formats that are easily
-readable, and editable: JSON, INI/ConfigParser, YAML (XML is to cluttered
+readable and editable: JSON, INI/ConfigParser, YAML (XML is to cluttered
 to be called easily readable).
 
 Unfortunately `JSON <http://www.json.org/>`_ doesn't support comments,
@@ -127,9 +127,9 @@ and Larosa even supports round trip editing with comment preservation,
 nesting of sections and limited lists (within a value). Retrieval of
 particular value format is explicit (and extensible).
 
-YAML has basic mapping and sequence structures as well support for
-ordered mappings and sets. It supports scalars are of various types
-including dates and datetimes (missing in JSON) as a list of
+YAML has basic mapping and sequence structures as well as support for
+ordered mappings and sets. It supports scalars various types
+including dates and datetimes (missing in JSON).
 YAML has comments, but these are normally thrown away.
 
 Block structured YAML is a clean and very human readable
@@ -141,7 +141,7 @@ the same time interpretable and modifiable by a program.
 Extending
 =========
 
-There are normally 6 files involved when extending the roundtrip
+There are normally six files involved when extending the roundtrip
 capabilities: the reader, parser, composer and constructor to go from YAML to
 Python and the resolver, representer, serializer and emitter to go the other
 way.
@@ -155,7 +155,7 @@ Smartening
 ==========
 
 When you use round-tripping, then the complex data you get are
-already subclasses of the build in types. So you can patch
+already subclasses of the built-in types. So you can patch
 in extra methods or override existing ones. Some methods are already
 included and you can do::
 
@@ -254,7 +254,7 @@ Optional requirements
 
 If you have the C yaml library and headers installed, as well as
 the header files for your Python executables then you can use the
-non-roundtrip but faster C loader en emitter.
+non-roundtrip but faster C loader and emitter.
 
 On Debian systems you should use::
 
@@ -269,8 +269,6 @@ For CentOS (7) based systems you should do::
 Testing
 =======
 
-Testing is done using the `tox <https://pypi.python.org/pypi/tox>`_, which
+Testing is done using `tox <https://pypi.python.org/pypi/tox>`_, which
 uses `virtualenv <https://pypi.python.org/pypi/virtualenv>`_ and
 `pytest <http://pytest.org/latest/>`_.
-
-
