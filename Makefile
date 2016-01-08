@@ -17,6 +17,8 @@ cython:	ext/_yaml.c
 ext/_yaml.c:	ext/_yaml.pyx
 	cd ext; cython _yaml.pyx
 	
+ls-l:
+	ls -l dist/*$(VERSION)*
 
 #tstvenv: testvenv testsetup testtest
 #
