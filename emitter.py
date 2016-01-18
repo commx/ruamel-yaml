@@ -1216,7 +1216,8 @@ class Emitter(object):
             col = self.column + 1
         # print('post_comment', self.line, self.column, value)
         try:
-            value = value.encode('utf-8')
+            if PY2:
+                value = value.encode('utf-8')
         except UnicodeDecodeError:
             pass
         self.stream.write(' ' * (col - self.column) + value)
