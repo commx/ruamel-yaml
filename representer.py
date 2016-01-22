@@ -834,9 +834,13 @@ RoundTripRepresenter.add_representer(CommentedSeq,
 RoundTripRepresenter.add_representer(CommentedMap,
                                      RoundTripRepresenter.represent_dict)
 
-RoundTripRepresenter.add_representer(
-    CommentedOrderedMap,
-    RoundTripRepresenter.represent_ordereddict)
+RoundTripRepresenter.add_representer(CommentedOrderedMap,
+                                     RoundTripRepresenter.represent_ordereddict)
+
+if sys.version_info >= (2, 7):
+    import collections
+    RoundTripRepresenter.add_representer(collections.OrderedDict,
+                                         RoundTripRepresenter.represent_ordereddict)
 
 RoundTripRepresenter.add_representer(CommentedSet,
                                      RoundTripRepresenter.represent_set)

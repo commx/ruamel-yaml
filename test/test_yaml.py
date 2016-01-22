@@ -5,6 +5,7 @@ from __future__ import print_function
 various test cases for YAML files
 """
 
+import sys
 import pytest
 import platform
 
@@ -37,6 +38,36 @@ class TestYAML:
         - b: 2
         - c: 3
         - d: 4
+        """)
+
+    @pytest.mark.skipif(sys.version_info < (2, 7), reason="collections not available")
+    def test_dump_collections_ordereddict(self):
+        from collections import OrderedDict
+        # OrderedDict mapped to !!omap
+        x = OrderedDict([('a', 1), ('b', 2)])
+        res = ruamel.yaml.dump(x,
+                               Dumper=ruamel.yaml.RoundTripDumper,
+                               default_flow_style=False)
+        assert res == dedent("""
+        !!omap
+        - a: 1
+        - b: 2
+        """)
+
+    @pytest.mark.skipif(sys.version_info >= (3, 0) or \
+                        platform.python_implementation() != "CPython",
+                        reason="ruamel.yaml not available")
+    def test_dump_ruamel_ordereddict(self):
+        from ruamel.ordereddict import ordereddict
+        # OrderedDict mapped to !!omap
+        x = ordereddict([('a', 1), ('b', 2)])
+        res = ruamel.yaml.dump(x,
+                               Dumper=ruamel.yaml.RoundTripDumper,
+                               default_flow_style=False)
+        assert res == dedent("""
+        !!omap
+        - a: 1
+        - b: 2
         """)
 
     def test_CommentedSet(self):

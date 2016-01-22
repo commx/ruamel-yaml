@@ -3,6 +3,17 @@
 
 from __future__ import print_function
 
+# # __init__.py parser
+
+import sys
+import os
+import platform
+from _ast import *       # NOQA
+from ast import parse
+
+from setuptools import setup, Extension, Distribution  # NOQA
+from setuptools.command import install_lib
+
 if __name__ != '__main__':
     raise NotImplementedError('should never include setup.py')
 
@@ -10,13 +21,8 @@ if __name__ != '__main__':
 
 full_package_name = None
 
-# # __init__.py parser
-
-import sys
-import platform
-from _ast import *       # NOQA
-from ast import parse
-
+if __name__ != '__main__':
+    raise NotImplementedError('should never include setup.py')
 
 if sys.version_info < (3, ):
     string_type = basestring
@@ -159,12 +165,6 @@ exclude_files = [
     'setup.py',
 ]
 
-# # imports
-import os
-
-from setuptools import setup, Extension, Distribution  # NOQA
-from setuptools.command import install_lib
-
 
 # # helper
 def _check_convert_version(tup):
@@ -177,7 +177,7 @@ def _check_convert_version(tup):
         if isinstance(x, int):
             nr_digits += 1
             if nr_digits > 2:
-                raise ValueError("too many consecutive digits " + ret_val)
+                raise ValueError("too many consecutive digits after " + ret_val)
             ret_val += next_sep + str(x)
             next_sep = '.'
             continue
@@ -186,7 +186,7 @@ def _check_convert_version(tup):
         if first_letter in 'abcr':
             if post_dev:
                 raise ValueError("release level specified after "
-                                 "post/dev:" + x)
+                                 "post/dev: " + x)
             nr_digits = 0
             ret_val += 'rc' if first_letter == 'r' else first_letter
         elif first_letter in 'pd':
@@ -195,6 +195,9 @@ def _check_convert_version(tup):
             ret_val += '.post' if first_letter == 'p' else '.dev'
         else:
             raise ValueError('First letter of "' + x + '" not recognised')
+    # .dev and .post need a number otherwise setuptools normalizes and complains
+    if nr_digits == 1 and post_dev:
+        ret_val += '0'
     return ret_val
 
 
@@ -513,7 +516,7 @@ class NameSpacePackager(object):
             return None
         if platform.python_implementation() == 'Jython':
             return None
-        if sys.platform == "win32":
+        if sys.platform == "win32" and not self._pkg_data.get('win32bin'):
             return None
         import tempfile
         import shutil
@@ -621,7 +624,7 @@ def main():
         package_data=nsp.package_data,
         ext_modules=nsp.ext_modules,
     )
-    if '--version' not in sys.argv or '--verbose' in sys.argv:
+    if '--version' not in sys.argv and '--verbose' in sys.argv:
         for k in sorted(kw):
             v = kw[k]
             print(k, '->', v)

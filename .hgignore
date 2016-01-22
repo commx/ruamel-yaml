@@ -14,5 +14,7 @@ build
 _yaml.so
 README.pdf
 .ruamel
+*$py.class
 convert
 cmd
+TODO.rst
