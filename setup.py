@@ -593,6 +593,8 @@ class NameSpacePackager(object):
                 print("\n\n>>>>>> LICENSE file not found <<<<<\n\n")
             if self._pkg_data.get('universal'):
                 fp.write('[bdist_wheel]\nuniversal = 1\n')
+            else:
+                fp.write('[bdist_wheel]\nuniversal = 0\n')
         try:
             setup(**kw)
         except:
@@ -609,6 +611,12 @@ class BinaryDistribution(Distribution):
 
 # # call setup
 def main():
+    if '--version' not in sys.argv:
+        import wheel
+        import distutils
+        print('python:   ', sys.version)
+        print('distutils:', distutils.__version__)
+        print('wheel:    ', wheel.__version__)
     nsp = NameSpacePackager(pkg_data)
     nsp.check()
     nsp.create_dirs()
