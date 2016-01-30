@@ -1,9 +1,9 @@
 environment:
-
   matrix:
-    - PYTHON: C:\Python266
-      PYTHON_VERSION: '2.6.6'
-      PYTHON_ARCH: '32'
+    - PYTHON_HOME: C:\Python26
+#    - PYTHON: C:\Python266
+#      PYTHON_VERSION: '2.6.6'
+#      PYTHON_ARCH: '32'
     - PYTHON: C:\Python27
 #    - PYTHON: C:\Python33
 #    - PYTHON: C:\Python34
@@ -17,7 +17,8 @@ environment:
 #    - PYTHON: 'C:\Python35-x64'
 
 install:
-  - SET PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%
+  - IF [%PYTHON_HOME%]==[C:\Python26] appveyor DownloadFile https://www.python.org/ftp/python/2.6.6/python-2.6.6.msi
+  - IF [%PYTHON_HOME%]==[C:\Python26] msiexec /i python-2.6.6.msi /qn  - SET PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%
   - python.exe -c "import sys, os; print sys.executable"
   - '%PYTHON%\python.exe -c "import sys, os; print sys.executable"'
   - |
