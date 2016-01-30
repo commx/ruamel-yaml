@@ -16,13 +16,13 @@ environment:
 
 install:
   - >
-    /opt/python/2.6.6/bin/python -c "import sys, os;
+    %PYTHON%\python.exe -c "import sys, os;
     os.system('%s -c \\"import urllib2; open(\\'c:\\\\get-pip.py\\', \\'w\\').
     write(urllib2.urlopen(\\'https://bootstrap.pypa.io/get-pip.py\\').read())\\"'
     % sys.executable)
     if sys.version_info < (2, 7) else True"
   - >
-    /opt/python/2.6.6/bin/python -c "import sys, os;
+    %PYTHON%\python.exe -c "import sys, os;
     os.system('%s c:\\get-pip.py' % sys.executable)
     if sys.version_info < (2, 7) else True"
   - '%PYTHON%\python.exe -m pip install wheel'
