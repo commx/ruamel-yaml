@@ -241,6 +241,7 @@ class NameSpacePackager(object):
         if self._pkg_data.get('universal'):
             Distribution.is_pure = lambda *args: True
         else:
+            print('>>>>> distribution not pure <<<<<')
             Distribution.is_pure = lambda *args: False
         for x in sys.argv:
             if x[0] == '-' or x == 'setup.py':
