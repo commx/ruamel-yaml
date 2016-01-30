@@ -2,11 +2,11 @@ environment:
 
   matrix:
     - PYTHON: C:\Python266
-#    - PYTHON: C:\Python27
+    - PYTHON: C:\Python27
 #    - PYTHON: C:\Python33
 #    - PYTHON: C:\Python34
 #    - PYTHON: C:\Python35
-    - PYTHON: C:\Python266-x64
+#    - PYTHON: C:\Python266-x64
 #    - PYTHON: C:\Python27-x64
 #    - PYTHON: C:\Python33-x64
 #      DISTUTILS_USE_SDK: '1'
@@ -15,6 +15,11 @@ environment:
 #    - PYTHON: 'C:\Python35-x64'
 
 install:
+  - >
+    %PYTHON%\python.exe -c "import sys, os;
+    os.system('%s -c \\"print True\\"'
+    % sys.executable)
+    if sys.version_info < (2, 7) else True"
   - >
     %PYTHON%\python.exe -c "import sys, os;
     os.system('%s -c \\"import urllib2; open(\\'c:\\\\get-pip.py\\', \\'w\\').
