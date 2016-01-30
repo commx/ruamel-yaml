@@ -1,53 +1,19 @@
 environment:
   matrix:
-    - PYTHON_HOME: C:\Python26
-#    - PYTHON: C:\Python266
-#      PYTHON_VERSION: '2.6.6'
-#      PYTHON_ARCH: '32'
     - PYTHON: C:\Python27
-#    - PYTHON: C:\Python33
-#    - PYTHON: C:\Python34
-#    - PYTHON: C:\Python35
-#    - PYTHON: C:\Python266-x64
-#    - PYTHON: C:\Python27-x64
-#    - PYTHON: C:\Python33-x64
-#      DISTUTILS_USE_SDK: '1'
-#    - PYTHON: 'C:\Python34-x64'
-#      DISTUTILS_USE_SDK: '1'
-#    - PYTHON: 'C:\Python35-x64'
+    - PYTHON: C:\Python33
+    - PYTHON: C:\Python34
+    - PYTHON: C:\Python35
+    - PYTHON: C:\Python27-x64
+    - PYTHON: C:\Python33-x64
+      DISTUTILS_USE_SDK: '1'
+    - PYTHON: 'C:\Python34-x64'
+      DISTUTILS_USE_SDK: '1'
+    - PYTHON: 'C:\Python35-x64'
 
 install:
-  - IF [%PYTHON_HOME%]==[C:\Python26] appveyor DownloadFile https://www.python.org/ftp/python/2.6.6/python-2.6.6.msi
-  - IF [%PYTHON_HOME%]==[C:\Python26] msiexec /i python-2.6.6.msi /qn
-
-  - SET PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%
-  - python.exe -c "import sys, os; print sys.executable"
-  - '%PYTHON%\python.exe -c "import sys, os; print sys.executable"'
   - |
-    %PYTHON%\python.exe -c "import sys, os; print sys.executable"
-  - >
-    %PYTHON%\python.exe -c "import sys, os; print sys.executable"
-  - >
-    %PYTHON%\python.exe -c "import sys, os;
-    os.system('%s -c \"print True\"'
-    % sys.executable)"
-  - >
-    if sys.version_info < (2, 7) else True"
-    %PYTHON%\python.exe -c "import sys, os;
-    os.system('%s -c \"print True\"'
-    % sys.executable)
-    if sys.version_info < (2, 7) else True"
-  - >
-    %PYTHON%\python.exe -c "import sys, os;
-    os.system('%s -c \"import urllib2; open(\'c:\\get-pip.py\', \'w\').
-    write(urllib2.urlopen(\'https://bootstrap.pypa.io/get-pip.py\').read())\"'
-    % sys.executable)
-    if sys.version_info < (2, 7) else True"
-  - >
-    %PYTHON%\python.exe -c "import sys, os;
-    os.system('%s c:\get-pip.py' % sys.executable)
-    if sys.version_info < (2, 7) else True"
-  - '%PYTHON%\python.exe -m pip install wheel'
+    %PYTHON%\python.exe -m pip install wheel
 
 build: off
 
@@ -55,8 +21,8 @@ test_script:
   - echo Skipped for now
 
 after_test:
-  - '%PYTHON%\python.exe setup.py bdist_wheel'
+  - |
+    %PYTHON%\python.exe setup.py bdist_wheel
 
 artifacts:
-  # bdist_wheel puts your built wheel in the dist directory
   - path: dist\*
