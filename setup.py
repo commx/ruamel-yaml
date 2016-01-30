@@ -602,6 +602,11 @@ class NameSpacePackager(object):
         return True
 
 
+class BinaryDistribution(Distribution):
+    def is_pure(self):
+        return False
+
+
 # # call setup
 def main():
     nsp = NameSpacePackager(pkg_data)
@@ -624,6 +629,7 @@ def main():
         classifiers=nsp.classifiers,
         package_data=nsp.package_data,
         ext_modules=nsp.ext_modules,
+        distclass=BinaryDistribution,
     )
     if '--version' not in sys.argv and '--verbose' in sys.argv:
         for k in sorted(kw):
