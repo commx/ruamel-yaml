@@ -1,20 +1,26 @@
 syntax: glob
 
+# python derivatives 
 *.pyc
+*.pyo
+*$py.class
+# backup files
 *~
 *.bak
 *.o
 *.orig
+.ruamel
+# pip / setup related
 dist
-venv
 build
 *.egg-info
+# tox related
 .tox
 .cache
+
 _yaml.so
 README.pdf
-.ruamel
-*$py.class
+venv
 convert
 cmd
 TODO.rst
