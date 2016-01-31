@@ -20,9 +20,6 @@ ext/_yaml.c:	ext/_yaml.pyx
 ls-l:
 	ls -l dist/*$(VERSION)*
 
-appveyor:
-	ssh -x -a appveyor@localhost "cd $$PWD; hg push ssh://hg@bitbucket.org/appveyor-ruamel/yaml --branch default"
-
 #tstvenv: testvenv testsetup testtest
 #
 #testvenv:
