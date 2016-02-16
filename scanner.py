@@ -33,13 +33,12 @@ __all__ = ['Scanner', 'RoundTripScanner', 'ScannerError']
 
 try:
     from .error import MarkedYAMLError
-    from .tokens import *
+    from .tokens import *                           # NOQA
     from .compat import utf8, unichr, PY3
 except (ImportError, ValueError):  # for Jython
     from ruamel.yaml.error import MarkedYAMLError
-    from ruamel.yaml.tokens import *
+    from ruamel.yaml.tokens import *                # NOQA
     from ruamel.yaml.compat import utf8, unichr, PY3
-
 
 
 class ScannerError(MarkedYAMLError):
@@ -1380,7 +1379,6 @@ class Scanner(object):
             comment = CommentToken(''.join(spaces) + '\n', start_mark, end_mark)
             token.add_post_comment(comment)
         return token
-
 
     def scan_plain_spaces(self, indent, start_mark):
         # See the specification for details.

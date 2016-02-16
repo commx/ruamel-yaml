@@ -13,19 +13,19 @@ import sys
 import types
 
 try:
-    from .error import *
-    from .nodes import *
+    from .error import *                               # NOQA
+    from .nodes import *                               # NOQA
     from .compat import (utf8, builtins_module, to_str, PY2, PY3, ordereddict,
                          text_type)
-    from .comments import *
-    from .scalarstring import *
+    from .comments import *                               # NOQA
+    from .scalarstring import *                           # NOQA
 except (ImportError, ValueError):  # for Jython
-    from ruamel.yaml.error import *
-    from ruamel.yaml.nodes import *
-    from ruamel.yaml.compat import (utf8, builtins_module, to_str, PY2, PY3, 
+    from ruamel.yaml.error import *                               # NOQA
+    from ruamel.yaml.nodes import *                               # NOQA
+    from ruamel.yaml.compat import (utf8, builtins_module, to_str, PY2, PY3,
                                     ordereddict, text_type)
-    from ruamel.yaml.comments import *
-    from ruamel.yaml.scalarstring import *
+    from ruamel.yaml.comments import *                               # NOQA
+    from ruamel.yaml.scalarstring import *                           # NOQA
 
 
 class ConstructorError(MarkedYAMLError):
@@ -372,7 +372,7 @@ class SafeConstructor(BaseConstructor):
           (?::(?P<tz_minute>[0-9][0-9]))?))?)?$''', re.X)
 
     def construct_yaml_timestamp(self, node):
-        value = self.construct_scalar(node)
+        value = self.construct_scalar(node)  # NOQA
         match = self.timestamp_regexp.match(node.value)
         values = match.groupdict()
         year = int(values['year'])
@@ -873,7 +873,7 @@ class RoundTripConstructor(SafeConstructor):
                 value = self.construct_object(value_node, deep=False)
             return value
 
-        #merge = []
+        # merge = []
         merge_map_list = []
         index = 0
         while index < len(node.value):
@@ -883,10 +883,10 @@ class RoundTripConstructor(SafeConstructor):
                 if isinstance(value_node, MappingNode):
                     merge_map_list.append(
                         (index, constructed(value_node)))
-                    #self.flatten_mapping(value_node)
-                    #merge.extend(value_node.value)
+                    # self.flatten_mapping(value_node)
+                    # merge.extend(value_node.value)
                 elif isinstance(value_node, SequenceNode):
-                    #submerge = []
+                    # submerge = []
                     for subnode in value_node.value:
                         if not isinstance(subnode, MappingNode):
                             raise ConstructorError(
@@ -896,11 +896,11 @@ class RoundTripConstructor(SafeConstructor):
                                 % subnode.id, subnode.start_mark)
                         merge_map_list.append(
                             (index, constructed(subnode)))
-                    #    self.flatten_mapping(subnode)
-                    #    submerge.append(subnode.value)
-                    #submerge.reverse()
-                    #for value in submerge:
-                    #    merge.extend(value)
+                    #     self.flatten_mapping(subnode)
+                    #     submerge.append(subnode.value)
+                    # submerge.reverse()
+                    # for value in submerge:
+                    #     merge.extend(value)
                 else:
                     raise ConstructorError(
                         "while constructing a mapping", node.start_mark,
@@ -912,10 +912,10 @@ class RoundTripConstructor(SafeConstructor):
                 index += 1
             else:
                 index += 1
-        #print ('merge_map_list', merge_map_list)
+        # print ('merge_map_list', merge_map_list)
         return merge_map_list
-        #if merge:
-        #    node.value = merge + node.value
+        # if merge:
+        #     node.value = merge + node.value
 
     def construct_mapping(self, node, maptyp, deep=False):
         if not isinstance(node, MappingNode):
@@ -963,7 +963,7 @@ class RoundTripConstructor(SafeConstructor):
                 maptyp._yaml_add_comment(value_node.comment, value=key)
             maptyp._yaml_set_kv_line_col(
                 key, [key_node.start_mark.line, key_node.start_mark.column,
-                value_node.start_mark.line, value_node.start_mark.column])
+                      value_node.start_mark.line, value_node.start_mark.column])
             maptyp[key] = value
 
     def construct_setting(self, node, typ, deep=False):
@@ -1000,7 +1000,7 @@ class RoundTripConstructor(SafeConstructor):
                     raise ConstructorError(
                         "while constructing a mapping", node.start_mark,
                         "found unhashable key", key_node.start_mark)
-            value = self.construct_object(value_node, deep=deep)
+            value = self.construct_object(value_node, deep=deep)  # NOQA
             if key_node.comment:
                 typ._yaml_add_comment(key_node.comment, key=key)
             if value_node.comment:

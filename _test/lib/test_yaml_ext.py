@@ -1,9 +1,12 @@
+# coding: utf-8
+
 from __future__ import absolute_import
 from __future__ import print_function
 
 import _ruamel_yaml
 import ruamel.yaml
-import types, pprint
+import types
+import pprint
 from ruamel.yaml.compat import PY3
 
 ruamel.yaml.PyBaseLoader = ruamel.yaml.BaseLoader
@@ -14,64 +17,95 @@ ruamel.yaml.PySafeDumper = ruamel.yaml.SafeDumper
 ruamel.yaml.PyDumper = ruamel.yaml.Dumper
 
 old_scan = ruamel.yaml.scan
+
+
 def new_scan(stream, Loader=ruamel.yaml.CLoader):
     return old_scan(stream, Loader)
 
 old_parse = ruamel.yaml.parse
+
+
 def new_parse(stream, Loader=ruamel.yaml.CLoader):
     return old_parse(stream, Loader)
 
 old_compose = ruamel.yaml.compose
+
+
 def new_compose(stream, Loader=ruamel.yaml.CLoader):
     return old_compose(stream, Loader)
 
 old_compose_all = ruamel.yaml.compose_all
+
+
 def new_compose_all(stream, Loader=ruamel.yaml.CLoader):
     return old_compose_all(stream, Loader)
 
 old_load = ruamel.yaml.load
+
+
 def new_load(stream, Loader=ruamel.yaml.CLoader):
     return old_load(stream, Loader)
 
 old_load_all = ruamel.yaml.load_all
+
+
 def new_load_all(stream, Loader=ruamel.yaml.CLoader):
     return old_load_all(stream, Loader)
 
 old_safe_load = ruamel.yaml.safe_load
+
+
 def new_safe_load(stream):
     return old_load(stream, ruamel.yaml.CSafeLoader)
 
 old_safe_load_all = ruamel.yaml.safe_load_all
+
+
 def new_safe_load_all(stream):
     return old_load_all(stream, ruamel.yaml.CSafeLoader)
 
 old_emit = ruamel.yaml.emit
+
+
 def new_emit(events, stream=None, Dumper=ruamel.yaml.CDumper, **kwds):
     return old_emit(events, stream, Dumper, **kwds)
 
 old_serialize = ruamel.yaml.serialize
+
+
 def new_serialize(node, stream, Dumper=ruamel.yaml.CDumper, **kwds):
     return old_serialize(node, stream, Dumper, **kwds)
 
 old_serialize_all = ruamel.yaml.serialize_all
+
+
 def new_serialize_all(nodes, stream=None, Dumper=ruamel.yaml.CDumper, **kwds):
     return old_serialize_all(nodes, stream, Dumper, **kwds)
 
 old_dump = ruamel.yaml.dump
+
+
 def new_dump(data, stream=None, Dumper=ruamel.yaml.CDumper, **kwds):
     return old_dump(data, stream, Dumper, **kwds)
 
 old_dump_all = ruamel.yaml.dump_all
+
+
 def new_dump_all(documents, stream=None, Dumper=ruamel.yaml.CDumper, **kwds):
     return old_dump_all(documents, stream, Dumper, **kwds)
 
 old_safe_dump = ruamel.yaml.safe_dump
+
+
 def new_safe_dump(data, stream=None, **kwds):
     return old_dump(data, stream, ruamel.yaml.CSafeDumper, **kwds)
 
 old_safe_dump_all = ruamel.yaml.safe_dump_all
+
+
 def new_safe_dump_all(documents, stream=None, **kwds):
     return old_dump_all(documents, stream, ruamel.yaml.CSafeDumper, **kwds)
+
 
 def _set_up():
     ruamel.yaml.BaseLoader = ruamel.yaml.CBaseLoader
@@ -96,6 +130,7 @@ def _set_up():
     ruamel.yaml.safe_dump = new_safe_dump
     ruamel.yaml.safe_dump_all = new_safe_dump_all
 
+
 def _tear_down():
     ruamel.yaml.BaseLoader = ruamel.yaml.PyBaseLoader
     ruamel.yaml.SafeLoader = ruamel.yaml.PySafeLoader
@@ -119,12 +154,14 @@ def _tear_down():
     ruamel.yaml.safe_dump = old_safe_dump
     ruamel.yaml.safe_dump_all = old_safe_dump_all
 
+
 def test_c_version(verbose=False):
     if verbose:
         print(_ruamel_yaml.get_version())
         print(_ruamel_yaml.get_version_string())
-    assert ("%s.%s.%s" % _ruamel_yaml.get_version()) == _ruamel_yaml.get_version_string(),    \
-            (_ruamel_yaml.get_version(), _ruamel_yaml.get_version_string())
+    assert ("%s.%s.%s" % _ruamel_yaml.get_version()) == _ruamel_yaml.get_version_string(), \
+           (_ruamel_yaml.get_version(), _ruamel_yaml.get_version_string())
+
 
 def _compare_scanners(py_data, c_data, verbose):
     py_tokens = list(ruamel.yaml.scan(py_data, Loader=ruamel.yaml.PyLoader))
@@ -139,9 +176,12 @@ def _compare_scanners(py_data, c_data, verbose):
                 assert py_token.value == c_token.value, (py_token, c_token)
             if isinstance(py_token, ruamel.yaml.StreamEndToken):
                 continue
-            py_start = (py_token.start_mark.index, py_token.start_mark.line, py_token.start_mark.column)
-            py_end = (py_token.end_mark.index, py_token.end_mark.line, py_token.end_mark.column)
-            c_start = (c_token.start_mark.index, c_token.start_mark.line, c_token.start_mark.column)
+            py_start = (py_token.start_mark.index, py_token.start_mark.line,
+                        py_token.start_mark.column)
+            py_end = (py_token.end_mark.index, py_token.end_mark.line,
+                      py_token.end_mark.column)
+            c_start = (c_token.start_mark.index, c_token.start_mark.line,
+                       c_token.start_mark.column)
             c_end = (c_token.end_mark.index, c_token.end_mark.line, c_token.end_mark.column)
             assert py_start == c_start, (py_start, c_start)
             assert py_end == c_end, (py_end, c_end)
@@ -151,6 +191,7 @@ def _compare_scanners(py_data, c_data, verbose):
             pprint.pprint(py_tokens)
             print("C_TOKENS:")
             pprint.pprint(c_tokens)
+
 
 def test_c_scanner(data_filename, canonical_filename, verbose=False):
     with open(data_filename, 'rb') as fp0:
@@ -169,6 +210,7 @@ def test_c_scanner(data_filename, canonical_filename, verbose=False):
 test_c_scanner.unittest = ['.data', '.canonical']
 test_c_scanner.skip = ['.skip-ext']
 
+
 def _compare_parsers(py_data, c_data, verbose):
     py_events = list(ruamel.yaml.parse(py_data, Loader=ruamel.yaml.PyLoader))
     c_events = []
@@ -178,7 +220,7 @@ def _compare_parsers(py_data, c_data, verbose):
         assert len(py_events) == len(c_events), (len(py_events), len(c_events))
         for py_event, c_event in zip(py_events, c_events):
             for attribute in ['__class__', 'anchor', 'tag', 'implicit',
-                                'value', 'explicit', 'version', 'tags']:
+                              'value', 'explicit', 'version', 'tags']:
                 py_value = getattr(py_event, attribute, None)
                 c_value = getattr(c_event, attribute, None)
                 assert py_value == c_value, (py_event, c_event, attribute)
@@ -188,6 +230,7 @@ def _compare_parsers(py_data, c_data, verbose):
             pprint.pprint(py_events)
             print("C_EVENTS:")
             pprint.pprint(c_events)
+
 
 def test_c_parser(data_filename, canonical_filename, verbose=False):
     with open(data_filename, 'rb') as fp0:
@@ -206,6 +249,7 @@ def test_c_parser(data_filename, canonical_filename, verbose=False):
 test_c_parser.unittest = ['.data', '.canonical']
 test_c_parser.skip = ['.skip-ext']
 
+
 def _compare_emitters(data, verbose):
     events = list(ruamel.yaml.parse(data, Loader=ruamel.yaml.PyLoader))
     c_data = ruamel.yaml.emit(events, Dumper=ruamel.yaml.CDumper)
@@ -218,7 +262,7 @@ def _compare_emitters(data, verbose):
         assert len(events) == len(c_events), (len(events), len(c_events))
         for event, py_event, c_event in zip(events, py_events, c_events):
             for attribute in ['__class__', 'anchor', 'tag', 'implicit',
-                                'value', 'explicit', 'version', 'tags']:
+                              'value', 'explicit', 'version', 'tags']:
                 value = getattr(event, attribute, None)
                 py_value = getattr(py_event, attribute, None)
                 c_value = getattr(c_event, attribute, None)
@@ -238,6 +282,7 @@ def _compare_emitters(data, verbose):
             print("C_EVENTS:")
             pprint.pprint(c_events)
 
+
 def test_c_emitter(data_filename, canonical_filename, verbose=False):
     with open(data_filename, 'rb') as fp0:
         _compare_emitters(fp0.read(), verbose)
@@ -246,6 +291,7 @@ def test_c_emitter(data_filename, canonical_filename, verbose=False):
 
 test_c_emitter.unittest = ['.data', '.canonical']
 test_c_emitter.skip = ['.skip-ext']
+
 
 def wrap_ext_function(function):
     def wrapper(*args, **kwds):
@@ -266,6 +312,7 @@ def wrap_ext_function(function):
     wrapper.skip = getattr(function, 'skip', [])+['.skip-ext']
     return wrapper
 
+
 def wrap_ext(collections):
     functions = []
     if not isinstance(collections, list):
@@ -285,13 +332,19 @@ def wrap_ext(collections):
             assert function.unittest_name not in globals()
             globals()[function.unittest_name] = function
 
-import test_tokens, test_structure, test_errors, test_resolver, test_constructor,   \
-        test_emitter, test_representer, test_recursive, test_input_output
+import test_tokens         # NOQA
+import test_structure      # NOQA
+import test_errors         # NOQA
+import test_resolver       # NOQA
+import test_constructor    # NOQA
+import test_emitter        # NOQA
+import test_representer    # NOQA
+import test_recursive      # NOQA
+import test_input_output   # NOQA
 wrap_ext([test_tokens, test_structure, test_errors, test_resolver, test_constructor,
-        test_emitter, test_representer, test_recursive, test_input_output])
+          test_emitter, test_representer, test_recursive, test_input_output])
 
 if __name__ == '__main__':
     import sys
     import test_appliance
     sys.exit(test_appliance.run(globals()))
-

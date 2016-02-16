@@ -1,8 +1,8 @@
 
-import pytest
+import pytest  # NOQA
 
-import ruamel.yaml
-from roundtrip import round_trip, dedent
+# import ruamel.yaml
+from roundtrip import round_trip
 
 
 class TestProgramConfig:

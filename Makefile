@@ -7,7 +7,11 @@ REGEN:=/home/bin/ruamel_util_new util --published --command YAML --skip-hg
 include ~/.config/ruamel_util_new/Makefile.inc
 
 gen_win_whl:
-	@python make_win_whl.py dist/$(PKGNAME)-$(VERSION)-*-none-any.whl
+	python2 setup.py bdist_wheel --plat-name win32
+	python2 setup.py bdist_wheel --plat-name win_amd64
+	python3 setup.py bdist_wheel --plat-name win32
+	python3 setup.py bdist_wheel --plat-name win_amd64
+	#@python make_win_whl.py dist/$(PKGNAME)-$(VERSION)-*-none-any.whl
 
 clean:	clean_common
 	find . -name "*py.class" -exec rm {} +

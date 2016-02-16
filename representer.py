@@ -5,17 +5,15 @@ __all__ = ['BaseRepresenter', 'SafeRepresenter', 'Representer',
            'RepresenterError', 'RoundTripRepresenter']
 
 try:
-    from .error import *
-    from .nodes import *
-    from .compat import text_type, binary_type, to_unicode, PY2, PY3, \
-                        ordereddict, nprint
-    from .scalarstring import *
+    from .error import *                                  # NOQA
+    from .nodes import *                                  # NOQA
+    from .compat import text_type, binary_type, to_unicode, PY2, PY3, ordereddict
+    from .scalarstring import *                           # NOQA
 except (ImportError, ValueError):  # for Jython
-    from ruamel.yaml.error import *
-    from ruamel.yaml.nodes import *
-    from ruamel.yaml.compat import text_type, binary_type, to_unicode, PY2, \
-                        PY3, ordereddict, nprint
-    from ruamel.yaml.scalarstring import *
+    from ruamel.yaml.error import *                       # NOQA
+    from ruamel.yaml.nodes import *                       # NOQA
+    from ruamel.yaml.compat import text_type, binary_type, to_unicode, PY2, PY3, ordereddict
+    from ruamel.yaml.scalarstring import *                # NOQA
 
 
 import datetime
@@ -576,11 +574,10 @@ Representer.add_multi_representer(object,
 
 try:
     from .comments import CommentedMap, CommentedOrderedMap, CommentedSeq, \
-    CommentedSet, comment_attrib, merge_attrib
+        CommentedSet, comment_attrib, merge_attrib
 except ImportError:  # for Jython
     from ruamel.yaml.comments import CommentedMap, CommentedOrderedMap, \
-           CommentedSeq, CommentedSet, comment_attrib, merge_attrib
-
+        CommentedSeq, CommentedSet, comment_attrib, merge_attrib
 
 
 class RoundTripRepresenter(SafeRepresenter):
@@ -818,6 +815,7 @@ class RoundTripRepresenter(SafeRepresenter):
                     node_value.style):
                 best_style = False
             value.append((node_key, node_value))
+        best_style = best_style
         return node
 
 

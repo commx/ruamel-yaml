@@ -2,11 +2,9 @@
 
 from __future__ import print_function
 
-import pytest
-from textwrap import dedent
+import pytest  # NOQA
 
-import ruamel.yaml
-from roundtrip import round_trip, dedent, round_trip_load, round_trip_dump
+from roundtrip import round_trip, dedent, round_trip_load, round_trip_dump  # NOQA
 
 
 def load(s):
@@ -15,7 +13,7 @@ def load(s):
 
 def compare(data, s):
     assert round_trip_dump(data) == dedent(s)
-#@pytest.mark.xfail
+# @pytest.mark.xfail
 
 
 class TestCommentsManipulation:
@@ -85,7 +83,7 @@ class TestCommentsManipulation:
         print(data._yaml_comment)
         # print(type(data._yaml_comment._items[0][0].start_mark))
         # ruamel.yaml.error.Mark
-        #print(type(data._yaml_comment._items[0][0].start_mark))
+        # print(type(data._yaml_comment._items[0][0].start_mark))
         data.yaml_add_eol_comment('comment 2', key=2)
         compare(data, """
         - a   # comment 1
@@ -110,7 +108,7 @@ class TestCommentsManipulation:
         print(data._yaml_comment)
         # print(type(data._yaml_comment._items[0][0].start_mark))
         # ruamel.yaml.error.Mark
-        #print(type(data._yaml_comment._items[0][0].start_mark))
+        # print(type(data._yaml_comment._items[0][0].start_mark))
         data.yaml_add_eol_comment('comment 2', key=3)
         compare(data, """
         - a   # comment 1
@@ -169,7 +167,6 @@ class TestCommentsManipulation:
         d: 4
         e: 5
         """)
-
 
     def test_map_set_comment_on_existing_column_prev(self):
         data = load("""
@@ -231,7 +228,7 @@ class TestCommentsManipulation:
 # py.test cannot handle comments in strings properly
 # https://bitbucket.org/pytest-dev/pytest/issue/752/internalerror-indexerror-list-index-out-of
 
-    #@pytest.mark.xfail
+    # @pytest.mark.xfail
     def test_before_top_map_rt(self):
         data = load("""
         a: 1
@@ -266,8 +263,8 @@ class TestCommentsManipulation:
         data['a'] = 1
         data['b'] = 2
         data.yaml_set_start_comment('Hello\nWorld\n')
-        #print(data.ca)
-        #print(data.ca._items)
+        # print(data.ca)
+        # print(data.ca._items)
         compare(data, """
             {comment} Hello
             {comment} World
@@ -390,4 +387,3 @@ class TestCommentsManipulation:
           - c
           - d
         """.format(comment='#'))
-

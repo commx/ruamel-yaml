@@ -31,7 +31,6 @@ except (ImportError, ValueError):  # for Jython
     from ruamel.yaml.compat import text_type, binary_type, PY3
 
 
-
 class ReaderError(YAMLError):
 
     def __init__(self, name, position, character, encoding, reason):

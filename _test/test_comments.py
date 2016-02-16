@@ -12,7 +12,6 @@ roundtrip changes
 
 import pytest
 
-import ruamel.yaml
 from roundtrip import round_trip, dedent, round_trip_load, round_trip_dump
 
 
@@ -70,6 +69,20 @@ class TestComments:
         klm: 3
         # C end a
         # C end b
+        """)
+
+    def test_reindent(self):
+        x = dedent("""\
+        a:
+          b:     # comment 1
+            c: 1 # comment 2
+        """)
+        d = round_trip_load(x)
+        y = round_trip_dump(d, indent=4)
+        assert y == dedent("""\
+        a:
+            b:   # comment 1
+                c: 1 # comment 2
         """)
 
     def test_main_mapping_begin_end_items_post(self):
@@ -184,7 +197,6 @@ class TestComments:
         x = x.replace(': secret          ', ': deleted password')
         assert round_trip_dump(data) == x
 
-
     def test_set_comment(self):
         round_trip("""
         !!set
@@ -268,4 +280,3 @@ class TestMultiLevelGet:
         assert d.mlget(['a', 1, 'd', 'f'], list_ok=True) == 196
         with pytest.raises(AssertionError):
             d.mlget(['a', 1, 'd', 'f']) == 196
-

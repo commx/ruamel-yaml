@@ -548,6 +548,12 @@ class NameSpacePackager(object):
             return None
         if sys.platform == "win32" and not self._pkg_data.get('win32bin'):
             return None
+        try:
+            plat = sys.argv.index('--plat-name')
+            if 'win' in sys.argv[plat+1]:
+                return None
+        except ValueError:
+            pass
         import tempfile
         import shutil
         from textwrap import dedent
@@ -622,8 +628,6 @@ class NameSpacePackager(object):
                 print("\n\n>>>>>> LICENSE file not found <<<<<\n\n")
             if self._pkg_data.get('universal'):
                 fp.write('[bdist_wheel]\nuniversal = 1\n')
-            else:
-                fp.write('[bdist_wheel]\nuniversal = 0\n')
         try:
             setup(**kw)
         except:
@@ -631,11 +635,6 @@ class NameSpacePackager(object):
         finally:
             os.remove(file_name)
         return True
-
-
-class BinaryDistribution(Distribution):
-    def is_pure(self):
-        return False
 
 
 # # call setup
@@ -668,7 +667,6 @@ def main():
         keywords=nsp.keywords,
         package_data=nsp.package_data,
         ext_modules=nsp.ext_modules,
-        distclass=BinaryDistribution,
     )
     if '--version' not in sys.argv and ('--verbose' in sys.argv or dump_kw in sys.argv):
         for k in sorted(kw):

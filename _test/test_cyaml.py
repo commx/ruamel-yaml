@@ -1,9 +1,11 @@
+# coding: utf-8
 
 import platform
 import pytest
 
+
 @pytest.mark.skipif(platform.python_implementation() == 'Jython',
-                reason="Jython throws RepresenterError")
+                    reason="Jython throws RepresenterError")
 def test_load_cyaml():
     import ruamel.yaml
     assert ruamel.yaml.__with_libyaml__

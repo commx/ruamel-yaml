@@ -5,13 +5,13 @@ __all__ = ['Composer', 'ComposerError']
 
 try:
     from .error import MarkedYAMLError
-    from .events import *
-    from .nodes import *
+    from .events import *                               # NOQA
+    from .nodes import *                               # NOQA
     from .compat import utf8
 except (ImportError, ValueError):  # for Jython
     from ruamel.yaml.error import MarkedYAMLError
-    from ruamel.yaml.events import *
-    from ruamel.yaml.nodes import *
+    from ruamel.yaml.events import *                               # NOQA
+    from ruamel.yaml.nodes import *                               # NOQA
     from ruamel.yaml.compat import utf8
 
 

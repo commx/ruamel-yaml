@@ -3,12 +3,12 @@ from __future__ import absolute_import
 __all__ = ['BaseResolver', 'Resolver']
 
 try:
-    from .error import *
-    from .nodes import *
+    from .error import *                               # NOQA
+    from .nodes import *                               # NOQA
     from .compat import string_types
 except (ImportError, ValueError):  # for Jython
-    from ruamel.yaml.error import *
-    from ruamel.yaml.nodes import *
+    from ruamel.yaml.error import *                               # NOQA
+    from ruamel.yaml.nodes import *                               # NOQA
     from ruamel.yaml.compat import string_types
 
 

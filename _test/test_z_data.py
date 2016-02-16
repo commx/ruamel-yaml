@@ -3,8 +3,8 @@ from __future__ import print_function
 
 import sys
 import os
-import pytest
-import platform
+import pytest    # NOQA
+import platform  # NOQA
 
 sys.path.insert(0, os.path.dirname(__file__) + '/lib')
 

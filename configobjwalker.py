@@ -47,19 +47,19 @@ def _walk_section(s, level=0):
         for val in _walk_section(s[name], level=level+1):
             yield val
 
-##def config_obj_2_rt_yaml(cfg):
-##    from .comments import CommentedMap, CommentedSeq
-##    from configobj import ConfigObj
-##    assert isinstance(cfg, ConfigObj)
-##    #for c in cfg.initial_comment:
-##    #    if c.strip():
-##    #        pass
-##    cm = CommentedMap()
-##    for name in s.sections:
-##        cm[name] = d = CommentedMap()
-##
-##
-##    #for c in cfg.final_comment:
-##    #    if c.strip():
-##    #        yield c
-##    return cm
+# def config_obj_2_rt_yaml(cfg):
+#     from .comments import CommentedMap, CommentedSeq
+#     from configobj import ConfigObj
+#     assert isinstance(cfg, ConfigObj)
+#     #for c in cfg.initial_comment:
+#     #    if c.strip():
+#     #        pass
+#     cm = CommentedMap()
+#     for name in s.sections:
+#         cm[name] = d = CommentedMap()
+#
+#
+#     #for c in cfg.final_comment:
+#     #    if c.strip():
+#     #        yield c
+#     return cm

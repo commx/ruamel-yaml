@@ -9,7 +9,6 @@ except (ImportError, ValueError):  # for Jython
     from ruamel.yaml.compat import text_type
 
 
-
 class ScalarString(text_type):
     def __new__(cls, *args, **kw):
         return text_type.__new__(cls, *args, **kw)
@@ -18,6 +17,7 @@ class ScalarString(text_type):
 class PreservedScalarString(ScalarString):
     def __new__(cls, value):
         return ScalarString.__new__(cls, value)
+
 
 def preserve_literal(s):
     return PreservedScalarString(s.replace('\r\n', '\n').replace('\r', '\n'))
@@ -30,7 +30,6 @@ def walk_tree(base):
     have multiple lines to literal scalars
     """
     from ruamel.yaml.compat import string_types
-
 
     if isinstance(base, dict):
         for k in base:

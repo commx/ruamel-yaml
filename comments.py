@@ -25,6 +25,7 @@ line_col_attrib = '_yaml_line_col'
 anchor_attrib = '_yaml_anchor'
 merge_attrib = '_yaml_merge'
 
+
 class Comment(object):
     # sys.getsize tested the Comment objects, __slots__ make them bigger
     # and adding self.end did not matter
@@ -63,7 +64,7 @@ class Comment(object):
     def start(self):
         return self._start
 
-    @end.setter
+    @start.setter
     def start(self, value):
         self._start = value
 
@@ -137,6 +138,7 @@ class Anchor(object):
     def __init__(self):
         self.value = None
         self.always_dump = False
+
 
 class CommentedBase(object):
     @property
@@ -242,6 +244,7 @@ class CommentedBase(object):
     def yaml_set_anchor(self, value, always_dump=False):
         self.anchor.value = value
         self.anchor.always_dump = always_dump
+
 
 class CommentedSeq(list, CommentedBase):
     __slots__ = [Comment.attrib, ]
@@ -355,6 +358,7 @@ class CommentedMap(ordereddict, CommentedBase):
         if not isinstance(key, list):
             return self.get(key, default)
         # assume that the key is a list of recursively accessible dicts
+
         def get_one_level(key_list, level, d):
             if not list_ok:
                 assert isinstance(d, dict)
@@ -370,7 +374,7 @@ class CommentedMap(ordereddict, CommentedBase):
             return default
         except (TypeError, IndexError):
             if not list_ok:
-                Raise
+                raise
             return default
 
     def __getitem__(self, key):
@@ -396,7 +400,6 @@ class CommentedMap(ordereddict, CommentedBase):
 
     def add_yaml_merge(self, value):
         self.merge.extend(value)
-
 
 
 class CommentedOrderedMap(CommentedMap):

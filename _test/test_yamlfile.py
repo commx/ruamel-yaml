@@ -6,12 +6,12 @@ various test cases for YAML files
 """
 
 import sys
-import pytest
+import pytest      # NOQA
 import platform
 
 import ruamel.yaml
 from ruamel.yaml.compat import ordereddict
-from roundtrip import round_trip, dedent, round_trip_load, round_trip_dump
+from roundtrip import round_trip, dedent, round_trip_load, round_trip_dump  # NOQA
 
 
 class TestYAML:
@@ -54,7 +54,7 @@ class TestYAML:
         - b: 2
         """)
 
-    @pytest.mark.skipif(sys.version_info >= (3, 0) or \
+    @pytest.mark.skipif(sys.version_info >= (3, 0) or
                         platform.python_implementation() != "CPython",
                         reason="ruamel.yaml not available")
     def test_dump_ruamel_ordereddict(self):
@@ -83,7 +83,7 @@ class TestYAML:
 
     def test_set_out(self):
         # preferable would be the shorter format without the ': null'
-        from ruamel.yaml.compat import ordereddict
+        # from ruamel.yaml.compat import ordereddict
         x = set(['a', 'b', 'c'])
         res = ruamel.yaml.dump(x, default_flow_style=False)
         assert res == dedent("""
@@ -123,7 +123,7 @@ class TestYAML:
         """)
 
     @pytest.mark.skipif(platform.python_implementation() == 'Jython',
-                    reason="Jython throws RepresenterError")
+                        reason="Jython throws RepresenterError")
     def test_blank_line_after_literal_chip(self):
         s = """
         c:
@@ -146,7 +146,7 @@ class TestYAML:
         assert d['c'][1].split('line.')[1] == '\n'
 
     @pytest.mark.skipif(platform.python_implementation() == 'Jython',
-                    reason="Jython throws RepresenterError")
+                        reason="Jython throws RepresenterError")
     def test_blank_line_after_literal_keep(self):
         """ have to insert an eof marker in YAML to test this"""
         s = """
@@ -171,7 +171,7 @@ class TestYAML:
         assert d['c'][1].split('line.')[1] == '\n\n\n'
 
     @pytest.mark.skipif(platform.python_implementation() == 'Jython',
-                    reason="Jython throws RepresenterError")
+                        reason="Jython throws RepresenterError")
     def test_blank_line_after_literal_strip(self):
         s = """
         c:
@@ -192,4 +192,3 @@ class TestYAML:
         round_trip(s)
         assert d['c'][0].split('it.')[1] == ''
         assert d['c'][1].split('line.')[1] == ''
-

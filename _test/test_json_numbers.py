@@ -1,10 +1,12 @@
+# coding: utf-8
 
 from __future__ import print_function
 
-import pytest
+import pytest  # NOQA
 
 import ruamel.yaml
 import json
+
 
 def load(s, typ=float):
     x = '{"low": %s }' % (s)
@@ -15,6 +17,7 @@ def load(s, typ=float):
     ret_val = ruamel.yaml.load(x, ruamel.yaml.RoundTripLoader)
     print(ret_val)
     return ret_val['low']
+
 
 class TestJSONNumbers:
     # based on http://stackoverflow.com/a/30462009/1307905
@@ -45,4 +48,3 @@ class TestJSONNumbers:
                 continue
             res = load(x, int)
             assert isinstance(res, int)
-

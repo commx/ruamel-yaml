@@ -26,9 +26,9 @@ def round_trip_load(dinp):
     return ruamel.yaml.load(dinp, ruamel.yaml.RoundTripLoader)
 
 
-def round_trip_dump(data):
+def round_trip_dump(data, indent=None):
     dumper = ruamel.yaml.RoundTripDumper
-    return ruamel.yaml.dump(data, default_flow_style=False, Dumper=dumper)
+    return ruamel.yaml.dump(data, default_flow_style=False, Dumper=dumper, indent=indent)
 
 
 def round_trip(inp, outp=None, extra=None, intermediate=None):

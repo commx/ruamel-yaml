@@ -1,3 +1,4 @@
+# coding: utf-8
 
 from __future__ import print_function
 
@@ -17,9 +18,8 @@ and the chomping modifiers:
 import pytest
 import platform
 
-import ruamel.yaml
-from ruamel.yaml.compat import ordereddict
-from roundtrip import round_trip, dedent, round_trip_load, round_trip_dump
+# from ruamel.yaml.compat import ordereddict
+from roundtrip import round_trip, dedent, round_trip_load, round_trip_dump  # NOQA
 
 
 class TestYAML:
@@ -34,7 +34,7 @@ class TestYAML:
         """)
 
     @pytest.mark.skipif(platform.python_implementation() == 'Jython',
-                    reason="Jython throws RepresenterError")
+                        reason="Jython throws RepresenterError")
     def test_preserve_string(self):
         round_trip("""
             a: |
@@ -43,7 +43,7 @@ class TestYAML:
             """, intermediate=dict(a='abc\ndef\n'))
 
     @pytest.mark.skipif(platform.python_implementation() == 'Jython',
-                    reason="Jython throws RepresenterError")
+                        reason="Jython throws RepresenterError")
     def test_preserve_string_strip(self):
         s = """
             a: |-
@@ -54,7 +54,7 @@ class TestYAML:
         round_trip(s, intermediate=dict(a='abc\ndef'))
 
     @pytest.mark.skipif(platform.python_implementation() == 'Jython',
-                    reason="Jython throws RepresenterError")
+                        reason="Jython throws RepresenterError")
     def test_preserve_string_keep(self):
             # with pytest.raises(AssertionError) as excinfo:
             round_trip("""
@@ -67,7 +67,7 @@ class TestYAML:
             """, intermediate=dict(a='ghi\njkl\n\n\n', b='x'))
 
     @pytest.mark.skipif(platform.python_implementation() == 'Jython',
-                    reason="Jython throws RepresenterError")
+                        reason="Jython throws RepresenterError")
     def test_preserve_string_keep_at_end(self):
         # at EOF you have to specify the ... to get proper "closure"
         # of the multiline scalar
@@ -80,7 +80,7 @@ class TestYAML:
             """, intermediate=dict(a='ghi\njkl\n\n'))
 
     def test_fold_string(self):
-        with pytest.raises(AssertionError) as excinfo:
+        with pytest.raises(AssertionError) as excinfo:  # NOQA
             round_trip("""
             a: >
               abc
@@ -89,7 +89,7 @@ class TestYAML:
             """, intermediate=dict(a='abc def\n'))
 
     def test_fold_string_strip(self):
-        with pytest.raises(AssertionError) as excinfo:
+        with pytest.raises(AssertionError) as excinfo:  # NOQA
             round_trip("""
             a: >-
               abc
@@ -98,7 +98,7 @@ class TestYAML:
             """, intermediate=dict(a='abc def'))
 
     def test_fold_string_keep(self):
-        with pytest.raises(AssertionError) as excinfo:
+        with pytest.raises(AssertionError) as excinfo:  # NOQA
             round_trip("""
             a: >+
               abc

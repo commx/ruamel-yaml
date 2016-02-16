@@ -8,11 +8,12 @@ import pytest
 from textwrap import dedent
 import platform
 
-import ruamel.yaml
-from roundtrip import round_trip, dedent, round_trip_load, round_trip_dump
+from roundtrip import round_trip, dedent, round_trip_load, round_trip_dump  # NOQA
+
 
 def load(s):
     return round_trip_load(dedent(s))
+
 
 def compare(data, s):
     assert round_trip_dump(data) == dedent(s)
@@ -47,11 +48,11 @@ class TestAnchorsAliases:
         assert not templated_id(u'id000')
         assert not templated_id(u'x000')
 
-    #def test_re_matcher(self):
-    #    import re
-    #    assert re.compile(u'id(?!000)\\d{3,}').match('id001')
-    #    assert not re.compile(u'id(?!000\\d*)\\d{3,}').match('id000')
-    #    assert re.compile(u'id(?!000$)\\d{3,}').match('id0001')
+    # def test_re_matcher(self):
+    #     import re
+    #     assert re.compile(u'id(?!000)\\d{3,}').match('id001')
+    #     assert not re.compile(u'id(?!000\\d*)\\d{3,}').match('id000')
+    #     assert re.compile(u'id(?!000$)\\d{3,}').match('id0001')
 
     def test_anchor_assigned(self):
         from ruamel.yaml.comments import CommentedMap
@@ -73,7 +74,7 @@ class TestAnchorsAliases:
         assert e.yaml_anchor().value == 'etemplate'
         assert e.yaml_anchor().always_dump is False
 
-    #@pytest.mark.xfail
+    # @pytest.mark.xfail
     def test_anchor_id_retained(self):
         data = load("""
         a: &id002
@@ -107,6 +108,7 @@ class TestAnchorsAliases:
               b: 1
               c: 2
             """)
+            data = data
 
     def test_anchor_on_sequence(self):
         # as reported by Bjorn Stabell
@@ -127,7 +129,6 @@ class TestAnchorsAliases:
         assert isinstance(l, CommentedSeq)
         assert l.yaml_anchor() is not None
         assert l.yaml_anchor().value == 'alice'
-
 
     merge_yaml = dedent("""
         - &CENTER {x: 1, y: 2}
@@ -197,7 +198,7 @@ class TestAnchorsAliases:
         b:
           <<: *content
         '''
-        data = round_trip(yaml)
+        data = round_trip(yaml)  # NOQA
 
     def test_merge_nested_with_sequence(self):
         yaml = '''
@@ -210,7 +211,7 @@ class TestAnchorsAliases:
         b:
           <<: [*content, *y2]
         '''
-        data = round_trip(yaml)
+        data = round_trip(yaml)  # NOQA
 
     def test_add_anchor(self):
         from ruamel.yaml.comments import CommentedMap

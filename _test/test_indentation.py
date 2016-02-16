@@ -1,3 +1,5 @@
+# coding: utf-8
+
 from __future__ import absolute_import
 from __future__ import print_function
 from __future__ import unicode_literals
@@ -5,7 +7,7 @@ from __future__ import unicode_literals
 
 from textwrap import dedent
 
-import pytest
+import pytest  # NOQA
 
 import ruamel.yaml
 
@@ -22,6 +24,7 @@ def test_roundtrip_inline_list():
     output = rt(s)
     assert s == output
 
+
 def test_roundtrip_mapping_of_inline_lists():
     s = dedent("""\
     a: [a, b, c]
@@ -29,6 +32,7 @@ def test_roundtrip_mapping_of_inline_lists():
     """)
     output = rt(s)
     assert s == output
+
 
 def test_roundtrip_mapping_of_inline_lists_comments():
     s = dedent("""\
@@ -39,6 +43,7 @@ def test_roundtrip_mapping_of_inline_lists_comments():
     """)
     output = rt(s)
     assert s == output
+
 
 def test_roundtrip_mapping_of_inline_sequence_eol_comments():
     s = dedent("""\
@@ -66,7 +71,8 @@ def test_added_inline_list():
     output = ruamel.yaml.dump(data, Dumper=ruamel.yaml.RoundTripDumper)
     assert s == output
 
-############# flow mappings
+# ############ flow mappings
+
 
 def test_roundtrip_flow_mapping():
     s = dedent("""\
@@ -77,6 +83,7 @@ def test_roundtrip_flow_mapping():
     output = ruamel.yaml.dump(data, Dumper=ruamel.yaml.RoundTripDumper)
     assert s == output
 
+
 def test_roundtrip_sequence_of_inline_mappings_eol_comments():
     s = dedent("""\
     # comment A
@@ -86,9 +93,8 @@ def test_roundtrip_sequence_of_inline_mappings_eol_comments():
     output = rt(s)
     assert s == output
 
+# ############ indentation
 
-
-############# indentation
 
 @pytest.mark.xfail
 def test_roundtrip_four_space_indents():

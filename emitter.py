@@ -12,13 +12,12 @@ __all__ = ['Emitter', 'EmitterError']
 
 try:
     from .error import YAMLError
-    from .events import *
+    from .events import *                                                # NOQA
     from .compat import utf8, text_type, PY2, nprint, dbg, DBG_EVENT
 except (ImportError, ValueError):  # for Jython
     from ruamel.yaml.error import YAMLError
-    from ruamel.yaml.events import *
+    from ruamel.yaml.events import *                                     # NOQA
     from ruamel.yaml.compat import utf8, text_type, PY2, nprint, dbg, DBG_EVENT
-
 
 
 class EmitterError(YAMLError):
@@ -213,10 +212,12 @@ class Emitter(object):
                     handle_text = self.prepare_tag_handle(handle)
                     prefix_text = self.prepare_tag_prefix(prefix)
                     self.write_tag_directive(handle_text, prefix_text)
-            implicit = (first and not self.event.explicit
-                        and not self.canonical
-                        and not self.event.version and not self.event.tags
-                        and not self.check_empty_document())
+            implicit = (first and
+                        not self.event.explicit and
+                        not self.canonical and
+                        not self.event.version and
+                        not self.event.tags and
+                        not self.check_empty_document())
             if not implicit:
                 self.write_indent()
                 self.write_indicator(u'---', True)
@@ -765,7 +766,7 @@ class Emitter(object):
             if not (ch == u'\n' or u'\x20' <= ch <= u'\x7E'):
                 if (ch == u'\x85' or u'\xA0' <= ch <= u'\uD7FF'
                         or u'\uE000' <= ch <= u'\uFFFD') and ch != u'\uFEFF':
-                    unicode_characters = True
+                    # unicode_characters = True
                     if not self.allow_unicode:
                         special_characters = True
                 else:
@@ -1205,6 +1206,7 @@ class Emitter(object):
 
     def write_comment(self, comment):
         value = comment.value
+        # print('{:02d} {:02d} {}'.format(self.column, comment.start_mark.column, value))
         if value[-1] == '\n':
             value = value[:-1]
         try:
@@ -1220,7 +1222,16 @@ class Emitter(object):
                 value = value.encode('utf-8')
         except UnicodeDecodeError:
             pass
-        self.stream.write(' ' * (col - self.column) + value)
+        try:
+            # at least one space if the current column >= the start column of the comment
+            # but not at the start of a line
+            nr_spaces = col - self.column
+            if self.column and value.strip() and nr_spaces < 1:
+                nr_spaces = 1
+            self.stream.write(' ' * nr_spaces + value)
+        except TypeError:
+            print('TypeError while trying to write', repr(value), type(value))
+            raise
         self.write_line_break()
 
     def write_pre_comment(self, event):

@@ -1,10 +1,8 @@
 # coding: utf-8
 
-import pytest
-from textwrap import dedent
+import pytest  # NOQA
 
-import ruamel.yaml
-from roundtrip import round_trip, dedent, round_trip_load, round_trip_dump
+from roundtrip import round_trip, dedent, round_trip_load, round_trip_dump  # NOQA
 
 
 def load(s):
@@ -53,7 +51,6 @@ class TestLineCol:
             """)
         assert data[2].lc.line == 2
         assert data[2].lc.col == 2
-
 
     def test_item_04(self):
         data = load("""

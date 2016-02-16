@@ -8,7 +8,6 @@ except (ImportError, ValueError):  # for Jython
     from ruamel.yaml.compat import utf8
 
 
-
 class Mark(object):
     def __init__(self, name, index, line, column, buffer, pointer):
         self.name = name

@@ -6,15 +6,14 @@ import re
 
 try:
     from .error import YAMLError
-    from .events import *
-    from .nodes import *
+    from .events import *                               # NOQA
+    from .nodes import *                                # NOQA
     from .compat import nprint, DBG_NODE, dbg
 except (ImportError, ValueError):  # for Jython
     from ruamel.yaml.error import YAMLError
-    from ruamel.yaml.events import *
-    from ruamel.yaml.nodes import *
+    from ruamel.yaml.events import *                               # NOQA
+    from ruamel.yaml.nodes import *                                # NOQA
     from ruamel.yaml.compat import nprint, DBG_NODE, dbg
-
 
 
 class SerializerError(YAMLError):
@@ -26,7 +25,6 @@ class Serializer(object):
     # 'id' and 3+ numbers, but not 000
     ANCHOR_TEMPLATE = u'id%03d'
     ANCHOR_RE = re.compile(u'id(?!000$)\\d{3,}')
-
 
     def __init__(self, encoding=None, explicit_start=None, explicit_end=None,
                  version=None, tags=None):
@@ -167,6 +165,7 @@ class Serializer(object):
                     self.serialize_node(value, node, key)
                 self.emit(MappingEndEvent(comment=[map_comment, end_comment]))
             self.ascend_resolver()
+
 
 def templated_id(s):
     return Serializer.ANCHOR_RE.match(s)

@@ -3,17 +3,18 @@
 from __future__ import absolute_import
 
 
-from ruamel.yaml.error import *
+from ruamel.yaml.error import *                                # NOQA
 
-from ruamel.yaml.tokens import *
-from ruamel.yaml.events import *
-from ruamel.yaml.nodes import *
+from ruamel.yaml.tokens import *                               # NOQA
+from ruamel.yaml.events import *                               # NOQA
+from ruamel.yaml.nodes import *                                # NOQA
 
-from ruamel.yaml.loader import *
-from ruamel.yaml.dumper import *
+from ruamel.yaml.loader import *                               # NOQA
+from ruamel.yaml.dumper import *                               # NOQA
 from ruamel.yaml.compat import StringIO, BytesIO, with_metaclass, PY3
 
-import io
+# import io
+
 
 def scan(stream, Loader=Loader):
     """
@@ -348,5 +349,3 @@ class YAMLObject(with_metaclass(YAMLObjectMetaclass)):
         """
         return dumper.represent_yaml_object(cls.yaml_tag, data, cls,
                                             flow_style=cls.yaml_flow_style)
-
-

@@ -9,7 +9,7 @@ from __future__ import absolute_import
 
 _package_data = dict(
     full_package_name="ruamel.yaml",
-    version_info=(0, 10, 20),
+    version_info=(0, 10, 21),
     author="Anthon van der Neut",
     author_email="a.van.der.neut@ruamel.eu",
     description="ruamel.yaml is a YAML parser/emitter that supports roundtrip preservation of comments, seq/map flow style, and map key order",  # NOQA
@@ -19,7 +19,7 @@ _package_data = dict(
         py26=["ruamel.ordereddict"],
         py27=["ruamel.ordereddict"]
     ),
-    ext_modules=[ dict(
+    ext_modules=[dict(
         name="_ruamel_yaml",
         src=["ext/_ruamel_yaml.c", "ext/api.c", "ext/writer.c", "ext/dumper.c",
                 "ext/loader.c", "ext/reader.c", "ext/scanner.c", "ext/parser.c",
@@ -70,17 +70,14 @@ __version__ = _convert_version(version_info)
 del _convert_version
 
 try:
-    from .cyaml import *
+    from .cyaml import *                               # NOQA
     __with_libyaml__ = True
 except (ImportError, ValueError):  # for Jython
     __with_libyaml__ = False
 
-import sys
 
 # body extracted to main.py
 try:
-    from .main import *
+    from .main import *                               # NOQA
 except ImportError:
-    from ruamel.yaml.main import *
-
-
+    from ruamel.yaml.main import *                               # NOQA
