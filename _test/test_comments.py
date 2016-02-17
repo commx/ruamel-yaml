@@ -280,3 +280,137 @@ class TestMultiLevelGet:
         assert d.mlget(['a', 1, 'd', 'f'], list_ok=True) == 196
         with pytest.raises(AssertionError):
             d.mlget(['a', 1, 'd', 'f']) == 196
+
+class TestInsertPopList:
+    """list insertion is more complex than dict insertion, as you
+    need to move the values to subsequent keys on insert"""
+
+    @property
+    def ins(self):
+        return dedent("""\
+        ab:
+        - a      # a
+        - b      # b
+        - c
+        - d      # d
+
+        de:
+        - 1
+        - 2
+        """)
+
+    def test_insert_0(self):
+        d = round_trip_load(self.ins)
+        d['ab'].insert(0, 'xyz')
+        y = round_trip_dump(d, indent=2)
+        assert y == dedent("""\
+        ab:
+        - xyz
+        - a      # a
+        - b      # b
+        - c
+        - d      # d
+
+        de:
+        - 1
+        - 2
+        """)
+
+
+    def test_insert_1(self):
+        d = round_trip_load(self.ins)
+        d['ab'].insert(4, 'xyz')
+        y = round_trip_dump(d, indent=2)
+        assert y == dedent("""\
+        ab:
+        - a      # a
+        - b      # b
+        - c
+        - d      # d
+
+        - xyz
+        de:
+        - 1
+        - 2
+        """)
+
+    def test_insert_1(self):
+        d = round_trip_load(self.ins)
+        d['ab'].insert(1, 'xyz')
+        y = round_trip_dump(d, indent=2)
+        assert y == dedent("""\
+        ab:
+        - a      # a
+        - xyz
+        - b      # b
+        - c
+        - d      # d
+
+        de:
+        - 1
+        - 2
+        """)
+
+
+    def test_pop_0(self):
+        d = round_trip_load(self.ins)
+        d['ab'].pop(0)
+        y = round_trip_dump(d, indent=2)
+        print(y)
+        assert y == dedent("""\
+        ab:
+        - b      # b
+        - c
+        - d      # d
+
+        de:
+        - 1
+        - 2
+        """)
+
+    def test_pop_1(self):
+        d = round_trip_load(self.ins)
+        d['ab'].pop(1)
+        y = round_trip_dump(d, indent=2)
+        print(y)
+        assert y == dedent("""\
+        ab:
+        - a      # a
+        - c
+        - d      # d
+
+        de:
+        - 1
+        - 2
+        """)
+
+    def test_pop_2(self):
+        d = round_trip_load(self.ins)
+        d['ab'].pop(2)
+        y = round_trip_dump(d, indent=2)
+        print(y)
+        assert y == dedent("""\
+        ab:
+        - a      # a
+        - b      # b
+        - d      # d
+
+        de:
+        - 1
+        - 2
+        """)
+
+    def test_pop_3(self):
+        d = round_trip_load(self.ins)
+        d['ab'].pop(3)
+        y = round_trip_dump(d, indent=2)
+        print(y)
+        assert y == dedent("""\
+        ab:
+        - a      # a
+        - b      # b
+        - c
+        de:
+        - 1
+        - 2
+        """)

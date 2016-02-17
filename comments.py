@@ -261,6 +261,23 @@ class CommentedSeq(list, CommentedBase):
     def _yaml_get_columnX(self, key):
         return self.ca.items[key][0].start_mark.column
 
+    def insert(self, idx, val):
+        """the comments after the insertion have to move forward"""
+        list.insert(self, idx, val)
+        for list_index in sorted(self.ca.items, reverse=True):
+            if list_index < idx:
+                break
+            self.ca.items[list_index+1] = self.ca.items.pop(list_index)
+
+    def pop(self, idx):
+        res = list.pop(self, idx)
+        self.ca.items.pop(idx, None)  # might not be there -> default value
+        for list_index in sorted(self.ca.items):
+            if list_index < idx:
+                continue
+            self.ca.items[list_index-1] = self.ca.items.pop(list_index)
+        return res
+
     def _yaml_get_column(self, key):
         column = None
         sel_idx = None
