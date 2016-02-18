@@ -2,6 +2,13 @@
 ruamel.yaml
 ===========
 
+
+**Starting with 0.11.0 the RoundTripLoader differentiates
+between YAML 1.2 and YAML 1.1. This may cause compatibility problems,
+see the "Document version support" section below.**
+
+----
+
 Starting with 0.10.7 the package has been reorganised and the
 command line utility is in its own package ``ruamel.yaml.cmd`` (so
 installing ``ruamel.yaml`` doesn't pull in possibly irrelevant modules
@@ -44,6 +51,42 @@ Major differences with PyYAML 3.11:
   Individual positions for mappings and sequences can also be retrieved
   (``lc.key('a')``, ``lc.value('a')`` resp. ``lc.item(3)``)
 - preservation of whitelines after block scalars. Contributed by Sam Thursfield.
+
+Document version support.
+=========================
+
+In YAML a document version can be explicitly set by using::
+
+   %YAML 1.x
+
+before the document start (at the top or before a
+``---``). For ``ruamel.yaml``  x has to be 1 or 2. If no explicit
+version is set `version 1.2 <http://www.yaml.org/spec/1.2/spec.html>`_
+is assumed (which has been released in 2009).
+
+The 1.2 version does **not** support:
+
+- sexagesimals like ``12:34:56``
+- octals that start with 0 only: like ``012`` for number 10 (``0o12`` **is**
+  supported by YAML 1.2)
+- Unquoted Yes and On as alternatives for True and No and Off for False.
+
+If you cannot change your YAML files and you need them to load as 1.1
+you can load with:
+
+  ruamel.yaml.load(some_str, Loader=ruamel.yaml.RoundTripLoader, version=(1, 1))
+
+or the equivalent (version can be a tuple, list or string):
+
+  ruamel.yaml.round_trip_load(some_str, version="1.1")
+
+this also works for ``load_all``/``round_trip_load_all``. 
+
+*If you cannot change your code, stick with ruamel.yaml==0.10.23 and let
+me know if it would help to be able to set an environment variable.*
+
+This does not affect dump as ruamel.yaml never emitted sexagesimals, nor
+octal numbers, and emitted booleans always as true resp. false
 
 Round trip including comments
 =============================
@@ -272,3 +315,12 @@ Testing
 Testing is done using `tox <https://pypi.python.org/pypi/tox>`_, which
 uses `virtualenv <https://pypi.python.org/pypi/virtualenv>`_ and
 `pytest <http://pytest.org/latest/>`_.
+
+ChangeLog
+=========
+
+::
+
+  0.11.0 (2016-02-18):
+    - RoundTripLoader loads 1.2 by default (no sexagesimals, 012 octals nor
+      yes/no/on/off booleans

@@ -1218,17 +1218,18 @@ class Emitter(object):
             col = self.column + 1
         # print('post_comment', self.line, self.column, value)
         try:
-            if PY2:
-                value = value.encode('utf-8')
-        except UnicodeDecodeError:
-            pass
-        try:
             # at least one space if the current column >= the start column of the comment
             # but not at the start of a line
             nr_spaces = col - self.column
             if self.column and value.strip() and nr_spaces < 1:
                 nr_spaces = 1
-            self.stream.write(' ' * nr_spaces + value)
+            value = ' ' * nr_spaces + value
+            try:
+                if PY2:
+                    value = value.encode('utf-8')
+            except UnicodeDecodeError:
+                pass
+            self.stream.write(value)
         except TypeError:
             print('TypeError while trying to write', repr(value), type(value))
             raise

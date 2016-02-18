@@ -18,9 +18,8 @@ except (ImportError, ValueError):  # for Jython
     from ruamel.yaml.resolver import *                              # NOQA
 
 
-class BaseLoader(Reader, Scanner, Parser, Composer, BaseConstructor,
-                 BaseResolver):
-    def __init__(self, stream):
+class BaseLoader(Reader, Scanner, Parser, Composer, BaseConstructor, BaseResolver):
+    def __init__(self, stream, version=None):
         Reader.__init__(self, stream)
         Scanner.__init__(self)
         Parser.__init__(self)
@@ -30,7 +29,7 @@ class BaseLoader(Reader, Scanner, Parser, Composer, BaseConstructor,
 
 
 class SafeLoader(Reader, Scanner, Parser, Composer, SafeConstructor, Resolver):
-    def __init__(self, stream):
+    def __init__(self, stream, version=None):
         Reader.__init__(self, stream)
         Scanner.__init__(self)
         Parser.__init__(self)
@@ -40,8 +39,7 @@ class SafeLoader(Reader, Scanner, Parser, Composer, SafeConstructor, Resolver):
 
 
 class Loader(Reader, Scanner, Parser, Composer, Constructor, Resolver):
-
-    def __init__(self, stream):
+    def __init__(self, stream, version=None):
         Reader.__init__(self, stream)
         Scanner.__init__(self)
         Parser.__init__(self)
@@ -50,12 +48,12 @@ class Loader(Reader, Scanner, Parser, Composer, Constructor, Resolver):
         Resolver.__init__(self)
 
 
-class RoundTripLoader(Reader, RoundTripScanner, Parser,
-                      Composer, RoundTripConstructor, Resolver):
-    def __init__(self, stream):
+class RoundTripLoader(Reader, RoundTripScanner, Parser, Composer,
+                      RoundTripConstructor, VersionedResolver):
+    def __init__(self, stream, version=None):
         Reader.__init__(self, stream)
         RoundTripScanner.__init__(self)
         Parser.__init__(self)
         Composer.__init__(self)
         RoundTripConstructor.__init__(self)
-        Resolver.__init__(self)
+        VersionedResolver.__init__(self, version)

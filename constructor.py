@@ -73,6 +73,9 @@ class BaseConstructor(object):
         return data
 
     def construct_object(self, node, deep=False):
+        """deep is True when creating an object/mapping recursively,
+        in that case want the underlying elements available during construction
+        """
         if node in self.constructed_objects:
             return self.constructed_objects[node]
         if deep:
@@ -132,6 +135,9 @@ class BaseConstructor(object):
         return node.value
 
     def construct_sequence(self, node, deep=False):
+        """deep is True when creating an object/mapping recursively,
+        in that case want the underlying elements available during construction
+        """
         if not isinstance(node, SequenceNode):
             raise ConstructorError(
                 None, None,
@@ -141,6 +147,9 @@ class BaseConstructor(object):
                 for child in node.value]
 
     def construct_mapping(self, node, deep=False):
+        """deep is True when creating an object/mapping recursively,
+        in that case want the underlying elements available during construction
+        """
         if not isinstance(node, MappingNode):
             raise ConstructorError(
                 None, None,
@@ -250,6 +259,9 @@ class SafeConstructor(BaseConstructor):
             node.value = merge + node.value
 
     def construct_mapping(self, node, deep=False):
+        """deep is True when creating an object/mapping recursively,
+        in that case want the underlying elements available during construction
+        """
         if isinstance(node, MappingNode):
             self.flatten_mapping(node)
         return BaseConstructor.construct_mapping(self, node, deep=deep)
@@ -288,9 +300,9 @@ class SafeConstructor(BaseConstructor):
             return sign*int(value[2:], 16)
         elif value.startswith('0o'):
             return sign*int(value[2:], 8)
-        elif value[0] == '0':
+        elif self.processing_version != (1, 2) and value[0] == '0':
             return sign*int(value, 8)
-        elif ':' in value:
+        elif self.processing_version != (1, 2) and ':' in value:
             digits = [int(part) for part in value.split(':')]
             digits.reverse()
             base = 1

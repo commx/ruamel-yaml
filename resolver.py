@@ -1,6 +1,6 @@
 from __future__ import absolute_import
 
-__all__ = ['BaseResolver', 'Resolver']
+__all__ = ['BaseResolver', 'Resolver', 'VersionedResolver']
 
 try:
     from .error import *                               # NOQA
@@ -14,6 +14,8 @@ except (ImportError, ValueError):  # for Jython
 
 import re
 
+
+_DEFAULT_VERSION = (1, 2)
 
 class ResolverError(YAMLError):
     pass
@@ -29,6 +31,7 @@ class BaseResolver(object):
     yaml_path_resolvers = {}
 
     def __init__(self):
+        self._loader_version = None
         self.resolver_exact_paths = []
         self.resolver_prefix_paths = []
 
@@ -174,6 +177,9 @@ class BaseResolver(object):
         elif kind is MappingNode:
             return self.DEFAULT_MAPPING_TAG
 
+    @property
+    def processing_version(self):
+        return None
 
 class Resolver(BaseResolver):
     pass
@@ -237,3 +243,149 @@ Resolver.add_implicit_resolver(
     u'tag:yaml.org,2002:yaml',
     re.compile(u'^(?:!|&|\\*)$'),
     list(u'!&*'))
+
+# resolvers consist of
+# - a list of applicable version
+# - a tag
+# - a regexp
+# - a list of first characters to match
+implicit_resolvers = [
+    ([(1, 2)],
+        u'tag:yaml.org,2002:bool',
+        re.compile(u'''^(?:true|True|TRUE|false|False|FALSE)$''', re.X),
+        list(u'tTfF')),
+    ([(1, 1)],
+        u'tag:yaml.org,2002:bool',
+        re.compile(u'''^(?:yes|Yes|YES|no|No|NO
+        |true|True|TRUE|false|False|FALSE
+        |on|On|ON|off|Off|OFF)$''', re.X),
+        list(u'yYnNtTfFoO')),
+    ([(1, 2), (1, 1)],
+        u'tag:yaml.org,2002:float',
+        re.compile(u'''^(?:
+         [-+]?(?:[0-9][0-9_]*)\\.[0-9_]*(?:[eE][-+]?[0-9]+)?
+        |[-+]?(?:[0-9][0-9_]*)(?:[eE][-+]?[0-9]+)
+        |\\.[0-9_]+(?:[eE][-+][0-9]+)?
+        |[-+]?[0-9][0-9_]*(?::[0-5]?[0-9])+\\.[0-9_]*
+        |[-+]?\\.(?:inf|Inf|INF)
+        |\\.(?:nan|NaN|NAN))$''', re.X),
+        list(u'-+0123456789.')),
+    ([(1, 2)],
+        u'tag:yaml.org,2002:int',
+        re.compile(u'''^(?:[-+]?0b[0-1_]+
+        |[-+]?0o?[0-7_]+
+        |[-+]?(?:0|[1-9][0-9_]*)
+        |[-+]?0x[0-9a-fA-F_]+)$''', re.X),
+        list(u'-+0123456789')),
+    ([(1, 1)],
+        u'tag:yaml.org,2002:int',
+        re.compile(u'''^(?:[-+]?0b[0-1_]+
+        |[-+]?0o?[0-7_]+
+        |[-+]?(?:0|[1-9][0-9_]*)
+        |[-+]?0x[0-9a-fA-F_]+
+        |[-+]?[1-9][0-9_]*(?::[0-5]?[0-9])+)$''', re.X),
+        list(u'-+0123456789')),
+    ([(1, 2), (1, 1)],
+        u'tag:yaml.org,2002:merge',
+        re.compile(u'^(?:<<)$'),
+        [u'<']),
+    ([(1, 2), (1, 1)],
+        u'tag:yaml.org,2002:null',
+        re.compile(u'''^(?: ~
+        |null|Null|NULL
+        | )$''', re.X),
+        [u'~', u'n', u'N', u'']),
+    ([(1, 2), (1, 1)],
+        u'tag:yaml.org,2002:timestamp',
+        re.compile(u'''^(?:[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]
+        |[0-9][0-9][0-9][0-9] -[0-9][0-9]? -[0-9][0-9]?
+        (?:[Tt]|[ \\t]+)[0-9][0-9]?
+        :[0-9][0-9] :[0-9][0-9] (?:\\.[0-9]*)?
+        (?:[ \\t]*(?:Z|[-+][0-9][0-9]?(?::[0-9][0-9])?))?)$''', re.X),
+        list(u'0123456789')),
+    ([(1, 2), (1, 1)],
+        u'tag:yaml.org,2002:value',
+        re.compile(u'^(?:=)$'),
+        [u'=']),
+    # The following resolver is only for documentation purposes. It cannot work
+    # because plain scalars cannot start with '!', '&', or '*'.
+    ([(1, 2), (1, 1)],
+        u'tag:yaml.org,2002:yaml',
+        re.compile(u'^(?:!|&|\\*)$'),
+        list(u'!&*')),
+]
+
+
+class VersionedResolver(BaseResolver):
+    """
+    contrary to the "normal" resolver, the smart resolver delays loading
+    the pattern matching rules. That way it can decide to load 1.1 rules
+    or the (default) 1.2 that no longer support octal without 0o, sexagesimals
+    and Yes/No/On/Off booleans.
+    """
+
+    def __init__(self, version=None):
+        BaseResolver.__init__(self)
+        self._loader_version = self.get_loader_version(version)
+        self._version_implicit_resolver = {}
+
+    def add_version_implicit_resolver(self, version, tag, regexp, first):
+        if first is None:
+            first = [None]
+        impl_resolver = self._version_implicit_resolver.setdefault(version, {})
+        for ch in first:
+            impl_resolver.setdefault(ch, []).append((tag, regexp))
+
+    def get_loader_version(self, version):
+        if version is None or isinstance(version, tuple):
+            return version
+        if isinstance(version, list):
+            return tuple(version)
+        # assume string
+        return tuple(map(int, version.split(u'.')))
+
+    @property
+    def resolver(self):
+        """
+        select the resolver based on the version we are parsing
+        """
+        version = self.processing_version
+        if version not in self._version_implicit_resolver:
+            print('>>> version', self.yaml_version, version)
+            for x in implicit_resolvers:
+                if version in x[0]:
+                    self.add_version_implicit_resolver(version, x[1], x[2], x[3])
+        return self._version_implicit_resolver[version]
+
+    def resolve(self, kind, value, implicit):
+        if kind is ScalarNode and implicit[0]:
+            if value == u'':
+                resolvers = self.resolver.get(u'', [])
+            else:
+                resolvers = self.resolver.get(value[0], [])
+            resolvers += self.resolver.get(None, [])
+            for tag, regexp in resolvers:
+                if regexp.match(value):
+                    return tag
+            implicit = implicit[1]
+        if self.yaml_path_resolvers:
+            exact_paths = self.resolver_exact_paths[-1]
+            if kind in exact_paths:
+                return exact_paths[kind]
+            if None in exact_paths:
+                return exact_paths[None]
+        if kind is ScalarNode:
+            return self.DEFAULT_SCALAR_TAG
+        elif kind is SequenceNode:
+            return self.DEFAULT_SEQUENCE_TAG
+        elif kind is MappingNode:
+            return self.DEFAULT_MAPPING_TAG
+
+    @property
+    def processing_version(self):
+        version = self.yaml_version
+        if version is None:
+            version = self._loader_version
+            if version is None:
+                version = _DEFAULT_VERSION
+        return version
