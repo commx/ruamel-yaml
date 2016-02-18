@@ -351,7 +351,6 @@ class VersionedResolver(BaseResolver):
         """
         version = self.processing_version
         if version not in self._version_implicit_resolver:
-            print('>>> version', self.yaml_version, version)
             for x in implicit_resolvers:
                 if version in x[0]:
                     self.add_version_implicit_resolver(version, x[1], x[2], x[3])
