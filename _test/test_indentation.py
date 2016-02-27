@@ -10,6 +10,7 @@ from textwrap import dedent
 import pytest  # NOQA
 
 import ruamel.yaml
+from roundtrip import round_trip
 
 
 def rt(s):
@@ -87,5 +88,12 @@ class TestIndent:
         """)
         output = rt(s)
         assert s == output
+
+    def test_indent_top_level(self):
+        round_trip("""
+        -   a:
+            -   b
+        """, indent=4)
+
 
 # ############ indentation

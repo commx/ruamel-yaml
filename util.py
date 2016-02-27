@@ -44,11 +44,13 @@ def load_yaml_guess_indent(stream):
             continue
         if prev_line_key_only is not None and rline:
             idx = 0
-            while line[idx] in ' -':  # this will end on ':'
+            while line[idx] in ' -':
                 idx += 1
             if idx > prev_line_key_only:
                 indent = idx - prev_line_key_only
                 break
+            else:
+                indent = 2
         prev_line_key_only = None
     return round_trip_load(yaml_str), indent
 

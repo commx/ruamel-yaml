@@ -87,10 +87,31 @@ class TestIndentFailures:
         a:
         -   foo
         -   bar
-        """), indent=4) == dedent("""
+        """)) == dedent("""
         a:
         - foo
         - bar
+        """)
+
+    @pytest.mark.xfail
+    def test_roundtrip_four_space_indents_expl_indent(self):
+        s = (
+            'a:\n'
+            '- foo\n'
+            '- bar\n'
+        )
+        output = round_trip_dump(round_trip_load(s), indent=4)
+        assert s == output
+
+    def test_roundtrip_four_space_indents_expl_indent_no_fail(self):
+        assert round_trip_dump(round_trip_load("""
+        a:
+        -   foo
+        -   bar
+        """), indent=4) == dedent("""
+        a:
+        -   foo
+        -   bar
         """)
 
     @pytest.mark.xfail
@@ -145,9 +166,9 @@ class TestIndentFailures:
         base_url: http://gopher.net
         special_indices: [1, 5, 8]
         also_special:
-        - a
-        - 19
-        - 32
+        -   a
+        -   19
+        -   32
         asia and europe: &asia_europe
             Turkey: Ankara
             Russia: Moscow
@@ -160,17 +181,10 @@ class TestIndentFailures:
                 Spain: Madrid
                 Italy: Rome
             Antarctica:
-            - too cold
+            -   too cold
         """)
 
-    @pytest.mark.xfail
-    def test_indent_top_level(self):
-        round_trip("""
-        -   a:
-            -   b
-        """, indent=4)
-
-    def test_indent_top_level_no_fail(self):
+    def Xtest_indent_top_level_no_fail(self):
         round_trip("""
         -   a:
             - b

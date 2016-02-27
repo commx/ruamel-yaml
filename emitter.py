@@ -257,7 +257,7 @@ class Emitter(object):
     def expect_node(self, root=False, sequence=False, mapping=False,
                     simple_key=False):
         self.root_context = root
-        self.sequence_context = sequence
+        self.sequence_context = sequence   # not used in PyYAML
         self.mapping_context = mapping
         self.simple_key_context = simple_key
         if isinstance(self.event, AliasEvent):
@@ -583,6 +583,8 @@ class Emitter(object):
         # if self.analysis.multiline and split    \
         #         and (not self.style or self.style in '\'\"'):
         #     self.write_indent()
+        if self.sequence_context and not self.flow_level:
+            self.write_indent()
         if self.style == '"':
             self.write_double_quoted(self.analysis.scalar, split)
         elif self.style == '\'':
@@ -1204,7 +1206,6 @@ class Emitter(object):
 
     def write_comment(self, comment):
         value = comment.value
-        print('################## comment', repr(value))
         # print('{:02d} {:02d} {}'.format(self.column, comment.start_mark.column, value))
         if value[-1] == '\n':
             value = value[:-1]
