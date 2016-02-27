@@ -194,7 +194,7 @@ def dump_all(documents, stream=None, Dumper=Dumper,
              canonical=None, indent=None, width=None,
              allow_unicode=None, line_break=None,
              encoding=enc, explicit_start=None, explicit_end=None,
-             version=None, tags=None):
+             version=None, tags=None, block_seq_indent=None):
     """
     Serialize a sequence of Python objects into a YAML stream.
     If stream is None, return the produced string instead.
@@ -210,8 +210,10 @@ def dump_all(documents, stream=None, Dumper=Dumper,
                     default_flow_style=default_flow_style,
                     canonical=canonical, indent=indent, width=width,
                     allow_unicode=allow_unicode, line_break=line_break,
-                    encoding=encoding, version=version, tags=tags,
-                    explicit_start=explicit_start, explicit_end=explicit_end)
+                    encoding=encoding, explicit_start=explicit_start,
+                    explicit_end=explicit_end, version=version,
+                    tags=tags, block_seq_indent=block_seq_indent
+                    )
     try:
         dumper.open()
         for data in documents:
@@ -228,8 +230,7 @@ def dump(data, stream=None, Dumper=Dumper,
          canonical=None, indent=None, width=None,
          allow_unicode=None, line_break=None,
          encoding=enc, explicit_start=None, explicit_end=None,
-         version=None, tags=None):
-
+         version=None, tags=None, block_seq_indent=None):
     """
     Serialize a Python object into a YAML stream.
     If stream is None, return the produced string instead.
@@ -246,7 +247,7 @@ def dump(data, stream=None, Dumper=Dumper,
                     line_break=line_break,
                     encoding=encoding, explicit_start=explicit_start,
                     explicit_end=explicit_end,
-                    version=version, tags=tags)
+                    version=version, tags=tags, block_seq_indent=block_seq_indent)
 
 
 def safe_dump_all(documents, stream=None, **kwds):

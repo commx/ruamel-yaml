@@ -27,14 +27,15 @@ def round_trip_load(inp):
     return ruamel.yaml.load(dinp, ruamel.yaml.RoundTripLoader)
 
 
-def round_trip_dump(data, indent=None):
+def round_trip_dump(data, indent=None, block_seq_indent=None):
     dumper = ruamel.yaml.RoundTripDumper
     return ruamel.yaml.dump(data, default_flow_style=False, Dumper=dumper,
                             allow_unicode=True,
-                            indent=indent)
+                            indent=indent, block_seq_indent=block_seq_indent)
 
 
-def round_trip(inp, outp=None, extra=None, intermediate=None, indent=None):
+def round_trip(inp, outp=None, extra=None, intermediate=None, indent=None,
+               block_seq_indent=None):
     if outp is None:
         outp = inp
     doutp = dedent(outp)
@@ -47,9 +48,9 @@ def round_trip(inp, outp=None, extra=None, intermediate=None, indent=None):
                 if data[k] != v:
                     print('{0!r} <> {1!r}'.format(data[k], v))
                     raise ValueError
-    res = round_trip_dump(data, indent=indent)
+    res = round_trip_dump(data, indent=indent, block_seq_indent=block_seq_indent)
     print('roundtrip data:\n', res, sep='')
     assert res == doutp
-    res = round_trip_dump(data, indent=indent)
+    res = round_trip_dump(data, indent=indent, block_seq_indent=block_seq_indent)
     print('roundtrip second round data:\n', res, sep='')
     assert res == doutp

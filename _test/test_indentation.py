@@ -95,5 +95,58 @@ class TestIndent:
             -   b
         """, indent=4)
 
+    def test_set_indent_5_block_list_indent_1(self):
+        round_trip("""
+        a:
+         -   b: c
+         -   1
+         -   d:
+              -   2
+        """, indent=5, block_seq_indent=1)
+
+    def test_set_indent_4_block_list_indent_2(self):
+        round_trip("""
+        a:
+          - b: c
+          - 1
+          - d:
+              - 2
+        """, indent=4, block_seq_indent=2)
+
+    def test_set_indent_3_block_list_indent_0(self):
+        round_trip("""
+        a:
+        -  b: c
+        -  1
+        -  d:
+           -  2
+        """, indent=3, block_seq_indent=0)
+
+    def test_set_indent_3_block_list_indent_2(self):
+        round_trip("""
+        a:
+          -
+           b: c
+          -
+           1
+          -
+           d:
+             -
+              2
+        """, indent=3, block_seq_indent=2)
+
+    def test_set_indent_2_block_list_indent_2(self):
+        round_trip("""
+        a:
+          -
+           b: c
+          -
+           1
+          -
+           d:
+             -
+              2
+        """, indent=2, block_seq_indent=2)
+
 
 # ############ indentation

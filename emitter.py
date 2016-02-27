@@ -50,7 +50,7 @@ class Emitter(object):
     MAX_SIMPLE_KEY_LENGTH = 128
 
     def __init__(self, stream, canonical=None, indent=None, width=None,
-                 allow_unicode=None, line_break=None):
+                 allow_unicode=None, line_break=None, block_seq_indent=None):
 
         # The stream should have the methods `write` and possibly `flush`.
         self.stream = stream
@@ -96,9 +96,12 @@ class Emitter(object):
         # Formatting details.
         self.canonical = canonical
         self.allow_unicode = allow_unicode
+        self.block_seq_indent = block_seq_indent if block_seq_indent else 0
         self.best_indent = 2
         if indent and 1 < indent < 10:
             self.best_indent = indent
+        if self.best_indent < self.block_seq_indent + 1:
+            self.best_indent = self.block_seq_indent + 1
         self.best_width = 80
         if width and width > self.best_indent*2:
             self.best_width = width
@@ -430,7 +433,7 @@ class Emitter(object):
             if self.event.comment and self.event.comment[1]:
                 self.write_pre_comment(self.event)
             self.write_indent()
-            self.write_indicator(u'-', True, indention=True)
+            self.write_indicator((u' ' * self.block_seq_indent) + u'-', True, indention=True)
             self.states.append(self.expect_block_sequence_item)
             self.expect_node(sequence=True)
 

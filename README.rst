@@ -28,6 +28,7 @@ Major differences with PyYAML 3.11:
   on Python 3, and ``!!omap`` is generated for these types.
 - some `YAML 1.2 <http://yaml.org/spec/1.2/spec.html>`_ enhancements
   (``0o`` octal prefix, ``\/`` escape)
+- scalars in lists are indented
 - pep8 compliance
 - tox and py.test based testing
 - Tests whether the C yaml library is installed as well as the header
@@ -51,6 +52,47 @@ Major differences with PyYAML 3.11:
   Individual positions for mappings and sequences can also be retrieved
   (``lc.key('a')``, ``lc.value('a')`` resp. ``lc.item(3)``)
 - preservation of whitelines after block scalars. Contributed by Sam Thursfield.
+
+Indentation of block sequences
+==============================
+
+Although ruamel.yaml doesn't preserve individual indentations of block sequence
+items, it does properly dump::
+
+  x:
+  - b: 1
+  - 2
+
+back to::
+
+  x:
+  -   b: 1
+  -   2
+
+if you specify ``indent=4``.
+
+PyYAML (and older versions of ruamel.yaml) gives you indented scalars::
+
+  x:
+  -   b: 1
+  - 2
+
+The dump routine also has an additional ``block_seq_indent`` parameter that
+can be used to push the dash inwards, *within the space defined by* ``indent``.
+
+The above example with the often seen ``indent=4, block_seq_indent=2``
+indentation::
+
+  x:
+    - b: 1
+    - 2
+
+
+If the ``block_seq_indent`` is only one less than the indent, there is
+not enough room to put the space that has to follow the dash. In that
+case the element is pushed to the next line. If you specify ``block_seq_indent>=indent``, then the emitter adjusts the ``indent`` value to equal 
+``block_seq_indent + 1``.
+  
 
 Document version support.
 =========================
