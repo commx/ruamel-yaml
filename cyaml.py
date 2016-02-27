@@ -1,7 +1,6 @@
-from __future__ import absolute_import
+# coding: utf-8
 
-__all__ = ['CBaseLoader', 'CSafeLoader', 'CLoader',
-           'CBaseDumper', 'CSafeDumper', 'CDumper']
+from __future__ import absolute_import
 
 from _ruamel_yaml import CParser, CEmitter
 
@@ -15,6 +14,9 @@ except (ImportError, ValueError):  # for Jython
     from ruamel.yaml.serializer import *                               # NOQA
     from ruamel.yaml.representer import *                               # NOQA
     from ruamel.yaml.resolver import *                               # NOQA
+
+__all__ = ['CBaseLoader', 'CSafeLoader', 'CLoader',
+           'CBaseDumper', 'CSafeDumper', 'CDumper']
 
 
 class CBaseLoader(CParser, BaseConstructor, BaseResolver):

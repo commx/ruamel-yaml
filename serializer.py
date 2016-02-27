@@ -1,6 +1,6 @@
-from __future__ import absolute_import
+# coding: utf-8
 
-__all__ = ['Serializer', 'SerializerError']
+from __future__ import absolute_import
 
 import re
 
@@ -14,6 +14,8 @@ except (ImportError, ValueError):  # for Jython
     from ruamel.yaml.events import *                               # NOQA
     from ruamel.yaml.nodes import *                                # NOQA
     from ruamel.yaml.compat import nprint, DBG_NODE, dbg
+
+__all__ = ['Serializer', 'SerializerError']
 
 
 class SerializerError(YAMLError):
@@ -114,17 +116,13 @@ class Serializer(object):
             self.serialized_nodes[node] = True
             self.descend_resolver(parent, index)
             if isinstance(node, ScalarNode):
-                detected_tag = self.resolve(ScalarNode, node.value,
-                                            (True, False))
-                default_tag = self.resolve(ScalarNode, node.value,
-                                           (False, True))
-                implicit = \
-                    (node.tag == detected_tag), (node.tag == default_tag)
+                detected_tag = self.resolve(ScalarNode, node.value, (True, False))
+                default_tag = self.resolve(ScalarNode, node.value, (False, True))
+                implicit = (node.tag == detected_tag), (node.tag == default_tag)
                 self.emit(ScalarEvent(alias, node.tag, implicit, node.value,
                                       style=node.style, comment=node.comment))
             elif isinstance(node, SequenceNode):
-                implicit = (node.tag
-                            == self.resolve(SequenceNode, node.value, True))
+                implicit = (node.tag == self.resolve(SequenceNode, node.value, True))
                 comment = node.comment
                 # print('comment >>>>>>>>>>>>>.', comment, node.flow_style)
                 end_comment = None
@@ -146,8 +144,7 @@ class Serializer(object):
                     index += 1
                 self.emit(SequenceEndEvent(comment=[seq_comment, end_comment]))
             elif isinstance(node, MappingNode):
-                implicit = (node.tag
-                            == self.resolve(MappingNode, node.value, True))
+                implicit = (node.tag == self.resolve(MappingNode, node.value, True))
                 comment = node.comment
                 end_comment = None
                 map_comment = None

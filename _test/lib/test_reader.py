@@ -1,11 +1,12 @@
 from __future__ import absolute_import
 from __future__ import print_function
 
-import codecs
+import codecs   # NOQA
 import io
 
 from ruamel.yaml.compat import PY2
 import ruamel.yaml.reader
+
 
 def _run_reader(data, verbose):
     try:
@@ -17,6 +18,7 @@ def _run_reader(data, verbose):
             print(exc)
     else:
         raise AssertionError("expected an exception")
+
 
 def test_stream_error(error_filename, verbose=False):
     with open(error_filename, 'rb') as fp0:
@@ -45,4 +47,3 @@ test_stream_error.unittest = ['.stream-error']
 if __name__ == '__main__':
     import test_appliance
     test_appliance.run(globals())
-

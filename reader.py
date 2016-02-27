@@ -1,3 +1,5 @@
+# coding: utf-8
+
 from __future__ import absolute_import
 # This module contains abstractions for the input stream. You don't have to
 # looks further, there are no pretty code.
@@ -18,8 +20,6 @@ from __future__ import absolute_import
 #   reader.line, stream.column - the line and the column of the current
 #      character.
 
-__all__ = ['Reader', 'ReaderError']
-
 import codecs
 import re
 
@@ -29,6 +29,8 @@ try:
 except (ImportError, ValueError):  # for Jython
     from ruamel.yaml.error import YAMLError, Mark
     from ruamel.yaml.compat import text_type, binary_type, PY3
+
+__all__ = ['Reader', 'ReaderError']
 
 
 class ReaderError(YAMLError):

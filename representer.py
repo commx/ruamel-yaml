@@ -1,8 +1,7 @@
+# coding: utf-8
+
 from __future__ import absolute_import
 from __future__ import print_function
-
-__all__ = ['BaseRepresenter', 'SafeRepresenter', 'Representer',
-           'RepresenterError', 'RoundTripRepresenter']
 
 try:
     from .error import *                                  # NOQA
@@ -24,6 +23,10 @@ if PY3:
     import base64
 else:
     import copy_reg as copyreg
+
+
+__all__ = ['BaseRepresenter', 'SafeRepresenter', 'Representer',
+           'RepresenterError', 'RoundTripRepresenter']
 
 
 class RepresenterError(YAMLError):
@@ -817,6 +820,17 @@ class RoundTripRepresenter(SafeRepresenter):
             value.append((node_key, node_value))
         best_style = best_style
         return node
+
+    def represent_dict(self, data):
+        """write out tag if safed on loading"""
+        t = data.tag.value
+        if t:
+            while t and t[0] == '!':
+                t = t[1:]
+            tag = 'tag:yaml.org,2002:' + t
+        else:
+            tag = u'tag:yaml.org,2002:map'
+        return self.represent_mapping(tag, data)
 
 
 RoundTripRepresenter.add_representer(type(None),

@@ -74,7 +74,6 @@ class TestAnchorsAliases:
         assert e.yaml_anchor().value == 'etemplate'
         assert e.yaml_anchor().always_dump is False
 
-    # @pytest.mark.xfail
     def test_anchor_id_retained(self):
         data = load("""
         a: &id002

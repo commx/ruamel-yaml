@@ -4,6 +4,7 @@ from __future__ import print_function
 import ruamel.yaml as yaml
 import test_emitter
 
+
 def test_loader_error(error_filename, verbose=False):
     try:
         with open(error_filename, 'rb') as fp0:
@@ -15,6 +16,7 @@ def test_loader_error(error_filename, verbose=False):
         raise AssertionError("expected an exception")
 
 test_loader_error.unittest = ['.loader-error']
+
 
 def test_loader_error_string(error_filename, verbose=False):
     try:
@@ -28,6 +30,7 @@ def test_loader_error_string(error_filename, verbose=False):
 
 test_loader_error_string.unittest = ['.loader-error']
 
+
 def test_loader_error_single(error_filename, verbose=False):
     try:
         with open(error_filename, 'rb') as fp0:
@@ -39,6 +42,7 @@ def test_loader_error_single(error_filename, verbose=False):
         raise AssertionError("expected an exception")
 
 test_loader_error_single.unittest = ['.single-loader-error']
+
 
 def test_emitter_error(error_filename, verbose=False):
     with open(error_filename, 'rb') as fp0:
@@ -54,12 +58,12 @@ def test_emitter_error(error_filename, verbose=False):
 
 test_emitter_error.unittest = ['.emitter-error']
 
+
 def test_dumper_error(error_filename, verbose=False):
     with open(error_filename, 'rb') as fp0:
         code = fp0.read()
     try:
         import yaml
-        from yaml.compat import StringIO
         exec(code)
     except yaml.YAMLError as exc:
         if verbose:
@@ -72,4 +76,3 @@ test_dumper_error.unittest = ['.dumper-error']
 if __name__ == '__main__':
     import test_appliance
     test_appliance.run(globals())
-

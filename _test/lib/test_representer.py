@@ -5,6 +5,7 @@ import ruamel.yaml as yaml
 import test_constructor
 import pprint
 
+
 def test_representer_types(code_filename, verbose=False):
     test_constructor._make_objects()
     for allow_unicode in [False, True]:
@@ -14,7 +15,7 @@ def test_representer_types(code_filename, verbose=False):
             native2 = None
             try:
                 output = yaml.dump(native1, Dumper=test_constructor.MyDumper,
-                            allow_unicode=allow_unicode, encoding=encoding)
+                                   allow_unicode=allow_unicode, encoding=encoding)
                 native2 = yaml.load(output, Loader=test_constructor.MyLoader)
                 try:
                     if native1 == native2:
@@ -43,4 +44,3 @@ test_representer_types.unittest = ['.code']
 if __name__ == '__main__':
     import test_appliance
     test_appliance.run(globals())
-

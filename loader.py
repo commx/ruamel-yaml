@@ -1,3 +1,5 @@
+# coding: utf-8
+
 from __future__ import absolute_import
 
 __all__ = ['BaseLoader', 'SafeLoader', 'Loader', 'RoundTripLoader']
@@ -48,12 +50,12 @@ class Loader(Reader, Scanner, Parser, Composer, Constructor, Resolver):
         Resolver.__init__(self)
 
 
-class RoundTripLoader(Reader, RoundTripScanner, Parser, Composer,
+class RoundTripLoader(Reader, RoundTripScanner, RoundTripParser, Composer,
                       RoundTripConstructor, VersionedResolver):
     def __init__(self, stream, version=None):
         Reader.__init__(self, stream)
         RoundTripScanner.__init__(self)
-        Parser.__init__(self)
+        RoundTripParser.__init__(self)
         Composer.__init__(self)
         RoundTripConstructor.__init__(self)
         VersionedResolver.__init__(self, version)

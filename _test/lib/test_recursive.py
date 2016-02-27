@@ -3,8 +3,8 @@ from __future__ import print_function
 
 import ruamel.yaml as yaml
 
-class AnInstance:
 
+class AnInstance:
     def __init__(self, foo, bar):
         self.foo = foo
         self.bar = bar
@@ -12,9 +12,10 @@ class AnInstance:
     def __repr__(self):
         try:
             return "%s(foo=%r, bar=%r)" % (self.__class__.__name__,
-                    self.foo, self.bar)
+                                           self.foo, self.bar)
         except RuntimeError:
             return "%s(foo=..., bar=...)" % self.__class__.__name__
+
 
 class AnInstanceWithState(AnInstance):
 
@@ -23,6 +24,7 @@ class AnInstanceWithState(AnInstance):
 
     def __setstate__(self, state):
         self.foo, self.bar = state['attributes']
+
 
 def test_recursive(recursive_filename, verbose=False):
     context = globals().copy()
@@ -51,4 +53,3 @@ test_recursive.unittest = ['.recursive']
 if __name__ == '__main__':
     import test_appliance
     test_appliance.run(globals())
-

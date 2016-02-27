@@ -5,6 +5,7 @@ import ruamel.yaml as yaml
 import pprint
 from ruamel.yaml.compat import PY3
 
+
 def test_implicit_resolver(data_filename, detect_filename, verbose=False):
     correct_tag = None
     node = None
@@ -26,26 +27,29 @@ def test_implicit_resolver(data_filename, detect_filename, verbose=False):
 
 test_implicit_resolver.unittest = ['.data', '.detect']
 
+
 def _make_path_loader_and_dumper():
     global MyLoader, MyDumper
 
     class MyLoader(yaml.Loader):
         pass
+
     class MyDumper(yaml.Dumper):
         pass
 
     yaml.add_path_resolver(u'!root', [],
-            Loader=MyLoader, Dumper=MyDumper)
+                           Loader=MyLoader, Dumper=MyDumper)
     yaml.add_path_resolver(u'!root/scalar', [], str,
-            Loader=MyLoader, Dumper=MyDumper)
+                           Loader=MyLoader, Dumper=MyDumper)
     yaml.add_path_resolver(u'!root/key11/key12/*', ['key11', 'key12'],
-            Loader=MyLoader, Dumper=MyDumper)
+                           Loader=MyLoader, Dumper=MyDumper)
     yaml.add_path_resolver(u'!root/key21/1/*', ['key21', 1],
-            Loader=MyLoader, Dumper=MyDumper)
+                           Loader=MyLoader, Dumper=MyDumper)
     yaml.add_path_resolver(u'!root/key31/*/*/key14/map', ['key31', None, None, 'key14'], dict,
-            Loader=MyLoader, Dumper=MyDumper)
+                           Loader=MyLoader, Dumper=MyDumper)
 
     return MyLoader, MyDumper
+
 
 def _convert_node(node):
     if isinstance(node, yaml.ScalarNode):
@@ -60,6 +64,7 @@ def _convert_node(node):
         for key, item in node.value:
             value.append((_convert_node(key), _convert_node(item)))
         return (node.tag, value)
+
 
 def test_path_resolver_loader(data_filename, path_filename, verbose=False):
     _make_path_loader_and_dumper()
@@ -77,6 +82,7 @@ def test_path_resolver_loader(data_filename, path_filename, verbose=False):
             print(yaml.serialize_all(nodes1))
 
 test_path_resolver_loader.unittest = ['.data', '.path']
+
 
 def test_path_resolver_dumper(data_filename, path_filename, verbose=False):
     _make_path_loader_and_dumper()
@@ -98,4 +104,3 @@ test_path_resolver_dumper.unittest = ['.data', '.path']
 if __name__ == '__main__':
     import test_appliance
     test_appliance.run(globals())
-

@@ -29,6 +29,7 @@ def find_test_functions(collections):
                 functions.append(value)
     return functions
 
+
 def find_test_filenames(directory):
     filenames = {}
     for filename in os.listdir(directory):
@@ -39,6 +40,7 @@ def find_test_filenames(directory):
             filenames.setdefault(base, []).append(ext)
     filenames = sorted(filenames.items())
     return filenames
+
 
 def parse_arguments(args):
     """"""
@@ -98,6 +100,7 @@ def parse_arguments(args):
         include_filenames.extend(os.environ['YAML_TEST_FILENAMES'].split())
     return include_functions, include_filenames, verbose, args
 
+
 def execute(function, filenames, verbose):
     if PY3:
         name = function.__name__
@@ -129,6 +132,7 @@ def execute(function, filenames, verbose):
             sys.stdout.write('.')
     sys.stdout.flush()
     return (name, filenames, kind, info)
+
 
 def display(results, verbose):
     if results and not verbose:
@@ -177,6 +181,7 @@ def display(results, verbose):
         ret_val = 2
     return ret_val
 
+
 def run(collections, args=None):
     test_functions = find_test_functions(collections)
     test_filenames = find_test_filenames(DATA)
@@ -211,4 +216,3 @@ def run(collections, args=None):
             result = execute(function, [], verbose)
             results.append(result)
     return display(results, verbose=verbose)
-

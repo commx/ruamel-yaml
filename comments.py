@@ -3,9 +3,6 @@
 from __future__ import absolute_import
 from __future__ import print_function
 
-__all__ = ["CommentedSeq", "CommentedMap", "CommentedOrderedMap",
-           "CommentedSet", 'comment_attrib', 'merge_attrib']
-
 """
 stuff to deal with comments and formatting on dict/list/ordereddict/set
 these are not really related, formatting could be factored out as
@@ -13,6 +10,10 @@ a separate base
 """
 
 from collections import MutableSet
+
+__all__ = ["CommentedSeq", "CommentedMap", "CommentedOrderedMap",
+           "CommentedSet", 'comment_attrib', 'merge_attrib']
+
 
 try:
     from .compat import ordereddict
@@ -24,6 +25,7 @@ format_attrib = '_yaml_format'
 line_col_attrib = '_yaml_line_col'
 anchor_attrib = '_yaml_anchor'
 merge_attrib = '_yaml_merge'
+tag_attrib = '_yaml_tag'
 
 
 class Comment(object):
@@ -140,6 +142,14 @@ class Anchor(object):
         self.always_dump = False
 
 
+class Tag(object):
+    """store tag information for roundtripping"""
+    attrib = tag_attrib
+
+    def __init__(self):
+        self.value = None
+
+
 class CommentedBase(object):
     @property
     def ca(self):
@@ -244,6 +254,15 @@ class CommentedBase(object):
     def yaml_set_anchor(self, value, always_dump=False):
         self.anchor.value = value
         self.anchor.always_dump = always_dump
+
+    @property
+    def tag(self):
+        if not hasattr(self, Tag.attrib):
+            setattr(self, Tag.attrib, Tag())
+        return getattr(self, Tag.attrib)
+
+    def yaml_set_tag(self, value):
+        self.tag.value = value
 
 
 class CommentedSeq(list, CommentedBase):

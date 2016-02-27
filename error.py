@@ -1,3 +1,5 @@
+# coding: utf-8
+
 from __future__ import absolute_import
 
 __all__ = ['Mark', 'YAMLError', 'MarkedYAMLError']
@@ -69,10 +71,10 @@ class MarkedYAMLError(YAMLError):
         if self.context is not None:
             lines.append(self.context)
         if self.context_mark is not None  \
-           and (self.problem is None or self.problem_mark is None
-                or self.context_mark.name != self.problem_mark.name
-                or self.context_mark.line != self.problem_mark.line
-                or self.context_mark.column != self.problem_mark.column):
+           and (self.problem is None or self.problem_mark is None or
+                self.context_mark.name != self.problem_mark.name or
+                self.context_mark.line != self.problem_mark.line or
+                self.context_mark.column != self.problem_mark.column):
             lines.append(str(self.context_mark))
         if self.problem is not None:
             lines.append(self.problem)

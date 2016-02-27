@@ -1,3 +1,5 @@
+# coding: utf-8
+
 from __future__ import absolute_import
 from __future__ import print_function
 
@@ -759,9 +761,9 @@ class Scanner(object):
         # '-' character) because we want the flow context to be space
         # independent.
         ch = self.peek()
-        return ch not in u'\0 \t\r\n\x85\u2028\u2029-?:,[]{}#&*!|>\'\"%@`' \
-            or (self.peek(1) not in u'\0 \t\r\n\x85\u2028\u2029'
-                and (ch == u'-' or (not self.flow_level and ch in u'?:')))
+        return ch not in u'\0 \t\r\n\x85\u2028\u2029-?:,[]{}#&*!|>\'\"%@`' or \
+            (self.peek(1) not in u'\0 \t\r\n\x85\u2028\u2029' and
+             (ch == u'-' or (not self.flow_level and ch in u'?:')))
 
     # Scanners.
 

@@ -1,3 +1,5 @@
+# coding: utf-8
+
 from __future__ import absolute_import
 
 # The following YAML grammar is LL(1) and is parsed by a recursive descent
@@ -69,7 +71,7 @@ from __future__ import absolute_import
 # flow_mapping_entry: { ALIAS ANCHOR TAG SCALAR FLOW-SEQUENCE-START
 #                                                    FLOW-MAPPING-START KEY }
 
-__all__ = ['Parser', 'ParserError']
+__all__ = ['Parser', 'RoundTripParser', 'ParserError']
 
 try:
     from .error import MarkedYAMLError
@@ -297,6 +299,9 @@ class Parser(object):
     def parse_block_node_or_indentless_sequence(self):
         return self.parse_node(block=True, indentless_sequence=True)
 
+    def transform_tag(self, handle, suffix):
+        return self.tag_handles[handle] + suffix
+
     def parse_node(self, block=False, indentless_sequence=False):
         if self.check_token(AliasToken):
             token = self.get_token()
@@ -333,7 +338,7 @@ class Parser(object):
                             "while parsing a node", start_mark,
                             "found undefined tag handle %r" % utf8(handle),
                             tag_mark)
-                    tag = self.tag_handles[handle]+suffix
+                    tag = self.transform_tag(handle, suffix)
                 else:
                     tag = suffix
             # if tag == u'!':
@@ -661,3 +666,14 @@ class Parser(object):
 
     def process_empty_scalar(self, mark):
         return ScalarEvent(None, None, (True, False), u'', mark, mark)
+
+
+class RoundTripParser(Parser):
+    """roundtrip is a safe loader, that wants to see the unmangled tag"""
+    def transform_tag(self, handle, suffix):
+        # return self.tag_handles[handle]+suffix
+        if handle == '!!' and suffix in (u'null', u'bool', u'int', u'float', u'binary',
+                                         u'timestamp', u'omap', u'pairs', u'set', u'str',
+                                         u'seq', u'map'):
+            return Parser.transform_tag(self, handle, suffix)
+        return handle+suffix

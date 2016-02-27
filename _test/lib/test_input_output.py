@@ -2,7 +2,10 @@ from __future__ import absolute_import
 from __future__ import print_function
 
 import ruamel.yaml as yaml
-import codecs, tempfile, os, os.path
+import codecs
+import tempfile
+import os
+import os.path
 from ruamel.yaml.compat import PY2, PY3, StringIO, BytesIO
 
 if PY2:
@@ -28,9 +31,9 @@ if PY3:
         output = yaml.load(StringIO(data))
         assert output == value, (output, value)
         for input in [data.encode('utf-8'),
-                        codecs.BOM_UTF8+data.encode('utf-8'),
-                        codecs.BOM_UTF16_BE+data.encode('utf-16-be'),
-                        codecs.BOM_UTF16_LE+data.encode('utf-16-le')]:
+                      codecs.BOM_UTF8+data.encode('utf-8'),
+                      codecs.BOM_UTF16_BE+data.encode('utf-16-be'),
+                      codecs.BOM_UTF16_LE+data.encode('utf-16-le')]:
             if verbose:
                 print("INPUT:", repr(input[:10]), "...")
             output = yaml.load(input)
@@ -45,9 +48,9 @@ else:
         output = yaml.load(_unicode_open(StringIO(data.encode('utf-8')), 'utf-8'))
         assert output == value, (output, value)
         for input in [data, data.encode('utf-8'),
-                        codecs.BOM_UTF8+data.encode('utf-8'),
-                        codecs.BOM_UTF16_BE+data.encode('utf-16-be'),
-                        codecs.BOM_UTF16_LE+data.encode('utf-16-le')]:
+                      codecs.BOM_UTF8+data.encode('utf-8'),
+                      codecs.BOM_UTF16_BE+data.encode('utf-16-be'),
+                      codecs.BOM_UTF16_LE+data.encode('utf-16-le')]:
             if verbose:
                 print("INPUT:", repr(input[:10]), "...")
             output = yaml.load(input)
@@ -57,14 +60,15 @@ else:
 
 test_unicode_input.unittest = ['.unicode']
 
+
 def test_unicode_input_errors(unicode_filename, verbose=False):
     with open(unicode_filename, 'rb') as fp:
         data = fp.read().decode('utf-8')
     for input in [data.encode('latin1', 'ignore'),
-                    data.encode('utf-16-be'), data.encode('utf-16-le'),
-                    codecs.BOM_UTF8+data.encode('utf-16-be'),
-                    codecs.BOM_UTF16_BE+data.encode('utf-16-le'),
-                    codecs.BOM_UTF16_LE+data.encode('utf-8')+b'!']:
+                  data.encode('utf-16-be'), data.encode('utf-16-le'),
+                  codecs.BOM_UTF8+data.encode('utf-16-be'),
+                  codecs.BOM_UTF16_BE+data.encode('utf-16-le'),
+                  codecs.BOM_UTF16_LE+data.encode('utf-8')+b'!']:
         try:
             yaml.load(input)
         except yaml.YAMLError as exc:
@@ -100,7 +104,8 @@ if PY3:
                 stream = BytesIO()
                 if encoding is None:
                     try:
-                        yaml.dump(value, stream, encoding=encoding, allow_unicode=allow_unicode)
+                        yaml.dump(value, stream, encoding=encoding,
+                                  allow_unicode=allow_unicode)
                     except TypeError as exc:
                         if verbose:
                             print(exc)
@@ -138,7 +143,8 @@ else:
             data1 = yaml.dump(value, allow_unicode=allow_unicode)
             for encoding in [None, 'utf-8', 'utf-16-be', 'utf-16-le']:
                 stream = StringIO()
-                yaml.dump(value, _unicode_open(stream, 'utf-8'), encoding=encoding, allow_unicode=allow_unicode)
+                yaml.dump(value, _unicode_open(stream, 'utf-8'), encoding=encoding,
+                          allow_unicode=allow_unicode)
                 data2 = stream.getvalue()
                 data3 = yaml.dump(value, encoding=encoding, allow_unicode=allow_unicode)
                 stream = StringIO()
@@ -170,6 +176,7 @@ else:
 
 test_unicode_output.unittest = ['.unicode']
 
+
 def test_file_output(unicode_filename, verbose=False):
     with open(unicode_filename, 'rb') as fp:
         data = fp.read().decode('utf-8')
@@ -197,7 +204,7 @@ def test_file_output(unicode_filename, verbose=False):
             with open(filename, 'rb') as fp0:
                 data2 = fp0.read()
             with open(filename, 'wb') as stream:
-                yaml.dump(data, stream, encoding='utf-16-le', 
+                yaml.dump(data, stream, encoding='utf-16-le',
                           allow_unicode=True)
             with open(filename, 'rb') as fp0:
                 data3 = fp0.read().decode('utf-16-le')[1:].encode('utf-8')
@@ -214,6 +221,7 @@ def test_file_output(unicode_filename, verbose=False):
             os.unlink(filename)
 
 test_file_output.unittest = ['.unicode']
+
 
 def test_unicode_transfer(unicode_filename, verbose=False):
     with open(unicode_filename, 'rb') as fp:
@@ -241,8 +249,7 @@ def test_unicode_transfer(unicode_filename, verbose=False):
                 input = (u'\ufeff'+input).encode(encoding)
             output1 = yaml.emit(yaml.parse(input), allow_unicode=True)
             stream = StringIO()
-            yaml.emit(yaml.parse(input), _unicode_open(stream, 'utf-8'),
-                                allow_unicode=True)
+            yaml.emit(yaml.parse(input), _unicode_open(stream, 'utf-8'), allow_unicode=True)
             output2 = stream.getvalue()
             if encoding is None:
                 assert isinstance(output1, unicode), (type(output1), encoding)
@@ -257,4 +264,3 @@ test_unicode_transfer.unittest = ['.unicode']
 if __name__ == '__main__':
     import test_appliance
     test_appliance.run(globals())
-

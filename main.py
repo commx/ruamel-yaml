@@ -107,6 +107,7 @@ def safe_load_all(stream, version=None):
     """
     return load_all(stream, SafeLoader, version)
 
+
 def round_trip_load(stream, version=None):
     """
     Parse the first YAML document in a stream

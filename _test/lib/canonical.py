@@ -5,8 +5,10 @@ from ruamel.yaml.constructor import Constructor
 from ruamel.yaml.resolver import Resolver
 from ruamel.yaml.compat import unichr, PY3
 
+
 class CanonicalError(ruamel.yaml.YAMLError):
     pass
+
 
 class CanonicalScanner:
 
@@ -214,8 +216,8 @@ class CanonicalScanner:
             else:
                 found = True
 
-class CanonicalParser:
 
+class CanonicalParser:
     def __init__(self):
         self.events = []
         self.parsed = False
@@ -237,7 +239,7 @@ class CanonicalParser:
 
     # document: DIRECTIVE? DOCUMENT-START node
     def parse_document(self):
-        node = None
+        # node = None
         if self.check_token(ruamel.yaml.DirectiveToken):
             self.get_token(ruamel.yaml.DirectiveToken)
         self.get_token(ruamel.yaml.DocumentStartToken)
@@ -257,7 +259,8 @@ class CanonicalParser:
             if self.check_token(ruamel.yaml.TagToken):
                 tag = self.get_token_value()
             if self.check_token(ruamel.yaml.ScalarToken):
-                self.events.append(ruamel.yaml.ScalarEvent(anchor, tag, (False, False), self.get_token_value(), None, None))
+                self.events.append(ruamel.yaml.ScalarEvent(anchor, tag, (False, False),
+                                                           self.get_token_value(), None, None))
             elif self.check_token(ruamel.yaml.FlowSequenceStartToken):
                 self.events.append(ruamel.yaml.SequenceStartEvent(anchor, tag, None, None))
                 self.parse_sequence()
@@ -265,7 +268,8 @@ class CanonicalParser:
                 self.events.append(ruamel.yaml.MappingStartEvent(anchor, tag, None, None))
                 self.parse_mapping()
             else:
-                raise CanonicalError("SCALAR, '[', or '{' is expected, got "+repr(self.tokens[0]))
+                raise CanonicalError("SCALAR, '[', or '{' is expected, got " +
+                                     repr(self.tokens[0]))
 
     # sequence: SEQUENCE-START (node (ENTRY node)*)? ENTRY? SEQUENCE-END
     def parse_sequence(self):
@@ -323,8 +327,9 @@ class CanonicalParser:
             self.parse()
         return self.events[0]
 
+
 class CanonicalLoader(CanonicalScanner, CanonicalParser,
-        Composer, Constructor, Resolver):
+                      Composer, Constructor, Resolver):
 
     def __init__(self, stream):
         if hasattr(stream, 'read'):
@@ -337,33 +342,38 @@ class CanonicalLoader(CanonicalScanner, CanonicalParser,
 
 ruamel.yaml.CanonicalLoader = CanonicalLoader
 
+
 def canonical_scan(stream):
     return ruamel.yaml.scan(stream, Loader=CanonicalLoader)
 
 ruamel.yaml.canonical_scan = canonical_scan
+
 
 def canonical_parse(stream):
     return ruamel.yaml.parse(stream, Loader=CanonicalLoader)
 
 ruamel.yaml.canonical_parse = canonical_parse
 
+
 def canonical_compose(stream):
     return ruamel.yaml.compose(stream, Loader=CanonicalLoader)
 
 ruamel.yaml.canonical_compose = canonical_compose
+
 
 def canonical_compose_all(stream):
     return ruamel.yaml.compose_all(stream, Loader=CanonicalLoader)
 
 ruamel.yaml.canonical_compose_all = canonical_compose_all
 
+
 def canonical_load(stream):
     return ruamel.yaml.load(stream, Loader=CanonicalLoader)
 
 ruamel.yaml.canonical_load = canonical_load
 
+
 def canonical_load_all(stream):
     return ruamel.yaml.load_all(stream, Loader=CanonicalLoader)
 
 ruamel.yaml.canonical_load_all = canonical_load_all
-

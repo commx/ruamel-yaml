@@ -26,4 +26,3 @@ inp = """\
 
 data = ruamel.yaml.load(inp, ruamel.yaml.RoundTripLoader)
 assert data[7]['y'] == 2
-

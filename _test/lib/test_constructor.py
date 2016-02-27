@@ -3,29 +3,32 @@ from __future__ import print_function
 
 import ruamel.yaml
 import pprint
-from ruamel.yaml.compat import PY2, PY3
+from ruamel.yaml.compat import PY2
 
 import datetime
 try:
     set
 except NameError:
-    from sets import Set as set
+    from sets import Set as set  # NOQA
 import ruamel.yaml.tokens
+
 
 def execute(code):
     global value
     exec(code)
     return value
 
-def _make_objects():
-    global MyLoader, MyDumper, MyTestClass1, MyTestClass2, MyTestClass3, YAMLobject1, YAMLobject2,  \
-            AnObject, AnInstance, AState, ACustomState, InitArgs, InitArgsWithState,    \
-            NewArgs, NewArgsWithState, Reduce, ReduceWithState, MyInt, MyList, MyDict,  \
-            FixedOffset, today, execute
 
-    class MyLoader(yaml.Loader):
+def _make_objects():
+    global MyLoader, MyDumper, MyTestClass1, MyTestClass2, MyTestClass3, YAMLobject1, \
+        YAMLobject2, AnObject, AnInstance, AState, ACustomState, InitArgs, InitArgsWithState, \
+        NewArgs, NewArgsWithState, Reduce, ReduceWithState, MyInt, MyList, MyDict,  \
+        FixedOffset, today, execute
+
+    class MyLoader(ruamel.yaml.Loader):
         pass
-    class MyDumper(yaml.Dumper):
+
+    class MyDumper(ruamel.yaml.Dumper):
         pass
 
     class MyTestClass1:
@@ -33,6 +36,7 @@ def _make_objects():
             self.x = x
             self.y = y
             self.z = z
+
         def __eq__(self, other):
             if isinstance(other, MyTestClass1):
                 return self.__class__, self.__dict__ == other.__class__, other.__dict__
@@ -42,6 +46,7 @@ def _make_objects():
     def construct1(constructor, node):
         mapping = constructor.construct_mapping(node)
         return MyTestClass1(**mapping)
+
     def represent1(representer, native):
         return representer.represent_mapping("!tag1", native.__dict__)
 
@@ -52,16 +57,19 @@ def _make_objects():
         ruamel.yaml.loader = MyLoader
         ruamel.yaml.dumper = MyDumper
         ruamel.yaml.tag = "!tag2"
+
         def from_yaml(cls, constructor, node):
             x = constructor.construct_yaml_int(node)
             return cls(x=x)
         from_yaml = classmethod(from_yaml)
+
         def to_yaml(cls, representer, native):
             return representer.represent_scalar(cls.yaml_tag, str(native.x))
         to_yaml = classmethod(to_yaml)
 
     class MyTestClass3(MyTestClass2):
         ruamel.yaml.tag = "!tag3"
+
         def from_yaml(cls, constructor, node):
             mapping = constructor.construct_mapping(node)
             if '=' in mapping:
@@ -70,17 +78,20 @@ def _make_objects():
                 mapping['x'] = x
             return cls(**mapping)
         from_yaml = classmethod(from_yaml)
+
         def to_yaml(cls, representer, native):
             return representer.represent_mapping(cls.yaml_tag, native.__dict__)
         to_yaml = classmethod(to_yaml)
 
-    class YAMLobject1(yaml.YAMLObject):
+    class YAMLobject1(ruamel.yaml.YAMLObject):
         ruamel.yaml.loader = MyLoader
         ruamel.yaml.dumper = MyDumper
         ruamel.yaml.tag = '!foo'
+
         def __init__(self, my_parameter=None, my_another_parameter=None):
             self.my_parameter = my_parameter
             self.my_another_parameter = my_another_parameter
+
         def __eq__(self, other):
             if isinstance(other, YAMLobject1):
                 return self.__class__, self.__dict__ == other.__class__, other.__dict__
@@ -91,16 +102,20 @@ def _make_objects():
         ruamel.yaml.loader = MyLoader
         ruamel.yaml.dumper = MyDumper
         ruamel.yaml.tag = '!bar'
+
         def __init__(self, foo=1, bar=2, baz=3):
             self.foo = foo
             self.bar = bar
             self.baz = baz
+
         def __getstate__(self):
             return {1: self.foo, 2: self.bar, 3: self.baz}
+
         def __setstate__(self, state):
             self.foo = state[1]
             self.bar = state[2]
             self.baz = state[3]
+
         def __eq__(self, other):
             if isinstance(other, YAMLobject2):
                 return self.__class__, self.__dict__ == other.__class__, other.__dict__
@@ -114,24 +129,28 @@ def _make_objects():
             self.bar = bar
             self.baz = baz
             return self
+
         def __cmp__(self, other):
             return cmp((type(self), self.foo, self.bar, self.baz),
-                    (type(other), other.foo, other.bar, other.baz))
+                       (type(other), other.foo, other.bar, other.baz))
+
         def __eq__(self, other):
             return type(self) is type(other) and    \
-                    (self.foo, self.bar, self.baz) == (other.foo, other.bar, other.baz)
+                (self.foo, self.bar, self.baz) == (other.foo, other.bar, other.baz)
 
     class AnInstance:
         def __init__(self, foo=None, bar=None, baz=None):
             self.foo = foo
             self.bar = bar
             self.baz = baz
+
         def __cmp__(self, other):
             return cmp((type(self), self.foo, self.bar, self.baz),
-                    (type(other), other.foo, other.bar, other.baz))
+                       (type(other), other.foo, other.bar, other.baz))
+
         def __eq__(self, other):
             return type(self) is type(other) and    \
-                    (self.foo, self.bar, self.baz) == (other.foo, other.bar, other.baz)
+                (self.foo, self.bar, self.baz) == (other.foo, other.bar, other.baz)
 
     class AState(AnInstance):
         def __getstate__(self):
@@ -140,6 +159,7 @@ def _make_objects():
                 '_bar': self.bar,
                 '_baz': self.baz,
             }
+
         def __setstate__(self, state):
             self.foo = state['_foo']
             self.bar = state['_bar']
@@ -148,38 +168,42 @@ def _make_objects():
     class ACustomState(AnInstance):
         def __getstate__(self):
             return (self.foo, self.bar, self.baz)
+
         def __setstate__(self, state):
             self.foo, self.bar, self.baz = state
 
-    #class InitArgs(AnInstance):
-    #    def __getinitargs__(self):
-    #        return (self.foo, self.bar, self.baz)
-    #    def __getstate__(self):
-    #        return {}
+    # class InitArgs(AnInstance):
+    #     def __getinitargs__(self):
+    #         return (self.foo, self.bar, self.baz)
+    #     def __getstate__(self):
+    #         return {}
 
-    #class InitArgsWithState(AnInstance):
-    #    def __getinitargs__(self):
-    #        return (self.foo, self.bar)
-    #    def __getstate__(self):
-    #        return self.baz
-    #    def __setstate__(self, state):
-    #        self.baz = state
+    # class InitArgsWithState(AnInstance):
+    #     def __getinitargs__(self):
+    #         return (self.foo, self.bar)
+    #     def __getstate__(self):
+    #         return self.baz
+    #     def __setstate__(self, state):
+    #         self.baz = state
 
     class NewArgs(AnObject):
         def __getnewargs__(self):
             return (self.foo, self.bar, self.baz)
+
         def __getstate__(self):
             return {}
 
     class NewArgsWithState(AnObject):
         def __getnewargs__(self):
             return (self.foo, self.bar)
+
         def __getstate__(self):
             return self.baz
+
         def __setstate__(self, state):
             self.baz = state
 
-    #if PY3 or PY2:
+    # if PY3 or PY2:
     InitArgs = NewArgs
 
     InitArgsWithState = NewArgsWithState
@@ -191,6 +215,7 @@ def _make_objects():
     class ReduceWithState(AnObject):
         def __reduce__(self):
             return self.__class__, (self.foo, self.bar), self.baz
+
         def __setstate__(self, state):
             self.baz = state
 
@@ -201,6 +226,7 @@ def _make_objects():
     class MyList(list):
         def __init__(self, n=1):
             self.extend([None]*n)
+
         def __eq__(self, other):
             return type(self) is type(other) and list(self) == list(other)
 
@@ -208,6 +234,7 @@ def _make_objects():
         def __init__(self, n=1):
             for k in range(n):
                 self[k] = None
+
         def __eq__(self, other):
             return type(self) is type(other) and dict(self) == dict(other)
 
@@ -215,10 +242,13 @@ def _make_objects():
         def __init__(self, offset, name):
             self.__offset = datetime.timedelta(minutes=offset)
             self.__name = name
+
         def utcoffset(self, dt):
             return self.__offset
+
         def tzname(self, dt):
             return self.__name
+
         def dst(self, dt):
             return datetime.timedelta(0)
 
@@ -229,6 +259,7 @@ try:
 except:
     from collections import OrderedDict
     # to get the right name import ... as ordereddict doesn't do that
+
     class ordereddict(OrderedDict):
         pass
 
@@ -257,13 +288,14 @@ def _serialize_value(data):
     else:
         return str(data)
 
+
 def test_constructor_types(data_filename, code_filename, verbose=False):
     _make_objects()
     native1 = None
     native2 = None
     try:
         with open(data_filename, 'rb') as fp0:
-            native1 = list(yaml.load_all(fp0, Loader=MyLoader))
+            native1 = list(ruamel.yaml.load_all(fp0, Loader=MyLoader))
         if len(native1) == 1:
             native1 = native1[0]
         with open(code_filename, 'rb') as fp0:
@@ -289,16 +321,17 @@ def test_constructor_types(data_filename, code_filename, verbose=False):
 
 test_constructor_types.unittest = ['.data', '.code']
 
+
 def test_roundtrip_data(code_filename, roundtrip_filename, verbose=False):
     _make_objects()
-    with open(code_filename, 'rb')  as fp0:
+    with open(code_filename, 'rb') as fp0:
         value1 = fp0 .read()
-    native2 = list(yaml.load_all(value1, Loader=MyLoader))
+    native2 = list(ruamel.yaml.load_all(value1, Loader=MyLoader))
     if len(native2) == 1:
         native2 = native2[0]
     try:
         value2 = ruamel.yaml.dump(native2, Dumper=MyDumper, default_flow_style=False,
-                    allow_unicode=True, encoding='utf-8')
+                                  allow_unicode=True, encoding='utf-8')
         # value2 += x
         if verbose:
             print("SERIALIZED NATIVE1:")
@@ -315,8 +348,8 @@ test_roundtrip_data.unittest = ['.data', '.roundtrip']
 
 
 if __name__ == '__main__':
-    import sys, test_constructor
+    import sys
+    import test_constructor  # NOQA
     sys.modules['test_constructor'] = sys.modules['__main__']
     import test_appliance
     test_appliance.run(globals())
-

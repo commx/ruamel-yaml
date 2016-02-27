@@ -22,33 +22,34 @@ def dedent(data):
     return textwrap.dedent(data)
 
 
-def round_trip_load(dinp):
+def round_trip_load(inp):
+    dinp = dedent(inp)
     return ruamel.yaml.load(dinp, ruamel.yaml.RoundTripLoader)
 
 
 def round_trip_dump(data, indent=None):
     dumper = ruamel.yaml.RoundTripDumper
-    return ruamel.yaml.dump(data, default_flow_style=False, Dumper=dumper, indent=indent)
+    return ruamel.yaml.dump(data, default_flow_style=False, Dumper=dumper,
+                            allow_unicode=True,
+                            indent=indent)
 
 
-def round_trip(inp, outp=None, extra=None, intermediate=None):
-    dinp = dedent(inp)
-    if outp is not None:
-        doutp = dedent(outp)
-    else:
-        doutp = dinp
+def round_trip(inp, outp=None, extra=None, intermediate=None, indent=None):
+    if outp is None:
+        outp = inp
+    doutp = dedent(outp)
     if extra is not None:
         doutp += extra
-    data = round_trip_load(dinp)
+    data = round_trip_load(inp)
     if intermediate is not None:
         if isinstance(intermediate, dict):
             for k, v in intermediate.items():
                 if data[k] != v:
                     print('{0!r} <> {1!r}'.format(data[k], v))
                     raise ValueError
-    res = round_trip_dump(data)
+    res = round_trip_dump(data, indent=indent)
     print('roundtrip data:\n', res, sep='')
     assert res == doutp
-    res = round_trip_dump(data)
+    res = round_trip_dump(data, indent=indent)
     print('roundtrip second round data:\n', res, sep='')
     assert res == doutp

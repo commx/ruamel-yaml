@@ -1,8 +1,7 @@
+# coding: utf-8
+
 from __future__ import absolute_import
 from __future__ import print_function
-
-__all__ = ['BaseConstructor', 'SafeConstructor', 'Constructor',
-           'ConstructorError', 'RoundTripConstructor']
 
 import collections
 import datetime
@@ -15,8 +14,7 @@ import types
 try:
     from .error import *                               # NOQA
     from .nodes import *                               # NOQA
-    from .compat import (utf8, builtins_module, to_str, PY2, PY3, ordereddict,
-                         text_type)
+    from .compat import utf8, builtins_module, to_str, PY2, PY3, ordereddict, text_type
     from .comments import *                               # NOQA
     from .scalarstring import *                           # NOQA
 except (ImportError, ValueError):  # for Jython
@@ -26,6 +24,10 @@ except (ImportError, ValueError):  # for Jython
                                     ordereddict, text_type)
     from ruamel.yaml.comments import *                               # NOQA
     from ruamel.yaml.scalarstring import *                           # NOQA
+
+
+__all__ = ['BaseConstructor', 'SafeConstructor', 'Constructor',
+           'ConstructorError', 'RoundTripConstructor']
 
 
 class ConstructorError(MarkedYAMLError):
@@ -935,10 +937,9 @@ class RoundTripConstructor(SafeConstructor):
                 None, None,
                 "expected a mapping node, but found %s" % node.id,
                 node.start_mark)
-        if isinstance(node, MappingNode):
-            merge_map = self.flatten_mapping(node)
-            if merge_map:
-                maptyp.add_yaml_merge(merge_map)
+        merge_map = self.flatten_mapping(node)
+        if merge_map:
+            maptyp.add_yaml_merge(merge_map)
         # mapping = {}
         if node.comment:
             maptyp._yaml_add_comment(node.comment[:2])
@@ -1088,6 +1089,25 @@ class RoundTripConstructor(SafeConstructor):
         data._yaml_set_line_col(node.start_mark.line, node.start_mark.column)
         yield data
         self.construct_setting(node, data)
+
+    def construct_undefined(self, node):
+        try:
+            data = CommentedMap()
+            data._yaml_set_line_col(node.start_mark.line, node.start_mark.column)
+            if node.flow_style is True:
+                data.fa.set_flow_style()
+            elif node.flow_style is False:
+                data.fa.set_block_style()
+            data.yaml_set_tag(node.tag)
+            yield data
+            self.construct_mapping(node, data)
+        except:
+            raise ConstructorError(
+                None, None,
+                "could not determine a constructor for the tag %r" %
+                utf8(node.tag),
+                node.start_mark)
+
 
 RoundTripConstructor.add_constructor(
     u'tag:yaml.org,2002:null',

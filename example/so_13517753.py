@@ -4,25 +4,26 @@ from __future__ import print_function
 import ruamel.yaml
 from ruamel.yaml.comments import CommentedMap
 
-##class MyObj():
-##    name = "boby"
-##    age = 34
-##
-##print(ruamel.yaml.dump(MyObj())) # , Dumper=ruamel.yaml.RoundTripDumper), end='')
-##
-##inp = """\
-##boby:       # this is the name
-##   age: 34  # in years
-##"""
-##
-##print('====', ruamel.yaml.load(inp))
-##
-##
-##data1 = ruamel.yaml.load(inp, Loader=ruamel.yaml.RoundTripLoader)
-##print('<<<', data1.ca.items)
-##print(ruamel.yaml.dump(data1, Dumper=ruamel.yaml.RoundTripDumper), end='')
-##
-##print('----------------')
+# class MyObj():
+#     name = "boby"
+#     age = 34
+#
+# print(ruamel.yaml.dump(MyObj())) # , Dumper=ruamel.yaml.RoundTripDumper), end='')
+#
+# inp = """\
+# boby:       # this is the name
+#    age: 34  # in years
+# """
+#
+# print('====', ruamel.yaml.load(inp))
+#
+#
+# data1 = ruamel.yaml.load(inp, Loader=ruamel.yaml.RoundTripLoader)
+# print('<<<', data1.ca.items)
+# print(ruamel.yaml.dump(data1, Dumper=ruamel.yaml.RoundTripDumper), end='')
+#
+# print('----------------')
+
 
 class MyObj():
     name = "boby"
@@ -48,7 +49,4 @@ ruamel.yaml.RoundTripDumper.add_representer(MyObj, MyObj.yaml_representer)
 
 data = MyObj()
 
-
 print(ruamel.yaml.dump(data, Dumper=ruamel.yaml.RoundTripDumper), end='')
-
-

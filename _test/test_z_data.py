@@ -1,3 +1,4 @@
+# coding: utf-8
 
 from __future__ import print_function
 
@@ -8,8 +9,8 @@ import platform  # NOQA
 
 sys.path.insert(0, os.path.dirname(__file__) + '/lib')
 
-import ruamel.yaml
-import test_appliance
+import ruamel.yaml   # NOQA
+import test_appliance  # NOQA
 
 args = []
 

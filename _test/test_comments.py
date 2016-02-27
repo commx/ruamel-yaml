@@ -72,11 +72,11 @@ class TestComments:
         """)
 
     def test_reindent(self):
-        x = dedent("""\
+        x = """\
         a:
           b:     # comment 1
             c: 1 # comment 2
-        """)
+        """
         d = round_trip_load(x)
         y = round_trip_dump(d, indent=4)
         assert y == dedent("""\
@@ -181,7 +181,7 @@ class TestComments:
         """)
 
     def test_substitute(self):
-        x = dedent("""
+        x = """
         args:
           username: anthon          # name
           passwd: secret            # password
@@ -190,31 +190,17 @@ class TestComments:
             session-name: test
           loop:
             wait: 10
-        """)
+        """
         data = round_trip_load(x)
         data['args']['passwd'] = 'deleted password'
         # note the requirement to add spaces for alignment of comment
         x = x.replace(': secret          ', ': deleted password')
-        assert round_trip_dump(data) == x
+        assert round_trip_dump(data) == dedent(x)
 
     def test_set_comment(self):
         round_trip("""
         !!set
         # the beginning
-        ? a
-        # next one is B (lowercase)
-        ? b  #  You see? Promised you.
-        ? c
-        # this is the end
-        """)
-
-    @pytest.mark.xfail
-    def XXXtest_set_comment_before_tag(self):
-        # no comments before tags
-        round_trip("""
-        # the beginning
-        !!set
-        # or this one?
         ? a
         # next one is B (lowercase)
         ? b  #  You see? Promised you.
@@ -241,8 +227,7 @@ class TestComments:
         - d: 4
         """)
 
-    @pytest.mark.xfail
-    def test_non_ascii_comment(self):
+    def test_non_ascii(self):
         round_trip("""
         verbosity: 1                  # 0 is minimal output, -1 none
         base_url: http://gopher.net
@@ -252,22 +237,22 @@ class TestComments:
         - 19
         - 32
         asia and europe: &asia_europe
-            Turkey: Ankara
-            Russia: Moscow
+          Turkey: Ankara
+          Russia: Moscow
         countries:
-            Asia:
-                <<: *asia_europe
-                Japan: Tokyo # 東京
-            Europe:
-                <<: *asia_europe
-                Spain: Madrid
-                Italy: Rome
+          Asia:
+            <<: *asia_europe
+            Japan: Tokyo # 東京
+          Europe:
+            <<: *asia_europe
+            Spain: Madrid
+            Italy: Rome
         """)
 
 
 class TestMultiLevelGet:
     def test_mlget_00(self):
-        x = dedent("""\
+        x = """\
         a:
         - b:
           c: 42
@@ -275,11 +260,12 @@ class TestMultiLevelGet:
             f: 196
           e:
             g: 3.14
-        """)
+        """
         d = round_trip_load(x)
         assert d.mlget(['a', 1, 'd', 'f'], list_ok=True) == 196
         with pytest.raises(AssertionError):
             d.mlget(['a', 1, 'd', 'f']) == 196
+
 
 class TestInsertPopList:
     """list insertion is more complex than dict insertion, as you
@@ -287,7 +273,7 @@ class TestInsertPopList:
 
     @property
     def ins(self):
-        return dedent("""\
+        return """\
         ab:
         - a      # a
         - b      # b
@@ -297,7 +283,7 @@ class TestInsertPopList:
         de:
         - 1
         - 2
-        """)
+        """
 
     def test_insert_0(self):
         d = round_trip_load(self.ins)
@@ -316,7 +302,6 @@ class TestInsertPopList:
         - 2
         """)
 
-
     def test_insert_1(self):
         d = round_trip_load(self.ins)
         d['ab'].insert(4, 'xyz')
@@ -334,7 +319,7 @@ class TestInsertPopList:
         - 2
         """)
 
-    def test_insert_1(self):
+    def test_insert_2(self):
         d = round_trip_load(self.ins)
         d['ab'].insert(1, 'xyz')
         y = round_trip_dump(d, indent=2)
@@ -350,7 +335,6 @@ class TestInsertPopList:
         - 1
         - 2
         """)
-
 
     def test_pop_0(self):
         d = round_trip_load(self.ins)

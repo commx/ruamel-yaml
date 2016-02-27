@@ -1,6 +1,8 @@
+# coding: utf-8
+
 from __future__ import absolute_import
 
-__all__ = ['BaseResolver', 'Resolver', 'VersionedResolver']
+import re
 
 try:
     from .error import *                               # NOQA
@@ -11,11 +13,11 @@ except (ImportError, ValueError):  # for Jython
     from ruamel.yaml.nodes import *                               # NOQA
     from ruamel.yaml.compat import string_types
 
-
-import re
+__all__ = ['BaseResolver', 'Resolver', 'VersionedResolver']
 
 
 _DEFAULT_VERSION = (1, 2)
+
 
 class ResolverError(YAMLError):
     pass
@@ -144,8 +146,8 @@ class BaseResolver(object):
                 and current_index is None:
             return
         if isinstance(index_check, string_types):
-            if not (isinstance(current_index, ScalarNode)
-                    and index_check == current_index.value):
+            if not (isinstance(current_index, ScalarNode) and
+                    index_check == current_index.value):
                 return
         elif isinstance(index_check, int) and not isinstance(index_check,
                                                              bool):
@@ -180,6 +182,7 @@ class BaseResolver(object):
     @property
     def processing_version(self):
         return None
+
 
 class Resolver(BaseResolver):
     pass
