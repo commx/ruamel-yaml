@@ -267,6 +267,23 @@ def safe_dump(data, stream=None, **kwds):
     """
     return dump_all([data], stream, Dumper=SafeDumper, **kwds)
 
+def round_trip_dump(data, stream=None, Dumper=RoundTripDumper,
+         default_style=None, default_flow_style=None,
+         canonical=None, indent=None, width=None,
+         allow_unicode=None, line_break=None,
+         encoding=enc, explicit_start=None, explicit_end=None,
+         version=None, tags=None, block_seq_indent=None):
+    allow_unicode = True if allow_unicode is None else allow_unicode
+    return dump_all([data], stream, Dumper=Dumper,
+                    default_style=default_style,
+                    default_flow_style=default_flow_style,
+                    canonical=canonical,
+                    indent=indent, width=width,
+                    allow_unicode=allow_unicode,
+                    line_break=line_break,
+                    encoding=encoding, explicit_start=explicit_start,
+                    explicit_end=explicit_end,
+                    version=version, tags=tags, block_seq_indent=block_seq_indent)
 
 def add_implicit_resolver(tag, regexp, first=None,
                           Loader=Loader, Dumper=Dumper):

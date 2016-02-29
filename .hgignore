@@ -24,3 +24,4 @@ venv
 convert
 cmd
 TODO.rst
+_doc/_build

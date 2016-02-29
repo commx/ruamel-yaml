@@ -10,6 +10,8 @@ from textwrap import dedent
 import pytest  # NOQA
 
 import ruamel.yaml
+from ruamel.yaml.util import load_yaml_guess_indent
+
 from roundtrip import round_trip
 
 
@@ -147,6 +149,36 @@ class TestIndent:
              -
               2
         """, indent=2, block_seq_indent=2)
+
+def guess(s):
+    x, y, z = load_yaml_guess_indent(dedent(s))
+    return y, z
+
+class TestGuessIndent:
+    def test_guess_20(self):
+        assert guess("""\
+        a:
+        - 1
+        """) == (2, 0)
+
+    def test_guess_42(self):
+        assert guess("""\
+        a:
+          - 1
+        """) == (4, 2)
+
+    def test_guess_42(self):
+        assert guess("""\
+        b:
+            a:
+              - 1
+        """) == (4, 2)
+
+    def test_guess_3None(self):
+        assert guess("""\
+        b:
+           a: 1
+        """) == (3, None)
 
 
 # ############ indentation

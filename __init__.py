@@ -9,13 +9,13 @@ from __future__ import absolute_import
 
 _package_data = dict(
     full_package_name="ruamel.yaml",
-    version_info=(0, 11, 3),
+    version_info=(0, 11, 4, "dev"),
     author="Anthon van der Neut",
     author_email="a.van.der.neut@ruamel.eu",
     description="ruamel.yaml is a YAML parser/emitter that supports roundtrip preservation of comments, seq/map flow style, and map key order",  # NOQA
     entry_points=None,
     install_requires=dict(
-        any=["ruamel.base>=1.0.0"],
+        any=[],
         py26=["ruamel.ordereddict"],
         py27=["ruamel.ordereddict"]
     ),

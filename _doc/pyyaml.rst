@@ -1,0 +1,68 @@
+Differences with PyYAML
+=======================
+
+.. parsed-literal::
+
+  *If I have seen further, it is by standing on the shoulders of giants*.
+                                                    Isaac Newton (1676)
+
+
+
+``ruamel.yaml`` is a derivative of Kirill Simonov's `PyYAML 3.11
+<https://bitbucket.org/xi/pyyaml>`_ and would not exist without that
+excellent base to start from.
+
+The following a summary of the major differences with PyYAML 3.11
+
+.. _yaml-1-2-support:
+
+Defaulting to YAML 1.2 support
+------------------------------
+
+PyYAML supports the `YAML 1.1`_ standard, ``ruamel.yaml`` supports
+`YAML 1.2`_ as released in 2009.
+
+- YAML 1.2 dropped support for several features unquoted ``Yes``,
+  ``No``, ``On``, ``Off``
+- YAML 1.2 no longer accepts strings that start with a ``0`` and solely 
+  consist of number characters as octal, you need to specify such strings with
+  ``0o[0-7]+`` (zero + lower-case o for octal + one or more octal characters).
+- YAML 1.2 no longer supports `sexagesimals
+  <https://en.wikipedia.org/wiki/Sexagesimal>`_, so the string scalar
+  ``12:34:56`` doesn't need quoting.
+- ``\/`` escape for JSON compatibility
+- correct parsing of floating point scalars with exponentials
+
+unless the YAML document is loaded with an explicit ``version==1.1`` or
+the document starts with::
+
+  % YAML 1.1
+
+, ``ruamel.yaml`` will load the document as version 1.2.
+
+
+PY2/PY3 reintegration
+---------------------
+
+``ruamel.yaml`` re-integrates the Python 2 and 3 sources, running on
+Python 2.6, 2.7 (CPython, PyPy), 3.3, 3.4, 3.5. It is more easy to
+extend and maintain as only a miniscule part of the code is version
+specific.
+
+Fixes
+-----
+
+- ``ruamel.yaml`` follows the ``indent`` keyword argument on scalars
+  when dumping.
+
+Testing
+-------
+
+``ruamel.yaml`` is tested using `tox`_ and `py.test`_. In addition to
+new tests the original PyYAML
+test framework is called from within ``tox`` runs.
+
+Before versions are pushed to PyPI, ``tox`` is invoked, and has to pass, on all
+Python versions, PyPI as well as flake8/pep8
+
+.. include:: links.rst

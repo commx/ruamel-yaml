@@ -16,8 +16,14 @@ from .main import round_trip_load
 # if you use this in your code, I suggest adding a test in your test suite
 # that check this routines output against a known piece of your YAML
 # before upgrades to this code break your round-tripped YAML
-def load_yaml_guess_indent(stream):
+def load_yaml_guess_indent(stream, **kw):
     # load a yaml file guess the indentation, if you use TABs ...
+    def leading_spaces(l):
+        idx = 0
+        while idx < len(l) and l[idx] == ' ':
+            idx += 1
+        return idx
+
     if isinstance(stream, text_type):
         yaml_str = stream
     elif isinstance(stream, binary_type):
@@ -25,18 +31,23 @@ def load_yaml_guess_indent(stream):
     else:
         yaml_str = stream.read()
     indent = None  # default if not found for some reason
+    block_seq_indent = None
     prev_line_key_only = None
+    key_indent = 0
     for line in yaml_str.splitlines():
         rline = line.rstrip()
-        if rline.startswith('- '):
+        lline = rline.lstrip()
+        if lline.startswith('- '):
+            block_seq_indent = leading_spaces(line) - key_indent
             idx = 1
             while line[idx] == ' ':  # this will end as we rstripped
                 idx += 1
             if line[idx] == '#':     # comment after -
                 continue
-            indent = idx
+            indent = idx - key_indent
             break
         if rline.endswith(':'):
+            key_indent = leading_spaces(line)
             idx = 0
             while line[idx] == ' ':  # this will end on ':'
                 idx += 1
@@ -52,7 +63,9 @@ def load_yaml_guess_indent(stream):
             else:
                 indent = 2
         prev_line_key_only = None
-    return round_trip_load(yaml_str), indent
+    if block_seq_indent:
+        indent += block_seq_indent
+    return round_trip_load(yaml_str, **kw), indent, block_seq_indent
 
 
 def configobj_walker(cfg):
