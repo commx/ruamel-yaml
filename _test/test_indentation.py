@@ -150,9 +150,11 @@ class TestIndent:
               2
         """, indent=2, block_seq_indent=2)
 
+
 def guess(s):
     x, y, z = load_yaml_guess_indent(dedent(s))
     return y, z
+
 
 class TestGuessIndent:
     def test_guess_20(self):
@@ -167,7 +169,7 @@ class TestGuessIndent:
           - 1
         """) == (4, 2)
 
-    def test_guess_42(self):
+    def test_guess_42a(self):
         assert guess("""\
         b:
             a:
@@ -179,6 +181,5 @@ class TestGuessIndent:
         b:
            a: 1
         """) == (3, None)
-
 
 # ############ indentation
