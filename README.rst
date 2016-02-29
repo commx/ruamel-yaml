@@ -10,6 +10,9 @@ ruamel.yaml
 * `Examples <http://yaml.readthedocs.org/en/latest/example.html>`_
 * `Differences with PyYAML <http://yaml.readthedocs.org/en/latest/pyyaml.html>`_
 
+.. image:: https://readthedocs.org/projects/yaml/badge/?version=stable
+   :target: https://yaml.readthedocs.org/en/stable
+
 ChangeLog
 =========
 

@@ -9,7 +9,7 @@ from __future__ import absolute_import
 
 _package_data = dict(
     full_package_name="ruamel.yaml",
-    version_info=(0, 11, 5),
+    version_info=(0, 11, 6),
     author="Anthon van der Neut",
     author_email="a.van.der.neut@ruamel.eu",
     description="ruamel.yaml is a YAML parser/emitter that supports roundtrip preservation of comments, seq/map flow style, and map key order",  # NOQA
@@ -41,6 +41,7 @@ _package_data = dict(
         "Topic :: Text Processing :: Markup"
     ],
     windows_wheels=True,
+    read_the_docs = 'yaml',
 )
 
 

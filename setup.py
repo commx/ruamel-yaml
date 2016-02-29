@@ -234,7 +234,11 @@ class NameSpacePackager(object):
         self._pkg = [None, None]  # required and pre-installable packages
         if sys.argv[0] == 'setup.py' and sys.argv[1] == 'install' and \
            '--single-version-externally-managed' not in sys.argv:
+            if os.environ.get('READTHEDOCS', None) == 'True':
+                os.system('pip install .')
+                sys.exit(0)
             print('error: you have to install with "pip install ."')
+            o
             sys.exit(1)
         # If you only support an extension module on Linux, Windows thinks it
         # is pure. That way you would get pure python .whl files that take
