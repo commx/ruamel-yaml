@@ -170,10 +170,11 @@ class TestGuessIndent:
         """) == (4, 2)
 
     def test_guess_42a(self):
+        # block seq indent prevails over nested key indent level
         assert guess("""\
         b:
-            a:
-              - 1
+              a:
+                - 1
         """) == (4, 2)
 
     def test_guess_3None(self):

@@ -1228,8 +1228,8 @@ class Emitter(object):
                 nr_spaces = 1
             value = ' ' * nr_spaces + value
             try:
-                if PY2:
-                    value = value.encode('utf-8')
+                if self.encoding:
+                    value = value.encode(self.encoding)
             except UnicodeDecodeError:
                 pass
             self.stream.write(value)

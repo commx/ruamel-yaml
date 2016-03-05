@@ -11,6 +11,7 @@ roundtrip changes
 """
 
 import pytest
+import ruamel.yaml
 
 from roundtrip import round_trip, dedent, round_trip_load, round_trip_dump
 
@@ -249,8 +250,32 @@ class TestComments:
             Italy: Rome
         """)
 
+    def test_dump_utf8(self):
+        x = dedent("""\
+        ab:
+        - x  # comment
+        - y  # more comment
+        """)
+        data = round_trip_load(x)
+        dumper = ruamel.yaml.RoundTripDumper
+        for utf in [True, False]:
+            y = ruamel.yaml.dump(data, default_flow_style=False, Dumper=dumper,
+                                 allow_unicode=utf)
+            assert y == x
 
-class TestMultiLevelGet:
+    def test_dump_unicode_utf8(self):
+        x = dedent(u"""\
+        ab:
+        - x  # comment
+        - y  # more comment
+        """)
+        data = round_trip_load(x)
+        dumper = ruamel.yaml.RoundTripDumper
+        for utf in [True, False]:
+            y = ruamel.yaml.dump(data, default_flow_style=False, Dumper=dumper,
+                                 allow_unicode=utf)
+            assert y == x
+
     def test_mlget_00(self):
         x = """\
         a:

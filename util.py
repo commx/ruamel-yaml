@@ -17,6 +17,13 @@ from .main import round_trip_load
 # that check this routines output against a known piece of your YAML
 # before upgrades to this code break your round-tripped YAML
 def load_yaml_guess_indent(stream, **kw):
+    """guess the indent and block sequence indent of yaml stream/string
+
+    returns round_trip_loaded stream, indent level, block sequence indent
+    - block sequence indent is the number of spaces before a dash relative to previous indent
+    - if there are no block sequences, indent is taken from nested mappings, block sequence
+      indent is unset (None) in that case
+    """
     # load a yaml file guess the indentation, if you use TABs ...
     def leading_spaces(l):
         idx = 0
@@ -30,6 +37,7 @@ def load_yaml_guess_indent(stream, **kw):
         yaml_str = stream.decode('utf-8')  # most likely, but the Reader checks BOM for this
     else:
         yaml_str = stream.read()
+    map_indent = None
     indent = None  # default if not found for some reason
     block_seq_indent = None
     prev_line_key_only = None
@@ -38,14 +46,21 @@ def load_yaml_guess_indent(stream, **kw):
         rline = line.rstrip()
         lline = rline.lstrip()
         if lline.startswith('- '):
-            block_seq_indent = leading_spaces(line) - key_indent
-            idx = 1
+            l_s = leading_spaces(line)
+            block_seq_indent = l_s - key_indent
+            idx = l_s + 1
             while line[idx] == ' ':  # this will end as we rstripped
                 idx += 1
             if line[idx] == '#':     # comment after -
                 continue
             indent = idx - key_indent
             break
+        if map_indent is None and prev_line_key_only is not None and rline:
+            idx = 0
+            while line[idx] in ' -':
+                idx += 1
+            if idx > prev_line_key_only:
+                map_indent = idx - prev_line_key_only
         if rline.endswith(':'):
             key_indent = leading_spaces(line)
             idx = 0
@@ -53,18 +68,9 @@ def load_yaml_guess_indent(stream, **kw):
                 idx += 1
             prev_line_key_only = idx
             continue
-        if prev_line_key_only is not None and rline:
-            idx = 0
-            while line[idx] in ' -':
-                idx += 1
-            if idx > prev_line_key_only:
-                indent = idx - prev_line_key_only
-                break
-            else:
-                indent = 2
         prev_line_key_only = None
-    if block_seq_indent:
-        indent += block_seq_indent
+    if indent is None and map_indent is not None:
+        indent = map_indent
     return round_trip_load(yaml_str, **kw), indent, block_seq_indent
 
 
