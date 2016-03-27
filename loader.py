@@ -7,14 +7,14 @@ __all__ = ['BaseLoader', 'SafeLoader', 'Loader', 'RoundTripLoader']
 try:
     from .reader import *                                # NOQA
     from .scanner import *                               # NOQA
-    from .parser_ import *                               # NOQA
+    from .parser import *                                # NOQA
     from .composer import *                              # NOQA
     from .constructor import *                           # NOQA
     from .resolver import *                              # NOQA
 except (ImportError, ValueError):  # for Jython
     from ruamel.yaml.reader import *                                # NOQA
     from ruamel.yaml.scanner import *                               # NOQA
-    from ruamel.yaml.parser_ import *                               # NOQA
+    from ruamel.yaml.parser import *                                # NOQA
     from ruamel.yaml.composer import *                              # NOQA
     from ruamel.yaml.constructor import *                           # NOQA
     from ruamel.yaml.resolver import *                              # NOQA

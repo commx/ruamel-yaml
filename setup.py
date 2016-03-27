@@ -1,18 +1,19 @@
 # # header
 # coding: utf-8
 
-from __future__ import print_function
+from __future__ import print_function, absolute_import, division
 
 # # __init__.py parser
 
 import sys
 import os
-import platform
+sys.path = [path for path in sys.path if path not in [os.getcwd(), '']]
+import platform          # NOQA
 from _ast import *       # NOQA
-from ast import parse
+from ast import parse    # NOQA
 
 from setuptools import setup, Extension, Distribution  # NOQA
-from setuptools.command import install_lib
+from setuptools.command import install_lib             # NOQA
 
 if __name__ != '__main__':
     raise NotImplementedError('should never include setup.py')
@@ -238,7 +239,6 @@ class NameSpacePackager(object):
                 os.system('pip install .')
                 sys.exit(0)
             print('error: you have to install with "pip install ."')
-            o
             sys.exit(1)
         # If you only support an extension module on Linux, Windows thinks it
         # is pure. That way you would get pure python .whl files that take

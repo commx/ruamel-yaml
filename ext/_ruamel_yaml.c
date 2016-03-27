@@ -941,7 +941,7 @@ static char __pyx_k_DocumentStartToken[] = "DocumentStartToken";
 static char __pyx_k_SequenceStartEvent[] = "SequenceStartEvent";
 static char __pyx_k_get_version_string[] = "get_version_string";
 static char __pyx_k_ruamel_yaml_events[] = "ruamel.yaml.events";
-static char __pyx_k_ruamel_yaml_parser[] = "ruamel.yaml.parser_";
+static char __pyx_k_ruamel_yaml_parser[] = "ruamel.yaml.parser";
 static char __pyx_k_ruamel_yaml_reader[] = "ruamel.yaml.reader";
 static char __pyx_k_ruamel_yaml_tokens[] = "ruamel.yaml.tokens";
 static char __pyx_k_unknown_event_type[] = "unknown event type";
@@ -23189,7 +23189,7 @@ PyMODINIT_FUNC PyInit__ruamel_yaml(void)
  * from ruamel.yaml.error import YAMLError
  * from ruamel.yaml.reader import ReaderError             # <<<<<<<<<<<<<<
  * from ruamel.yaml.scanner import ScannerError
- * from ruamel.yaml.parser_ import ParserError
+ * from ruamel.yaml.parser import ParserError
  */
   __pyx_t_2 = PyList_New(1); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 18; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
@@ -23209,7 +23209,7 @@ PyMODINIT_FUNC PyInit__ruamel_yaml(void)
  * from ruamel.yaml.error import YAMLError
  * from ruamel.yaml.reader import ReaderError
  * from ruamel.yaml.scanner import ScannerError             # <<<<<<<<<<<<<<
- * from ruamel.yaml.parser_ import ParserError
+ * from ruamel.yaml.parser import ParserError
  * from ruamel.yaml.composer import ComposerError
  */
   __pyx_t_1 = PyList_New(1); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 19; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
@@ -23229,7 +23229,7 @@ PyMODINIT_FUNC PyInit__ruamel_yaml(void)
   /* "_ruamel_yaml.pyx":20
  * from ruamel.yaml.reader import ReaderError
  * from ruamel.yaml.scanner import ScannerError
- * from ruamel.yaml.parser_ import ParserError             # <<<<<<<<<<<<<<
+ * from ruamel.yaml.parser import ParserError             # <<<<<<<<<<<<<<
  * from ruamel.yaml.composer import ComposerError
  * from ruamel.yaml.constructor import ConstructorError
  */
@@ -23249,7 +23249,7 @@ PyMODINIT_FUNC PyInit__ruamel_yaml(void)
 
   /* "_ruamel_yaml.pyx":21
  * from ruamel.yaml.scanner import ScannerError
- * from ruamel.yaml.parser_ import ParserError
+ * from ruamel.yaml.parser import ParserError
  * from ruamel.yaml.composer import ComposerError             # <<<<<<<<<<<<<<
  * from ruamel.yaml.constructor import ConstructorError
  * from ruamel.yaml.emitter import EmitterError
@@ -23269,7 +23269,7 @@ PyMODINIT_FUNC PyInit__ruamel_yaml(void)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
   /* "_ruamel_yaml.pyx":22
- * from ruamel.yaml.parser_ import ParserError
+ * from ruamel.yaml.parser import ParserError
  * from ruamel.yaml.composer import ComposerError
  * from ruamel.yaml.constructor import ConstructorError             # <<<<<<<<<<<<<<
  * from ruamel.yaml.emitter import EmitterError

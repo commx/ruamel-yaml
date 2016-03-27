@@ -73,18 +73,14 @@ from __future__ import absolute_import
 
 __all__ = ['Parser', 'RoundTripParser', 'ParserError']
 
-try:
-    from .error import MarkedYAMLError
-    from .tokens import *                               # NOQA
-    from .events import *                               # NOQA
-    from .scanner import *                              # NOQA
-    from .compat import utf8
-except (ImportError, ValueError):  # for Jython
-    from ruamel.yaml.error import MarkedYAMLError
-    from ruamel.yaml.tokens import *                               # NOQA
-    from ruamel.yaml.events import *                               # NOQA
-    from ruamel.yaml.scanner import *                              # NOQA
-    from ruamel.yaml.compat import utf8
+# need to have full path, as pkg_resources tries to load parser.py in __init__.py
+# only to not do anything with the package afterwards
+# and for Jython too
+from ruamel.yaml.error import MarkedYAMLError                  # NOQA
+from ruamel.yaml.tokens import *                               # NOQA
+from ruamel.yaml.events import *                               # NOQA
+from ruamel.yaml.scanner import *                              # NOQA
+from ruamel.yaml.compat import utf8                            # NOQA
 
 
 class ParserError(MarkedYAMLError):

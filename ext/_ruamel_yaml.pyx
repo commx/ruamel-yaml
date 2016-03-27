@@ -17,7 +17,7 @@ def get_version():
 from ruamel.yaml.error import YAMLError
 from ruamel.yaml.reader import ReaderError
 from ruamel.yaml.scanner import ScannerError
-from ruamel.yaml.parser_ import ParserError
+from ruamel.yaml.parser import ParserError
 from ruamel.yaml.composer import ComposerError
 from ruamel.yaml.constructor import ConstructorError
 from ruamel.yaml.emitter import EmitterError
