@@ -1,7 +1,7 @@
 # # header
 # coding: utf-8
 
-from __future__ import print_function, absolute_import, division
+from __future__ import print_function, absolute_import, division, unicode_literals
 
 # # __init__.py parser
 
@@ -284,6 +284,9 @@ class NameSpacePackager(object):
                 x = os.path.join(d, '__init__.py')
                 if os.path.exists(x):
                     self._split.append(self.full_package_name + '.' + d)
+            if sys.version_info < (3, ):
+                self._split = [(y.encode('utf-8') if isinstance(y, unicode) else y)
+                               for y in self._split]
         return self._split
 
     @property

@@ -385,7 +385,11 @@ class VersionedResolver(BaseResolver):
 
     @property
     def processing_version(self):
-        version = self.yaml_version
+        try:
+            version = self.yaml_version
+        except AttributeError:
+            # dumping
+            version = self.use_version
         if version is None:
             version = self._loader_version
             if version is None:

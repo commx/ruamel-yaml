@@ -76,7 +76,7 @@ class Dumper(Emitter, Serializer, Representer, Resolver):
         Resolver.__init__(self)
 
 
-class RoundTripDumper(Emitter, Serializer, RoundTripRepresenter, Resolver):
+class RoundTripDumper(Emitter, Serializer, RoundTripRepresenter, VersionedResolver):
     def __init__(self, stream,
                  default_style=None, default_flow_style=None,
                  canonical=None, indent=None, width=None,
@@ -93,4 +93,4 @@ class RoundTripDumper(Emitter, Serializer, RoundTripRepresenter, Resolver):
                             version=version, tags=tags)
         RoundTripRepresenter.__init__(self, default_style=default_style,
                                       default_flow_style=default_flow_style)
-        Resolver.__init__(self)
+        VersionedResolver.__init__(self)

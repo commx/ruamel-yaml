@@ -822,7 +822,7 @@ class RoundTripRepresenter(SafeRepresenter):
         return node
 
     def represent_dict(self, data):
-        """write out tag if safed on loading"""
+        """write out tag if saved on loading"""
         t = data.tag.value
         if t:
             while t and t[0] == '!':

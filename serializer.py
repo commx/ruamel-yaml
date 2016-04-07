@@ -116,6 +116,8 @@ class Serializer(object):
             self.serialized_nodes[node] = True
             self.descend_resolver(parent, index)
             if isinstance(node, ScalarNode):
+                # here check if the node.tag equals the one that would result from parsing
+                # if not equal quoting is necessary for strings
                 detected_tag = self.resolve(ScalarNode, node.value, (True, False))
                 default_tag = self.resolve(ScalarNode, node.value, (False, True))
                 implicit = (node.tag == detected_tag), (node.tag == default_tag)
