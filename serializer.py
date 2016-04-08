@@ -8,12 +8,12 @@ try:
     from .error import YAMLError
     from .events import *                               # NOQA
     from .nodes import *                                # NOQA
-    from .compat import nprint, DBG_NODE, dbg
+    from .compat import nprint, DBG_NODE, dbg, string_types
 except (ImportError, ValueError):  # for Jython
     from ruamel.yaml.error import YAMLError
     from ruamel.yaml.events import *                               # NOQA
     from ruamel.yaml.nodes import *                                # NOQA
-    from ruamel.yaml.compat import nprint, DBG_NODE, dbg
+    from ruamel.yaml.compat import nprint, DBG_NODE, dbg, string_types
 
 __all__ = ['Serializer', 'SerializerError']
 
@@ -33,7 +33,10 @@ class Serializer(object):
         self.use_encoding = encoding
         self.use_explicit_start = explicit_start
         self.use_explicit_end = explicit_end
-        self.use_version = version
+        if isinstance(version, string_types):
+            self.use_version = tuple(map(int, version.split('.')))
+        else:
+            self.use_version = version
         self.use_tags = tags
         self.serialized_nodes = {}
         self.anchors = {}
