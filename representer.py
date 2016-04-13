@@ -823,7 +823,10 @@ class RoundTripRepresenter(SafeRepresenter):
 
     def represent_dict(self, data):
         """write out tag if saved on loading"""
-        t = data.tag.value
+        try:
+            t = data.tag.value
+        except AttributeError:
+            t = None
         if t:
             while t and t[0] == '!':
                 t = t[1:]
