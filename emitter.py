@@ -50,7 +50,8 @@ class Emitter(object):
     MAX_SIMPLE_KEY_LENGTH = 128
 
     def __init__(self, stream, canonical=None, indent=None, width=None,
-                 allow_unicode=None, line_break=None, block_seq_indent=None):
+                 allow_unicode=None, line_break=None, block_seq_indent=None,
+                 top_level_colon_align=None, prefix_colon=None):
 
         # The stream should have the methods `write` and possibly `flush`.
         self.stream = stream
@@ -93,10 +94,15 @@ class Emitter(object):
         # Whether the document requires an explicit document indicator
         self.open_ended = False
 
+        # colon handling
+        self.colon = u':'
+        self.prefixed_colon = self.colon if prefix_colon is None else prefix_colon + self.colon
+
         # Formatting details.
         self.canonical = canonical
         self.allow_unicode = allow_unicode
         self.block_seq_indent = block_seq_indent if block_seq_indent else 0
+        self.top_level_colon_align = top_level_colon_align
         self.best_indent = 2
         if indent and 1 < indent < 10:
             self.best_indent = indent
@@ -162,7 +168,7 @@ class Emitter(object):
                 return False
         return (len(self.events) < count+1)
 
-    def increase_indent(self, flow=False, indentless=False):
+    def increase_indent(self, flow=False, sequence=None, indentless=False):
         self.indents.append(self.indent)
         if self.indent is None:
             if flow:
@@ -311,7 +317,7 @@ class Emitter(object):
     def expect_flow_sequence(self):
         self.write_indicator(u'[', True, whitespace=True)
         self.flow_level += 1
-        self.increase_indent(flow=True)
+        self.increase_indent(flow=True, sequence=True)
         self.state = self.expect_first_flow_sequence_item
 
     def expect_first_flow_sequence_item(self):
@@ -350,7 +356,7 @@ class Emitter(object):
     def expect_flow_mapping(self):
         self.write_indicator(u'{', True, whitespace=True)
         self.flow_level += 1
-        self.increase_indent(flow=True)
+        self.increase_indent(flow=True, sequence=False)
         self.state = self.expect_first_flow_mapping_key
 
     def expect_first_flow_mapping_key(self):
@@ -400,14 +406,14 @@ class Emitter(object):
                 self.expect_node(mapping=True)
 
     def expect_flow_mapping_simple_value(self):
-        self.write_indicator(u':', False)
+        self.write_indicator(self.prefixed_colon, False)
         self.states.append(self.expect_flow_mapping_key)
         self.expect_node(mapping=True)
 
     def expect_flow_mapping_value(self):
         if self.canonical or self.column > self.best_width:
             self.write_indent()
-        self.write_indicator(u':', True)
+        self.write_indicator(self.prefixed_colon, True)
         self.states.append(self.expect_flow_mapping_key)
         self.expect_node(mapping=True)
 
@@ -415,7 +421,7 @@ class Emitter(object):
 
     def expect_block_sequence(self):
         indentless = (self.mapping_context and not self.indention)
-        self.increase_indent(flow=False, indentless=indentless)
+        self.increase_indent(flow=False, sequence=True, indentless=indentless)
         self.state = self.expect_first_block_sequence_item
 
     def expect_first_block_sequence_item(self):
@@ -440,7 +446,7 @@ class Emitter(object):
     # Block mapping handlers.
 
     def expect_block_mapping(self):
-        self.increase_indent(flow=False)
+        self.increase_indent(flow=False, sequence=False)
         self.state = self.expect_first_block_mapping_key
 
     def expect_first_block_mapping_key(self):
@@ -470,13 +476,19 @@ class Emitter(object):
 
     def expect_block_mapping_simple_value(self):
         if getattr(self.event, 'style', None) != '?':
-            self.write_indicator(u':', False)
+            prefix = u''
+            if self.indent == 0 and self.top_level_colon_align is not None:
+                # write non-prefixed colon
+                c = u' ' * (self.top_level_colon_align - self.column) + self.colon
+            else:
+                c = self.prefixed_colon
+            self.write_indicator(c, False)
         self.states.append(self.expect_block_mapping_key)
         self.expect_node(mapping=True)
 
     def expect_block_mapping_value(self):
         self.write_indent()
-        self.write_indicator(u':', True, indention=True)
+        self.write_indicator(self.prefixed_colon, True, indention=True)
         self.states.append(self.expect_block_mapping_key)
         self.expect_node(mapping=True)
 

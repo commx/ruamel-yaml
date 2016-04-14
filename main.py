@@ -194,12 +194,15 @@ def dump_all(documents, stream=None, Dumper=Dumper,
              canonical=None, indent=None, width=None,
              allow_unicode=None, line_break=None,
              encoding=enc, explicit_start=None, explicit_end=None,
-             version=None, tags=None, block_seq_indent=None):
+             version=None, tags=None, block_seq_indent=None,
+             top_level_colon_align=None, prefix_colon=None):
     """
     Serialize a sequence of Python objects into a YAML stream.
     If stream is None, return the produced string instead.
     """
     getvalue = None
+    if top_level_colon_align is True:
+        top_level_colon_align = max([len(str(x)) for x in documents[0]])
     if stream is None:
         if encoding is None:
             stream = StringIO()
@@ -212,7 +215,8 @@ def dump_all(documents, stream=None, Dumper=Dumper,
                     allow_unicode=allow_unicode, line_break=line_break,
                     encoding=encoding, explicit_start=explicit_start,
                     explicit_end=explicit_end, version=version,
-                    tags=tags, block_seq_indent=block_seq_indent
+                    tags=tags, block_seq_indent=block_seq_indent,
+                    top_level_colon_align=top_level_colon_align, prefix_colon=prefix_colon,
                     )
     try:
         dumper.open()
@@ -273,7 +277,8 @@ def round_trip_dump(data, stream=None, Dumper=RoundTripDumper,
                     canonical=None, indent=None, width=None,
                     allow_unicode=None, line_break=None,
                     encoding=enc, explicit_start=None, explicit_end=None,
-                    version=None, tags=None, block_seq_indent=None):
+                    version=None, tags=None, block_seq_indent=None,
+                    top_level_colon_align=None, prefix_colon=None):
     allow_unicode = True if allow_unicode is None else allow_unicode
     return dump_all([data], stream, Dumper=Dumper,
                     default_style=default_style,
@@ -284,7 +289,8 @@ def round_trip_dump(data, stream=None, Dumper=RoundTripDumper,
                     line_break=line_break,
                     encoding=encoding, explicit_start=explicit_start,
                     explicit_end=explicit_end,
-                    version=version, tags=tags, block_seq_indent=block_seq_indent)
+                    version=version, tags=tags, block_seq_indent=block_seq_indent,
+                    top_level_colon_align=top_level_colon_align, prefix_colon=prefix_colon)
 
 
 def add_implicit_resolver(tag, regexp, first=None,

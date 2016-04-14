@@ -27,7 +27,6 @@ Details
 - preservation of whitelines after block scalars. Contributed by Sam Thursfield.
 
 
-
 Indentation of block sequences
 ------------------------------
 
@@ -68,6 +67,31 @@ If the ``block_seq_indent`` is only one less than the indent, there is
 not enough room to put the space that has to follow the dash. In that
 case the element is pushed to the next line. If you specify ``block_seq_indent>=indent``, then the emitter adjusts the ``indent`` value to equal 
 ``block_seq_indent + 1``.
+
+Positioning ':' in top level mappings, prefix in ':'
+----------------------------------------------------
+
+If you want your toplevel mappings to look like::
+
+  library version: 1 
+  comment        : |
+      this is just a first try
+
+then call ``round_trip_dump()`` with ``top_level_colon_align=True``
+(and ``indent=4``). ``True`` causes calculation based on the longest key, 
+but you can also explicitly set a number.
+
+If you want an extra space between a mapping key and the colon specify 
+``prefix_colon=' '``::
+
+  - https://myurl/abc.tar.xz : 23445
+  #                         ^ extra space here
+  - https://myurl/def.tar.xz : 944
+
+If you combine ``prefix_colon`` with ``top_level_colon_align``, the
+top level mapping doesn't get the extra prefix. If you want that
+anyway, specify ``top_level_colon_align=12`` where ``12`` has to be an
+integer that is one more than length of the widest key.
   
 
 Document version support.

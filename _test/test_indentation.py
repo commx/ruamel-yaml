@@ -151,6 +151,26 @@ class TestIndent:
         """, indent=2, block_seq_indent=2)
 
 
+class TestYpkgIndent:
+    def test_00(self):
+        round_trip("""
+        name       : nano
+        version    : 2.3.2
+        release    : 1
+        homepage   : http://www.nano-editor.org
+        source     :
+          - http://www.nano-editor.org/dist/v2.3/nano-2.3.2.tar.gz : ff309248071486445609ad4269b798262a1324d7503dc09dea289f5b60106be8
+        license    : GPL-2.0
+        summary    : GNU nano is an easy-to-use text editor
+        builddeps  :
+          - ncurses-devel
+        description: |
+            GNU nano is an easy-to-use text editor originally designed
+            as a replacement for Pico, the ncurses-based editor from the non-free mailer
+            package Pine (itself now available under the Apache License as Alpine).
+        """, indent=4, block_seq_indent=2, top_level_colon_align=True, prefix_colon=' ')
+
+
 def guess(s):
     x, y, z = load_yaml_guess_indent(dedent(s))
     return y, z
