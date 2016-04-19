@@ -63,10 +63,14 @@ indentation::
     - 2
 
 
-If the ``block_seq_indent`` is only one less than the indent, there is
-not enough room to put the space that has to follow the dash. In that
-case the element is pushed to the next line. If you specify ``block_seq_indent>=indent``, then the emitter adjusts the ``indent`` value to equal 
-``block_seq_indent + 1``.
+If the ``block_seq_indent`` equals ``indent``, there is not enough
+room for the dash and the space that has to follow. In that case the
+element itself would normally be pushed to the next line (and older versions
+of ruamel.yaml did so). But this is
+prevented from happening. However the ``indent`` level is what is used
+for calculating the cumulative indent for deeper levels and specifying
+``indent=3`` resp. ``block_seq_indent=2``, gives correct, but counter
+intuitive results.
 
 Positioning ':' in top level mappings, prefix in ':'
 ----------------------------------------------------

@@ -90,6 +90,7 @@ class Emitter(object):
         self.column = 0
         self.whitespace = True
         self.indention = True
+        self.no_newline = None  # set if directly after `- `
 
         # Whether the document requires an explicit document indicator
         self.open_ended = False
@@ -106,8 +107,8 @@ class Emitter(object):
         self.best_indent = 2
         if indent and 1 < indent < 10:
             self.best_indent = indent
-        if self.best_indent < self.block_seq_indent + 1:
-            self.best_indent = self.block_seq_indent + 1
+        # if self.best_indent < self.block_seq_indent + 1:
+        #     self.best_indent = self.block_seq_indent + 1
         self.best_width = 80
         if width and width > self.best_indent*2:
             self.best_width = width
@@ -177,6 +178,8 @@ class Emitter(object):
                 self.indent = 0
         elif not indentless:
             self.indent += self.best_indent
+            # if self.sequence_context and (self.block_seq_indent + 2) > self.best_indent:
+            #    self.indent = self.block_seq_indent + 2
 
     # States.
 
@@ -440,6 +443,8 @@ class Emitter(object):
                 self.write_pre_comment(self.event)
             self.write_indent()
             self.write_indicator((u' ' * self.block_seq_indent) + u'-', True, indention=True)
+            if self.block_seq_indent + 2 > self.best_indent:
+                self.no_newline = True
             self.states.append(self.expect_block_sequence_item)
             self.expect_node(sequence=True)
 
@@ -476,7 +481,7 @@ class Emitter(object):
 
     def expect_block_mapping_simple_value(self):
         if getattr(self.event, 'style', None) != '?':
-            prefix = u''
+            # prefix = u''
             if self.indent == 0 and self.top_level_colon_align is not None:
                 # write non-prefixed colon
                 c = u' ' * (self.top_level_colon_align - self.column) + self.colon
@@ -898,7 +903,10 @@ class Emitter(object):
         indent = self.indent or 0
         if not self.indention or self.column > indent   \
                 or (self.column == indent and not self.whitespace):
-            self.write_line_break()
+            if self.no_newline:
+                self.no_newline = False
+            else:
+                self.write_line_break()
         if self.column < indent:
             self.whitespace = True
             data = u' '*(indent-self.column)

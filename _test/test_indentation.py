@@ -124,7 +124,7 @@ class TestIndent:
            -  2
         """, indent=3, block_seq_indent=0)
 
-    def test_set_indent_3_block_list_indent_2(self):
+    def Xtest_set_indent_3_block_list_indent_2(self):
         round_trip("""
         a:
           -
@@ -137,7 +137,16 @@ class TestIndent:
               2
         """, indent=3, block_seq_indent=2)
 
-    def test_set_indent_2_block_list_indent_2(self):
+    def test_set_indent_3_block_list_indent_2(self):
+        round_trip("""
+        a:
+          - b: c
+          - 1
+          - d:
+             - 2
+        """, indent=3, block_seq_indent=2)
+
+    def Xtest_set_indent_2_block_list_indent_2(self):
         round_trip("""
         a:
           -
@@ -150,6 +159,16 @@ class TestIndent:
               2
         """, indent=2, block_seq_indent=2)
 
+    # this is how it should be: block_seq_indent stretches the indent
+    def test_set_indent_2_block_list_indent_2(self):
+        round_trip("""
+        a:
+          - b: c
+          - 1
+          - d:
+            - 2
+        """, indent=2, block_seq_indent=2)
+
 
 class TestYpkgIndent:
     def test_00(self):
@@ -159,7 +178,7 @@ class TestYpkgIndent:
         release    : 1
         homepage   : http://www.nano-editor.org
         source     :
-          - http://www.nano-editor.org/dist/v2.3/nano-2.3.2.tar.gz : ff309248071486445609ad4269b798262a1324d7503dc09dea289f5b60106be8
+          - http://www.nano-editor.org/dist/v2.3/nano-2.3.2.tar.gz : ff30924807ea289f5b60106be8
         license    : GPL-2.0
         summary    : GNU nano is an easy-to-use text editor
         builddeps  :

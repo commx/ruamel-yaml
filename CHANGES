@@ -1,3 +1,10 @@
+
+0.11.10 2016-04-19
+
+- indent=2, block_seq_indent=2 works as expected
+
+<To be updated>
+
 0.10.11: 2015-09-17
 - Fix issue 13: dependency on libyaml to be installed for yaml.h
 
