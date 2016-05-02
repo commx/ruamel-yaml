@@ -389,6 +389,14 @@ class CommentedMap(ordereddict, CommentedBase):
             for x in vals:
                 self[x] = vals[x]
 
+    def insert(self, pos, key, value, comment=None):
+        """insert key value into given position
+        attach comment if provided
+        """
+        ordereddict.insert(self, pos, key, value)
+        if comment is not None:
+            self.yaml_add_eol_comment(comment, key=key)
+
     def mlget(self, key, default=None, list_ok=False):
         """multi-level get that expects dicts within dicts"""
         if not isinstance(key, list):

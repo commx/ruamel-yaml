@@ -34,9 +34,10 @@ Resulting in ::
 
 .. example output small.py
 
+----
 
 YAML handcrafted anchors and references as well as key merging
-is preserved. The merged keys can transparently be accessed
+are preserved. The merged keys can transparently be accessed
 using ``[]`` and ``.get()``::
 
   import ruamel.yaml
@@ -70,4 +71,32 @@ using ``[]`` and ``.get()``::
 
 
 .. example code anchor_merge.py
+
+----
+
+The ``CommentedMap``, which is the ``dict`` like construct one gets when round-trip loading,
+supports insertion of a key into a particular position, while optionally adding a comment::
+
+  yaml_str = """\
+  first_name: Art
+  occupation: Architect  # This is an occupation comment
+  about: Art Vandelay is a fictional character that George invents...
+  """
+
+  data = ruamel.yaml.round_trip_load(yaml_str)
+  data.insert(1, 'last name', 'Vandelay', comment="new key")
+  print(ruamel.yaml.round_trip_dump(data))
+
+gives::
+
+  first_name: Art
+  last name: Vandelay    # new key
+  occupation: Architect  # This is an occupation comment
+  about: Art Vandelay is a fictional character that George invents...
+
+Please note that the comment is aligned with that of its neighbour (if available).
+
+The above was inspired by a `question <http://stackoverflow.com/a/36970608/1307905>`_
+posted by *demux* on StackOverflow.
+
 

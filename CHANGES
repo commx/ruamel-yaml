@@ -1,4 +1,8 @@
 
+0.11.10 2016-05-02
+
+- added .insert(pos, key, value, comment=None) to CommentedMap
+
 0.11.10 2016-04-19
 
 - indent=2, block_seq_indent=2 works as expected

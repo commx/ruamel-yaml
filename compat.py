@@ -18,7 +18,20 @@ except:
     # to get the right name import ... as ordereddict doesn't do that
 
     class ordereddict(OrderedDict):
-        pass
+        if not hasattr(OrderedDict, 'insert'):
+            def insert(self, pos, key, value):
+                if pos >= len(self):
+                    self[key] = value
+                    return
+                od = ordereddict()
+                od.update(self)
+                for k in od:
+                    del self[k]
+                for index, old_key in enumerate(od):
+                    if pos == index:
+                        self[key] = value
+                    self[old_key] = od[old_key]
+
 
 PY2 = sys.version_info[0] == 2
 PY3 = sys.version_info[0] == 3

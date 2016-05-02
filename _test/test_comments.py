@@ -423,3 +423,52 @@ class TestInsertPopList:
         - 1
         - 2
         """)
+
+
+# inspired by demux' question on stackoverflow
+# http://stackoverflow.com/a/36970608/1307905
+class TestInsertInMapping:
+    @property
+    def ins(self):
+        return """\
+        first_name: Art
+        occupation: Architect  # This is an occupation comment
+        about: Art Vandelay is a fictional character that George invents...
+        """
+
+    def test_insert_at_pos_1(self):
+        d = round_trip_load(self.ins)
+        d.insert(1, 'last name', 'Vandelay', comment="new key")
+        y = round_trip_dump(d)
+        print(y)
+        assert y == dedent("""\
+        first_name: Art
+        last name: Vandelay    # new key
+        occupation: Architect  # This is an occupation comment
+        about: Art Vandelay is a fictional character that George invents...
+        """)
+
+    def test_insert_at_pos_0(self):
+        d = round_trip_load(self.ins)
+        d.insert(0, 'last name', 'Vandelay', comment="new key")
+        y = round_trip_dump(d)
+        print(y)
+        assert y == dedent("""\
+        last name: Vandelay  # new key
+        first_name: Art
+        occupation: Architect  # This is an occupation comment
+        about: Art Vandelay is a fictional character that George invents...
+        """)
+
+    def test_insert_at_pos_3(self):
+        # much more simple if done with appending.
+        d = round_trip_load(self.ins)
+        d.insert(3, 'last name', 'Vandelay', comment="new key")
+        y = round_trip_dump(d)
+        print(y)
+        assert y == dedent("""\
+        first_name: Art
+        occupation: Architect  # This is an occupation comment
+        about: Art Vandelay is a fictional character that George invents...
+        last name: Vandelay  # new key
+        """)
