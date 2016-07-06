@@ -65,12 +65,12 @@ def compose_all(stream, Loader=Loader):
         loader.dispose()
 
 
-def load(stream, Loader=Loader, version=None):
+def load(stream, Loader=Loader, version=None, preserve_quotes=None):
     """
     Parse the first YAML document in a stream
     and produce the corresponding Python object.
     """
-    loader = Loader(stream, version)
+    loader = Loader(stream, version, preserve_quotes=preserve_quotes)
     try:
         return loader.get_single_data()
     finally:
@@ -108,22 +108,22 @@ def safe_load_all(stream, version=None):
     return load_all(stream, SafeLoader, version)
 
 
-def round_trip_load(stream, version=None):
+def round_trip_load(stream, version=None, preserve_quotes=None):
     """
     Parse the first YAML document in a stream
     and produce the corresponding Python object.
     Resolve only basic YAML tags.
     """
-    return load(stream, RoundTripLoader, version)
+    return load(stream, RoundTripLoader, version, preserve_quotes=preserve_quotes)
 
 
-def round_trip_load_all(stream, version=None):
+def round_trip_load_all(stream, version=None, preserve_quotes=None):
     """
     Parse all YAML documents in a stream
     and produce corresponding Python objects.
     Resolve only basic YAML tags.
     """
-    return load_all(stream, RoundTripLoader, version)
+    return load_all(stream, RoundTripLoader, version, preserve_quotes=preserve_quotes)
 
 
 def emit(events, stream=None, Dumper=Dumper,

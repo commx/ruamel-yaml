@@ -6,14 +6,19 @@ import re
 
 try:
     from .error import YAMLError
-    from .events import *                               # NOQA
-    from .nodes import *                                # NOQA
     from .compat import nprint, DBG_NODE, dbg, string_types
 except (ImportError, ValueError):  # for Jython
     from ruamel.yaml.error import YAMLError
-    from ruamel.yaml.events import *                               # NOQA
-    from ruamel.yaml.nodes import *                                # NOQA
     from ruamel.yaml.compat import nprint, DBG_NODE, dbg, string_types
+
+from ruamel.yaml.events import (
+    StreamStartEvent, StreamEndEvent, MappingStartEvent, MappingEndEvent,
+    SequenceStartEvent, SequenceEndEvent, AliasEvent, ScalarEvent,
+    DocumentStartEvent, DocumentEndEvent,
+)
+from ruamel.yaml.nodes import (
+    MappingNode, ScalarNode, SequenceNode,
+)
 
 __all__ = ['Serializer', 'SerializerError']
 

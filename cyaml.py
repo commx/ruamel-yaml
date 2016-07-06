@@ -34,7 +34,7 @@ class CSafeLoader(CParser, SafeConstructor, Resolver):
 
 
 class CLoader(CParser, Constructor, Resolver):
-    def __init__(self, stream, version=None):
+    def __init__(self, stream, version=None, preserve_quotes=None):
         CParser.__init__(self, stream)
         Constructor.__init__(self)
         Resolver.__init__(self)

@@ -605,6 +605,22 @@ class RoundTripRepresenter(SafeRepresenter):
         tag = u'tag:yaml.org,2002:str'
         return self.represent_scalar(tag, data, style=style)
 
+    def represent_single_quoted_scalarstring(self, data):
+        tag = None
+        style = "'"
+        if PY2 and not isinstance(data, unicode):
+            data = unicode(data, 'ascii')
+        tag = u'tag:yaml.org,2002:str'
+        return self.represent_scalar(tag, data, style=style)
+
+    def represent_double_quoted_scalarstring(self, data):
+        tag = None
+        style = '"'
+        if PY2 and not isinstance(data, unicode):
+            data = unicode(data, 'ascii')
+        tag = u'tag:yaml.org,2002:str'
+        return self.represent_scalar(tag, data, style=style)
+
     def represent_sequence(self, tag, sequence, flow_style=None):
         value = []
         # if the flow_style is None, the flow style tacked on to the object
@@ -842,6 +858,14 @@ RoundTripRepresenter.add_representer(type(None),
 RoundTripRepresenter.add_representer(
     PreservedScalarString,
     RoundTripRepresenter.represent_preserved_scalarstring)
+
+RoundTripRepresenter.add_representer(
+    SingleQuotedScalarString,
+    RoundTripRepresenter.represent_single_quoted_scalarstring)
+
+RoundTripRepresenter.add_representer(
+    DoubleQuotedScalarString,
+    RoundTripRepresenter.represent_double_quoted_scalarstring)
 
 RoundTripRepresenter.add_representer(CommentedSeq,
                                      RoundTripRepresenter.represent_list)

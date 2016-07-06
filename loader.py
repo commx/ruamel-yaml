@@ -52,10 +52,10 @@ class Loader(Reader, Scanner, Parser, Composer, Constructor, Resolver):
 
 class RoundTripLoader(Reader, RoundTripScanner, RoundTripParser, Composer,
                       RoundTripConstructor, VersionedResolver):
-    def __init__(self, stream, version=None):
+    def __init__(self, stream, version=None, preserve_quotes=None):
         Reader.__init__(self, stream)
         RoundTripScanner.__init__(self)
         RoundTripParser.__init__(self)
         Composer.__init__(self)
-        RoundTripConstructor.__init__(self)
+        RoundTripConstructor.__init__(self, preserve_quotes=preserve_quotes)
         VersionedResolver.__init__(self, version)

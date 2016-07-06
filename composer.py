@@ -3,18 +3,23 @@
 from __future__ import absolute_import
 from __future__ import print_function
 
-__all__ = ['Composer', 'ComposerError']
 
 try:
     from .error import MarkedYAMLError
-    from .events import *                               # NOQA
-    from .nodes import *                               # NOQA
     from .compat import utf8
 except (ImportError, ValueError):  # for Jython
     from ruamel.yaml.error import MarkedYAMLError
-    from ruamel.yaml.events import *                               # NOQA
-    from ruamel.yaml.nodes import *                               # NOQA
     from ruamel.yaml.compat import utf8
+
+from ruamel.yaml.events import (
+    StreamStartEvent, StreamEndEvent, MappingStartEvent, MappingEndEvent,
+    SequenceStartEvent, SequenceEndEvent, AliasEvent, ScalarEvent,
+)
+from ruamel.yaml.nodes import (
+    MappingNode, ScalarNode, SequenceNode,
+)
+
+__all__ = ['Composer', 'ComposerError']
 
 
 class ComposerError(MarkedYAMLError):

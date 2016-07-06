@@ -3,7 +3,8 @@
 from __future__ import absolute_import
 from __future__ import print_function
 
-__all__ = ["ScalarString", "PreservedScalarString"]
+__all__ = ["ScalarString", "PreservedScalarString", "SingleQuotedScalarString",
+           "DoubleQuotedScalarString"]
 
 try:
     from .compat import text_type
@@ -17,6 +18,16 @@ class ScalarString(text_type):
 
 
 class PreservedScalarString(ScalarString):
+    def __new__(cls, value):
+        return ScalarString.__new__(cls, value)
+
+
+class SingleQuotedScalarString(ScalarString):
+    def __new__(cls, value):
+        return ScalarString.__new__(cls, value)
+
+
+class DoubleQuotedScalarString(ScalarString):
     def __new__(cls, value):
         return ScalarString.__new__(cls, value)
 

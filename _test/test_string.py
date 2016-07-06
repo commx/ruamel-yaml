@@ -22,13 +22,13 @@ import platform
 from roundtrip import round_trip, dedent, round_trip_load, round_trip_dump  # NOQA
 
 
-class TestYAML:
+class TestPreservedScalarString:
     def test_basic_string(self):
         round_trip("""
         a: abcdefg
         """, )
 
-    def test_quoted_string(self):
+    def test_quoted_integer_string(self):
         round_trip("""
         a: '12345'
         """)
@@ -105,3 +105,22 @@ class TestYAML:
               def
 
             """, intermediate=dict(a='abc def\n\n'))
+
+
+class TestQuotedScalarString:
+    def test_single_quoted_string(self):
+        round_trip("""
+        a: 'abc'
+        """, preserve_quotes=True)
+
+    def test_double_quoted_string(self):
+        round_trip("""
+        a: "abc"
+        """, preserve_quotes=True)
+
+    def test_non_preserved_double_quoted_string(self):
+        round_trip("""
+        a: "abc"
+        """, outp="""
+        a: abc
+        """)

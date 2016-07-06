@@ -7,9 +7,10 @@ from __future__ import print_function, absolute_import, division, unicode_litera
 
 import sys
 import os
+import datetime
 sys.path = [path for path in sys.path if path not in [os.getcwd(), '']]
 import platform          # NOQA
-from _ast import *       # NOQA
+from _ast import *       # NOQA: F405
 from ast import parse    # NOQA
 
 from setuptools import setup, Extension, Distribution  # NOQA

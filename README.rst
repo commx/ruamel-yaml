@@ -18,6 +18,9 @@ ChangeLog
 
 ::
 
+  0.11.12 (2016-07-06):
+    - added 
+
   0.11.0 (2016-02-18):
     - RoundTripLoader loads 1.2 by default (no sexagesimals, 012 octals nor
       yes/no/on/off booleans

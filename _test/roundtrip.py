@@ -22,9 +22,9 @@ def dedent(data):
     return textwrap.dedent(data)
 
 
-def round_trip_load(inp):
+def round_trip_load(inp, preserve_quotes=None):
     dinp = dedent(inp)
-    return ruamel.yaml.load(dinp, ruamel.yaml.RoundTripLoader)
+    return ruamel.yaml.load(dinp, ruamel.yaml.RoundTripLoader, preserve_quotes=preserve_quotes)
 
 
 def round_trip_dump(data, indent=None, block_seq_indent=None, top_level_colon_align=None,
@@ -36,13 +36,14 @@ def round_trip_dump(data, indent=None, block_seq_indent=None, top_level_colon_al
 
 
 def round_trip(inp, outp=None, extra=None, intermediate=None, indent=None,
-               block_seq_indent=None, top_level_colon_align=None, prefix_colon=None):
+               block_seq_indent=None, top_level_colon_align=None, prefix_colon=None,
+               preserve_quotes=None):
     if outp is None:
         outp = inp
     doutp = dedent(outp)
     if extra is not None:
         doutp += extra
-    data = round_trip_load(inp)
+    data = round_trip_load(inp, preserve_quotes=preserve_quotes)
     if intermediate is not None:
         if isinstance(intermediate, dict):
             for k, v in intermediate.items():

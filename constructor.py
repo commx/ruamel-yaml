@@ -39,11 +39,12 @@ class BaseConstructor(object):
     yaml_constructors = {}
     yaml_multi_constructors = {}
 
-    def __init__(self):
+    def __init__(self, preserve_quotes=None):
         self.constructed_objects = {}
         self.recursive_objects = {}
         self.state_generators = []
         self.deep_construct = False
+        self._preserve_quotes = preserve_quotes
 
     def check_data(self):
         # If there are more documents available?
@@ -830,6 +831,11 @@ class RoundTripConstructor(SafeConstructor):
 
         if node.style == '|' and isinstance(node.value, text_type):
             return PreservedScalarString(node.value)
+        elif self._preserve_quotes and isinstance(node.value, text_type):
+            if node.style == "'":
+                return SingleQuotedScalarString(node.value)
+            if node.style == '"':
+                return DoubleQuotedScalarString(node.value)
         return node.value
 
     def construct_yaml_str(self, node):

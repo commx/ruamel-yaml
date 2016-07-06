@@ -1,0 +1,11 @@
+version: '2'
+user-data:
+  author: Anthon van der Neut <a.van.der.neut@ruamel.eu>
+  description: manylinux1 wheel build container for ruamel.yaml
+  # env-defaults:
+services:
+  yamlmanylinux1:
+    container_name: yamlmanylinux1
+    build: .
+    volumes:
+    - .:/src
