@@ -18,8 +18,12 @@ ChangeLog
 
 ::
 
+  0.11.13 (2016-07-06):
+    - documentation only, automated linux wheels
+
   0.11.12 (2016-07-06):
-    - added 
+    - added support for roundtrip of single/double quoted scalars using:
+      ruamel.yaml.round_trip_load(stream, preserve_quotes=True)
 
   0.11.0 (2016-02-18):
     - RoundTripLoader loads 1.2 by default (no sexagesimals, 012 octals nor
