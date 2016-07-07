@@ -19,6 +19,10 @@ ChangeLog
 ::
 
   0.11.13 (2016-07-06):
+    - fix preserve_quotes missing on original Loaders (as reported 
+      by Leynos, bitbucket issue 38)
+
+  0.11.13 (2016-07-06):
     - documentation only, automated linux wheels
 
   0.11.12 (2016-07-06):
