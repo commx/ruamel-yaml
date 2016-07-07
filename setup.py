@@ -10,7 +10,7 @@ import os
 import datetime
 sys.path = [path for path in sys.path if path not in [os.getcwd(), '']]
 import platform          # NOQA
-from _ast import *       # NOQA: F405
+from _ast import *       # NOQA
 from ast import parse    # NOQA
 
 from setuptools import setup, Extension, Distribution  # NOQA
@@ -506,6 +506,8 @@ class NameSpacePackager(object):
             return self._pkg
         # 'any' for all builds, 'py27' etc for specifics versions
         packages = ir.get('any', [])
+        if isinstance(packages, string_type):
+            packages = packages.split()    # assume white space separated string
         implementation = platform.python_implementation()
         if implementation == 'CPython':
             pyver = 'py{0}{1}'.format(*sys.version_info)
@@ -558,7 +560,7 @@ class NameSpacePackager(object):
             return None
         try:
             plat = sys.argv.index('--plat-name')
-            if 'win' in sys.argv[plat+1]:
+            if 'win' in sys.argv[plat + 1]:
                 return None
         except ValueError:
             pass
