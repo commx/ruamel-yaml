@@ -18,8 +18,12 @@ ChangeLog
 
 ::
 
+  0.11.15 (2016-XX-XX):
+    - Change to prevent FutureWarning in NumPy, as reported by tgehring
+    ("comparison to None will result in an elementwise object comparison in the future")
+
   0.11.14 (2016-07-06):
-    - fix preserve_quotes missing on original Loaders (as reported 
+    - fix preserve_quotes missing on original Loaders (as reported
       by Leynos, bitbucket issue 38)
 
   0.11.13 (2016-07-06):
