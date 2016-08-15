@@ -30,17 +30,11 @@ from __future__ import print_function
 #
 # Read comments in the Scanner code for more details.
 #
+from ruamel.yaml.error import MarkedYAMLError
+from ruamel.yaml.tokens import *                # NOQA
+from ruamel.yaml.compat import utf8, unichr, PY3
 
 __all__ = ['Scanner', 'RoundTripScanner', 'ScannerError']
-
-try:
-    from .error import MarkedYAMLError
-    from .tokens import *                           # NOQA
-    from .compat import utf8, unichr, PY3
-except (ImportError, ValueError):  # for Jython
-    from ruamel.yaml.error import MarkedYAMLError
-    from ruamel.yaml.tokens import *                # NOQA
-    from ruamel.yaml.compat import utf8, unichr, PY3
 
 
 class ScannerError(MarkedYAMLError):

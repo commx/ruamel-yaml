@@ -2,12 +2,9 @@
 
 from __future__ import absolute_import
 
-__all__ = ['Mark', 'YAMLError', 'MarkedYAMLError']
+from ruamel.yaml.compat import utf8
 
-try:
-    from .compat import utf8
-except (ImportError, ValueError):  # for Jython
-    from ruamel.yaml.compat import utf8
+__all__ = ['Mark', 'YAMLError', 'MarkedYAMLError']
 
 
 class Mark(object):

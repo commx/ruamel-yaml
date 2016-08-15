@@ -23,12 +23,8 @@ from __future__ import absolute_import
 import codecs
 import re
 
-try:
-    from .error import YAMLError, Mark
-    from .compat import text_type, binary_type, PY3
-except (ImportError, ValueError):  # for Jython
-    from ruamel.yaml.error import YAMLError, Mark
-    from ruamel.yaml.compat import text_type, binary_type, PY3
+from ruamel.yaml.error import YAMLError, Mark
+from ruamel.yaml.compat import text_type, binary_type, PY3
 
 __all__ = ['Reader', 'ReaderError']
 

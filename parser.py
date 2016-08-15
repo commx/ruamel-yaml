@@ -71,16 +71,16 @@ from __future__ import absolute_import
 # flow_mapping_entry: { ALIAS ANCHOR TAG SCALAR FLOW-SEQUENCE-START
 #                                                    FLOW-MAPPING-START KEY }
 
-__all__ = ['Parser', 'RoundTripParser', 'ParserError']
-
 # need to have full path, as pkg_resources tries to load parser.py in __init__.py
 # only to not do anything with the package afterwards
 # and for Jython too
-from ruamel.yaml.error import MarkedYAMLError                  # NOQA
+from ruamel.yaml.error import MarkedYAMLError                  # type: ignore
 from ruamel.yaml.tokens import *                               # NOQA
 from ruamel.yaml.events import *                               # NOQA
-from ruamel.yaml.scanner import *                              # NOQA
+from ruamel.yaml.scanner import Scanner, RoundTripScanner, ScannerError      # NOQA
 from ruamel.yaml.compat import utf8                            # NOQA
+
+__all__ = ['Parser', 'RoundTripParser', 'ParserError']
 
 
 class ParserError(MarkedYAMLError):

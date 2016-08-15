@@ -11,19 +11,14 @@ import re
 import sys
 import types
 
-try:
-    from .error import *                               # NOQA
-    from .nodes import *                               # NOQA
-    from .compat import utf8, builtins_module, to_str, PY2, PY3, ordereddict, text_type
-    from .comments import *                               # NOQA
-    from .scalarstring import *                           # NOQA
-except (ImportError, ValueError):  # for Jython
-    from ruamel.yaml.error import *                               # NOQA
-    from ruamel.yaml.nodes import *                               # NOQA
-    from ruamel.yaml.compat import (utf8, builtins_module, to_str, PY2, PY3,
-                                    ordereddict, text_type)
-    from ruamel.yaml.comments import *                               # NOQA
-    from ruamel.yaml.scalarstring import *                           # NOQA
+from typing import Any, Dict  # NOQA
+
+from ruamel.yaml.error import *                               # NOQA
+from ruamel.yaml.nodes import *                               # NOQA
+from ruamel.yaml.compat import (utf8, builtins_module, to_str, PY2, PY3,
+                                ordereddict, text_type)
+from ruamel.yaml.comments import *                               # NOQA
+from ruamel.yaml.scalarstring import *                           # NOQA
 
 
 __all__ = ['BaseConstructor', 'SafeConstructor', 'Constructor',
@@ -36,8 +31,8 @@ class ConstructorError(MarkedYAMLError):
 
 class BaseConstructor(object):
 
-    yaml_constructors = {}
-    yaml_multi_constructors = {}
+    yaml_constructors = {}   # type: Dict[Any, Any]
+    yaml_multi_constructors = {}   # type: Dict[Any, Any]
 
     def __init__(self, preserve_quotes=None):
         self.constructed_objects = {}

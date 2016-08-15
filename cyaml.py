@@ -2,18 +2,12 @@
 
 from __future__ import absolute_import
 
-from _ruamel_yaml import CParser, CEmitter
+from _ruamel_yaml import CParser, CEmitter   # type: ignore
 
-try:
-    from .constructor import *                               # NOQA
-    from .serializer import *                               # NOQA
-    from .representer import *                               # NOQA
-    from .resolver import *                               # NOQA
-except (ImportError, ValueError):  # for Jython
-    from ruamel.yaml.constructor import *                               # NOQA
-    from ruamel.yaml.serializer import *                               # NOQA
-    from ruamel.yaml.representer import *                               # NOQA
-    from ruamel.yaml.resolver import *                               # NOQA
+from ruamel.yaml.constructor import Constructor, BaseConstructor, SafeConstructor
+from ruamel.yaml.serializer import Serializer
+from ruamel.yaml.representer import Representer, SafeRepresenter, BaseRepresenter
+from ruamel.yaml.resolver import Resolver, BaseResolver
 
 __all__ = ['CBaseLoader', 'CSafeLoader', 'CLoader',
            'CBaseDumper', 'CSafeDumper', 'CDumper']
@@ -46,7 +40,8 @@ class CBaseDumper(CEmitter, BaseRepresenter, BaseResolver):
                  canonical=None, indent=None, width=None,
                  allow_unicode=None, line_break=None,
                  encoding=None, explicit_start=None, explicit_end=None,
-                 version=None, tags=None):
+                 version=None, tags=None, block_seq_indent=None,
+                 top_level_colon_align=None, prefix_colon=None):
         CEmitter.__init__(self, stream, canonical=canonical,
                           indent=indent, width=width, encoding=encoding,
                           allow_unicode=allow_unicode, line_break=line_break,
@@ -64,7 +59,8 @@ class CSafeDumper(CEmitter, SafeRepresenter, Resolver):
                  canonical=None, indent=None, width=None,
                  allow_unicode=None, line_break=None,
                  encoding=None, explicit_start=None, explicit_end=None,
-                 version=None, tags=None):
+                 version=None, tags=None, block_seq_indent=None,
+                 top_level_colon_align=None, prefix_colon=None):
         CEmitter.__init__(self, stream, canonical=canonical,
                           indent=indent, width=width, encoding=encoding,
                           allow_unicode=allow_unicode, line_break=line_break,
@@ -82,7 +78,8 @@ class CDumper(CEmitter, Serializer, Representer, Resolver):
                  canonical=None, indent=None, width=None,
                  allow_unicode=None, line_break=None,
                  encoding=None, explicit_start=None, explicit_end=None,
-                 version=None, tags=None):
+                 version=None, tags=None, block_seq_indent=None,
+                 top_level_colon_align=None, prefix_colon=None):
         CEmitter.__init__(self, stream, canonical=canonical,
                           indent=indent, width=width, encoding=encoding,
                           allow_unicode=allow_unicode, line_break=line_break,

@@ -2,22 +2,15 @@
 
 from __future__ import absolute_import
 
-__all__ = ['BaseLoader', 'SafeLoader', 'Loader', 'RoundTripLoader']
+from ruamel.yaml.reader import Reader
+from ruamel.yaml.scanner import Scanner, RoundTripScanner
+from ruamel.yaml.parser import Parser, RoundTripParser
+from ruamel.yaml.composer import Composer
+from ruamel.yaml.constructor import BaseConstructor, SafeConstructor, Constructor, \
+    RoundTripConstructor
+from ruamel.yaml.resolver import Resolver, BaseResolver, VersionedResolver
 
-try:
-    from .reader import *                                # NOQA
-    from .scanner import *                               # NOQA
-    from .parser import *                                # NOQA
-    from .composer import *                              # NOQA
-    from .constructor import *                           # NOQA
-    from .resolver import *                              # NOQA
-except (ImportError, ValueError):  # for Jython
-    from ruamel.yaml.reader import *                                # NOQA
-    from ruamel.yaml.scanner import *                               # NOQA
-    from ruamel.yaml.parser import *                                # NOQA
-    from ruamel.yaml.composer import *                              # NOQA
-    from ruamel.yaml.constructor import *                           # NOQA
-    from ruamel.yaml.resolver import *                              # NOQA
+__all__ = ['BaseLoader', 'SafeLoader', 'Loader', 'RoundTripLoader']
 
 
 class BaseLoader(Reader, Scanner, Parser, Composer, BaseConstructor, BaseResolver):

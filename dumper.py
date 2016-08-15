@@ -2,18 +2,13 @@
 
 from __future__ import absolute_import
 
-__all__ = ['BaseDumper', 'SafeDumper', 'Dumper', 'RoundTripDumper']
+from ruamel.yaml.emitter import Emitter
+from ruamel.yaml.serializer import Serializer
+from ruamel.yaml.representer import Representer, SafeRepresenter, BaseRepresenter, \
+    RoundTripRepresenter
+from ruamel.yaml.resolver import Resolver, BaseResolver, VersionedResolver
 
-try:
-    from .emitter import *                               # NOQA
-    from .serializer import *                               # NOQA
-    from .representer import *                               # NOQA
-    from .resolver import *                               # NOQA
-except (ImportError, ValueError):  # for Jython
-    from ruamel.yaml.emitter import *                               # NOQA
-    from ruamel.yaml.serializer import *                               # NOQA
-    from ruamel.yaml.representer import *                               # NOQA
-    from ruamel.yaml.resolver import *                               # NOQA
+__all__ = ['BaseDumper', 'SafeDumper', 'Dumper', 'RoundTripDumper']
 
 
 class BaseDumper(Emitter, Serializer, BaseRepresenter, BaseResolver):

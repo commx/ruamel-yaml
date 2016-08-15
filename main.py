@@ -1,7 +1,9 @@
 # coding: utf-8
 
-from __future__ import absolute_import
+from __future__ import absolute_import, unicode_literals
 
+
+from typing import List, Set, Dict, Tuple, Optional, Union, BinaryIO, IO, Any  # NOQA
 
 from ruamel.yaml.error import *                                # NOQA
 
@@ -9,11 +11,14 @@ from ruamel.yaml.tokens import *                               # NOQA
 from ruamel.yaml.events import *                               # NOQA
 from ruamel.yaml.nodes import *                                # NOQA
 
-from ruamel.yaml.loader import *                               # NOQA
-from ruamel.yaml.dumper import *                               # NOQA
+from ruamel.yaml.loader import BaseLoader, SafeLoader, Loader, RoundTripLoader  # NOQA
+from ruamel.yaml.dumper import BaseDumper, SafeDumper, Dumper, RoundTripDumper  # NOQA
 from ruamel.yaml.compat import StringIO, BytesIO, with_metaclass, PY3
 
 # import io
+
+VersionType = Union[List[int], str, Tuple[int, int]]
+StreamType = Union[BinaryIO, IO[str], StringIO]
 
 
 def scan(stream, Loader=Loader):
@@ -66,6 +71,7 @@ def compose_all(stream, Loader=Loader):
 
 
 def load(stream, Loader=Loader, version=None, preserve_quotes=None):
+    # type: (StreamType, Any, VersionType, Any) -> Any
     """
     Parse the first YAML document in a stream
     and produce the corresponding Python object.
@@ -366,7 +372,8 @@ class YAMLObjectMetaclass(type):
             cls.yaml_dumper.add_representer(cls, cls.to_yaml)
 
 
-class YAMLObject(with_metaclass(YAMLObjectMetaclass)):
+class YAMLObject(with_metaclass(YAMLObjectMetaclass)):  # type: ignore
+    # type: ignore
     """
     An object that can dump itself to a YAML stream
     and load itself from a YAML stream.
@@ -376,8 +383,8 @@ class YAMLObject(with_metaclass(YAMLObjectMetaclass)):
     yaml_loader = Loader
     yaml_dumper = Dumper
 
-    yaml_tag = None
-    yaml_flow_style = None
+    yaml_tag = None  # type: Any
+    yaml_flow_style = None  # type: Any
 
     @classmethod
     def from_yaml(cls, loader, node):

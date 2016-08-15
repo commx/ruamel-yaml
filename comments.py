@@ -1,7 +1,6 @@
 # coding: utf-8
 
-from __future__ import absolute_import
-from __future__ import print_function
+from __future__ import absolute_import, print_function
 
 """
 stuff to deal with comments and formatting on dict/list/ordereddict/set
@@ -9,16 +8,12 @@ these are not really related, formatting could be factored out as
 a separate base
 """
 
-from collections import MutableSet
+from collections import MutableSet  # type: ignore
+
+from ruamel.yaml.compat import ordereddict
 
 __all__ = ["CommentedSeq", "CommentedMap", "CommentedOrderedMap",
            "CommentedSet", 'comment_attrib', 'merge_attrib']
-
-
-try:
-    from .compat import ordereddict
-except ImportError:
-    from ruamel.yaml.compat import ordereddict
 
 comment_attrib = '_yaml_comment'
 format_attrib = '_yaml_format'

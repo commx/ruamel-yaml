@@ -4,14 +4,11 @@ from __future__ import absolute_import
 
 import re
 
-try:
-    from .error import *                               # NOQA
-    from .nodes import *                               # NOQA
-    from .compat import string_types
-except (ImportError, ValueError):  # for Jython
-    from ruamel.yaml.error import *                               # NOQA
-    from ruamel.yaml.nodes import *                               # NOQA
-    from ruamel.yaml.compat import string_types
+from typing import Any, Dict  # NOQA
+
+from ruamel.yaml.error import *                               # NOQA
+from ruamel.yaml.nodes import *                               # NOQA
+from ruamel.yaml.compat import string_types
 
 __all__ = ['BaseResolver', 'Resolver', 'VersionedResolver']
 
@@ -29,8 +26,8 @@ class BaseResolver(object):
     DEFAULT_SEQUENCE_TAG = u'tag:yaml.org,2002:seq'
     DEFAULT_MAPPING_TAG = u'tag:yaml.org,2002:map'
 
-    yaml_implicit_resolvers = {}
-    yaml_path_resolvers = {}
+    yaml_implicit_resolvers = {}  # type: Dict[Any, Any]
+    yaml_path_resolvers = {}      # type: Dict[Any, Any]
 
     def __init__(self):
         self._loader_version = None

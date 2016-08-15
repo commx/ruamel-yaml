@@ -4,12 +4,8 @@ from __future__ import absolute_import
 from __future__ import print_function
 
 
-try:
-    from .error import MarkedYAMLError
-    from .compat import utf8
-except (ImportError, ValueError):  # for Jython
-    from ruamel.yaml.error import MarkedYAMLError
-    from ruamel.yaml.compat import utf8
+from ruamel.yaml.error import MarkedYAMLError
+from ruamel.yaml.compat import utf8
 
 from ruamel.yaml.events import (
     StreamStartEvent, StreamEndEvent, MappingStartEvent, MappingEndEvent,

@@ -9,15 +9,15 @@ import os
 import types
 
 try:
-    from ruamel.ordereddict import ordereddict
+    from ruamel.ordereddict import ordereddict  # type: ignore
 except:
     try:
         from collections import OrderedDict
     except ImportError:
-        from orderddict import OrderedDict
+        from orderddict import OrderedDict  # type: ignore
     # to get the right name import ... as ordereddict doesn't do that
 
-    class ordereddict(OrderedDict):
+    class ordereddict(OrderedDict):   # type: ignore
         if not hasattr(OrderedDict, 'insert'):
             def insert(self, pos, key, value):
                 if pos >= len(self):
@@ -64,7 +64,7 @@ if PY3:
     binary_type = bytes
 
     MAXSIZE = sys.maxsize
-    unichr = chr
+    unichr = chr  # type: ignore
     import io
     StringIO = io.StringIO
     BytesIO = io.BytesIO
@@ -76,9 +76,9 @@ else:
     text_type = unicode
     binary_type = str
 
-    unichr = unichr  # to allow importing
-    import StringIO
-    StringIO = StringIO.StringIO
+    unichr = unichr  # type: ignore   to allow importing
+    from StringIO import StringIO as _StringIO
+    StringIO = _StringIO
     import cStringIO
     BytesIO = cStringIO.StringIO
 

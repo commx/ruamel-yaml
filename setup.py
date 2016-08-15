@@ -233,6 +233,7 @@ class NameSpacePackager(object):
         self._split = None
         self.depth = self.full_package_name.count('.')
         self.command = None
+        self.python_version()
         self._pkg = [None, None]  # required and pre-installable packages
         if sys.argv[0] == 'setup.py' and sys.argv[1] == 'install' and \
            '--single-version-externally-managed' not in sys.argv:
@@ -327,6 +328,23 @@ class NameSpacePackager(object):
                 with open(os.path.join(d, '__init__.py'), 'w') as fp:
                     fp.write('import pkg_resources\n'
                              'pkg_resources.declare_namespace(__name__)\n')
+
+    def python_version(self):
+        supported = self._pkg_data.get('supported')
+        if supported is None:
+            return
+        if len(supported) == 1:
+            minimum = supported[0]
+        else:
+            for x in supported:
+                if x[0] == sys.version_info[0]:
+                    minimum = x
+                    break
+            else:
+                return
+        if sys.version_info < minimum:
+            print('minimum python version(s): ' + str(supported))
+            sys.exit(1)
 
     def check(self):
         try:

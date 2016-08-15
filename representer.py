@@ -3,26 +3,21 @@
 from __future__ import absolute_import
 from __future__ import print_function
 
-try:
-    from .error import *                                  # NOQA
-    from .nodes import *                                  # NOQA
-    from .compat import text_type, binary_type, to_unicode, PY2, PY3, ordereddict
-    from .scalarstring import *                           # NOQA
-except (ImportError, ValueError):  # for Jython
-    from ruamel.yaml.error import *                       # NOQA
-    from ruamel.yaml.nodes import *                       # NOQA
-    from ruamel.yaml.compat import text_type, binary_type, to_unicode, PY2, PY3, ordereddict
-    from ruamel.yaml.scalarstring import *                # NOQA
+from typing import Dict, Any   # NOQA
 
+from ruamel.yaml.error import *                       # NOQA
+from ruamel.yaml.nodes import *                       # NOQA
+from ruamel.yaml.compat import text_type, binary_type, to_unicode, PY2, PY3, ordereddict
+from ruamel.yaml.scalarstring import *                # NOQA
 
 import datetime
 import sys
 import types
 if PY3:
-    import copyreg
+    import copyreg  # type: ignore
     import base64
 else:
-    import copy_reg as copyreg
+    import copy_reg as copyreg  # type: ignore
 
 
 __all__ = ['BaseRepresenter', 'SafeRepresenter', 'Representer',
@@ -35,8 +30,8 @@ class RepresenterError(YAMLError):
 
 class BaseRepresenter(object):
 
-    yaml_representers = {}
-    yaml_multi_representers = {}
+    yaml_representers = {}   # type: Dict[Any, Any]
+    yaml_multi_representers = {}  # type: Dict[Any, Any]
 
     def __init__(self, default_style=None, default_flow_style=None):
         self.default_style = default_style
@@ -578,12 +573,8 @@ Representer.add_multi_representer(object,
                                   Representer.represent_object)
 
 
-try:
-    from .comments import CommentedMap, CommentedOrderedMap, CommentedSeq, \
-        CommentedSet, comment_attrib, merge_attrib
-except ImportError:  # for Jython
-    from ruamel.yaml.comments import CommentedMap, CommentedOrderedMap, \
-        CommentedSeq, CommentedSet, comment_attrib, merge_attrib
+from ruamel.yaml.comments import CommentedMap, CommentedOrderedMap, \
+    CommentedSeq, CommentedSet, comment_attrib, merge_attrib    # NOQA
 
 
 class RoundTripRepresenter(SafeRepresenter):

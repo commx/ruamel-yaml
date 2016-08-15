@@ -9,15 +9,17 @@ from __future__ import absolute_import
 
 _package_data = dict(
     full_package_name="ruamel.yaml",
-    version_info=(0, 11, 15),
+    version_info=(0, 12, 0),
     author="Anthon van der Neut",
     author_email="a.van.der.neut@ruamel.eu",
     description="ruamel.yaml is a YAML parser/emitter that supports roundtrip preservation of comments, seq/map flow style, and map key order",  # NOQA
     entry_points=None,
     install_requires=dict(
         any=[],
-        py26=["ruamel.ordereddict"],
-        py27=["ruamel.ordereddict"]
+        py33=["typing"],
+        py34=["typing"],
+        py27=["ruamel.ordereddict", "typing"],
+        pypy=["typing"],
     ),
     ext_modules=[dict(
         name="_ruamel_yaml",
@@ -29,7 +31,6 @@ _package_data = dict(
         )
     ],
     classifiers=[
-        "Programming Language :: Python :: 2.6",
         "Programming Language :: Python :: 2.7",
         "Programming Language :: Python :: 3.3",
         "Programming Language :: Python :: 3.4",
@@ -43,6 +44,7 @@ _package_data = dict(
     windows_wheels=True,
     read_the_docs='yaml',
     many_linux='libyaml-devel',
+    supported=[(2, 7), (3, 3)],  # minimum
 )
 
 
@@ -64,7 +66,6 @@ def _convert_version(tup):
             ret_val += '.post' if first_letter == 'p' else '.dev'
     return ret_val
 
-
 # <
 version_info = _package_data['version_info']
 __version__ = _convert_version(version_info)
@@ -72,14 +73,9 @@ __version__ = _convert_version(version_info)
 del _convert_version
 
 try:
-    from .cyaml import *                               # NOQA
+    from .cyaml import *  # NOQA
     __with_libyaml__ = True
 except (ImportError, ValueError):  # for Jython
     __with_libyaml__ = False
 
-
-# body extracted to main.py
-try:
-    from .main import *                               # NOQA
-except ImportError:
-    from ruamel.yaml.main import *                               # NOQA
+from ruamel.yaml.main import *  # NOQA

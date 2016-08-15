@@ -4,12 +4,8 @@ from __future__ import absolute_import
 
 import re
 
-try:
-    from .error import YAMLError
-    from .compat import nprint, DBG_NODE, dbg, string_types
-except (ImportError, ValueError):  # for Jython
-    from ruamel.yaml.error import YAMLError
-    from ruamel.yaml.compat import nprint, DBG_NODE, dbg, string_types
+from ruamel.yaml.error import YAMLError
+from ruamel.yaml.compat import nprint, DBG_NODE, dbg, string_types
 
 from ruamel.yaml.events import (
     StreamStartEvent, StreamEndEvent, MappingStartEvent, MappingEndEvent,

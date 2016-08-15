@@ -18,7 +18,11 @@ ChangeLog
 
 ::
 
-  0.11.15 (2016-XX-XX):
+  0.12.0 (2016-08-16):
+    - drop support for Python 2.6
+    - include initial Type information (inspired by M. Crusoe)
+
+  0.11.15 (2016-08-07):
     - Change to prevent FutureWarning in NumPy, as reported by tgehring
     ("comparison to None will result in an elementwise object comparison in the future")
 
