@@ -373,7 +373,6 @@ class YAMLObjectMetaclass(type):
 
 
 class YAMLObject(with_metaclass(YAMLObjectMetaclass)):  # type: ignore
-    # type: ignore
     """
     An object that can dump itself to a YAML stream
     and load itself from a YAML stream.

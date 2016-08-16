@@ -18,6 +18,10 @@ ChangeLog
 
 ::
 
+  0.12.2 (2016-08-16):
+    - minor improvements based on feedback from M. Crusoe
+      https://bitbucket.org/ruamel/yaml/issues/42/
+
   0.12.0 (2016-08-16):
     - drop support for Python 2.6
     - include initial Type information (inspired by M. Crusoe)

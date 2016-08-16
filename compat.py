@@ -64,7 +64,7 @@ if PY3:
     binary_type = bytes
 
     MAXSIZE = sys.maxsize
-    unichr = chr  # type: ignore
+    unichr = chr
     import io
     StringIO = io.StringIO
     BytesIO = io.BytesIO
@@ -76,7 +76,8 @@ else:
     text_type = unicode
     binary_type = str
 
-    unichr = unichr  # type: ignore   to allow importing
+    # to allow importing
+    unichr = unichr  # type: ignore
     from StringIO import StringIO as _StringIO
     StringIO = _StringIO
     import cStringIO
