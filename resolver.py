@@ -36,6 +36,7 @@ class BaseResolver(object):
 
     @classmethod
     def add_implicit_resolver(cls, tag, regexp, first):
+        # type: (Any, Any, Any) -> None
         if 'yaml_implicit_resolvers' not in cls.__dict__:
             cls.yaml_implicit_resolvers = cls.yaml_implicit_resolvers.copy()
         if first is None:
