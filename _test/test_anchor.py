@@ -175,7 +175,7 @@ class TestAnchorsAliases:
         k: &level_2 { a: 1, b2 }
         l: &level_1 { a: 10, c: 3 }
         m:
-          << : *level_1
+          <<: *level_1
           c: 30
           d: 40
         """)
@@ -227,3 +227,62 @@ class TestAnchorsAliases:
           c: 3
         b: 2
         """)
+
+
+class TestMergeKeysValues:
+
+    yaml_str = dedent("""\
+    - &mx
+      a: x1
+      b: x2
+      c: x3
+    - &my
+      a: y1
+      b: y2  # masked by the one in &mx
+      d: y4
+    -
+      a: 1
+      <<: *mx
+      m: 6
+      <<: *my
+        """)
+
+    def test_merge_for(self):
+        from ruamel.yaml import safe_load
+        d = safe_load(self.yaml_str)
+        data = round_trip_load(self.yaml_str)
+        count = 0
+        for x in data[2]:
+            count += 1
+            print(count, x)
+        assert count == len(d[2])
+
+    def test_merge_keys(self):
+        from ruamel.yaml import safe_load
+        d = safe_load(self.yaml_str)
+        data = round_trip_load(self.yaml_str)
+        count = 0
+        for x in data[2].keys():
+            count += 1
+            print(count, x)
+        assert count == len(d[2])
+
+    def test_merge_values(self):
+        from ruamel.yaml import safe_load
+        d = safe_load(self.yaml_str)
+        data = round_trip_load(self.yaml_str)
+        count = 0
+        for x in data[2].values():
+            count += 1
+            print(count, x)
+        assert count == len(d[2])
+
+    def test_merge_items(self):
+        from ruamel.yaml import safe_load
+        d = safe_load(self.yaml_str)
+        data = round_trip_load(self.yaml_str)
+        count = 0
+        for x in data[2].items():
+            count += 1
+            print(count, x)
+        assert count == len(d[2])

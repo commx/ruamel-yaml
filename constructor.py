@@ -941,8 +941,6 @@ class RoundTripConstructor(SafeConstructor):
                 "expected a mapping node, but found %s" % node.id,
                 node.start_mark)
         merge_map = self.flatten_mapping(node)
-        if merge_map:
-            maptyp.add_yaml_merge(merge_map)
         # mapping = {}
         if node.comment:
             maptyp._yaml_add_comment(node.comment[:2])
@@ -981,6 +979,10 @@ class RoundTripConstructor(SafeConstructor):
                 key, [key_node.start_mark.line, key_node.start_mark.column,
                       value_node.start_mark.line, value_node.start_mark.column])
             maptyp[key] = value
+        # do this last, or <<: before a key will prevent insertion in instances
+        # of collections.OrderedDict (as they have no __contains__
+        if merge_map:
+            maptyp.add_yaml_merge(merge_map)
 
     def construct_setting(self, node, typ, deep=False):
         if not isinstance(node, MappingNode):

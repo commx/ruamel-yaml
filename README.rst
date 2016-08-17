@@ -17,9 +17,10 @@ ChangeLog
 =========
 
 ::
-
-  0.12.3 (2016-08-XX):
-    - proper 'in' operation for merged CommentedMaps (implementation by J.Ngo)
+  0.12.3 (XXXX-XX-XX):
+  - correct 'in' operation for merged CommentedMaps in round-trip mode
+   (implementation inspired by J.Ngo, but original not working for merges)
+  - iteration over round-trip loaded mappings, as well as 
 
   0.12.2 (2016-08-16):
     - minor improvements based on feedback from M. Crusoe

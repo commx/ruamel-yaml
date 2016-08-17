@@ -689,7 +689,12 @@ class RoundTripRepresenter(SafeRepresenter):
                 pass
         except AttributeError:
             item_comments = {}
-        for item_key, item_value in mapping.items():
+        merge_list = [m[1] for m in getattr(mapping, merge_attrib, [])]
+        if merge_list:
+            items = mapping.non_merged_items()
+        else:
+            items = mapping.items()
+        for item_key, item_value in items:
             node_key = self.represent_key(item_key)
             node_value = self.represent_data(item_value)
             item_comment = item_comments.get(item_key)
@@ -713,7 +718,6 @@ class RoundTripRepresenter(SafeRepresenter):
                 node.flow_style = self.default_flow_style
             else:
                 node.flow_style = best_style
-        merge_list = [m[1] for m in getattr(mapping, merge_attrib, [])]
         if merge_list:
             # because of the call to represent_data here, the anchors
             # are marked as being used and thereby created

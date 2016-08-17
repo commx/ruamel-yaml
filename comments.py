@@ -10,7 +10,7 @@ a separate base
 
 from collections import MutableSet  # type: ignore
 
-from ruamel.yaml.compat import ordereddict
+from ruamel.yaml.compat import ordereddict, PY2
 
 __all__ = ["CommentedSeq", "CommentedMap", "CommentedOrderedMap",
            "CommentedSet", 'comment_attrib', 'merge_attrib']
@@ -24,7 +24,7 @@ tag_attrib = '_yaml_tag'
 
 
 class Comment(object):
-    # sys.getsize tested the Comment objects, __slots__ make them bigger
+    # sys.getsize tested the Comment objects, __slots__ makes them bigger
     # and adding self.end did not matter
     attrib = comment_attrib
 
@@ -428,6 +428,7 @@ class CommentedMap(ordereddict, CommentedBase):
     def __contains__(self, key):
         if ordereddict.__contains__(self, key):
             return True
+        # this will only work once the mapping/dict is built to completion
         for merged in getattr(self, merge_attrib, []):
             if key in merged[1]:
                 return True
@@ -438,6 +439,97 @@ class CommentedMap(ordereddict, CommentedBase):
             return self.__getitem__(key)
         except:
             return default
+
+    def non_merged_items(self):
+        for x in ordereddict.__iter__(self):
+            yield x, ordereddict.__getitem__(self, x)
+
+    def __iter__(self):
+        for x in ordereddict.__iter__(self):
+            yield x
+        done = []  # list of processed merge items, kept for masking
+        for merged in getattr(self, merge_attrib, []):
+            for x in merged[1]:
+                if ordereddict.__contains__(self, x):
+                    continue
+                for y in done:
+                    if x in y:
+                        break
+                else:
+                    yield x
+            done.append(merged[1])
+
+    def _keys(self):
+        for x in ordereddict.__iter__(self):
+            yield x
+        done = []  # list of processed merge items, kept for masking
+        for merged in getattr(self, merge_attrib, []):
+            for x in merged[1]:
+                if ordereddict.__contains__(self, x):
+                    continue
+                for y in done:
+                    if x in y:
+                        break
+                else:
+                    yield x
+            done.append(merged[1])
+
+    if PY2:
+        def keys(self):
+            return list(self._keys())
+    else:
+        # def keys(self):
+        #     import collections
+        #     return collections.KeysView(self._keys())
+        keys = _keys
+
+    def _values(self):
+        for x in ordereddict.__iter__(self):
+            yield ordereddict.__getitem__(self, x)
+        done = []  # list of processed merge items, kept for masking
+        for merged in getattr(self, merge_attrib, []):
+            for x in merged[1]:
+                if ordereddict.__contains__(self, x):
+                    continue
+                for y in done:
+                    if x in y:
+                        break
+                else:
+                    yield ordereddict.__getitem__(merged[1], x)
+            done.append(merged[1])
+
+    if PY2:
+        def values(self):
+            return list(self._values())
+    else:
+        # def values(self):
+        #     import collections
+        #     return collections.ValuesView(self)
+        values = _values
+
+    def _items(self):
+        for x in ordereddict.__iter__(self):
+            yield x, ordereddict.__getitem__(self, x)
+        done = []  # list of processed merge items, kept for masking
+        for merged in getattr(self, merge_attrib, []):
+            for x in merged[1]:
+                if ordereddict.__contains__(self, x):
+                    continue
+                for y in done:
+                    if x in y:
+                        break
+                else:
+                    yield x, ordereddict.__getitem__(merged[1], x)
+            done.append(merged[1])
+
+    if PY2:
+        def items(self):
+            return list(self._items())
+    else:
+        # def items(self):
+        #    import collections
+        #    return collections.ItemsView(self._items())
+        items = _items
 
     @property
     def merge(self):
