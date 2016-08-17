@@ -472,3 +472,21 @@ class TestInsertInMapping:
         about: Art Vandelay is a fictional character that George invents...
         last name: Vandelay  # new key
         """)
+
+
+class TestCommentedMapMerge:
+    def test_in_operator(self):
+        data = round_trip_load("""
+        x: &base
+          a: 1
+          b: 2
+          c: 3
+        y:
+          <<: *base
+          k: 4
+          l: 5
+        """)
+        assert data['x']['a'] == 1
+        assert 'a' in data['x']
+        assert data['y']['a'] == 1
+        assert 'a' in data['y']

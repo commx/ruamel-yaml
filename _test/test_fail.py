@@ -12,7 +12,7 @@ from roundtrip import round_trip, dedent, round_trip_load, round_trip_dump
 
 
 class TestCommentFailures:
-    @pytest.mark.xfail
+    @pytest.mark.xfail(strict=True)
     def test_set_comment_before_tag(self):
         # no comments before tags
         round_trip("""
@@ -47,7 +47,7 @@ class TestCommentFailures:
         # this is the end
         """)
 
-    @pytest.mark.xfail
+    @pytest.mark.xfail(strict=True)
     def test_comment_dash_line(self):
         round_trip("""
         - # abc
@@ -72,7 +72,7 @@ class TestCommentFailures:
 
 class TestIndentFailures:
 
-    @pytest.mark.xfail
+    @pytest.mark.xfail(strict=True)
     def test_roundtrip_four_space_indents(self):
         s = (
             'a:\n'
@@ -93,7 +93,7 @@ class TestIndentFailures:
         - bar
         """)
 
-    @pytest.mark.xfail
+    @pytest.mark.xfail(strict=True)
     def test_roundtrip_four_space_indents_expl_indent(self):
         s = (
             'a:\n'
@@ -114,7 +114,7 @@ class TestIndentFailures:
         -   bar
         """)
 
-    @pytest.mark.xfail
+    @pytest.mark.xfail(strict=True)
     def test_indent_not_retained(self):
         round_trip("""
         verbosity: 1                  # 0 is minimal output, -1 none
@@ -192,7 +192,7 @@ class TestIndentFailures:
 
 
 class TestTagFailures:
-    @pytest.mark.xfail
+    @pytest.mark.xfail(strict=True)
     def test_standard_short_tag(self):
         round_trip("""\
         !!map

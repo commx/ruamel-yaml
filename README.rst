@@ -18,6 +18,9 @@ ChangeLog
 
 ::
 
+  0.12.3 (2016-08-XX):
+    - proper 'in' operation for merged CommentedMaps (implementation by J.Ngo)
+
   0.12.2 (2016-08-16):
     - minor improvements based on feedback from M. Crusoe
       https://bitbucket.org/ruamel/yaml/issues/42/

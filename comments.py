@@ -425,6 +425,14 @@ class CommentedMap(ordereddict, CommentedBase):
                     return merged[1][key]
             raise
 
+    def __contains__(self, key):
+        if ordereddict.__contains__(self, key):
+            return True
+        for merged in getattr(self, merge_attrib, []):
+            if key in merged[1]:
+                return True
+        return False
+
     def get(self, key, default=None):
         try:
             return self.__getitem__(key)
