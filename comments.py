@@ -8,7 +8,7 @@ these are not really related, formatting could be factored out as
 a separate base
 """
 
-from collections import MutableSet  # type: ignore
+from collections import MutableSet, Sized, Set  # type: ignore
 
 from ruamel.yaml.compat import ordereddict, PY2
 
@@ -321,6 +321,87 @@ class CommentedSeq(list, CommentedBase):
         return pre_comments
 
 
+class CommentedMapView(Sized):
+
+    __slots__ = '_mapping',
+
+    def __init__(self, mapping):
+        self._mapping = mapping
+
+    def __len__(self):
+        count = len(self._mapping)
+        done = []  # list of processed merge items, kept for masking
+        for merged in getattr(self._mapping, merge_attrib, []):
+            for x in merged[1]:
+                if self._mapping._unmerged_contains(x):
+                    continue
+                for y in done:
+                    if x in y:
+                        break
+                else:
+                    count += 1
+            done.append(merged[1])
+        return count
+
+    def __repr__(self):
+        return '{0.__class__.__name__}({0._mapping!r})'.format(self)
+
+
+class CommentedMapKeysView(CommentedMapView, Set):
+
+    __slots__ = ()
+
+    @classmethod
+    def _from_iterable(self, it):
+        return set(it)
+
+    def __contains__(self, key):
+        return key in self._mapping
+
+    def __iter__(self):
+        # yield from self._mapping  # not in py27, pypy
+        for x in self._mapping:
+            yield x
+
+
+class CommentedMapItemsView(CommentedMapView, Set):
+
+    __slots__ = ()
+
+    @classmethod
+    def _from_iterable(self, it):
+        return set(it)
+
+    def __contains__(self, item):
+        key, value = item
+        try:
+            v = self._mapping[key]
+        except KeyError:
+            return False
+        else:
+            return v == value
+
+    def __iter__(self):
+        for key in self._mapping._keys():
+            yield (key, self._mapping[key])
+
+
+class CommentedMapValuesView(CommentedMapView):
+
+    __slots__ = ()
+
+    def __contains__(self, value):
+        for key in self._mapping:
+            if value == self._mapping[key]:
+                return True
+        return False
+
+    def __iter__(self):
+        print('xxy values_iter')
+        for key in self._mapping:
+            yield self._mapping[key]
+
+
 class CommentedMap(ordereddict, CommentedBase):
     __slots__ = [Comment.attrib, ]
 
@@ -425,6 +506,10 @@ class CommentedMap(ordereddict, CommentedBase):
                     return merged[1][key]
             raise
 
+    def _unmerged_contains(self, key):
+        if ordereddict.__contains__(self, key):
+            return True
+
     def __contains__(self, key):
         if ordereddict.__contains__(self, key):
             return True
@@ -443,6 +528,20 @@ class CommentedMap(ordereddict, CommentedBase):
     def non_merged_items(self):
         for x in ordereddict.__iter__(self):
             yield x, ordereddict.__getitem__(self, x)
+
+    def __delitem__(self, key):
+        found = True
+        for merged in getattr(self, merge_attrib, []):
+            try:
+                del merged[1][key]
+                found = True
+            except KeyError:
+                pass
+        try:
+            ordereddict.__delitem__(self, key)
+        except KeyError:
+            if not found:
+                raise
 
     def __iter__(self):
         for x in ordereddict.__iter__(self):
@@ -477,11 +576,15 @@ class CommentedMap(ordereddict, CommentedBase):
     if PY2:
         def keys(self):
             return list(self._keys())
+
+        def iterkeys(self):
+            return self._keys()
+
+        def viewkeys(self):
+            return CommentedMapKeysView(self)
     else:
-        # def keys(self):
-        #     import collections
-        #     return collections.KeysView(self._keys())
-        keys = _keys
+        def keys(self):
+            return CommentedMapKeysView(self)
 
     def _values(self):
         for x in ordereddict.__iter__(self):
@@ -501,11 +604,15 @@ class CommentedMap(ordereddict, CommentedBase):
     if PY2:
         def values(self):
             return list(self._values())
+
+        def itervalues(self):
+            return self._values()
+
+        def viewvalues(self):
+            return CommentedMapValuesView(self)
     else:
-        # def values(self):
-        #     import collections
-        #     return collections.ValuesView(self)
-        values = _values
+        def values(self):
+            return CommentedMapValuesView(self)
 
     def _items(self):
         for x in ordereddict.__iter__(self):
@@ -525,11 +632,15 @@ class CommentedMap(ordereddict, CommentedBase):
     if PY2:
         def items(self):
             return list(self._items())
+
+        def iteritems(self):
+            return self._items()
+
+        def viewitems(self):
+            return CommentedMapItemsView(self)
     else:
-        # def items(self):
-        #    import collections
-        #    return collections.ItemsView(self._items())
-        items = _items
+        def items(self):
+            return CommentedMapItemsView(self)
 
     @property
     def merge(self):

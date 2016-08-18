@@ -9,6 +9,8 @@ from textwrap import dedent
 import platform
 
 from roundtrip import round_trip, dedent, round_trip_load, round_trip_dump  # NOQA
+from ruamel.yaml.compat import PY3
+from ruamel.yaml.error import ReusedAnchorWarning
 
 
 def load(s):
@@ -228,6 +230,19 @@ class TestAnchorsAliases:
         b: 2
         """)
 
+    # this is an error in PyYAML
+    def test_reused_anchor(self):
+        yaml = '''
+        - &a
+          x: 1
+        - <<: *a
+        - &a
+          x: 2
+        - <<: *a
+        '''
+        with pytest.warns(ReusedAnchorWarning):
+            data = round_trip(yaml)  # NOQA
+
 
 class TestMergeKeysValues:
 
@@ -246,6 +261,8 @@ class TestMergeKeysValues:
       m: 6
       <<: *my
         """)
+
+    # in the following d always has "expanded" the merges
 
     def test_merge_for(self):
         from ruamel.yaml import safe_load
@@ -286,3 +303,23 @@ class TestMergeKeysValues:
             count += 1
             print(count, x)
         assert count == len(d[2])
+
+    def test_len_items_delete(self):
+        from ruamel.yaml import safe_load
+        d = safe_load(self.yaml_str)
+        data = round_trip_load(self.yaml_str)
+        x = data[2].items()
+        ref = len(d[2].items())
+        assert len(x) == ref
+        del data[2]['m']
+        if PY3:
+            ref -= 1
+        assert len(x) == ref
+        del data[2]['d']
+        if PY3:
+            ref -= 1
+        assert len(x) == ref
+        del data[2]['a']
+        if PY3:
+            ref -= 1
+        assert len(x) == ref

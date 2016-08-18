@@ -3,8 +3,9 @@
 from __future__ import absolute_import
 from __future__ import print_function
 
+import warnings
 
-from ruamel.yaml.error import MarkedYAMLError
+from ruamel.yaml.error import MarkedYAMLError, ReusedAnchorWarning
 from ruamel.yaml.compat import utf8
 
 from ruamel.yaml.events import (
@@ -87,10 +88,14 @@ class Composer(object):
         anchor = event.anchor
         if anchor is not None:  # have an anchor
             if anchor in self.anchors:
-                raise ComposerError(
-                    "found duplicate anchor %r; first occurence"
-                    % utf8(anchor), self.anchors[anchor].start_mark,
-                    "second occurence", event.start_mark)
+                # raise ComposerError(
+                #     "found duplicate anchor %r; first occurence"
+                #     % utf8(anchor), self.anchors[anchor].start_mark,
+                #     "second occurence", event.start_mark)
+                ws = "\nfound duplicate anchor {!r}\nfirst occurence {}\nsecond occurence "\
+                     "{}".format(
+                         (anchor), self.anchors[anchor].start_mark, event.start_mark)
+                warnings.warn(ws, ReusedAnchorWarning)
         self.descend_resolver(parent, index)
         if self.check_event(ScalarEvent):
             node = self.compose_scalar_node(anchor)

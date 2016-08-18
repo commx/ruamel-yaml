@@ -17,10 +17,20 @@ ChangeLog
 =========
 
 ::
-  0.12.3 (XXXX-XX-XX):
-  - correct 'in' operation for merged CommentedMaps in round-trip mode
-   (implementation inspired by J.Ngo, but original not working for merges)
-  - iteration over round-trip loaded mappings, as well as 
+
+  0.12.3 (2016-08-17):
+    - correct 'in' operation for merged CommentedMaps in round-trip mode
+      (implementation inspired by J.Ngo, but original not working for merges)
+    - iteration over round-trip loaded mappings, that contain merges. Also
+      keys(), items(), values() (Py3/Py2) and iterkeys(), iteritems(),
+      itervalues(), viewkeys(), viewitems(), viewvalues() (Py2)
+    - reuse of anchor name now generates warning, not an error. Round-tripping such
+      anchors works correctly. This inherited PyYAML issue was brought to attention
+      by G. Coddut (and was long standing https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=515634)
+      suppressing the warning:
+          import warnings
+          from ruamel.yaml.error import ReusedAnchorWarning
+          warnings.simplefilter("ignore", ReusedAnchorWarning)
 
   0.12.2 (2016-08-16):
     - minor improvements based on feedback from M. Crusoe

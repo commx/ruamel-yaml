@@ -4,7 +4,7 @@ from __future__ import absolute_import
 
 from ruamel.yaml.compat import utf8
 
-__all__ = ['Mark', 'YAMLError', 'MarkedYAMLError']
+__all__ = ['Mark', 'YAMLError', 'MarkedYAMLError', 'ReusedAnchorWarning']
 
 
 class Mark(object):
@@ -80,3 +80,7 @@ class MarkedYAMLError(YAMLError):
         if self.note is not None:
             lines.append(self.note)
         return '\n'.join(lines)
+
+
+class ReusedAnchorWarning(Warning):
+    pass
