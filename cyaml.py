@@ -14,14 +14,14 @@ __all__ = ['CBaseLoader', 'CSafeLoader', 'CLoader',
 
 
 class CBaseLoader(CParser, BaseConstructor, BaseResolver):
-    def __init__(self, stream, version=None):
+    def __init__(self, stream, version=None, preserve_quotes=None):
         CParser.__init__(self, stream)
         BaseConstructor.__init__(self)
         BaseResolver.__init__(self)
 
 
 class CSafeLoader(CParser, SafeConstructor, Resolver):
-    def __init__(self, stream, version=None):
+    def __init__(self, stream, version=None, preserve_quotes=None):
         CParser.__init__(self, stream)
         SafeConstructor.__init__(self)
         Resolver.__init__(self)
