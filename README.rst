@@ -18,6 +18,10 @@ ChangeLog
 
 ::
 
+  0.12.4 (2016-08-19):
+    - Fix for issue 44: missing preserve_quotes keyword argument (reported
+      by M. Crusoe)
+
   0.12.3 (2016-08-17):
     - correct 'in' operation for merged CommentedMaps in round-trip mode
       (implementation inspired by J.Ngo, but original not working for merges)
