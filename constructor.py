@@ -1,7 +1,6 @@
 # coding: utf-8
 
-from __future__ import absolute_import
-from __future__ import print_function
+from __future__ import print_function, absolute_import, division, unicode_literals
 
 import collections
 import datetime
@@ -19,7 +18,7 @@ from ruamel.yaml.compat import (utf8, builtins_module, to_str, PY2, PY3,
                                 ordereddict, text_type)
 from ruamel.yaml.comments import *                               # NOQA
 from ruamel.yaml.scalarstring import *                           # NOQA
-
+from ruamel.yaml.timestamp import TimeStamp
 
 __all__ = ['BaseConstructor', 'SafeConstructor', 'Constructor',
            'ConstructorError', 'RoundTripConstructor']
@@ -375,7 +374,7 @@ class SafeConstructor(BaseConstructor):
         u'''^(?P<year>[0-9][0-9][0-9][0-9])
           -(?P<month>[0-9][0-9]?)
           -(?P<day>[0-9][0-9]?)
-          (?:(?:[Tt]|[ \\t]+)
+          (?:((?P<t>[Tt])|[ \\t]+)   # explictly not retaining extra spaces
           (?P<hour>[0-9][0-9]?)
           :(?P<minute>[0-9][0-9])
           :(?P<second>[0-9][0-9])
@@ -383,10 +382,10 @@ class SafeConstructor(BaseConstructor):
           (?:[ \\t]*(?P<tz>Z|(?P<tz_sign>[-+])(?P<tz_hour>[0-9][0-9]?)
           (?::(?P<tz_minute>[0-9][0-9]))?))?)?$''', re.X)
 
-    def construct_yaml_timestamp(self, node):
-        value = self.construct_scalar(node)  # NOQA
-        match = self.timestamp_regexp.match(node.value)
-        values = match.groupdict()
+    def construct_yaml_timestamp(self, node, values=None):
+        if values is None:
+            match = self.timestamp_regexp.match(node.value)
+            values = match.groupdict()
         year = int(values['year'])
         month = int(values['month'])
         day = int(values['day'])
@@ -401,6 +400,8 @@ class SafeConstructor(BaseConstructor):
             while len(fraction) < 6:
                 fraction += '0'
             fraction = int(fraction)
+            if len(values['fraction']) > 6 and int(values['fraction'][6]) > 4:
+                fraction += 1
         delta = None
         if values['tz_sign']:
             tz_hour = int(values['tz_hour'])
@@ -929,7 +930,6 @@ class RoundTripConstructor(SafeConstructor):
                 index += 1
             else:
                 index += 1
-        # print ('merge_map_list', merge_map_list)
         return merge_map_list
         # if merge:
         #     node.value = merge + node.value
@@ -1112,6 +1112,56 @@ class RoundTripConstructor(SafeConstructor):
                 "could not determine a constructor for the tag %r" %
                 utf8(node.tag),
                 node.start_mark)
+
+    def construct_yaml_timestamp(self, node):
+        match = self.timestamp_regexp.match(node.value)
+        values = match.groupdict()
+        if not values['hour']:
+            return SafeConstructor.construct_yaml_timestamp(self, node, values)
+        for part in ['t', 'tz_sign', 'tz_hour', 'tz_minute']:
+            if values[part]:
+                break
+        else:
+            return SafeConstructor.construct_yaml_timestamp(self, node, values)
+        year = int(values['year'])
+        month = int(values['month'])
+        day = int(values['day'])
+        hour = int(values['hour'])
+        minute = int(values['minute'])
+        second = int(values['second'])
+        fraction = 0
+        if values['fraction']:
+            fraction = values['fraction'][:6]
+            while len(fraction) < 6:
+                fraction += '0'
+            fraction = int(fraction)
+            if len(values['fraction']) > 6 and int(values['fraction'][6]) > 4:
+                fraction += 1
+        delta = None
+        if values['tz_sign']:
+            tz_hour = int(values['tz_hour'])
+            tz_minute = int(values['tz_minute'] or 0)
+            delta = datetime.timedelta(hours=tz_hour, minutes=tz_minute)
+            if values['tz_sign'] == '-':
+                delta = -delta
+        if delta:
+            dt = datetime.datetime(year, month, day, hour, minute)
+            dt -= delta
+            data = TimeStamp(dt.year, dt.month, dt.day, dt.hour, dt.minute,
+                             second, fraction)
+            data._yaml['delta'] = delta
+            tz = values['tz_sign'] + values['tz_hour']
+            if values['tz_minute']:
+                tz += ':' + values['tz_minute']
+            data._yaml['tz'] = tz
+        else:
+            data = TimeStamp(year, month, day, hour, minute, second, fraction)
+            if values['tz']:  # no delta
+                data._yaml['tz'] = values['tz']
+
+        if values['t']:
+            data._yaml['t'] = True
+        return data
 
 
 RoundTripConstructor.add_constructor(

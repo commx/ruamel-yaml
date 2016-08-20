@@ -38,6 +38,10 @@ def round_trip_dump(data, indent=None, block_seq_indent=None, top_level_colon_al
 def round_trip(inp, outp=None, extra=None, intermediate=None, indent=None,
                block_seq_indent=None, top_level_colon_align=None, prefix_colon=None,
                preserve_quotes=None):
+    """
+    inp:    input string to parse
+    outp:   expected output (equals input if not specified)
+    """
     if outp is None:
         outp = inp
     doutp = dedent(outp)

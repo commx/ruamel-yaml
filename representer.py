@@ -9,6 +9,7 @@ from ruamel.yaml.error import *                       # NOQA
 from ruamel.yaml.nodes import *                       # NOQA
 from ruamel.yaml.compat import text_type, binary_type, to_unicode, PY2, PY3, ordereddict
 from ruamel.yaml.scalarstring import *                # NOQA
+from ruamel.yaml.timestamp import TimeStamp
 
 import datetime
 import sys
@@ -851,6 +852,18 @@ class RoundTripRepresenter(SafeRepresenter):
             tag = u'tag:yaml.org,2002:map'
         return self.represent_mapping(tag, data)
 
+    def represent_datetime(self, data):
+        inter = 'T' if data._yaml['t'] else ' '
+        _yaml = data._yaml
+        if _yaml['delta']:
+            data += _yaml['delta']
+            value = data.isoformat(inter)
+        else:
+            value = data.isoformat(inter)
+        if _yaml['tz']:
+            value += _yaml['tz']
+        return self.represent_scalar(u'tag:yaml.org,2002:timestamp', to_unicode(value))
+
 
 RoundTripRepresenter.add_representer(type(None),
                                      RoundTripRepresenter.represent_none)
@@ -883,3 +896,6 @@ if sys.version_info >= (2, 7):
 
 RoundTripRepresenter.add_representer(CommentedSet,
                                      RoundTripRepresenter.represent_set)
+
+RoundTripRepresenter.add_representer(TimeStamp,
+                                     RoundTripRepresenter.represent_datetime)

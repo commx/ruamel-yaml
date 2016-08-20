@@ -18,6 +18,15 @@ ChangeLog
 
 ::
 
+  0.12.5 (2016-08-20):
+    - fixing issue 45 preserving datetime formatting (submitted by altuin)
+      Several formatting parameters are preserved with some normalisation:
+      - preserve 'T', 't' is replaced by 'T', multiple spaces between date
+        and time reduced to one.
+      - optional space before timezone is removed
+      - still using microseconds, but now rounded (.1234567 -> .123457)
+      - Z/-5/+01:00 preserved
+
   0.12.4 (2016-08-19):
     - Fix for issue 44: missing preserve_quotes keyword argument (reported
       by M. Crusoe)
