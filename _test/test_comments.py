@@ -490,3 +490,82 @@ class TestCommentedMapMerge:
         assert 'a' in data['x']
         assert data['y']['a'] == 1
         assert 'a' in data['y']
+
+
+class TestEmptyLines:
+    # prompted by issue 46 from Alex Harvey
+    def Xtest_issue_46(self):
+        yaml_str = dedent("""\
+        ---
+        # Please add key/value pairs in alphabetical order
+
+        aws_s3_bucket: 'mys3bucket'
+
+        jenkins_ad_credentials:
+          bind_name: 'CN=svc-AAA-BBB-T,OU=Example,DC=COM,DC=EXAMPLE,DC=Local'
+          bind_pass: 'xxxxyyyy{'
+        """)
+        d = round_trip_load(yaml_str, preserve_quotes=True)
+        y = round_trip_dump(d, explicit_start=True)
+        assert yaml_str == y
+
+    def test_multispace_map(self):
+        round_trip("""
+        a: 1x
+
+        b: 2x
+
+
+        c: 3x
+
+
+
+        d: 4x
+
+        """)
+
+    @pytest.mark.xfail(strict=True)
+    def test_multispace_map_initial(self):
+        round_trip("""
+
+        a: 1x
+
+        b: 2x
+
+
+        c: 3x
+
+
+
+        d: 4x
+
+        """)
+
+    def test_embedded_map(self):
+        round_trip("""
+        - a: 1y
+          b: 2y
+
+          c: 3y
+        """)
+
+    def test_toplevel_seq(self):
+        round_trip("""\
+        - 1
+
+        - 2
+
+        - 3
+        """)
+
+    def test_embedded_seq(self):
+        round_trip("""
+        a:
+          b:
+          - 1
+
+          - 2
+
+
+          - 3
+        """)

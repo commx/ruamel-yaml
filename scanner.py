@@ -1645,6 +1645,16 @@ class RoundTripScanner(Scanner):
             if self.scan_line_break():
                 if not self.flow_level:
                     self.allow_simple_key = True
+                ch = self.peek()
+                if ch == '\n':    # empty toplevel lines
+                    start_mark = self.get_mark()
+                    comment = ''
+                    while ch:
+                        ch = self.scan_line_break()
+                        comment += ch
+                    # print('ch', repr(comment))
+                    end_mark = self.get_mark()
+                    return comment, start_mark, end_mark
             else:
                 found = True
 

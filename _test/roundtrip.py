@@ -28,11 +28,13 @@ def round_trip_load(inp, preserve_quotes=None):
 
 
 def round_trip_dump(data, indent=None, block_seq_indent=None, top_level_colon_align=None,
-                    prefix_colon=None):
+                    prefix_colon=None, explicit_start=None, explicit_end=None):
     return ruamel.yaml.round_trip_dump(data,
                                        indent=indent, block_seq_indent=block_seq_indent,
                                        top_level_colon_align=top_level_colon_align,
-                                       prefix_colon=prefix_colon)
+                                       prefix_colon=prefix_colon,
+                                       explicit_start=explicit_start,
+                                       explicit_end=explicit_end)
 
 
 def round_trip(inp, outp=None, extra=None, intermediate=None, indent=None,

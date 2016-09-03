@@ -18,6 +18,11 @@ ChangeLog
 
 ::
 
+  0.12.6 (2016-09-03):
+     - fixing issue 46 empty lines between top-level keys were gobbled (but
+       not between sequence elements, nor between keys in netsted mappings
+       (reported by Alex Harvey)
+   
   0.12.5 (2016-08-20):
     - fixing issue 45 preserving datetime formatting (submitted by altuin)
       Several formatting parameters are preserved with some normalisation:
