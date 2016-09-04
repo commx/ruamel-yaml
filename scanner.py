@@ -1643,6 +1643,7 @@ class RoundTripScanner(Scanner):
                     self.allow_simple_key = True
                 return comment, start_mark, end_mark
             if self.scan_line_break():
+                start_mark = self.get_mark()
                 if not self.flow_level:
                     self.allow_simple_key = True
                 ch = self.peek()
@@ -1650,13 +1651,35 @@ class RoundTripScanner(Scanner):
                     start_mark = self.get_mark()
                     comment = ''
                     while ch:
-                        ch = self.scan_line_break()
+                        ch = self.scan_line_break(empty_line=True)
                         comment += ch
-                    # print('ch', repr(comment))
                     end_mark = self.get_mark()
                     return comment, start_mark, end_mark
             else:
                 found = True
+
+    def scan_line_break(self, empty_line=False):
+        # Transforms:
+        #   '\r\n'      :   '\n'
+        #   '\r'        :   '\n'
+        #   '\n'        :   '\n'
+        #   '\x85'      :   '\n'
+        #   '\u2028'    :   '\u2028'
+        #   '\u2029     :   '\u2029'
+        #   default     :   ''
+        ch = self.peek()
+        if ch in u'\r\n\x85':
+            if self.prefix(2) == u'\r\n':
+                self.forward(2)
+            else:
+                self.forward()
+            return u'\n'
+        elif ch in u'\u2028\u2029':
+            self.forward()
+            return ch
+        elif empty_line and ch in '\t ':
+            return ch
+        return u''
 
 # try:
 #     import psyco

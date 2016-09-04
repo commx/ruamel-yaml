@@ -18,6 +18,9 @@ ChangeLog
 
 ::
 
+  0.12.7 (2016-09-03):
+     - fixing issue 54 empty lines with spaces (reported by Alex Harvey)
+
   0.12.6 (2016-09-03):
      - fixing issue 46 empty lines between top-level keys were gobbled (but
        not between sequence elements, nor between keys in netsted mappings
