@@ -24,7 +24,7 @@ import codecs
 import re
 
 from ruamel.yaml.error import YAMLError, Mark
-from ruamel.yaml.compat import text_type, binary_type, PY3
+from ruamel.yaml.compat import text_type, binary_type, PY3, UNICODE_SIZE
 
 __all__ = ['Reader', 'ReaderError']
 
@@ -144,13 +144,21 @@ class Reader(object):
                 self.encoding = 'utf-8'
         self.update(1)
 
-    NON_PRINTABLE = re.compile(
-        u'[^\x09\x0A\x0D\x20-\x7E\x85'
-        u'\xA0-\uD7FF'
-        u'\uE000-\uFFFD'
-        u'\U00010000-\U0010FFFF'
-        u']'
-    )
+    if UNICODE_SIZE == 4:
+        NON_PRINTABLE = re.compile(
+            u'[^\x09\x0A\x0D\x20-\x7E\x85'
+            u'\xA0-\uD7FF'
+            u'\uE000-\uFFFD'
+            u'\U00010000-\U0010FFFF'
+            u']'
+        )
+    else:
+        NON_PRINTABLE = re.compile(
+            u'[^\x09\x0A\x0D\x20-\x7E\x85'
+            u'\xA0-\uD7FF'
+            u'\uE000-\uFFFD'
+            u']'
+        )
 
     def check_printable(self, data):
         match = self.NON_PRINTABLE.search(data)

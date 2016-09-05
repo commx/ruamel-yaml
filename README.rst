@@ -18,7 +18,11 @@ ChangeLog
 
 ::
 
-  0.12.8 (2016-09-xx):
+  0.12.9 (2016-09-05):
+   - Make previous fix depend on unicode char width (32 bit unicode support
+     is a problem on MacOS reported by David Tagatac)
+
+  0.12.8 (2016-09-05):
      - To be ignored Unicode characters were not properly regex matched
        (no specific tests, PR by Haraguroicha Hsu)
 
