@@ -145,7 +145,7 @@ class Reader(object):
         self.update(1)
 
     NON_PRINTABLE = re.compile(
-        u'[^\x09\x0A\x0D\x20-\x7E\x85\xA0-\uD7FF\uE000-\uFFFD]')
+        u'[^\x09\x0A\x0D\x20-\x7E\x85\xA0-\uD7FF\uE000-\uFFFD\U00010000-\U0010FFFF]')
 
     def check_printable(self, data):
         match = self.NON_PRINTABLE.search(data)
