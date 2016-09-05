@@ -18,7 +18,7 @@ ChangeLog
 
 ::
 
-  0.12.9 (2016-09-05):
+  0.12.10 (2016-09-05):
    - Make previous fix depend on unicode char width (32 bit unicode support
      is a problem on MacOS reported by David Tagatac)
 

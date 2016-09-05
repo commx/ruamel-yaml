@@ -7,7 +7,6 @@ from __future__ import print_function
 import sys
 import os
 import types
-import sysconfig
 
 try:
     from ruamel.ordereddict import ordereddict  # type: ignore
@@ -36,11 +35,6 @@ except:
 
 PY2 = sys.version_info[0] == 2
 PY3 = sys.version_info[0] == 3
-
-# 4 if 32 bit unicode supported, 2 e.g. on MacOS (issue 56)
-UNICODE_SIZE = sysconfig.get_config_vars().get(
-    'SIZEOF_WCHAR_T',
-    sysconfig.get_config_vars().get('Py_UNICODE_SIZE', 4))
 
 
 if PY3:
