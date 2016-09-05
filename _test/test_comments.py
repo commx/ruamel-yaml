@@ -494,7 +494,7 @@ class TestCommentedMapMerge:
 
 class TestEmptyLines:
     # prompted by issue 46 from Alex Harvey
-    def Xtest_issue_46(self):
+    def test_issue_46(self):
         yaml_str = dedent("""\
         ---
         # Please add key/value pairs in alphabetical order
@@ -591,3 +591,23 @@ class TestEmptyLines:
             stripped += line.rstrip() + '\n'
             print(line + '$')
         assert stripped == y
+
+
+class TestUnicodeComments:
+    def test_issue_55(self):  # reported by Haraguroicha Hsu
+        round_trip("""\
+        name: TEST
+        description: test using
+        author: Harguroicha
+        sql:
+          command: |-
+            select name from testtbl where no = :no
+
+          ci-test:
+          - :no: 04043709 # 小花
+          - :no: 05161690 # 茶
+          - :no: 05293147 # 〇𤋥川
+          - :no: 05338777 # 〇〇啓
+          - :no: 05273867 # 〇
+          - :no: 05205786 # 〇𤦌
+        """)

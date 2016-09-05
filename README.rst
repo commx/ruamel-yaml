@@ -18,6 +18,10 @@ ChangeLog
 
 ::
 
+  0.12.8 (2016-09-xx):
+     - To be ignored Unicode characters were not properly regex matched
+       (no specific tests, PR by Haraguroicha Hsu)
+
   0.12.7 (2016-09-03):
      - fixing issue 54 empty lines with spaces (reported by Alex Harvey)
 
