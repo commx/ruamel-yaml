@@ -592,6 +592,29 @@ class TestEmptyLines:
             print(line + '$')
         assert stripped == y
 
+    def test_issue_54_not_ok(self):
+        yaml_str = dedent("""\
+        toplevel:
+
+            # some comment
+            sublevel: 300
+        """)
+        d = round_trip_load(yaml_str)
+        print(d.ca)
+        y = round_trip_dump(d, indent=4)
+        print(y.replace('\n', '$\n'))
+        assert yaml_str == y
+
+    def test_issue_54_ok(self):
+        yaml_str = dedent("""\
+        toplevel:
+            # some comment
+            sublevel: 300
+        """)
+        d = round_trip_load(yaml_str)
+        y = round_trip_dump(d, indent=4)
+        assert yaml_str == y
+
 
 class TestUnicodeComments:
     @pytest.mark.skipif(ruamel.yaml.reader.Reader.UNICODE_SIZE < 4,

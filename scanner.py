@@ -1653,6 +1653,9 @@ class RoundTripScanner(Scanner):
                     while ch:
                         ch = self.scan_line_break(empty_line=True)
                         comment += ch
+                    if self.peek() == '#':  # empty line followed by indented real cmment
+                        comment = comment.rsplit('\n', 1)[0] + '\n'
+                    print('comment', repr(comment), self.peek() == '#')
                     end_mark = self.get_mark()
                     return comment, start_mark, end_mark
             else:
@@ -1678,6 +1681,7 @@ class RoundTripScanner(Scanner):
             self.forward()
             return ch
         elif empty_line and ch in '\t ':
+            self.forward()
             return ch
         return u''
 

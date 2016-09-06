@@ -18,6 +18,10 @@ ChangeLog
 
 ::
 
+  0.12.11 (2016-09-06):
+   - Fix issue 58 endless loop in scanning tokens (reported by 
+     Christopher Lambert)
+
   0.12.10 (2016-09-05):
    - Make previous fix depend on unicode char width (32 bit unicode support
      is a problem on MacOS reported by David Tagatac)
