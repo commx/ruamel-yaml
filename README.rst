@@ -18,6 +18,10 @@ ChangeLog
 
 ::
 
+  0.12.13 (2016-09-15):
+   - Fix for issue #60 representation of CommentedMap with merge
+     keys incorrect (reported by Tal Liron)
+
   0.12.11 (2016-09-06):
    - Fix issue 58 endless loop in scanning tokens (reported by 
      Christopher Lambert)

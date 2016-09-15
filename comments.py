@@ -501,6 +501,7 @@ class CommentedMap(ordereddict, CommentedBase):
         try:
             return ordereddict.__getitem__(self, key)
         except KeyError:
+            print('keyerror')
             for merged in getattr(self, merge_attrib, []):
                 if key in merged[1]:
                     return merged[1][key]
@@ -524,6 +525,11 @@ class CommentedMap(ordereddict, CommentedBase):
             return self.__getitem__(key)
         except:
             return default
+
+    def __repr__(self):
+        if not hasattr(self, merge_attrib):
+            return ordereddict.__repr__(self)
+        return 'ordereddict(' + repr(list(self._items())) + ')'
 
     def non_merged_items(self):
         for x in ordereddict.__iter__(self):

@@ -491,6 +491,29 @@ class TestCommentedMapMerge:
         assert data['y']['a'] == 1
         assert 'a' in data['y']
 
+    def test_issue_60(self):
+        data = round_trip_load("""
+        x: &base
+          a: 1
+        y:
+          <<: *base
+        """)
+        assert data['x']['a'] == 1
+        assert data['y']['a'] == 1
+        assert str(data['y']) == """ordereddict([('a', 1)])"""
+
+    def test_issue_60_1(self):
+        data = round_trip_load("""
+        x: &base
+          a: 1
+        y:
+          <<: *base
+          b: 2
+        """)
+        assert data['x']['a'] == 1
+        assert data['y']['a'] == 1
+        assert str(data['y']) == """ordereddict([('b', 2), ('a', 1)])"""
+
 
 class TestEmptyLines:
     # prompted by issue 46 from Alex Harvey
