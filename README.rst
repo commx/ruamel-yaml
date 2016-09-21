@@ -18,6 +18,10 @@ ChangeLog
 
 ::
 
+  0.12.14 (2016-09-21):
+   - preserve round-trip sequences that are mapping keys 
+     (prompted by stackoverflow question 39595807 from Nowox)
+
   0.12.13 (2016-09-15):
    - Fix for issue #60 representation of CommentedMap with merge
      keys incorrect (reported by Tal Liron)

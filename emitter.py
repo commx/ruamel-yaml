@@ -465,8 +465,9 @@ class Emitter(object):
                 self.write_pre_comment(self.event)
             self.write_indent()
             if self.check_simple_key():
-                if self.event.style == '?':
-                    self.write_indicator(u'?', True, indention=True)
+                if not isinstance(self.event, SequenceStartEvent):  # sequence keys
+                    if self.event.style == '?':
+                        self.write_indicator(u'?', True, indention=True)
                 self.states.append(self.expect_block_mapping_simple_value)
                 self.expect_node(mapping=True, simple_key=True)
             else:
@@ -526,6 +527,8 @@ class Emitter(object):
             length += len(self.analysis.scalar)
         return (length < self.MAX_SIMPLE_KEY_LENGTH and (
             isinstance(self.event, AliasEvent) or
+            (isinstance(self.event, SequenceStartEvent) and
+             self.event.flow_style is True) or
             (isinstance(self.event, ScalarEvent) and
              not self.analysis.empty and not self.analysis.multiline) or
             self.check_empty_sequence() or self.check_empty_mapping()))

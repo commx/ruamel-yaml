@@ -956,7 +956,12 @@ class RoundTripConstructor(SafeConstructor):
             # lists are not hashable, but tuples are
             if not isinstance(key, collections.Hashable):
                 if isinstance(key, list):
-                    key = tuple(key)
+                    key = CommentedKeySeq(key)
+                    if key_node.flow_style is True:
+                        key.fa.set_flow_style()
+                    elif key_node.flow_style is False:
+                        key.fa.set_block_style()
+                    # key = tuple(key)
             if PY2:
                 try:
                     hash(key)

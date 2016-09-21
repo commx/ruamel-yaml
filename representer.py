@@ -576,8 +576,8 @@ Representer.add_multi_representer(object,
                                   Representer.represent_object)
 
 
-from ruamel.yaml.comments import CommentedMap, CommentedOrderedMap, \
-    CommentedSeq, CommentedSet, comment_attrib, merge_attrib    # NOQA
+from ruamel.yaml.comments import CommentedMap, CommentedOrderedMap, CommentedSeq, \
+    CommentedKeySeq, CommentedSet, comment_attrib, merge_attrib    # NOQA
 
 
 class RoundTripRepresenter(SafeRepresenter):
@@ -657,6 +657,12 @@ class RoundTripRepresenter(SafeRepresenter):
             else:
                 node.flow_style = best_style
         return node
+
+    def represent_key(self, data):
+        if isinstance(data, CommentedKeySeq):
+            return self.represent_sequence(u'tag:yaml.org,2002:seq', data,
+                                           flow_style=True)
+        return SafeRepresenter.represent_key(self, data)
 
     def represent_mapping(self, tag, mapping, flow_style=None):
         value = []
