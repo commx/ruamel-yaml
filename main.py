@@ -83,12 +83,12 @@ def load(stream, Loader=Loader, version=None, preserve_quotes=None):
         loader.dispose()
 
 
-def load_all(stream, Loader=Loader, version=None):
+def load_all(stream, Loader=Loader, version=None, preserve_quotes=None):
     """
     Parse all YAML documents in a stream
     and produce corresponding Python objects.
     """
-    loader = Loader(stream, version)
+    loader = Loader(stream, version, preserve_quotes=preserve_quotes)
     try:
         while loader.check_data():
             yield loader.get_data()

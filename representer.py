@@ -660,6 +660,7 @@ class RoundTripRepresenter(SafeRepresenter):
 
     def represent_key(self, data):
         if isinstance(data, CommentedKeySeq):
+            self.alias_key = None
             return self.represent_sequence(u'tag:yaml.org,2002:seq', data,
                                            flow_style=True)
         return SafeRepresenter.represent_key(self, data)

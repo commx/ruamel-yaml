@@ -192,3 +192,18 @@ class TestYAML:
         round_trip(s)
         assert d['c'][0].split('it.')[1] == ''
         assert d['c'][1].split('line.')[1] == ''
+
+    def test_load_all_perserve_quotes(self):
+        s = dedent("""\
+        a: 'hello'
+        ---
+        b: "goodbye"
+        """)
+        data = []
+        for x in ruamel.yaml.round_trip_load_all(s, preserve_quotes=True):
+            data.append(x)
+        out = ruamel.yaml.dump_all(data, Dumper=ruamel.yaml.RoundTripDumper)
+        print(type(data[0]['a']), data[0]['a'])
+        # out = ruamel.yaml.round_trip_dump_all(data)
+        print(out)
+        assert out == s
