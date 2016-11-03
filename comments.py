@@ -440,7 +440,6 @@ class CommentedMapValuesView(CommentedMapView):
         return False
 
     def __iter__(self):
-        print('xxy values_iter')
         for key in self._mapping:
             yield self._mapping[key]
 
