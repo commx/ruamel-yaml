@@ -18,7 +18,7 @@ ChangeLog
 
 ::
 
-  0.12.16 (2016-09-21):
+  0.12.16 (2016-11-13):
    - allow dot char (and many others) in anchor name
      Fix issue 72 (reported by Shalon Wood)
    - Slightly smarter behaviour dumping strings when no style is
