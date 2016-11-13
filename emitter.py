@@ -12,7 +12,8 @@ from __future__ import print_function
 
 from ruamel.yaml.error import YAMLError
 from ruamel.yaml.events import *                                     # NOQA
-from ruamel.yaml.compat import utf8, text_type, PY2, nprint, dbg, DBG_EVENT
+from ruamel.yaml.compat import utf8, text_type, PY2, nprint, dbg, DBG_EVENT, \
+    check_anchorname_char
 
 __all__ = ['Emitter', 'EmitterError']
 
@@ -586,6 +587,9 @@ class Emitter(object):
             if (not self.flow_level and not self.simple_key_context and
                     self.analysis.allow_block):
                 return self.event.style
+        if not self.event.style and self.analysis.allow_double_quoted:
+            if "'" in self.event.value or '\n' in self.event.value:
+                return '"'
         if not self.event.style or self.event.style == '\'':
             if (self.analysis.allow_single_quoted and
                     not (self.simple_key_context and self.analysis.multiline)):
@@ -703,8 +707,7 @@ class Emitter(object):
         if not anchor:
             raise EmitterError("anchor must not be empty")
         for ch in anchor:
-            if not (u'0' <= ch <= u'9' or u'A' <= ch <= u'Z' or
-                    u'a' <= ch <= u'z' or ch in u'-_'):
+            if not check_anchorname_char(ch):
                 raise EmitterError("invalid character %r in the anchor: %r"
                                    % (utf8(ch), utf8(anchor)))
         return anchor

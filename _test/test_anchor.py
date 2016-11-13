@@ -17,8 +17,8 @@ def load(s):
     return round_trip_load(dedent(s))
 
 
-def compare(data, s):
-    assert round_trip_dump(data) == dedent(s)
+def compare(d, s):
+    assert round_trip_dump(d) == dedent(s)
 
 
 class TestAnchorsAliases:
@@ -323,3 +323,33 @@ class TestMergeKeysValues:
         if PY3:
             ref -= 1
         assert len(x) == ref
+
+
+class TestFullCharSetAnchors:
+    def test_master_of_orion(self):
+        # https://bitbucket.org/ruamel/yaml/issues/72/not-allowed-in-anchor-names
+        # submitted by Shalon Wood
+        yaml_str = '''
+        - collection: &Backend.Civilizations.RacialPerk
+            items:
+                  - key: perk_population_growth_modifier
+        - *Backend.Civilizations.RacialPerk
+        '''
+        data = load(yaml_str)  # NOQA
+
+    def test_roundtrip_00(self):
+        yaml_str = '''
+        - &dotted.words.here
+          a: 1
+          b: 2
+        - *dotted.words.here
+        '''
+        data = round_trip(yaml_str)  # NOQA
+
+    def test_roundtrip_01(self):
+        yaml_str = '''
+        - &dotted.words.here[a, b]
+        - *dotted.words.here
+        '''
+        data = load(yaml_str)  # NOQA
+        compare(data, yaml_str.replace('[', ' ['))  # an extra space is inserted

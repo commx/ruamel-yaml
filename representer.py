@@ -97,7 +97,7 @@ class BaseRepresenter(object):
         """
         David Fraser: Extract a method to represent keys in mappings, so that
         a subclass can choose not to quote them (for example)
-        used in repesent_mapping
+        used in represent_mapping
         https://bitbucket.org/davidfraser/pyyaml/commits/d81df6eb95f20cac4a79eed95ae553b5c6f77b8c
         """
         return self.represent_data(data)

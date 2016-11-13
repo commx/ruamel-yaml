@@ -32,7 +32,7 @@ from __future__ import print_function
 #
 from ruamel.yaml.error import MarkedYAMLError
 from ruamel.yaml.tokens import *                # NOQA
-from ruamel.yaml.compat import utf8, unichr, PY3
+from ruamel.yaml.compat import utf8, unichr, PY3, check_anchorname_char
 
 __all__ = ['Scanner', 'RoundTripScanner', 'ScannerError']
 
@@ -937,8 +937,9 @@ class Scanner(object):
         self.forward()
         length = 0
         ch = self.peek(length)
-        while u'0' <= ch <= u'9' or u'A' <= ch <= u'Z' or u'a' <= ch <= u'z' \
-                or ch in u'-_':
+        # while u'0' <= ch <= u'9' or u'A' <= ch <= u'Z' or u'a' <= ch <= u'z' \
+        #         or ch in u'-_':
+        while check_anchorname_char(ch):
             length += 1
             ch = self.peek(length)
         if not length:
@@ -948,8 +949,10 @@ class Scanner(object):
                 % utf8(ch), self.get_mark())
         value = self.prefix(length)
         self.forward(length)
-        ch = self.peek()
-        if ch not in u'\0 \t\r\n\x85\u2028\u2029?:,]}%@`':
+        # ch1 = ch
+        # ch = self.peek()   # no need to peek, ch is already set
+        # assert ch1 == ch
+        if ch not in u'\0 \t\r\n\x85\u2028\u2029?:,[]{}%@`':
             raise ScannerError(
                 "while scanning an %s" % name, start_mark,
                 "expected alphabetic or numeric character, but found %r"

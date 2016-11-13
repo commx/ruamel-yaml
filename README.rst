@@ -18,8 +18,18 @@ ChangeLog
 
 ::
 
+  0.12.15 (2016-09-21):
+   - allow dot char (and many others) in anchor name
+     Fix issue 72 (reported by Shalon Wood)
+   - Slightly smarter behaviour dumping strings when no style is
+     specified. Single string scalars that start with single quotes
+     or have newlines now are dumped double quoted: "'abc\nklm'" instead of
+     '''abc
+
+        klm'''
+
   0.12.14 (2016-09-21):
-   - preserve round-trip sequences that are mapping keys 
+   - preserve round-trip sequences that are mapping keys
      (prompted by stackoverflow question 39595807 from Nowox)
 
   0.12.13 (2016-09-15):
@@ -27,7 +37,7 @@ ChangeLog
      keys incorrect (reported by Tal Liron)
 
   0.12.11 (2016-09-06):
-   - Fix issue 58 endless loop in scanning tokens (reported by 
+   - Fix issue 58 endless loop in scanning tokens (reported by
      Christopher Lambert)
 
   0.12.10 (2016-09-05):
@@ -45,7 +55,7 @@ ChangeLog
      - fixing issue 46 empty lines between top-level keys were gobbled (but
        not between sequence elements, nor between keys in netsted mappings
        (reported by Alex Harvey)
-   
+
   0.12.5 (2016-08-20):
     - fixing issue 45 preserving datetime formatting (submitted by altuin)
       Several formatting parameters are preserved with some normalisation:

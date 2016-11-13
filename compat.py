@@ -120,3 +120,23 @@ def dbg(val=None):
 def nprint(*args, **kw):
     if dbg:
         print(*args, **kw)
+
+# char checkers following production rules
+
+
+def check_namespace_char(ch):
+    if u'\x21' <= ch <= u'\x7E':  # ! to ~
+        return True
+    if u'\xA0' <= ch <= u'\xD7FF':
+        return True
+    if (u'\xE000' <= ch <= u'\xFFFD') and ch != u'\xFEFF':  # excl. byte order mark
+        return True
+    if u'\x10000' <= ch <= u'\x10FFFF':
+        return True
+    return False
+
+
+def check_anchorname_char(ch):
+    if ch in u',[]{}':
+        return False
+    return check_namespace_char(ch)

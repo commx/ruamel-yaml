@@ -60,7 +60,7 @@ class ScalarNode(Node):
       " -> double quoted
       ' -> single quoted
       | -> literal style
-      > ->
+      > -> folding style
     """
     id = 'scalar'
 
