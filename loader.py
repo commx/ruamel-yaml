@@ -8,39 +8,39 @@ from ruamel.yaml.parser import Parser, RoundTripParser
 from ruamel.yaml.composer import Composer
 from ruamel.yaml.constructor import BaseConstructor, SafeConstructor, Constructor, \
     RoundTripConstructor
-from ruamel.yaml.resolver import Resolver, BaseResolver, VersionedResolver
+from ruamel.yaml.resolver import VersionedResolver
 
 __all__ = ['BaseLoader', 'SafeLoader', 'Loader', 'RoundTripLoader']
 
 
-class BaseLoader(Reader, Scanner, Parser, Composer, BaseConstructor, BaseResolver):
+class BaseLoader(Reader, Scanner, Parser, Composer, BaseConstructor, VersionedResolver):
     def __init__(self, stream, version=None, preserve_quotes=None):
         Reader.__init__(self, stream)
         Scanner.__init__(self)
         Parser.__init__(self)
         Composer.__init__(self)
         BaseConstructor.__init__(self)
-        BaseResolver.__init__(self)
+        VersionedResolver.__init__(self)
 
 
-class SafeLoader(Reader, Scanner, Parser, Composer, SafeConstructor, Resolver):
+class SafeLoader(Reader, Scanner, Parser, Composer, SafeConstructor, VersionedResolver):
     def __init__(self, stream, version=None, preserve_quotes=None):
         Reader.__init__(self, stream)
         Scanner.__init__(self)
         Parser.__init__(self)
         Composer.__init__(self)
         SafeConstructor.__init__(self)
-        Resolver.__init__(self)
+        VersionedResolver.__init__(self)
 
 
-class Loader(Reader, Scanner, Parser, Composer, Constructor, Resolver):
+class Loader(Reader, Scanner, Parser, Composer, Constructor, VersionedResolver):
     def __init__(self, stream, version=None, preserve_quotes=None):
         Reader.__init__(self, stream)
         Scanner.__init__(self)
         Parser.__init__(self)
         Composer.__init__(self)
         Constructor.__init__(self)
-        Resolver.__init__(self)
+        VersionedResolver.__init__(self)
 
 
 class RoundTripLoader(Reader, RoundTripScanner, RoundTripParser, Composer,

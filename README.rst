@@ -18,6 +18,10 @@ ChangeLog
 
 ::
 
+  0.12.17 (2016-11-15):
+   - only the RoundTripLoader included the Resolver that supports YAML 1.2
+     now all loaders do (reported by mixmastamyk)
+
   0.12.16 (2016-11-13):
    - allow dot char (and many others) in anchor name
      Fix issue 72 (reported by Shalon Wood)
