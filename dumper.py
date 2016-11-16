@@ -27,9 +27,9 @@ class BaseDumper(Emitter, Serializer, BaseRepresenter, BaseResolver):
                             explicit_start=explicit_start,
                             explicit_end=explicit_end,
                             version=version, tags=tags)
-        Representer.__init__(self, default_style=default_style,
-                             default_flow_style=default_flow_style)
-        Resolver.__init__(self)
+        BaseRepresenter.__init__(self, default_style=default_style,
+                                 default_flow_style=default_flow_style)
+        BaseResolver.__init__(self)
 
 
 class SafeDumper(Emitter, Serializer, SafeRepresenter, Resolver):

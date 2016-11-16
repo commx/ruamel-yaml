@@ -18,6 +18,9 @@ ChangeLog
 
 ::
 
+  0.12.18 (2016-11-16):
+   - another fix for numpy (re-reported by Nathanial Burdic)
+
   0.12.17 (2016-11-15):
    - only the RoundTripLoader included the Resolver that supports YAML 1.2
      now all loaders do (reported by mixmastamyk)

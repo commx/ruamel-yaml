@@ -200,7 +200,7 @@ class SafeRepresenter(BaseRepresenter):
         # https://docs.python.org/3/reference/expressions.html#parenthesized-forms :
         # "i.e. two occurrences of the empty tuple may or may not yield the same object"
         # so "data is ()" should not be used
-        if data is None or data == ():
+        if data is None or (isinstance(data, tuple) and data == ()):
             return True
         if isinstance(data, (binary_type, text_type, bool, int, float)):
             return True
