@@ -13,6 +13,11 @@ def load(s):
 
 def compare(data, s):
     assert round_trip_dump(data) == dedent(s)
+
+
+def compare_eol(data, s):
+    assert round_trip_dump(data).replace('\n', '|\n') == \
+        dedent(s).replace('EOL', '').replace('\n', '|\n')
 # @pytest.mark.xfail
 
 
@@ -224,10 +229,6 @@ class TestCommentsManipulation:
             e: 5     # comment 3
             """)
 
-# the ugly {comment} in the following is because
-# py.test cannot handle comments in strings properly
-# https://bitbucket.org/pytest-dev/pytest/issue/752/internalerror-indexerror-list-index-out-of
-
     # @pytest.mark.xfail
     def test_before_top_map_rt(self):
         data = load("""
@@ -236,8 +237,8 @@ class TestCommentsManipulation:
         """)
         data.yaml_set_start_comment('Hello\nWorld\n')
         compare(data, """
-        {comment} Hello
-        {comment} World
+        # Hello
+        # World
         a: 1
         b: 2
         """.format(comment='#'))
@@ -251,8 +252,8 @@ class TestCommentsManipulation:
         """)
         data.yaml_set_start_comment('Hello\nWorld\n')
         compare(data, """
-        {comment} Hello
-        {comment} World
+        # Hello
+        # World
         a: 1 # 1
         b: 2
         """.format(comment='#'))
@@ -266,8 +267,8 @@ class TestCommentsManipulation:
         # print(data.ca)
         # print(data.ca._items)
         compare(data, """
-            {comment} Hello
-            {comment} World
+            # Hello
+            # World
             a: 1
             b: 2
             """.format(comment='#'))
@@ -288,16 +289,16 @@ class TestCommentsManipulation:
 
     def test_before_top_seq_rt_replace(self):
         data = load("""
-        {comment} this
-        {comment} that
+        # this
+        # that
         - a
         - b
         """.format(comment='#'))
         data.yaml_set_start_comment('Hello\nWorld\n')
         print(round_trip_dump(data))
         compare(data, """
-        {comment} Hello
-        {comment} World
+        # Hello
+        # World
         - a
         - b
         """.format(comment='#'))
@@ -310,8 +311,8 @@ class TestCommentsManipulation:
         data.yaml_set_start_comment('Hello\nWorld\n')
         print(round_trip_dump(data))
         compare(data, """
-        {comment} Hello
-        {comment} World
+        # Hello
+        # World
         - a
         - b
         """.format(comment='#'))
@@ -328,8 +329,8 @@ class TestCommentsManipulation:
         compare(data, """
         a: 1
         b:
-        {comment} Hello
-        {comment} World
+        # Hello
+        # World
           c: 2
           d: 3
         """.format(comment='#'))
@@ -345,8 +346,8 @@ class TestCommentsManipulation:
         compare(data, """
         a: 1
         b:
-          {comment} Hello
-          {comment} World
+          # Hello
+          # World
           c: 2
           d: 3
         """.format(comment='#'))
@@ -364,8 +365,8 @@ class TestCommentsManipulation:
         compare(data, """
         a: 1
         b:
-        {comment} Hello
-        {comment} World
+        # Hello
+        # World
           c: 2
           d: 3
         """.format(comment='#'))
@@ -382,8 +383,93 @@ class TestCommentsManipulation:
         compare(data, """
         a: 1
         b:
-          {comment} Hello
-          {comment} World
+          # Hello
+          # World
           - c
           - d
         """.format(comment='#'))
+
+    def test_map_set_comment_before_and_after_non_first_key_00(self):
+        # http://stackoverflow.com/a/40705671/1307905
+        data = load("""
+        xyz:
+          a: 1    # comment 1
+          b: 2
+
+        test1:
+          test2:
+            test3: 3
+                """)
+        data.yaml_set_comment_before_after_key('test1', 'before test1 (top level)',
+                                               after='before test2')
+        data['test1']['test2'].yaml_set_start_comment('after test2', indent=4)
+        compare(data, """
+        xyz:
+          a: 1    # comment 1
+          b: 2
+
+        # before test1 (top level)
+        test1:
+          # before test2
+          test2:
+            # after test2
+            test3: 3
+        """)
+
+    def test_map_set_comment_before_and_after_non_first_key_01(self):
+        data = load("""
+        xyz:
+          a: 1    # comment 1
+          b: 2
+
+        test1:
+          test2:
+            test3: 3
+        """)
+        data.yaml_set_comment_before_after_key('test1', 'before test1 (top level)',
+                                               after='before test2\n\n')
+        data['test1']['test2'].yaml_set_start_comment('after test2', indent=4)
+        # EOL is needed here as dedenting gets rid of spaces (as well as does Emacs
+        compare_eol(data, """
+        xyz:
+          a: 1    # comment 1
+          b: 2
+
+        # before test1 (top level)
+        test1:
+          # before test2
+          EOL
+          test2:
+            # after test2
+            test3: 3
+        """)
+
+    def test_map_set_comment_before_and_after_non_first_key_02(self):
+        data = load("""
+        xyz:
+          a: 1    # comment 1
+          b: 2
+
+        test1:
+          test2:
+            test3: 3
+        """)
+        data.yaml_set_comment_before_after_key('test1', 'xyz\n\nbefore test1 (top level)',
+                                               after='\nbefore test2', after_indent=4)
+        data['test1']['test2'].yaml_set_start_comment('after test2', indent=4)
+        # EOL is needed here as dedenting gets rid of spaces (as well as does Emacs
+        compare_eol(data, """
+        xyz:
+          a: 1    # comment 1
+          b: 2
+
+        # xyz
+
+        # before test1 (top level)
+        test1:
+            EOL
+            # before test2
+          test2:
+            # after test2
+            test3: 3
+        """)

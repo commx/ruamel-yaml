@@ -2,9 +2,12 @@
 
 from __future__ import absolute_import
 
+import warnings
+
 from ruamel.yaml.compat import utf8
 
-__all__ = ['Mark', 'YAMLError', 'MarkedYAMLError', 'ReusedAnchorWarning']
+__all__ = ['Mark', 'YAMLError', 'MarkedYAMLError', 'ReusedAnchorWarning',
+           'UnsafeLoaderWarning']
 
 
 class Mark(object):
@@ -84,3 +87,18 @@ class MarkedYAMLError(YAMLError):
 
 class ReusedAnchorWarning(Warning):
     pass
+
+
+class UnsafeLoaderWarning(Warning):
+    text = """
+The default 'Loader' for 'load(stream)' without further arguments can be unsafe.
+Use 'load(stream, Loader=ruamel.yaml.Loader)' explicitly if that is OK.
+Alternatively include the following in your code:
+
+  import warnings
+  warnings.simplefilter('ignore', ruamel.yaml.error.UnsafeLoaderWarning)
+
+In most other cases you should consider using 'safe_load(stream)'"""
+    pass
+
+warnings.simplefilter('once', UnsafeLoaderWarning)

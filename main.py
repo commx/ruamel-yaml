@@ -70,12 +70,17 @@ def compose_all(stream, Loader=Loader):
         loader.dispose()
 
 
-def load(stream, Loader=Loader, version=None, preserve_quotes=None):
+def load(stream, Loader=None, version=None, preserve_quotes=None):
     # type: (StreamType, Any, VersionType, Any) -> Any
     """
     Parse the first YAML document in a stream
     and produce the corresponding Python object.
     """
+    if Loader is None:
+        from ruamel.yaml.loader import Loader as UnsafeLoader
+        import warnings
+        warnings.warn(UnsafeLoaderWarning.text, UnsafeLoaderWarning, stacklevel=2)
+        Loader = UnsafeLoader
     loader = Loader(stream, version, preserve_quotes=preserve_quotes)
     try:
         return loader.get_single_data()
@@ -83,11 +88,16 @@ def load(stream, Loader=Loader, version=None, preserve_quotes=None):
         loader.dispose()
 
 
-def load_all(stream, Loader=Loader, version=None, preserve_quotes=None):
+def load_all(stream, Loader=None, version=None, preserve_quotes=None):
     """
     Parse all YAML documents in a stream
     and produce corresponding Python objects.
     """
+    if Loader is None:
+        from ruamel.yaml.loader import Loader as UnsafeLoader
+        import warnings
+        warnings.warn(UnsafeLoaderWarning.text, UnsafeLoaderWarning, stacklevel=2)
+        Loader = UnsafeLoader
     loader = Loader(stream, version, preserve_quotes=preserve_quotes)
     try:
         while loader.check_data():
