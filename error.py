@@ -6,21 +6,40 @@ import warnings
 
 from ruamel.yaml.compat import utf8
 
-__all__ = ['Mark', 'YAMLError', 'MarkedYAMLError', 'ReusedAnchorWarning',
+__all__ = ['FileMark', 'StringMark', 'CommentMark',
+           'YAMLError', 'MarkedYAMLError', 'ReusedAnchorWarning',
            'UnsafeLoaderWarning']
 
 
-class Mark(object):
-    def __init__(self, name, index, line, column, buffer, pointer):
+class StreamMark(object):
+    __slots__ = 'name', 'index', 'line', 'column',
+
+    def __init__(self, name, index, line, column):
         self.name = name
         self.index = index
         self.line = line
         self.column = column
+
+    def __str__(self):
+        where = "  in \"%s\", line %d, column %d"   \
+                % (self.name, self.line+1, self.column+1)
+        return where
+
+
+class FileMark(StreamMark):
+    __slots__ = ()
+
+
+class StringMark(StreamMark):
+    __slots__ = 'name', 'index', 'line', 'column', 'buffer', 'pointer',
+
+    def __init__(self, name, index, line, column, buffer, pointer):
+        StreamMark.__init__(self, name, index, line, column)
         self.buffer = buffer
         self.pointer = pointer
 
     def get_snippet(self, indent=4, max_length=75):
-        if self.buffer is None:
+        if self.buffer is None:  # always False
             return None
         head = ''
         start = self.pointer
@@ -51,6 +70,13 @@ class Mark(object):
         if snippet is not None:
             where += ":\n"+snippet
         return where
+
+
+class CommentMark(object):
+    __slots__ = 'column',
+
+    def __init__(self, column):
+        self.column = column
 
 
 class YAMLError(Exception):

@@ -8,7 +8,6 @@ from __future__ import print_function
 from __future__ import absolute_import
 
 from .compat import text_type, binary_type
-from .main import round_trip_load
 
 
 # originally as comment
@@ -24,6 +23,8 @@ def load_yaml_guess_indent(stream, **kw):
     - if there are no block sequences, indent is taken from nested mappings, block sequence
       indent is unset (None) in that case
     """
+    from .main import round_trip_load
+
     # load a yaml file guess the indentation, if you use TABs ...
     def leading_spaces(l):
         idx = 0

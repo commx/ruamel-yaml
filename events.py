@@ -8,6 +8,8 @@ def CommentCheck():
 
 
 class Event(object):
+    __slots__ = 'start_mark', 'end_mark', 'comment',
+
     def __init__(self, start_mark=None, end_mark=None, comment=CommentCheck):
         self.start_mark = start_mark
         self.end_mark = end_mark
@@ -28,28 +30,33 @@ class Event(object):
 
 
 class NodeEvent(Event):
+    __slots__ = 'anchor',
+
     def __init__(self, anchor, start_mark=None, end_mark=None, comment=None):
         Event.__init__(self, start_mark, end_mark, comment)
         self.anchor = anchor
 
 
 class CollectionStartEvent(NodeEvent):
+    __slots__ = 'tag', 'implicit', 'flow_style',
+
     def __init__(self, anchor, tag, implicit, start_mark=None, end_mark=None,
                  flow_style=None, comment=None):
-        Event.__init__(self, start_mark, end_mark, comment)
-        self.anchor = anchor
+        NodeEvent.__init__(self, anchor, start_mark, end_mark, comment)
         self.tag = tag
         self.implicit = implicit
         self.flow_style = flow_style
 
 
 class CollectionEndEvent(Event):
-    pass
+    __slots__ = ()
+
 
 # Implementations.
 
-
 class StreamStartEvent(Event):
+    __slots__ = 'encoding',
+
     def __init__(self, start_mark=None, end_mark=None, encoding=None,
                  comment=None):
         Event.__init__(self, start_mark, end_mark, comment)
@@ -57,10 +64,12 @@ class StreamStartEvent(Event):
 
 
 class StreamEndEvent(Event):
-    pass
+    __slots__ = ()
 
 
 class DocumentStartEvent(Event):
+    __slots__ = 'explicit', 'version', 'tags',
+
     def __init__(self, start_mark=None, end_mark=None,
                  explicit=None, version=None, tags=None, comment=None):
         Event.__init__(self, start_mark, end_mark, comment)
@@ -70,6 +79,8 @@ class DocumentStartEvent(Event):
 
 
 class DocumentEndEvent(Event):
+    __slots__ = 'explicit',
+
     def __init__(self, start_mark=None, end_mark=None,
                  explicit=None, comment=None):
         Event.__init__(self, start_mark, end_mark, comment)
@@ -77,10 +88,12 @@ class DocumentEndEvent(Event):
 
 
 class AliasEvent(NodeEvent):
-    pass
+    __slots__ = ()
 
 
 class ScalarEvent(NodeEvent):
+    __slots__ = 'tag', 'implicit', 'value', 'style',
+
     def __init__(self, anchor, tag, implicit, value,
                  start_mark=None, end_mark=None, style=None, comment=None):
         NodeEvent.__init__(self, anchor, start_mark, end_mark, comment)
@@ -91,16 +104,16 @@ class ScalarEvent(NodeEvent):
 
 
 class SequenceStartEvent(CollectionStartEvent):
-    pass
+    __slots__ = ()
 
 
 class SequenceEndEvent(CollectionEndEvent):
-    pass
+    __slots__ = ()
 
 
 class MappingStartEvent(CollectionStartEvent):
-    pass
+    __slots__ = ()
 
 
 class MappingEndEvent(CollectionEndEvent):
-    pass
+    __slots__ = ()

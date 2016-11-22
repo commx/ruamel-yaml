@@ -16,11 +16,14 @@ ruamel.yaml
 ChangeLog
 =========
 
-.. should insert 0.13.0 (2016-11-20): for next key
+.. should insert NEXT: at the beginning of line for next key
 
+0.13.1 (2016-11-22):
+  - optimisations on memory usage when loading YAML from large files (py3: -50%, py2: -85%)
 
-NEXT:
-  - if load() or load_all() is called with only a single argument (stream or string)
+0.13.0 (2016-11-20):
+  - if ``load()`` or ``load_all()`` is called with only a single argument
+    (stream or string)
     a UnsafeLoaderWarning will be issued once. If appropriate you can surpress this
     warning by filtering it. Explicitly supplying the ``Loader=ruamel.yaml.Loader``
     argument, will also prevent it from being issued. You should however consider
@@ -30,7 +33,7 @@ NEXT:
     `msinn <http://stackoverflow.com/users/7185467/msinn>`_)
 
 0.12.18 (2016-11-16):
-  - another fix for numpy (re-reported by Nathanial Burdic)
+  - another fix for numpy (re-reported independently by PaulG & Nathanial Burdic)
 
 0.12.17 (2016-11-15):
   - only the RoundTripLoader included the Resolver that supports YAML 1.2

@@ -10,21 +10,29 @@ __all__ = ["ScalarString", "PreservedScalarString", "SingleQuotedScalarString",
 
 
 class ScalarString(text_type):
+    __slots__ = ()
+
     def __new__(cls, *args, **kw):
         return text_type.__new__(cls, *args, **kw)
 
 
 class PreservedScalarString(ScalarString):
+    __slots__ = ()
+
     def __new__(cls, value):
         return ScalarString.__new__(cls, value)
 
 
 class SingleQuotedScalarString(ScalarString):
+    __slots__ = ()
+
     def __new__(cls, value):
         return ScalarString.__new__(cls, value)
 
 
 class DoubleQuotedScalarString(ScalarString):
+    __slots__ = ()
+
     def __new__(cls, value):
         return ScalarString.__new__(cls, value)
 

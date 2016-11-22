@@ -3,13 +3,15 @@
 
 
 class Token(object):
+    __slots__ = 'start_mark', 'end_mark', '_comment',
+
     def __init__(self, start_mark, end_mark):
         self.start_mark = start_mark
         self.end_mark = end_mark
 
     def __repr__(self):
-        attributes = [key for key in self.__dict__
-                      if not key.endswith('_mark')]
+        attributes = [key for key in self.__slots__ if not key.endswith('_mark') and
+                      hasattr('self', key)]
         attributes.sort()
         arguments = ', '.join(['%s=%r' % (key, getattr(self, key))
                                for key in attributes])
@@ -77,6 +79,7 @@ class Token(object):
 #     id = '<byte order mark>'
 
 class DirectiveToken(Token):
+    __slots__ = 'name', 'value',
     id = '<directive>'
 
     def __init__(self, name, value, start_mark, end_mark):
@@ -86,14 +89,17 @@ class DirectiveToken(Token):
 
 
 class DocumentStartToken(Token):
+    __slots__ = ()
     id = '<document start>'
 
 
 class DocumentEndToken(Token):
+    __slots__ = ()
     id = '<document end>'
 
 
 class StreamStartToken(Token):
+    __slots__ = 'encoding',
     id = '<stream start>'
 
     def __init__(self, start_mark=None, end_mark=None, encoding=None):
@@ -102,54 +108,67 @@ class StreamStartToken(Token):
 
 
 class StreamEndToken(Token):
+    __slots__ = ()
     id = '<stream end>'
 
 
 class BlockSequenceStartToken(Token):
+    __slots__ = ()
     id = '<block sequence start>'
 
 
 class BlockMappingStartToken(Token):
+    __slots__ = ()
     id = '<block mapping start>'
 
 
 class BlockEndToken(Token):
+    __slots__ = ()
     id = '<block end>'
 
 
 class FlowSequenceStartToken(Token):
+    __slots__ = ()
     id = '['
 
 
 class FlowMappingStartToken(Token):
+    __slots__ = ()
     id = '{'
 
 
 class FlowSequenceEndToken(Token):
+    __slots__ = ()
     id = ']'
 
 
 class FlowMappingEndToken(Token):
+    __slots__ = ()
     id = '}'
 
 
 class KeyToken(Token):
+    __slots__ = ()
     id = '?'
 
 
 class ValueToken(Token):
+    __slots__ = ()
     id = ':'
 
 
 class BlockEntryToken(Token):
+    __slots__ = ()
     id = '-'
 
 
 class FlowEntryToken(Token):
+    __slots__ = ()
     id = ','
 
 
 class AliasToken(Token):
+    __slots__ = 'value',
     id = '<alias>'
 
     def __init__(self, value, start_mark, end_mark):
@@ -158,6 +177,7 @@ class AliasToken(Token):
 
 
 class AnchorToken(Token):
+    __slots__ = 'value',
     id = '<anchor>'
 
     def __init__(self, value, start_mark, end_mark):
@@ -166,6 +186,7 @@ class AnchorToken(Token):
 
 
 class TagToken(Token):
+    __slots__ = 'value',
     id = '<tag>'
 
     def __init__(self, value, start_mark, end_mark):
@@ -174,6 +195,7 @@ class TagToken(Token):
 
 
 class ScalarToken(Token):
+    __slots__ = 'value', 'plain', 'style',
     id = '<scalar>'
 
     def __init__(self, value, plain, start_mark, end_mark, style=None):
@@ -184,6 +206,7 @@ class ScalarToken(Token):
 
 
 class CommentToken(Token):
+    __slots__ = 'value', 'pre_done',
     id = '<comment>'
 
     def __init__(self, value, start_mark, end_mark):

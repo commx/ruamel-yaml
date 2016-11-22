@@ -27,6 +27,7 @@ tag_attrib = '_yaml_tag'
 class Comment(object):
     # sys.getsize tested the Comment objects, __slots__ makes them bigger
     # and adding self.end did not matter
+    __slots__ = 'comment', '_items', '_end', '_start',
     attrib = comment_attrib
 
     def __init__(self):
@@ -73,6 +74,7 @@ def NoComment():
 
 
 class Format(object):
+    __slots__ = '_flow_style',
     attrib = format_attrib
 
     def __init__(self):
@@ -131,6 +133,7 @@ class LineCol(object):
 
 
 class Anchor(object):
+    __slots__ = 'value', 'always_dump',
     attrib = anchor_attrib
 
     def __init__(self):
@@ -140,6 +143,7 @@ class Anchor(object):
 
 class Tag(object):
     """store tag information for roundtripping"""
+    __slots__ = 'value',
     attrib = tag_attrib
 
     def __init__(self):
@@ -182,12 +186,12 @@ class CommentedBase(object):
         """overwrites any preceding comment lines on an object
         expects comment to be without `#` and possible have multiple lines
         """
-        from .error import Mark
+        from .error import CommentMark
         from .tokens import CommentToken
         pre_comments = self._yaml_get_pre_comment()
         if comment[-1] == '\n':
             comment = comment[:-1]  # strip final newline if there
-        start_mark = Mark(None, None, None, indent, None, None)
+        start_mark = CommentMark(indent)
         for com in comment.split('\n'):
             pre_comments.append(CommentToken('# ' + com + '\n', start_mark, None))
 
@@ -196,7 +200,7 @@ class CommentedBase(object):
         """
         expects comment (before/after) to be without `#` and possible have multiple lines
         """
-        from ruamel.yaml.error import Mark
+        from ruamel.yaml.error import CommentMark
         from ruamel.yaml.tokens import CommentToken
 
         def comment_token(s, mark):
@@ -209,13 +213,13 @@ class CommentedBase(object):
             before = before[:-1]  # strip final newline if there
         if after and after[-1] == '\n':
             after = after[:-1]  # strip final newline if there
-        start_mark = Mark(None, None, None, indent, None, None)
+        start_mark = CommentMark(indent)
         c = self.ca.items.setdefault(key, [None, [], None, None])
         if before:
             for com in before.split('\n'):
                 c[1].append(comment_token(com, start_mark))
         if after:
-            start_mark = Mark(None, None, None, after_indent, None, None)
+            start_mark = CommentMark(after_indent)
             if c[3] is None:
                 c[3] = []
             for com in after.split('\n'):
@@ -237,7 +241,7 @@ class CommentedBase(object):
         the #. The column index is for the # mark
         """
         from .tokens import CommentToken
-        from .error import Mark
+        from .error import CommentMark
         if column is None:
             column = self._yaml_get_column(key)
         if comment[0] != '#':
@@ -246,7 +250,7 @@ class CommentedBase(object):
             if comment[0] == '#':
                 comment = ' ' + comment
                 column = 0
-        start_mark = Mark(None, None, None, column, None, None)
+        start_mark = CommentMark(column)
         ct = [CommentToken(comment, start_mark, None), None]
         self._yaml_add_eol_comment(ct, key=key)
 
@@ -292,7 +296,7 @@ class CommentedBase(object):
 
 
 class CommentedSeq(list, CommentedBase):
-    __slots__ = [Comment.attrib, ]
+    __slots__ = Comment.attrib,
 
     def _yaml_add_comment(self, comment, key=NoComment):
         if key is not NoComment:
@@ -421,7 +425,6 @@ class CommentedMapView(Sized):
 
 
 class CommentedMapKeysView(CommentedMapView, Set):
-
     __slots__ = ()
 
     @classmethod
@@ -438,7 +441,6 @@ class CommentedMapKeysView(CommentedMapView, Set):
 
 
 class CommentedMapItemsView(CommentedMapView, Set):
-
     __slots__ = ()
 
     @classmethod
@@ -460,7 +462,6 @@ class CommentedMapItemsView(CommentedMapView, Set):
 
 
 class CommentedMapValuesView(CommentedMapView):
-
     __slots__ = ()
 
     def __contains__(self, value):
@@ -475,7 +476,7 @@ class CommentedMapValuesView(CommentedMapView):
 
 
 class CommentedMap(ordereddict, CommentedBase):
-    __slots__ = [Comment.attrib, ]
+    __slots__ = Comment.attrib,
 
     def _yaml_add_comment(self, comment, key=NoComment, value=NoComment):
         """values is set to key to indicate a value attachment of comment"""
@@ -730,11 +731,11 @@ class CommentedMap(ordereddict, CommentedBase):
 
 
 class CommentedOrderedMap(CommentedMap):
-    __slots__ = [Comment.attrib, ]
+    __slots__ = Comment.attrib,
 
 
 class CommentedSet(MutableSet, CommentedMap):
-    __slots__ = [Comment.attrib, 'odict']
+    __slots__ = Comment.attrib, 'odict',
 
     def __init__(self, values=None):
         self.odict = ordereddict()

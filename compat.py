@@ -101,6 +101,20 @@ DBG_NODE = 4
 
 _debug = None
 
+if _debug:
+    class ObjectCounter(object):
+        def __init__(self):
+            self.map = {}
+
+        def __call__(self, k):
+            self.map[k] = self.map.get(k, 0) + 1
+
+        def dump(self):
+            for k in sorted(self.map):
+                print(k, '->', self.map[k])
+
+    object_counter = ObjectCounter()
+
 
 # used from yaml util when testing
 def dbg(val=None):

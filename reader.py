@@ -23,7 +23,7 @@ from __future__ import absolute_import
 import codecs
 import re
 
-from ruamel.yaml.error import YAMLError, Mark
+from ruamel.yaml.error import YAMLError, FileMark, StringMark
 from ruamel.yaml.compat import text_type, binary_type, PY3
 
 __all__ = ['Reader', 'ReaderError']
@@ -122,11 +122,10 @@ class Reader(object):
 
     def get_mark(self):
         if self.stream is None:
-            return Mark(self.name, self.index, self.line, self.column,
-                        self.buffer, self.pointer)
+            return StringMark(self.name, self.index, self.line, self.column,
+                              self.buffer, self.pointer)
         else:
-            return Mark(self.name, self.index, self.line, self.column,
-                        None, None)
+            return FileMark(self.name, self.index, self.line, self.column)
 
     def determine_encoding(self):
         while not self.eof and (self.raw_buffer is None or

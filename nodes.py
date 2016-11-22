@@ -4,6 +4,8 @@ from __future__ import print_function
 
 
 class Node(object):
+    __slots__ = 'tag', 'value', 'start_mark', 'end_mark', 'comment', 'anchor',
+
     def __init__(self, tag, value, start_mark, end_mark, comment=None):
         self.tag = tag
         self.value = value
@@ -62,6 +64,7 @@ class ScalarNode(Node):
       | -> literal style
       > -> folding style
     """
+    __slots__ = 'style',
     id = 'scalar'
 
     def __init__(self, tag, value, start_mark=None, end_mark=None, style=None,
@@ -71,6 +74,8 @@ class ScalarNode(Node):
 
 
 class CollectionNode(Node):
+    __slots__ = 'flow_style', 'anchor',
+
     def __init__(self, tag, value, start_mark=None, end_mark=None,
                  flow_style=None, comment=None, anchor=None):
         Node.__init__(self, tag, value, start_mark, end_mark, comment=comment)
@@ -79,8 +84,10 @@ class CollectionNode(Node):
 
 
 class SequenceNode(CollectionNode):
+    __slots__ = ()
     id = 'sequence'
 
 
 class MappingNode(CollectionNode):
+    __slots__ = ()
     id = 'mapping'
