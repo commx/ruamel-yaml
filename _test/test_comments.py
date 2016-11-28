@@ -659,3 +659,35 @@ class TestUnicodeComments:
           - :no: 05273867 # 〇
           - :no: 05205786 # 〇𤦌
         """)
+
+
+class TestEmptyValueBeforeComments:
+    @pytest.mark.xfail(strict=True)
+    def test_issue_25a(self):
+        round_trip("""\
+        - a: b
+          c: d
+          d:  # foo
+          - e: f
+        """)
+
+    def test_issue_25b(self):
+        round_trip("""\
+        var1: #empty
+        var2: something #notempty
+        """)
+
+    def test_issue_25c(self):
+        round_trip("""\
+        params:
+          a: 1 # comment a
+          b:   # comment b
+          c: 3 # comment c
+        """)
+
+    def test_issue_25_00(self):
+        round_trip("""\
+        params:
+          a: 1 # comment a
+          b:   # comment b
+        """)

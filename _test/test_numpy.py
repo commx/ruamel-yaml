@@ -10,7 +10,7 @@ except:
 import ruamel.yaml
 
 
-def test_numpy():
+def Xtest_numpy():
     if numpy is None:
         return
     data = numpy.arange(10)

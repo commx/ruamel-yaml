@@ -18,6 +18,9 @@ ChangeLog
 
 .. should insert NEXT: at the beginning of line for next key
 
+0.13.2 (2016-11-28):
+  - fix for comments after empty (null) values  (reported by dsw2127 and cokelaer)
+
 0.13.1 (2016-11-22):
   - optimisations on memory usage when loading YAML from large files (py3: -50%, py2: -85%)
 

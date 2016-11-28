@@ -515,13 +515,17 @@ class Parser(object):
         if self.check_token(ValueToken):
             token = self.get_token()
             # value token might have post comment move it to e.g. block
-            token.move_comment(self.peek_token())
+            if self.check_token(ValueToken):
+                token.move_comment(self.peek_token())
+            else:
+                token.move_comment(self.peek_token(), empty=True)
             if not self.check_token(KeyToken, ValueToken, BlockEndToken):
                 self.states.append(self.parse_block_mapping_key)
                 return self.parse_block_node_or_indentless_sequence()
             else:
                 self.state = self.parse_block_mapping_key
-                return self.process_empty_scalar(token.end_mark)
+                return self.process_empty_scalar(token.end_mark,
+                                                 comment=self.peek_token().comment)
         else:
             self.state = self.parse_block_mapping_key
             token = self.peek_token()
@@ -660,8 +664,8 @@ class Parser(object):
         self.state = self.parse_flow_mapping_key
         return self.process_empty_scalar(self.peek_token().start_mark)
 
-    def process_empty_scalar(self, mark):
-        return ScalarEvent(None, None, (True, False), u'', mark, mark)
+    def process_empty_scalar(self, mark, comment=None):
+        return ScalarEvent(None, None, (True, False), u'', mark, mark, comment=comment)
 
 
 class RoundTripParser(Parser):
