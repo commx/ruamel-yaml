@@ -106,6 +106,19 @@ class BaseResolver(object):
         self.resolver_prefix_paths = []
 
     @classmethod
+    def add_implicit_resolver_base(cls, tag, regexp, first):
+        # type: (Any, Any, Any) -> None
+        if 'yaml_implicit_resolvers' not in cls.__dict__:
+            # deepcopy doesn't work here
+            cls.yaml_implicit_resolvers = dict((k, cls.yaml_implicit_resolvers[k][:])
+                                               for k in cls.yaml_implicit_resolvers)
+        if first is None:
+            first = [None]
+        for ch in first:
+            cls.yaml_implicit_resolvers.setdefault(ch, []).append(
+                (tag, regexp))
+
+    @classmethod
     def add_implicit_resolver(cls, tag, regexp, first):
         # type: (Any, Any, Any) -> None
         if 'yaml_implicit_resolvers' not in cls.__dict__:
@@ -113,11 +126,11 @@ class BaseResolver(object):
             cls.yaml_implicit_resolvers = dict((k, cls.yaml_implicit_resolvers[k][:])
                                                for k in cls.yaml_implicit_resolvers)
         if first is None:
-            implicit_resolvers.append(([(1, 2), (1, 1)], tag, regexp, first))
             first = [None]
         for ch in first:
             cls.yaml_implicit_resolvers.setdefault(ch, []).append(
                 (tag, regexp))
+        implicit_resolvers.append(([(1, 2), (1, 1)], tag, regexp, first))
 
     # @classmethod
     # def add_implicit_resolver(cls, tag, regexp, first):
@@ -262,14 +275,14 @@ class BaseResolver(object):
 class Resolver(BaseResolver):
     pass
 
-Resolver.add_implicit_resolver(
+Resolver.add_implicit_resolver_base(
     u'tag:yaml.org,2002:bool',
     re.compile(u'''^(?:yes|Yes|YES|no|No|NO
     |true|True|TRUE|false|False|FALSE
     |on|On|ON|off|Off|OFF)$''', re.X),
     list(u'yYnNtTfFoO'))
 
-Resolver.add_implicit_resolver(
+Resolver.add_implicit_resolver_base(
     u'tag:yaml.org,2002:float',
     re.compile(u'''^(?:
      [-+]?(?:[0-9][0-9_]*)\\.[0-9_]*(?:[eE][-+]?[0-9]+)?
@@ -280,7 +293,7 @@ Resolver.add_implicit_resolver(
     |\\.(?:nan|NaN|NAN))$''', re.X),
     list(u'-+0123456789.'))
 
-Resolver.add_implicit_resolver(
+Resolver.add_implicit_resolver_base(
     u'tag:yaml.org,2002:int',
     re.compile(u'''^(?:[-+]?0b[0-1_]+
     |[-+]?0o?[0-7_]+
@@ -289,19 +302,19 @@ Resolver.add_implicit_resolver(
     |[-+]?[1-9][0-9_]*(?::[0-5]?[0-9])+)$''', re.X),
     list(u'-+0123456789'))
 
-Resolver.add_implicit_resolver(
+Resolver.add_implicit_resolver_base(
     u'tag:yaml.org,2002:merge',
     re.compile(u'^(?:<<)$'),
     [u'<'])
 
-Resolver.add_implicit_resolver(
+Resolver.add_implicit_resolver_base(
     u'tag:yaml.org,2002:null',
     re.compile(u'''^(?: ~
     |null|Null|NULL
     | )$''', re.X),
     [u'~', u'n', u'N', u''])
 
-Resolver.add_implicit_resolver(
+Resolver.add_implicit_resolver_base(
     u'tag:yaml.org,2002:timestamp',
     re.compile(u'''^(?:[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]
     |[0-9][0-9][0-9][0-9] -[0-9][0-9]? -[0-9][0-9]?
@@ -310,14 +323,14 @@ Resolver.add_implicit_resolver(
     (?:[ \\t]*(?:Z|[-+][0-9][0-9]?(?::[0-9][0-9])?))?)$''', re.X),
     list(u'0123456789'))
 
-Resolver.add_implicit_resolver(
+Resolver.add_implicit_resolver_base(
     u'tag:yaml.org,2002:value',
     re.compile(u'^(?:=)$'),
     [u'='])
 
 # The following resolver is only for documentation purposes. It cannot work
 # because plain scalars cannot start with '!', '&', or '*'.
-Resolver.add_implicit_resolver(
+Resolver.add_implicit_resolver_base(
     u'tag:yaml.org,2002:yaml',
     re.compile(u'^(?:!|&|\\*)$'),
     list(u'!&*'))
