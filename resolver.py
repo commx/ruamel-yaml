@@ -15,6 +15,77 @@ __all__ = ['BaseResolver', 'Resolver', 'VersionedResolver']
 
 _DEFAULT_VERSION = (1, 2)
 
+# resolvers consist of
+# - a list of applicable version
+# - a tag
+# - a regexp
+# - a list of first characters to match
+implicit_resolvers = [
+    ([(1, 2)],
+        u'tag:yaml.org,2002:bool',
+        re.compile(u'''^(?:true|True|TRUE|false|False|FALSE)$''', re.X),
+        list(u'tTfF')),
+    ([(1, 1)],
+        u'tag:yaml.org,2002:bool',
+        re.compile(u'''^(?:yes|Yes|YES|no|No|NO
+        |true|True|TRUE|false|False|FALSE
+        |on|On|ON|off|Off|OFF)$''', re.X),
+        list(u'yYnNtTfFoO')),
+    ([(1, 2), (1, 1)],
+        u'tag:yaml.org,2002:float',
+        re.compile(u'''^(?:
+         [-+]?(?:[0-9][0-9_]*)\\.[0-9_]*(?:[eE][-+]?[0-9]+)?
+        |[-+]?(?:[0-9][0-9_]*)(?:[eE][-+]?[0-9]+)
+        |\\.[0-9_]+(?:[eE][-+][0-9]+)?
+        |[-+]?[0-9][0-9_]*(?::[0-5]?[0-9])+\\.[0-9_]*
+        |[-+]?\\.(?:inf|Inf|INF)
+        |\\.(?:nan|NaN|NAN))$''', re.X),
+        list(u'-+0123456789.')),
+    ([(1, 2)],
+        u'tag:yaml.org,2002:int',
+        re.compile(u'''^(?:[-+]?0b[0-1_]+
+        |[-+]?0o?[0-7_]+
+        |[-+]?(?:0|[1-9][0-9_]*)
+        |[-+]?0x[0-9a-fA-F_]+)$''', re.X),
+        list(u'-+0123456789')),
+    ([(1, 1)],
+        u'tag:yaml.org,2002:int',
+        re.compile(u'''^(?:[-+]?0b[0-1_]+
+        |[-+]?0o?[0-7_]+
+        |[-+]?(?:0|[1-9][0-9_]*)
+        |[-+]?0x[0-9a-fA-F_]+
+        |[-+]?[1-9][0-9_]*(?::[0-5]?[0-9])+)$''', re.X),
+        list(u'-+0123456789')),
+    ([(1, 2), (1, 1)],
+        u'tag:yaml.org,2002:merge',
+        re.compile(u'^(?:<<)$'),
+        [u'<']),
+    ([(1, 2), (1, 1)],
+        u'tag:yaml.org,2002:null',
+        re.compile(u'''^(?: ~
+        |null|Null|NULL
+        | )$''', re.X),
+        [u'~', u'n', u'N', u'']),
+    ([(1, 2), (1, 1)],
+        u'tag:yaml.org,2002:timestamp',
+        re.compile(u'''^(?:[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]
+        |[0-9][0-9][0-9][0-9] -[0-9][0-9]? -[0-9][0-9]?
+        (?:[Tt]|[ \\t]+)[0-9][0-9]?
+        :[0-9][0-9] :[0-9][0-9] (?:\\.[0-9]*)?
+        (?:[ \\t]*(?:Z|[-+][0-9][0-9]?(?::[0-9][0-9])?))?)$''', re.X),
+        list(u'0123456789')),
+    ([(1, 2), (1, 1)],
+        u'tag:yaml.org,2002:value',
+        re.compile(u'^(?:=)$'),
+        [u'=']),
+    # The following resolver is only for documentation purposes. It cannot work
+    # because plain scalars cannot start with '!', '&', or '*'.
+    ([(1, 2), (1, 1)],
+        u'tag:yaml.org,2002:yaml',
+        re.compile(u'^(?:!|&|\\*)$'),
+        list(u'!&*')),
+]
+
 
 class ResolverError(YAMLError):
     pass
@@ -42,10 +113,14 @@ class BaseResolver(object):
             cls.yaml_implicit_resolvers = dict((k, cls.yaml_implicit_resolvers[k][:])
                                                for k in cls.yaml_implicit_resolvers)
         if first is None:
+            implicit_resolvers.append(([(1, 2), (1, 1)], tag, regexp, first))
             first = [None]
         for ch in first:
             cls.yaml_implicit_resolvers.setdefault(ch, []).append(
                 (tag, regexp))
+
+    # @classmethod
+    # def add_implicit_resolver(cls, tag, regexp, first):
 
     @classmethod
     def add_path_resolver(cls, tag, path, kind=None):
@@ -246,77 +321,6 @@ Resolver.add_implicit_resolver(
     u'tag:yaml.org,2002:yaml',
     re.compile(u'^(?:!|&|\\*)$'),
     list(u'!&*'))
-
-# resolvers consist of
-# - a list of applicable version
-# - a tag
-# - a regexp
-# - a list of first characters to match
-implicit_resolvers = [
-    ([(1, 2)],
-        u'tag:yaml.org,2002:bool',
-        re.compile(u'''^(?:true|True|TRUE|false|False|FALSE)$''', re.X),
-        list(u'tTfF')),
-    ([(1, 1)],
-        u'tag:yaml.org,2002:bool',
-        re.compile(u'''^(?:yes|Yes|YES|no|No|NO
-        |true|True|TRUE|false|False|FALSE
-        |on|On|ON|off|Off|OFF)$''', re.X),
-        list(u'yYnNtTfFoO')),
-    ([(1, 2), (1, 1)],
-        u'tag:yaml.org,2002:float',
-        re.compile(u'''^(?:
-         [-+]?(?:[0-9][0-9_]*)\\.[0-9_]*(?:[eE][-+]?[0-9]+)?
-        |[-+]?(?:[0-9][0-9_]*)(?:[eE][-+]?[0-9]+)
-        |\\.[0-9_]+(?:[eE][-+][0-9]+)?
-        |[-+]?[0-9][0-9_]*(?::[0-5]?[0-9])+\\.[0-9_]*
-        |[-+]?\\.(?:inf|Inf|INF)
-        |\\.(?:nan|NaN|NAN))$''', re.X),
-        list(u'-+0123456789.')),
-    ([(1, 2)],
-        u'tag:yaml.org,2002:int',
-        re.compile(u'''^(?:[-+]?0b[0-1_]+
-        |[-+]?0o?[0-7_]+
-        |[-+]?(?:0|[1-9][0-9_]*)
-        |[-+]?0x[0-9a-fA-F_]+)$''', re.X),
-        list(u'-+0123456789')),
-    ([(1, 1)],
-        u'tag:yaml.org,2002:int',
-        re.compile(u'''^(?:[-+]?0b[0-1_]+
-        |[-+]?0o?[0-7_]+
-        |[-+]?(?:0|[1-9][0-9_]*)
-        |[-+]?0x[0-9a-fA-F_]+
-        |[-+]?[1-9][0-9_]*(?::[0-5]?[0-9])+)$''', re.X),
-        list(u'-+0123456789')),
-    ([(1, 2), (1, 1)],
-        u'tag:yaml.org,2002:merge',
-        re.compile(u'^(?:<<)$'),
-        [u'<']),
-    ([(1, 2), (1, 1)],
-        u'tag:yaml.org,2002:null',
-        re.compile(u'''^(?: ~
-        |null|Null|NULL
-        | )$''', re.X),
-        [u'~', u'n', u'N', u'']),
-    ([(1, 2), (1, 1)],
-        u'tag:yaml.org,2002:timestamp',
-        re.compile(u'''^(?:[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]
-        |[0-9][0-9][0-9][0-9] -[0-9][0-9]? -[0-9][0-9]?
-        (?:[Tt]|[ \\t]+)[0-9][0-9]?
-        :[0-9][0-9] :[0-9][0-9] (?:\\.[0-9]*)?
-        (?:[ \\t]*(?:Z|[-+][0-9][0-9]?(?::[0-9][0-9])?))?)$''', re.X),
-        list(u'0123456789')),
-    ([(1, 2), (1, 1)],
-        u'tag:yaml.org,2002:value',
-        re.compile(u'^(?:=)$'),
-        [u'=']),
-    # The following resolver is only for documentation purposes. It cannot work
-    # because plain scalars cannot start with '!', '&', or '*'.
-    ([(1, 2), (1, 1)],
-        u'tag:yaml.org,2002:yaml',
-        re.compile(u'^(?:!|&|\\*)$'),
-        list(u'!&*')),
-]
 
 
 class VersionedResolver(BaseResolver):
