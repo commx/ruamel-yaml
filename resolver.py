@@ -3,7 +3,6 @@
 from __future__ import absolute_import
 
 import re
-import copy
 
 from typing import Any, Dict  # NOQA
 
@@ -39,7 +38,9 @@ class BaseResolver(object):
     def add_implicit_resolver(cls, tag, regexp, first):
         # type: (Any, Any, Any) -> None
         if 'yaml_implicit_resolvers' not in cls.__dict__:
-            cls.yaml_implicit_resolvers = copy.deepcopy(cls.yaml_implicit_resolvers)
+            # deepcopy doesn't work here
+            cls.yaml_implicit_resolvers = dict((k, cls.yaml_implicit_resolvers[k][:])
+                                               for k in cls.yaml_implicit_resolvers)
         if first is None:
             first = [None]
         for ch in first:

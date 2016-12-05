@@ -18,6 +18,9 @@ ChangeLog
 
 .. should insert NEXT: at the beginning of line for next key
 
+0.13.3 (2016-12-05):
+  - fix for issue 82, deepcopy not working (reported by code monk)
+
 0.13.2 (2016-11-28):
   - fix for comments after empty (null) values  (reported by dsw2127 and cokelaer)
 
