@@ -8,6 +8,7 @@ these are not really related, formatting could be factored out as
 a separate base
 """
 
+import copy
 from collections import MutableSet, Sized, Set  # type: ignore
 
 from ruamel.yaml.compat import ordereddict, PY2
@@ -296,6 +297,15 @@ class CommentedBase(object):
     def yaml_set_tag(self, value):
         self.tag.value = value
 
+    def copy_attributes(self, t, deep=False):
+        for a in [Comment.attrib, Format.attrib, LineCol.attrib, Anchor.attrib,
+                  Tag.attrib, merge_attrib]:
+            if hasattr(self, a):
+                if deep:
+                    setattr(t, a, copy.deepcopy(getattr(self, a)))
+                else:
+                    setattr(t, a, getattr(self, a))
+
 
 class CommentedSeq(list, CommentedBase):
     __slots__ = Comment.attrib,
@@ -356,6 +366,14 @@ class CommentedSeq(list, CommentedBase):
         else:
             pre_comments = self.ca.comment[1] = []
         return pre_comments
+
+    def __deepcopy__(self, memo):
+        res = CommentedSeq()
+        memo[id(self)] = res
+        for k in self:
+            res.append(copy.deepcopy(k))
+            self.copy_attributes(res, deep=True)
+        return res
 
 
 class CommentedKeySeq(tuple, CommentedBase):
@@ -730,6 +748,14 @@ class CommentedMap(ordereddict, CommentedBase):
 
     def add_yaml_merge(self, value):
         self.merge.extend(value)
+
+    def __deepcopy__(self, memo):
+        res = CommentedMap()
+        memo[id(self)] = res
+        for k in self:
+            res[k] = copy.deepcopy(self[k])
+            self.copy_attributes(res, deep=True)
+        return res
 
 
 class CommentedOrderedMap(CommentedMap):

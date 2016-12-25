@@ -18,8 +18,11 @@ ChangeLog
 
 .. should insert NEXT: at the beginning of line for next key
 
+0.13.5 (2016-12-25):
+  - fix for issue 84, deepcopy not properly workin (reported by Peter Amstutz)
+
 0.13.4 (2016-12-05):
-  - another fxi for issue 82, change to non-global resolver data broke implicit type
+  - another fix for issue 82, change to non-global resolver data broke implicit type
     specification
 
 0.13.3 (2016-12-05):
