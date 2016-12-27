@@ -18,12 +18,16 @@ ChangeLog
 
 .. should insert NEXT: at the beginning of line for next key
 
+0.13.7 (2016-12-27):
+  - fix for issue 85, constructor.py importing unicode_literals caused mypy to fail
+    on 2.7 (reported by Peter Amstutz)
+
 0.13.6 (2016-12-27):
   - fix for issue 83, collections.OrderedDict not representable by SafeRepresenter
     (reported by Frazer McLean)
 
 0.13.5 (2016-12-25):
-  - fix for issue 84, deepcopy not properly workin (reported by Peter Amstutz)
+  - fix for issue 84, deepcopy not properly working (reported by Peter Amstutz)
 
 0.13.4 (2016-12-05):
   - another fix for issue 82, change to non-global resolver data broke implicit type
