@@ -18,6 +18,10 @@ ChangeLog
 
 .. should insert NEXT: at the beginning of line for next key
 
+0.13.6 (2016-12-27):
+  - fix for issue 83, collections.OrderedDict not representable by SafeRepresenter
+    (reported by Frazer McLean)
+
 0.13.5 (2016-12-25):
   - fix for issue 84, deepcopy not properly workin (reported by Peter Amstutz)
 

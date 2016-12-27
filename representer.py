@@ -365,6 +365,11 @@ SafeRepresenter.add_representer(set,
 SafeRepresenter.add_representer(ordereddict,
                                 SafeRepresenter.represent_ordereddict)
 
+if sys.version_info >= (2, 7):
+    import collections
+    SafeRepresenter.add_representer(collections.OrderedDict,
+                                    SafeRepresenter.represent_ordereddict)
+
 SafeRepresenter.add_representer(datetime.date,
                                 SafeRepresenter.represent_date)
 
