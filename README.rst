@@ -18,6 +18,13 @@ ChangeLog
 
 .. should insert NEXT: at the beginning of line for next key
 
+0.13.8 (2017-01-18):
+  - fix for issue 91, when a compiler is unavailable reported by Maximilian Hils
+  - fix for deepcopy issue with TimeStamps not preserving 'T', reported on
+    `StackOverflow Q&A <http://stackoverflow.com/a/41577841/1307905>`_ by
+    `Quuxplusone <http://stackoverflow.com/users/1424877/quuxplusone>`_
+
+
 0.13.7 (2016-12-27):
   - fix for issue 85, constructor.py importing unicode_literals caused mypy to fail
     on 2.7 (reported by Peter Amstutz)

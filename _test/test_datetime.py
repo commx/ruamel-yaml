@@ -19,6 +19,7 @@ Please note that a fraction can only be included if not equal to 0
 
 """
 
+import copy
 import pytest    # NOQA
 import ruamel.yaml   # NOQA
 
@@ -119,3 +120,11 @@ class TestDateTime:
         round_trip("""
         dt: 2016-08-19T22:45:47Z
         """)
+
+    def test_deepcopy_datestring(self):
+        # reported by Quuxplusone, http://stackoverflow.com/a/41577841/1307905
+        x = dedent("""\
+        foo: 2016-10-12T12:34:56
+        """)
+        data = copy.deepcopy(round_trip_load(x))
+        assert round_trip_dump(data) == x
