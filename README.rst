@@ -18,6 +18,9 @@ ChangeLog
 
 .. should insert NEXT: at the beginning of line for next key
 
+0.13.9 (2017-01-18):
+  - fix for issue 92, wrong import name reported by the-corinthian
+
 0.13.8 (2017-01-18):
   - fix for issue 91, when a compiler is unavailable reported by Maximilian Hils
   - fix for deepcopy issue with TimeStamps not preserving 'T', reported on

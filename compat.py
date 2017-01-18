@@ -14,7 +14,7 @@ except:
     try:
         from collections import OrderedDict
     except ImportError:
-        from orderddict import OrderedDict  # type: ignore
+        from ordereddict import OrderedDict  # type: ignore
     # to get the right name import ... as ordereddict doesn't do that
 
     class ordereddict(OrderedDict):   # type: ignore
