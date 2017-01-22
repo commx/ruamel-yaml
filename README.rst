@@ -18,6 +18,10 @@ ChangeLog
 
 .. should insert NEXT: at the beginning of line for next key
 
+0.13.10 (2017-01-22):
+  - fix for issue 93, insert spurious blank line before single line comment
+    between indented sequence elements (reported by Alex)
+
 0.13.9 (2017-01-18):
   - fix for issue 92, wrong import name reported by the-corinthian
 

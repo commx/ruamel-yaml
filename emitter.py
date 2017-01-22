@@ -434,7 +434,6 @@ class Emitter(object):
             self.indent = self.indents.pop()
             self.state = self.states.pop()
         else:
-            self.write_indent()
             if self.event.comment and self.event.comment[1]:
                 self.write_pre_comment(self.event)
             self.write_indent()

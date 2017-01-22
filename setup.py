@@ -586,6 +586,11 @@ class NameSpacePackager(object):
         to be installed explicitly as they are not on PyPI
         install_requires should be  dict, with keys 'any', 'py27' etc
         or a list (which is as if only 'any' was defined
+
+        ToDo: update with: pep508 conditional dependencies
+        https://www.python.org/dev/peps/pep-0508/
+        https://wheel.readthedocs.io/en/latest/index.html#defining-conditional-dependencies
+        https://hynek.me/articles/conditional-python-dependencies/
         """
         if self._pkg[0] is None:
             self._pkg[0] = []
@@ -683,7 +688,7 @@ class NameSpacePackager(object):
                     sources=[self.pn(x) for x in target['src']],
                     libraries=[self.pn(x) for x in target.get('lib')],
                 )
-            self._ext_modules.append(ext)
+                self._ext_modules.append(ext)
             return self._ext_modules
 
         print('sys.argv', sys.argv)

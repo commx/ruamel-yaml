@@ -638,6 +638,38 @@ class TestEmptyLines:
         y = round_trip_dump(d, indent=4)
         assert yaml_str == y
 
+    def test_issue_93(self):
+        round_trip("""\
+        a:
+          b:
+          - c1: cat  # a1
+          # my comment on catfish
+          - c2: catfish  # a2
+        """)
+
+    def test_issue_93_00(self):
+        round_trip("""\
+        a:
+        - - c1: cat   # a1
+          # my comment on catfish
+          - c2: catfish  # a2
+        """)
+
+    def test_issue_93_01(self):
+        round_trip("""\
+        - - c1: cat   # a1
+          # my comment on catfish
+          - c2: catfish  # a2
+        """)
+
+    def test_issue_93_02(self):
+        # never failed as there is no indent
+        round_trip("""\
+        - c1: cat
+        # my comment on catfish
+        - c2: catfish
+        """)
+
 
 class TestUnicodeComments:
     @pytest.mark.skipif(ruamel.yaml.reader.Reader.UNICODE_SIZE < 4,
