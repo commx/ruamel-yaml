@@ -18,6 +18,11 @@ ChangeLog
 
 .. should insert NEXT: at the beginning of line for next key
 
+0.13.11 (2017-01-23):
+  - allow ':' in flow style scalars if not followed by space. Also don't
+    quote such scalar as this is no longer necessary.
+  - add python 3.6 manylinux wheel to PyPI 
+
 0.13.10 (2017-01-22):
   - fix for issue 93, insert spurious blank line before single line comment
     between indented sequence elements (reported by Alex)

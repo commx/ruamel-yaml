@@ -1344,10 +1344,13 @@ class Scanner(object):
                 break
             while True:
                 ch = self.peek(length)
-                if ch in u'\0 \t\r\n\x85\u2028\u2029' \
-                   or (not self.flow_level and ch == u':' and
-                       self.peek(length+1) in u'\0 \t\r\n\x85\u2028\u2029') \
-                   or (self.flow_level and ch in u',:?[]{}'):
+                if (ch == u':' and
+                   self.peek(length+1) not in u'\0 \t\r\n\x85\u2028\u2029'):
+                    pass
+                elif (ch in u'\0 \t\r\n\x85\u2028\u2029' or
+                      (not self.flow_level and ch == u':' and
+                          self.peek(length+1) in u'\0 \t\r\n\x85\u2028\u2029') or
+                      (self.flow_level and ch in u',:?[]{}')):
                     break
                 length += 1
             # It's not clear what we should do with ':' in the flow context.

@@ -775,8 +775,8 @@ class Emitter(object):
                 if ch in u',?[]{}':
                     flow_indicators = True
                 if ch == u':':
-                    flow_indicators = True
                     if followed_by_whitespace:
+                        flow_indicators = True
                         block_indicators = True
                 if ch == u'#' and preceeded_by_whitespace:
                     flow_indicators = True

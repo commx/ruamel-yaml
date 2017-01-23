@@ -212,3 +212,16 @@ class TestTagFailures:
         location: Germany
         language: python
         """)
+
+
+class TestFlowValues:
+    def test_flow_value_with_colon(self):
+        round_trip("""\
+        {a: bcd:efg}
+        """)
+
+    @pytest.mark.xfail(strict=True)
+    def test_flow_value_with_colon_quoted(self):
+        round_trip("""\
+        {a: 'bcd:efg'}
+        """)
