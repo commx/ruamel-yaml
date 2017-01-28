@@ -670,6 +670,18 @@ class TestEmptyLines:
         - c2: catfish
         """)
 
+    def test_issue_96(self):
+        # inserted extra line on trailing spaces
+        round_trip("""\
+        a:
+          b:
+            c: c_val
+            d:
+
+          e:
+            g: g_val
+        """)
+
 
 class TestUnicodeComments:
     @pytest.mark.skipif(ruamel.yaml.reader.Reader.UNICODE_SIZE < 4,

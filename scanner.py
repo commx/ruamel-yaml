@@ -1601,7 +1601,6 @@ class RoundTripScanner(Scanner):
             # empty line within indented key context
             # no need to update end-mark, that is not used
             value = value[:-1]
-        print('comment', repr(value))
         self.tokens.append(CommentToken(value, start_mark, end_mark))
 
     # scanner
