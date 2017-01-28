@@ -1,7 +1,6 @@
 # coding: utf-8
 
-from __future__ import absolute_import
-from __future__ import print_function
+from __future__ import print_function, absolute_import, division, unicode_literals
 
 # Scanner produces tokens of the following types:
 # STREAM-START
@@ -1326,7 +1325,7 @@ class Scanner(object):
     def scan_plain(self):
         # See the specification for details.
         # We add an additional restriction for the flow context:
-        #   plain scalars in the flow context cannot contain ',', ':' and '?'.
+        #   plain scalars in the flow context cannot contain ',', ': '  and '?'.
         # We also keep track of the `allow_simple_key` flag here.
         # Indentation rules are loosed for the flow context.
         chunks = []
@@ -1596,8 +1595,13 @@ class RoundTripScanner(Scanner):
             self.tokens_taken += 1
             return self.tokens.pop(0)
 
-    def fetch_comment(self, comment):  # XXXX
+    def fetch_comment(self, comment):
         value, start_mark, end_mark = comment
+        while value and value[-1] == u' ':
+            # empty line within indented key context
+            # no need to update end-mark, that is not used
+            value = value[:-1]
+        print('comment', repr(value))
         self.tokens.append(CommentToken(value, start_mark, end_mark))
 
     # scanner

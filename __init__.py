@@ -1,7 +1,6 @@
 # coding: utf-8
 
-from __future__ import print_function
-from __future__ import absolute_import
+from __future__ import print_function, absolute_import, division, unicode_literals
 
 # install_requires of ruamel.base is not really required but the old
 # ruamel.base installed __init__.py, and thus a new version should
@@ -9,7 +8,7 @@ from __future__ import absolute_import
 
 _package_data = dict(
     full_package_name="ruamel.yaml",
-    version_info=(0, 13, 11),
+    version_info=(0, 13, 12),
     author="Anthon van der Neut",
     author_email="a.van.der.neut@ruamel.eu",
     description="ruamel.yaml is a YAML parser/emitter that supports roundtrip preservation of comments, seq/map flow style, and map key order",  # NOQA
