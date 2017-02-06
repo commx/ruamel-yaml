@@ -69,23 +69,27 @@ element itself would normally be pushed to the next line (and older versions
 of ruamel.yaml did so). But this is
 prevented from happening. However the ``indent`` level is what is used
 for calculating the cumulative indent for deeper levels and specifying
-``indent=3`` resp. ``block_seq_indent=2``, gives correct, but counter
+``indent=3`` resp. ``block_seq_indent=2``, migth give correct, but counter
 intuitive results.
+
+**It is best to always have** `indent >= block_seq_indent + 2` **but
+ this is not enforced**. Depending on your structure, not following
+ this advice **might lead to invalid output**.
 
 Positioning ':' in top level mappings, prefix in ':'
 ----------------------------------------------------
 
 If you want your toplevel mappings to look like::
 
-  library version: 1 
+  library version: 1
   comment        : |
       this is just a first try
 
 then call ``round_trip_dump()`` with ``top_level_colon_align=True``
-(and ``indent=4``). ``True`` causes calculation based on the longest key, 
+(and ``indent=4``). ``True`` causes calculation based on the longest key,
 but you can also explicitly set a number.
 
-If you want an extra space between a mapping key and the colon specify 
+If you want an extra space between a mapping key and the colon specify
 ``prefix_colon=' '``::
 
   - https://myurl/abc.tar.xz : 23445
@@ -96,7 +100,7 @@ If you combine ``prefix_colon`` with ``top_level_colon_align``, the
 top level mapping doesn't get the extra prefix. If you want that
 anyway, specify ``top_level_colon_align=12`` where ``12`` has to be an
 integer that is one more than length of the widest key.
-  
+
 
 Document version support.
 -------------------------
@@ -126,7 +130,7 @@ or the equivalent (version can be a tuple, list or string):
 
   ruamel.yaml.round_trip_load(some_str, version="1.1")
 
-this also works for ``load_all``/``round_trip_load_all``. 
+this also works for ``load_all``/``round_trip_load_all``.
 
 *If you cannot change your code, stick with ruamel.yaml==0.10.23 and let
 me know if it would help to be able to set an environment variable.*
@@ -262,6 +266,3 @@ included and you can do::
     data = yaml.load(yaml_str, Loader=yaml.RoundTripLoader)
 
     assert data.mlget(['a', 1, 'd', 'f'], list_ok=True) == 196
-
-
-

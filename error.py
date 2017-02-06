@@ -60,8 +60,10 @@ class StringMark(StreamMark):
                 end -= 5
                 break
         snippet = utf8(self.buffer[start:end])
+        caret = '^'
+        caret = '^ (line: {})'.format(self.line+1)
         return ' '*indent + head + snippet + tail + '\n' \
-               + ' '*(indent+self.pointer-start+len(head)) + '^'
+               + ' '*(indent+self.pointer-start+len(head)) + caret
 
     def __str__(self):
         snippet = self.get_snippet()
