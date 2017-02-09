@@ -89,10 +89,10 @@ class Composer(object):
         if anchor is not None:  # have an anchor
             if anchor in self.anchors:
                 # raise ComposerError(
-                #     "found duplicate anchor %r; first occurence"
+                #     "found duplicate anchor %r; first occurrence"
                 #     % utf8(anchor), self.anchors[anchor].start_mark,
-                #     "second occurence", event.start_mark)
-                ws = "\nfound duplicate anchor {!r}\nfirst occurence {}\nsecond occurence "\
+                #     "second occurrence", event.start_mark)
+                ws = "\nfound duplicate anchor {!r}\nfirst occurrence {}\nsecond occurrence "\
                      "{}".format(
                          (anchor), self.anchors[anchor].start_mark, event.start_mark)
                 warnings.warn(ws, ReusedAnchorWarning)

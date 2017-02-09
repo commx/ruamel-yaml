@@ -932,7 +932,7 @@ static char __pyx_k_StreamStartEvent[] = "StreamStartEvent";
 static char __pyx_k_StreamStartToken[] = "StreamStartToken";
 static char __pyx_k_descend_resolver[] = "descend_resolver";
 static char __pyx_k_no_emitter_error[] = "no emitter error";
-static char __pyx_k_second_occurence[] = "second occurence";
+static char __pyx_k_second_occurrence[] = "second occurrence";
 static char __pyx_k_MappingStartEvent[] = "MappingStartEvent";
 static char __pyx_k_ruamel_yaml_error[] = "ruamel.yaml.error";
 static char __pyx_k_ruamel_yaml_nodes[] = "ruamel.yaml.nodes";
@@ -973,7 +973,7 @@ static char __pyx_k_serializer_is_already_opened[] = "serializer is already open
 static char __pyx_k_home_avdndata_hg_ruamel_eu_src[] = "/home/avdndata/hg/ruamel.eu/src/site-packages/ruamel/yaml/ext/_ruamel_yaml.pyx";
 static char __pyx_k_a_string_or_stream_input_is_requ[] = "a string or stream input is required";
 static char __pyx_k_expected_a_single_document_in_th[] = "expected a single document in the stream";
-static char __pyx_k_found_duplicate_anchor_first_occ[] = "found duplicate anchor; first occurence";
+static char __pyx_k_found_duplicate_anchor_first_occ[] = "found duplicate anchor; first occurrence";
 static PyObject *__pyx_n_s_AliasEvent;
 static PyObject *__pyx_n_s_AliasToken;
 static PyObject *__pyx_n_s_AnchorToken;
@@ -1108,8 +1108,8 @@ static PyObject *__pyx_n_s_ruamel_yaml_representer;
 static PyObject *__pyx_n_s_ruamel_yaml_scanner;
 static PyObject *__pyx_n_s_ruamel_yaml_serializer;
 static PyObject *__pyx_n_s_ruamel_yaml_tokens;
-static PyObject *__pyx_kp_s_second_occurence;
-static PyObject *__pyx_kp_u_second_occurence;
+static PyObject *__pyx_kp_s_second_occurrence;
+static PyObject *__pyx_kp_u_second_occurrence;
 static PyObject *__pyx_kp_s_serializer_is_already_opened;
 static PyObject *__pyx_kp_u_serializer_is_already_opened;
 static PyObject *__pyx_kp_s_serializer_is_closed;
@@ -10543,8 +10543,8 @@ static PyObject *__pyx_f_12_ruamel_yaml_7CParser__compose_node(struct __pyx_obj_
  *                         self.parsed_event.start_mark.column,
  *                         None, None)
  *                 if PY_MAJOR_VERSION < 3:             # <<<<<<<<<<<<<<
- *                     raise ComposerError("found duplicate anchor; first occurence",
- *                             self.anchors[anchor].start_mark, "second occurence", mark)
+ *                     raise ComposerError("found duplicate anchor; first occurrence",
+ *                             self.anchors[anchor].start_mark, "second occurrence", mark)
  */
       __pyx_t_4 = ((PY_MAJOR_VERSION < 3) != 0);
       if (__pyx_t_4) {
@@ -10552,8 +10552,8 @@ static PyObject *__pyx_f_12_ruamel_yaml_7CParser__compose_node(struct __pyx_obj_
         /* "_ruamel_yaml.pyx":764
  *                         None, None)
  *                 if PY_MAJOR_VERSION < 3:
- *                     raise ComposerError("found duplicate anchor; first occurence",             # <<<<<<<<<<<<<<
- *                             self.anchors[anchor].start_mark, "second occurence", mark)
+ *                     raise ComposerError("found duplicate anchor; first occurrence",             # <<<<<<<<<<<<<<
+ *                             self.anchors[anchor].start_mark, "second occurrence", mark)
  *                 else:
  */
         __pyx_t_3 = __Pyx_GetModuleGlobalName(__pyx_n_s_ComposerError); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 764; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
@@ -10561,10 +10561,10 @@ static PyObject *__pyx_f_12_ruamel_yaml_7CParser__compose_node(struct __pyx_obj_
 
         /* "_ruamel_yaml.pyx":765
  *                 if PY_MAJOR_VERSION < 3:
- *                     raise ComposerError("found duplicate anchor; first occurence",
- *                             self.anchors[anchor].start_mark, "second occurence", mark)             # <<<<<<<<<<<<<<
+ *                     raise ComposerError("found duplicate anchor; first occurrence",
+ *                             self.anchors[anchor].start_mark, "second occurrence", mark)             # <<<<<<<<<<<<<<
  *                 else:
- *                     raise ComposerError(u"found duplicate anchor; first occurence",
+ *                     raise ComposerError(u"found duplicate anchor; first occurrence",
  */
         __pyx_t_7 = PyObject_GetItem(__pyx_v_self->anchors, __pyx_v_anchor); if (unlikely(__pyx_t_7 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 765; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
         __Pyx_GOTREF(__pyx_t_7);
@@ -10593,9 +10593,9 @@ static PyObject *__pyx_f_12_ruamel_yaml_7CParser__compose_node(struct __pyx_obj_
         PyTuple_SET_ITEM(__pyx_t_9, 0+__pyx_t_8, __pyx_kp_s_found_duplicate_anchor_first_occ);
         __Pyx_GIVEREF(__pyx_t_6);
         PyTuple_SET_ITEM(__pyx_t_9, 1+__pyx_t_8, __pyx_t_6);
-        __Pyx_INCREF(__pyx_kp_s_second_occurence);
-        __Pyx_GIVEREF(__pyx_kp_s_second_occurence);
-        PyTuple_SET_ITEM(__pyx_t_9, 2+__pyx_t_8, __pyx_kp_s_second_occurence);
+        __Pyx_INCREF(__pyx_kp_s_second_occurrence);
+        __Pyx_GIVEREF(__pyx_kp_s_second_occurrence);
+        PyTuple_SET_ITEM(__pyx_t_9, 2+__pyx_t_8, __pyx_kp_s_second_occurrence);
         __Pyx_INCREF(((PyObject *)__pyx_v_mark));
         __Pyx_GIVEREF(((PyObject *)__pyx_v_mark));
         PyTuple_SET_ITEM(__pyx_t_9, 3+__pyx_t_8, ((PyObject *)__pyx_v_mark));
@@ -10612,16 +10612,16 @@ static PyObject *__pyx_f_12_ruamel_yaml_7CParser__compose_node(struct __pyx_obj_
  *                         self.parsed_event.start_mark.column,
  *                         None, None)
  *                 if PY_MAJOR_VERSION < 3:             # <<<<<<<<<<<<<<
- *                     raise ComposerError("found duplicate anchor; first occurence",
- *                             self.anchors[anchor].start_mark, "second occurence", mark)
+ *                     raise ComposerError("found duplicate anchor; first occurrence",
+ *                             self.anchors[anchor].start_mark, "second occurrence", mark)
  */
       }
 
       /* "_ruamel_yaml.pyx":767
- *                             self.anchors[anchor].start_mark, "second occurence", mark)
+ *                             self.anchors[anchor].start_mark, "second occurrence", mark)
  *                 else:
- *                     raise ComposerError(u"found duplicate anchor; first occurence",             # <<<<<<<<<<<<<<
- *                             self.anchors[anchor].start_mark, u"second occurence", mark)
+ *                     raise ComposerError(u"found duplicate anchor; first occurrence",             # <<<<<<<<<<<<<<
+ *                             self.anchors[anchor].start_mark, u"second occurrence", mark)
  *         self.descend_resolver(parent, index)
  */
       /*else*/ {
@@ -10630,8 +10630,8 @@ static PyObject *__pyx_f_12_ruamel_yaml_7CParser__compose_node(struct __pyx_obj_
 
         /* "_ruamel_yaml.pyx":768
  *                 else:
- *                     raise ComposerError(u"found duplicate anchor; first occurence",
- *                             self.anchors[anchor].start_mark, u"second occurence", mark)             # <<<<<<<<<<<<<<
+ *                     raise ComposerError(u"found duplicate anchor; first occurrence",
+ *                             self.anchors[anchor].start_mark, u"second occurrence", mark)             # <<<<<<<<<<<<<<
  *         self.descend_resolver(parent, index)
  *         if self.parsed_event.type == YAML_SCALAR_EVENT:
  */
@@ -10662,9 +10662,9 @@ static PyObject *__pyx_f_12_ruamel_yaml_7CParser__compose_node(struct __pyx_obj_
         PyTuple_SET_ITEM(__pyx_t_7, 0+__pyx_t_8, __pyx_kp_u_found_duplicate_anchor_first_occ);
         __Pyx_GIVEREF(__pyx_t_6);
         PyTuple_SET_ITEM(__pyx_t_7, 1+__pyx_t_8, __pyx_t_6);
-        __Pyx_INCREF(__pyx_kp_u_second_occurence);
-        __Pyx_GIVEREF(__pyx_kp_u_second_occurence);
-        PyTuple_SET_ITEM(__pyx_t_7, 2+__pyx_t_8, __pyx_kp_u_second_occurence);
+        __Pyx_INCREF(__pyx_kp_u_second_occurrence);
+        __Pyx_GIVEREF(__pyx_kp_u_second_occurrence);
+        PyTuple_SET_ITEM(__pyx_t_7, 2+__pyx_t_8, __pyx_kp_u_second_occurrence);
         __Pyx_INCREF(((PyObject *)__pyx_v_mark));
         __Pyx_GIVEREF(((PyObject *)__pyx_v_mark));
         PyTuple_SET_ITEM(__pyx_t_7, 3+__pyx_t_8, ((PyObject *)__pyx_v_mark));
@@ -10697,8 +10697,8 @@ static PyObject *__pyx_f_12_ruamel_yaml_7CParser__compose_node(struct __pyx_obj_
   }
 
   /* "_ruamel_yaml.pyx":769
- *                     raise ComposerError(u"found duplicate anchor; first occurence",
- *                             self.anchors[anchor].start_mark, u"second occurence", mark)
+ *                     raise ComposerError(u"found duplicate anchor; first occurrence",
+ *                             self.anchors[anchor].start_mark, u"second occurrence", mark)
  *         self.descend_resolver(parent, index)             # <<<<<<<<<<<<<<
  *         if self.parsed_event.type == YAML_SCALAR_EVENT:
  *             node = self._compose_scalar_node(anchor)
@@ -10735,7 +10735,7 @@ static PyObject *__pyx_f_12_ruamel_yaml_7CParser__compose_node(struct __pyx_obj_
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
 
   /* "_ruamel_yaml.pyx":770
- *                             self.anchors[anchor].start_mark, u"second occurence", mark)
+ *                             self.anchors[anchor].start_mark, u"second occurrence", mark)
  *         self.descend_resolver(parent, index)
  *         if self.parsed_event.type == YAML_SCALAR_EVENT:             # <<<<<<<<<<<<<<
  *             node = self._compose_scalar_node(anchor)
@@ -10757,7 +10757,7 @@ static PyObject *__pyx_f_12_ruamel_yaml_7CParser__compose_node(struct __pyx_obj_
     __pyx_t_5 = 0;
 
     /* "_ruamel_yaml.pyx":770
- *                             self.anchors[anchor].start_mark, u"second occurence", mark)
+ *                             self.anchors[anchor].start_mark, u"second occurrence", mark)
  *         self.descend_resolver(parent, index)
  *         if self.parsed_event.type == YAML_SCALAR_EVENT:             # <<<<<<<<<<<<<<
  *             node = self._compose_scalar_node(anchor)
@@ -22237,8 +22237,8 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_ruamel_yaml_scanner, __pyx_k_ruamel_yaml_scanner, sizeof(__pyx_k_ruamel_yaml_scanner), 0, 0, 1, 1},
   {&__pyx_n_s_ruamel_yaml_serializer, __pyx_k_ruamel_yaml_serializer, sizeof(__pyx_k_ruamel_yaml_serializer), 0, 0, 1, 1},
   {&__pyx_n_s_ruamel_yaml_tokens, __pyx_k_ruamel_yaml_tokens, sizeof(__pyx_k_ruamel_yaml_tokens), 0, 0, 1, 1},
-  {&__pyx_kp_s_second_occurence, __pyx_k_second_occurence, sizeof(__pyx_k_second_occurence), 0, 0, 1, 0},
-  {&__pyx_kp_u_second_occurence, __pyx_k_second_occurence, sizeof(__pyx_k_second_occurence), 0, 1, 0, 0},
+  {&__pyx_kp_s_second_occurrence, __pyx_k_second_occurrence, sizeof(__pyx_k_second_occurrence), 0, 0, 1, 0},
+  {&__pyx_kp_u_second_occurrence, __pyx_k_second_occurrence, sizeof(__pyx_k_second_occurrence), 0, 1, 0, 0},
   {&__pyx_kp_s_serializer_is_already_opened, __pyx_k_serializer_is_already_opened, sizeof(__pyx_k_serializer_is_already_opened), 0, 0, 1, 0},
   {&__pyx_kp_u_serializer_is_already_opened, __pyx_k_serializer_is_already_opened, sizeof(__pyx_k_serializer_is_already_opened), 0, 1, 0, 0},
   {&__pyx_kp_s_serializer_is_closed, __pyx_k_serializer_is_closed, sizeof(__pyx_k_serializer_is_closed), 0, 0, 1, 0},
