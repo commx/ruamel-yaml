@@ -18,6 +18,11 @@ ChangeLog
 
 .. should insert NEXT: at the beginning of line for next key
 
+0.13.14 (2017-02-12):
+  - fix for issue 97: clipped block scalar followed by empty lines and comment
+    would result in two CommentTokens of which the first was dropped.
+    (reported by Colm O'Connor)
+
 0.13.13 (2017-01-28):
   - fix for issue 96: prevent insertion of extra empty line if indented mapping entries
     are separated by an empty line (reported by Derrick Sawyer)

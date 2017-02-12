@@ -735,3 +735,24 @@ class TestEmptyValueBeforeComments:
           a: 1 # comment a
           b:   # comment b
         """)
+
+test_block_scalar_commented_line_template = """\
+y: p
+# Some comment
+
+a: |
+  x
+{}b: y
+"""
+
+
+class TestBlockScalarWithComments:
+    # issue 99 reported by Colm O'Connor
+
+    for x in ['', '\n', '\n# Another comment\n', '\n\n', '\n\n# abc\n#xyz\n',
+              '\n\n# abc\n#xyz\n', '# abc\n\n#xyz\n', '\n\n  # abc\n  #xyz\n']:
+
+        commented_line = test_block_scalar_commented_line_template.format(x)
+        data = ruamel.yaml.round_trip_load(commented_line)
+
+        assert ruamel.yaml.round_trip_dump(data) == commented_line

@@ -1070,22 +1070,28 @@ class Scanner(object):
 
         # Process trailing line breaks. The 'chomping' setting determines
         # whether they are included in the value.
-        comment = []
+        trailing = []
         if chomping in [None, True]:
             chunks.append(line_break)
         if chomping is True:
             chunks.extend(breaks)
         elif chomping in [None, False]:
-            comment.extend(breaks)
+            trailing.extend(breaks)
 
         # We are done.
-        token = ScalarToken(u''.join(chunks), False, start_mark, end_mark,
-                            style)
-        if len(comment) > 0:
-            # Keep track of the trailing whitespace as a comment token, if
-            # isn't all included in the actual value.
+        token = ScalarToken(u''.join(chunks), False, start_mark, end_mark, style)
+        if len(trailing) > 0:
+            # print('trailing 1', trailing)  # XXXXX
+            # Eat whitespaces and comments until we reach the next token.
+            comment = self.scan_to_next_token()
+            while comment:
+                trailing.append(comment[0])
+                comment = self.scan_to_next_token()
+
+            # Keep track of the trailing whitespace and following comments
+            # as a comment token, if isn't all included in the actual value.
             comment_end_mark = self.get_mark()
-            comment = CommentToken(''.join(comment), end_mark,
+            comment = CommentToken(''.join(trailing), end_mark,
                                    comment_end_mark)
             token.add_post_comment(comment)
         return token
