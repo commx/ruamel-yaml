@@ -4,8 +4,9 @@
 some helper functions that might be generally useful
 """
 
-from __future__ import print_function
-from __future__ import absolute_import
+from __future__ import absolute_import, print_function
+
+from typing import Any, Dict, Optional, List  # NOQA
 
 from .compat import text_type, binary_type
 
@@ -16,6 +17,7 @@ from .compat import text_type, binary_type
 # that check this routines output against a known piece of your YAML
 # before upgrades to this code break your round-tripped YAML
 def load_yaml_guess_indent(stream, **kw):
+    # type: (Any, Any) -> Any
     """guess the indent and block sequence indent of yaml stream/string
 
     returns round_trip_loaded stream, indent level, block sequence indent
@@ -27,6 +29,7 @@ def load_yaml_guess_indent(stream, **kw):
 
     # load a yaml file guess the indentation, if you use TABs ...
     def leading_spaces(l):
+        # type: (Any) -> int
         idx = 0
         while idx < len(l) and l[idx] == ' ':
             idx += 1
@@ -76,6 +79,7 @@ def load_yaml_guess_indent(stream, **kw):
 
 
 def configobj_walker(cfg):
+    # type: (Any) -> Any
     """
     walks over a ConfigObj (INI file with comments) generating
     corresponding YAML output (including comments
@@ -94,6 +98,7 @@ def configobj_walker(cfg):
 
 
 def _walk_section(s, level=0):
+    # type: (Any, int) -> Any
     from configobj import Section
     assert isinstance(s, Section)
     indent = u'  ' * level

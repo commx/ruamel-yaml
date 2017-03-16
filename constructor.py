@@ -14,10 +14,15 @@ from typing import Any, Dict  # NOQA
 
 from ruamel.yaml.error import *                               # NOQA
 from ruamel.yaml.nodes import *                               # NOQA
-from ruamel.yaml.compat import (utf8, builtins_module, to_str, PY2, PY3,
-                                ordereddict, text_type)
+from ruamel.yaml.nodes import (SequenceNode, MappingNode, ScalarNode)
+from ruamel.yaml.compat import (utf8, builtins_module, to_str, PY2, PY3,  # NOQA
+                                ordereddict, text_type, nprint)
 from ruamel.yaml.comments import *                               # NOQA
+from ruamel.yaml.comments import (CommentedMap, CommentedOrderedMap, CommentedSet,
+                                  CommentedKeySeq, CommentedSeq)
 from ruamel.yaml.scalarstring import *                           # NOQA
+from ruamel.yaml.scalarstring import (PreservedScalarString, SingleQuotedScalarString,
+                                      DoubleQuotedScalarString, ScalarString)
 from ruamel.yaml.timestamp import TimeStamp
 
 __all__ = ['BaseConstructor', 'SafeConstructor', 'Constructor',
@@ -34,6 +39,7 @@ class BaseConstructor(object):
     yaml_multi_constructors = {}   # type: Dict[Any, Any]
 
     def __init__(self, preserve_quotes=None):
+        # type: (Any) -> None
         self.constructed_objects = {}
         self.recursive_objects = {}
         self.state_generators = []
@@ -41,15 +47,18 @@ class BaseConstructor(object):
         self._preserve_quotes = preserve_quotes
 
     def check_data(self):
+        # type: () -> Any
         # If there are more documents available?
         return self.check_node()
 
     def get_data(self):
+        # type: () -> Any
         # Construct and return the next document.
         if self.check_node():
             return self.construct_document(self.get_node())
 
     def get_single_data(self):
+        # type: () -> Any
         # Ensure that the stream contains a single document and construct it.
         node = self.get_single_node()
         if node is not None:
@@ -57,6 +66,7 @@ class BaseConstructor(object):
         return None
 
     def construct_document(self, node):
+        # type: (Any) -> Any
         data = self.construct_object(node)
         while self.state_generators:
             state_generators = self.state_generators
@@ -70,6 +80,7 @@ class BaseConstructor(object):
         return data
 
     def construct_object(self, node, deep=False):
+        # type: (Any, bool) -> Any
         """deep is True when creating an object/mapping recursively,
         in that case want the underlying elements available during construction
         """
@@ -124,6 +135,7 @@ class BaseConstructor(object):
         return data
 
     def construct_scalar(self, node):
+        # type: (Any) -> Any
         if not isinstance(node, ScalarNode):
             raise ConstructorError(
                 None, None,
@@ -132,6 +144,7 @@ class BaseConstructor(object):
         return node.value
 
     def construct_sequence(self, node, deep=False):
+        # type: (Any, bool) -> Any
         """deep is True when creating an object/mapping recursively,
         in that case want the underlying elements available during construction
         """
@@ -144,6 +157,7 @@ class BaseConstructor(object):
                 for child in node.value]
 
     def construct_mapping(self, node, deep=False):
+        # type: (Any, bool) -> Any
         """deep is True when creating an object/mapping recursively,
         in that case want the underlying elements available during construction
         """
@@ -179,6 +193,7 @@ class BaseConstructor(object):
         return mapping
 
     def construct_pairs(self, node, deep=False):
+        # type: (Any, bool) -> Any
         if not isinstance(node, MappingNode):
             raise ConstructorError(
                 None, None,
@@ -208,6 +223,7 @@ class BaseConstructor(object):
 
 class SafeConstructor(BaseConstructor):
     def construct_scalar(self, node):
+        # type: (Any) -> Any
         if isinstance(node, MappingNode):
             for key_node, value_node in node.value:
                 if key_node.tag == u'tag:yaml.org,2002:value':
@@ -215,6 +231,7 @@ class SafeConstructor(BaseConstructor):
         return BaseConstructor.construct_scalar(self, node)
 
     def flatten_mapping(self, node):
+        # type: (Any) -> Any
         """
         This implements the merge key feature http://yaml.org/type/merge.html
         by inserting keys from the merge dict/list of dicts if not yet
@@ -258,6 +275,7 @@ class SafeConstructor(BaseConstructor):
             node.value = merge + node.value
 
     def construct_mapping(self, node, deep=False):
+        # type: (Any, bool) -> Any
         """deep is True when creating an object/mapping recursively,
         in that case want the underlying elements available during construction
         """
@@ -266,6 +284,7 @@ class SafeConstructor(BaseConstructor):
         return BaseConstructor.construct_mapping(self, node, deep=deep)
 
     def construct_yaml_null(self, node):
+        # type: (Any) -> Any
         self.construct_scalar(node)
         return None
 
@@ -280,29 +299,31 @@ class SafeConstructor(BaseConstructor):
     }
 
     def construct_yaml_bool(self, node):
+        # type: (Any) -> bool
         value = self.construct_scalar(node)
         return self.bool_values[value.lower()]
 
     def construct_yaml_int(self, node):
-        value = to_str(self.construct_scalar(node))
-        value = value.replace('_', '')
+        # type: (Any) -> int
+        value_s = to_str(self.construct_scalar(node))
+        value_s = value_s.replace('_', '')
         sign = +1
-        if value[0] == '-':
+        if value_s[0] == '-':
             sign = -1
-        if value[0] in '+-':
-            value = value[1:]
-        if value == '0':
+        if value_s[0] in '+-':
+            value_s = value_s[1:]
+        if value_s == '0':
             return 0
-        elif value.startswith('0b'):
-            return sign*int(value[2:], 2)
-        elif value.startswith('0x'):
-            return sign*int(value[2:], 16)
-        elif value.startswith('0o'):
-            return sign*int(value[2:], 8)
-        elif self.processing_version != (1, 2) and value[0] == '0':
-            return sign*int(value, 8)
-        elif self.processing_version != (1, 2) and ':' in value:
-            digits = [int(part) for part in value.split(':')]
+        elif value_s.startswith('0b'):
+            return sign*int(value_s[2:], 2)
+        elif value_s.startswith('0x'):
+            return sign*int(value_s[2:], 16)
+        elif value_s.startswith('0o'):
+            return sign*int(value_s[2:], 8)
+        elif self.processing_version != (1, 2) and value_s[0] == '0':
+            return sign*int(value_s, 8)
+        elif self.processing_version != (1, 2) and ':' in value_s:
+            digits = [int(part) for part in value_s.split(':')]
             digits.reverse()
             base = 1
             value = 0
@@ -311,7 +332,7 @@ class SafeConstructor(BaseConstructor):
                 base *= 60
             return sign*value
         else:
-            return sign*int(value)
+            return sign*int(value_s)
 
     inf_value = 1e300
     while inf_value != inf_value*inf_value:
@@ -319,19 +340,20 @@ class SafeConstructor(BaseConstructor):
     nan_value = -inf_value/inf_value   # Trying to make a quiet NaN (like C99).
 
     def construct_yaml_float(self, node):
-        value = to_str(self.construct_scalar(node))
-        value = value.replace('_', '').lower()
+        # type: (Any) -> float
+        value_s = to_str(self.construct_scalar(node))
+        value_s = value_s.replace('_', '').lower()
         sign = +1
-        if value[0] == '-':
+        if value_s[0] == '-':
             sign = -1
-        if value[0] in '+-':
-            value = value[1:]
-        if value == '.inf':
+        if value_s[0] in '+-':
+            value_s = value_s[1:]
+        if value_s == '.inf':
             return sign*self.inf_value
-        elif value == '.nan':
+        elif value_s == '.nan':
             return self.nan_value
-        elif ':' in value:
-            digits = [float(part) for part in value.split(':')]
+        elif ':' in value_s:
+            digits = [float(part) for part in value_s.split(':')]
             digits.reverse()
             base = 1
             value = 0.0
@@ -340,10 +362,11 @@ class SafeConstructor(BaseConstructor):
                 base *= 60
             return sign*value
         else:
-            return sign*float(value)
+            return sign*float(value_s)
 
     if PY3:
         def construct_yaml_binary(self, node):
+            # type: (Any) -> Any
             try:
                 value = self.construct_scalar(node).encode('ascii')
             except UnicodeEncodeError as exc:
@@ -362,6 +385,7 @@ class SafeConstructor(BaseConstructor):
                     "failed to decode base64 data: %s" % exc, node.start_mark)
     else:
         def construct_yaml_binary(self, node):
+            # type: (Any) -> Any
             value = self.construct_scalar(node)
             try:
                 return to_str(value).decode('base64')
@@ -383,6 +407,7 @@ class SafeConstructor(BaseConstructor):
           (?::(?P<tz_minute>[0-9][0-9]))?))?)?$''', re.X)
 
     def construct_yaml_timestamp(self, node, values=None):
+        # type: (Any, Any) -> Any
         if values is None:
             match = self.timestamp_regexp.match(node.value)
             values = match.groupdict()
@@ -396,10 +421,10 @@ class SafeConstructor(BaseConstructor):
         second = int(values['second'])
         fraction = 0
         if values['fraction']:
-            fraction = values['fraction'][:6]
-            while len(fraction) < 6:
-                fraction += '0'
-            fraction = int(fraction)
+            fraction_s = values['fraction'][:6]
+            while len(fraction_s) < 6:
+                fraction_s += '0'
+            fraction = int(fraction_s)
             if len(values['fraction']) > 6 and int(values['fraction'][6]) > 4:
                 fraction += 1
         delta = None
@@ -416,6 +441,7 @@ class SafeConstructor(BaseConstructor):
         return data
 
     def construct_yaml_omap(self, node):
+        # type: (Any) -> Any
         # Note: we do now check for duplicate keys
         omap = ordereddict()
         yield omap
@@ -443,6 +469,7 @@ class SafeConstructor(BaseConstructor):
             omap[key] = value
 
     def construct_yaml_pairs(self, node):
+        # type: (Any) -> Any
         # Note: the same code as `construct_yaml_omap`.
         pairs = []
         yield pairs
@@ -469,12 +496,14 @@ class SafeConstructor(BaseConstructor):
             pairs.append((key, value))
 
     def construct_yaml_set(self, node):
+        # type: (Any) -> Any
         data = set()
         yield data
         value = self.construct_mapping(node)
         data.update(value)
 
     def construct_yaml_str(self, node):
+        # type: (Any) -> Any
         value = self.construct_scalar(node)
         if PY3:
             return value
@@ -484,17 +513,20 @@ class SafeConstructor(BaseConstructor):
             return value
 
     def construct_yaml_seq(self, node):
+        # type: (Any) -> Any
         data = []
         yield data
         data.extend(self.construct_sequence(node))
 
     def construct_yaml_map(self, node):
+        # type: (Any) -> Any
         data = {}
         yield data
         value = self.construct_mapping(node)
         data.update(value)
 
     def construct_yaml_object(self, node, cls):
+        # type: (Any, Any) -> Any
         data = cls.__new__(cls)
         yield data
         if hasattr(data, '__setstate__'):
@@ -505,6 +537,7 @@ class SafeConstructor(BaseConstructor):
             data.__dict__.update(state)
 
     def construct_undefined(self, node):
+        # type: (Any) -> None
         raise ConstructorError(
             None, None,
             "could not determine a constructor for the tag %r" %
@@ -566,13 +599,16 @@ SafeConstructor.add_constructor(
 class Constructor(SafeConstructor):
 
     def construct_python_str(self, node):
+        # type: (Any) -> Any
         return utf8(self.construct_scalar(node))
 
     def construct_python_unicode(self, node):
+        # type: (Any) -> Any
         return self.construct_scalar(node)
 
     if PY3:
         def construct_python_bytes(self, node):
+            # type: (Any) -> Any
             try:
                 value = self.construct_scalar(node).encode('ascii')
             except UnicodeEncodeError as exc:
@@ -591,18 +627,22 @@ class Constructor(SafeConstructor):
                     "failed to decode base64 data: %s" % exc, node.start_mark)
 
     def construct_python_long(self, node):
+        # type: (Any) -> int
         val = self.construct_yaml_int(node)
         if PY3:
             return val
         return int(val)
 
     def construct_python_complex(self, node):
+        # type: (Any) -> Any
         return complex(self.construct_scalar(node))
 
     def construct_python_tuple(self, node):
+        # type: (Any) -> Any
         return tuple(self.construct_sequence(node))
 
     def find_python_module(self, name, mark):
+        # type: (Any, Any) -> Any
         if not name:
             raise ConstructorError(
                 "while constructing a Python module", mark,
@@ -616,6 +656,7 @@ class Constructor(SafeConstructor):
         return sys.modules[name]
 
     def find_python_name(self, name, mark):
+        # type: (Any, Any) -> Any
         if not name:
             raise ConstructorError(
                 "while constructing a Python object", mark,
@@ -640,6 +681,7 @@ class Constructor(SafeConstructor):
         return getattr(module, object_name)
 
     def construct_python_name(self, suffix, node):
+        # type: (Any, Any) -> Any
         value = self.construct_scalar(node)
         if value:
             raise ConstructorError(
@@ -649,6 +691,7 @@ class Constructor(SafeConstructor):
         return self.find_python_name(suffix, node.start_mark)
 
     def construct_python_module(self, suffix, node):
+        # type: (Any, Any) -> Any
         value = self.construct_scalar(node)
         if value:
             raise ConstructorError(
@@ -663,6 +706,7 @@ class Constructor(SafeConstructor):
 
     def make_python_instance(self, suffix, node,
                              args=None, kwds=None, newobj=False):
+        # type: (Any, Any, Any, Any, bool) -> Any
         if not args:
             args = []
         if not kwds:
@@ -685,10 +729,11 @@ class Constructor(SafeConstructor):
                 return cls(*args, **kwds)
 
     def set_python_instance_state(self, instance, state):
+        # type: (Any, Any) -> None
         if hasattr(instance, '__setstate__'):
             instance.__setstate__(state)
         else:
-            slotstate = {}
+            slotstate = {}  # type: Dict[Any, Any]
             if isinstance(state, tuple) and len(state) == 2:
                 state, slotstate = state
             if hasattr(instance, '__dict__'):
@@ -699,6 +744,7 @@ class Constructor(SafeConstructor):
                 setattr(object, key, value)
 
     def construct_python_object(self, suffix, node):
+        # type: (Any, Any) -> Any
         # Format:
         #   !!python/object:module.name { ... state ... }
         instance = self.make_python_instance(suffix, node, newobj=True)
@@ -708,6 +754,7 @@ class Constructor(SafeConstructor):
         self.set_python_instance_state(instance, state)
 
     def construct_python_object_apply(self, suffix, node, newobj=False):
+        # type: (Any, Any, bool) -> Any
         # Format:
         #   !!python/object/apply       # (or !!python/object/new)
         #   args: [ ... arguments ... ]
@@ -721,10 +768,10 @@ class Constructor(SafeConstructor):
         # is how an object is created, check make_python_instance for details.
         if isinstance(node, SequenceNode):
             args = self.construct_sequence(node, deep=True)
-            kwds = {}
-            state = {}
-            listitems = []
-            dictitems = {}
+            kwds = {}  # type: Dict[Any, Any]
+            state = {}  # type: Dict[Any, Any]
+            listitems = []  # List[Any]
+            dictitems = {}  # type: Dict[Any, Any]
         else:
             value = self.construct_mapping(node, deep=True)
             args = value.get('args', [])
@@ -743,6 +790,7 @@ class Constructor(SafeConstructor):
         return instance
 
     def construct_python_object_new(self, suffix, node):
+        # type: (Any, Any) -> Any
         return self.construct_python_object_apply(suffix, node, newobj=True)
 
 Constructor.add_constructor(
@@ -821,6 +869,7 @@ class RoundTripConstructor(SafeConstructor):
     """
 
     def construct_scalar(self, node):
+        # type: (Any) -> Any
         if not isinstance(node, ScalarNode):
             raise ConstructorError(
                 None, None,
@@ -837,6 +886,7 @@ class RoundTripConstructor(SafeConstructor):
         return node.value
 
     def construct_yaml_str(self, node):
+        # type: (Any) -> Any
         value = self.construct_scalar(node)
         if isinstance(value, ScalarString):
             return value
@@ -851,6 +901,7 @@ class RoundTripConstructor(SafeConstructor):
             return value
 
     def construct_sequence(self, node, seqtyp, deep=False):
+        # type: (Any, Any, bool) -> Any
         if not isinstance(node, SequenceNode):
             raise ConstructorError(
                 None, None,
@@ -874,6 +925,7 @@ class RoundTripConstructor(SafeConstructor):
         return ret_val
 
     def flatten_mapping(self, node):
+        # type: (Any) -> Any
         """
         This implements the merge key feature http://yaml.org/type/merge.html
         by inserting keys from the merge dict/list of dicts if not yet
@@ -935,9 +987,11 @@ class RoundTripConstructor(SafeConstructor):
         #     node.value = merge + node.value
 
     def _sentinel(self):
+        # type: () -> None
         pass
 
     def construct_mapping(self, node, maptyp, deep=False):
+        # type: (Any, Any, bool) -> Any
         if not isinstance(node, MappingNode):
             raise ConstructorError(
                 None, None,
@@ -1004,6 +1058,7 @@ class RoundTripConstructor(SafeConstructor):
             maptyp.add_yaml_merge(merge_map)
 
     def construct_setting(self, node, typ, deep=False):
+        # type: (Any, Any, bool) -> Any
         if not isinstance(node, MappingNode):
             raise ConstructorError(
                 None, None,
@@ -1045,6 +1100,7 @@ class RoundTripConstructor(SafeConstructor):
             typ.add(key)
 
     def construct_yaml_seq(self, node):
+        # type: (Any) -> Any
         data = CommentedSeq()
         data._yaml_set_line_col(node.start_mark.line, node.start_mark.column)
         if node.flow_style is True:
@@ -1057,6 +1113,7 @@ class RoundTripConstructor(SafeConstructor):
         data.extend(self.construct_sequence(node, data))
 
     def construct_yaml_map(self, node):
+        # type: (Any) -> Any
         data = CommentedMap()
         data._yaml_set_line_col(node.start_mark.line, node.start_mark.column)
         if node.flow_style is True:
@@ -1067,6 +1124,7 @@ class RoundTripConstructor(SafeConstructor):
         self.construct_mapping(node, data)
 
     def construct_yaml_omap(self, node):
+        # type: (Any) -> Any
         # Note: we do now check for duplicate keys
         omap = CommentedOrderedMap()
         omap._yaml_set_line_col(node.start_mark.line, node.start_mark.column)
@@ -1109,12 +1167,14 @@ class RoundTripConstructor(SafeConstructor):
             omap[key] = value
 
     def construct_yaml_set(self, node):
+        # type: (Any) -> Any
         data = CommentedSet()
         data._yaml_set_line_col(node.start_mark.line, node.start_mark.column)
         yield data
         self.construct_setting(node, data)
 
     def construct_undefined(self, node):
+        # type: (Any) -> Any
         try:
             data = CommentedMap()
             data._yaml_set_line_col(node.start_mark.line, node.start_mark.column)
@@ -1133,6 +1193,7 @@ class RoundTripConstructor(SafeConstructor):
                 node.start_mark)
 
     def construct_yaml_timestamp(self, node):
+        # type: (Any) -> Any
         match = self.timestamp_regexp.match(node.value)
         values = match.groupdict()
         if not values['hour']:
@@ -1150,10 +1211,10 @@ class RoundTripConstructor(SafeConstructor):
         second = int(values['second'])
         fraction = 0
         if values['fraction']:
-            fraction = values['fraction'][:6]
-            while len(fraction) < 6:
-                fraction += '0'
-            fraction = int(fraction)
+            fraction_s = values['fraction'][:6]
+            while len(fraction_s) < 6:
+                fraction_s += '0'
+            fraction = int(fraction_s)
             if len(values['fraction']) > 6 and int(values['fraction'][6]) > 4:
                 fraction += 1
         delta = None

@@ -24,6 +24,12 @@ ext/_yaml.c:	ext/_yaml.pyx
 ls-l:
 	ls -l dist/*$(VERSION)*
 
+mypy:
+	cd ..; mypy --strict --no-warn-unused-ignores yaml/*.py
+
+mypy2:
+	cd ..; mypy --py2 --strict --no-strict-boolean --no-warn-unused-ignores yaml/*.py
+
 #tstvenv: testvenv testsetup testtest
 #
 #testvenv:

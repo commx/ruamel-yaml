@@ -4,6 +4,8 @@ from __future__ import absolute_import
 
 import warnings
 
+from typing import Any, Dict, Optional, List  # NOQA
+
 from ruamel.yaml.compat import utf8
 
 __all__ = ['FileMark', 'StringMark', 'CommentMark',
@@ -78,6 +80,7 @@ class CommentMark(object):
     __slots__ = 'column',
 
     def __init__(self, column):
+        # type: (Any) -> None
         self.column = column
 
 
@@ -88,6 +91,7 @@ class YAMLError(Exception):
 class MarkedYAMLError(YAMLError):
     def __init__(self, context=None, context_mark=None,
                  problem=None, problem_mark=None, note=None):
+        # type: (Any, Any, Any, Any, Any) -> None
         self.context = context
         self.context_mark = context_mark
         self.problem = problem
@@ -95,6 +99,7 @@ class MarkedYAMLError(YAMLError):
         self.note = note
 
     def __str__(self):
+        # type: () -> str
         lines = []
         if self.context is not None:
             lines.append(self.context)

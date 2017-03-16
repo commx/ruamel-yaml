@@ -125,6 +125,7 @@ def safe_load_all(stream, version=None):
 
 
 def round_trip_load(stream, version=None, preserve_quotes=None):
+    # type: (Any, Any, bool) -> Any
     """
     Parse the first YAML document in a stream
     and produce the corresponding Python object.

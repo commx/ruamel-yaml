@@ -8,6 +8,9 @@ import sys
 import os
 import types
 
+from typing import Any, Dict, Optional, List, Union  # NOQA
+
+
 try:
     from ruamel.ordereddict import ordereddict  # type: ignore
 except:
@@ -20,6 +23,7 @@ except:
     class ordereddict(OrderedDict):   # type: ignore
         if not hasattr(OrderedDict, 'insert'):
             def insert(self, pos, key, value):
+                # type: (int, Any, Any) -> None
                 if pos >= len(self):
                     self[key] = value
                     return
@@ -39,22 +43,28 @@ PY3 = sys.version_info[0] == 3
 
 if PY3:
     def utf8(s):
+        # type: (str) -> str
         return s
 
     def to_str(s):
+        # type: (str) -> str
         return s
 
     def to_unicode(s):
+        # type: (str) -> str
         return s
 
 else:
     def utf8(s):
+        # type: (unicode) -> str
         return s.encode('utf-8')
 
     def to_str(s):
+        # type: (str) -> str
         return str(s)
 
     def to_unicode(s):
+        # type: (str) -> unicode
         return unicode(s)
 
 if PY3:
@@ -91,6 +101,7 @@ else:
 
 
 def with_metaclass(meta, *bases):
+    # type: (Any, Any) -> Any
     """Create a base class with a metaclass."""
     return meta("NewBase", bases, {})
 
@@ -99,17 +110,20 @@ DBG_EVENT = 2
 DBG_NODE = 4
 
 
-_debug = None
+_debug = None  # type: Union[None, int]
 
 if _debug:
     class ObjectCounter(object):
         def __init__(self):
-            self.map = {}
+            # type: () -> None
+            self.map = {}  # type: Dict[Any, Any]
 
         def __call__(self, k):
+            # type: (Any) -> None
             self.map[k] = self.map.get(k, 0) + 1
 
         def dump(self):
+            # type: () -> None
             for k in sorted(self.map):
                 print(k, '->', self.map[k])
 
@@ -118,20 +132,22 @@ if _debug:
 
 # used from yaml util when testing
 def dbg(val=None):
+    # type: (Any) -> Any
     global _debug
     if _debug is None:
         # set to true or false
-        _debug = os.environ.get('YAMLDEBUG')
-        if _debug is None:
+        _debugx = os.environ.get('YAMLDEBUG')
+        if _debugx is None:
             _debug = 0
         else:
-            _debug = int(_debug)
+            _debug = int(_debugx)
     if val is None:
         return _debug
     return _debug & val
 
 
 def nprint(*args, **kw):
+    # type: (Any, Any) -> None
     if dbg:
         print(*args, **kw)
 
@@ -139,6 +155,7 @@ def nprint(*args, **kw):
 
 
 def check_namespace_char(ch):
+    # type: (Any) -> bool
     if u'\x21' <= ch <= u'\x7E':  # ! to ~
         return True
     if u'\xA0' <= ch <= u'\xD7FF':
@@ -151,6 +168,7 @@ def check_namespace_char(ch):
 
 
 def check_anchorname_char(ch):
+    # type: (Any) -> bool
     if ch in u',[]{}':
         return False
     return check_namespace_char(ch)

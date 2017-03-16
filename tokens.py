@@ -216,6 +216,7 @@ class CommentToken(Token):
     id = '<comment>'
 
     def __init__(self, value, start_mark, end_mark):
+        # type: (Any, Any, Any) -> None
         Token.__init__(self, start_mark, end_mark)
         self.value = value
 

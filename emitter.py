@@ -1229,7 +1229,7 @@ class Emitter(object):
 
     def write_comment(self, comment):
         value = comment.value
-        # print('{:02d} {:02d} {}'.format(self.column, comment.start_mark.column, value))
+        # print('{:02d} {:02d} {!r}'.format(self.column, comment.start_mark.column, value))
         if value[-1] == '\n':
             value = value[:-1]
         try:

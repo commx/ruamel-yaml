@@ -5,6 +5,8 @@ from __future__ import print_function
 
 import warnings
 
+from typing import Any, Dict, Optional, List  # NOQA
+
 from ruamel.yaml.error import MarkedYAMLError, ReusedAnchorWarning
 from ruamel.yaml.compat import utf8
 
@@ -25,9 +27,11 @@ class ComposerError(MarkedYAMLError):
 
 class Composer(object):
     def __init__(self):
-        self.anchors = {}
+        # type: () -> None
+        self.anchors = {}  # type: Dict[Any, Any]
 
     def check_node(self):
+        # type: () -> Any
         # Drop the STREAM-START event.
         if self.check_event(StreamStartEvent):
             self.get_event()
@@ -36,11 +40,13 @@ class Composer(object):
         return not self.check_event(StreamEndEvent)
 
     def get_node(self):
+        # type: () -> Any
         # Get the root node of the next document.
         if not self.check_event(StreamEndEvent):
             return self.compose_document()
 
     def get_single_node(self):
+        # type: () -> Any
         # Drop the STREAM-START event.
         self.get_event()
 
@@ -63,6 +69,7 @@ class Composer(object):
         return document
 
     def compose_document(self):
+        # type: (Any) -> Any
         # Drop the DOCUMENT-START event.
         self.get_event()
 
@@ -76,6 +83,7 @@ class Composer(object):
         return node
 
     def compose_node(self, parent, index):
+        # type: (Any, Any) -> Any
         if self.check_event(AliasEvent):
             event = self.get_event()
             alias = event.anchor
@@ -107,6 +115,7 @@ class Composer(object):
         return node
 
     def compose_scalar_node(self, anchor):
+        # type: (Any) -> Any
         event = self.get_event()
         tag = event.tag
         if tag is None or tag == u'!':
@@ -119,6 +128,7 @@ class Composer(object):
         return node
 
     def compose_sequence_node(self, anchor):
+        # type: (Any) -> Any
         start_event = self.get_event()
         tag = start_event.tag
         if tag is None or tag == u'!':
@@ -144,6 +154,7 @@ class Composer(object):
         return node
 
     def compose_mapping_node(self, anchor):
+        # type: (Any) -> Any
         start_event = self.get_event()
         tag = start_event.tag
         if tag is None or tag == u'!':
@@ -172,6 +183,7 @@ class Composer(object):
         return node
 
     def check_end_doc_comment(self, end_event, node):
+        # type: (Any, Any) -> None
         if end_event.comment and end_event.comment[1]:
             # pre comments on an end_event, no following to move to
             if node.comment is None:
