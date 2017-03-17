@@ -101,6 +101,7 @@ class BaseResolver(object):
     yaml_path_resolvers = {}      # type: Dict[Any, Any]
 
     def __init__(self):
+        # type: () -> None
         self._loader_version = None
         self.resolver_exact_paths = []
         self.resolver_prefix_paths = []

@@ -28,7 +28,7 @@ mypy:
 	cd ..; mypy --strict --no-warn-unused-ignores yaml/*.py
 
 mypy2:
-	cd ..; mypy --py2 --strict --no-strict-boolean --no-warn-unused-ignores yaml/*.py
+	cd ../.. ; mypy --py2 --strict --no-strict-boolean --no-warn-unused-ignores ruamel/yaml/*.py
 
 #tstvenv: testvenv testsetup testtest
 #

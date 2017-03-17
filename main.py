@@ -14,14 +14,15 @@ from ruamel.yaml.nodes import *                                # NOQA
 from ruamel.yaml.loader import BaseLoader, SafeLoader, Loader, RoundTripLoader  # NOQA
 from ruamel.yaml.dumper import BaseDumper, SafeDumper, Dumper, RoundTripDumper  # NOQA
 from ruamel.yaml.compat import StringIO, BytesIO, with_metaclass, PY3
+from ruamel.yaml.compat import StreamType, StreamTextType  # NOQA
 
 # import io
 
 VersionType = Union[List[int], str, Tuple[int, int]]
-StreamType = Union[BinaryIO, IO[str], StringIO]
 
 
 def scan(stream, Loader=Loader):
+    # type: (StreamTextType, Any) -> Any
     """
     Scan a YAML stream and produce scanning tokens.
     """
@@ -34,6 +35,7 @@ def scan(stream, Loader=Loader):
 
 
 def parse(stream, Loader=Loader):
+    # type: (StreamTextType, Any) -> Any
     """
     Parse a YAML stream and produce parsing events.
     """
@@ -46,6 +48,7 @@ def parse(stream, Loader=Loader):
 
 
 def compose(stream, Loader=Loader):
+    # type: (StreamTextType, Any) -> Any
     """
     Parse the first YAML document in a stream
     and produce the corresponding representation tree.
@@ -58,6 +61,7 @@ def compose(stream, Loader=Loader):
 
 
 def compose_all(stream, Loader=Loader):
+    # type: (StreamTextType, Any) -> Any
     """
     Parse all YAML documents in a stream
     and produce corresponding representation trees.
@@ -71,7 +75,7 @@ def compose_all(stream, Loader=Loader):
 
 
 def load(stream, Loader=None, version=None, preserve_quotes=None):
-    # type: (StreamType, Any, VersionType, Any) -> Any
+    # type: (StreamTextType, Any, VersionType, Any) -> Any
     """
     Parse the first YAML document in a stream
     and produce the corresponding Python object.
@@ -89,6 +93,7 @@ def load(stream, Loader=None, version=None, preserve_quotes=None):
 
 
 def load_all(stream, Loader=None, version=None, preserve_quotes=None):
+    # type: (StreamTextType, Any, VersionType, bool) -> Any
     """
     Parse all YAML documents in a stream
     and produce corresponding Python objects.
@@ -107,6 +112,7 @@ def load_all(stream, Loader=None, version=None, preserve_quotes=None):
 
 
 def safe_load(stream, version=None):
+    # type: (StreamTextType, VersionType) -> Any
     """
     Parse the first YAML document in a stream
     and produce the corresponding Python object.
@@ -116,6 +122,7 @@ def safe_load(stream, version=None):
 
 
 def safe_load_all(stream, version=None):
+    # type: (StreamTextType, VersionType) -> Any
     """
     Parse all YAML documents in a stream
     and produce corresponding Python objects.
@@ -125,7 +132,7 @@ def safe_load_all(stream, version=None):
 
 
 def round_trip_load(stream, version=None, preserve_quotes=None):
-    # type: (Any, Any, bool) -> Any
+    # type: (StreamTextType, VersionType, bool) -> Any
     """
     Parse the first YAML document in a stream
     and produce the corresponding Python object.
@@ -135,6 +142,7 @@ def round_trip_load(stream, version=None, preserve_quotes=None):
 
 
 def round_trip_load_all(stream, version=None, preserve_quotes=None):
+    # type: (StreamTextType, VersionType, bool) -> Any
     """
     Parse all YAML documents in a stream
     and produce corresponding Python objects.
@@ -146,6 +154,7 @@ def round_trip_load_all(stream, version=None, preserve_quotes=None):
 def emit(events, stream=None, Dumper=Dumper,
          canonical=None, indent=None, width=None,
          allow_unicode=None, line_break=None):
+    # type: (Any, StreamType, Any, bool, Union[int, None], int, bool, Any) -> Any
     """
     Emit YAML parsing events into a stream.
     If stream is None, return the produced string instead.
@@ -172,6 +181,7 @@ def serialize_all(nodes, stream=None, Dumper=Dumper,
                   allow_unicode=None, line_break=None,
                   encoding=enc, explicit_start=None, explicit_end=None,
                   version=None, tags=None):
+    # type: (Any, StreamType, Any, Any, Union[None, int], Union[None, int], bool, Any, Any, Union[None, bool], Union[None, bool], VersionType, Any) -> Any # NOQA
     """
     Serialize a sequence of representation trees into a YAML stream.
     If stream is None, return the produced string instead.
@@ -199,6 +209,7 @@ def serialize_all(nodes, stream=None, Dumper=Dumper,
 
 
 def serialize(node, stream=None, Dumper=Dumper, **kwds):
+    # type: (Any, StreamType, Any, Any) -> Any
     """
     Serialize a representation tree into a YAML stream.
     If stream is None, return the produced string instead.
@@ -213,6 +224,7 @@ def dump_all(documents, stream=None, Dumper=Dumper,
              encoding=enc, explicit_start=None, explicit_end=None,
              version=None, tags=None, block_seq_indent=None,
              top_level_colon_align=None, prefix_colon=None):
+    # type: (Any, StreamType, Any, Any, Any, bool, Union[None, int], Union[None, int], bool, Any, Any, Union[None, bool], Union[None, bool], Any, Any, Any, Any, Any) -> Union[None, str]   # NOQA
     """
     Serialize a sequence of Python objects into a YAML stream.
     If stream is None, return the produced string instead.
@@ -244,6 +256,7 @@ def dump_all(documents, stream=None, Dumper=Dumper,
         dumper.dispose()
     if getvalue:
         return getvalue()
+    return None
 
 
 def dump(data, stream=None, Dumper=Dumper,
@@ -252,6 +265,7 @@ def dump(data, stream=None, Dumper=Dumper,
          allow_unicode=None, line_break=None,
          encoding=enc, explicit_start=None, explicit_end=None,
          version=None, tags=None, block_seq_indent=None):
+    # type: (Any, StreamType, Any, Any, Any, bool, Union[None, int], Union[None, int], bool, Any, Any, Union[None, bool], Union[None, bool], VersionType, Any, Any) -> Union[None, str]   # NOQA
     """
     Serialize a Python object into a YAML stream.
     If stream is None, return the produced string instead.
@@ -272,6 +286,7 @@ def dump(data, stream=None, Dumper=Dumper,
 
 
 def safe_dump_all(documents, stream=None, **kwds):
+    # type: (Any, StreamType, Any) -> Union[None, str]
     """
     Serialize a sequence of Python objects into a YAML stream.
     Produce only basic YAML tags.
@@ -281,6 +296,7 @@ def safe_dump_all(documents, stream=None, **kwds):
 
 
 def safe_dump(data, stream=None, **kwds):
+    # type: (Any, StreamType, Any) -> Union[None, str]
     """
     Serialize a Python object into a YAML stream.
     Produce only basic YAML tags.
@@ -296,6 +312,7 @@ def round_trip_dump(data, stream=None, Dumper=RoundTripDumper,
                     encoding=enc, explicit_start=None, explicit_end=None,
                     version=None, tags=None, block_seq_indent=None,
                     top_level_colon_align=None, prefix_colon=None):
+    # type: (Any, StreamType, Any, Any, Any, bool, Union[None, int], Union[None, int], bool, Any, Any, Union[None, bool], Union[None, bool], VersionType, Any, Any, Any, Any) -> Union[None, str]   # NOQA
     allow_unicode = True if allow_unicode is None else allow_unicode
     return dump_all([data], stream, Dumper=Dumper,
                     default_style=default_style,
@@ -312,6 +329,7 @@ def round_trip_dump(data, stream=None, Dumper=RoundTripDumper,
 
 def add_implicit_resolver(tag, regexp, first=None,
                           Loader=Loader, Dumper=Dumper):
+    # type: (Any, Any, Any, Any, Any) -> None
     """
     Add an implicit scalar detector.
     If an implicit scalar value matches the given regexp,
@@ -323,6 +341,7 @@ def add_implicit_resolver(tag, regexp, first=None,
 
 
 def add_path_resolver(tag, path, kind=None, Loader=Loader, Dumper=Dumper):
+    # type: (Any, Any, Any, Any, Any) -> None
     """
     Add a path based resolver for the given tag.
     A path is a list of keys that forms a path
@@ -334,6 +353,7 @@ def add_path_resolver(tag, path, kind=None, Loader=Loader, Dumper=Dumper):
 
 
 def add_constructor(tag, constructor, Loader=Loader):
+    # type: (Any, Any, Any) -> None
     """
     Add a constructor for the given tag.
     Constructor is a function that accepts a Loader instance
@@ -343,6 +363,7 @@ def add_constructor(tag, constructor, Loader=Loader):
 
 
 def add_multi_constructor(tag_prefix, multi_constructor, Loader=Loader):
+    # type: (Any, Any, Any) -> None
     """
     Add a multi-constructor for the given tag prefix.
     Multi-constructor is called for a node if its tag starts with tag_prefix.
@@ -353,6 +374,7 @@ def add_multi_constructor(tag_prefix, multi_constructor, Loader=Loader):
 
 
 def add_representer(data_type, representer, Dumper=Dumper):
+    # type: (Any, Any, Any) -> None
     """
     Add a representer for the given type.
     Representer is a function accepting a Dumper instance
@@ -363,6 +385,7 @@ def add_representer(data_type, representer, Dumper=Dumper):
 
 
 def add_multi_representer(data_type, multi_representer, Dumper=Dumper):
+    # type: (Any, Any, Any) -> None
     """
     Add a representer for the given type.
     Multi-representer is a function accepting a Dumper instance
@@ -377,10 +400,11 @@ class YAMLObjectMetaclass(type):
     The metaclass for YAMLObject.
     """
     def __init__(cls, name, bases, kwds):
+        # type: (Any, Any, Any) -> None
         super(YAMLObjectMetaclass, cls).__init__(name, bases, kwds)
         if 'yaml_tag' in kwds and kwds['yaml_tag'] is not None:
-            cls.yaml_loader.add_constructor(cls.yaml_tag, cls.from_yaml)
-            cls.yaml_dumper.add_representer(cls, cls.to_yaml)
+            cls.yaml_loader.add_constructor(cls.yaml_tag, cls.from_yaml)  # type: ignore
+            cls.yaml_dumper.add_representer(cls, cls.to_yaml)  # type: ignore
 
 
 class YAMLObject(with_metaclass(YAMLObjectMetaclass)):  # type: ignore
@@ -398,6 +422,7 @@ class YAMLObject(with_metaclass(YAMLObjectMetaclass)):  # type: ignore
 
     @classmethod
     def from_yaml(cls, loader, node):
+        # type: (Any, Any) -> Any
         """
         Convert a representation node to a Python object.
         """
@@ -405,6 +430,7 @@ class YAMLObject(with_metaclass(YAMLObjectMetaclass)):  # type: ignore
 
     @classmethod
     def to_yaml(cls, dumper, data):
+        # type: (Any, Any) -> Any
         """
         Convert a Python object to a representation node.
         """

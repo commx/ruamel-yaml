@@ -10,9 +10,10 @@ import re
 import sys
 import types
 
-from typing import Any, Dict  # NOQA
+from typing import Any, Dict, List  # NOQA
 
-from ruamel.yaml.error import *                               # NOQA
+
+from ruamel.yaml.error import (MarkedYAMLError)
 from ruamel.yaml.nodes import *                               # NOQA
 from ruamel.yaml.nodes import (SequenceNode, MappingNode, ScalarNode)
 from ruamel.yaml.compat import (utf8, builtins_module, to_str, PY2, PY3,  # NOQA
@@ -39,10 +40,10 @@ class BaseConstructor(object):
     yaml_multi_constructors = {}   # type: Dict[Any, Any]
 
     def __init__(self, preserve_quotes=None):
-        # type: (Any) -> None
-        self.constructed_objects = {}
-        self.recursive_objects = {}
-        self.state_generators = []
+        # type: (bool) -> None
+        self.constructed_objects = {}  # type: Dict[Any, Any]
+        self.recursive_objects = {}  # type: Dict[Any, Any]
+        self.state_generators = []  # type: List[Any]
         self.deep_construct = False
         self._preserve_quotes = preserve_quotes
 
@@ -430,7 +431,8 @@ class SafeConstructor(BaseConstructor):
         delta = None
         if values['tz_sign']:
             tz_hour = int(values['tz_hour'])
-            tz_minute = int(values['tz_minute'] or 0)
+            minutes = values['tz_minute']
+            tz_minute = int(minutes) if minutes else 0
             delta = datetime.timedelta(hours=tz_hour, minutes=tz_minute)
             if values['tz_sign'] == '-':
                 delta = -delta
@@ -471,7 +473,7 @@ class SafeConstructor(BaseConstructor):
     def construct_yaml_pairs(self, node):
         # type: (Any) -> Any
         # Note: the same code as `construct_yaml_omap`.
-        pairs = []
+        pairs = []  # type: List[Any]
         yield pairs
         if not isinstance(node, SequenceNode):
             raise ConstructorError(
@@ -900,7 +902,7 @@ class RoundTripConstructor(SafeConstructor):
         except UnicodeEncodeError:
             return value
 
-    def construct_sequence(self, node, seqtyp, deep=False):
+    def construct_rt_sequence(self, node, seqtyp, deep=False):
         # type: (Any, Any, bool) -> Any
         if not isinstance(node, SequenceNode):
             raise ConstructorError(
@@ -933,6 +935,7 @@ class RoundTripConstructor(SafeConstructor):
         """
 
         def constructed(value_node):
+            # type: (Any) -> Any
             # If the contents of a merge are defined within the
             # merge marker, then they won't have been constructed
             # yet. But if they were already constructed, we need to use
@@ -1014,11 +1017,12 @@ class RoundTripConstructor(SafeConstructor):
             # lists are not hashable, but tuples are
             if not isinstance(key, collections.Hashable):
                 if isinstance(key, list):
-                    key = CommentedKeySeq(key)
+                    key_a = CommentedKeySeq(key)
                     if key_node.flow_style is True:
-                        key.fa.set_flow_style()
+                        key_a.fa.set_flow_style()
                     elif key_node.flow_style is False:
-                        key.fa.set_block_style()
+                        key_a.fa.set_block_style()
+                    key = key_a
                     # key = tuple(key)
             if PY2:
                 try:
@@ -1110,7 +1114,7 @@ class RoundTripConstructor(SafeConstructor):
         if node.comment:
             data._yaml_add_comment(node.comment)
         yield data
-        data.extend(self.construct_sequence(node, data))
+        data.extend(self.construct_rt_sequence(node, data))
 
     def construct_yaml_map(self, node):
         # type: (Any) -> Any
@@ -1192,8 +1196,8 @@ class RoundTripConstructor(SafeConstructor):
                 utf8(node.tag),
                 node.start_mark)
 
-    def construct_yaml_timestamp(self, node):
-        # type: (Any) -> Any
+    def construct_yaml_timestamp(self, node, values=None):
+        # type: (Any, Any) -> Any
         match = self.timestamp_regexp.match(node.value)
         values = match.groupdict()
         if not values['hour']:
@@ -1220,7 +1224,8 @@ class RoundTripConstructor(SafeConstructor):
         delta = None
         if values['tz_sign']:
             tz_hour = int(values['tz_hour'])
-            tz_minute = int(values['tz_minute'] or 0)
+            minutes = values['tz_minute']
+            tz_minute = int(minutes) if minutes else 0
             delta = datetime.timedelta(hours=tz_hour, minutes=tz_minute)
             if values['tz_sign'] == '-':
                 delta = -delta

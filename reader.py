@@ -23,6 +23,8 @@ from __future__ import absolute_import
 import codecs
 import re
 
+from typing import Any, Dict, Optional, List  # NOQA
+
 from ruamel.yaml.error import YAMLError, FileMark, StringMark
 from ruamel.yaml.compat import text_type, binary_type, PY3
 
@@ -32,6 +34,7 @@ __all__ = ['Reader', 'ReaderError']
 class ReaderError(YAMLError):
 
     def __init__(self, name, position, character, encoding, reason):
+        # type: (Any, Any, Any, Any, Any) -> None
         self.name = name
         self.character = character
         self.position = position
@@ -39,6 +42,7 @@ class ReaderError(YAMLError):
         self.reason = reason
 
     def __str__(self):
+        # type () -> str
         if isinstance(self.character, binary_type):
             return "'%s' codec can't decode byte #x%02x: %s\n"  \
                    "  in \"%s\", position %d"    \

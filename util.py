@@ -9,6 +9,7 @@ from __future__ import absolute_import, print_function
 from typing import Any, Dict, Optional, List  # NOQA
 
 from .compat import text_type, binary_type
+from .compat import StreamTextType, StringIO  # NOQA
 
 
 # originally as comment
@@ -17,7 +18,7 @@ from .compat import text_type, binary_type
 # that check this routines output against a known piece of your YAML
 # before upgrades to this code break your round-tripped YAML
 def load_yaml_guess_indent(stream, **kw):
-    # type: (Any, Any) -> Any
+    # type: (StreamTextType, Any) -> Any
     """guess the indent and block sequence indent of yaml stream/string
 
     returns round_trip_loaded stream, indent level, block sequence indent

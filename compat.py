@@ -8,7 +8,7 @@ import sys
 import os
 import types
 
-from typing import Any, Dict, Optional, List, Union  # NOQA
+from typing import Any, Dict, Optional, List, Union, BinaryIO, IO, Text  # NOQA
 
 
 try:
@@ -93,6 +93,9 @@ else:
     StringIO = _StringIO
     import cStringIO
     BytesIO = cStringIO.StringIO
+
+StreamType = Union[BinaryIO, IO[str], StringIO]
+StreamTextType = Union[Text, StreamType]
 
 if PY3:
     builtins_module = 'builtins'
