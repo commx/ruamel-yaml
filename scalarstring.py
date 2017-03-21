@@ -3,6 +3,8 @@
 from __future__ import absolute_import
 from __future__ import print_function
 
+from typing import Text, Any, Dict, List  # NOQA
+
 from ruamel.yaml.compat import text_type
 
 __all__ = ["ScalarString", "PreservedScalarString", "SingleQuotedScalarString",
@@ -13,13 +15,15 @@ class ScalarString(text_type):
     __slots__ = ()
 
     def __new__(cls, *args, **kw):
-        return text_type.__new__(cls, *args, **kw)
+        # type: (Any, Any) -> Any
+        return text_type.__new__(cls, *args, **kw)  # type: ignore
 
 
 class PreservedScalarString(ScalarString):
     __slots__ = ()
 
     def __new__(cls, value):
+        # type: (Text) -> Any
         return ScalarString.__new__(cls, value)
 
 
@@ -27,6 +31,7 @@ class SingleQuotedScalarString(ScalarString):
     __slots__ = ()
 
     def __new__(cls, value):
+        # type: (Text) -> Any
         return ScalarString.__new__(cls, value)
 
 
@@ -34,14 +39,17 @@ class DoubleQuotedScalarString(ScalarString):
     __slots__ = ()
 
     def __new__(cls, value):
+        # type: (Text) -> Any
         return ScalarString.__new__(cls, value)
 
 
 def preserve_literal(s):
+    # type: (Text) -> Text
     return PreservedScalarString(s.replace('\r\n', '\n').replace('\r', '\n'))
 
 
 def walk_tree(base):
+    # type: (Any) -> None
     """
     the routine here walks over a simple yaml tree (recursing in
     dict values and list items) and converts strings that
@@ -51,15 +59,14 @@ def walk_tree(base):
 
     if isinstance(base, dict):
         for k in base:
-            v = base[k]
+            v = base[k]  # type: Text
             if isinstance(v, string_types) and '\n' in v:
                 base[k] = preserve_literal(v)
             else:
                 walk_tree(v)
     elif isinstance(base, list):
         for idx, elem in enumerate(base):
-            if isinstance(elem, string_types) and '\n' in elem:
-                print(elem)
-                base[idx] = preserve_literal(elem)
+            if isinstance(elem, string_types) and '\n' in elem:  # type: ignore
+                base[idx] = preserve_literal(elem)  # type: ignore
             else:
                 walk_tree(elem)

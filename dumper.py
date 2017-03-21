@@ -2,6 +2,10 @@
 
 from __future__ import absolute_import
 
+from typing import Any, Dict, List, Union               # NOQA
+
+from ruamel.yaml.compat import StreamType, VersionType  # NOQA
+
 from ruamel.yaml.emitter import Emitter
 from ruamel.yaml.serializer import Serializer
 from ruamel.yaml.representer import Representer, SafeRepresenter, BaseRepresenter, \
@@ -19,17 +23,21 @@ class BaseDumper(Emitter, Serializer, BaseRepresenter, BaseResolver):
                  encoding=None, explicit_start=None, explicit_end=None,
                  version=None, tags=None, block_seq_indent=None,
                  top_level_colon_align=None, prefix_colon=None):
+        # type: (Any, StreamType, Any, Any, bool, Union[None, int], Union[None, int], bool, Any, Any, Union[None, bool], Union[None, bool], Any, Any, Any, Any, Any) -> None   # NOQA
         Emitter.__init__(self, stream, canonical=canonical,
                          indent=indent, width=width,
                          allow_unicode=allow_unicode, line_break=line_break,
-                         block_seq_indent=block_seq_indent)
+                         block_seq_indent=block_seq_indent,
+                         dumper=self)
         Serializer.__init__(self, encoding=encoding,
                             explicit_start=explicit_start,
                             explicit_end=explicit_end,
-                            version=version, tags=tags)
+                            version=version, tags=tags,
+                            dumper=self)
         BaseRepresenter.__init__(self, default_style=default_style,
-                                 default_flow_style=default_flow_style)
-        BaseResolver.__init__(self)
+                                 default_flow_style=default_flow_style,
+                                 dumper=self)
+        BaseResolver.__init__(self, loadumper=self)
 
 
 class SafeDumper(Emitter, Serializer, SafeRepresenter, Resolver):
@@ -40,17 +48,21 @@ class SafeDumper(Emitter, Serializer, SafeRepresenter, Resolver):
                  encoding=None, explicit_start=None, explicit_end=None,
                  version=None, tags=None, block_seq_indent=None,
                  top_level_colon_align=None, prefix_colon=None):
+        # type: (Any, StreamType, Any, Any, bool, Union[None, int], Union[None, int], bool, Any, Any, Union[None, bool], Union[None, bool], Any, Any, Any, Any, Any) -> None  # NOQA
         Emitter.__init__(self, stream, canonical=canonical,
                          indent=indent, width=width,
                          allow_unicode=allow_unicode, line_break=line_break,
-                         block_seq_indent=block_seq_indent)
+                         block_seq_indent=block_seq_indent,
+                         dumper=self)
         Serializer.__init__(self, encoding=encoding,
                             explicit_start=explicit_start,
                             explicit_end=explicit_end,
-                            version=version, tags=tags)
+                            version=version, tags=tags,
+                            dumper=self)
         SafeRepresenter.__init__(self, default_style=default_style,
-                                 default_flow_style=default_flow_style)
-        Resolver.__init__(self)
+                                 default_flow_style=default_flow_style,
+                                 dumper=self)
+        Resolver.__init__(self, loadumper=self)
 
 
 class Dumper(Emitter, Serializer, Representer, Resolver):
@@ -61,17 +73,21 @@ class Dumper(Emitter, Serializer, Representer, Resolver):
                  encoding=None, explicit_start=None, explicit_end=None,
                  version=None, tags=None, block_seq_indent=None,
                  top_level_colon_align=None, prefix_colon=None):
+        # type: (Any, StreamType, Any, Any, bool, Union[None, int], Union[None, int], bool, Any, Any, Union[None, bool], Union[None, bool], Any, Any, Any, Any, Any) -> None   # NOQA
         Emitter.__init__(self, stream, canonical=canonical,
                          indent=indent, width=width,
                          allow_unicode=allow_unicode, line_break=line_break,
-                         block_seq_indent=block_seq_indent)
+                         block_seq_indent=block_seq_indent,
+                         dumper=self)
         Serializer.__init__(self, encoding=encoding,
                             explicit_start=explicit_start,
                             explicit_end=explicit_end,
-                            version=version, tags=tags)
+                            version=version, tags=tags,
+                            dumper=self)
         Representer.__init__(self, default_style=default_style,
-                             default_flow_style=default_flow_style)
-        Resolver.__init__(self)
+                             default_flow_style=default_flow_style,
+                             dumper=self)
+        Resolver.__init__(self, loadumper=self)
 
 
 class RoundTripDumper(Emitter, Serializer, RoundTripRepresenter, VersionedResolver):
@@ -82,16 +98,20 @@ class RoundTripDumper(Emitter, Serializer, RoundTripRepresenter, VersionedResolv
                  encoding=None, explicit_start=None, explicit_end=None,
                  version=None, tags=None, block_seq_indent=None,
                  top_level_colon_align=None, prefix_colon=None):
+        # type: (Any, StreamType, Any, bool, Union[None, int], Union[None, int], bool, Any, Any, Union[None, bool], Union[None, bool], Any, Any, Any, Any, Any) -> None  # NOQA
         Emitter.__init__(self, stream, canonical=canonical,
                          indent=indent, width=width,
                          allow_unicode=allow_unicode, line_break=line_break,
                          block_seq_indent=block_seq_indent,
                          top_level_colon_align=top_level_colon_align,
-                         prefix_colon=prefix_colon)
+                         prefix_colon=prefix_colon,
+                         dumper=self)
         Serializer.__init__(self, encoding=encoding,
                             explicit_start=explicit_start,
                             explicit_end=explicit_end,
-                            version=version, tags=tags)
+                            version=version, tags=tags,
+                            dumper=self)
         RoundTripRepresenter.__init__(self, default_style=default_style,
-                                      default_flow_style=default_flow_style)
-        VersionedResolver.__init__(self)
+                                      default_flow_style=default_flow_style,
+                                      dumper=self)
+        VersionedResolver.__init__(self, loader=self)

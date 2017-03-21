@@ -4,25 +4,28 @@ from __future__ import absolute_import
 
 import warnings
 
-from typing import Any, Dict, Optional, List  # NOQA
+from typing import Any, Dict, Optional, List, Text  # NOQA
 
 from ruamel.yaml.compat import utf8
 
-__all__ = ['FileMark', 'StringMark', 'CommentMark',
-           'YAMLError', 'MarkedYAMLError', 'ReusedAnchorWarning',
-           'UnsafeLoaderWarning']
+__all__ = [
+    'FileMark', 'StringMark', 'CommentMark', 'YAMLError', 'MarkedYAMLError',
+    'ReusedAnchorWarning', 'UnsafeLoaderWarning',
+]
 
 
 class StreamMark(object):
     __slots__ = 'name', 'index', 'line', 'column',
 
     def __init__(self, name, index, line, column):
+        # type: (Any, int, int, int) -> None
         self.name = name
         self.index = index
         self.line = line
         self.column = column
 
     def __str__(self):
+        # type: () -> Any
         where = "  in \"%s\", line %d, column %d"   \
                 % (self.name, self.line+1, self.column+1)
         return where
@@ -36,11 +39,13 @@ class StringMark(StreamMark):
     __slots__ = 'name', 'index', 'line', 'column', 'buffer', 'pointer',
 
     def __init__(self, name, index, line, column, buffer, pointer):
+        # type: (Any, int, int, int, Any, Any) -> None
         StreamMark.__init__(self, name, index, line, column)
         self.buffer = buffer
         self.pointer = pointer
 
     def get_snippet(self, indent=4, max_length=75):
+        # type: (int, int) -> Any
         if self.buffer is None:  # always False
             return None
         head = ''
@@ -68,6 +73,7 @@ class StringMark(StreamMark):
                + ' '*(indent+self.pointer-start+len(head)) + caret
 
     def __str__(self):
+        # type: () -> Any
         snippet = self.get_snippet()
         where = "  in \"%s\", line %d, column %d"   \
                 % (self.name, self.line+1, self.column+1)
@@ -99,8 +105,8 @@ class MarkedYAMLError(YAMLError):
         self.note = note
 
     def __str__(self):
-        # type: () -> str
-        lines = []
+        # type: () -> Any
+        lines = []  # type: List[str]
         if self.context is not None:
             lines.append(self.context)
         if self.context_mark is not None  \

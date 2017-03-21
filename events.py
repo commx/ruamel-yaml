@@ -2,8 +2,11 @@
 
 # Abstract classes.
 
+from typing import Any, Dict, Optional, List  # NOQA
+
 
 def CommentCheck():
+    # type: () -> None
     pass
 
 
@@ -11,6 +14,7 @@ class Event(object):
     __slots__ = 'start_mark', 'end_mark', 'comment',
 
     def __init__(self, start_mark=None, end_mark=None, comment=CommentCheck):
+        # type: (Any, Any, Any) -> None
         self.start_mark = start_mark
         self.end_mark = end_mark
         # assert comment is not CommentCheck
@@ -19,6 +23,7 @@ class Event(object):
         self.comment = comment
 
     def __repr__(self):
+        # type: () -> Any
         attributes = [key for key in ['anchor', 'tag', 'implicit', 'value',
                                       'flow_style', 'style']
                       if hasattr(self, key)]
@@ -33,6 +38,7 @@ class NodeEvent(Event):
     __slots__ = 'anchor',
 
     def __init__(self, anchor, start_mark=None, end_mark=None, comment=None):
+        # type: (Any, Any, Any, Any) -> None
         Event.__init__(self, start_mark, end_mark, comment)
         self.anchor = anchor
 
@@ -42,6 +48,7 @@ class CollectionStartEvent(NodeEvent):
 
     def __init__(self, anchor, tag, implicit, start_mark=None, end_mark=None,
                  flow_style=None, comment=None):
+        # type: (Any, Any, Any, Any, Any, Any, Any) -> None
         NodeEvent.__init__(self, anchor, start_mark, end_mark, comment)
         self.tag = tag
         self.implicit = implicit
@@ -59,6 +66,7 @@ class StreamStartEvent(Event):
 
     def __init__(self, start_mark=None, end_mark=None, encoding=None,
                  comment=None):
+        # type: (Any, Any, Any, Any) -> None
         Event.__init__(self, start_mark, end_mark, comment)
         self.encoding = encoding
 
@@ -72,6 +80,7 @@ class DocumentStartEvent(Event):
 
     def __init__(self, start_mark=None, end_mark=None,
                  explicit=None, version=None, tags=None, comment=None):
+        # type: (Any, Any, Any, Any, Any, Any) -> None
         Event.__init__(self, start_mark, end_mark, comment)
         self.explicit = explicit
         self.version = version
@@ -83,6 +92,7 @@ class DocumentEndEvent(Event):
 
     def __init__(self, start_mark=None, end_mark=None,
                  explicit=None, comment=None):
+        # type: (Any, Any, Any, Any) -> None
         Event.__init__(self, start_mark, end_mark, comment)
         self.explicit = explicit
 
@@ -96,6 +106,7 @@ class ScalarEvent(NodeEvent):
 
     def __init__(self, anchor, tag, implicit, value,
                  start_mark=None, end_mark=None, style=None, comment=None):
+        # type: (Any, Any, Any, Any, Any, Any, Any, Any) -> None
         NodeEvent.__init__(self, anchor, start_mark, end_mark, comment)
         self.tag = tag
         self.implicit = implicit

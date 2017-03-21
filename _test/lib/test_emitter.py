@@ -95,6 +95,9 @@ class EventsLoader(yaml.Loader):
         value = getattr(yaml, class_name)(**mapping)
         return value
 
+# if Loader is not a composite, add this function
+# EventsLoader.add_constructor = yaml.constructor.Constructor.add_constructor
+
 EventsLoader.add_constructor(None, EventsLoader.construct_event)
 
 

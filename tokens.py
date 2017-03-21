@@ -1,15 +1,19 @@
 # # header
 # coding: utf-8
 
+from typing import Any, Dict, Optional, List  # NOQA
+
 
 class Token(object):
     __slots__ = 'start_mark', 'end_mark', '_comment',
 
     def __init__(self, start_mark, end_mark):
+        # type: (Any, Any) -> None
         self.start_mark = start_mark
         self.end_mark = end_mark
 
     def __repr__(self):
+        # type: () -> Any
         attributes = [key for key in self.__slots__ if not key.endswith('_mark') and
                       hasattr('self', key)]
         attributes.sort()
@@ -18,24 +22,29 @@ class Token(object):
         return '%s(%s)' % (self.__class__.__name__, arguments)
 
     def add_post_comment(self, comment):
+        # type: (Any) -> None
         if not hasattr(self, '_comment'):
             self._comment = [None, None]
         self._comment[0] = comment
 
     def add_pre_comments(self, comments):
+        # type: (Any) -> None
         if not hasattr(self, '_comment'):
             self._comment = [None, None]
         assert self._comment[1] is None
         self._comment[1] = comments
 
     def get_comment(self):
+        # type: () -> Any
         return getattr(self, '_comment', None)
 
     @property
     def comment(self):
+        # type: () -> Any
         return getattr(self, '_comment', None)
 
     def move_comment(self, target, empty=False):
+        # type: (Any, bool) -> Any
         """move a comment from this token to target (normally next token)
         used to combine e.g. comments before a BlockEntryToken to the
         ScalarToken that follows it
@@ -66,6 +75,7 @@ class Token(object):
         return self
 
     def split_comment(self):
+        # type: () -> Any
         """ split the post part of a comment, and return it
         as comment to be added. Delete second part if [None, None]
          abc:  # this goes to sequence
@@ -89,6 +99,7 @@ class DirectiveToken(Token):
     id = '<directive>'
 
     def __init__(self, name, value, start_mark, end_mark):
+        # type: (Any, Any, Any, Any) -> None
         Token.__init__(self, start_mark, end_mark)
         self.name = name
         self.value = value
@@ -109,6 +120,7 @@ class StreamStartToken(Token):
     id = '<stream start>'
 
     def __init__(self, start_mark=None, end_mark=None, encoding=None):
+        # type: (Any, Any, Any) -> None
         Token.__init__(self, start_mark, end_mark)
         self.encoding = encoding
 
@@ -178,6 +190,7 @@ class AliasToken(Token):
     id = '<alias>'
 
     def __init__(self, value, start_mark, end_mark):
+        # type: (Any, Any, Any) -> None
         Token.__init__(self, start_mark, end_mark)
         self.value = value
 
@@ -187,6 +200,7 @@ class AnchorToken(Token):
     id = '<anchor>'
 
     def __init__(self, value, start_mark, end_mark):
+        # type: (Any, Any, Any) -> None
         Token.__init__(self, start_mark, end_mark)
         self.value = value
 
@@ -196,6 +210,7 @@ class TagToken(Token):
     id = '<tag>'
 
     def __init__(self, value, start_mark, end_mark):
+        # type: (Any, Any, Any) -> None
         Token.__init__(self, start_mark, end_mark)
         self.value = value
 
@@ -205,6 +220,7 @@ class ScalarToken(Token):
     id = '<scalar>'
 
     def __init__(self, value, plain, start_mark, end_mark, style=None):
+        # type: (Any, Any, Any, Any, Any) -> None
         Token.__init__(self, start_mark, end_mark)
         self.value = value
         self.plain = plain
@@ -221,5 +237,6 @@ class CommentToken(Token):
         self.value = value
 
     def reset(self):
+        # type: () -> None
         if hasattr(self, 'pre_done'):
             delattr(self, 'pre_done')

@@ -8,11 +8,11 @@ import sys
 import os
 import types
 
-from typing import Any, Dict, Optional, List, Union, BinaryIO, IO, Text  # NOQA
+from typing import Any, Dict, Optional, List, Union, BinaryIO, IO, Text, Tuple   # NOQA
 
 
 try:
-    from ruamel.ordereddict import ordereddict  # type: ignore
+    from ruamel.ordereddict import ordereddict
 except:
     try:
         from collections import OrderedDict
@@ -68,9 +68,9 @@ else:
         return unicode(s)
 
 if PY3:
-    string_types = str,
-    integer_types = int,
-    class_types = type,
+    string_types = str
+    integer_types = int
+    class_types = type
     text_type = str
     binary_type = bytes
 
@@ -81,7 +81,7 @@ if PY3:
     BytesIO = io.BytesIO
 
 else:
-    string_types = basestring,
+    string_types = basestring
     integer_types = (int, long)
     class_types = (type, types.ClassType)
     text_type = unicode
@@ -94,8 +94,11 @@ else:
     import cStringIO
     BytesIO = cStringIO.StringIO
 
+# StreamType = Union[BinaryIO, IO[str], IO[unicode],  StringIO]
 StreamType = Union[BinaryIO, IO[str], StringIO]
+
 StreamTextType = Union[Text, StreamType]
+VersionType = Union[List[int], str, Tuple[int, int]]
 
 if PY3:
     builtins_module = 'builtins'
@@ -115,7 +118,7 @@ DBG_NODE = 4
 
 _debug = None  # type: Union[None, int]
 
-if _debug:
+if bool(_debug):
     class ObjectCounter(object):
         def __init__(self):
             # type: () -> None
@@ -151,7 +154,7 @@ def dbg(val=None):
 
 def nprint(*args, **kw):
     # type: (Any, Any) -> None
-    if dbg:
+    if bool(dbg):
         print(*args, **kw)
 
 # char checkers following production rules

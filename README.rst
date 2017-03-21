@@ -18,6 +18,14 @@ ChangeLog
 
 .. should insert NEXT: at the beginning of line for next key
 
+0.14.0 (2017-03-21):
+  - updates for mypy --strict
+  - preparation for moving away from inheritance in Loader and Dumper, calls from e.g.
+    the Representer to the Serializer.serialize() are now done via the attribute
+    .serializer.serialize(). Usage of .serialize() outside of Serializer will be
+    deprecated soon
+  - some extra tests on main.py functions
+
 0.13.14 (2017-02-12):
   - fix for issue 97: clipped block scalar followed by empty lines and comment
     would result in two CommentTokens of which the first was dropped.

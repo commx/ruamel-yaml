@@ -2,9 +2,12 @@
 
 from __future__ import absolute_import, unicode_literals
 
+import warnings
 
-from typing import List, Set, Dict, Tuple, Optional, Union, BinaryIO, IO, Any  # NOQA
 
+from typing import List, Set, Dict, Union, Any                 # NOQA
+
+import ruamel.yaml
 from ruamel.yaml.error import *                                # NOQA
 
 from ruamel.yaml.tokens import *                               # NOQA
@@ -14,11 +17,16 @@ from ruamel.yaml.nodes import *                                # NOQA
 from ruamel.yaml.loader import BaseLoader, SafeLoader, Loader, RoundTripLoader  # NOQA
 from ruamel.yaml.dumper import BaseDumper, SafeDumper, Dumper, RoundTripDumper  # NOQA
 from ruamel.yaml.compat import StringIO, BytesIO, with_metaclass, PY3
-from ruamel.yaml.compat import StreamType, StreamTextType  # NOQA
+from ruamel.yaml.compat import StreamType, StreamTextType, VersionType  # NOQA
+from ruamel.yaml.resolver import VersionedResolver, Resolver  # NOQA
+from ruamel.yaml.representer import (BaseRepresenter, SafeRepresenter, Representer,
+                                     RoundTripRepresenter)
+from ruamel.yaml.constructor import (BaseConstructor, SafeConstructor, Constructor,
+                                     RoundTripConstructor)
+from ruamel.yaml.loader import Loader as UnsafeLoader
+
 
 # import io
-
-VersionType = Union[List[int], str, Tuple[int, int]]
 
 
 def scan(stream, Loader=Loader):
@@ -28,10 +36,10 @@ def scan(stream, Loader=Loader):
     """
     loader = Loader(stream)
     try:
-        while loader.check_token():
-            yield loader.get_token()
+        while loader.scanner.check_token():
+            yield loader.scanner.get_token()
     finally:
-        loader.dispose()
+        loader._parser.dispose()
 
 
 def parse(stream, Loader=Loader):
@@ -41,10 +49,10 @@ def parse(stream, Loader=Loader):
     """
     loader = Loader(stream)
     try:
-        while loader.check_event():
-            yield loader.get_event()
+        while loader._parser.check_event():
+            yield loader._parser.get_event()
     finally:
-        loader.dispose()
+        loader._parser.dispose()
 
 
 def compose(stream, Loader=Loader):
@@ -69,9 +77,9 @@ def compose_all(stream, Loader=Loader):
     loader = Loader(stream)
     try:
         while loader.check_node():
-            yield loader.get_node()
+            yield loader._composer.get_node()
     finally:
-        loader.dispose()
+        loader._parser.dispose()
 
 
 def load(stream, Loader=None, version=None, preserve_quotes=None):
@@ -81,15 +89,13 @@ def load(stream, Loader=None, version=None, preserve_quotes=None):
     and produce the corresponding Python object.
     """
     if Loader is None:
-        from ruamel.yaml.loader import Loader as UnsafeLoader
-        import warnings
         warnings.warn(UnsafeLoaderWarning.text, UnsafeLoaderWarning, stacklevel=2)
         Loader = UnsafeLoader
     loader = Loader(stream, version, preserve_quotes=preserve_quotes)
     try:
-        return loader.get_single_data()
+        return loader._constructor.get_single_data()
     finally:
-        loader.dispose()
+        loader._parser.dispose()
 
 
 def load_all(stream, Loader=None, version=None, preserve_quotes=None):
@@ -99,16 +105,14 @@ def load_all(stream, Loader=None, version=None, preserve_quotes=None):
     and produce corresponding Python objects.
     """
     if Loader is None:
-        from ruamel.yaml.loader import Loader as UnsafeLoader
-        import warnings
         warnings.warn(UnsafeLoaderWarning.text, UnsafeLoaderWarning, stacklevel=2)
         Loader = UnsafeLoader
     loader = Loader(stream, version, preserve_quotes=preserve_quotes)
     try:
-        while loader.check_data():
-            yield loader.get_data()
+        while loader._constructor.check_data():
+            yield loader._constructor.get_data()
     finally:
-        loader.dispose()
+        loader._parser.dispose()
 
 
 def safe_load(stream, version=None):
@@ -169,8 +173,8 @@ def emit(events, stream=None, Dumper=Dumper,
         for event in events:
             dumper.emit(event)
     finally:
-        dumper.dispose()
-    if getvalue:
+        dumper._emitter.dispose()
+    if getvalue is not None:
         return getvalue()
 
 enc = None if PY3 else 'utf-8'
@@ -198,13 +202,13 @@ def serialize_all(nodes, stream=None, Dumper=Dumper,
                     encoding=encoding, version=version, tags=tags,
                     explicit_start=explicit_start, explicit_end=explicit_end)
     try:
-        dumper.open()
+        dumper._serializer.open()
         for node in nodes:
             dumper.serialize(node)
-        dumper.close()
+        dumper._serializer.close()
     finally:
-        dumper.dispose()
-    if getvalue:
+        dumper._emitter.dispose()
+    if getvalue is not None:
         return getvalue()
 
 
@@ -248,13 +252,17 @@ def dump_all(documents, stream=None, Dumper=Dumper,
                     top_level_colon_align=top_level_colon_align, prefix_colon=prefix_colon,
                     )
     try:
-        dumper.open()
+        dumper._serializer.open()
         for data in documents:
-            dumper.represent(data)
-        dumper.close()
+            try:
+                dumper._representer.represent(data)
+            except AttributeError:
+                # print(dir(dumper._representer))
+                raise
+        dumper._serializer.close()
     finally:
-        dumper.dispose()
-    if getvalue:
+        dumper._emitter.dispose()
+    if getvalue is not None:
         return getvalue()
     return None
 
@@ -327,72 +335,173 @@ def round_trip_dump(data, stream=None, Dumper=RoundTripDumper,
                     top_level_colon_align=top_level_colon_align, prefix_colon=prefix_colon)
 
 
-def add_implicit_resolver(tag, regexp, first=None,
-                          Loader=Loader, Dumper=Dumper):
-    # type: (Any, Any, Any, Any, Any) -> None
+# Loader/Dumper are no longer composites, to get to the associated
+# Resolver()/Representer(), etc., you need to instantiate the class
+
+def add_implicit_resolver(tag, regexp, first=None, Loader=None, Dumper=None,
+                          resolver=Resolver):
+    # type: (Any, Any, Any, Any, Any, Any) -> None
     """
     Add an implicit scalar detector.
     If an implicit scalar value matches the given regexp,
     the corresponding tag is assigned to the scalar.
     first is a sequence of possible initial characters or None.
     """
-    Loader.add_implicit_resolver(tag, regexp, first)
-    Dumper.add_implicit_resolver(tag, regexp, first)
+    if Loader is None and Dumper is None:
+        resolver.add_implicit_resolver(tag, regexp, first)
+        return
+    if Loader:
+        if hasattr(Loader, 'add_implicit_resolver'):
+            Loader.add_implicit_resolver(tag, regexp, first)
+        elif issubclass(Loader, (BaseLoader, SafeLoader, ruamel.yaml.loader.Loader,
+                                 RoundTripLoader)):
+            Resolver.add_implicit_resolver(tag, regexp, first)
+        else:
+            raise NotImplementedError
+    if Dumper:
+        if hasattr(Dumper, 'add_implicit_resolver'):
+            Dumper.add_implicit_resolver(tag, regexp, first)
+        elif issubclass(Dumper, (BaseDumper, SafeDumper, ruamel.yaml.dumper.Dumper,
+                                 RoundTripDumper)):
+            Resolver.add_implicit_resolver(tag, regexp, first)
+        else:
+            raise NotImplementedError
 
 
-def add_path_resolver(tag, path, kind=None, Loader=Loader, Dumper=Dumper):
-    # type: (Any, Any, Any, Any, Any) -> None
+# this code currently not tested
+def add_path_resolver(tag, path, kind=None, Loader=None, Dumper=None,
+                      resolver=Resolver):
+    # type: (Any, Any, Any, Any, Any, Any) -> None
     """
     Add a path based resolver for the given tag.
     A path is a list of keys that forms a path
     to a node in the representation tree.
     Keys can be string values, integers, or None.
     """
-    Loader.add_path_resolver(tag, path, kind)
-    Dumper.add_path_resolver(tag, path, kind)
+    if Loader is None and Dumper is None:
+        resolver.add_path_resolver(tag, path, kind)
+        return
+    if Loader:
+        if hasattr(Loader, 'add_path_resolver'):
+            Loader.add_path_resolver(tag, path, kind)
+        elif issubclass(Loader, (BaseLoader, SafeLoader, ruamel.yaml.loader.Loader,
+                                 RoundTripLoader)):
+            Resolver.add_path_resolver(tag, path, kind)
+        else:
+            raise NotImplementedError
+    if Dumper:
+        if hasattr(Dumper, 'add_path_resolver'):
+            Dumper.add_path_resolver(tag, path, kind)
+        elif issubclass(Dumper, (BaseDumper, SafeDumper, ruamel.yaml.dumper.Dumper,
+                                 RoundTripDumper)):
+            Resolver.add_path_resolver(tag, path, kind)
+        else:
+            raise NotImplementedError
 
 
-def add_constructor(tag, constructor, Loader=Loader):
-    # type: (Any, Any, Any) -> None
+def add_constructor(tag, object_constructor, Loader=None, constructor=Constructor):
+    # type: (Any, Any, Any, Any) -> None
     """
-    Add a constructor for the given tag.
-    Constructor is a function that accepts a Loader instance
+    Add an object constructor for the given tag.
+    object_onstructor is a function that accepts a Loader instance
     and a node object and produces the corresponding Python object.
     """
-    Loader.add_constructor(tag, constructor)
+    if Loader is None:
+        constructor.add_constructor(tag, object_constructor)
+    else:
+        if hasattr(Loader, 'add_constructor'):
+            Loader.add_constructor(tag, object_constructor)
+            return
+        if issubclass(Loader, BaseLoader):
+            BaseConstructor.add_constructor(tag, object_constructor)
+        elif issubclass(Loader, SafeLoader):
+            SafeConstructor.add_constructor(tag, object_constructor)
+        elif issubclass(Loader, Loader):
+            Constructor.add_constructor(tag, object_constructor)
+        elif issubclass(Loader, RoundTripLoader):
+            RoundTripConstructor.add_constructor(tag, object_constructor)
+        else:
+            raise NotImplementedError
 
 
-def add_multi_constructor(tag_prefix, multi_constructor, Loader=Loader):
-    # type: (Any, Any, Any) -> None
+def add_multi_constructor(tag_prefix, multi_constructor, Loader=None,
+                          constructor=Constructor):
+    # type: (Any, Any, Any, Any) -> None
     """
     Add a multi-constructor for the given tag prefix.
     Multi-constructor is called for a node if its tag starts with tag_prefix.
     Multi-constructor accepts a Loader instance, a tag suffix,
     and a node object and produces the corresponding Python object.
     """
-    Loader.add_multi_constructor(tag_prefix, multi_constructor)
+    if Loader is None:
+        constructor.add_multi_constructor(tag_prefix, multi_constructor)
+    else:
+        if False and hasattr(Loader, 'add_multi_constructor'):
+            Loader.add_multi_constructor(tag_prefix, constructor)
+            return
+        if issubclass(Loader, BaseLoader):
+            BaseConstructor.add_multi_constructor(tag_prefix, multi_constructor)
+        elif issubclass(Loader, SafeLoader):
+            SafeConstructor.add_multi_constructor(tag_prefix, multi_constructor)
+        elif issubclass(Loader, ruamel.yaml.loader.Loader):
+            Constructor.add_multi_constructor(tag_prefix, multi_constructor)
+        elif issubclass(Loader, RoundTripLoader):
+            RoundTripConstructor.add_multi_constructor(tag_prefix, multi_constructor)
+        else:
+            raise NotImplementedError
 
 
-def add_representer(data_type, representer, Dumper=Dumper):
-    # type: (Any, Any, Any) -> None
+def add_representer(data_type, object_representer, Dumper=None, representer=Representer):
+    # type: (Any, Any, Any, Any) -> None
     """
     Add a representer for the given type.
-    Representer is a function accepting a Dumper instance
+    object_representer is a function accepting a Dumper instance
     and an instance of the given data type
     and producing the corresponding representation node.
     """
-    Dumper.add_representer(data_type, representer)
+    if Dumper is None:
+        representer.add_representer(data_type, object_representer)
+    else:
+        if hasattr(Dumper, 'add_representer'):
+            Dumper.add_representer(data_type, object_representer)
+            return
+        if issubclass(Dumper, BaseDumper):
+            BaseRepresenter.add_representer(data_type, object_representer)
+        elif issubclass(Dumper, SafeDumper):
+            SafeRepresenter.add_representer(data_type, object_representer)
+        elif issubclass(Dumper, Dumper):
+            Representer.add_representer(data_type, object_representer)
+        elif issubclass(Dumper, RoundTripDumper):
+            RoundTripRepresenter.add_representer(data_type, object_representer)
+        else:
+            raise NotImplementedError
 
 
-def add_multi_representer(data_type, multi_representer, Dumper=Dumper):
-    # type: (Any, Any, Any) -> None
+# this code currently not tested
+def add_multi_representer(data_type, multi_representer, Dumper=None, representer=Representer):
+    # type: (Any, Any, Any, Any) -> None
     """
     Add a representer for the given type.
-    Multi-representer is a function accepting a Dumper instance
+    multi_representer is a function accepting a Dumper instance
     and an instance of the given data type or subtype
     and producing the corresponding representation node.
     """
-    Dumper.add_multi_representer(data_type, multi_representer)
+    if Dumper is None:
+        representer.add_multi_representer(data_type, multi_representer)
+    else:
+        if hasattr(Dumper, 'add_multi_representer'):
+            Dumper.add_multi_representer(data_type, multi_representer)
+            return
+        if issubclass(Dumper, BaseDumper):
+            BaseRepresenter.add_multi_representer(data_type, multi_representer)
+        elif issubclass(Dumper, SafeDumper):
+            SafeRepresenter.add_multi_representer(data_type, multi_representer)
+        elif issubclass(Dumper, Dumper):
+            Representer.add_multi_representer(data_type, multi_representer)
+        elif issubclass(Dumper, RoundTripDumper):
+            RoundTripRepresenter.add_multi_representer(data_type, multi_representer)
+        else:
+            raise NotImplementedError
 
 
 class YAMLObjectMetaclass(type):
@@ -403,8 +512,8 @@ class YAMLObjectMetaclass(type):
         # type: (Any, Any, Any) -> None
         super(YAMLObjectMetaclass, cls).__init__(name, bases, kwds)
         if 'yaml_tag' in kwds and kwds['yaml_tag'] is not None:
-            cls.yaml_loader.add_constructor(cls.yaml_tag, cls.from_yaml)  # type: ignore
-            cls.yaml_dumper.add_representer(cls, cls.to_yaml)  # type: ignore
+            cls.yaml_constructor.add_constructor(cls.yaml_tag, cls.from_yaml)  # type: ignore
+            cls.yaml_representer.add_representer(cls, cls.to_yaml)             # type: ignore
 
 
 class YAMLObject(with_metaclass(YAMLObjectMetaclass)):  # type: ignore
@@ -414,25 +523,25 @@ class YAMLObject(with_metaclass(YAMLObjectMetaclass)):  # type: ignore
     """
     __slots__ = ()  # no direct instantiation, so allow immutable subclasses
 
-    yaml_loader = Loader
-    yaml_dumper = Dumper
+    yaml_constructor = Constructor
+    yaml_representer = Representer
 
     yaml_tag = None  # type: Any
     yaml_flow_style = None  # type: Any
 
     @classmethod
-    def from_yaml(cls, loader, node):
+    def from_yaml(cls, constructor, node):
         # type: (Any, Any) -> Any
         """
         Convert a representation node to a Python object.
         """
-        return loader.construct_yaml_object(node, cls)
+        return constructor.construct_yaml_object(node, cls)
 
     @classmethod
-    def to_yaml(cls, dumper, data):
+    def to_yaml(cls, representer, data):
         # type: (Any, Any) -> Any
         """
         Convert a Python object to a representation node.
         """
-        return dumper.represent_yaml_object(cls.yaml_tag, data, cls,
-                                            flow_style=cls.yaml_flow_style)
+        return representer.represent_yaml_object(cls.yaml_tag, data, cls,
+                                                 flow_style=cls.yaml_flow_style)

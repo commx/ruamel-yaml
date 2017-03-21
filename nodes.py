@@ -2,11 +2,14 @@
 
 from __future__ import print_function
 
+from typing import Dict, Any, Text   # NOQA
+
 
 class Node(object):
     __slots__ = 'tag', 'value', 'start_mark', 'end_mark', 'comment', 'anchor',
 
     def __init__(self, tag, value, start_mark, end_mark, comment=None):
+        # type: (Any, Any, Any, Any, Any) -> None
         self.tag = tag
         self.value = value
         self.start_mark = start_mark
@@ -15,6 +18,7 @@ class Node(object):
         self.anchor = None
 
     def __repr__(self):
+        # type: () -> str
         value = self.value
         # if isinstance(value, list):
         #     if len(value) == 0:
@@ -33,6 +37,7 @@ class Node(object):
                                          self.tag, value)
 
     def dump(self, indent=0):
+        # type: (int) -> None
         if isinstance(self.value, basestring):
             print('{}{}(tag={!r}, value={!r})'.format(
                 '  ' * indent, self.__class__.__name__, self.tag, self.value))
@@ -69,6 +74,7 @@ class ScalarNode(Node):
 
     def __init__(self, tag, value, start_mark=None, end_mark=None, style=None,
                  comment=None):
+        # type: (Any, Any, Any, Any, Any, Any) -> None
         Node.__init__(self, tag, value, start_mark, end_mark, comment=comment)
         self.style = style
 
@@ -78,6 +84,7 @@ class CollectionNode(Node):
 
     def __init__(self, tag, value, start_mark=None, end_mark=None,
                  flow_style=None, comment=None, anchor=None):
+        # type: (Any, Any, Any, Any, Any, Any, Any) -> None
         Node.__init__(self, tag, value, start_mark, end_mark, comment=comment)
         self.flow_style = flow_style
         self.anchor = anchor

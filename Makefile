@@ -11,7 +11,7 @@ gen_win_whl:
 	python2 setup.py bdist_wheel --plat-name win_amd64
 	python3 setup.py bdist_wheel --plat-name win32
 	python3 setup.py bdist_wheel --plat-name win_amd64
-	#@python make_win_whl.py dist/$(PKGNAME)-$(VERSION)-*-none-any.whl
+	# @python make_win_whl.py dist/$(PKGNAME)-$(VERSION)-*-none-any.whl
 
 clean:	clean_common
 	find . -name "*py.class" -exec rm {} +
@@ -20,15 +20,27 @@ cython:	ext/_yaml.c
 
 ext/_yaml.c:	ext/_yaml.pyx
 	cd ext; cython _yaml.pyx
-	
+
 ls-l:
 	ls -l dist/*$(VERSION)*
+
+pytest:
+	py.test _test/*.py
+
+MYPYSRC:=$(shell ls -1 *.py | grep -Ev "^(setup.py|.*_flymake.py)$$" | sed 's|^|ruamel/yaml/|')
+MYPYOPT:=--py2 --strict
 
 mypy:
 	cd ..; mypy --strict --no-warn-unused-ignores yaml/*.py
 
+# sleep to give time to flymake*.py to disappear
 mypy2:
-	cd ../.. ; mypy --py2 --strict --no-strict-boolean --no-warn-unused-ignores ruamel/yaml/*.py
+	cd ../.. ; mypy $(MYPYOPT) $(MYPYSRC)
+
+mypy2single:
+	@echo 'mypy *.py'
+	@cd ../.. ; mypy $(MYPYOPT) $(MYPYSRC) | fgrep -v ordereddict/__init | grep .
+#	@echo 'mypy ' $(MYPYSRC)
 
 #tstvenv: testvenv testsetup testtest
 #

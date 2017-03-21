@@ -11,7 +11,7 @@ a separate base
 from typing import Any, Dict, Optional, List, Union  # NOQA
 import copy
 
-from collections import MutableSet, Sized, Set  # type: ignore
+from collections import MutableSet, Sized, Set
 
 from ruamel.yaml.compat import ordereddict, PY2
 
@@ -45,7 +45,7 @@ class Comment(object):
 
     def __str__(self):
         # type: () -> str
-        if self._end:
+        if bool(self._end):
             end = ',\n  end=' + str(self._end)
         else:
             end = ''
@@ -875,11 +875,11 @@ class CommentedSet(MutableSet, CommentedMap):
     __slots__ = Comment.attrib, 'odict',
 
     def __init__(self, values=None):
-        # type: (Optional[Any]) -> None
+        # type: (Any) -> None
         self.odict = ordereddict()
         MutableSet.__init__(self)
         if values is not None:
-            self |= values
+            self |= values  # type: ignore
 
     def add(self, value):
         # type: (Any) -> None

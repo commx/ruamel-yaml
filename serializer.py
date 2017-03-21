@@ -4,8 +4,11 @@ from __future__ import absolute_import
 
 import re
 
+from typing import Any, Dict, Union, Text  # NOQA
+
 from ruamel.yaml.error import YAMLError
 from ruamel.yaml.compat import nprint, DBG_NODE, dbg, string_types
+from ruamel.yaml.compat import VersionType  # NOQA
 
 from ruamel.yaml.events import (
     StreamStartEvent, StreamEndEvent, MappingStartEvent, MappingEndEvent,
@@ -30,24 +33,39 @@ class Serializer(object):
     ANCHOR_RE = re.compile(u'id(?!000$)\\d{3,}')
 
     def __init__(self, encoding=None, explicit_start=None, explicit_end=None,
-                 version=None, tags=None):
+                 version=None, tags=None, dumper=None):
+        # type: (Any, bool, bool, VersionType, Any, Any) -> None
+        self.dumper = dumper
+        if self.dumper is not None:
+            self.dumper._serializer = self
         self.use_encoding = encoding
         self.use_explicit_start = explicit_start
         self.use_explicit_end = explicit_end
         if isinstance(version, string_types):
             self.use_version = tuple(map(int, version.split('.')))
         else:
-            self.use_version = version
+            self.use_version = version  # type: ignore
         self.use_tags = tags
-        self.serialized_nodes = {}
-        self.anchors = {}
+        self.serialized_nodes = {}  # type: Dict[Any, Any]
+        self.anchors = {}  # type: Dict[Any, Any]
         self.last_anchor_id = 0
-        self.closed = None
+        self.closed = None  # type: Union[None, bool]
         self._templated_id = None
 
+    @property
+    def emitter(self):
+        # type: () -> Any
+        return self.dumper._emitter
+
+    @property
+    def resolver(self):
+        # type: () -> Any
+        return self.dumper._resolver
+
     def open(self):
+        # type: () -> None
         if self.closed is None:
-            self.emit(StreamStartEvent(encoding=self.use_encoding))
+            self.emitter.emit(StreamStartEvent(encoding=self.use_encoding))
             self.closed = False
         elif self.closed:
             raise SerializerError("serializer is closed")
@@ -55,16 +73,18 @@ class Serializer(object):
             raise SerializerError("serializer is already opened")
 
     def close(self):
+        # type: () -> None
         if self.closed is None:
             raise SerializerError("serializer is not opened")
         elif not self.closed:
-            self.emit(StreamEndEvent())
+            self.emitter.emit(StreamEndEvent())
             self.closed = True
 
     # def __del__(self):
     #     self.close()
 
     def serialize(self, node):
+        # type: (Any) -> None
         if dbg(DBG_NODE):
             nprint('Serializing nodes')
             node.dump()
@@ -72,17 +92,18 @@ class Serializer(object):
             raise SerializerError("serializer is not opened")
         elif self.closed:
             raise SerializerError("serializer is closed")
-        self.emit(DocumentStartEvent(explicit=self.use_explicit_start,
-                                     version=self.use_version,
-                                     tags=self.use_tags))
+        self.emitter.emit(DocumentStartEvent(explicit=self.use_explicit_start,
+                                             version=self.use_version,
+                                             tags=self.use_tags))
         self.anchor_node(node)
         self.serialize_node(node, None, None)
-        self.emit(DocumentEndEvent(explicit=self.use_explicit_end))
+        self.emitter.emit(DocumentEndEvent(explicit=self.use_explicit_end))
         self.serialized_nodes = {}
         self.anchors = {}
         self.last_anchor_id = 0
 
     def anchor_node(self, node):
+        # type: (Any) -> None
         if node in self.anchors:
             if self.anchors[node] is None:
                 self.anchors[node] = self.generate_anchor(node)
@@ -103,6 +124,7 @@ class Serializer(object):
                     self.anchor_node(value)
 
     def generate_anchor(self, node):
+        # type: (Any) -> Any
         try:
             anchor = node.anchor.value
         except:
@@ -113,22 +135,23 @@ class Serializer(object):
         return anchor
 
     def serialize_node(self, node, parent, index):
+        # type: (Any, Any, Any) -> None
         alias = self.anchors[node]
         if node in self.serialized_nodes:
-            self.emit(AliasEvent(alias))
+            self.emitter.emit(AliasEvent(alias))
         else:
             self.serialized_nodes[node] = True
-            self.descend_resolver(parent, index)
+            self.resolver.descend_resolver(parent, index)
             if isinstance(node, ScalarNode):
                 # here check if the node.tag equals the one that would result from parsing
                 # if not equal quoting is necessary for strings
-                detected_tag = self.resolve(ScalarNode, node.value, (True, False))
-                default_tag = self.resolve(ScalarNode, node.value, (False, True))
+                detected_tag = self.resolver.resolve(ScalarNode, node.value, (True, False))
+                default_tag = self.resolver.resolve(ScalarNode, node.value, (False, True))
                 implicit = (node.tag == detected_tag), (node.tag == default_tag)
-                self.emit(ScalarEvent(alias, node.tag, implicit, node.value,
-                                      style=node.style, comment=node.comment))
+                self.emitter.emit(ScalarEvent(alias, node.tag, implicit, node.value,
+                                              style=node.style, comment=node.comment))
             elif isinstance(node, SequenceNode):
-                implicit = (node.tag == self.resolve(SequenceNode, node.value, True))
+                implicit = (node.tag == self.resolver.resolve(SequenceNode, node.value, True))
                 comment = node.comment
                 # print('comment >>>>>>>>>>>>>.', comment, node.flow_style)
                 end_comment = None
@@ -141,16 +164,16 @@ class Serializer(object):
                     end_comment = comment[2]
                 else:
                     end_comment = None
-                self.emit(SequenceStartEvent(alias, node.tag, implicit,
-                                             flow_style=node.flow_style,
-                                             comment=node.comment))
+                self.emitter.emit(SequenceStartEvent(alias, node.tag, implicit,
+                                                     flow_style=node.flow_style,
+                                                     comment=node.comment))
                 index = 0
                 for item in node.value:
                     self.serialize_node(item, node, index)
                     index += 1
-                self.emit(SequenceEndEvent(comment=[seq_comment, end_comment]))
+                self.emitter.emit(SequenceEndEvent(comment=[seq_comment, end_comment]))
             elif isinstance(node, MappingNode):
-                implicit = (node.tag == self.resolve(MappingNode, node.value, True))
+                implicit = (node.tag == self.resolver.resolve(MappingNode, node.value, True))
                 comment = node.comment
                 end_comment = None
                 map_comment = None
@@ -160,15 +183,16 @@ class Serializer(object):
                         # comment[0] = None
                 if comment and len(comment) > 2:
                     end_comment = comment[2]
-                self.emit(MappingStartEvent(alias, node.tag, implicit,
-                                            flow_style=node.flow_style,
-                                            comment=node.comment))
+                self.emitter.emit(MappingStartEvent(alias, node.tag, implicit,
+                                                    flow_style=node.flow_style,
+                                                    comment=node.comment))
                 for key, value in node.value:
                     self.serialize_node(key, node, None)
                     self.serialize_node(value, node, key)
-                self.emit(MappingEndEvent(comment=[map_comment, end_comment]))
-            self.ascend_resolver()
+                self.emitter.emit(MappingEndEvent(comment=[map_comment, end_comment]))
+            self.resolver.ascend_resolver()
 
 
 def templated_id(s):
+    # type: (Text) -> Any
     return Serializer.ANCHOR_RE.match(s)

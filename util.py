@@ -6,7 +6,7 @@ some helper functions that might be generally useful
 
 from __future__ import absolute_import, print_function
 
-from typing import Any, Dict, Optional, List  # NOQA
+from typing import Any, Dict, Optional, List, Text  # NOQA
 
 from .compat import text_type, binary_type
 from .compat import StreamTextType, StringIO  # NOQA
@@ -85,7 +85,7 @@ def configobj_walker(cfg):
     walks over a ConfigObj (INI file with comments) generating
     corresponding YAML output (including comments
     """
-    from configobj import ConfigObj
+    from configobj import ConfigObj  # type: ignore
     assert isinstance(cfg, ConfigObj)
     for c in cfg.initial_comment:
         if c.strip():

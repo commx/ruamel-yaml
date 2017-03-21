@@ -23,10 +23,11 @@ from __future__ import absolute_import
 import codecs
 import re
 
-from typing import Any, Dict, Optional, List  # NOQA
+from typing import Any, Dict, Optional, List, Union, Text  # NOQA
 
 from ruamel.yaml.error import YAMLError, FileMark, StringMark
 from ruamel.yaml.compat import text_type, binary_type, PY3
+from ruamel.yaml.compat import StreamTextType  # NOQA
 
 __all__ = ['Reader', 'ReaderError']
 
@@ -42,7 +43,7 @@ class ReaderError(YAMLError):
         self.reason = reason
 
     def __str__(self):
-        # type () -> str
+        # type: () -> str
         if isinstance(self.character, binary_type):
             return "'%s' codec can't decode byte #x%02x: %s\n"  \
                    "  in \"%s\", position %d"    \
@@ -69,16 +70,20 @@ class Reader(object):
 
     # Yeah, it's ugly and slow.
 
-    def __init__(self, stream):
+    def __init__(self, stream, loader=None):
+        # type: (StreamTextType, Any) -> None
+        self.loader = loader
+        if self.loader is not None:
+            self.loader._reader = self
         self.name = None
-        self.stream = None
+        self.stream = None  # type: Any  # as .read is called
         self.stream_pointer = 0
         self.eof = True
         self.buffer = u''
         self.pointer = 0
-        self.raw_buffer = None
+        self.raw_buffer = None  # type: Any
         self.raw_decode = None
-        self.encoding = None
+        self.encoding = None  # type: Union[None, Text]
         self.index = 0
         self.line = 0
         self.column = 0
@@ -98,6 +103,7 @@ class Reader(object):
             self.determine_encoding()
 
     def peek(self, index=0):
+        # type: (int) -> Text
         try:
             return self.buffer[self.pointer+index]
         except IndexError:
@@ -105,14 +111,16 @@ class Reader(object):
             return self.buffer[self.pointer+index]
 
     def prefix(self, length=1):
+        # type: (int) -> Any
         if self.pointer+length >= len(self.buffer):
             self.update(length)
         return self.buffer[self.pointer:self.pointer+length]
 
     def forward(self, length=1):
+        # type: (int) -> None
         if self.pointer+length+1 >= len(self.buffer):
             self.update(length+1)
-        while length:
+        while length != 0:
             ch = self.buffer[self.pointer]
             self.pointer += 1
             self.index += 1
@@ -125,25 +133,27 @@ class Reader(object):
             length -= 1
 
     def get_mark(self):
-        if self.stream is None:
+        # type: () -> Any
+        if self.stream is None and self.stream is None:
             return StringMark(self.name, self.index, self.line, self.column,
                               self.buffer, self.pointer)
         else:
             return FileMark(self.name, self.index, self.line, self.column)
 
     def determine_encoding(self):
+        # type: () -> None
         while not self.eof and (self.raw_buffer is None or
                                 len(self.raw_buffer) < 2):
             self.update_raw()
         if isinstance(self.raw_buffer, binary_type):
             if self.raw_buffer.startswith(codecs.BOM_UTF16_LE):
-                self.raw_decode = codecs.utf_16_le_decode
+                self.raw_decode = codecs.utf_16_le_decode  # type: ignore
                 self.encoding = 'utf-16-le'
             elif self.raw_buffer.startswith(codecs.BOM_UTF16_BE):
-                self.raw_decode = codecs.utf_16_be_decode
+                self.raw_decode = codecs.utf_16_be_decode  # type: ignore
                 self.encoding = 'utf-16-be'
             else:
-                self.raw_decode = codecs.utf_8_decode
+                self.raw_decode = codecs.utf_8_decode  # type: ignore
                 self.encoding = 'utf-8'
         self.update(1)
 
@@ -167,14 +177,16 @@ class Reader(object):
         UNICODE_SIZE = 2
 
     def check_printable(self, data):
+        # type: (Any) -> None
         match = self.NON_PRINTABLE.search(data)
-        if match:
+        if bool(match):
             character = match.group()
             position = self.index+(len(self.buffer)-self.pointer)+match.start()
             raise ReaderError(self.name, position, ord(character),
                               'unicode', "special characters are not allowed")
 
     def update(self, length):
+        # type: (int) -> None
         if self.raw_buffer is None:
             return
         self.buffer = self.buffer[self.pointer:]
@@ -194,6 +206,9 @@ class Reader(object):
                     if self.stream is not None:
                         position = self.stream_pointer - \
                             len(self.raw_buffer) + exc.start
+                    elif self.stream is not None:
+                        position = self.stream_pointer - \
+                            len(self.raw_buffer) + exc.start
                     else:
                         position = exc.start
                     raise ReaderError(self.name, position, character,
@@ -210,6 +225,7 @@ class Reader(object):
                 break
 
     def update_raw(self, size=None):
+        # type: (int) -> None
         if size is None:
             size = 4096 if PY3 else 1024
         data = self.stream.read(size)
