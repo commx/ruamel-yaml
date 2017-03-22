@@ -3,9 +3,12 @@
 from __future__ import absolute_import
 from __future__ import print_function
 
-from typing import Text, Any, Dict, List  # NOQA
+import sys
 
 from ruamel.yaml.compat import text_type
+
+if sys.version_info >= (3, 5, 2):
+    from typing import Text, Any, Dict, List  # NOQA
 
 __all__ = ["ScalarString", "PreservedScalarString", "SingleQuotedScalarString",
            "DoubleQuotedScalarString"]

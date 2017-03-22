@@ -2,7 +2,8 @@
 
 from __future__ import absolute_import
 
-from typing import Any, Union  # NOQA
+import sys
+
 
 from _ruamel_yaml import CParser, CEmitter   # type: ignore
 
@@ -11,7 +12,9 @@ from ruamel.yaml.serializer import Serializer
 from ruamel.yaml.representer import Representer, SafeRepresenter, BaseRepresenter
 from ruamel.yaml.resolver import Resolver, BaseResolver
 
-from ruamel.yaml.compat import StreamTextType, StreamType, VersionType  # NOQA
+if sys.version_info >= (3, 5, 2):
+    from typing import Any, Union  # NOQA
+    from ruamel.yaml.compat import StreamTextType, StreamType, VersionType  # NOQA
 
 __all__ = ['CBaseLoader', 'CSafeLoader', 'CLoader',
            'CBaseDumper', 'CSafeDumper', 'CDumper']

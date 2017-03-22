@@ -4,8 +4,7 @@ from __future__ import absolute_import, unicode_literals
 
 import warnings
 
-
-from typing import List, Set, Dict, Union, Any                 # NOQA
+import sys
 
 import ruamel.yaml
 from ruamel.yaml.error import *                                # NOQA
@@ -17,7 +16,6 @@ from ruamel.yaml.nodes import *                                # NOQA
 from ruamel.yaml.loader import BaseLoader, SafeLoader, Loader, RoundTripLoader  # NOQA
 from ruamel.yaml.dumper import BaseDumper, SafeDumper, Dumper, RoundTripDumper  # NOQA
 from ruamel.yaml.compat import StringIO, BytesIO, with_metaclass, PY3
-from ruamel.yaml.compat import StreamType, StreamTextType, VersionType  # NOQA
 from ruamel.yaml.resolver import VersionedResolver, Resolver  # NOQA
 from ruamel.yaml.representer import (BaseRepresenter, SafeRepresenter, Representer,
                                      RoundTripRepresenter)
@@ -25,6 +23,9 @@ from ruamel.yaml.constructor import (BaseConstructor, SafeConstructor, Construct
                                      RoundTripConstructor)
 from ruamel.yaml.loader import Loader as UnsafeLoader
 
+if sys.version_info >= (3, 5, 2):
+    from typing import List, Set, Dict, Union, Any                 # NOQA
+    from ruamel.yaml.compat import StreamType, StreamTextType, VersionType  # NOQA
 
 # import io
 

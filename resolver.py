@@ -4,11 +4,13 @@ from __future__ import absolute_import
 
 import re
 
-from typing import Any, Dict, List, Union  # NOQA
+import sys
+if sys.version_info >= (3, 5, 2):
+    from typing import Any, Dict, List, Union  # NOQA
+    from ruamel.yaml.compat import string_types, VersionType      # NOQA
 
 from ruamel.yaml.error import *                               # NOQA
 from ruamel.yaml.nodes import *                               # NOQA
-from ruamel.yaml.compat import string_types, VersionType      # NOQA
 
 __all__ = ['BaseResolver', 'Resolver', 'VersionedResolver']
 

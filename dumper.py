@@ -2,15 +2,17 @@
 
 from __future__ import absolute_import
 
-from typing import Any, Dict, List, Union               # NOQA
-
-from ruamel.yaml.compat import StreamType, VersionType  # NOQA
+import sys
 
 from ruamel.yaml.emitter import Emitter
 from ruamel.yaml.serializer import Serializer
 from ruamel.yaml.representer import Representer, SafeRepresenter, BaseRepresenter, \
     RoundTripRepresenter
 from ruamel.yaml.resolver import Resolver, BaseResolver, VersionedResolver
+
+if sys.version_info >= (3, 5, 2):
+    from typing import Any, Dict, List, Union               # NOQA
+    from ruamel.yaml.compat import StreamType, VersionType  # NOQA
 
 __all__ = ['BaseDumper', 'SafeDumper', 'Dumper', 'RoundTripDumper']
 

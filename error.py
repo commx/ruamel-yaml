@@ -4,9 +4,13 @@ from __future__ import absolute_import
 
 import warnings
 
-from typing import Any, Dict, Optional, List, Text  # NOQA
+import sys
 
 from ruamel.yaml.compat import utf8
+
+if sys.version_info >= (3, 5, 2):
+    from typing import Any, Dict, Optional, List, Text  # NOQA
+
 
 __all__ = [
     'FileMark', 'StringMark', 'CommentMark', 'YAMLError', 'MarkedYAMLError',

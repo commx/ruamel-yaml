@@ -2,9 +2,7 @@
 
 from __future__ import absolute_import
 
-from typing import Any, Dict, List                          # NOQA
-
-from ruamel.yaml.compat import StreamTextType, VersionType  # NOQA
+import sys
 
 from ruamel.yaml.reader import Reader
 from ruamel.yaml.scanner import Scanner, RoundTripScanner
@@ -13,6 +11,10 @@ from ruamel.yaml.composer import Composer
 from ruamel.yaml.constructor import BaseConstructor, SafeConstructor, Constructor, \
     RoundTripConstructor
 from ruamel.yaml.resolver import VersionedResolver
+
+if sys.version_info >= (3, 5, 2):
+    from typing import Any, Dict, List                          # NOQA
+    from ruamel.yaml.compat import StreamTextType, VersionType  # NOQA
 
 __all__ = ['BaseLoader', 'SafeLoader', 'Loader', 'RoundTripLoader']
 

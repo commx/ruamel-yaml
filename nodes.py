@@ -2,7 +2,9 @@
 
 from __future__ import print_function
 
-from typing import Dict, Any, Text   # NOQA
+import sys
+if sys.version_info >= (3, 5, 2):
+    from typing import Dict, Any, Text   # NOQA
 
 
 class Node(object):

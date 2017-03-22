@@ -8,7 +8,8 @@ import sys
 import os
 import types
 
-from typing import Any, Dict, Optional, List, Union, BinaryIO, IO, Text, Tuple   # NOQA
+if sys.version_info >= (3, 5, 2):
+    from typing import Any, Dict, Optional, List, Union, BinaryIO, IO, Text, Tuple   # NOQA
 
 
 try:
@@ -94,11 +95,12 @@ else:
     import cStringIO
     BytesIO = cStringIO.StringIO
 
-# StreamType = Union[BinaryIO, IO[str], IO[unicode],  StringIO]
-StreamType = Union[BinaryIO, IO[str], StringIO]
+if sys.version_info >= (3, 5, 2):
+    # StreamType = Union[BinaryIO, IO[str], IO[unicode],  StringIO]
+    StreamType = Union[BinaryIO, IO[str], StringIO]
 
-StreamTextType = Union[Text, StreamType]
-VersionType = Union[List[int], str, Tuple[int, int]]
+    StreamTextType = Union[Text, StreamType]
+    VersionType = Union[List[int], str, Tuple[int, int]]
 
 if PY3:
     builtins_module = 'builtins'

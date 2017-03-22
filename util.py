@@ -6,10 +6,13 @@ some helper functions that might be generally useful
 
 from __future__ import absolute_import, print_function
 
-from typing import Any, Dict, Optional, List, Text  # NOQA
+import sys
 
 from .compat import text_type, binary_type
-from .compat import StreamTextType, StringIO  # NOQA
+
+if sys.version_info >= (3, 5, 2):
+    from typing import Any, Dict, Optional, List, Text  # NOQA
+    from .compat import StreamTextType  # NOQA
 
 
 # originally as comment

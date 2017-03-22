@@ -18,6 +18,9 @@ ChangeLog
 
 .. should insert NEXT: at the beginning of line for next key
 
+0.14.1 (2017-03-22):
+  - fix Text not available on 3.5.0 and 3.5.1 (reported by Charles Bouchard-Légaré)
+
 0.14.0 (2017-03-21):
   - updates for mypy --strict
   - preparation for moving away from inheritance in Loader and Dumper, calls from e.g.
