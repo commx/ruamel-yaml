@@ -18,6 +18,9 @@ ChangeLog
 
 .. should insert NEXT: at the beginning of line for next key
 
+0.14.2 (2017-03-23):
+  - fix for old default pip on Ubuntu 14.04 (reported by Sébastien Maccagnoni-Munch)
+
 0.14.1 (2017-03-22):
   - fix Text not available on 3.5.0 and 3.5.1 (reported by Charles Bouchard-Légaré)
 

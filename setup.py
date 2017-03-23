@@ -815,8 +815,11 @@ def main():
             print('  "{0}": "{1}",'.format(k, v))
     if dump_kw in sys.argv:
         sys.argv.remove(dump_kw)
-    with open('README.rst') as fp:
-        kw['long_description'] = fp.read()
+    try:
+        with open('README.rst') as fp:
+            kw['long_description'] = fp.read()
+    except:
+        pass
     if nsp.wheel(kw, setup):
         return
     for x in ['-c', 'egg_info', '--egg-base', 'pip-egg-info']:
