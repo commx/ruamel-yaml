@@ -52,7 +52,7 @@ class TestVersions:
         assert l[0] == 45296
         assert l[1] == 10
         assert l[2] == '012345678'
-        assert l[3] == 10
+        assert l[3] == '0o12'
         assert l[4] is True
         assert l[5] is False
         assert l[6] is True
@@ -96,7 +96,7 @@ class TestVersions:
         assert l[0] == 45296
         assert l[1] == 10
         assert l[2] == '012345678'
-        assert l[3] == 10
+        assert l[3] == '0o12'
         assert l[4] is True
         assert l[5] is False
         assert l[6] is True
