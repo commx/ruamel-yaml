@@ -1,3 +1,6 @@
+[0, 14, 4]: 2017-03-31
+  - fix readme
+
 [0, 14, 3]: 2017-03-31
   - fix for 0o52 not being a string in YAML 1.1 (reported on
     `StackOverflow Q&A 43138503><http://stackoverflow.com/a/43138503/1307905>`_ by
