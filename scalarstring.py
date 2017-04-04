@@ -21,6 +21,9 @@ class ScalarString(text_type):
         # type: (Any, Any) -> Any
         return text_type.__new__(cls, *args, **kw)  # type: ignore
 
+    def replace(self, old, new, maxreplace=-1):
+        return type(self)((text_type.replace(self, old, new, maxreplace)))
+
 
 class PreservedScalarString(ScalarString):
     __slots__ = ()

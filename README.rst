@@ -18,6 +18,11 @@ ChangeLog
 
 .. should insert NEXT: at the beginning of line for next key
 
+NEXT:
+  - fix issue 109: None not dumping correctly at top level (reported by Andrea Censi)
+  - fix issue 110: .replace on Preserved/DoubleQuoted/SingleQuoted ScalarString
+    would give back "normal" string (reported by sandres23)
+
 0.14.4 (2017-03-31):
   - fix readme
 

@@ -644,8 +644,10 @@ class RoundTripRepresenter(SafeRepresenter):
 
     def represent_none(self, data):
         # type: (Any) -> Any
-        return self.represent_scalar(u'tag:yaml.org,2002:null',
-                                     u'')
+        if len(self.represented_objects) == 0 and not self.serializer.use_explicit_start:
+            # this will be open ended (although it is not yet)
+            return self.represent_scalar(u'tag:yaml.org,2002:null', u'null')
+        return self.represent_scalar(u'tag:yaml.org,2002:null', u'')
 
     def represent_preserved_scalarstring(self, data):
         # type: (Any) -> Any

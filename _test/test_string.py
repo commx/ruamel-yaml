@@ -17,6 +17,7 @@ and the chomping modifiers:
 
 import pytest
 import platform
+import ruamel
 
 # from ruamel.yaml.compat import ordereddict
 from roundtrip import round_trip, dedent, round_trip_load, round_trip_dump  # NOQA
@@ -124,3 +125,33 @@ class TestQuotedScalarString:
         """, outp="""
         a: abc
         """)
+
+
+class TestReplace:
+    """inspired by issue 110 from sandres23"""
+    def test_replace_preserved_scalar_string(self):
+        s = dedent("""\
+        foo: |
+          foo
+          foo
+          bar
+          foo
+        """)
+        data = round_trip_load(s, preserve_quotes=True)
+        so = data['foo'].replace('foo', 'bar', 2)
+        assert isinstance(so, ruamel.yaml.scalarstring.PreservedScalarString)
+        assert so == dedent("""
+        bar
+        bar
+        bar
+        foo
+        """)
+
+    def test_replace_double_quoted_scalar_string(self):
+        s = dedent("""\
+        foo: "foo foo bar foo"
+        """)
+        data = round_trip_load(s, preserve_quotes=True)
+        so = data['foo'].replace('foo', 'bar', 2)
+        assert isinstance(so, ruamel.yaml.scalarstring.DoubleQuotedScalarString)
+        assert so == 'bar bar bar foo'
