@@ -22,6 +22,7 @@ class ScalarString(text_type):
         return text_type.__new__(cls, *args, **kw)  # type: ignore
 
     def replace(self, old, new, maxreplace=-1):
+        # type: (Any, Any, int) -> Any
         return type(self)((text_type.replace(self, old, new, maxreplace)))
 
 
