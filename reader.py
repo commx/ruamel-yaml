@@ -136,7 +136,7 @@ class Reader(object):
 
     def get_mark(self):
         # type: () -> Any
-        if self.stream is None and self.stream is None:
+        if self.stream is None:
             return StringMark(self.name, self.index, self.line, self.column,
                               self.buffer, self.pointer)
         else:
