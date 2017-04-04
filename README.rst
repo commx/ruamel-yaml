@@ -18,7 +18,7 @@ ChangeLog
 
 .. should insert NEXT: at the beginning of line for next key
 
-NEXT:
+0.14.5 (2017-04-04):
   - fix issue 109: None not dumping correctly at top level (reported by Andrea Censi)
   - fix issue 110: .replace on Preserved/DoubleQuoted/SingleQuoted ScalarString
     would give back "normal" string (reported by sandres23)
