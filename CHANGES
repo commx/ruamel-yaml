@@ -1,3 +1,11 @@
+[0, 14, 6]: 2017-04-14
+  - binary, octal and hex integers are now preserved by default. This
+    was a known deficiency. Working on this was prompted by the issue report (112)
+    from devnoname120, as well as the additional experience with `.replace()`
+    on `scalarstring` classes.
+  - fix issues 114: cannot install on Buildozer (reported by mixmastamyk).
+    Setting env. var ``RUAMEL_NO_PIP_INSTALL_CHECK`` will suppress ``pip``-check.
+
 [0, 14, 5]: 2017-04-04
   - fix issue 109: None not dumping correctly at top level (reported by Andrea Censi)
   - fix issue 110: .replace on Preserved/DoubleQuoted/SingleQuoted ScalarString

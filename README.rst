@@ -18,7 +18,11 @@ ChangeLog
 
 .. should insert NEXT: at the beginning of line for next key
 
-NEXT:
+0.14.6 (2017-04-14):
+  - binary, octal and hex integers are now preserved by default. This
+    was a known deficiency. Working on this was prompted by the issue report (112)
+    from devnoname120, as well as the additional experience with `.replace()`
+    on `scalarstring` classes.
   - fix issues 114: cannot install on Buildozer (reported by mixmastamyk).
     Setting env. var ``RUAMEL_NO_PIP_INSTALL_CHECK`` will suppress ``pip``-check.
 
@@ -112,6 +116,7 @@ NEXT:
     `StackOveflow Q&A <http://stackoverflow.com/a/40705671/1307905>`_  by
     `msinn <http://stackoverflow.com/users/7185467/msinn>`_)
 
----
+----
+
 For older changes see the file
 `CHANGES <https://bitbucket.org/ruamel/yaml/src/default/CHANGES>`_

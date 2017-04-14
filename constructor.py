@@ -24,6 +24,7 @@ from ruamel.yaml.comments import (CommentedMap, CommentedOrderedMap, CommentedSe
 from ruamel.yaml.scalarstring import *                           # NOQA
 from ruamel.yaml.scalarstring import (PreservedScalarString, SingleQuotedScalarString,
                                       DoubleQuotedScalarString, ScalarString)
+from ruamel.yaml.scalarint import BinaryInt, OctalInt, HexInt, HexCapsInt
 from ruamel.yaml.timestamp import TimeStamp
 
 __all__ = ['BaseConstructor', 'SafeConstructor', 'Constructor',
@@ -906,6 +907,45 @@ class RoundTripConstructor(SafeConstructor):
             if node.style == '"':
                 return DoubleQuotedScalarString(node.value)
         return node.value
+
+    def construct_yaml_int(self, node):
+        # type: (Any) -> Any
+        value_s = to_str(self.construct_scalar(node))
+        value_s = value_s.replace('_', '')
+        sign = +1
+        if value_s[0] == '-':
+            sign = -1
+        if value_s[0] in '+-':
+            value_s = value_s[1:]
+        if value_s == '0':
+            return 0
+        elif value_s.startswith('0b'):
+            return BinaryInt(sign*int(value_s[2:], 2))
+        elif value_s.startswith('0x'):
+            # default to lower-case if no a-fA-F in string
+            hex_fun = HexInt  # type: Any
+            for ch in value_s[2:]:
+                if ch in 'ABCDEF':  # first non-digit is capital
+                    hex_fun = HexCapsInt
+                    break
+                if ch in 'abcdef':
+                    break
+            return hex_fun(sign*int(value_s[2:], 16))
+        elif value_s.startswith('0o'):
+            return OctalInt(sign*int(value_s[2:], 8))
+        elif self.resolver.processing_version != (1, 2) and value_s[0] == '0':
+            return sign*int(value_s, 8)
+        elif self.resolver.processing_version != (1, 2) and ':' in value_s:
+            digits = [int(part) for part in value_s.split(':')]
+            digits.reverse()
+            base = 1
+            value = 0
+            for digit in digits:
+                value += digit*base
+                base *= 60
+            return sign*value
+        else:
+            return sign*int(value_s)
 
     def construct_yaml_str(self, node):
         # type: (Any) -> Any

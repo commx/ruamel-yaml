@@ -8,7 +8,9 @@ from typing import Dict, List, Any, Union   # NOQA
 from ruamel.yaml.error import *                       # NOQA
 from ruamel.yaml.nodes import *                       # NOQA
 from ruamel.yaml.compat import text_type, binary_type, to_unicode, PY2, PY3, ordereddict
-from ruamel.yaml.scalarstring import *                # NOQA
+from ruamel.yaml.scalarstring import (PreservedScalarString, SingleQuotedScalarString,
+                                      DoubleQuotedScalarString)
+from ruamel.yaml.scalarint import BinaryInt, OctalInt, HexInt, HexCapsInt
 from ruamel.yaml.timestamp import TimeStamp
 
 import datetime
@@ -676,6 +678,22 @@ class RoundTripRepresenter(SafeRepresenter):
         tag = u'tag:yaml.org,2002:str'
         return self.represent_scalar(tag, data, style=style)
 
+    def represent_binary_int(self, data):
+        # type: (Any) -> Any
+        return self.represent_scalar(u'tag:yaml.org,2002:int', '0b' + format(data, 'b'))
+
+    def represent_octal_int(self, data):
+        # type: (Any) -> Any
+        return self.represent_scalar(u'tag:yaml.org,2002:int', '0o' + format(data, 'o'))
+
+    def represent_hex_int(self, data):
+        # type: (Any) -> Any
+        return self.represent_scalar(u'tag:yaml.org,2002:int', '0x' + format(data, 'x'))
+
+    def represent_hex_caps_int(self, data):
+        # type: (Any) -> Any
+        return self.represent_scalar(u'tag:yaml.org,2002:int', '0x' + format(data, 'X'))
+
     def represent_sequence(self, tag, sequence, flow_style=None):
         # type: (Any, Any, Any) -> Any
         value = []  # type: List[Any]
@@ -951,6 +969,22 @@ RoundTripRepresenter.add_representer(
 RoundTripRepresenter.add_representer(
     DoubleQuotedScalarString,
     RoundTripRepresenter.represent_double_quoted_scalarstring)
+
+RoundTripRepresenter.add_representer(
+    BinaryInt,
+    RoundTripRepresenter.represent_binary_int)
+
+RoundTripRepresenter.add_representer(
+    OctalInt,
+    RoundTripRepresenter.represent_octal_int)
+
+RoundTripRepresenter.add_representer(
+    HexInt,
+    RoundTripRepresenter.represent_hex_int)
+
+RoundTripRepresenter.add_representer(
+    HexCapsInt,
+    RoundTripRepresenter.represent_hex_caps_int)
 
 RoundTripRepresenter.add_representer(CommentedSeq,
                                      RoundTripRepresenter.represent_list)

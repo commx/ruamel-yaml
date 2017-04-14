@@ -220,8 +220,8 @@ class TestFlowValues:
         {a: bcd:efg}
         """)
 
-    @pytest.mark.xfail(strict=True)
+    # @pytest.mark.xfail(strict=True)
     def test_flow_value_with_colon_quoted(self):
         round_trip("""\
         {a: 'bcd:efg'}
-        """)
+        """, preserve_quotes=True)
