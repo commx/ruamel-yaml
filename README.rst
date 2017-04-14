@@ -18,6 +18,10 @@ ChangeLog
 
 .. should insert NEXT: at the beginning of line for next key
 
+NEXT:
+  - fix issues 114: cannot install on Buildozer (reported by mixmastamyk).
+    Setting env. var ``RUAMEL_NO_PIP_INSTALL_CHECK`` will suppress ``pip``-check.
+
 0.14.5 (2017-04-04):
   - fix issue 109: None not dumping correctly at top level (reported by Andrea Censi)
   - fix issue 110: .replace on Preserved/DoubleQuoted/SingleQuoted ScalarString
@@ -108,103 +112,6 @@ ChangeLog
     `StackOveflow Q&A <http://stackoverflow.com/a/40705671/1307905>`_  by
     `msinn <http://stackoverflow.com/users/7185467/msinn>`_)
 
-0.12.18 (2016-11-16):
-  - another fix for numpy (re-reported independently by PaulG & Nathanial Burdic)
-
-0.12.17 (2016-11-15):
-  - only the RoundTripLoader included the Resolver that supports YAML 1.2
-    now all loaders do (reported by mixmastamyk)
-
-0.12.16 (2016-11-13):
-  - allow dot char (and many others) in anchor name
-    Fix issue 72 (reported by Shalon Wood)
-  - Slightly smarter behaviour dumping strings when no style is
-    specified. Single string scalars that start with single quotes
-    or have newlines now are dumped double quoted: "'abc\nklm'" instead of::
-
-      '''abc
-
-        klm'''
-
-0.12.14 (2016-09-21):
- - preserve round-trip sequences that are mapping keys
-   (prompted by stackoverflow question 39595807 from Nowox)
-
-0.12.13 (2016-09-15):
- - Fix for issue #60 representation of CommentedMap with merge
-   keys incorrect (reported by Tal Liron)
-
-0.12.11 (2016-09-06):
- - Fix issue 58 endless loop in scanning tokens (reported by
-   Christopher Lambert)
-
-0.12.10 (2016-09-05):
- - Make previous fix depend on unicode char width (32 bit unicode support
-   is a problem on MacOS reported by David Tagatac)
-
-0.12.8 (2016-09-05):
-   - To be ignored Unicode characters were not properly regex matched
-     (no specific tests, PR by Haraguroicha Hsu)
-
-0.12.7 (2016-09-03):
-   - fixing issue 54 empty lines with spaces (reported by Alex Harvey)
-
-0.12.6 (2016-09-03):
-   - fixing issue 46 empty lines between top-level keys were gobbled (but
-     not between sequence elements, nor between keys in netsted mappings
-     (reported by Alex Harvey)
-
-0.12.5 (2016-08-20):
-  - fixing issue 45 preserving datetime formatting (submitted by altuin)
-    Several formatting parameters are preserved with some normalisation:
-  - preserve 'T', 't' is replaced by 'T', multiple spaces between date
-    and time reduced to one.
-  - optional space before timezone is removed
-  - still using microseconds, but now rounded (.1234567 -> .123457)
-  - Z/-5/+01:00 preserved
-
-0.12.4 (2016-08-19):
-  - Fix for issue 44: missing preserve_quotes keyword argument (reported
-    by M. Crusoe)
-
-0.12.3 (2016-08-17):
-  - correct 'in' operation for merged CommentedMaps in round-trip mode
-    (implementation inspired by J.Ngo, but original not working for merges)
-  - iteration over round-trip loaded mappings, that contain merges. Also
-    keys(), items(), values() (Py3/Py2) and iterkeys(), iteritems(),
-    itervalues(), viewkeys(), viewitems(), viewvalues() (Py2)
-  - reuse of anchor name now generates warning, not an error. Round-tripping such
-    anchors works correctly. This inherited PyYAML issue was brought to attention
-    by G. Coddut (and was long standing https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=515634)
-    suppressing the warning::
-
-        import warnings
-        from ruamel.yaml.error import ReusedAnchorWarning
-        warnings.simplefilter("ignore", ReusedAnchorWarning)
-
-0.12.2 (2016-08-16):
-  - minor improvements based on feedback from M. Crusoe
-    https://bitbucket.org/ruamel/yaml/issues/42/
-
-0.12.0 (2016-08-16):
-  - drop support for Python 2.6
-  - include initial Type information (inspired by M. Crusoe)
-
-0.11.15 (2016-08-07):
-  - Change to prevent FutureWarning in NumPy, as reported by tgehring
-    ("comparison to None will result in an elementwise object comparison in the future")
-
-0.11.14 (2016-07-06):
-  - fix preserve_quotes missing on original Loaders (as reported
-    by Leynos, bitbucket issue 38)
-
-0.11.13 (2016-07-06):
-  - documentation only, automated linux wheels
-
-0.11.12 (2016-07-06):
-  - added support for roundtrip of single/double quoted scalars using:
-    ruamel.yaml.round_trip_load(stream, preserve_quotes=True)
-
-0.11.0 (2016-02-18):
-  - RoundTripLoader loads 1.2 by default (no sexagesimals, 012 octals nor
-    yes/no/on/off booleans
+---
+For older changes see the file
+`CHANGES <https://bitbucket.org/ruamel/yaml/src/default/CHANGES>`_
