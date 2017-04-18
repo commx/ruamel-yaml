@@ -24,7 +24,7 @@ from ruamel.yaml.comments import (CommentedMap, CommentedOrderedMap, CommentedSe
 from ruamel.yaml.scalarstring import *                           # NOQA
 from ruamel.yaml.scalarstring import (PreservedScalarString, SingleQuotedScalarString,
                                       DoubleQuotedScalarString, ScalarString)
-from ruamel.yaml.scalarint import BinaryInt, OctalInt, HexInt, HexCapsInt
+from ruamel.yaml.scalarint import ScalarInt, BinaryInt, OctalInt, HexInt, HexCapsInt
 from ruamel.yaml.timestamp import TimeStamp
 
 __all__ = ['BaseConstructor', 'SafeConstructor', 'Constructor',
@@ -910,8 +910,16 @@ class RoundTripConstructor(SafeConstructor):
 
     def construct_yaml_int(self, node):
         # type: (Any) -> Any
-        value_s = to_str(self.construct_scalar(node))
-        value_s = value_s.replace('_', '')
+        width = None  # type: Any
+        value_su = to_str(self.construct_scalar(node))
+        try:
+            sx = value_su.rstrip('_')
+            underscore = [len(sx) - sx.rindex('_') - 1, False, False]  # type: Any
+        except ValueError:
+            underscore = None
+        except IndexError:
+            underscore = None
+        value_s = value_su.replace('_', '')
         sign = +1
         if value_s[0] == '-':
             sign = -1
@@ -920,9 +928,17 @@ class RoundTripConstructor(SafeConstructor):
         if value_s == '0':
             return 0
         elif value_s.startswith('0b'):
-            return BinaryInt(sign*int(value_s[2:], 2))
+            if self.resolver.processing_version > (1, 1) and value_s[2] == '0':
+                width = len(value_s[2:])
+            if underscore is not None:
+                underscore[1] = value_su[2] == '_'
+                underscore[2] = len(value_su[2:]) > 1 and value_su[-1] == '_'
+            return BinaryInt(sign*int(value_s[2:], 2), width=width,
+                             underscore=underscore)  # type: ignore
         elif value_s.startswith('0x'):
             # default to lower-case if no a-fA-F in string
+            if self.resolver.processing_version > (1, 1) and value_s[2] == '0':
+                width = len(value_s[2:])
             hex_fun = HexInt  # type: Any
             for ch in value_s[2:]:
                 if ch in 'ABCDEF':  # first non-digit is capital
@@ -930,9 +946,18 @@ class RoundTripConstructor(SafeConstructor):
                     break
                 if ch in 'abcdef':
                     break
-            return hex_fun(sign*int(value_s[2:], 16))
+            if underscore is not None:
+                underscore[1] = value_su[2] == '_'
+                underscore[2] = len(value_su[2:]) > 1 and value_su[-1] == '_'
+            return hex_fun(sign*int(value_s[2:], 16), width=width, underscore=underscore)
         elif value_s.startswith('0o'):
-            return OctalInt(sign*int(value_s[2:], 8))
+            if self.resolver.processing_version > (1, 1) and value_s[2] == '0':
+                width = len(value_s[2:])
+            if underscore is not None:
+                underscore[1] = value_su[2] == '_'
+                underscore[2] = len(value_su[2:]) > 1 and value_su[-1] == '_'
+            return OctalInt(sign*int(value_s[2:], 8), width=width,
+                            underscore=underscore)  # type: ignore
         elif self.resolver.processing_version != (1, 2) and value_s[0] == '0':
             return sign*int(value_s, 8)
         elif self.resolver.processing_version != (1, 2) and ':' in value_s:
@@ -944,6 +969,18 @@ class RoundTripConstructor(SafeConstructor):
                 value += digit*base
                 base *= 60
             return sign*value
+        elif self.resolver.processing_version > (1, 1) and value_s[0] == '0':
+            # not an octal, an integer with leading zero(s)
+            if underscore is not None:
+                # cannot have a leading underscore
+                underscore[2] = len(value_su) > 1 and value_su[-1] == '_'
+            return ScalarInt(sign*int(value_s), width=len(value_s),
+                             underscore=underscore)  # type: ignore
+        elif underscore:
+            # cannot have a leading underscore
+            underscore[2] = len(value_su) > 1 and value_su[-1] == '_'
+            return ScalarInt(sign*int(value_s), width=None,
+                             underscore=underscore)  # type: ignore
         else:
             return sign*int(value_s)
 

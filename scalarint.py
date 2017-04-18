@@ -11,47 +11,61 @@ __all__ = ["ScalarInt", "BinaryInt", "OctalInt", "HexInt", "HexCapsInt"]
 
 
 class ScalarInt(int):
-    __slots__ = ()
-
     def __new__(cls, *args, **kw):
-        # type: (Any, Any) -> Any
-        return int.__new__(cls, *args, **kw)  # type: ignore
+        # type: (Any, Any, Any) -> Any
+        width = kw.pop('width', None)            # type: ignore
+        underscore = kw.pop('underscore', None)  # type: ignore
+        v = int.__new__(cls, *args, **kw)        # type: ignore
+        v._width = width
+        v._underscore = underscore
+        return v
 
     def __iadd__(self, a):  # type: ignore
         # type: (Any) -> Any
-        return type(self)(self + a)
+        x = type(self)(self + a)
+        x._width = self._width
+        x._underscore = self._underscore[:] if self._underscore is not None else None
+        return x
 
     def __ifloordiv__(self, a):  # type: ignore
         # type: (Any) -> Any
-        return type(self)(self // a)
+        x = type(self)(self // a)
+        x._width = self._width
+        x._underscore = self._underscore[:] if self._underscore is not None else None
+        return x
 
     def __imul__(self, a):  # type: ignore
         # type: (Any) -> Any
-        return type(self)(self * a)
+        x = type(self)(self * a)
+        x._width = self._width
+        x._underscore = self._underscore[:] if self._underscore is not None else None
+        return x
 
     def __ipow__(self, a):  # type: ignore
         # type: (Any) -> Any
-        return type(self)(self ** a)
+        x = type(self)(self ** a)
+        x._width = self._width
+        x._underscore = self._underscore[:] if self._underscore is not None else None
+        return x
 
     def __isub__(self, a):  # type: ignore
         # type: (Any) -> Any
-        return type(self)(self - a)
+        x = type(self)(self - a)
+        x._width = self._width
+        x._underscore = self._underscore[:] if self._underscore is not None else None
+        return x
 
 
 class BinaryInt(ScalarInt):
-    __slots__ = ()
-
-    def __new__(cls, value):
-        # type: (Text) -> Any
-        return ScalarInt.__new__(cls, value)
+    def __new__(cls, value, width=None, underscore=None):
+        # type: (Any, Any, Any) -> Any
+        return ScalarInt.__new__(cls, value, width=width, underscore=underscore)
 
 
 class OctalInt(ScalarInt):
-    __slots__ = ()
-
-    def __new__(cls, value):
-        # type: (Text) -> Any
-        return ScalarInt.__new__(cls, value)
+    def __new__(cls, value, width=None, underscore=None):
+        # type: (Any, Any, Any) -> Any
+        return ScalarInt.__new__(cls, value, width=width, underscore=underscore)
 
 
 # mixed casing of A-F is not supported, when loading the first non digit
@@ -59,17 +73,13 @@ class OctalInt(ScalarInt):
 
 class HexInt(ScalarInt):
     """uses lower case (a-f)"""
-    __slots__ = ()
-
-    def __new__(cls, value):
-        # type: (Text) -> Any
-        return ScalarInt.__new__(cls, value)
+    def __new__(cls, value, width=None, underscore=None):
+        # type: (Any, Any, Any) -> Any
+        return ScalarInt.__new__(cls, value, width=width, underscore=underscore)
 
 
 class HexCapsInt(ScalarInt):
     """uses upper case (A-F)"""
-    __slots__ = ()
-
-    def __new__(cls, value):
-        # type: (Text) -> Any
-        return ScalarInt.__new__(cls, value)
+    def __new__(cls, value, width=None, underscore=None):
+        # type: (Any, Any, Any) -> Any
+        return ScalarInt.__new__(cls, value, width=width, underscore=underscore)

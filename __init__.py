@@ -10,8 +10,8 @@ from typing import Dict, Any  # NOQA
 
 _package_data = dict(
     full_package_name='ruamel.yaml',
-    version_info=(0, 14, 6),
-    __version__='0.14.6',
+    version_info=(0, 14, 7),
+    __version__='0.14.7',
     author='Anthon van der Neut',
     author_email='a.van.der.neut@ruamel.eu',
     description='ruamel.yaml is a YAML parser/emitter that supports roundtrip preservation of comments, seq/map flow style, and map key order',  # NOQA

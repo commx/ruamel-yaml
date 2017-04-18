@@ -1,16 +1,15 @@
 # coding: utf-8
 
-from __future__ import absolute_import
-from __future__ import print_function
+from __future__ import print_function, absolute_import, division
 
-from typing import Dict, List, Any, Union   # NOQA
+from typing import Dict, List, Any, Union, Text   # NOQA
 
 from ruamel.yaml.error import *                       # NOQA
 from ruamel.yaml.nodes import *                       # NOQA
 from ruamel.yaml.compat import text_type, binary_type, to_unicode, PY2, PY3, ordereddict
 from ruamel.yaml.scalarstring import (PreservedScalarString, SingleQuotedScalarString,
                                       DoubleQuotedScalarString)
-from ruamel.yaml.scalarint import BinaryInt, OctalInt, HexInt, HexCapsInt
+from ruamel.yaml.scalarint import ScalarInt, BinaryInt, OctalInt, HexInt, HexCapsInt
 from ruamel.yaml.timestamp import TimeStamp
 
 import datetime
@@ -678,21 +677,66 @@ class RoundTripRepresenter(SafeRepresenter):
         tag = u'tag:yaml.org,2002:str'
         return self.represent_scalar(tag, data, style=style)
 
+    def insert_underscore(self, prefix, s, underscore):
+        # type: (Any, Any, Any) -> Any
+        if underscore is None:
+            return self.represent_scalar(u'tag:yaml.org,2002:int', prefix + s)
+        if underscore[0]:
+            sl = list(s)
+            pos = len(s) - underscore[0]
+            while pos > 0:
+                sl.insert(pos, '_')
+                pos -= underscore[0]
+            s = ''.join(sl)
+        if underscore[1]:
+            s = '_' + s
+        if underscore[2]:
+            s += '_'
+        return self.represent_scalar(u'tag:yaml.org,2002:int', prefix + s)
+
+    def represent_scalar_int(self, data):
+        # type: (Any) -> Any
+        if data._width is not None:
+            s = '{:0{}d}'.format(data, data._width)
+        else:
+            s = format(data, 'd')
+        return self.insert_underscore('', s, data._underscore)
+
     def represent_binary_int(self, data):
         # type: (Any) -> Any
-        return self.represent_scalar(u'tag:yaml.org,2002:int', '0b' + format(data, 'b'))
+        if data._width is not None:
+            # cannot use '{:#0{}b}', that strips the zeros
+            s = '{:0{}b}'.format(data, data._width)
+        else:
+            s = format(data, 'b')
+        return self.insert_underscore('0b', s, data._underscore)
 
     def represent_octal_int(self, data):
         # type: (Any) -> Any
-        return self.represent_scalar(u'tag:yaml.org,2002:int', '0o' + format(data, 'o'))
+        if data._width is not None:
+            # cannot use '{:#0{}o}', that strips the zeros
+            s = '{:0{}o}'.format(data, data._width)
+        else:
+            s = format(data, 'o')
+        return self.insert_underscore('0o', s, data._underscore)
 
     def represent_hex_int(self, data):
         # type: (Any) -> Any
-        return self.represent_scalar(u'tag:yaml.org,2002:int', '0x' + format(data, 'x'))
+        if data._width is not None:
+            # cannot use '{:#0{}x}', that strips the zeros
+            s = '{:0{}x}'.format(data, data._width)
+        else:
+            s = format(data, 'x')
+        return self.insert_underscore('0x', s, data._underscore)
 
     def represent_hex_caps_int(self, data):
         # type: (Any) -> Any
-        return self.represent_scalar(u'tag:yaml.org,2002:int', '0x' + format(data, 'X'))
+        if data._width is not None:
+            # cannot use '{:#0{}X}', that strips the zeros
+            s = '{:0{}X}'.format(data, data._width)
+        else:
+            s = format(data, 'X')
+        return self.insert_underscore('0x', s, data._underscore)
 
     def represent_sequence(self, tag, sequence, flow_style=None):
         # type: (Any, Any, Any) -> Any
@@ -969,6 +1013,10 @@ RoundTripRepresenter.add_representer(
 RoundTripRepresenter.add_representer(
     DoubleQuotedScalarString,
     RoundTripRepresenter.represent_double_quoted_scalarstring)
+
+RoundTripRepresenter.add_representer(
+    ScalarInt,
+    RoundTripRepresenter.represent_scalar_int)
 
 RoundTripRepresenter.add_representer(
     BinaryInt,

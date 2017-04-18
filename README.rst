@@ -18,6 +18,13 @@ ChangeLog
 
 .. should insert NEXT: at the beginning of line for next key
 
+0.14.7 (2017-04-18):
+  - round trip of integers (decimal, octal, hex, binary) now preserve
+    leading zero(s) padding and underscores. Underscores are presumed
+    to be at regular distances (i.e. ``0o12_345_67`` dumps back as
+    ``0o1_23_45_67`` as the space from the last digit to the
+    underscore before that is the determining factor).
+
 0.14.6 (2017-04-14):
   - binary, octal and hex integers are now preserved by default. This
     was a known deficiency. Working on this was prompted by the issue report (112)
