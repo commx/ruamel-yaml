@@ -75,13 +75,16 @@ from __future__ import absolute_import
 # only to not do anything with the package afterwards
 # and for Jython too
 
-from typing import Any, Dict, Optional, List  # NOQA
 
 from ruamel.yaml.error import MarkedYAMLError
 from ruamel.yaml.tokens import *                               # NOQA
 from ruamel.yaml.events import *                               # NOQA
 from ruamel.yaml.scanner import Scanner, RoundTripScanner, ScannerError      # NOQA
 from ruamel.yaml.compat import utf8                            # NOQA
+
+import sys
+if sys.version_info >= (3, 5, 2):
+    from typing import Any, Dict, Optional, List  # NOQA
 
 __all__ = ['Parser', 'RoundTripParser', 'ParserError']
 

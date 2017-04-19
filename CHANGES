@@ -1,3 +1,7 @@
+[0, 14, 8]: 2017-04-19
+  - fix Text not available on 3.5.0 and 3.5.1, now proactively setting version guards
+    on all files (reported by `João Paulo Magalhães <https://bitbucket.org/jpmag/>`_)
+
 [0, 14, 7]: 2017-04-18
   - round trip of integers (decimal, octal, hex, binary) now preserve
     leading zero(s) padding and underscores. Underscores are presumed

@@ -8,12 +8,15 @@ these are not really related, formatting could be factored out as
 a separate base
 """
 
-from typing import Any, Dict, Optional, List, Union  # NOQA
 import copy
 
 from collections import MutableSet, Sized, Set
 
 from ruamel.yaml.compat import ordereddict, PY2
+
+import sys
+if sys.version_info >= (3, 5, 2):
+    from typing import Any, Dict, Optional, List, Union  # NOQA
 
 __all__ = ["CommentedSeq", "CommentedKeySeq",
            "CommentedMap", "CommentedOrderedMap",

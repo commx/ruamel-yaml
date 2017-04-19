@@ -10,9 +10,6 @@ import re
 import sys
 import types
 
-from typing import Any, Dict, List, Set, Generator  # NOQA
-
-
 from ruamel.yaml.error import (MarkedYAMLError)
 from ruamel.yaml.nodes import *                               # NOQA
 from ruamel.yaml.nodes import (SequenceNode, MappingNode, ScalarNode)
@@ -26,6 +23,10 @@ from ruamel.yaml.scalarstring import (PreservedScalarString, SingleQuotedScalarS
                                       DoubleQuotedScalarString, ScalarString)
 from ruamel.yaml.scalarint import ScalarInt, BinaryInt, OctalInt, HexInt, HexCapsInt
 from ruamel.yaml.timestamp import TimeStamp
+
+if sys.version_info >= (3, 5, 2):
+    from typing import Any, Dict, List, Set, Generator  # NOQA
+
 
 __all__ = ['BaseConstructor', 'SafeConstructor', 'Constructor',
            'ConstructorError', 'RoundTripConstructor']
@@ -933,8 +934,8 @@ class RoundTripConstructor(SafeConstructor):
             if underscore is not None:
                 underscore[1] = value_su[2] == '_'
                 underscore[2] = len(value_su[2:]) > 1 and value_su[-1] == '_'
-            return BinaryInt(sign*int(value_s[2:], 2), width=width,
-                             underscore=underscore)  # type: ignore
+            return BinaryInt(sign*int(value_s[2:], 2), width=width,   # type: ignore
+                             underscore=underscore)
         elif value_s.startswith('0x'):
             # default to lower-case if no a-fA-F in string
             if self.resolver.processing_version > (1, 1) and value_s[2] == '0':
@@ -956,8 +957,8 @@ class RoundTripConstructor(SafeConstructor):
             if underscore is not None:
                 underscore[1] = value_su[2] == '_'
                 underscore[2] = len(value_su[2:]) > 1 and value_su[-1] == '_'
-            return OctalInt(sign*int(value_s[2:], 8), width=width,
-                            underscore=underscore)  # type: ignore
+            return OctalInt(sign*int(value_s[2:], 8), width=width,  # type: ignore
+                            underscore=underscore)
         elif self.resolver.processing_version != (1, 2) and value_s[0] == '0':
             return sign*int(value_s, 8)
         elif self.resolver.processing_version != (1, 2) and ':' in value_s:
@@ -974,13 +975,13 @@ class RoundTripConstructor(SafeConstructor):
             if underscore is not None:
                 # cannot have a leading underscore
                 underscore[2] = len(value_su) > 1 and value_su[-1] == '_'
-            return ScalarInt(sign*int(value_s), width=len(value_s),
-                             underscore=underscore)  # type: ignore
+            return ScalarInt(sign*int(value_s), width=len(value_s),  # type: ignore
+                             underscore=underscore)
         elif underscore:
             # cannot have a leading underscore
             underscore[2] = len(value_su) > 1 and value_su[-1] == '_'
-            return ScalarInt(sign*int(value_s), width=None,
-                             underscore=underscore)  # type: ignore
+            return ScalarInt(sign*int(value_s), width=None,  # type: ignore
+                             underscore=underscore)
         else:
             return sign*int(value_s)
 

@@ -2,9 +2,11 @@
 
 import warnings
 
-from typing import Any  # NOQA
-
 from ruamel.yaml.util import configobj_walker as new_configobj_walker
+
+import sys
+if sys.version_info >= (3, 5, 2):
+    from typing import Any  # NOQA
 
 
 def configobj_walker(cfg):

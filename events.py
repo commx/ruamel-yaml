@@ -2,7 +2,9 @@
 
 # Abstract classes.
 
-from typing import Any, Dict, Optional, List  # NOQA
+import sys
+if sys.version_info >= (3, 5, 2):
+    from typing import Any, Dict, Optional, List  # NOQA
 
 
 def CommentCheck():

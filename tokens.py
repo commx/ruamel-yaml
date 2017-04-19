@@ -1,7 +1,9 @@
 # # header
 # coding: utf-8
 
-from typing import Any, Dict, Optional, List  # NOQA
+import sys
+if sys.version_info >= (3, 5, 2):
+    from typing import Any, Dict, Optional, List  # NOQA
 
 
 class Token(object):

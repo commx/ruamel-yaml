@@ -23,36 +23,36 @@ class ScalarInt(int):
     def __iadd__(self, a):  # type: ignore
         # type: (Any) -> Any
         x = type(self)(self + a)
-        x._width = self._width
-        x._underscore = self._underscore[:] if self._underscore is not None else None
+        x._width = self._width  # type: ignore
+        x._underscore = self._underscore[:] if self._underscore is not None else None  # type: ignore  # NOQA
         return x
 
     def __ifloordiv__(self, a):  # type: ignore
         # type: (Any) -> Any
         x = type(self)(self // a)
-        x._width = self._width
-        x._underscore = self._underscore[:] if self._underscore is not None else None
+        x._width = self._width  # type: ignore
+        x._underscore = self._underscore[:] if self._underscore is not None else None  # type: ignore  # NOQA
         return x
 
     def __imul__(self, a):  # type: ignore
         # type: (Any) -> Any
         x = type(self)(self * a)
-        x._width = self._width
-        x._underscore = self._underscore[:] if self._underscore is not None else None
+        x._width = self._width  # type: ignore
+        x._underscore = self._underscore[:] if self._underscore is not None else None  # type: ignore  # NOQA
         return x
 
     def __ipow__(self, a):  # type: ignore
         # type: (Any) -> Any
         x = type(self)(self ** a)
-        x._width = self._width
-        x._underscore = self._underscore[:] if self._underscore is not None else None
+        x._width = self._width  # type: ignore
+        x._underscore = self._underscore[:] if self._underscore is not None else None  # type: ignore  # NOQA
         return x
 
     def __isub__(self, a):  # type: ignore
         # type: (Any) -> Any
         x = type(self)(self - a)
-        x._width = self._width
-        x._underscore = self._underscore[:] if self._underscore is not None else None
+        x._width = self._width  # type: ignore
+        x._underscore = self._underscore[:] if self._underscore is not None else None  # type: ignore  # NOQA
         return x
 
 

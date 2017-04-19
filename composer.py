@@ -5,8 +5,6 @@ from __future__ import print_function
 
 import warnings
 
-from typing import Any, Dict, Optional, List  # NOQA
-
 from ruamel.yaml.error import MarkedYAMLError, ReusedAnchorWarning
 from ruamel.yaml.compat import utf8
 
@@ -17,6 +15,10 @@ from ruamel.yaml.events import (
 from ruamel.yaml.nodes import (
     MappingNode, ScalarNode, SequenceNode,
 )
+
+import sys
+if sys.version_info >= (3, 5, 2):
+    from typing import Any, Dict, Optional, List  # NOQA
 
 __all__ = ['Composer', 'ComposerError']
 

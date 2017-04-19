@@ -2,7 +2,6 @@
 
 from __future__ import print_function, absolute_import, division
 
-from typing import Dict, List, Any, Union, Text   # NOQA
 
 from ruamel.yaml.error import *                       # NOQA
 from ruamel.yaml.nodes import *                       # NOQA
@@ -20,6 +19,9 @@ if PY3:
     import base64
 else:
     import copy_reg as copyreg  # type: ignore
+
+if sys.version_info >= (3, 5, 2):
+    from typing import Dict, List, Any, Union, Text   # NOQA
 
 
 __all__ = ['BaseRepresenter', 'SafeRepresenter', 'Representer',
