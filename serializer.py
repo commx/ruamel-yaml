@@ -4,8 +4,6 @@ from __future__ import absolute_import
 
 import re
 
-import sys
-
 from ruamel.yaml.error import YAMLError
 from ruamel.yaml.compat import nprint, DBG_NODE, dbg, string_types
 
@@ -18,7 +16,7 @@ from ruamel.yaml.nodes import (
     MappingNode, ScalarNode, SequenceNode,
 )
 
-if sys.version_info >= (3, 5, 2):
+if False:  # MYPY
     from typing import Any, Dict, Union, Text  # NOQA
     from ruamel.yaml.compat import VersionType  # NOQA
 

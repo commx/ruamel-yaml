@@ -14,8 +14,7 @@ from collections import MutableSet, Sized, Set
 
 from ruamel.yaml.compat import ordereddict, PY2
 
-import sys
-if sys.version_info >= (3, 5, 2):
+if False:  # MYPY
     from typing import Any, Dict, Optional, List, Union  # NOQA
 
 __all__ = ["CommentedSeq", "CommentedKeySeq",

@@ -23,11 +23,10 @@ from __future__ import absolute_import
 import codecs
 import re
 
-import sys
 from ruamel.yaml.error import YAMLError, FileMark, StringMark
 from ruamel.yaml.compat import text_type, binary_type, PY3
 
-if sys.version_info >= (3, 5, 2):
+if False:  # MYPY
     from typing import Any, Dict, Optional, List, Union, Text  # NOQA
     from ruamel.yaml.compat import StreamTextType  # NOQA
 

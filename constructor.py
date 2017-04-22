@@ -24,7 +24,7 @@ from ruamel.yaml.scalarstring import (PreservedScalarString, SingleQuotedScalarS
 from ruamel.yaml.scalarint import ScalarInt, BinaryInt, OctalInt, HexInt, HexCapsInt
 from ruamel.yaml.timestamp import TimeStamp
 
-if sys.version_info >= (3, 5, 2):
+if False:  # MYPY
     from typing import Any, Dict, List, Set, Generator  # NOQA
 
 

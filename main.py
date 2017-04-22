@@ -4,8 +4,6 @@ from __future__ import absolute_import, unicode_literals
 
 import warnings
 
-import sys
-
 import ruamel.yaml
 from ruamel.yaml.error import *                                # NOQA
 
@@ -23,8 +21,8 @@ from ruamel.yaml.constructor import (BaseConstructor, SafeConstructor, Construct
                                      RoundTripConstructor)
 from ruamel.yaml.loader import Loader as UnsafeLoader
 
-if sys.version_info >= (3, 5, 2):
-    from typing import List, Set, Dict, Union, Any                 # NOQA
+if False:  # MYPY
+    from typing import List, Set, Dict, Union, Any                          # NOQA
     from ruamel.yaml.compat import StreamType, StreamTextType, VersionType  # NOQA
 
 # import io

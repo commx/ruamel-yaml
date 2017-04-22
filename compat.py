@@ -8,7 +8,7 @@ import sys
 import os
 import types
 
-if sys.version_info >= (3, 5, 2):
+if False:  # MYPY
     from typing import Any, Dict, Optional, List, Union, BinaryIO, IO, Text, Tuple   # NOQA
 
 
@@ -95,7 +95,7 @@ else:
     import cStringIO
     BytesIO = cStringIO.StringIO
 
-if sys.version_info >= (3, 5, 2):
+if False:  # MYPY
     # StreamType = Union[BinaryIO, IO[str], IO[unicode],  StringIO]
     StreamType = Union[BinaryIO, IO[str], StringIO]
 

@@ -20,7 +20,7 @@ if PY3:
 else:
     import copy_reg as copyreg  # type: ignore
 
-if sys.version_info >= (3, 5, 2):
+if False:  # MYPY
     from typing import Dict, List, Any, Union, Text   # NOQA
 
 

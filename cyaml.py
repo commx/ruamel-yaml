@@ -2,9 +2,6 @@
 
 from __future__ import absolute_import
 
-import sys
-
-
 from _ruamel_yaml import CParser, CEmitter   # type: ignore
 
 from ruamel.yaml.constructor import Constructor, BaseConstructor, SafeConstructor
@@ -12,7 +9,7 @@ from ruamel.yaml.serializer import Serializer
 from ruamel.yaml.representer import Representer, SafeRepresenter, BaseRepresenter
 from ruamel.yaml.resolver import Resolver, BaseResolver
 
-if sys.version_info >= (3, 5, 2):
+if False:  # MYPY
     from typing import Any, Union  # NOQA
     from ruamel.yaml.compat import StreamTextType, StreamType, VersionType  # NOQA
 

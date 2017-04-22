@@ -6,24 +6,20 @@ from __future__ import print_function, absolute_import, division, unicode_litera
 # ruamel.base installed __init__.py, and thus a new version should
 # be installed at some point
 
-import sys
-if sys.version_info >= (3, 5, 2):
+if False:  # MYPY
     from typing import Dict, Any  # NOQA
 
 _package_data = dict(
     full_package_name='ruamel.yaml',
-    version_info=(0, 14, 8),
-    __version__='0.14.8',
+    version_info=(0, 14, 9),
+    __version__='0.14.9',
     author='Anthon van der Neut',
     author_email='a.van.der.neut@ruamel.eu',
     description='ruamel.yaml is a YAML parser/emitter that supports roundtrip preservation of comments, seq/map flow style, and map key order',  # NOQA
     entry_points=None,
     install_requires=dict(
         any=[],
-        py33=['typing'],
-        py34=['typing'],
-        py27=['ruamel.ordereddict', 'typing'],
-        pypy=['typing'],
+        py27=['ruamel.ordereddict'],
     ),
     ext_modules=[dict(
             name='_ruamel_yaml',

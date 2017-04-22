@@ -30,13 +30,11 @@ from __future__ import print_function, absolute_import, division, unicode_litera
 # Read comments in the Scanner code for more details.
 #
 
-import sys
-
 from ruamel.yaml.error import MarkedYAMLError
 from ruamel.yaml.tokens import *                # NOQA
 from ruamel.yaml.compat import utf8, unichr, PY3, check_anchorname_char
 
-if sys.version_info >= (3, 5, 2):
+if False:  # MYPY
     from typing import Any, Dict, Optional, List, Union, Text  # NOQA
 
 __all__ = ['Scanner', 'RoundTripScanner', 'ScannerError']

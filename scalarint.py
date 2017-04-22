@@ -2,9 +2,7 @@
 
 from __future__ import print_function, absolute_import, division, unicode_literals
 
-import sys
-
-if sys.version_info >= (3, 5, 2):
+if False:  # MYPY
     from typing import Text, Any, Dict, List  # NOQA
 
 __all__ = ["ScalarInt", "BinaryInt", "OctalInt", "HexInt", "HexCapsInt"]

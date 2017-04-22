@@ -2,11 +2,9 @@
 
 from __future__ import print_function, absolute_import, division, unicode_literals
 
-import sys
-
 from ruamel.yaml.compat import text_type
 
-if sys.version_info >= (3, 5, 2):
+if False:  # MYPY
     from typing import Text, Any, Dict, List  # NOQA
 
 __all__ = ["ScalarString", "PreservedScalarString", "SingleQuotedScalarString",

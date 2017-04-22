@@ -4,11 +4,9 @@ from __future__ import absolute_import
 
 import warnings
 
-import sys
-
 from ruamel.yaml.compat import utf8
 
-if sys.version_info >= (3, 5, 2):
+if False:  # MYPY
     from typing import Any, Dict, Optional, List, Text  # NOQA
 
 

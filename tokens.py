@@ -1,8 +1,7 @@
 # # header
 # coding: utf-8
 
-import sys
-if sys.version_info >= (3, 5, 2):
+if False:  # MYPY
     from typing import Any, Dict, Optional, List  # NOQA
 
 

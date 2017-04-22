@@ -2,7 +2,6 @@
 
 from __future__ import absolute_import
 
-import sys
 
 from ruamel.yaml.reader import Reader
 from ruamel.yaml.scanner import Scanner, RoundTripScanner
@@ -12,7 +11,7 @@ from ruamel.yaml.constructor import BaseConstructor, SafeConstructor, Constructo
     RoundTripConstructor
 from ruamel.yaml.resolver import VersionedResolver
 
-if sys.version_info >= (3, 5, 2):
+if False:  # MYPY
     from typing import Any, Dict, List                          # NOQA
     from ruamel.yaml.compat import StreamTextType, VersionType  # NOQA
 

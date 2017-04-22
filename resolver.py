@@ -4,8 +4,7 @@ from __future__ import absolute_import
 
 import re
 
-import sys
-if sys.version_info >= (3, 5, 2):
+if False:  # MYPY
     from typing import Any, Dict, List, Union  # NOQA
     from ruamel.yaml.compat import string_types, VersionType      # NOQA
 

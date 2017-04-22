@@ -1,3 +1,8 @@
+[0, 14, 9]: 2017-04-22
+  - remove dependency on ``typing`` while still supporting ``mypy``
+    (http://stackoverflow.com/a/43516781/1307905)
+  - fix unclarity in doc that stated 2.6 is supported (reported by feetdust)
+
 [0, 14, 8]: 2017-04-19
   - fix Text not available on 3.5.0 and 3.5.1, now proactively setting version guards
     on all files (reported by `João Paulo Magalhães <https://bitbucket.org/jpmag/>`_)

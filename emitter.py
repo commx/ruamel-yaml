@@ -10,15 +10,12 @@ from __future__ import print_function
 # sequence ::= SEQUENCE-START node* SEQUENCE-END
 # mapping ::= MAPPING-START (node node)* MAPPING-END
 
-import sys
-
-
 from ruamel.yaml.error import YAMLError
 from ruamel.yaml.events import *                                     # NOQA
 from ruamel.yaml.compat import utf8, text_type, PY2, nprint, dbg, DBG_EVENT, \
     check_anchorname_char
 
-if sys.version_info >= (3, 5, 2):
+if False:  # MYPY
     from typing import Any, Dict, List, Union, Text  # NOQA
     from ruamel.yaml.compat import StreamType  # NOQA
 

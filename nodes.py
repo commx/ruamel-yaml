@@ -2,8 +2,7 @@
 
 from __future__ import print_function
 
-import sys
-if sys.version_info >= (3, 5, 2):
+if False:  # MYPY
     from typing import Dict, Any, Text   # NOQA
 
 
