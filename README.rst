@@ -18,6 +18,9 @@ ChangeLog
 
 .. should insert NEXT: at the beginning of line for next key
 
+0.14.10 (2017-04-26):
+  - fix problem with emitting using cyaml
+
 0.14.9 (2017-04-22):
   - remove dependency on ``typing`` while still supporting ``mypy``
     (http://stackoverflow.com/a/43516781/1307905)

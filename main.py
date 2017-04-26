@@ -172,7 +172,11 @@ def emit(events, stream=None, Dumper=Dumper,
         for event in events:
             dumper.emit(event)
     finally:
-        dumper._emitter.dispose()
+        try:
+            dumper._emitter.dispose()
+        except AttributeError:
+            raise
+            dumper.dispose()   # cyaml
     if getvalue is not None:
         return getvalue()
 
@@ -206,7 +210,11 @@ def serialize_all(nodes, stream=None, Dumper=Dumper,
             dumper.serialize(node)
         dumper._serializer.close()
     finally:
-        dumper._emitter.dispose()
+        try:
+            dumper._emitter.dispose()
+        except AttributeError:
+            raise
+            dumper.dispose()   # cyaml
     if getvalue is not None:
         return getvalue()
 
@@ -260,7 +268,11 @@ def dump_all(documents, stream=None, Dumper=Dumper,
                 raise
         dumper._serializer.close()
     finally:
-        dumper._emitter.dispose()
+        try:
+            dumper._emitter.dispose()
+        except AttributeError:
+            raise
+            dumper.dispose()  # cyaml
     if getvalue is not None:
         return getvalue()
     return None

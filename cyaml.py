@@ -71,6 +71,7 @@ class CBaseDumper(CEmitter, BaseRepresenter, BaseResolver):  # type: ignore
                           explicit_start=explicit_start,
                           explicit_end=explicit_end,
                           version=version, tags=tags)
+        self._emitter = self._serializer = self._representer = self
         BaseRepresenter.__init__(self, default_style=default_style,
                                  default_flow_style=default_flow_style, dumper=self)
         BaseResolver.__init__(self, loadumper=self)
@@ -85,6 +86,7 @@ class CSafeDumper(CEmitter, SafeRepresenter, Resolver):  # type: ignore
                  version=None, tags=None, block_seq_indent=None,
                  top_level_colon_align=None, prefix_colon=None):
         # type: (StreamType, Any, Any, Any, bool, Union[None, int], Union[None, int], bool, Any, Any, Union[None, bool], Union[None, bool], Any, Any, Any, Any, Any) -> None   # NOQA
+        self._emitter = self._serializer = self._representer = self
         CEmitter.__init__(self, stream, canonical=canonical,
                           indent=indent, width=width, encoding=encoding,
                           allow_unicode=allow_unicode, line_break=line_break,
@@ -111,6 +113,7 @@ class CDumper(CEmitter, Serializer, Representer, Resolver):  # type: ignore
                           explicit_start=explicit_start,
                           explicit_end=explicit_end,
                           version=version, tags=tags)
+        self._emitter = self._serializer = self._representer = self
         Representer.__init__(self, default_style=default_style,
                              default_flow_style=default_flow_style)
         Resolver.__init__(self)

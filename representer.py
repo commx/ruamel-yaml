@@ -59,7 +59,10 @@ class BaseRepresenter(object):
     @property
     def serializer(self):
         # type: () -> Any
-        return self.dumper._serializer
+        try:
+            return self.dumper._serializer
+        except AttributeError:
+            return self  # cyaml
 
     def represent(self, data):
         # type: (Any) -> None

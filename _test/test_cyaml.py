@@ -11,3 +11,11 @@ def test_load_cyaml():
     assert ruamel.yaml.__with_libyaml__
     from ruamel.yaml.cyaml import CLoader
     ruamel.yaml.load("abc: 1", Loader=CLoader)
+
+
+def test_dump_cyaml():
+    import ruamel.yaml
+    data = {'a': 1, 'b': 2}
+    res = ruamel.yaml.dump(data, Dumper=ruamel.yaml.cyaml.CSafeDumper,
+                           default_flow_style=False, allow_unicode=True)
+    assert res == "a: 1\nb: 2\n"
