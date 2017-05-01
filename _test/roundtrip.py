@@ -22,9 +22,24 @@ def dedent(data):
     return textwrap.dedent(data)
 
 
-def round_trip_load(inp, preserve_quotes=None):
+def round_trip_load(inp, preserve_quotes=None, version=None):
     dinp = dedent(inp)
-    return ruamel.yaml.load(dinp, ruamel.yaml.RoundTripLoader, preserve_quotes=preserve_quotes)
+    return ruamel.yaml.load(
+        dinp,
+        Loader=ruamel.yaml.RoundTripLoader,
+        preserve_quotes=preserve_quotes,
+        version=version,
+    )
+
+
+def round_trip_load_all(inp, preserve_quotes=None, version=None):
+    dinp = dedent(inp)
+    return ruamel.yaml.load_all(
+        dinp,
+        Loader=ruamel.yaml.RoundTripLoader,
+        preserve_quotes=preserve_quotes,
+        version=version,
+    )
 
 
 def round_trip_dump(data, indent=None, block_seq_indent=None, top_level_colon_align=None,
@@ -40,7 +55,9 @@ def round_trip_dump(data, indent=None, block_seq_indent=None, top_level_colon_al
 
 def round_trip(inp, outp=None, extra=None, intermediate=None, indent=None,
                block_seq_indent=None, top_level_colon_align=None, prefix_colon=None,
-               preserve_quotes=None, explicit_start=None, version=None):
+               preserve_quotes=None,
+               explicit_start=None, explicit_end=None,
+               version=None):
     """
     inp:    input string to parse
     outp:   expected output (equals input if not specified)
@@ -59,13 +76,17 @@ def round_trip(inp, outp=None, extra=None, intermediate=None, indent=None,
                     raise ValueError
     res = round_trip_dump(data, indent=indent, block_seq_indent=block_seq_indent,
                           top_level_colon_align=top_level_colon_align,
-                          prefix_colon=prefix_colon, explicit_start=explicit_start,
+                          prefix_colon=prefix_colon,
+                          explicit_start=explicit_start,
+                          explicit_end=explicit_end,
                           version=version)
     print('roundtrip data:\n', res, sep='')
     assert res == doutp
     res = round_trip_dump(data, indent=indent, block_seq_indent=block_seq_indent,
                           top_level_colon_align=top_level_colon_align,
-                          prefix_colon=prefix_colon, explicit_start=explicit_start,
+                          prefix_colon=prefix_colon,
+                          explicit_start=explicit_start,
+                          explicit_end=explicit_end,
                           version=version)
     print('roundtrip second round data:\n', res, sep='')
     assert res == doutp

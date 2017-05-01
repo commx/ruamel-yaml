@@ -18,6 +18,10 @@ ChangeLog
 
 .. should insert NEXT: at the beginning of line for next key
 
+NEXT:
+  - fix for issue 103 allowing implicit documents after document end marker line (``...``)
+    in YAML 1.2
+
 0.14.10 (2017-04-26):
   - fix problem with emitting using cyaml
 

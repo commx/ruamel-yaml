@@ -118,6 +118,11 @@ class Parser(object):
         # type: () -> Any
         return self.loader._scanner
 
+    @property
+    def resolver(self):
+        # type: () -> Any
+        return self.loader._resolver
+
     def dispose(self):
         # type: () -> None
         # Reset the state attributes (to clear self-references)
@@ -239,7 +244,10 @@ class Parser(object):
         event = DocumentEndEvent(start_mark, end_mark, explicit=explicit)
 
         # Prepare the next state.
-        self.state = self.parse_document_start
+        if self.resolver.processing_version == (1, 1):
+            self.state = self.parse_document_start
+        else:
+            self.state = self.parse_implicit_document_start
 
         return event
 
