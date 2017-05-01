@@ -54,7 +54,7 @@ class TestDocument:
         ...
         - b
         ...
-        """, version=(1,2)))
+        """, version=(1, 2)))
         assert docs == [['a'], ['b']]
 
     def test_multi_doc_ends_only_1_1(self):
@@ -65,5 +65,5 @@ class TestDocument:
             ...
             - b
             ...
-            """, version=(1,1)))
-            assert False
+            """, version=(1, 1)))
+            assert docs == [['a'], ['b']]  # not True, but not reached
