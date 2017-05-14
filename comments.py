@@ -428,7 +428,7 @@ class CommentedSeq(list, CommentedBase):
 
     def __deepcopy__(self, memo):
         # type: (Any) -> Any
-        res = CommentedSeq()
+        res = self.__class__()
         memo[id(self)] = res
         for k in self:
             res.append(copy.deepcopy(k))
@@ -861,7 +861,7 @@ class CommentedMap(ordereddict, CommentedBase):
 
     def __deepcopy__(self, memo):
         # type: (Any) -> Any
-        res = CommentedMap()
+        res = self.__class__()
         memo[id(self)] = res
         for k in self:
             res[k] = copy.deepcopy(self[k])
