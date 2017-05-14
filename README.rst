@@ -18,6 +18,10 @@ ChangeLog
 
 .. should insert NEXT: at the beginning of line for next key
 
+0.14.12 (2017-05-14):
+  - fix for issue 119, deepcopy not returning subclasses (reported and PR by
+    Constantine Evans <cevans@evanslabs.org>)
+
 0.14.11 (2017-05-01):
   - fix for issue 103 allowing implicit documents after document end marker line (``...``)
     in YAML 1.2
