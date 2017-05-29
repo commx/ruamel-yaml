@@ -12,7 +12,8 @@ import copy
 
 from collections import MutableSet, Sized, Set
 
-from ruamel.yaml.compat import ordereddict, PY2
+from ruamel.yaml.compat import ordereddict, PY2, string_types
+from ruamel.yaml.scalarstring import ScalarString
 
 if False:  # MYPY
     from typing import Any, Dict, Optional, List, Union  # NOQA
@@ -435,6 +436,16 @@ class CommentedSeq(list, CommentedBase):
             self.copy_attributes(res, deep=True)
         return res
 
+    def __setitem__(self, idx, value):
+        # type: (Any, Any) -> None
+        # try to preserve the scalarstring type if setting an existing key to a new value
+        if idx < len(self):
+            if isinstance(value, string_types) and \
+               not isinstance(value, ScalarString) and \
+               isinstance(self[idx], ScalarString):
+                value = type(self[idx])(value)
+        list.__setitem__(self, idx, value)
+
 
 class CommentedKeySeq(tuple, CommentedBase):
     """This primarily exists to be able to roundtrip keys that are sequences"""
@@ -683,6 +694,16 @@ class CommentedMap(ordereddict, CommentedBase):
                 if key in merged[1]:
                     return merged[1][key]
             raise
+
+    def __setitem__(self, key, value):
+        # type: (Any, Any) -> None
+        # try to preserve the scalarstring type if setting an existing key to a new value
+        if key in self:
+            if isinstance(value, string_types) and \
+               not isinstance(value, ScalarString) and \
+               isinstance(self[key], ScalarString):
+                value = type(self[key])(value)
+        ordereddict.__setitem__(self, key, value)
 
     def _unmerged_contains(self, key):
         # type: (Any) -> Any

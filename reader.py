@@ -23,7 +23,7 @@ from __future__ import absolute_import
 import codecs
 import re
 
-from ruamel.yaml.error import YAMLError, FileMark, StringMark
+from ruamel.yaml.error import YAMLError, FileMark, StringMark, YAMLStreamError
 from ruamel.yaml.compat import text_type, binary_type, PY3
 
 if False:  # MYPY
@@ -97,7 +97,12 @@ class Reader(object):
             self.raw_buffer = stream
             self.determine_encoding()
         else:
-            self.stream = stream
+            if not hasattr(stream, 'read') and hasattr(stream, 'open'):
+                self.stream = stream.open('r')
+            else:
+                if not hasattr(stream, 'read'):
+                    raise YAMLStreamError('stream argument needs to have a read() method')
+                self.stream = stream
             self.name = getattr(stream, 'name', "<file>")
             self.eof = False
             self.raw_buffer = None

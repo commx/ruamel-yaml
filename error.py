@@ -126,6 +126,9 @@ class MarkedYAMLError(YAMLError):
         return '\n'.join(lines)
 
 
+class YAMLStreamError(Exception):
+    pass
+
 class ReusedAnchorWarning(Warning):
     pass
 

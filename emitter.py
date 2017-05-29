@@ -10,7 +10,7 @@ from __future__ import print_function
 # sequence ::= SEQUENCE-START node* SEQUENCE-END
 # mapping ::= MAPPING-START (node node)* MAPPING-END
 
-from ruamel.yaml.error import YAMLError
+from ruamel.yaml.error import YAMLError, YAMLStreamError
 from ruamel.yaml.events import *                                     # NOQA
 from ruamel.yaml.compat import utf8, text_type, PY2, nprint, dbg, DBG_EVENT, \
     check_anchorname_char
@@ -58,7 +58,12 @@ class Emitter(object):
         if self.dumper is not None:
             self.dumper._emitter = self
         # The stream should have the methods `write` and possibly `flush`.
-        self.stream = stream
+        if not hasattr(stream, 'write') and hasattr(stream, 'open'):
+            self.stream = stream.open('w')  # pathlib.Path() instance
+        else:
+            if not hasattr(stream, 'write'):
+                raise YAMLStreamError('stream argument needs to have a write() method')
+            self.stream = stream
 
         # Encoding can be overriden by STREAM-START.
         self.encoding = None  # type: Union[None, Text]
