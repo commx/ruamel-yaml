@@ -104,7 +104,7 @@ class BaseResolver(object):
     def __init__(self, loadumper=None):
         # type: (Any, Any) -> None
         self.loadumper = loadumper
-        if self.loadumper is not None:
+        if self.loadumper is not None and getattr(self.loadumper, '_resolver', None) is None:
             self.loadumper._resolver = self.loadumper
         self._loader_version = None  # type: Any
         self.resolver_exact_paths = []  # type: List[Any]
@@ -114,6 +114,8 @@ class BaseResolver(object):
     def parser(self):
         # type: () -> Any
         if self.loadumper is not None:
+            if hasattr(self.loadumper, 'typ'):
+                return self.loadumper.parser
             return self.loadumper._parser
         return None
 
@@ -204,6 +206,8 @@ class BaseResolver(object):
 
     def descend_resolver(self, current_node, current_index):
         # type: (Any, Any) -> None
+        # print('xx2', self)
+        # sys.exit(0)
         if not self.yaml_path_resolvers:
             return
         exact_paths = {}
@@ -429,7 +433,10 @@ class VersionedResolver(BaseResolver):
         try:
             version = self.parser.yaml_version
         except AttributeError:
-            version = self.loadumper._serializer.use_version     # dumping
+            if hasattr(self.loadumper, 'typ'):
+                version = self.loadumper.version
+            else:
+                version = self.loadumper._serializer.use_version     # dumping
         if version is None:
             version = self._loader_version
             if version is None:

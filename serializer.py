@@ -56,11 +56,15 @@ class Serializer(object):
     @property
     def emitter(self):
         # type: () -> Any
+        if hasattr(self.dumper, 'typ'):
+            return self.dumper.emitter
         return self.dumper._emitter
 
     @property
     def resolver(self):
         # type: () -> Any
+        if hasattr(self.dumper, 'typ'):
+            self.dumper.resolver
         return self.dumper._resolver
 
     def open(self):

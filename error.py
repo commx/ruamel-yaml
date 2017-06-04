@@ -129,6 +129,7 @@ class MarkedYAMLError(YAMLError):
 class YAMLStreamError(Exception):
     pass
 
+
 class ReusedAnchorWarning(Warning):
     pass
 

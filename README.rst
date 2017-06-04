@@ -4,10 +4,24 @@ ruamel.yaml
 
 ``ruamel.yaml`` is a YAML 1.2 loader/dumper package for Python.
 
+Starting with version 0.15.0 the way YAML files are loaded and dumped
+is changing. See the API doc for details.  Currently existing
+functionality will throw a warning before being changed/removed.
+**For production systems you should pin the version being used with
+``ruamel.yaml<=0.15``**. There might be bug fixes in the 0.14 series,
+but new functionality is likely only to be available via the new API.
+
+If your package uses ``ruamel.yaml`` and is not listed on PyPI, drop
+me an email, preferably with some infomormation on how you use the
+package (or a link to bitbucket/github) and I'll keep you informed
+when the status of the API is stable enough to make the transition.
+
 * `Overview <http://yaml.readthedocs.org/en/latest/overview.html>`_
 * `Installing <http://yaml.readthedocs.org/en/latest/install.html>`_
+* `Basic Usage <http://yaml.readthedocs.org/en/latest/basicuse.html>`_
 * `Details <http://yaml.readthedocs.org/en/latest/detail.html>`_
 * `Examples <http://yaml.readthedocs.org/en/latest/example.html>`_
+* `API <http://yaml.readthedocs.org/en/latest/api.html>`_
 * `Differences with PyYAML <http://yaml.readthedocs.org/en/latest/pyyaml.html>`_
 
 .. image:: https://readthedocs.org/projects/yaml/badge/?version=stable
@@ -18,13 +32,14 @@ ChangeLog
 
 .. should insert NEXT: at the beginning of line for next key
 
-NEXT:
+0.15.0 (2017-06-04):
   - it is no allowed to pass in a ``pathlib.Path`` as "stream" parameter to all
     load/dump functions
   - passing in a non-supported object (e.g. a string) as "stream" will result in a
     much more meaningful YAMLStreamError.
   - assigning a normal string value to an existing CommentedMap key or CommentedSeq
     element will result in a value cast to the previous value's type if possible.
+  - added ``YAML`` class for new API
 
 0.14.12 (2017-05-14):
   - fix for issue 119, deepcopy not returning subclasses (reported and PR by

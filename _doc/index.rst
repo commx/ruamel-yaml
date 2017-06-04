@@ -13,11 +13,8 @@ Contents:
 
    overview
    install
+   basicuse
    detail
    example
+   api
    pyyaml
-
-
-
-
-

@@ -44,7 +44,7 @@ class BaseConstructor(object):
     def __init__(self, preserve_quotes=None, loader=None):
         # type: (bool, Any) -> None
         self.loader = loader
-        if self.loader is not None:
+        if self.loader is not None and getattr(self.loader, '_constructor', None) is None:
             self.loader._constructor = self
         self.loader = loader
         self.constructed_objects = {}  # type: Dict[Any, Any]
@@ -56,6 +56,8 @@ class BaseConstructor(object):
     @property
     def composer(self):
         # type: () -> Any
+        if hasattr(self.loader, 'typ'):
+            return self.loader.composer
         try:
             return self.loader._composer
         except AttributeError:
@@ -67,6 +69,8 @@ class BaseConstructor(object):
     @property
     def resolver(self):
         # type: () -> Any
+        if hasattr(self.loader, 'typ'):
+            return self.loader.resolver
         return self.loader._resolver
 
     def check_data(self):

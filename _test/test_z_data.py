@@ -9,8 +9,11 @@ import platform  # NOQA
 
 sys.path.insert(0, os.path.dirname(__file__) + '/lib')
 
-import ruamel.yaml   # NOQA
+import ruamel.yaml     # NOQA
 import test_appliance  # NOQA
+import warnings        # NOQA
+warnings.simplefilter('ignore', ruamel.yaml.error.UnsafeLoaderWarning)
+
 
 args = []
 

@@ -60,6 +60,8 @@ class BaseRepresenter(object):
     def serializer(self):
         # type: () -> Any
         try:
+            if hasattr(self.dumper, 'typ'):
+                return self.dumper.serializer
             return self.dumper._serializer
         except AttributeError:
             return self  # cyaml

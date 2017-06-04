@@ -55,18 +55,13 @@ class Emitter(object):
                  top_level_colon_align=None, prefix_colon=None, dumper=None):
         # type: (StreamType, Any, int, int, bool, Any, int, bool, Any, Any) -> None
         self.dumper = dumper
-        if self.dumper is not None:
+        if self.dumper is not None and getattr(self.dumper, '_emitter', None) is None:
             self.dumper._emitter = self
-        # The stream should have the methods `write` and possibly `flush`.
-        if not hasattr(stream, 'write') and hasattr(stream, 'open'):
-            self.stream = stream.open('w')  # pathlib.Path() instance
-        else:
-            if not hasattr(stream, 'write'):
-                raise YAMLStreamError('stream argument needs to have a write() method')
-            self.stream = stream
+        self.stream = stream
 
         # Encoding can be overriden by STREAM-START.
         self.encoding = None  # type: Union[None, Text]
+        self.allow_space_break = None
 
         # Emitter is a state machine with a stack of states to handle nested
         # structures.
@@ -135,6 +130,23 @@ class Emitter(object):
         # Scalar analysis and style.
         self.analysis = None  # type: Any
         self.style = None  # type: Any
+
+    @property
+    def stream(self):
+        # type: () -> Any
+        try:
+            return self._stream
+        except AttributeError:
+            raise YAMLStreamError('output stream needs to specified')
+
+    @stream.setter
+    def stream(self, val):
+        # type: (Any) -> None
+        if val is None:
+            return
+        if not hasattr(val, 'write'):
+            raise YAMLStreamError('stream argument needs to have a write() method')
+        self._stream = val
 
     def dispose(self):
         # type: () -> None
@@ -632,6 +644,7 @@ class Emitter(object):
                 (self.flow_level and self.analysis.allow_flow_plain or
                     (not self.flow_level and self.analysis.allow_block_plain))):
                 return ''
+        self.analysis.allow_block = True
         if self.event.style and self.event.style in '|>':
             if (not self.flow_level and not self.simple_key_context and
                     self.analysis.allow_block):
@@ -902,9 +915,12 @@ class Emitter(object):
 
         # Spaces followed by breaks, as well as special character are only
         # allowed for double quoted scalars.
-        if space_break or special_characters:
-            allow_flow_plain = allow_block_plain = \
-                allow_single_quoted = allow_block = False
+        if special_characters:
+            allow_flow_plain = allow_block_plain = allow_single_quoted = allow_block = False
+        elif space_break:
+            allow_flow_plain = allow_block_plain = allow_single_quoted = False
+            if not self.allow_space_break:
+                allow_block = False
 
         # Although the plain scalar writer supports breaks, we never emit
         # multiline plain scalars.
@@ -974,7 +990,7 @@ class Emitter(object):
             self.column = indent
             if self.encoding:  # type: ignore
                 data = data.encode(self.encoding)
-            self.stream.write(data)  # type: ignore
+            self.stream.write(data)
 
     def write_line_break(self, data=None):
         # type: (Any) -> None
@@ -993,7 +1009,7 @@ class Emitter(object):
         data = u'%%YAML %s' % version_text
         if self.encoding:  # type: ignore
             data = data.encode(self.encoding)
-        self.stream.write(data)  # type: ignore
+        self.stream.write(data)
         self.write_line_break()
 
     def write_tag_directive(self, handle_text, prefix_text):
@@ -1001,7 +1017,7 @@ class Emitter(object):
         data = u'%%TAG %s %s' % (handle_text, prefix_text)
         if self.encoding:  # type: ignore
             data = data.encode(self.encoding)
-        self.stream.write(data)  # type: ignore
+        self.stream.write(data)
         self.write_line_break()
 
     # Scalar streams.
@@ -1247,7 +1263,7 @@ class Emitter(object):
             self.column += len(data)
             if self.encoding:  # type: ignore
                 data = data.encode(self.encoding)
-            self.stream.write(data)  # type: ignore
+            self.stream.write(data)
         self.whitespace = False
         self.indention = False
         spaces = False
@@ -1269,7 +1285,7 @@ class Emitter(object):
                         self.column += len(data)
                         if self.encoding:  # type: ignore
                             data = data.encode(self.encoding)
-                        self.stream.write(data)  # type: ignore
+                        self.stream.write(data)
                     start = end
             elif breaks:
                 if ch not in u'\n\x85\u2028\u2029':
@@ -1290,7 +1306,7 @@ class Emitter(object):
                     self.column += len(data)
                     if self.encoding:  # type: ignore
                         data = data.encode(self.encoding)
-                    self.stream.write(data)  # type: ignore
+                    self.stream.write(data)
                     start = end
             if ch is not None:
                 spaces = (ch == u' ')

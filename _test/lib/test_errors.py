@@ -3,6 +3,8 @@ from __future__ import print_function
 
 import ruamel.yaml as yaml
 import test_emitter
+import warnings
+warnings.simplefilter('ignore', yaml.error.UnsafeLoaderWarning)
 
 
 def test_loader_error(error_filename, verbose=False):

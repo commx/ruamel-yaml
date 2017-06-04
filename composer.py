@@ -30,19 +30,23 @@ class Composer(object):
     def __init__(self, loader=None):
         # type: (Any) -> None
         self.loader = loader
-        if self.loader is not None:
+        if self.loader is not None and getattr(self.loader, '_composer', None) is None:
             self.loader._composer = self
         self.anchors = {}  # type: Dict[Any, Any]
 
     @property
     def parser(self):
         # type: () -> Any
+        if hasattr(self.loader, 'typ'):
+            self.loader.parser
         return self.loader._parser
 
     @property
     def resolver(self):
         # type: () -> Any
         # assert self.loader._resolver is not None
+        if hasattr(self.loader, 'typ'):
+            self.loader.resolver
         return self.loader._resolver
 
     def check_node(self):

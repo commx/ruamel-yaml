@@ -5,7 +5,6 @@ from __future__ import absolute_import
 from _ruamel_yaml import CParser, CEmitter   # type: ignore
 
 from ruamel.yaml.constructor import Constructor, BaseConstructor, SafeConstructor
-from ruamel.yaml.serializer import Serializer
 from ruamel.yaml.representer import Representer, SafeRepresenter, BaseRepresenter
 from ruamel.yaml.resolver import Resolver, BaseResolver
 
@@ -98,7 +97,7 @@ class CSafeDumper(CEmitter, SafeRepresenter, Resolver):  # type: ignore
         Resolver.__init__(self)
 
 
-class CDumper(CEmitter, Serializer, Representer, Resolver):  # type: ignore
+class CDumper(CEmitter, Representer, Resolver):  # type: ignore
     def __init__(self, stream,
                  default_style=None, default_flow_style=None,
                  canonical=None, indent=None, width=None,

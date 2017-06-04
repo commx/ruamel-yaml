@@ -1,3 +1,19 @@
+[0, 15, 0]: 2017-06-04
+  - it is no allowed to pass in a ``pathlib.Path`` as "stream" parameter to all
+    load/dump functions
+  - passing in a non-supported object (e.g. a string) as "stream" will result in a
+    much more meaningful YAMLStreamError.
+  - assigning a normal string value to an existing CommentedMap key or CommentedSeq
+    element will result in a value cast to the previous value's type if possible.
+
+[0, 15, 0]: 2017-06-04
+  - it is no allowed to pass in a ``pathlib.Path`` as "stream" parameter to all
+    load/dump functions
+  - passing in a non-supported object (e.g. a string) as "stream" will result in a
+    much more meaningful YAMLStreamError.
+  - assigning a normal string value to an existing CommentedMap key or CommentedSeq
+    element will result in a value cast to the previous value's type if possible.
+
 [0, 14, 12]: 2017-05-14
   - fix for issue 119, deepcopy not returning subclasses (reported and PR by
     Constantine Evans <cevans@evanslabs.org>)

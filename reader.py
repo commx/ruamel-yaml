@@ -74,10 +74,9 @@ class Reader(object):
     def __init__(self, stream, loader=None):
         # type: (StreamTextType, Any) -> None
         self.loader = loader
-        if self.loader is not None:
+        if self.loader is not None and getattr(self.loader, '_reader', None) is None:
             self.loader._reader = self
-        self.name = None
-        self.stream = None  # type: Any  # as .read is called
+        self.name = None        # type: Any
         self.stream_pointer = 0
         self.eof = True
         self.buffer = u''
@@ -88,22 +87,35 @@ class Reader(object):
         self.index = 0
         self.line = 0
         self.column = 0
-        if isinstance(stream, text_type):
+        self.stream = stream  # type: Any  # as .read is called
+
+    @property
+    def stream(self):
+        # type: () -> Any
+        try:
+            return self._stream
+        except AttributeError:
+            raise YAMLStreamError('input stream needs to specified')
+
+    @stream.setter
+    def stream(self, val):
+        # type: (Any) -> None
+        if val is None:
+            return
+        self._stream = None
+        if isinstance(val, text_type):
             self.name = "<unicode string>"
-            self.check_printable(stream)
-            self.buffer = stream+u'\0'
-        elif isinstance(stream, binary_type):
+            self.check_printable(val)
+            self.buffer = val + u'\0'
+        elif isinstance(val, binary_type):
             self.name = "<byte string>"
-            self.raw_buffer = stream
+            self.raw_buffer = val
             self.determine_encoding()
         else:
-            if not hasattr(stream, 'read') and hasattr(stream, 'open'):
-                self.stream = stream.open('r')
-            else:
-                if not hasattr(stream, 'read'):
-                    raise YAMLStreamError('stream argument needs to have a read() method')
-                self.stream = stream
-            self.name = getattr(stream, 'name', "<file>")
+            if not hasattr(val, 'read'):
+                raise YAMLStreamError('stream argument needs to have a read() method')
+            self._stream = val
+            self.name = getattr(self.stream, 'name', "<file>")
             self.eof = False
             self.raw_buffer = None
             self.determine_encoding()

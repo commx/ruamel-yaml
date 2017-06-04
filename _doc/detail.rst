@@ -72,9 +72,9 @@ for calculating the cumulative indent for deeper levels and specifying
 ``indent=3`` resp. ``block_seq_indent=2``, migth give correct, but counter
 intuitive results.
 
-**It is best to always have** `indent >= block_seq_indent + 2` **but
- this is not enforced**. Depending on your structure, not following
- this advice **might lead to invalid output**.
+**It is best to always have** ``indent >= block_seq_indent + 2``
+**but this is not enforced**. Depending on your structure, not following
+this advice **might lead to invalid output**.
 
 Positioning ':' in top level mappings, prefix in ':'
 ----------------------------------------------------

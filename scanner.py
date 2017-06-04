@@ -72,7 +72,7 @@ class Scanner(object):
         #   self.forward(l=1) # read the next l characters and move the pointer
 
         self.loader = loader
-        if self.loader is not None:
+        if self.loader is not None and getattr(self.loader, '_scanner', None) is None:
             self.loader._scanner = self
 
         # Had we reached the end of the stream?
@@ -130,6 +130,8 @@ class Scanner(object):
     @property
     def reader(self):
         # type: () -> Any
+        if hasattr(self.loader, 'typ'):
+            self.loader.reader
         return self.loader._reader
 
     # Public methods.

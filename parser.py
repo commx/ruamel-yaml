@@ -104,7 +104,7 @@ class Parser(object):
     def __init__(self, loader):
         # type: (Any) -> None
         self.loader = loader
-        if self.loader is not None:
+        if self.loader is not None and getattr(self.loader, '_parser', None) is None:
             self.loader._parser = self
         self.current_event = None
         self.yaml_version = None
@@ -116,11 +116,15 @@ class Parser(object):
     @property
     def scanner(self):
         # type: () -> Any
+        if hasattr(self.loader, 'typ'):
+            self.loader.scanner
         return self.loader._scanner
 
     @property
     def resolver(self):
         # type: () -> Any
+        if hasattr(self.loader, 'typ'):
+            self.loader.resolver
         return self.loader._resolver
 
     def dispose(self):
