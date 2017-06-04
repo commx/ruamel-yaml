@@ -72,6 +72,84 @@ Initially only the typical operations are supported, but in principle
 all functionality of the old interface will be available via
 ``YAML`` instances (if you are using something that isn't let me know).
 
+Transparent usage of new and old API
+------------------------------------
+
+If you have multiple packages depending on ``ruamel.yaml``, or install
+your utility together with other packages not under your control, then
+fixing your ``install_requires`` might not be so easy.
+
+Depending on your usage you might be able to "version" your usage to
+be compatible with both the old and the new. The following are some
+examples all assuming `from ruamel import yaml`` somewhere at the top
+of your file and some ``istream`` and ``ostream`` apropriately opened
+for reading resp.  writing.
+
+
+Loading and dumping using the ``SafeLoader``::
+
+  if yaml.version_info < (0, 15):
+      data = yaml.safe_load(istream)
+      yaml.safe_dump(data, ostream)
+  else:
+      yml = yaml.YAML(typ='safe', pure=True)  # 'safe' load and dump
+      data = yml.load(istream)
+      yml.dump(ostream)
+
+
+Loading with the ``CSafeLoader``, dumping with
+``RoundTripLoader``. You need two ``YAML`` instances, but each of them
+can be re-used ::
+
+  if yaml.version_info < (0, 15):
+      data = yaml.load(istream, Loader=yaml.CSafeLoader)
+      yaml.round_trip_dump(data, ostream, width=1000, explicit_start=True)
+  else:
+      yml = yaml.YAML(typ='safe')
+      data = yml.load(istream)
+      ymlo = yaml.YAML()   # or yaml.YAML(typ='rt')
+      ymlo.width = 1000
+      ymlo.explicit_start = True
+      ymlo.dump(ostream)
+
+
+Loading and dumping from  ``pathlib.Path`` instances using the
+round-trip-loader::
+
+  # in myyaml.py
+  if yaml.version_info < (0, 15):
+      class MyYAML(yaml.YAML):
+          def __init__(self):
+              yaml.YAML.__init__(self)
+              self.preserve_quotes = True
+              self.indent = 4
+              self.block_seq_indent = 2
+
+  try:
+      from myyaml import MyYAML
+  except ImportError:
+      if yaml.version_info >= (0, 15):
+          raise
+
+  # some pathlib.Path
+  from pathlib import Path
+  inf = Path('/tmp/in.yaml')
+  outf = Path('/tmp/out.yaml')
+
+  if yaml.version_info < (0, 15):
+      with inf.open() as ifp:
+           data = yaml.round_trip_load(ifp, preserve_quotes=True)
+      with outf.open('w') as ofp:
+           yaml.round_trip_dump(data, ofp, indent=4, block_seq_indent=2)
+  else:
+      yml = MyYAML()
+      # no need for with statement when using pathlib.Path instances
+      data = yml.load(inf)
+      yml.dump(outf)
+
+
+
+
 Reason for API change
 ---------------------
 
