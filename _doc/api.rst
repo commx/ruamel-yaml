@@ -72,6 +72,31 @@ Initially only the typical operations are supported, but in principle
 all functionality of the old interface will be available via
 ``YAML`` instances (if you are using something that isn't let me know).
 
+Loading
+-------
+
+Duplicate keys
+++++++++++++++
+
+In JSON mapping keys should be unique, in YAML they must be unique.
+PyYAML never enforced this although the YAML 1.1 specification already
+required this.
+
+In the new API (starting 0.15.1) duplicate keys in mappings are no longer allowed by
+default. To allow duplicate keys in mappings::
+
+  yaml = ruamel.yaml.YAML()
+  yaml.allow_duplicate_keys = True
+  yaml.load(stream)
+
+In the old API this is a warning starting with 0.15.2 and an error in
+0.16.0.
+
+Dumping
+-------
+
+
+
 Transparent usage of new and old API
 ------------------------------------
 
