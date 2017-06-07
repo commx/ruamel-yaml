@@ -9,12 +9,13 @@ import binascii
 import re
 import sys
 import types
+import warnings
 
-from ruamel.yaml.error import (MarkedYAMLError)
+from ruamel.yaml.error import (MarkedYAMLError, MarkedYAMLFutureWarning)
 from ruamel.yaml.nodes import *                               # NOQA
 from ruamel.yaml.nodes import (SequenceNode, MappingNode, ScalarNode)
 from ruamel.yaml.compat import (utf8, builtins_module, to_str, PY2, PY3,  # NOQA
-                                ordereddict, text_type, nprint)
+                                ordereddict, text_type, nprint, version_tnf)
 from ruamel.yaml.comments import *                               # NOQA
 from ruamel.yaml.comments import (CommentedMap, CommentedOrderedMap, CommentedSet,
                                   CommentedKeySeq, CommentedSeq)
@@ -36,6 +37,14 @@ class ConstructorError(MarkedYAMLError):
     pass
 
 
+class DuplicateKeyFutureWarning(MarkedYAMLFutureWarning):
+    pass
+
+
+class DuplicateKeyError(MarkedYAMLFutureWarning):
+    pass
+
+
 class BaseConstructor(object):
 
     yaml_constructors = {}   # type: Dict[Any, Any]
@@ -52,6 +61,7 @@ class BaseConstructor(object):
         self.state_generators = []  # type: List[Any]
         self.deep_construct = False
         self._preserve_quotes = preserve_quotes
+        self.allow_duplicate_keys = version_tnf((0, 15, 1), (0, 16))
 
     @property
     def composer(self):
@@ -193,31 +203,62 @@ class BaseConstructor(object):
                 None, None,
                 "expected a mapping node, but found %s" % node.id,
                 node.start_mark)
-        mapping = {}
-        for key_node, value_node in node.value:
-            # keys can be list -> deep
-            key = self.construct_object(key_node, deep=True)
-            # lists are not hashable, but tuples are
-            if not isinstance(key, collections.Hashable):  # type: ignore
-                if isinstance(key, list):
-                    key = tuple(key)
-            if PY2:
-                try:
-                    hash(key)
-                except TypeError as exc:
-                    raise ConstructorError(
-                        "while constructing a mapping", node.start_mark,
-                        "found unacceptable key (%s)" %
-                        exc, key_node.start_mark)
-            else:
-                if not isinstance(key, collections.Hashable):
-                    raise ConstructorError(
-                        "while constructing a mapping", node.start_mark,
-                        "found unhashable key", key_node.start_mark)
+        total_mapping = {}
+        if hasattr(node, 'merge'):
+            todo = [(node.merge, False), (node.value, True)]
+        else:
+            todo = [(node.value, True)]
+        for values, check in todo:
+            mapping = {}
+            for key_node, value_node in values:
+                # keys can be list -> deep
+                key = self.construct_object(key_node, deep=True)
+                # lists are not hashable, but tuples are
+                if not isinstance(key, collections.Hashable):  # type: ignore
+                    if isinstance(key, list):
+                        key = tuple(key)
+                if PY2:
+                    try:
+                        hash(key)
+                    except TypeError as exc:
+                        raise ConstructorError(
+                            "while constructing a mapping", node.start_mark,
+                            "found unacceptable key (%s)" %
+                            exc, key_node.start_mark)
+                else:
+                    if not isinstance(key, collections.Hashable):
+                        raise ConstructorError(
+                            "while constructing a mapping", node.start_mark,
+                            "found unhashable key", key_node.start_mark)
 
-            value = self.construct_object(value_node, deep=deep)
-            mapping[key] = value
-        return mapping
+                value = self.construct_object(value_node, deep=deep)
+                if check:
+                    self.check_mapping_key(node, key_node, mapping, key, value)
+                mapping[key] = value
+            total_mapping.update(mapping)
+        return total_mapping
+
+    def check_mapping_key(self, node, key_node, mapping, key, value):
+        if key in mapping:
+            if not self.allow_duplicate_keys:
+                args = [
+                    "while constructing a mapping", node.start_mark,
+                    'found duplicate key "{}" with value "{}" '
+                    '(original value: "{}")'.format(
+                        key, value, mapping[key]), key_node.start_mark,
+                    """
+                    To suppress this check see:
+                        http://yaml.readthedocs.io/en/latest/api.html#duplicate-keys
+                    """,
+                    """\
+                    Duplicate keys will become and error in future releases, and are errors
+                    by default when using the new API.
+                    """,
+                ]
+                if self.allow_duplicate_keys is None:
+                    warnings.warn(DuplicateKeyFutureWarning(*args))
+                else:
+                    raise DuplicateKeyError(*args)
 
     def construct_pairs(self, node, deep=False):
         # type: (Any, bool) -> Any
@@ -299,7 +340,8 @@ class SafeConstructor(BaseConstructor):
             else:
                 index += 1
         if bool(merge):
-            node.value = merge + node.value
+            node.merge = merge  # separate merge keys to be able to update without duplicate
+            # node.value = merge + node.value
 
     def construct_mapping(self, node, deep=False):
         # type: (Any, bool) -> Any
@@ -1140,6 +1182,8 @@ class RoundTripConstructor(SafeConstructor):
                         "while constructing a mapping", node.start_mark,
                         "found unhashable key", key_node.start_mark)
             value = self.construct_object(value_node, deep=deep)
+            self.check_mapping_key(node, key_node, maptyp, key, value)
+
             if key_node.comment and len(key_node.comment) > 4 and \
                key_node.comment[4]:
                 if last_value is None:

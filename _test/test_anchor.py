@@ -11,6 +11,7 @@ import platform
 from roundtrip import round_trip, dedent, round_trip_load, round_trip_dump  # NOQA
 from ruamel.yaml.compat import PY3
 from ruamel.yaml.error import ReusedAnchorWarning
+from ruamel.yaml import version_info
 
 
 def load(s):
@@ -323,6 +324,31 @@ class TestMergeKeysValues:
         if PY3:
             ref -= 1
         assert len(x) == ref
+
+
+class TestDuplicateKeyThroughAnchor:
+    def test_duplicate_key_00(self):
+        from ruamel.yaml import safe_load, round_trip_load
+        from ruamel.yaml.constructor import DuplicateKeyFutureWarning, DuplicateKeyError
+        s = dedent("""\
+        &anchor foo:
+            foo: bar
+            *anchor : duplicate key
+            baz: bat
+            *anchor : duplicate key
+        """)
+        if version_info < (0, 15, 1):
+            pass
+        elif version_info < (0, 16, 0):
+            with pytest.warns(DuplicateKeyFutureWarning):
+                safe_load(s)
+            with pytest.warns(DuplicateKeyFutureWarning):
+                round_trip_load(s)
+        else:
+            with pytest.raises(DuplicateKeyError):
+                safe_load(s)
+            with pytest.raises(DuplicateKeyError):
+                round_trip_load(s)
 
 
 class TestFullCharSetAnchors:

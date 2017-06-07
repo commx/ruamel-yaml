@@ -99,6 +99,7 @@ class YAML(object):
         self.prefix_colon = None
         self.version = None
         self.preserve_quotes = None
+        self.allow_duplicate_keys = False  # duplicate keys in map, set
         self.encoding = None
         self.explicit_start = None
         self.explicit_end = None
@@ -157,8 +158,9 @@ class YAML(object):
         # type: () -> Any
         attr = '_' + sys._getframe().f_code.co_name
         if not hasattr(self, attr):
-            setattr(self, attr, self.Constructor(
-                preserve_quotes=self.preserve_quotes, loader=self))
+            cnst = self.Constructor(preserve_quotes=self.preserve_quotes, loader=self)
+            cnst.allow_duplicate_keys = self.allow_duplicate_keys
+            setattr(self, attr, cnst)
         return getattr(self, attr)
 
     @property
@@ -289,6 +291,7 @@ class YAML(object):
                         CParser.__init__(selfx, stream)
                         selfx._parser = selfx._composer = selfx
                         self.Constructor.__init__(selfx, loader=selfx)
+                        selfx.allow_duplicate_keys = self.allow_duplicate_keys
                         rslvr.__init__(selfx, loadumper=selfx)
                 self._stream = stream
                 loader = XLoader(stream)

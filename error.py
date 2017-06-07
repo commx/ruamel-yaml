@@ -3,6 +3,7 @@
 from __future__ import absolute_import
 
 import warnings
+import textwrap
 
 from ruamel.yaml.compat import utf8
 
@@ -12,7 +13,8 @@ if False:  # MYPY
 
 __all__ = [
     'FileMark', 'StringMark', 'CommentMark', 'YAMLError', 'MarkedYAMLError',
-    'ReusedAnchorWarning', 'UnsafeLoaderWarning',
+    'ReusedAnchorWarning', 'UnsafeLoaderWarning', 'MarkedYAMLWarning',
+    'MarkedYAMLFutureWarning',
 ]
 
 
@@ -98,13 +100,14 @@ class YAMLError(Exception):
 
 class MarkedYAMLError(YAMLError):
     def __init__(self, context=None, context_mark=None,
-                 problem=None, problem_mark=None, note=None):
+                 problem=None, problem_mark=None, note=None, warn=None):
         # type: (Any, Any, Any, Any, Any) -> None
         self.context = context
         self.context_mark = context_mark
         self.problem = problem
         self.problem_mark = problem_mark
         self.note = note
+        # warn is ignored
 
     def __str__(self):
         # type: () -> Any
@@ -121,8 +124,9 @@ class MarkedYAMLError(YAMLError):
             lines.append(self.problem)
         if self.problem_mark is not None:
             lines.append(str(self.problem_mark))
-        if self.note is not None:
-            lines.append(self.note)
+        if self.note is not None and self.note:
+            note = textwrap.dedent(self.note)
+            lines.append(note)
         return '\n'.join(lines)
 
 
@@ -130,11 +134,49 @@ class YAMLStreamError(Exception):
     pass
 
 
-class ReusedAnchorWarning(Warning):
+class YAMLWarning(Warning):
     pass
 
 
-class UnsafeLoaderWarning(Warning):
+class MarkedYAMLWarning(YAMLWarning):
+    def __init__(self, context=None, context_mark=None,
+                 problem=None, problem_mark=None, note=None, warn=None):
+        # type: (Any, Any, Any, Any, Any) -> None
+        self.context = context
+        self.context_mark = context_mark
+        self.problem = problem
+        self.problem_mark = problem_mark
+        self.warn = warn
+
+    def __str__(self):
+        # type: () -> Any
+        lines = []  # type: List[str]
+        if self.context is not None:
+            lines.append(self.context)
+        if self.context_mark is not None  \
+           and (self.problem is None or self.problem_mark is None or
+                self.context_mark.name != self.problem_mark.name or
+                self.context_mark.line != self.problem_mark.line or
+                self.context_mark.column != self.problem_mark.column):
+            lines.append(str(self.context_mark))
+        if self.problem is not None:
+            lines.append(self.problem)
+        if self.problem_mark is not None:
+            lines.append(str(self.problem_mark))
+        if self.note is not None and self.note:
+            note = textwrap.dedent(self.note)
+            lines.append(note)
+        if self.warn is not None and self.warn:
+            warn = textwrap.dedent(self.warn)
+            lines.append(warn)
+        return '\n'.join(lines)
+
+
+class ReusedAnchorWarning(YAMLWarning):
+    pass
+
+
+class UnsafeLoaderWarning(YAMLWarning):
     text = """
 The default 'Loader' for 'load(stream)' without further arguments can be unsafe.
 Use 'load(stream, Loader=ruamel.yaml.Loader)' explicitly if that is OK.
@@ -147,3 +189,43 @@ In most other cases you should consider using 'safe_load(stream)'"""
     pass
 
 warnings.simplefilter('once', UnsafeLoaderWarning)
+
+
+class YAMLFutureWarning(Warning):
+    pass
+
+
+class MarkedYAMLFutureWarning(YAMLFutureWarning):
+    def __init__(self, context=None, context_mark=None,
+                 problem=None, problem_mark=None, note=None, warn=None):
+        # type: (Any, Any, Any, Any, Any) -> None
+        self.context = context
+        self.context_mark = context_mark
+        self.problem = problem
+        self.problem_mark = problem_mark
+        self.note = note
+        self.warn = warn
+
+    def __str__(self):
+        # type: () -> Any
+        lines = []  # type: List[str]
+        if self.context is not None:
+            lines.append(self.context)
+
+        if self.context_mark is not None  \
+           and (self.problem is None or self.problem_mark is None or
+                self.context_mark.name != self.problem_mark.name or
+                self.context_mark.line != self.problem_mark.line or
+                self.context_mark.column != self.problem_mark.column):
+            lines.append(str(self.context_mark))
+        if self.problem is not None:
+            lines.append(self.problem)
+        if self.problem_mark is not None:
+            lines.append(str(self.problem_mark))
+        if self.note is not None and self.note:
+            note = textwrap.dedent(self.note)
+            lines.append(note)
+        if self.warn is not None and self.warn:
+            warn = textwrap.dedent(self.warn)
+            lines.append(warn)
+        return '\n'.join(lines)

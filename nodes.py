@@ -97,5 +97,5 @@ class SequenceNode(CollectionNode):
 
 
 class MappingNode(CollectionNode):
-    __slots__ = ()
+    __slots__ = ('merge', )
     id = 'mapping'

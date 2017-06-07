@@ -11,16 +11,15 @@ if False:  # MYPY
 
 _package_data = dict(
     full_package_name='ruamel.yaml',
-    version_info=(0, 15, 1, 'dev'),
-    __version__='0.15.1.dev',
+    version_info=(0, 15, 1),
+    __version__='0.15.1',
     author='Anthon van der Neut',
     author_email='a.van.der.neut@ruamel.eu',
     description='ruamel.yaml is a YAML parser/emitter that supports roundtrip preservation of comments, seq/map flow style, and map key order',  # NOQA
     entry_points=None,
-    install_requires=dict(
-        any=[],
-        py27=['ruamel.ordereddict'],
-    ),
+    extras_require={':platform_python_implementation=="CPython" and python_version<="2.7"': [
+        'ruamel.ordereddict',
+        ]},
     ext_modules=[dict(
             name='_ruamel_yaml',
             src=['ext/_ruamel_yaml.c', 'ext/api.c', 'ext/writer.c', 'ext/dumper.c',
@@ -45,6 +44,7 @@ _package_data = dict(
         'Topic :: Software Development :: Libraries :: Python Modules',
         'Topic :: Text Processing :: Markup',
     ],
+    keywords='yaml 1.2 parser round-trip preserve quotes order config',
     windows_wheels=True,
     read_the_docs='yaml',
     many_linux='libyaml-devel',

@@ -32,6 +32,11 @@ ChangeLog
 
 .. should insert NEXT: at the beginning of line for next key
 
+0.15.1 (2017-06-07):
+  - `duplicate keys  <http://yaml.readthedocs.io/en/latest/api.html#duplicate-keys>`_
+    in mappings generate an error (in the old API this change generates a warning until 0.16)
+  - dependecy on ruamel.ordereddict for 2.7 now via extras_require
+
 0.15.0 (2017-06-04):
   - it is no allowed to pass in a ``pathlib.Path`` as "stream" parameter to all
     load/dump functions
