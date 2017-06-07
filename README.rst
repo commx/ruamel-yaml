@@ -32,6 +32,11 @@ ChangeLog
 
 .. should insert NEXT: at the beginning of line for next key
 
+0.15.3 (2017-06-07):
+  - No longer try to compile C extensions on Windows. Compilation can be forced by setting
+    the environment variable `RUAMEL_FORCE_EXT_BUILD` to some value
+    before starting the `pip install`.
+
 0.15.2 (2017-06-07):
   - update to conform to mypy 0.511: mypy --strict
 
