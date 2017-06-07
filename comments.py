@@ -259,7 +259,7 @@ class CommentedBase(object):
             if c[3] is None:
                 c[3] = []
             for com in after.split('\n'):
-                c[3].append(comment_token(com, start_mark))
+                c[3].append(comment_token(com, start_mark))  # type: ignore
 
     @property
     def fa(self):
@@ -359,6 +359,10 @@ class CommentedBase(object):
         # type: () -> Any
         raise NotImplementedError
 
+    def _yaml_get_column(self, key):
+        # type: (Any) -> Any
+        raise NotImplementedError
+
 
 class CommentedSeq(list, CommentedBase):
     __slots__ = Comment.attrib,
@@ -389,7 +393,7 @@ class CommentedSeq(list, CommentedBase):
 
     def pop(self, idx=None):
         # type: (Any) -> Any
-        res = list.pop(self, idx)
+        res = list.pop(self, idx)  # type: ignore
         self.ca.items.pop(idx, None)  # might not be there -> default value
         for list_index in sorted(self.ca.items):
             if list_index < idx:

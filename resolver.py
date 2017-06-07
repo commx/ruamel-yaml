@@ -434,9 +434,9 @@ class VersionedResolver(BaseResolver):
             version = self.parser.yaml_version
         except AttributeError:
             if hasattr(self.loadumper, 'typ'):
-                version = self.loadumper.version
+                version = self.loadumper.version  # type: ignore
             else:
-                version = self.loadumper._serializer.use_version     # dumping
+                version = self.loadumper._serializer.use_version  # type: ignore  # dumping
         if version is None:
             version = self._loader_version
             if version is None:

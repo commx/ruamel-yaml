@@ -30,7 +30,9 @@ pytest:
 MYPYSRC:=$(shell ls -1 *.py | grep -Ev "^(setup.py|.*_flymake.py)$$" | sed 's|^|ruamel/yaml/|')
 MYPYOPT:=--py2 --strict
 
-mypy:
+mypy:	mypy2single
+
+mypyold:
 	cd ..; mypy --strict --no-warn-unused-ignores yaml/*.py
 
 # sleep to give time to flymake*.py to disappear

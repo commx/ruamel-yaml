@@ -61,8 +61,8 @@ class BaseRepresenter(object):
         # type: () -> Any
         try:
             if hasattr(self.dumper, 'typ'):
-                return self.dumper.serializer
-            return self.dumper._serializer
+                return self.dumper.serializer  # type: ignore
+            return self.dumper._serializer  # type: ignore
         except AttributeError:
             return self  # cyaml
 
@@ -527,7 +527,7 @@ class Representer(SafeRepresenter):
             value = {}
             if bool(args):
                 value['args'] = args
-            value['state'] = state
+            value['state'] = state  # type: ignore
             return self.represent_mapping(
                 u'tag:yaml.org,2002:python/object/new:'+class_name, value)
 

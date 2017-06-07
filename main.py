@@ -55,7 +55,7 @@ class YAML(object):
                             "one was given ({!r})".format(self.__class__.__name__, _kw))
 
         self.typ = 'rt' if typ is None else typ
-        self.Resolver = ruamel.yaml.resolver.VersionedResolver
+        self.Resolver = ruamel.yaml.resolver.VersionedResolver               # type: Any
         self.allow_unicode = True
         self.Reader = None       # type: Any
         self.Scanner = None      # type: Any
@@ -139,7 +139,7 @@ class YAML(object):
                     #     # pathlib.Path() instance
                     #     setattr(self, attr, CParser(self._stream))
                     # else:
-                    setattr(self, attr, CParser(self._stream))  # type: ignore
+                    setattr(self, attr, CParser(self._stream))
                     # self._parser = self._composer = self
                     # print('scanner', self.loader.scanner)
 
@@ -475,9 +475,9 @@ def load(stream, Loader=None, version=None, preserve_quotes=None):
         Loader = UnsafeLoader
     loader = Loader(stream, version, preserve_quotes=preserve_quotes)
     try:
-        return loader._constructor.get_single_data()
+        return loader._constructor.get_single_data()  # type: ignore
     finally:
-        loader._parser.dispose()
+        loader._parser.dispose()  # type: ignore
 
 
 def load_all(stream, Loader=None, version=None, preserve_quotes=None):
@@ -491,10 +491,10 @@ def load_all(stream, Loader=None, version=None, preserve_quotes=None):
         Loader = UnsafeLoader
     loader = Loader(stream, version, preserve_quotes=preserve_quotes)
     try:
-        while loader._constructor.check_data():
-            yield loader._constructor.get_data()
+        while loader._constructor.check_data():  # type: ignore
+            yield loader._constructor.get_data()  # type: ignore
     finally:
-        loader._parser.dispose()
+        loader._parser.dispose()  # type: ignore
 
 
 def safe_load(stream, version=None):

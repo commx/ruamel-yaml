@@ -131,8 +131,8 @@ class Scanner(object):
     def reader(self):
         # type: () -> Any
         if hasattr(self.loader, 'typ'):
-            self.loader.reader
-        return self.loader._reader
+            self.loader.reader  # type: ignore
+        return self.loader._reader  # type: ignore
 
     # Public methods.
 

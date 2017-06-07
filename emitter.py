@@ -106,17 +106,17 @@ class Emitter(object):
         # Formatting details.
         self.canonical = canonical
         self.allow_unicode = allow_unicode
-        self.block_seq_indent = block_seq_indent if block_seq_indent else 0  # type: ignore
+        self.block_seq_indent = block_seq_indent if block_seq_indent else 0
         self.top_level_colon_align = top_level_colon_align
         self.best_indent = 2
-        if indent and 1 < indent < 10:  # type: ignore
+        if indent and 1 < indent < 10:
             self.best_indent = indent
         # if self.best_indent < self.block_seq_indent + 1:
         #     self.best_indent = self.block_seq_indent + 1
         self.best_width = 80
-        if width and width > self.best_indent*2:  # type: ignore
+        if width and width > self.best_indent*2:
             self.best_width = width
-        self.best_line_break = u'\n'
+        self.best_line_break = u'\n'  # type: Any
         if line_break in [u'\r', u'\n', u'\r\n']:
             self.best_line_break = line_break
 
@@ -953,7 +953,7 @@ class Emitter(object):
     def write_stream_start(self):
         # type: () -> None
         # Write BOM if needed.
-        if self.encoding and self.encoding.startswith('utf-16'):  # type: ignore
+        if self.encoding and self.encoding.startswith('utf-16'):
             self.stream.write(u'\uFEFF'.encode(self.encoding))
 
     def write_stream_end(self):
@@ -988,7 +988,7 @@ class Emitter(object):
             self.whitespace = True
             data = u' '*(indent-self.column)
             self.column = indent
-            if self.encoding:  # type: ignore
+            if self.encoding:
                 data = data.encode(self.encoding)
             self.stream.write(data)
 
@@ -1007,7 +1007,7 @@ class Emitter(object):
     def write_version_directive(self, version_text):
         # type: (Any) -> None
         data = u'%%YAML %s' % version_text
-        if self.encoding:  # type: ignore
+        if self.encoding:
             data = data.encode(self.encoding)
         self.stream.write(data)
         self.write_line_break()
@@ -1015,7 +1015,7 @@ class Emitter(object):
     def write_tag_directive(self, handle_text, prefix_text):
         # type: (Any, Any) -> None
         data = u'%%TAG %s %s' % (handle_text, prefix_text)
-        if self.encoding:  # type: ignore
+        if self.encoding:
             data = data.encode(self.encoding)
         self.stream.write(data)
         self.write_line_break()
@@ -1261,7 +1261,7 @@ class Emitter(object):
         if not self.whitespace:
             data = u' '
             self.column += len(data)
-            if self.encoding:  # type: ignore
+            if self.encoding:
                 data = data.encode(self.encoding)
             self.stream.write(data)
         self.whitespace = False
@@ -1283,7 +1283,7 @@ class Emitter(object):
                     else:
                         data = text[start:end]
                         self.column += len(data)
-                        if self.encoding:  # type: ignore
+                        if self.encoding:
                             data = data.encode(self.encoding)
                         self.stream.write(data)
                     start = end
@@ -1304,7 +1304,7 @@ class Emitter(object):
                 if ch is None or ch in u' \n\x85\u2028\u2029':
                     data = text[start:end]
                     self.column += len(data)
-                    if self.encoding:  # type: ignore
+                    if self.encoding:
                         data = data.encode(self.encoding)
                     self.stream.write(data)
                     start = end

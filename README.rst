@@ -32,6 +32,9 @@ ChangeLog
 
 .. should insert NEXT: at the beginning of line for next key
 
+0.15.2 (2017-06-07):
+  - update to conform to mypy 0.511: mypy --strict
+
 0.15.1 (2017-06-07):
   - `duplicate keys  <http://yaml.readthedocs.io/en/latest/api.html#duplicate-keys>`_
     in mappings generate an error (in the old API this change generates a warning until 0.16)

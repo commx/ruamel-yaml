@@ -67,12 +67,12 @@ class BaseConstructor(object):
     def composer(self):
         # type: () -> Any
         if hasattr(self.loader, 'typ'):
-            return self.loader.composer
+            return self.loader.composer  # type: ignore
         try:
-            return self.loader._composer
+            return self.loader._composer  # type: ignore
         except AttributeError:
             print('slt', type(self))
-            print('slc', self.loader._composer)
+            print('slc', self.loader._composer)  # type: ignore
             print(dir(self))
             raise
 
@@ -80,8 +80,8 @@ class BaseConstructor(object):
     def resolver(self):
         # type: () -> Any
         if hasattr(self.loader, 'typ'):
-            return self.loader.resolver
-        return self.loader._resolver
+            return self.loader.resolver  # type: ignore
+        return self.loader._resolver  # type: ignore
 
     def check_data(self):
         # type: () -> Any
@@ -131,7 +131,7 @@ class BaseConstructor(object):
                 None, None,
                 "found unconstructable recursive node", node.start_mark)
         self.recursive_objects[node] = None
-        constructor = None
+        constructor = None  # type: Any
         tag_suffix = None
         if node.tag in self.yaml_constructors:
             constructor = self.yaml_constructors[node.tag]
@@ -204,17 +204,17 @@ class BaseConstructor(object):
                 "expected a mapping node, but found %s" % node.id,
                 node.start_mark)
         total_mapping = {}
-        if hasattr(node, 'merge'):
+        if getattr(node, 'merge', None) is not None:
             todo = [(node.merge, False), (node.value, True)]
         else:
             todo = [(node.value, True)]
         for values, check in todo:
-            mapping = {}
+            mapping = {}  # type: Dict[Any, Any]
             for key_node, value_node in values:
                 # keys can be list -> deep
                 key = self.construct_object(key_node, deep=True)
                 # lists are not hashable, but tuples are
-                if not isinstance(key, collections.Hashable):  # type: ignore
+                if not isinstance(key, collections.Hashable):
                     if isinstance(key, list):
                         key = tuple(key)
                 if PY2:
@@ -239,6 +239,7 @@ class BaseConstructor(object):
         return total_mapping
 
     def check_mapping_key(self, node, key_node, mapping, key, value):
+        # type: (Any, Any, Any, Any, Any) -> None
         if key in mapping:
             if not self.allow_duplicate_keys:
                 args = [
@@ -506,7 +507,7 @@ class SafeConstructor(BaseConstructor):
                 delta = -delta
         data = datetime.datetime(year, month, day, hour, minute, second,
                                  fraction)
-        if delta:  # type: ignore
+        if delta:
             data -= delta
         return data
 
@@ -1058,7 +1059,7 @@ class RoundTripConstructor(SafeConstructor):
             seqtyp._yaml_add_comment(node.comment[:2])
             if len(node.comment) > 2:
                 seqtyp.yaml_end_comment_extend(node.comment[2], clear=True)
-        if node.anchor:  # type: ignore
+        if node.anchor:
             from ruamel.yaml.serializer import templated_id
             if not templated_id(node.anchor):
                 seqtyp.yaml_set_anchor(node.anchor)
@@ -1147,10 +1148,10 @@ class RoundTripConstructor(SafeConstructor):
         merge_map = self.flatten_mapping(node)
         # mapping = {}
         if node.comment:
-            maptyp._yaml_add_comment(node.comment[:2])
+            maptyp._yaml_add_comment(node.comment[:2])  # type: ignore
             if len(node.comment) > 2:
-                maptyp.yaml_end_comment_extend(node.comment[2], clear=True)
-        if node.anchor:  # type: ignore
+                maptyp.yaml_end_comment_extend(node.comment[2], clear=True)  # type: ignore
+        if node.anchor:
             from ruamel.yaml.serializer import templated_id
             if not templated_id(node.anchor):
                 maptyp.yaml_set_anchor(node.anchor)
@@ -1159,7 +1160,7 @@ class RoundTripConstructor(SafeConstructor):
             # keys can be list -> deep
             key = self.construct_object(key_node, deep=True)
             # lists are not hashable, but tuples are
-            if not isinstance(key, collections.Hashable):  # type: ignore
+            if not isinstance(key, collections.Hashable):
                 if isinstance(key, list):
                     key_a = CommentedKeySeq(key)
                     if key_node.flow_style is True:
@@ -1191,21 +1192,21 @@ class RoundTripConstructor(SafeConstructor):
                     maptyp._yaml_add_comment(key_node.comment, value=last_key)
                 else:
                     key_node.comment[2] = key_node.comment.pop(4)
-                    maptyp._yaml_add_comment(key_node.comment, key=key)
+                    maptyp._yaml_add_comment(key_node.comment, key=key)  # type: ignore
                 key_node.comment = None
             if key_node.comment:
-                maptyp._yaml_add_comment(key_node.comment, key=key)
+                maptyp._yaml_add_comment(key_node.comment, key=key)  # type: ignore
             if value_node.comment:
-                maptyp._yaml_add_comment(value_node.comment, value=key)
-            maptyp._yaml_set_kv_line_col(
+                maptyp._yaml_add_comment(value_node.comment, value=key)  # type: ignore
+            maptyp._yaml_set_kv_line_col(  # type: ignore
                 key, [key_node.start_mark.line, key_node.start_mark.column,
                       value_node.start_mark.line, value_node.start_mark.column])
-            maptyp[key] = value
+            maptyp[key] = value  # type: ignore
             last_key, last_value = key, value  # could use indexing
         # do this last, or <<: before a key will prevent insertion in instances
         # of collections.OrderedDict (as they have no __contains__
         if merge_map:
-            maptyp.add_yaml_merge(merge_map)
+            maptyp.add_yaml_merge(merge_map)  # type: ignore
 
     def construct_setting(self, node, typ, deep=False):
         # type: (Any, Any, bool) -> Any
@@ -1218,7 +1219,7 @@ class RoundTripConstructor(SafeConstructor):
             typ._yaml_add_comment(node.comment[:2])
             if len(node.comment) > 2:
                 typ.yaml_end_comment_extend(node.comment[2], clear=True)
-        if node.anchor:  # type: ignore
+        if node.anchor:
             from ruamel.yaml.serializer import templated_id
             if not templated_id(node.anchor):
                 typ.yaml_set_anchor(node.anchor)
@@ -1226,7 +1227,7 @@ class RoundTripConstructor(SafeConstructor):
             # keys can be list -> deep
             key = self.construct_object(key_node, deep=True)
             # lists are not hashable, but tuples are
-            if not isinstance(key, collections.Hashable):  # type: ignore
+            if not isinstance(key, collections.Hashable):
                 if isinstance(key, list):
                     key = tuple(key)
             if PY2:
@@ -1375,7 +1376,7 @@ class RoundTripConstructor(SafeConstructor):
             delta = datetime.timedelta(hours=tz_hour, minutes=tz_minute)
             if values['tz_sign'] == '-':
                 delta = -delta
-        if delta:  # type: ignore
+        if delta:
             dt = datetime.datetime(year, month, day, hour, minute)
             dt -= delta
             data = TimeStamp(dt.year, dt.month, dt.day, dt.hour, dt.minute,

@@ -38,16 +38,16 @@ class Composer(object):
     def parser(self):
         # type: () -> Any
         if hasattr(self.loader, 'typ'):
-            self.loader.parser
-        return self.loader._parser
+            self.loader.parser  # type: ignore
+        return self.loader._parser  # type: ignore
 
     @property
     def resolver(self):
         # type: () -> Any
         # assert self.loader._resolver is not None
         if hasattr(self.loader, 'typ'):
-            self.loader.resolver
-        return self.loader._resolver
+            self.loader.resolver  # type: ignore
+        return self.loader._resolver  # type: ignore
 
     def check_node(self):
         # type: () -> Any
@@ -70,7 +70,7 @@ class Composer(object):
         self.parser.get_event()
 
         # Compose a document if the stream is not empty.
-        document = None
+        document = None  # type: Any
         if not self.parser.check_event(StreamEndEvent):
             document = self.compose_document()
 
