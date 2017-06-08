@@ -106,12 +106,20 @@ class Parser(object):
         self.loader = loader
         if self.loader is not None and getattr(self.loader, '_parser', None) is None:
             self.loader._parser = self
+        self.reset_parser()
+
+    def reset_parser(self):
+        # type: () -> None
+        # Reset the state attributes (to clear self-references)
         self.current_event = None
         self.yaml_version = None
         self.tag_handles = {}  # type: Dict[Any, Any]
         self.states = []  # type: List[Any]
         self.marks = []   # type: List[Any]
         self.state = self.parse_stream_start  # type: Any
+
+    def dispose(self):
+        self.reset_parser()
 
     @property
     def scanner(self):
@@ -126,12 +134,6 @@ class Parser(object):
         if hasattr(self.loader, 'typ'):
             self.loader.resolver
         return self.loader._resolver
-
-    def dispose(self):
-        # type: () -> None
-        # Reset the state attributes (to clear self-references)
-        self.states = []
-        self.state = None
 
     def check_event(self, *choices):
         # type: (Any) -> bool

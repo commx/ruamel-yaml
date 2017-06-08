@@ -32,6 +32,9 @@ ChangeLog
 
 .. should insert NEXT: at the beginning of line for next key
 
+0.15.5 (2017-06-08):
+  - repeat `load()` on a single `YAML()` instance would fail.
+
 0.15.4 (2017-06-08):
   - `transform` parameter on dump that expects a function taking a
     string and returning a string. This allows transformation of the output

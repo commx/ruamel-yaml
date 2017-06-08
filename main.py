@@ -233,6 +233,14 @@ class YAML(object):
             return constructor.get_single_data()
         finally:
             parser.dispose()
+            try:
+                self._reader.reset_reader()
+            except AttributeError:
+                pass
+            try:
+                self._scanner.reset_scanner()
+            except AttributeError:
+                pass
 
     def load_all(self, stream, _kw=enforce):  # , skip=None):
         # type: (StreamTextType, Any) -> Any
@@ -253,6 +261,14 @@ class YAML(object):
                 yield constructor.get_data()
         finally:
             parser.dispose()
+            try:
+                self._reader.reset_reader()
+            except AttributeError:
+                pass
+            try:
+                self._scanner.reset_scanner()
+            except AttributeError:
+                pass
 
     def get_constructor_parser(self, stream):
         # type: (StreamTextType) -> Any

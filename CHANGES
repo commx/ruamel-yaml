@@ -1,23 +1,26 @@
-[0, 15, 4]: 2017-06-08
+[0, 15, 5]: 2017-06-08
+  - repeat `load()` on a single `YAML()` instance would fail.
+
+(0, 15, 4) 2017-06-08: |
   - `transform` parameter on dump that expects a function taking a
     string and returning a string. This allows transformation of the output
     before it is written to stream.
   - some updates to the docs
 
-[0, 15, 3]: 2017-06-07
+(0, 15, 3) 2017-06-07:
   - No longer try to compile C extensions on Windows. Compilation can be forced by setting
     the environment variable `RUAMEL_FORCE_EXT_BUILD` to some value
     before starting the `pip install`.
 
-[0, 15, 2]: 2017-06-07
-  - update to conform to mypy 0.511: mypy --strict
+(0, 15, 2) 2017-06-07:
+  - update to conform to mypy 0.511:mypy --strict
 
-[0, 15, 1]: 2017-06-07
-  - `duplicate keys  <http://yaml.readthedocs.io/en/latest/api.html#duplicate-keys>`_
+(0, 15, 1) 2017-06-07:
+  - Any `duplicate keys  <http://yaml.readthedocs.io/en/latest/api.html#duplicate-keys>`_
     in mappings generate an error (in the old API this change generates a warning until 0.16)
   - dependecy on ruamel.ordereddict for 2.7 now via extras_require
 
-[0, 15, 0]: 2017-06-04
+(0, 15, 0) 2017-06-04:
   - it is no allowed to pass in a ``pathlib.Path`` as "stream" parameter to all
     load/dump functions
   - passing in a non-supported object (e.g. a string) as "stream" will result in a
@@ -25,61 +28,61 @@
   - assigning a normal string value to an existing CommentedMap key or CommentedSeq
     element will result in a value cast to the previous value's type if possible.
 
-[0, 14, 12]: 2017-05-14
+(0, 14, 12) 2017-05-14:
   - fix for issue 119, deepcopy not returning subclasses (reported and PR by
     Constantine Evans <cevans@evanslabs.org>)
 
-[0, 14, 11]: 2017-05-01
+(0, 14, 11) 2017-05-01:
   - fix for issue 103 allowing implicit documents after document end marker line (``...``)
     in YAML 1.2
 
-[0, 14, 10]: 2017-04-26
+(0, 14, 10) 2017-04-26:
   - fix problem with emitting using cyaml
 
-[0, 14, 9]: 2017-04-22
+(0, 14, 9) 2017-04-22:
   - remove dependency on ``typing`` while still supporting ``mypy``
     (http://stackoverflow.com/a/43516781/1307905)
   - fix unclarity in doc that stated 2.6 is supported (reported by feetdust)
 
-[0, 14, 8]: 2017-04-19
+(0, 14, 8) 2017-04-19:
   - fix Text not available on 3.5.0 and 3.5.1, now proactively setting version guards
     on all files (reported by `João Paulo Magalhães <https://bitbucket.org/jpmag/>`_)
 
-[0, 14, 7]: 2017-04-18
+(0, 14, 7) 2017-04-18:
   - round trip of integers (decimal, octal, hex, binary) now preserve
     leading zero(s) padding and underscores. Underscores are presumed
     to be at regular distances (i.e. ``0o12_345_67`` dumps back as
     ``0o1_23_45_67`` as the space from the last digit to the
     underscore before that is the determining factor).
 
-[0, 14, 6]: 2017-04-14
+(0, 14, 6) 2017-04-14:
   - binary, octal and hex integers are now preserved by default. This
     was a known deficiency. Working on this was prompted by the issue report (112)
     from devnoname120, as well as the additional experience with `.replace()`
     on `scalarstring` classes.
-  - fix issues 114: cannot install on Buildozer (reported by mixmastamyk).
+  - fix issues 114 cannot install on Buildozer (reported by mixmastamyk).
     Setting env. var ``RUAMEL_NO_PIP_INSTALL_CHECK`` will suppress ``pip``-check.
 
-[0, 14, 5]: 2017-04-04
-  - fix issue 109: None not dumping correctly at top level (reported by Andrea Censi)
-  - fix issue 110: .replace on Preserved/DoubleQuoted/SingleQuoted ScalarString
+(0, 14, 5) 2017-04-04:
+  - fix issue 109 None not dumping correctly at top level (reported by Andrea Censi)
+  - fix issue 110 .replace on Preserved/DoubleQuoted/SingleQuoted ScalarString
     would give back "normal" string (reported by sandres23)
 
-[0, 14, 4]: 2017-03-31
+(0, 14, 4) 2017-03-31:
   - fix readme
 
-[0, 14, 3]: 2017-03-31
+(0, 14, 3) 2017-03-31:
   - fix for 0o52 not being a string in YAML 1.1 (reported on
     `StackOverflow Q&A 43138503><http://stackoverflow.com/a/43138503/1307905>`_ by
     `Frank D <http://stackoverflow.com/users/7796630/frank-d>`_
 
-[0, 14, 2]: 2017-03-23
+(0, 14, 2) 2017-03-23:
   - fix for old default pip on Ubuntu 14.04 (reported by Sébastien Maccagnoni-Munch)
 
-0.14.1: 2017-03-22
+(0.14.1) 2017-03-22:
   - fix Text not available on 3.5.0 and 3.5.1 (reported by Charles Bouchard-Légaré)
 
-0.14.0: 2017-03-21
+(0.14.0) 2017-03-21:
   - updates for mypy --strict
   - preparation for moving away from inheritance in Loader and Dumper, calls from e.g.
     the Representer to the Serializer.serialize() are now done via the attribute
@@ -87,59 +90,58 @@
     deprecated soon
   - some extra tests on main.py functions
 
-0.13.14: 2017-02-12
-  - fix for issue 97: clipped block scalar followed by empty lines and comment
+(0.13.14) 2017-02-12:
+  - fix for issue 97, clipped block scalar followed by empty lines and comment
     would result in two CommentTokens of which the first was dropped.
     (reported by Colm O'Connor)
 
-0.13.13: 2017-01-28
-  - fix for issue 96: prevent insertion of extra empty line if indented mapping entries
+(0.13.13) 2017-01-28:
+  - fix for issue 96, prevent insertion of extra empty line if indented mapping entries
     are separated by an empty line (reported by Derrick Sawyer)
 
-0.13.11: 2017-01-23
+(0.13.11) 2017-01-23:
   - allow ':' in flow style scalars if not followed by space. Also don't
     quote such scalar as this is no longer necessary.
   - add python 3.6 manylinux wheel to PyPI
 
-0.13.10: 2017-01-22
+(0.13.10) 2017-01-22:
   - fix for issue 93, insert spurious blank line before single line comment
     between indented sequence elements (reported by Alex)
 
-0.13.9: 2017-01-18
+(0.13.9) 2017-01-18:
   - fix for issue 92, wrong import name reported by the-corinthian
 
-0.13.8: 2017-01-18
+(0.13.8) 2017-01-18:
   - fix for issue 91, when a compiler is unavailable reported by Maximilian Hils
   - fix for deepcopy issue with TimeStamps not preserving 'T', reported on
     `StackOverflow Q&A <http://stackoverflow.com/a/41577841/1307905>`_ by
     `Quuxplusone <http://stackoverflow.com/users/1424877/quuxplusone>`_
 
-
-0.13.7: 2016-12-27
+(0.13.7) 2016-12-27:
   - fix for issue 85, constructor.py importing unicode_literals caused mypy to fail
     on 2.7 (reported by Peter Amstutz)
 
-0.13.6: 2016-12-27
+(0.13.6) 2016-12-27:
   - fix for issue 83, collections.OrderedDict not representable by SafeRepresenter
     (reported by Frazer McLean)
 
-0.13.5: 2016-12-25
+(0.13.5) 2016-12-25:
   - fix for issue 84, deepcopy not properly working (reported by Peter Amstutz)
 
-0.13.4: 2016-12-05
+(0.13.4) 2016-12-05:
   - another fix for issue 82, change to non-global resolver data broke implicit type
     specification
 
-0.13.3: 2016-12-05
+(0.13.3) 2016-12-05:
   - fix for issue 82, deepcopy not working (reported by code monk)
 
-0.13.2: 2016-11-28
+(0.13.2) 2016-11-28:
   - fix for comments after empty (null) values  (reported by dsw2127 and cokelaer)
 
-0.13.1: 2016-11-22
-  - optimisations on memory usage when loading YAML from large files (py3: -50%, py2: -85%)
+(0.13.1) 2016-11-22:
+  - optimisations on memory usage when loading YAML from large files (py3 -50%, py2 -85%)
 
-0.13.0: 2016-11-20
+(0.13.0) 2016-11-20:
   - if ``load()`` or ``load_all()`` is called with only a single argument
     (stream or string)
     a UnsafeLoaderWarning will be issued once. If appropriate you can surpress this
@@ -150,53 +152,54 @@
     `StackOveflow Q&A <http://stackoverflow.com/a/40705671/1307905>`_  by
     `msinn <http://stackoverflow.com/users/7185467/msinn>`_)
 
-0.12.18: 2016-11-16
+(0.12.18) 2016-11-16:
   - another fix for numpy (re-reported independently by PaulG & Nathanial Burdic)
 
-0.12.17: 2016-11-15
+(0.12.17) 2016-11-15:
   - only the RoundTripLoader included the Resolver that supports YAML 1.2
     now all loaders do (reported by mixmastamyk)
 
-0.12.16: 2016-11-13
+(0.12.16) 2016-11-13:
   - allow dot char (and many others) in anchor name
     Fix issue 72 (reported by Shalon Wood)
-  - Slightly smarter behaviour dumping strings when no style is
+  - |
+    Slightly smarter behaviour dumping strings when no style is
     specified. Single string scalars that start with single quotes
-    or have newlines now are dumped double quoted: "'abc\nklm'" instead of::
+    or have newlines now are dumped double quoted "'abc\nklm'" instead of
 
       '''abc
 
         klm'''
 
-0.12.14: 2016-09-21
+(0.12.14) 2016-09-21:
  - preserve round-trip sequences that are mapping keys
    (prompted by stackoverflow question 39595807 from Nowox)
 
-0.12.13: 2016-09-15
+(0.12.13) 2016-09-15:
  - Fix for issue #60 representation of CommentedMap with merge
    keys incorrect (reported by Tal Liron)
 
-0.12.11: 2016-09-06
+(0.12.11) 2016-09-06:
  - Fix issue 58 endless loop in scanning tokens (reported by
    Christopher Lambert)
 
-0.12.10: 2016-09-05
+(0.12.10) 2016-09-05:
  - Make previous fix depend on unicode char width (32 bit unicode support
    is a problem on MacOS reported by David Tagatac)
 
-0.12.8: 2016-09-05
+(0.12.8) 2016-09-05:
    - To be ignored Unicode characters were not properly regex matched
      (no specific tests, PR by Haraguroicha Hsu)
 
-0.12.7: 2016-09-03
+(0.12.7) 2016-09-03:
    - fixing issue 54 empty lines with spaces (reported by Alex Harvey)
 
-0.12.6: 2016-09-03
+(0.12.6) 2016-09-03:
    - fixing issue 46 empty lines between top-level keys were gobbled (but
      not between sequence elements, nor between keys in netsted mappings
      (reported by Alex Harvey)
 
-0.12.5: 2016-08-20
+(0.12.5) 2016-08-20:
   - fixing issue 45 preserving datetime formatting (submitted by altuin)
     Several formatting parameters are preserved with some normalisation:
   - preserve 'T', 't' is replaced by 'T', multiple spaces between date
@@ -205,11 +208,11 @@
   - still using microseconds, but now rounded (.1234567 -> .123457)
   - Z/-5/+01:00 preserved
 
-0.12.4: 2016-08-19
+(0.12.4) 2016-08-19:
   - Fix for issue 44: missing preserve_quotes keyword argument (reported
     by M. Crusoe)
 
-0.12.3: 2016-08-17
+(0.12.3) 2016-08-17:
   - correct 'in' operation for merged CommentedMaps in round-trip mode
     (implementation inspired by J.Ngo, but original not working for merges)
   - iteration over round-trip loaded mappings, that contain merges. Also
@@ -224,118 +227,118 @@
         from ruamel.yaml.error import ReusedAnchorWarning
         warnings.simplefilter("ignore", ReusedAnchorWarning)
 
-0.12.2: 2016-08-16
+(0.12.2) 2016-08-16:
   - minor improvements based on feedback from M. Crusoe
     https://bitbucket.org/ruamel/yaml/issues/42/
 
-0.12.0: 2016-08-16
+(0.12.0) 2016-08-16:
   - drop support for Python 2.6
   - include initial Type information (inspired by M. Crusoe)
 
-0.11.15: 2016-08-07
+(0.11.15) 2016-08-07:
   - Change to prevent FutureWarning in NumPy, as reported by tgehring
     ("comparison to None will result in an elementwise object comparison in the future")
 
-0.11.14: 2016-07-06
+(0.11.14) 2016-07-06:
   - fix preserve_quotes missing on original Loaders (as reported
     by Leynos, bitbucket issue 38)
 
-0.11.13: 2016-07-06
+(0.11.13) 2016-07-06:
   - documentation only, automated linux wheels
 
-0.11.12: 2016-07-06
+(0.11.12) 2016-07-06:
   - added support for roundtrip of single/double quoted scalars using:
     ruamel.yaml.round_trip_load(stream, preserve_quotes=True)
 
-0.11.10: 2016-05-02
+(0.11.10) 2016-05-02:
 
 - added .insert(pos, key, value, comment=None) to CommentedMap
 
-0.11.10: 2016-04-19
+(0.11.10) 2016-04-19:
 
 - indent=2, block_seq_indent=2 works as expected
 
-0.11.0: 2016-02-18
+(0.11.0) 2016-02-18:
   - RoundTripLoader loads 1.2 by default (no sexagesimals, 012 octals nor
     yes/no/on/off booleans
 
-0.10.11: 2015-09-17
+(0.10.11) 2015-09-17:
 - Fix issue 13: dependency on libyaml to be installed for yaml.h
 
-0.10.10: 2015-09-15
+(0.10.10) 2015-09-15:
 - Python 3.5 tested with tox
 - pypy full test (old PyYAML tests failed on too many open file handles)
 
-0.10.6-0.10.9: 2015-09-14
+(0.10.6-0.10.9) 2015-09-14:
 - Fix for issue 9
 - Fix for issue 11: double dump losing comments
 - Include libyaml code
 - move code from 'py' subdir for proper namespace packaging.
 
-0.10.5: 2015-08-25
+(0.10.5) 2015-08-25:
 - preservation of newlines after block scalars. Contributed by Sam Thursfield.
 
-0.10: 2015-06-22
+(0.10) 2015-06-22:
 - preservation of hand crafted anchor names ( not of the form "idNNN")
 - preservation of map merges ( <<< )
 
-0.9: 2015-04-18
+(0.9) 2015-04-18:
 - collections read in by the RoundTripLoader now have a ``lc`` property
   that can be quired for line and column ( ``lc.line`` resp. ``lc.col``)
 
-0.8: 2015-04-15
+(0.8) 2015-04-15:
 - bug fix for non-roundtrip save of ordereddict
 - adding/replacing end of line comments on block style mappings/sequences
 
-0.7.2: 2015-03-29
+(0.7.2) 2015-03-29:
 - support for end-of-line comments on flow style sequences and mappings
 
-0.7.1: 2015-03-27
+(0.7.1) 2015-03-27:
 - RoundTrip capability of flow style sequences ( 'a: b, c, d' )
 
-0.7 2015-03-26
+(0.7) 2015-03-26:
 - tests (currently failing) for inline sequece and non-standard spacing between
   block sequence dash and scalar (Anthony Sottile)
 - initial possibility (on list, i.e. CommentedSeq) to set the flow format
   explicitly
 - RoundTrip capability of flow style sequences ( 'a: b, c, d' )
 
-0.6.1 2015-03-15
+(0.6.1) 2015-03-15:
 - setup.py changed so ruamel.ordereddict no longer is a dependency
   if not on CPython 2.x (used to test only for 2.x, which breaks pypy 2.5.0
   reported by Anthony Sottile)
 
-0.6 2015-03-11
+(0.6) 2015-03-11:
 - basic support for scalars with preserved newlines
 - html option for yaml command
 - check if yaml C library is available before trying to compile C extension
 - include unreleased change in PyYAML dd 20141128
 
-0.5 2015-01-14
+(0.5) 2015-01-14:
 - move configobj -> YAML generator to own module
 - added dependency on ruamel.base (based on feedback from  Sess
   <leycec@gmail.com>
 
-0.4: 20141125
+(0.4) 20141125:
 - move comment classes in own module comments
 - fix omap pre comment
 - make !!omap and !!set take parameters. There are still some restrictions:
   - no comments before the !!tag
 - extra tests
 
-0.3: 20141124
+(0.3) 20141124:
 - fix value comment occuring as on previous line (looking like eol comment)
 - INI conversion in yaml + tests
 - (hidden) test in yaml for debugging with auto command
 - fix for missing comment in middel of simple map + test
 
-0.2: 20141123
+(0.2) 20141123:
 - add ext/_yaml.c etc to the source tree
 - tests for yaml to work on 2.6/3.3/3.4
 - change install so that you can include ruamel.yaml instead of ruamel.yaml.py
 - add "yaml" utility with initial subcommands (test rt, from json)
 
-0.1: 20141122
+(0.1) 20141122:
 - merge py2 and py3 code bases
 - remove support for 2.5/3.0/3.1/3.2 (this merge relies on u"" as
   available in 3.3 and . imports not available in 2.5)

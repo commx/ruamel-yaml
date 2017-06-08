@@ -76,6 +76,10 @@ class Reader(object):
         self.loader = loader
         if self.loader is not None and getattr(self.loader, '_reader', None) is None:
             self.loader._reader = self
+        self.reset_reader()
+        self.stream = stream  # type: Any  # as .read is called
+
+    def reset_reader(self):
         self.name = None        # type: Any
         self.stream_pointer = 0
         self.eof = True
@@ -87,7 +91,6 @@ class Reader(object):
         self.index = 0
         self.line = 0
         self.column = 0
-        self.stream = stream  # type: Any  # as .read is called
 
     @property
     def stream(self):

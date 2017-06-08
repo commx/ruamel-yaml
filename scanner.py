@@ -74,7 +74,9 @@ class Scanner(object):
         self.loader = loader
         if self.loader is not None and getattr(self.loader, '_scanner', None) is None:
             self.loader._scanner = self
+        self.reset_scanner()
 
+    def reset_scanner(self):
         # Had we reached the end of the stream?
         self.done = False
 

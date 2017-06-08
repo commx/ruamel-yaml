@@ -89,3 +89,11 @@ class TestWrite:
         yaml.dump(data, sys.stdout)
         out, err = capsys.readouterr()
         assert out == "a: 1\nb: 2\n"
+
+
+class TestRead:
+    def test_multi_load(self):
+        # make sure reader, scanner, parser get reset
+        yaml = YAML()
+        yaml.load('a: 1')
+        yaml.load('a: 1')  # did not work in 0.15.4
