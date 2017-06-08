@@ -47,7 +47,7 @@ PY2/PY3 reintegration
 ``ruamel.yaml`` re-integrates the Python 2 and 3 sources, running on
 Python 2.7 (CPython, PyPy), 3.3, 3.4, 3.5 (support for 2.6 has been
 dropped mid 2016). It is more easy to extend and maintain as only a
-miniscule part of the code is version specific.
+miniscule part of the code is Python version specific.
 
 Fixes
 -----
@@ -67,5 +67,12 @@ test framework is called from within ``tox`` runs.
 
 Before versions are pushed to PyPI, ``tox`` is invoked, and has to pass, on all
 supported Python versions, on PyPI as well as flake8/pep8
+
+API
+---
+
+Starting with 0.15 the API for using ``ruamel.yaml`` has diverged allowing easier
+addition of new features.
+
 
 .. include:: links.rst

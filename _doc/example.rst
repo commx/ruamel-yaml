@@ -4,9 +4,8 @@ Examples
 Basic round trip of parsing YAML to Python objects, modifying
 and generating YAML::
 
-  from __future__ import print_function
-
-  import ruamel.yaml
+  import sys
+  from ruamel.yaml import YAML
 
   inp = """\
   # example
@@ -16,10 +15,11 @@ and generating YAML::
     given: Alice    # one of the siblings
   """
 
-  code = ruamel.yaml.load(inp, ruamel.yaml.RoundTripLoader)
+  yaml = YAML()
+  code = yaml.load(inp)
   code['name']['given'] = 'Bob'
 
-  print(ruamel.yaml.dump(code, Dumper=ruamel.yaml.RoundTripDumper), end='')
+  yaml.dump(code, sys.stdout)
 
 .. example code small.py
 
@@ -34,13 +34,51 @@ Resulting in ::
 
 .. example output small.py
 
+with the old API::
+
+  from __future__ import print_function
+
+  import sys
+  import ruamel.yaml
+
+  inp = """\
+  # example
+  name:
+    # details
+    family: Smith   # very common
+    given: Alice    # one of the siblings
+  """
+
+  code = ruamel.yaml.load(inp, ruamel.yaml.RoundTripLoader)
+  code['name']['given'] = 'Bob'
+
+  ruamel.yaml.dump(code, sys.stdout, Dumper=ruamel.yaml.RoundTripDumper)
+
+  # the last statement can be done less efficient in time and memory with
+  # leaving out the end='' would cause a double newline at the end
+  # print(ruamel.yaml.dump(code, Dumper=ruamel.yaml.RoundTripDumper), end='')
+
+.. example code small_o.py
+
+Resulting in ::
+
+  # example
+  name:
+    # details
+    family: Smith   # very common
+    given: Bob      # one of the siblings
+
+
+.. example output small_o.py
+
+
 ----
 
 YAML handcrafted anchors and references as well as key merging
 are preserved. The merged keys can transparently be accessed
 using ``[]`` and ``.get()``::
 
-  import ruamel.yaml
+  from ruamel.yaml import YAML
 
   inp = """\
   - &CENTER {x: 1, y: 2}
@@ -66,16 +104,20 @@ using ``[]`` and ``.get()``::
     label: center/big
   """
 
-  data = ruamel.yaml.load(inp, ruamel.yaml.RoundTripLoader)
+  yaml = YAML()
+  data = yaml.load(inp)
   assert data[7]['y'] == 2
 
-
 .. example code anchor_merge.py
+
 
 ----
 
 The ``CommentedMap``, which is the ``dict`` like construct one gets when round-trip loading,
 supports insertion of a key into a particular position, while optionally adding a comment::
+
+  import sys
+  from ruamel.yaml import YAML
 
   yaml_str = """\
   first_name: Art
@@ -83,9 +125,12 @@ supports insertion of a key into a particular position, while optionally adding 
   about: Art Vandelay is a fictional character that George invents...
   """
 
-  data = ruamel.yaml.round_trip_load(yaml_str)
+  yaml = YAML()
+  data = yaml.load(yaml_str)
   data.insert(1, 'last name', 'Vandelay', comment="new key")
-  print(ruamel.yaml.round_trip_dump(data))
+  yaml.dump(data, sys.stdout)
+
+.. example code map_insert.py
 
 gives::
 
@@ -94,9 +139,99 @@ gives::
   occupation: Architect  # This is an occupation comment
   about: Art Vandelay is a fictional character that George invents...
 
+
+.. example output map_insert.py
+
 Please note that the comment is aligned with that of its neighbour (if available).
 
 The above was inspired by a `question <http://stackoverflow.com/a/36970608/1307905>`_
 posted by *demux* on StackOverflow.
 
 
+----
+
+By default `ruamel.yaml` indents with two positions in block style, for
+both mappings and sequences. For sequences the indent is counted to the beginning of the
+scalar, with the dash taking the first position of the indented "space".
+
+The following program with three dumps::
+
+
+  import sys
+  from ruamel.yaml import YAML
+
+  data = {1: {1: [{1: 1, 2: 2}, {1: 1, 2: 2}], 2: 2}, 2: 42}
+
+  yaml = YAML()
+  yaml.explicit_start = True
+  yaml.dump(data, sys.stdout)
+  yaml.indent = 4
+  yaml.block_seq_indent = 2
+  yaml.dump(data, sys.stdout)
+
+
+  def sequence_indent_four(s):
+      # this will fail on direclty nested lists: {1; [[2, 3], 4]}
+      levels = []
+      ret_val = ''
+      for line in s.splitlines(True):
+          ls = line.lstrip()
+          indent = len(line) - len(ls)
+          if ls.startswith('- '):
+              if not levels or indent > levels[-1]:
+                  levels.append(indent)
+              elif levels:
+                  if indent < levels[-1]:
+                      levels = levels[:-1]
+              # same -> do nothing
+          else:
+              if levels:
+                  if indent <= levels[-1]:
+                      while levels and indent <= levels[-1]:
+                          levels = levels[:-1]
+          ret_val += '  ' * len(levels) + line
+      return ret_val
+
+  yaml = YAML()
+  yaml.explicit_start = True
+  yaml.dump(data, sys.stdout, transform=sequence_indent_four)
+
+.. example code transform.py
+
+gives as output::
+
+  ---
+  1:
+    1:
+    - 1: 1
+      2: 2
+    - 1: 1
+      2: 2
+    2: 2
+  2: 42
+  ---
+  1:
+      1:
+        - 1: 1
+          2: 2
+        - 1: 1
+          2: 2
+      2: 2
+  2: 42
+  ---
+  1:
+    1:
+      - 1: 1
+        2: 2
+      - 1: 1
+        2: 2
+    2: 2
+  2: 42
+
+
+.. example output transform.py
+
+
+The transform example was inspired by a `question
+<https://stackoverflow.com/q/44388701/1307905>`_ posted by *nowox* on
+StackOverflow.

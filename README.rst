@@ -32,6 +32,12 @@ ChangeLog
 
 .. should insert NEXT: at the beginning of line for next key
 
+0.15.4 (2017-06-08):
+  - `transform` parameter on dump that expects a function taking a
+    string and returning a string. This allows transformation of the output
+    before it is written to stream. This forces creation of the complete output in memory!
+  - some updates to the docs
+
 0.15.3 (2017-06-07):
   - No longer try to compile C extensions on Windows. Compilation can be forced by setting
     the environment variable `RUAMEL_FORCE_EXT_BUILD` to some value

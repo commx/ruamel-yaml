@@ -298,32 +298,34 @@ class YAML(object):
                 return loader, loader
         return self.constructor, self.parser
 
-    def dump(self, data, stream=None):
-        # type: (Any, StreamType) -> Any
-        return self.dump_all([data], stream)
+    def dump(self, data, stream, _kw=enforce, transform=None):
+        # type: (Any, StreamType, Any, Any) -> Any
+        return self.dump_all([data], stream, _kw, transform=transform)
 
-    def dump_all(self, documents, stream=None):
-        # type: (Any, StreamType) -> Any
+    def dump_all(self, documents, stream, _kw=enforce, transform=None):
+        # type: (Any, StreamType, Any, Any) -> Any
         """
         Serialize a sequence of Python objects into a YAML stream.
         If stream is None, return the produced string instead.
         """
-        # The stream should have the methods `write` and possibly `flush`.
         if not hasattr(stream, 'write') and hasattr(stream, 'open'):
             # pathlib.Path() instance
             with stream.open('w') as fp:   # type: ignore
-                return self.dump_all(documents, fp)
-        getvalue = None
+                return self.dump_all(documents, fp, _kw, transform=transform)
+        if _kw is not enforce:
+            raise TypeError("{}.dump(_all) takes two positional argument but at least "
+                            "three were given ({!r})".format(self.__class__.__name__, _kw))
+        # The stream should have the methods `write` and possibly `flush`.
         if self.top_level_colon_align is True:
             tlca = max([len(str(x)) for x in documents[0]])  # type: Any
         else:
             tlca = self.top_level_colon_align
-        if stream is None:
+        if transform is not None:
+            fstream = stream
             if self.encoding is None:
                 stream = StringIO()
             else:
                 stream = BytesIO()
-            getvalue = stream.getvalue
         serializer, representer, emitter = \
             self.get_serializer_representer_emitter(stream, tlca)
         try:
@@ -343,8 +345,8 @@ class YAML(object):
                 # self.dumper.dispose()  # cyaml
             delattr(self, "_serializer")
             delattr(self, "_emitter")
-        if getvalue is not None:
-            return getvalue()
+        if transform:
+            fstream.write(transform(stream.getvalue()))
         return None
 
     def get_serializer_representer_emitter(self, stream, tlca):

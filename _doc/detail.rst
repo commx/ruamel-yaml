@@ -26,6 +26,12 @@ Details
   (``lc.key('a')``, ``lc.value('a')`` resp. ``lc.item(3)``)
 - preservation of whitelines after block scalars. Contributed by Sam Thursfield.
 
+*In the following examples it is assumed you have done something like:*::
+
+  from ruamel.yaml import YAML
+  yaml = YAML()
+
+*if not explicitly specified.*
 
 Indentation of block sequences
 ------------------------------
@@ -43,7 +49,7 @@ back to::
   -   b: 1
   -   2
 
-if you specify ``indent=4``.
+if you specify ``yaml.indent = 4``.
 
 PyYAML (and older versions of ruamel.yaml) gives you non-indented
 scalars (when specifying default_flow_style=False)::
@@ -52,10 +58,10 @@ scalars (when specifying default_flow_style=False)::
   -   b: 1
   - 2
 
-The dump routine also has an additional ``block_seq_indent`` parameter that
+The dump also observes an additional ``block_seq_indent`` settingr that
 can be used to push the dash inwards, *within the space defined by* ``indent``.
 
-The above example with the often seen ``indent=4, block_seq_indent=2``
+The above example with the often seen ``yaml.indent = 4; yaml.block_seq_indent = 2``
 indentation::
 
   x:
@@ -69,14 +75,14 @@ element itself would normally be pushed to the next line (and older versions
 of ruamel.yaml did so). But this is
 prevented from happening. However the ``indent`` level is what is used
 for calculating the cumulative indent for deeper levels and specifying
-``indent=3`` resp. ``block_seq_indent=2``, migth give correct, but counter
+``yaml.indent = 3`` resp. ``yaml.block_seq_indent = 2``, migth give correct, but counter
 intuitive results.
 
 **It is best to always have** ``indent >= block_seq_indent + 2``
 **but this is not enforced**. Depending on your structure, not following
 this advice **might lead to invalid output**.
 
-Positioning ':' in top level mappings, prefix in ':'
+Positioning ':' in top level mappings, prefixing ':'
 ----------------------------------------------------
 
 If you want your toplevel mappings to look like::
@@ -85,12 +91,12 @@ If you want your toplevel mappings to look like::
   comment        : |
       this is just a first try
 
-then call ``round_trip_dump()`` with ``top_level_colon_align=True``
-(and ``indent=4``). ``True`` causes calculation based on the longest key,
+then set ``yaml.top_level_colon_align = True``
+(and ``yaml.indent = 4``). ``True`` causes calculation based on the longest key,
 but you can also explicitly set a number.
 
 If you want an extra space between a mapping key and the colon specify
-``prefix_colon=' '``::
+``yaml.prefix_colon = ' '``::
 
   - https://myurl/abc.tar.xz : 23445
   #                         ^ extra space here
@@ -98,7 +104,7 @@ If you want an extra space between a mapping key and the colon specify
 
 If you combine ``prefix_colon`` with ``top_level_colon_align``, the
 top level mapping doesn't get the extra prefix. If you want that
-anyway, specify ``top_level_colon_align=12`` where ``12`` has to be an
+anyway, specify ``yaml.top_level_colon_align = 12`` where ``12`` has to be an
 integer that is one more than length of the widest key.
 
 
@@ -122,15 +128,8 @@ The 1.2 version does **not** support:
 - Unquoted Yes and On as alternatives for True and No and Off for False.
 
 If you cannot change your YAML files and you need them to load as 1.1
-you can load with:
-
-  ruamel.yaml.load(some_str, Loader=ruamel.yaml.RoundTripLoader, version=(1, 1))
-
-or the equivalent (version can be a tuple, list or string):
-
-  ruamel.yaml.round_trip_load(some_str, version="1.1")
-
-this also works for ``load_all``/``round_trip_load_all``.
+you can load with ``yaml.version = (1, 1)``,
+or the equivalent (version can be a tuple, list or string)  ``yaml.version = "1.1"
 
 *If you cannot change your code, stick with ruamel.yaml==0.10.23 and let
 me know if it would help to be able to set an environment variable.*
@@ -154,7 +153,10 @@ for for this is::
 
   from __future__ import print_function
 
+  import sys
   import ruamel.yaml
+
+  yaml = ruamel.yaml.YAML()  # defaults to round-trip
 
   inp = """\
   abc:
@@ -168,14 +170,14 @@ for for this is::
     f: 6 # comment 3
   """
 
-  data = ruamel.yaml.load(inp, ruamel.yaml.RoundTripLoader)
+  data = yaml.load(inp)
   data['abc'].append('b')
   data['abc'].yaml_add_eol_comment('comment 4', 1)  # takes column of comment 1
   data['xyz'].yaml_add_eol_comment('comment 5', 'c')  # takes column of comment 2
   data['xyz'].yaml_add_eol_comment('comment 6', 'e')  # takes column of comment 3
   data['xyz'].yaml_add_eol_comment('comment 7', 'd', column=20)
 
-  print(ruamel.yaml.dump(data, Dumper=ruamel.yaml.RoundTripDumper), end='')
+  yaml.dump(data, sys.stdout)
 
 .. example code add_comment.py
 
@@ -263,6 +265,6 @@ included and you can do::
     """
 
 
-    data = yaml.load(yaml_str, Loader=yaml.RoundTripLoader)
+    data = yaml.load(yaml_str)
 
     assert data.mlget(['a', 1, 'd', 'f'], list_ok=True) == 196

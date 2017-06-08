@@ -1,4 +1,4 @@
-import ruamel.yaml
+from ruamel.yaml import YAML
 
 inp = """\
 - &CENTER {x: 1, y: 2}
@@ -24,5 +24,6 @@ inp = """\
   label: center/big
 """
 
-data = ruamel.yaml.load(inp, ruamel.yaml.RoundTripLoader)
+yaml = YAML()
+data = yaml.load(inp)
 assert data[7]['y'] == 2

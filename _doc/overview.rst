@@ -3,17 +3,17 @@ Overview
 
 ``ruamel.yaml`` is a YAML 1.2  loader/dumper package for Python. It is a
 derivative of Kirill Simonov's `PyYAML 3.11
-<https://bitbucket.org/xi/pyyaml>`_ 
+<https://bitbucket.org/xi/pyyaml>`_.
 
 ``ruamel.yaml`` supports `YAML 1.2`_ and has  round-trip loaders and dumpers
 that preserves, among others:
 
 - comments
-- block style and key ordering are kept, so you can diff the round-tripped 
+- block style and key ordering are kept, so you can diff the round-tripped
   source
 - flow style sequences ( 'a: b, c, d') (based on request and test by
   Anthony Sottile)
-- anchors names that are hand-crafted (i.e. not of the form``idNNN``)
+- anchor names that are hand-crafted (i.e. not of the form``idNNN``)
 - `merges <http://yaml.org/type/merge.html>`_ in dictionaries are preserved
 
 This preservation is normally not broken unless you severely alter
@@ -22,10 +22,25 @@ Reassigning values or replacing list items, etc., is fine.
 
 For the specific 1.2 differences see :ref:`yaml-1-2-support`
 
-Although individual indentation is not preserved, you can specify both
-indentation and specific offset of block sequence dashes within that
-indentation. There is a utility function that tries to determine the
-correct values for ``indent`` and ``block_seq_indent`` that can
-then be passed to the dumper.
+Although individual indentation of lines is not preserved, you can
+specify both indentation (counting for this does **not** include the
+dash for a sequence element) and specific offset of block sequence
+dashes within that indentation. There is a utility function that tries
+to determine the correct values for ``indent`` and
+``block_seq_indent`` that can then be passed to the dumper.
+
+
+Although `ruamel.yaml` still allows most of the PyYAML way of doing
+things, adding features required a different API then the transient
+nature of PyYAML's ``Loader`` and ``Dumper``.  Starting with
+``ruamel.yaml`` version 0.15.0 this new API gets introduced. Old ways
+that get in the way will be removed, after first generating warnings
+on use, then generating an error. In general a warning in version 0.N.x will become an
+error in 0.N+1.0
+
+
+Many of the bugs filed against PyYAML, but that were never
+acted upon, have been fixed in ``ruamel.yaml``
+
 
 .. include:: links.rst

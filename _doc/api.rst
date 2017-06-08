@@ -12,6 +12,7 @@ At the latest with 1.0, but possible earlier transition error and
 warning messages will be issued, so any packages depending on
 ruamel.yaml should pin the version with which they are testing.
 
+
 Up to 0.15.0, the loaders (``load()``, ``safe_load()``,
 ``round_trip_load()``, ``load_all``, etc.) took, apart from the input
 stream, a ``version`` argument to allow downgrading to YAML 1.1,
@@ -185,7 +186,7 @@ created that were discarded on termination of the function.
 
 This way of doing things leads to several problems:
 
-- it is impossible to return information to the caller apart from the
+- it is virtually impossible to return information to the caller apart from the
   constructed data structure. E.g. if you would get a YAML document
   version number from a directive, there is no way to let the caller
   know apart from handing back special data structures. The same
@@ -195,7 +196,11 @@ This way of doing things leads to several problems:
 - these instances were composites of the various load/dump steps and
   if you wanted to enhance one of the steps, you needed e.g. subclass
   the emitter and make a new composite (dumper) as well, providing all
-  of the parameters (i.e. copy paste
+  of the parameters (i.e. copy paste)
+
+  Alternatives, like making a class that returned a ``Dumper`` when
+  called and sets attributes before doing so, is cumbersome for
+  day-to-day use.
 
 - many routines (like ``add_representer()``) have a direct global
   impact on all of the following calls to ``dump()`` and those are

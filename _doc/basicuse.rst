@@ -18,7 +18,9 @@ You load a YAML document using::
 in this ``doc`` can be a file pointer (i.e. an object that has the
 `.read()` method, a string or a ``pathlib.Path()``. `typ='safe'`
 accomplishes the same as what ``safe_load()`` did before: loading of a
-document without resolving unknow tags.
+document without resolving unknow tags. Provide  `pure=True` to
+enforce using the pure Python implementation (faster C libraries will be used
+when possible/available)
 
 Dumping works in the same way::
 
@@ -29,13 +31,17 @@ Dumping works in the same way::
    yaml.dump({a: [1, 2], s)
 
 in this ``s`` can be a file pointer (i.e. an object that has the
-`.write()` method, a ``pathlib.Path()`` or ``None`` (the default, which causes the
-YAML documented to be returned as a string.
+`.write()` method, or a ``pathlib.Path()``. If you want to display
+your output, just stream to `sys.stdout`.
 
-*If you have `yaml.dump()`
-return the YAML doc as string, do not just ``print`` that returned
-value*. In that case use `yaml.dump(data, sys.stdout)`, which is more
-efficient (and shows that you know what you are doing).
+If you need to transform a string representation of the output provide
+a function that takes a string as input and returns one:
+
+   def tr(s):
+       return s.replace('\n', '<\n')  # such output is not valid YAML!
+
+   yaml.dump(data, sys.stdout, transform=tr)
+
 
 More examples
 -------------
