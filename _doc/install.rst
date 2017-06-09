@@ -15,16 +15,15 @@ files (JSON,INI,HTML tables)
 Optional requirements
 ---------------------
 
-If you have the C yaml library and headers installed, as well as
-the header files for your Python executables then you can use the
-non-roundtrip, but faster, C loader and emitter.
+If you have the the header files for your Python executables installed
+then you can use the (non-roundtrip), but faster, C loader and emitter.
 
 On Debian systems you should use::
 
-    sudo apt-get install libyaml-dev python-dev python3-dev
+    sudo apt-get install python3-dev
 
 you can leave out ``python3-dev`` if you don't use python3
 
 For CentOS (7) based systems you should do::
 
-   sudo yum install libyaml-devel python-devel
+   sudo yum install python-devel
