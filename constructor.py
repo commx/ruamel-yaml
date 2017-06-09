@@ -246,7 +246,7 @@ class BaseConstructor(object):
                     "while constructing a mapping", node.start_mark,
                     'found duplicate key "{}" with value "{}" '
                     '(original value: "{}")'.format(
-                        key, value, mapping[key]), key_node.start_mark,
+                        key, value, mapping.get(key)), key_node.start_mark,
                     """
                     To suppress this check see:
                         http://yaml.readthedocs.io/en/latest/api.html#duplicate-keys
@@ -1243,7 +1243,9 @@ class RoundTripConstructor(SafeConstructor):
                     raise ConstructorError(
                         "while constructing a mapping", node.start_mark,
                         "found unhashable key", key_node.start_mark)
+            # construct but should be null
             value = self.construct_object(value_node, deep=deep)  # NOQA
+            self.check_mapping_key(node, key_node, typ, key, value)
             if key_node.comment:
                 typ._yaml_add_comment(key_node.comment, key=key)
             if value_node.comment:

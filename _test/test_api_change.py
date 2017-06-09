@@ -7,6 +7,7 @@ testing of anchors and the aliases referring to them
 """
 
 import sys
+import textwrap
 import pytest
 from ruamel.yaml import YAML
 from ruamel.yaml.constructor import DuplicateKeyError
@@ -97,3 +98,17 @@ class TestRead:
         yaml = YAML()
         yaml.load('a: 1')
         yaml.load('a: 1')  # did not work in 0.15.4
+
+
+class TestDuplSet:
+    def test_dupl_set_00(self):
+        # round-trip-loader should except
+        yaml = YAML()
+        with pytest.raises(DuplicateKeyError):
+            yaml.load(textwrap.dedent("""\
+            !!set
+            ? a
+            ? b
+            ? c
+            ? a
+            """))

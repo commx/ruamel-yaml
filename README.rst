@@ -32,6 +32,9 @@ ChangeLog
 
 .. should insert NEXT: at the beginning of line for next key
 
+NEXT:
+  - a set with duplicate elements now throws error in rt loading
+
 0.15.5 (2017-06-08):
   - repeat `load()` on a single `YAML()` instance would fail.
 
