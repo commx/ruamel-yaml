@@ -80,6 +80,7 @@ class Reader(object):
         self.stream = stream  # type: Any  # as .read is called
 
     def reset_reader(self):
+        # type: () -> None
         self.name = None        # type: Any
         self.stream_pointer = 0
         self.eof = True

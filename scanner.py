@@ -36,6 +36,7 @@ from ruamel.yaml.compat import utf8, unichr, PY3, check_anchorname_char
 
 if False:  # MYPY
     from typing import Any, Dict, Optional, List, Union, Text  # NOQA
+    from ruamel.yaml.compat import VersionType  # NOQA
 
 __all__ = ['Scanner', 'RoundTripScanner', 'ScannerError']
 
@@ -77,6 +78,7 @@ class Scanner(object):
         self.reset_scanner()
 
     def reset_scanner(self):
+        # type: () -> None
         # Had we reached the end of the stream?
         self.done = False
 
@@ -135,6 +137,13 @@ class Scanner(object):
         if hasattr(self.loader, 'typ'):
             self.loader.reader  # type: ignore
         return self.loader._reader  # type: ignore
+
+    @property
+    def scanner_processing_version(self):  # prefix until un-composited
+        # type: () -> VersionType
+        if hasattr(self.loader, 'typ'):
+            return self.loader.resolver.processing_version  # type: ignore
+        return self.loader.processing_version
 
     # Public methods.
 
@@ -1044,12 +1053,19 @@ class Scanner(object):
 
         # Determine the indentation level and go to the first non-empty line.
         min_indent = self.indent+1
-        if min_indent < 1:
-            min_indent = 1
         if increment is None:
+            # no increment and top level, min_indent could be 0
+            if min_indent < 1 and \
+               (style not in '|>' or (
+                   self.scanner_processing_version == (1, 1)) and
+                   getattr(self.loader,
+                           'top_level_block_style_scalar_no_indent_error_1_1', False)):
+                min_indent = 1
             breaks, max_indent, end_mark = self.scan_block_scalar_indentation()
             indent = max(min_indent, max_indent)
         else:
+            if min_indent < 1:
+                min_indent = 1
             indent = min_indent+increment-1
             breaks, end_mark = self.scan_block_scalar_breaks(indent)
         line_break = u''

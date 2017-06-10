@@ -6,15 +6,14 @@ import re
 
 if False:  # MYPY
     from typing import Any, Dict, List, Union  # NOQA
-    from ruamel.yaml.compat import string_types, VersionType      # NOQA
+    from ruamel.yaml.compat import VersionType  # NOQA
 
+from ruamel.yaml.compat import string_types, _DEFAULT_YAML_VERSION  # NOQA
 from ruamel.yaml.error import *                               # NOQA
 from ruamel.yaml.nodes import *                               # NOQA
 
 __all__ = ['BaseResolver', 'Resolver', 'VersionedResolver']
 
-
-_DEFAULT_VERSION = (1, 2)
 
 # resolvers consist of
 # - a list of applicable version
@@ -440,5 +439,5 @@ class VersionedResolver(BaseResolver):
         if version is None:
             version = self._loader_version
             if version is None:
-                version = _DEFAULT_VERSION
+                version = _DEFAULT_YAML_VERSION
         return version

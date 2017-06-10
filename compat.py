@@ -11,6 +11,7 @@ import types
 if False:  # MYPY
     from typing import Any, Dict, Optional, List, Union, BinaryIO, IO, Text, Tuple   # NOQA
 
+_DEFAULT_YAML_VERSION = (1, 2)
 
 try:
     from ruamel.ordereddict import ordereddict

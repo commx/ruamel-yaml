@@ -1,3 +1,7 @@
+[0, 15, 6]: 2017-06-10
+  - a set() with duplicate elements now throws error in rt loading
+  - support for toplevel column zero literal/folded scalar in explicit documents
+
 [0, 15, 5]: 2017-06-08
   - repeat `load()` on a single `YAML()` instance would fail.
 

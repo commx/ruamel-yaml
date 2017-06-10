@@ -90,3 +90,13 @@ def round_trip(inp, outp=None, extra=None, intermediate=None, indent=None,
                           version=version)
     print('roundtrip second round data:\n', res, sep='')
     assert res == doutp
+
+
+class YAML(ruamel.yaml.YAML):
+    """auto dedent string parameters on load"""
+    def load(self, stream):
+        if isinstance(stream, str):
+            if stream and stream[0] == '\n':
+                stream = stream[1:]
+            stream = textwrap.dedent(stream)
+        return ruamel.yaml.YAML.load(self, stream)
