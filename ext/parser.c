@@ -1295,7 +1295,7 @@ yaml_parser_process_directives(yaml_parser_t *parser,
         token = PEEK_TOKEN(parser);
         if (!token) goto error;
     }
-    
+
     for (default_tag_directive = default_tag_directives;
             default_tag_directive->handle; default_tag_directive++) {
         if (!yaml_parser_append_tag_directive(parser, *default_tag_directive, 1,
@@ -1371,4 +1371,3 @@ error:
     yaml_free(copy.prefix);
     return 0;
 }
-
