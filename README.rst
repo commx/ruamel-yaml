@@ -32,6 +32,9 @@ ChangeLog
 
 .. should insert NEXT: at the beginning of line for next key
 
+0.15.7 (2017-06-14):
+  - add plug-in mechanism for load/dump pre resp. post-processing
+
 0.15.6 (2017-06-10):
   - a set() with duplicate elements now throws error in rt loading
   - support for toplevel column zero literal/folded scalar in explicit documents

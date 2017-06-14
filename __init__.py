@@ -11,12 +11,13 @@ if False:  # MYPY
 
 _package_data = dict(
     full_package_name='ruamel.yaml',
-    version_info=(0, 15, 6),
-    __version__='0.15.6',
+    version_info=(0, 15, 7),
+    __version__='0.15.7',
     author='Anthon van der Neut',
     author_email='a.van.der.neut@ruamel.eu',
     description='ruamel.yaml is a YAML parser/emitter that supports roundtrip preservation of comments, seq/map flow style, and map key order',  # NOQA
     entry_points=None,
+    since=2014,
     extras_require={':platform_python_implementation=="CPython" and python_version<="2.7"': [
         'ruamel.ordereddict',
         ]},
@@ -49,6 +50,11 @@ _package_data = dict(
     read_the_docs='yaml',
     many_linux='libyaml-devel',
     supported=[(2, 7), (3, 3)],  # minimum
+    tox=dict(
+        env='*p',
+        deps='ruamel.std.pathlib',
+        fl8excl='_test/lib',
+    ),
 )  # type: Dict[Any, Any]
 
 version_info = _package_data['version_info']

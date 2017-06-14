@@ -3,7 +3,11 @@
 from __future__ import absolute_import, unicode_literals
 
 import sys
+import os
 import warnings
+import glob
+from importlib import import_module
+
 
 import ruamel.yaml
 from ruamel.yaml.error import *                                # NOQA
@@ -40,7 +44,7 @@ enforce = object()
 # subset of abbreviations, which should all caps according to PEP8
 
 class YAML(object):
-    def __init__(self, _kw=enforce, typ=None, pure=False):
+    def __init__(self, _kw=enforce, typ=None, pure=False, plug_ins=None):
         # type: (Any, Any, Any) -> None
         """
         _kw: not used, forces keyword arguments in 2.7 (in 3 you can do (*, safe_load=..)
@@ -49,12 +53,17 @@ class YAML(object):
              'unsafe'  -> normal/unsafe Loader/Dumper
              'base'    -> baseloader
         pure: if True only use Python modules
+        plug_ins: a list of plug-in files
         """
         if _kw is not enforce:
             raise TypeError("{}.__init__() takes no positional argument but at least "
                             "one was given ({!r})".format(self.__class__.__name__, _kw))
 
         self.typ = 'rt' if typ is None else typ
+        self.plug_ins = []
+        for pu in ([] if plug_ins is None else plug_ins) + self.official_plug_ins():
+            file_name = pu.replace('/', '.')
+            self.plug_ins.append(import_module(file_name))
         self.Resolver = ruamel.yaml.resolver.VersionedResolver               # type: Any
         self.allow_unicode = True
         self.Reader = None       # type: Any
@@ -89,6 +98,14 @@ class YAML(object):
             self.Parser = ruamel.yaml.parser.Parser if pure or CParser is None else CParser
             self.Composer = ruamel.yaml.composer.Composer
             self.Constructor = ruamel.yaml.constructor.Constructor
+        else:
+            for module in self.plug_ins:
+                if getattr(module, 'typ', None) == self.typ:
+                    module.init_typ(self)
+                    break
+            else:
+                raise NotImplementedError(
+                    'typ "{}"not recognised (need to install plug-in?)'.format(self.typ))
         self.stream = None
         self.canonical = None
         self.indent = None
@@ -426,6 +443,13 @@ class YAML(object):
             return CommentedSeq(*args)
         else:
             return list(*args)
+
+    # helpers
+    def official_plug_ins(self):
+        bd = os.path.dirname(__file__)
+        gpbd = os.path.dirname(os.path.dirname(bd))
+        res = [x.replace(gpbd, '')[1:-3] for x in glob.glob(bd + '/*/yaml_plugin.py')]
+        return res
 
 
 ########################################################################################
