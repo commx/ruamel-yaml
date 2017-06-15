@@ -14,7 +14,6 @@ syntax: glob
 dist
 build
 *.egg-info
-setup.py
 # tox related
 .tox
 .cache

@@ -32,6 +32,9 @@ ChangeLog
 
 .. should insert NEXT: at the beginning of line for next key
 
+0.15.8 (2017-06-15):
+  - allow plug-in install via ``install ruamel.yaml[jinja2]``
+
 0.15.7 (2017-06-14):
   - add plug-in mechanism for load/dump pre resp. post-processing
 

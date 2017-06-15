@@ -11,8 +11,8 @@ if False:  # MYPY
 
 _package_data = dict(
     full_package_name='ruamel.yaml',
-    version_info=(0, 15, 7),
-    __version__='0.15.7',
+    version_info=(0, 15, 8),
+    __version__='0.15.8',
     author='Anthon van der Neut',
     author_email='a.van.der.neut@ruamel.eu',
     description='ruamel.yaml is a YAML parser/emitter that supports roundtrip preservation of comments, seq/map flow style, and map key order',  # NOQA
@@ -20,7 +20,7 @@ _package_data = dict(
     since=2014,
     extras_require={':platform_python_implementation=="CPython" and python_version<="2.7"': [
         'ruamel.ordereddict',
-        ]},
+        ], 'jinja2': ['ruamel.yaml.jinja2']},
     ext_modules=[dict(
             name='_ruamel_yaml',
             src=['ext/_ruamel_yaml.c', 'ext/api.c', 'ext/writer.c', 'ext/dumper.c',
