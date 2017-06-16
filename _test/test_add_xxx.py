@@ -40,8 +40,9 @@ def test_dice_constructor_with_loader():
 
 def test_dice_representer():
     ruamel.yaml.add_representer(Dice, dice_representer)
+    # ruamel.yaml 0.15.8+ no longer forces quotes tagged scalars
     assert ruamel.yaml.dump(dict(gold=Dice(10, 6)), default_flow_style=False) == \
-        "gold: !dice '10d6'\n"
+        "gold: !dice 10d6\n"
 
 
 def test_dice_implicit_resolver():
@@ -105,3 +106,42 @@ def test_yaml_obj_with_loader_and_dumper():
 
 # ToDo use nullege to search add_multi_representer and add_path_resolver
 # and add some test code
+
+# Issue 127 reported by Tommy Wang
+
+class Ref(ruamel.yaml.YAMLObject):
+    yaml_constructor = ruamel.yaml.RoundTripConstructor
+    yaml_representer = ruamel.yaml.RoundTripRepresenter
+    yaml_tag = u'!Ref'
+
+    def __init__(self, logical_id):
+        self.logical_id = logical_id
+
+    @classmethod
+    def from_yaml(cls, loader, node):
+        return cls(loader.construct_scalar(node))
+
+    @classmethod
+    def to_yaml(cls, dumper, data):
+        if isinstance(data.logical_id, ruamel.yaml.scalarstring.ScalarString):
+            style = data.logical_id.style   # ruamel.yaml>0.15.8
+        else:
+            style = None
+        return dumper.represent_scalar(cls.yaml_tag, data.logical_id, style=style)
+
+
+def test_issue_127():
+    document = dedent('''\
+    AList:
+      - !Ref One
+      - !Ref 'Two'
+      - !Ref
+        Two and a half
+    BList: [!Ref Three, !Ref "Four"]
+    CList:
+      - Five Six
+      - 'Seven Eight'
+    ''')
+    data = ruamel.yaml.round_trip_load(document, preserve_quotes=True)
+    assert ruamel.yaml.round_trip_dump(data, indent=4, block_seq_indent=2) == \
+        document.replace('\n    Two and', ' Two and')

@@ -152,13 +152,13 @@ class Serializer(object):
                 # if not equal quoting is necessary for strings
                 detected_tag = self.resolver.resolve(ScalarNode, node.value, (True, False))
                 default_tag = self.resolver.resolve(ScalarNode, node.value, (False, True))
-                implicit = (node.tag == detected_tag), (node.tag == default_tag)
+                implicit = ((node.tag == detected_tag), (node.tag == default_tag),
+                            node.tag.startswith('tag:yaml.org,2002:'))
                 self.emitter.emit(ScalarEvent(alias, node.tag, implicit, node.value,
                                               style=node.style, comment=node.comment))
             elif isinstance(node, SequenceNode):
                 implicit = (node.tag == self.resolver.resolve(SequenceNode, node.value, True))
                 comment = node.comment
-                # print('comment >>>>>>>>>>>>>.', comment, node.flow_style)
                 end_comment = None
                 seq_comment = None
                 if node.flow_style is True:

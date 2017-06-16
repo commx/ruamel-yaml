@@ -26,6 +26,8 @@ class ScalarString(text_type):
 class PreservedScalarString(ScalarString):
     __slots__ = ()
 
+    style = "|"
+
     def __new__(cls, value):
         # type: (Text) -> Any
         return ScalarString.__new__(cls, value)
@@ -34,6 +36,8 @@ class PreservedScalarString(ScalarString):
 class SingleQuotedScalarString(ScalarString):
     __slots__ = ()
 
+    style = "'"
+
     def __new__(cls, value):
         # type: (Text) -> Any
         return ScalarString.__new__(cls, value)
@@ -41,6 +45,8 @@ class SingleQuotedScalarString(ScalarString):
 
 class DoubleQuotedScalarString(ScalarString):
     __slots__ = ()
+
+    style = '"'
 
     def __new__(cls, value):
         # type: (Text) -> Any

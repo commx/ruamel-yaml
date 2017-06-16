@@ -32,6 +32,11 @@ ChangeLog
 
 .. should insert NEXT: at the beginning of line for next key
 
+0.15.9 (2017-06-16):
+  - fix for issue 127: tagged scalars were always quoted and seperated
+    by a newline when in a block sequence (reported and largely fixed by
+    `Tommy Wang <https://bitbucket.org/twang817/>`_)
+
 0.15.8 (2017-06-15):
   - allow plug-in install via ``install ruamel.yaml[jinja2]``
 

@@ -629,6 +629,9 @@ class Emitter(object):
             self.prepared_tag = self.prepare_tag(tag)
         if self.prepared_tag:
             self.write_indicator(self.prepared_tag, True)
+            if self.sequence_context and not self.flow_level and \
+               isinstance(self.event, ScalarEvent):
+                self.no_newline = True
         self.prepared_tag = None
 
     def choose_scalar_style(self):
@@ -638,7 +641,7 @@ class Emitter(object):
         if self.event.style == '"' or self.canonical:
             return '"'
         if (not self.event.style or self.event.style == '?') and \
-           self.event.implicit[0]:
+           (self.event.implicit[0] or not self.event.implicit[2]):
             if (not (self.simple_key_context and
                      (self.analysis.empty or self.analysis.multiline)) and
                 (self.flow_level and self.analysis.allow_flow_plain or
