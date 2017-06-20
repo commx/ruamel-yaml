@@ -43,7 +43,7 @@ Before 0.15.0::
     with out.open('w') as fp:
         yaml.safe_dump(data, fp, default_flow_style=False)
 
-after:
+after::
 
     from ruamel.yaml import YAML
 
