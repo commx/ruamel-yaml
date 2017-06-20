@@ -45,7 +45,7 @@ PY2/PY3 reintegration
 ---------------------
 
 ``ruamel.yaml`` re-integrates the Python 2 and 3 sources, running on
-Python 2.7 (CPython, PyPy), 3.3, 3.4, 3.5 (support for 2.6 has been
+Python 2.7 (CPython, PyPy), 3.3, 3.4, 3.5 and 3.6 (support for 2.6 has been
 dropped mid 2016). It is more easy to extend and maintain as only a
 miniscule part of the code is Python version specific.
 
