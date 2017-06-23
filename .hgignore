@@ -1,11 +1,7 @@
 syntax: glob
 
-MAKEFILE
-
 # _yaml.so
 README.pdf
 venv
 TODO.rst
-_doc/_build
-_bg_info
 try_*
