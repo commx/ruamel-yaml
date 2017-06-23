@@ -9,3 +9,4 @@ services:
     build: .
     volumes:
     - .:/src
+    - ${PYDISTBASE}/ruamel.yaml:/src/dist
