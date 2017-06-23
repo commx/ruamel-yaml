@@ -143,7 +143,7 @@ class Scanner(object):
         # type: () -> VersionType
         if hasattr(self.loader, 'typ'):
             return self.loader.resolver.processing_version  # type: ignore
-        return self.loader.processing_version
+        return self.loader.processing_version  # type: ignore
 
     # Public methods.
 

@@ -15,6 +15,8 @@ from ast import parse    # NOQA
 
 from setuptools import setup, Extension, Distribution  # NOQA
 from setuptools.command import install_lib             # NOQA
+from setuptools.command.sdist import sdist as _sdist   # NOQA
+from wheel.bdist_wheel import bdist_wheel as _bdist_wheel   # NOQA
 
 if __name__ != '__main__':
     raise NotImplementedError('should never include setup.py')
@@ -231,6 +233,28 @@ class MyInstallLib(install_lib.install_lib):
         return alt_files
 
 
+class MySdist(_sdist):
+    def initialize_options(self):
+        _sdist.initialize_options(self)
+        # because of unicode_literals
+        self.formats = [b'bztar'] if sys.version_info < (3, ) else ['bztar']
+        dist_base = os.environ.get('PYDISTBASE')
+        fpn = getattr(getattr(self, 'nsp', self), 'full_package_name',  None)
+        if fpn and dist_base:
+            print('setting  distdir {}/{}'.format(dist_base, fpn))
+            self.dist_dir = os.path.join(dist_base, fpn)
+
+
+class MyBdistWheel(_bdist_wheel):
+    def initialize_options(self):
+        _bdist_wheel.initialize_options(self)
+        dist_base = os.environ.get('PYDISTBASE')
+        fpn = getattr(getattr(self, 'nsp', self), 'full_package_name',  None)
+        if fpn and dist_base:
+            print('setting  distdir {}/{}'.format(dist_base, fpn))
+            self.dist_dir = os.path.join(dist_base, fpn)
+
+
 class InMemoryZipFile(object):
     def __init__(self, file_name=None):
         try:
@@ -359,16 +383,6 @@ class NameSpacePackager(object):
                     if pd.get('nested', False):
                         continue
                     self._split.append(self.full_package_name + '.' + d)
-                # x = os.path.join(d, 'setup.py')
-                # if os.path.exists(x):
-                #     if not os.path.exists(os.path.join(d, 'tox.ini')):
-                #        print('\n>>>>> found "{0}" without tox.ini <<<<<\n'
-                #              ''.format(x))
-                #    # raise NotImplementedError('XXXX')
-                #    continue
-                # x = os.path.join(d, '__init__.py')
-                # if os.path.exists(x):
-                #     self._split.append(self.full_package_name + '.' + d)
             if sys.version_info < (3, ):
                 self._split = [(y.encode('utf-8') if isinstance(y, unicode) else y)
                                for y in self._split]
@@ -805,12 +819,16 @@ def main():
     if dump_kw in sys.argv:
         import wheel
         import distutils
-        print('python:   ', sys.version)
-        print('distutils:', distutils.__version__)
-        print('wheel:    ', wheel.__version__)
+        import setuptools
+        print('python:    ', sys.version)
+        print('setuptools:', setuptools.__version__)
+        print('distutils: ', distutils.__version__)
+        print('wheel:     ', wheel.__version__)
     nsp = NameSpacePackager(pkg_data)
     nsp.check()
     nsp.create_dirs()
+    MySdist.nsp = nsp
+    MyBdistWheel.nsp = nsp
     kw = dict(
         name=nsp.full_package_name,
         namespace_packages=nsp.namespace_packages,
@@ -819,7 +837,11 @@ def main():
         url=nsp.url,
         author=nsp.author,
         author_email=nsp.author_email,
-        cmdclass={'install_lib': MyInstallLib},
+        cmdclass=dict(
+            install_lib=MyInstallLib,
+            sdist=MySdist,
+            bdist_wheel=MyBdistWheel,
+        ),
         package_dir=nsp.package_dir,
         entry_points=nsp.entry_points(),
         description=nsp.description,

@@ -7,6 +7,7 @@ helper routines for testing round trip of commented YAML data
 import textwrap
 
 import ruamel.yaml
+from ruamel.yaml.compat import StringIO, BytesIO  # NOQA
 
 
 def dedent(data):
@@ -100,3 +101,17 @@ class YAML(ruamel.yaml.YAML):
                 stream = stream[1:]
             stream = textwrap.dedent(stream)
         return ruamel.yaml.YAML.load(self, stream)
+
+    def dump(self, data, **kw):
+        assert ('stream' in kw) ^ ('compare' in kw)
+        if 'stream' in kw:
+            return ruamel.yaml.YAML.dump(data, **kw)
+        lkw = kw.copy()
+        expected = textwrap.dedent(lkw.pop('compare'))
+        if expected and expected[0] == '\n':
+            expected = expected[1:]
+        lkw['stream'] = st = StringIO() if self.encoding is None else BytesIO()
+        ruamel.yaml.YAML.dump(self, data, **lkw)
+        res = st.getvalue()
+        print(res)
+        assert res == expected

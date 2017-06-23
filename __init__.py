@@ -2,17 +2,13 @@
 
 from __future__ import print_function, absolute_import, division, unicode_literals
 
-# install_requires of ruamel.base is not really required but the old
-# ruamel.base installed __init__.py, and thus a new version should
-# be installed at some point
-
 if False:  # MYPY
     from typing import Dict, Any  # NOQA
 
 _package_data = dict(
     full_package_name='ruamel.yaml',
-    version_info=(0, 15, 9),
-    __version__='0.15.9',
+    version_info=(0, 15, 10),
+    __version__='0.15.10',
     author='Anthon van der Neut',
     author_email='a.van.der.neut@ruamel.eu',
     description='ruamel.yaml is a YAML parser/emitter that supports roundtrip preservation of comments, seq/map flow style, and map key order',  # NOQA
@@ -20,7 +16,7 @@ _package_data = dict(
     since=2014,
     extras_require={':platform_python_implementation=="CPython" and python_version<="2.7"': [
         'ruamel.ordereddict',
-        ], 'jinja2': ['ruamel.yaml.jinja2']},
+        ], 'jinja2': ['ruamel.yaml.jinja2>=0.2']},
     ext_modules=[dict(
             name='_ruamel_yaml',
             src=['ext/_ruamel_yaml.c', 'ext/api.c', 'ext/writer.c', 'ext/dumper.c',
@@ -56,6 +52,7 @@ _package_data = dict(
         fl8excl='_test/lib',
     ),
 )  # type: Dict[Any, Any]
+
 
 version_info = _package_data['version_info']
 __version__ = _package_data['__version__']

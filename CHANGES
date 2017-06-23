@@ -1,3 +1,8 @@
+[0, 15, 10]: 2017-06-23
+  - top level PreservedScalarString not indented if not explicitly asked to
+  - remove Makefile (not very useful anyway)
+  - some mypy additions
+
 [0, 15, 9]: 2017-06-16
   - fix for issue 127: tagged scalars were always quoted and seperated
     by a newline when in a block sequence (reported and largely fixed by

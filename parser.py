@@ -119,6 +119,7 @@ class Parser(object):
         self.state = self.parse_stream_start  # type: Any
 
     def dispose(self):
+        # type: () -> None
         self.reset_parser()
 
     @property

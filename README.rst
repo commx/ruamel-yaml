@@ -32,6 +32,11 @@ ChangeLog
 
 .. should insert NEXT: at the beginning of line for next key
 
+0.15.10 (2017-06-23):
+  - top level PreservedScalarString not indented if not explicitly asked to
+  - remove Makefile (not very useful anyway)
+  - some mypy additions
+
 0.15.9 (2017-06-16):
   - fix for issue 127: tagged scalars were always quoted and seperated
     by a newline when in a block sequence (reported and largely fixed by
@@ -139,69 +144,6 @@ ChangeLog
     .serializer.serialize(). Usage of .serialize() outside of Serializer will be
     deprecated soon
   - some extra tests on main.py functions
-
-0.13.14 (2017-02-12):
-  - fix for issue 97: clipped block scalar followed by empty lines and comment
-    would result in two CommentTokens of which the first was dropped.
-    (reported by Colm O'Connor)
-
-0.13.13 (2017-01-28):
-  - fix for issue 96: prevent insertion of extra empty line if indented mapping entries
-    are separated by an empty line (reported by Derrick Sawyer)
-
-0.13.11 (2017-01-23):
-  - allow ':' in flow style scalars if not followed by space. Also don't
-    quote such scalar as this is no longer necessary.
-  - add python 3.6 manylinux wheel to PyPI
-
-0.13.10 (2017-01-22):
-  - fix for issue 93, insert spurious blank line before single line comment
-    between indented sequence elements (reported by Alex)
-
-0.13.9 (2017-01-18):
-  - fix for issue 92, wrong import name reported by the-corinthian
-
-0.13.8 (2017-01-18):
-  - fix for issue 91, when a compiler is unavailable reported by Maximilian Hils
-  - fix for deepcopy issue with TimeStamps not preserving 'T', reported on
-    `StackOverflow Q&A <http://stackoverflow.com/a/41577841/1307905>`_ by
-    `Quuxplusone <http://stackoverflow.com/users/1424877/quuxplusone>`_
-
-
-0.13.7 (2016-12-27):
-  - fix for issue 85, constructor.py importing unicode_literals caused mypy to fail
-    on 2.7 (reported by Peter Amstutz)
-
-0.13.6 (2016-12-27):
-  - fix for issue 83, collections.OrderedDict not representable by SafeRepresenter
-    (reported by Frazer McLean)
-
-0.13.5 (2016-12-25):
-  - fix for issue 84, deepcopy not properly working (reported by Peter Amstutz)
-
-0.13.4 (2016-12-05):
-  - another fix for issue 82, change to non-global resolver data broke implicit type
-    specification
-
-0.13.3 (2016-12-05):
-  - fix for issue 82, deepcopy not working (reported by code monk)
-
-0.13.2 (2016-11-28):
-  - fix for comments after empty (null) values  (reported by dsw2127 and cokelaer)
-
-0.13.1 (2016-11-22):
-  - optimisations on memory usage when loading YAML from large files (py3: -50%, py2: -85%)
-
-0.13.0 (2016-11-20):
-  - if ``load()`` or ``load_all()`` is called with only a single argument
-    (stream or string)
-    a UnsafeLoaderWarning will be issued once. If appropriate you can surpress this
-    warning by filtering it. Explicitly supplying the ``Loader=ruamel.yaml.Loader``
-    argument, will also prevent it from being issued. You should however consider
-    using ``safe_load()``, ``safe_load_all()`` if your YAML input does not use tags.
-  - allow adding comments before and after keys (based on
-    `StackOveflow Q&A <http://stackoverflow.com/a/40705671/1307905>`_  by
-    `msinn <http://stackoverflow.com/users/7185467/msinn>`_)
 
 ----
 

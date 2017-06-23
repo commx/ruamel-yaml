@@ -109,6 +109,7 @@ class Emitter(object):
         self.block_seq_indent = block_seq_indent if block_seq_indent else 0
         self.top_level_colon_align = top_level_colon_align
         self.best_indent = 2
+        self.requested_indent = indent  # specific for literal zero indent
         if indent and 1 < indent < 10:
             self.best_indent = indent
         # if self.best_indent < self.block_seq_indent + 1:
@@ -1027,6 +1028,11 @@ class Emitter(object):
 
     def write_single_quoted(self, text, split=True):
         # type: (Any, Any) -> None
+        if self.root_context:
+            if self.requested_indent is not None:
+                self.write_line_break()
+                if self.requested_indent != 0:
+                    self.write_indent()
         self.write_indicator(u'\'', True)
         spaces = False
         breaks = False
@@ -1100,6 +1106,11 @@ class Emitter(object):
 
     def write_double_quoted(self, text, split=True):
         # type: (Any, Any) -> None
+        if self.root_context:
+            if self.requested_indent is not None:
+                self.write_line_break()
+                if self.requested_indent != 0:
+                    self.write_indent()
         self.write_indicator(u'"', True)
         start = end = 0
         while end <= len(text):
@@ -1239,7 +1250,7 @@ class Emitter(object):
                             self.write_line_break()
                         else:
                             self.write_line_break(br)
-                    if ch is not None:
+                    if ch is not None and (not self.root_context or self.requested_indent):
                         self.write_indent()
                     start = end
             else:
@@ -1258,7 +1269,12 @@ class Emitter(object):
     def write_plain(self, text, split=True):
         # type: (Any, Any) -> None
         if self.root_context:
-            self.open_ended = True
+            if self.requested_indent is not None:
+                self.write_line_break()
+                if self.requested_indent != 0:
+                    self.write_indent()
+            else:
+                self.open_ended = True
         if not text:
             return
         if not self.whitespace:

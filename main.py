@@ -45,7 +45,7 @@ enforce = object()
 
 class YAML(object):
     def __init__(self, _kw=enforce, typ=None, pure=False, plug_ins=None):
-        # type: (Any, Any, Any) -> None
+        # type: (Any, Any, Any, Any) -> None
         """
         _kw: not used, forces keyword arguments in 2.7 (in 3 you can do (*, safe_load=..)
         typ: 'rt'/None -> RoundTripLoader/RoundTripDumper,  (default)
@@ -60,7 +60,7 @@ class YAML(object):
                             "one was given ({!r})".format(self.__class__.__name__, _kw))
 
         self.typ = 'rt' if typ is None else typ
-        self.plug_ins = []
+        self.plug_ins = []  # type: List[Any]
         for pu in ([] if plug_ins is None else plug_ins) + self.official_plug_ins():
             file_name = pu.replace('/', '.')
             self.plug_ins.append(import_module(file_name))
@@ -252,11 +252,11 @@ class YAML(object):
         finally:
             parser.dispose()
             try:
-                self._reader.reset_reader()
+                self._reader.reset_reader()  # type: ignore
             except AttributeError:
                 pass
             try:
-                self._scanner.reset_scanner()
+                self._scanner.reset_scanner()  # type: ignore
             except AttributeError:
                 pass
 
@@ -280,11 +280,11 @@ class YAML(object):
         finally:
             parser.dispose()
             try:
-                self._reader.reset_reader()
+                self._reader.reset_reader()  # type: ignore
             except AttributeError:
                 pass
             try:
-                self._scanner.reset_scanner()
+                self._scanner.reset_scanner()  # type: ignore
             except AttributeError:
                 pass
 
@@ -380,7 +380,7 @@ class YAML(object):
             delattr(self, "_serializer")
             delattr(self, "_emitter")
         if transform:
-            fstream.write(transform(stream.getvalue()))
+            fstream.write(transform(stream.getvalue()))   # type: ignore
         return None
 
     def get_serializer_representer_emitter(self, stream, tlca):
@@ -446,9 +446,10 @@ class YAML(object):
 
     # helpers
     def official_plug_ins(self):
+        # type: () -> Any
         bd = os.path.dirname(__file__)
         gpbd = os.path.dirname(os.path.dirname(bd))
-        res = [x.replace(gpbd, '')[1:-3] for x in glob.glob(bd + '/*/yaml_plugin.py')]
+        res = [x.replace(gpbd, '')[1:-3] for x in glob.glob(bd + '/*/__plug_in__.py')]
         return res
 
 
