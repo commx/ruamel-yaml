@@ -1,9 +1,25 @@
 Installing
 ==========
 
-``ruamel.yaml`` should be installed from PyPI_ using::
+Make sure you have a recent version of ``pip`` and ``setuptools``
+installed. The later needs environment marker support
+(``setuptools>=20.6.8``) and that is e.g.  bundled with Python 3.4.6 but
+not with 3.4.4. It is probably best to do:
+
+    pip install -U pip setuptools wheel
+
+in your environment (`virtualenv`, (Docker) container, etc) before
+installing ``ruamel.yaml``.
+
+``ruamel.yaml`` itself should be installed from PyPI_ using::
 
     pip install ruamel.yaml
+
+If you want to process jinja2/YAML templates (which are not valid YAML
+with the default jinja2 markers), do ``pip install
+ruamel.yaml[jinja2]`` (you might need to quote the last argument
+because of the ``[]``)
+
 
 There also is a commandline utility ``yaml`` available after installing::
 
