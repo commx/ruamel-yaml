@@ -342,7 +342,7 @@ class SafeConstructor(BaseConstructor):
                 index += 1
         if bool(merge):
             node.merge = merge  # separate merge keys to be able to update without duplicate
-            # node.value = merge + node.value
+            node.value = merge + node.value
 
     def construct_mapping(self, node, deep=False):
         # type: (Any, bool) -> Any

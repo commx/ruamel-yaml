@@ -237,7 +237,8 @@ class MySdist(_sdist):
     def initialize_options(self):
         _sdist.initialize_options(self)
         # because of unicode_literals
-        self.formats = [b'bztar'] if sys.version_info < (3, ) else ['bztar']
+        fmt = getattr(self, 'tarfmt',  None)
+        self.formats = fmt if fmt else [b'bztar'] if sys.version_info < (3, ) else ['bztar']
         dist_base = os.environ.get('PYDISTBASE')
         fpn = getattr(getattr(self, 'nsp', self), 'full_package_name',  None)
         if fpn and dist_base:
@@ -828,6 +829,8 @@ def main():
     nsp.check()
     nsp.create_dirs()
     MySdist.nsp = nsp
+    if pkg_data.get('tarfmt'):
+        MySdist.tarfmt = pkg_data.get('tarfmt')
     MyBdistWheel.nsp = nsp
     kw = dict(
         name=nsp.full_package_name,

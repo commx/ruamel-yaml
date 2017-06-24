@@ -244,6 +244,29 @@ class TestAnchorsAliases:
         with pytest.warns(ReusedAnchorWarning):
             data = round_trip(yaml)  # NOQA
 
+    def test_issue_130(self):
+        # issue 130 reported by Devid Fee
+        import ruamel.yaml
+        ys = dedent("""\
+        components:
+          server: &server_component
+            type: spark.server:ServerComponent
+            host: 0.0.0.0
+            port: 8000
+          shell: &shell_component
+            type: spark.shell:ShellComponent
+
+        services:
+          server: &server_service
+            <<: *server_component
+          shell: &shell_service
+            <<: *shell_component
+            components:
+              server: {<<: *server_service}
+        """)
+        data = ruamel.yaml.safe_load(ys)
+        assert data['services']['shell']['components']['server']['port'] == 8000
+
 
 class TestMergeKeysValues:
 
