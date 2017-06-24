@@ -8,5 +8,5 @@ services:
     container_name: yamlmanylinux1
     build: .
     volumes:
-    - .:/src
     - ${PYDISTBASE}/ruamel.yaml:/src/dist
+    - .:/src

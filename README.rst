@@ -32,6 +32,10 @@ ChangeLog
 
 .. should insert NEXT: at the beginning of line for next key
 
+0.15.12 (2017-06-24):
+  - remove fatal dependency of setup.py on wheel package (reported by
+    Cameron Sweeney)
+
 0.15.11 (2017-06-24):
   - fix for issue 130, regression in nested merge keys (reported by
     `David Fee <https://bitbucket.org/dfee/>`_)

@@ -16,7 +16,7 @@ from ast import parse    # NOQA
 from setuptools import setup, Extension, Distribution  # NOQA
 from setuptools.command import install_lib             # NOQA
 from setuptools.command.sdist import sdist as _sdist   # NOQA
-from wheel.bdist_wheel import bdist_wheel as _bdist_wheel   # NOQA
+
 
 if __name__ != '__main__':
     raise NotImplementedError('should never include setup.py')
@@ -236,9 +236,10 @@ class MyInstallLib(install_lib.install_lib):
 class MySdist(_sdist):
     def initialize_options(self):
         _sdist.initialize_options(self)
+        # see pep 527, new uploads should be tar.gz or .zip
+        # fmt = getattr(self, 'tarfmt',  None)
         # because of unicode_literals
-        fmt = getattr(self, 'tarfmt',  None)
-        self.formats = fmt if fmt else [b'bztar'] if sys.version_info < (3, ) else ['bztar']
+        # self.formats = fmt if fmt else [b'bztar'] if sys.version_info < (3, ) else ['bztar']
         dist_base = os.environ.get('PYDISTBASE')
         fpn = getattr(getattr(self, 'nsp', self), 'full_package_name',  None)
         if fpn and dist_base:
@@ -246,14 +247,24 @@ class MySdist(_sdist):
             self.dist_dir = os.path.join(dist_base, fpn)
 
 
-class MyBdistWheel(_bdist_wheel):
-    def initialize_options(self):
-        _bdist_wheel.initialize_options(self)
-        dist_base = os.environ.get('PYDISTBASE')
-        fpn = getattr(getattr(self, 'nsp', self), 'full_package_name',  None)
-        if fpn and dist_base:
-            print('setting  distdir {}/{}'.format(dist_base, fpn))
-            self.dist_dir = os.path.join(dist_base, fpn)
+# try except so this doesn't bomb when you don't have wheel installed, implies
+# generation of wheels in ./dist
+try:
+    from wheel.bdist_wheel import bdist_wheel as _bdist_wheel   # NOQA
+
+    class MyBdistWheel(_bdist_wheel):
+        def initialize_options(self):
+            _bdist_wheel.initialize_options(self)
+            dist_base = os.environ.get('PYDISTBASE')
+            fpn = getattr(getattr(self, 'nsp', self), 'full_package_name',  None)
+            if fpn and dist_base:
+                print('setting  distdir {}/{}'.format(dist_base, fpn))
+                self.dist_dir = os.path.join(dist_base, fpn)
+
+    _bdist_wheel_available = True
+
+except ModuleNotFoundError:
+    _bdist_wheel_available = False
 
 
 class InMemoryZipFile(object):
@@ -831,7 +842,15 @@ def main():
     MySdist.nsp = nsp
     if pkg_data.get('tarfmt'):
         MySdist.tarfmt = pkg_data.get('tarfmt')
-    MyBdistWheel.nsp = nsp
+
+    cmdclass = dict(
+        install_lib=MyInstallLib,
+        sdist=MySdist,
+    )
+    if _bdist_wheel_available:
+        MyBdistWheel.nsp = nsp
+        cmdclass['bdist_wheel'] = MyBdistWheel
+
     kw = dict(
         name=nsp.full_package_name,
         namespace_packages=nsp.namespace_packages,
@@ -840,11 +859,7 @@ def main():
         url=nsp.url,
         author=nsp.author,
         author_email=nsp.author_email,
-        cmdclass=dict(
-            install_lib=MyInstallLib,
-            sdist=MySdist,
-            bdist_wheel=MyBdistWheel,
-        ),
+        cmdclass=cmdclass,
         package_dir=nsp.package_dir,
         entry_points=nsp.entry_points(),
         description=nsp.description,
