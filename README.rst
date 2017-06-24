@@ -75,7 +75,7 @@ ChangeLog
   - dependecy on ruamel.ordereddict for 2.7 now via extras_require
 
 0.15.0 (2017-06-04):
-  - it is no allowed to pass in a ``pathlib.Path`` as "stream" parameter to all
+  - it is now allowed to pass in a ``pathlib.Path`` as "stream" parameter to all
     load/dump functions
   - passing in a non-supported object (e.g. a string) as "stream" will result in a
     much more meaningful YAMLStreamError.
