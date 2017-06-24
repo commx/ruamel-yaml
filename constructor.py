@@ -205,7 +205,7 @@ class BaseConstructor(object):
                 node.start_mark)
         total_mapping = {}
         if getattr(node, 'merge', None) is not None:
-            todo = [(node.merge, False), (node.value, True)]
+            todo = [(node.merge, False), (node.value, False)]
         else:
             todo = [(node.value, True)]
         for values, check in todo:

@@ -32,6 +32,10 @@ ChangeLog
 
 .. should insert NEXT: at the beginning of line for next key
 
+0.15.13 (2017-06-24):
+  - suppress duplicate key warning on mappings with merge keys (reported by
+    Cameron Sweeney)
+
 0.15.12 (2017-06-24):
   - remove fatal dependency of setup.py on wheel package (reported by
     Cameron Sweeney)
