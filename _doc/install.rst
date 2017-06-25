@@ -4,7 +4,7 @@ Installing
 Make sure you have a recent version of ``pip`` and ``setuptools``
 installed. The later needs environment marker support
 (``setuptools>=20.6.8``) and that is e.g.  bundled with Python 3.4.6 but
-not with 3.4.4. It is probably best to do:
+not with 3.4.4. It is probably best to do::
 
     pip install -U pip setuptools wheel
 
