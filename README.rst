@@ -32,6 +32,11 @@ ChangeLog
 
 .. should insert NEXT: at the beginning of line for next key
 
+0.15.14 (2017-06-25):
+  - fix for issue 133, in setup.py: change ModuleNotFoundError to
+    ImportError (reported and fix by
+    `Asley Drake  <https://github.com/aldraco>`_)
+
 0.15.13 (2017-06-24):
   - suppress duplicate key warning on mappings with merge keys (reported by
     Cameron Sweeney)

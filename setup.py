@@ -263,7 +263,7 @@ try:
 
     _bdist_wheel_available = True
 
-except ModuleNotFoundError:
+except ImportError:
     _bdist_wheel_available = False
 
 
