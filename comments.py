@@ -239,7 +239,7 @@ class CommentedBase(object):
         from ruamel.yaml.tokens import CommentToken
 
         def comment_token(s, mark):
-            # type: (Any) -> Any
+            # type: (Any, Any) -> Any
             # handle empty lines as having no comment
             return CommentToken(('# ' if s else '') + s + '\n', mark, None)
 
