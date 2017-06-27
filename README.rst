@@ -32,6 +32,10 @@ ChangeLog
 
 .. should insert NEXT: at the beginning of line for next key
 
+0.15.15 (2017-06-27):
+  - fix for issue 135, typ='safe' not dumping in Python 2.7
+    (reported by Andrzej Ostrowski <https://bitbucket.org/aostr123/>`_)
+
 0.15.14 (2017-06-25):
   - fix for issue 133, in setup.py: change ModuleNotFoundError to
     ImportError (reported and fix by

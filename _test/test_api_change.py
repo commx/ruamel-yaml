@@ -32,6 +32,19 @@ class TestNewAPI:
         with pytest.raises(DuplicateKeyError):
             yaml.load('{a: 1, a: 2}')
 
+    def test_issue_135(self):
+        # reported by Andrzej Ostrowski
+        data = {'a': 1, 'b': 2}
+        yaml = YAML(typ='safe')
+        # originally on 2.7: with pytest.raises(TypeError):
+        yaml.dump(data, sys.stdout)
+
+    def test_issue_135_temporary_workaround(self):
+        # never raised error
+        data = {'a': 1, 'b': 2}
+        yaml = YAML(typ='safe', pure=True)
+        yaml.dump(data, sys.stdout)
+
 
 class TestWrite:
     def test_dump_path(self, tmpdir):

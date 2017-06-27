@@ -419,9 +419,10 @@ class YAML(object):
                                   explicit_end=explicit_end,
                                   version=version, tags=tags)
                 selfx._emitter = selfx._serializer = selfx._representer = selfx
-                Representer.__init__(selfx, default_style=default_style,
-                                     default_flow_style=default_flow_style)
-                Resolver.__init__(selfx)
+                print(type(selfx), self.Representer, rslvr)
+                self.Representer.__init__(selfx, default_style=default_style,
+                                          default_flow_style=default_flow_style)
+                rslvr.__init__(selfx)
         self._stream = stream
         dumper = XDumper(stream)
         self._emitter = self._serializer = dumper
