@@ -34,7 +34,7 @@ ChangeLog
 
 0.15.16 (2017-07-01):
   - minor typing issues (reported and fix provided by
-    `Manvendra Singh <https://bitbucket.org/manu-chroma/>`_)mmm
+    `Manvendra Singh <https://bitbucket.org/manu-chroma/>`_
   - small doc improvements
 
 0.15.15 (2017-06-27):
