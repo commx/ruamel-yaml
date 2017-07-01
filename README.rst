@@ -32,7 +32,7 @@ ChangeLog
 
 .. should insert NEXT: at the beginning of line for next key
 
-0.15.15 (2017-07-01):
+0.15.16 (2017-07-01):
   - minor typing issues (reported and fix provided by
     `Manvendra Singh <https://bitbucket.org/manu-chroma/>`_)mmm
   - small doc improvements
