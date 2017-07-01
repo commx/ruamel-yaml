@@ -419,7 +419,6 @@ class YAML(object):
                                   explicit_end=explicit_end,
                                   version=version, tags=tags)
                 selfx._emitter = selfx._serializer = selfx._representer = selfx
-                print(type(selfx), self.Representer, rslvr)
                 self.Representer.__init__(selfx, default_style=default_style,
                                           default_flow_style=default_flow_style)
                 rslvr.__init__(selfx)

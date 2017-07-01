@@ -3,9 +3,9 @@
 Departure from previous API
 ---------------------------
 
-With version 0.15.0 `ruamel.yaml` starts to depart from the previous (PyYAML) way
+With version 0.15.0 ``ruamel.yaml`` starts to depart from the previous (PyYAML) way
 of loading and dumping.  During a transition period the original
-`load()` and `dump()` in its various formats will still be supported,
+``load()`` and ``dump()`` in its various formats will still be supported,
 but this is not guaranteed to be so with the transition to 1.0.
 
 At the latest with 1.0, but possible earlier transition error and
@@ -53,18 +53,18 @@ after::
     out = path('/tmp/out.yaml')
     yaml.dump(data, out)
 
-If you previously used an keyword argument `explicit_start=True` you
+If you previously used an keyword argument ``explicit_start=True`` you
 now do ``yaml.explicit_start = True`` before calling ``dump()``. The
 ``Loader`` and ``Dumper`` keyword arguments are not supported that
-way. You can provide the `typ` keyword to `rt`  (default),
-`safe`, `unsafe` or `base` (for round-trip load/dump, safe_load/dump,
+way. You can provide the ``typ`` keyword to ``rt``  (default),
+``safe``, ``unsafe`` or ``base`` (for round-trip load/dump, safe_load/dump,
 load/dump resp. using the BaseLoader / BaseDumper. More fine-control
-is possible by setting the attributes `.Parser`, `.Constructor`,
-`.Emitter`, etc., to the class of the type to create for that stage
+is possible by setting the attributes ``.Parser``, ``.Constructor``,
+``.Emitter``, etc., to the class of the type to create for that stage
 (typically a subclass of an existing class implementing that).
 
-All data is dumped (not just for round-trip-mode) with `.allow_unicode
-= True`
+All data is dumped (not just for round-trip-mode) with ``.allow_unicode
+= True``
 
 You can of course have multiple YAML instances active at the same
 time, with different load and/or dump behaviour.
@@ -107,7 +107,7 @@ fixing your ``install_requires`` might not be so easy.
 
 Depending on your usage you might be able to "version" your usage to
 be compatible with both the old and the new. The following are some
-examples all assuming `from ruamel import yaml`` somewhere at the top
+examples all assuming ``from ruamel import yaml`` somewhere at the top
 of your file and some ``istream`` and ``ostream`` apropriately opened
 for reading resp.  writing.
 
@@ -206,14 +206,14 @@ This way of doing things leads to several problems:
   impact on all of the following calls to ``dump()`` and those are
   difficult if not impossible to turn back. This forces the need to
   subclass ``Loaders`` and ``Dumpers``, a long time problem in PyYAML
-  as some attributes were not `deep_copied`` although a bug-report
+  as some attributes were not ``deep_copied`` although a bug-report
   (and fix) had been available a long time.
 
 - If you want to set an attribute, e.g. to control whether literal
   block style scalars are allowed to have trailing spaces on a line
   instead of being dumped as double quoted scalars, you have to change
   the ``dump()`` family of routines, all of the ``Dumpers()`` as well
-  as the actual functionality change in `emitter.Emitter()`. The
+  as the actual functionality change in ``emitter.Emitter()``. The
   functionality change takes changing 4 (four!) lines in one file, and being able
   to enable that another 50+ line changes (non-contiguous) in 3 more files resulting
   in diff that is far over 200 lines long.

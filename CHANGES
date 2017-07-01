@@ -1,3 +1,8 @@
+[0, 15, 16]: 2017-07-01
+  - minor typing issues (reported and fix provided by
+    `Manvendra Singh <https://bitbucket.org/manu-chroma/>`_)mmm
+  - small doc improvements
+
 [0, 15, 15]: 2017-06-27
   - fix for issue 135, typ='safe' not dumping in Python 2.7
     (reported by Andrzej Ostrowski <https://bitbucket.org/aostr123/>`_)
