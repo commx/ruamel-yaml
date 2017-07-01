@@ -28,14 +28,14 @@ Dumping works in the same way::
 
    yaml=YAML()
    yaml.default_flow_style = False
-   yaml.dump({a: [1, 2], s)
+   yaml.dump({a: [1, 2]}, s)
 
 in this ``s`` can be a file pointer (i.e. an object that has the
 `.write()` method, or a ``pathlib.Path()``. If you want to display
 your output, just stream to `sys.stdout`.
 
 If you need to transform a string representation of the output provide
-a function that takes a string as input and returns one:
+a function that takes a string as input and returns one::
 
    def tr(s):
        return s.replace('\n', '<\n')  # such output is not valid YAML!
