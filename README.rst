@@ -32,6 +32,11 @@ ChangeLog
 
 .. should insert NEXT: at the beginning of line for next key
 
+0.15.17 (2017-07-03):
+  - support for Unicode supplementary Plane **output**
+    (input was already supported, triggered by
+    `this <https://stackoverflow.com/a/44875714/1307905>`_ Stack Overflow Q&A)
+
 0.15.16 (2017-07-01):
   - minor typing issues (reported and fix provided by
     `Manvendra Singh <https://bitbucket.org/manu-chroma/>`_

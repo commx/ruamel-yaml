@@ -76,6 +76,7 @@ all functionality of the old interface will be available via
 Loading
 -------
 
+
 Duplicate keys
 ++++++++++++++
 
@@ -96,7 +97,19 @@ In the old API this is a warning starting with 0.15.2 and an error in
 Dumping
 -------
 
+Controls
+++++++++
 
+On your `YAML()` instance you can set attributes e.g with::
+
+  yaml = YAML(typ='safe', pure=True)
+  yaml.allow_unicode = False
+
+new attributes available are:
+
+`_supplementary`
+   defaults to `True` if Unicode chars larger than 2 bytes. Set to `False` to
+   enforce output of the `\U0001f601` ( presumes `allow_unicode` is `True`
 
 Transparent usage of new and old API
 ------------------------------------

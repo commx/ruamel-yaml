@@ -10,6 +10,7 @@ from __future__ import print_function
 # sequence ::= SEQUENCE-START node* SEQUENCE-END
 # mapping ::= MAPPING-START (node node)* MAPPING-END
 
+import sys
 from ruamel.yaml.error import YAMLError, YAMLStreamError
 from ruamel.yaml.events import *                                     # NOQA
 from ruamel.yaml.compat import utf8, text_type, PY2, nprint, dbg, DBG_EVENT, \
@@ -106,6 +107,8 @@ class Emitter(object):
         # Formatting details.
         self.canonical = canonical
         self.allow_unicode = allow_unicode
+        # set to False to get "\Uxxxxxxxx" for non-basic unicode like emojis
+        self.unicode_supplementary = sys.maxunicode > 0xffff
         self.block_seq_indent = block_seq_indent if block_seq_indent else 0
         self.top_level_colon_align = top_level_colon_align
         self.best_indent = 2
@@ -860,7 +863,9 @@ class Emitter(object):
                 line_breaks = True
             if not (ch == u'\n' or u'\x20' <= ch <= u'\x7E'):
                 if (ch == u'\x85' or u'\xA0' <= ch <= u'\uD7FF' or
-                        u'\uE000' <= ch <= u'\uFFFD') and ch != u'\uFEFF':
+                        u'\uE000' <= ch <= u'\uFFFD' or
+                        (self.unicode_supplementary and
+                         (u'\U00010000' <= ch <= u'\U0010FFFF'))) and ch != u'\uFEFF':
                     # unicode_characters = True
                     if not self.allow_unicode:
                         special_characters = True
