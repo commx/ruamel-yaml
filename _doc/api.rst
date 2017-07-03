@@ -107,8 +107,8 @@ On your `YAML()` instance you can set attributes e.g with::
 
 new attributes available are:
 
-`_supplementary`
-   defaults to `True` if Unicode chars larger than 2 bytes. Set to `False` to
+``unicode_supplementary``
+   Defaults to `True` if Unicode chars larger than 2 bytes. Set to `False` to
    enforce output of the `\U0001f601` ( presumes `allow_unicode` is `True`
 
 Transparent usage of new and old API
