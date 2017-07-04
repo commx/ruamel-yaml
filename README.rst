@@ -32,6 +32,13 @@ ChangeLog
 
 .. should insert NEXT: at the beginning of line for next key
 
+0.15.18 (2017-07-04):
+  - missing ``pure`` attribute on ``YAML`` useful for implementing `!include` tag
+    constructor for `including YAML files in a YAML file
+    <https://stackoverflow.com/a/44913652/1307905>`_
+  - some documentation improvements
+  - trigger of doc build on new revision
+
 0.15.17 (2017-07-03):
   - support for Unicode supplementary Plane **output**
     (input was already supported, triggered by

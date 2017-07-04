@@ -100,7 +100,7 @@ Dumping
 Controls
 ++++++++
 
-On your `YAML()` instance you can set attributes e.g with::
+On your ``YAML()`` instance you can set attributes e.g with::
 
   yaml = YAML(typ='safe', pure=True)
   yaml.allow_unicode = False
@@ -108,7 +108,7 @@ On your `YAML()` instance you can set attributes e.g with::
 available attributes include:
 
 ``unicode_supplementary``
-   Defaults to ``True`` if Unicode chars larger than 2 bytes. Set to ``False`` to
+   Defaults to ``True`` if Python's Unicode size is larger than 2 bytes. Set to ``False`` to
    enforce output of the form ``\U0001f601`` (ignored if ``allow_unicode`` is ``False``)
 
 Transparent usage of new and old API

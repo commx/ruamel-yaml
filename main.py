@@ -60,6 +60,7 @@ class YAML(object):
                             "one was given ({!r})".format(self.__class__.__name__, _kw))
 
         self.typ = 'rt' if typ is None else typ
+        self.pure = pure
         self.plug_ins = []  # type: List[Any]
         for pu in ([] if plug_ins is None else plug_ins) + self.official_plug_ins():
             file_name = pu.replace('/', '.')
@@ -340,7 +341,6 @@ class YAML(object):
         # type: (Any, StreamType, Any, Any) -> Any
         """
         Serialize a sequence of Python objects into a YAML stream.
-        If stream is None, return the produced string instead.
         """
         if not hasattr(stream, 'write') and hasattr(stream, 'open'):
             # pathlib.Path() instance
