@@ -64,6 +64,7 @@ def test_tokens(data_filename, tokens_filename, verbose=False):
     for token1, token2 in zip(tokens1, tokens2):
         assert token1 == token2, (token1, token2)
 
+
 test_tokens.unittest = ['.data', '.tokens']
 
 
@@ -77,6 +78,7 @@ def test_scanner(data_filename, canonical_filename, verbose=False):
         finally:
             if verbose:
                 pprint.pprint(tokens)
+
 
 test_scanner.unittest = ['.data', '.canonical']
 

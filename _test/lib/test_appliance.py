@@ -110,7 +110,7 @@ def execute(function, filenames, verbose):
         else:
             name = function.func_name
     if verbose:
-        sys.stdout.write('='*75+'\n')
+        sys.stdout.write('=' * 75 + '\n')
         sys.stdout.write('%s(%s)...\n' % (name, ', '.join(filenames)))
     try:
         function(verbose=verbose, *filenames)
@@ -147,7 +147,7 @@ def display(results, verbose):
             failures += 1
         if kind == 'ERROR':
             errors += 1
-        sys.stdout.write('='*75+'\n')
+        sys.stdout.write('=' * 75 + '\n')
         sys.stdout.write('%s(%s): %s\n' % (name, ', '.join(filenames), kind))
         if kind == 'ERROR':
             traceback.print_exception(file=sys.stdout, *info)
@@ -155,11 +155,11 @@ def display(results, verbose):
             sys.stdout.write('Traceback (most recent call last):\n')
             traceback.print_tb(info[2], file=sys.stdout)
             sys.stdout.write('%s: see below\n' % info[0].__name__)
-            sys.stdout.write('~'*75+'\n')
+            sys.stdout.write('~' * 75 + '\n')
             for arg in info[1].args:
                 pprint.pprint(arg, stream=sys.stdout)
         for filename in filenames:
-            sys.stdout.write('-'*75+'\n')
+            sys.stdout.write('-' * 75 + '\n')
             sys.stdout.write('%s:\n' % filename)
             if PY3:
                 with open(filename, 'r', errors='replace') as fp:
@@ -170,7 +170,7 @@ def display(results, verbose):
             sys.stdout.write(data)
             if data and data[-1] != '\n':
                 sys.stdout.write('\n')
-    sys.stdout.write('='*75+'\n')
+    sys.stdout.write('=' * 75 + '\n')
     sys.stdout.write('TESTS: %s\n' % total)
     ret_val = 0
     if failures:
@@ -203,7 +203,7 @@ def run(collections, args=None):
                 for ext in function.unittest:
                     if ext not in exts:
                         break
-                    filenames.append(os.path.join(DATA, base+ext))
+                    filenames.append(os.path.join(DATA, base + ext))
                 else:
                     skip_exts = getattr(function, 'skip', [])
                     for skip_ext in skip_exts:

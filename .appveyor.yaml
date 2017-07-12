@@ -14,7 +14,10 @@ environment:
 install:
   - |
     %PYTHON%\python.exe -m pip install --upgrade pip
-    %PYTHON%\python.exe -m pip install wheel==0.24
+    %PYTHON%\python.exe -m pip install wheel
+    %PYTHON%\python.exe -m pip list
+
+#    %PYTHON%\python.exe -m pip install wheel==0.24
 
 build: off
 

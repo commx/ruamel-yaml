@@ -126,7 +126,7 @@ def _walk_section(s, level=0):
         if c:
             line += u' ' + c
         yield line
-        for val in _walk_section(s[name], level=level+1):
+        for val in _walk_section(s[name], level=level + 1):
             yield val
 
 # def config_obj_2_rt_yaml(cfg):

@@ -41,7 +41,7 @@ enforce = object()
 
 
 # YAML is an acronym, i.e. spoken: rhymes with "camel". And thus a
-# subset of abbreviations, which should all caps according to PEP8
+# subset of abbreviations, which should be all caps according to PEP8
 
 class YAML(object):
     def __init__(self, _kw=enforce, typ=None, pure=False, plug_ins=None):
@@ -606,6 +606,7 @@ def emit(events, stream=None, Dumper=Dumper,
             dumper.dispose()   # cyaml
     if getvalue is not None:
         return getvalue()
+
 
 enc = None if PY3 else 'utf-8'
 

@@ -112,7 +112,7 @@ class TestNoIndent:
             {s}
         """.format(s=s))
         print(d)
-        assert d == (s + '\n')*2
+        assert d == (s + '\n') * 2
 
     def test_top_literal_scalar_no_indent_special(self):
         yaml = YAML()

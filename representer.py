@@ -31,6 +31,7 @@ __all__ = ['BaseRepresenter', 'SafeRepresenter', 'Representer',
 class RepresenterError(YAMLError):
     pass
 
+
 if PY2:
     def get_classobj_bases(cls):
         # type: (Any) -> Any
@@ -291,7 +292,7 @@ class SafeRepresenter(BaseRepresenter):
                                          text_type(data))
 
     inf_value = 1e300
-    while repr(inf_value) != repr(inf_value*inf_value):
+    while repr(inf_value) != repr(inf_value * inf_value):
         inf_value *= inf_value
 
     def represent_float(self, data):
@@ -367,6 +368,7 @@ class SafeRepresenter(BaseRepresenter):
     def represent_undefined(self, data):
         # type: (Any) -> None
         raise RepresenterError("cannot represent an object: %s" % data)
+
 
 SafeRepresenter.add_representer(type(None),
                                 SafeRepresenter.represent_none)
@@ -485,7 +487,7 @@ class Representer(SafeRepresenter):
     def represent_module(self, data):
         # type: (Any) -> Any
         return self.represent_scalar(
-            u'tag:yaml.org,2002:python/module:'+data.__name__, u'')
+            u'tag:yaml.org,2002:python/module:' + data.__name__, u'')
 
     if PY2:
         def represent_instance(self, data):
@@ -519,7 +521,7 @@ class Representer(SafeRepresenter):
                 state = data.__dict__
             if args is None and isinstance(state, dict):
                 return self.represent_mapping(
-                    u'tag:yaml.org,2002:python/object:'+class_name, state)
+                    u'tag:yaml.org,2002:python/object:' + class_name, state)
             if isinstance(state, dict) and not state:
                 return self.represent_sequence(
                     u'tag:yaml.org,2002:python/object/new:' +
@@ -529,7 +531,7 @@ class Representer(SafeRepresenter):
                 value['args'] = args
             value['state'] = state  # type: ignore
             return self.represent_mapping(
-                u'tag:yaml.org,2002:python/object/new:'+class_name, value)
+                u'tag:yaml.org,2002:python/object/new:' + class_name, value)
 
     def represent_object(self, data):
         # type: (Any) -> Any
@@ -558,7 +560,7 @@ class Representer(SafeRepresenter):
             reduce = data.__reduce__()
         else:
             raise RepresenterError("cannot represent object: %r" % data)
-        reduce = (list(reduce)+[None]*5)[:5]
+        reduce = (list(reduce) + [None] * 5)[:5]
         function, args, state, listitems, dictitems = reduce
         args = list(args)
         if state is None:
@@ -579,10 +581,10 @@ class Representer(SafeRepresenter):
         if not args and not listitems and not dictitems \
                 and isinstance(state, dict) and newobj:
             return self.represent_mapping(
-                u'tag:yaml.org,2002:python/object:'+function_name, state)
+                u'tag:yaml.org,2002:python/object:' + function_name, state)
         if not listitems and not dictitems  \
                 and isinstance(state, dict) and not state:
-            return self.represent_sequence(tag+function_name, args)
+            return self.represent_sequence(tag + function_name, args)
         value = {}
         if args:
             value['args'] = args
@@ -592,7 +594,8 @@ class Representer(SafeRepresenter):
             value['listitems'] = listitems
         if dictitems:
             value['dictitems'] = dictitems
-        return self.represent_mapping(tag+function_name, value)
+        return self.represent_mapping(tag + function_name, value)
+
 
 if PY2:
     Representer.add_representer(str,

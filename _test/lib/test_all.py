@@ -13,5 +13,6 @@ def main(args=None):
         collections.append(test_yaml_ext)
     test_appliance.run(collections, args)
 
+
 if __name__ == '__main__':
     main()

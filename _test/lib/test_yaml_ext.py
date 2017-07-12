@@ -22,11 +22,13 @@ old_scan = ruamel.yaml.scan
 def new_scan(stream, Loader=ruamel.yaml.CLoader):
     return old_scan(stream, Loader)
 
+
 old_parse = ruamel.yaml.parse
 
 
 def new_parse(stream, Loader=ruamel.yaml.CLoader):
     return old_parse(stream, Loader)
+
 
 old_compose = ruamel.yaml.compose
 
@@ -34,11 +36,13 @@ old_compose = ruamel.yaml.compose
 def new_compose(stream, Loader=ruamel.yaml.CLoader):
     return old_compose(stream, Loader)
 
+
 old_compose_all = ruamel.yaml.compose_all
 
 
 def new_compose_all(stream, Loader=ruamel.yaml.CLoader):
     return old_compose_all(stream, Loader)
+
 
 old_load = ruamel.yaml.load
 
@@ -46,11 +50,13 @@ old_load = ruamel.yaml.load
 def new_load(stream, Loader=ruamel.yaml.CLoader):
     return old_load(stream, Loader)
 
+
 old_load_all = ruamel.yaml.load_all
 
 
 def new_load_all(stream, Loader=ruamel.yaml.CLoader):
     return old_load_all(stream, Loader)
+
 
 old_safe_load = ruamel.yaml.safe_load
 
@@ -58,11 +64,13 @@ old_safe_load = ruamel.yaml.safe_load
 def new_safe_load(stream):
     return old_load(stream, ruamel.yaml.CSafeLoader)
 
+
 old_safe_load_all = ruamel.yaml.safe_load_all
 
 
 def new_safe_load_all(stream):
     return old_load_all(stream, ruamel.yaml.CSafeLoader)
+
 
 old_emit = ruamel.yaml.emit
 
@@ -70,11 +78,13 @@ old_emit = ruamel.yaml.emit
 def new_emit(events, stream=None, Dumper=ruamel.yaml.CDumper, **kwds):
     return old_emit(events, stream, Dumper, **kwds)
 
+
 old_serialize = ruamel.yaml.serialize
 
 
 def new_serialize(node, stream, Dumper=ruamel.yaml.CDumper, **kwds):
     return old_serialize(node, stream, Dumper, **kwds)
+
 
 old_serialize_all = ruamel.yaml.serialize_all
 
@@ -82,11 +92,13 @@ old_serialize_all = ruamel.yaml.serialize_all
 def new_serialize_all(nodes, stream=None, Dumper=ruamel.yaml.CDumper, **kwds):
     return old_serialize_all(nodes, stream, Dumper, **kwds)
 
+
 old_dump = ruamel.yaml.dump
 
 
 def new_dump(data, stream=None, Dumper=ruamel.yaml.CDumper, **kwds):
     return old_dump(data, stream, Dumper, **kwds)
+
 
 old_dump_all = ruamel.yaml.dump_all
 
@@ -94,11 +106,13 @@ old_dump_all = ruamel.yaml.dump_all
 def new_dump_all(documents, stream=None, Dumper=ruamel.yaml.CDumper, **kwds):
     return old_dump_all(documents, stream, Dumper, **kwds)
 
+
 old_safe_dump = ruamel.yaml.safe_dump
 
 
 def new_safe_dump(data, stream=None, **kwds):
     return old_dump(data, stream, ruamel.yaml.CSafeDumper, **kwds)
+
 
 old_safe_dump_all = ruamel.yaml.safe_dump_all
 
@@ -207,6 +221,7 @@ def test_c_scanner(data_filename, canonical_filename, verbose=False):
         with open(canonical_filename, 'rb') as fp1:
             _compare_scanners(fp0.read(), fp1.read(), verbose)
 
+
 test_c_scanner.unittest = ['.data', '.canonical']
 test_c_scanner.skip = ['.skip-ext']
 
@@ -245,6 +260,7 @@ def test_c_parser(data_filename, canonical_filename, verbose=False):
     with open(canonical_filename, 'rb') as fp0:
         with open(canonical_filename, 'rb') as fp1:
             _compare_parsers(fp0.read(), fp1.read(), verbose)
+
 
 test_c_parser.unittest = ['.data', '.canonical']
 test_c_parser.skip = ['.skip-ext']
@@ -289,6 +305,7 @@ def test_c_emitter(data_filename, canonical_filename, verbose=False):
     with open(canonical_filename, 'rb') as fp0:
         _compare_emitters(fp0.read(), verbose)
 
+
 test_c_emitter.unittest = ['.data', '.canonical']
 test_c_emitter.skip = ['.skip-ext']
 
@@ -309,7 +326,7 @@ def wrap_ext_function(function):
             pass
         wrapper.unittest_name = '%s_ext' % function.__name__
     wrapper.unittest = function.unittest
-    wrapper.skip = getattr(function, 'skip', [])+['.skip-ext']
+    wrapper.skip = getattr(function, 'skip', []) + ['.skip-ext']
     return wrapper
 
 

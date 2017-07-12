@@ -67,7 +67,7 @@ else:
 
     def to_unicode(s):
         # type: (str) -> unicode
-        return unicode(s)
+        return unicode(s)    # NOQA
 
 if PY3:
     string_types = str
@@ -83,10 +83,10 @@ if PY3:
     BytesIO = io.BytesIO
 
 else:
-    string_types = basestring
-    integer_types = (int, long)
+    string_types = basestring    # NOQA
+    integer_types = (int, long)  # NOQA
     class_types = (type, types.ClassType)
-    text_type = unicode
+    text_type = unicode          # NOQA
     binary_type = str
 
     # to allow importing
@@ -113,6 +113,7 @@ def with_metaclass(meta, *bases):
     # type: (Any, Any) -> Any
     """Create a base class with a metaclass."""
     return meta("NewBase", bases, {})
+
 
 DBG_TOKEN = 1
 DBG_EVENT = 2

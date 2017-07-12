@@ -61,6 +61,7 @@ def test_structure(data_filename, structure_filename, verbose=False):
             print("NODES2:")
             pprint.pprint(nodes2)
 
+
 test_structure.unittest = ['.data', '.structure']
 
 
@@ -93,6 +94,7 @@ def test_parser(data_filename, canonical_filename, verbose=False):
             print("EVENTS2:")
             pprint.pprint(events2)
 
+
 test_parser.unittest = ['.data', '.canonical']
 
 
@@ -111,6 +113,7 @@ def test_parser_on_canonical(canonical_filename, verbose=False):
             pprint.pprint(events1)
             print("EVENTS2:")
             pprint.pprint(events2)
+
 
 test_parser_on_canonical.unittest = ['.canonical']
 
@@ -147,6 +150,7 @@ def test_composer(data_filename, canonical_filename, verbose=False):
             pprint.pprint(nodes1)
             print("NODES2:")
             pprint.pprint(nodes2)
+
 
 test_composer.unittest = ['.data', '.canonical']
 
@@ -207,6 +211,7 @@ def test_constructor(data_filename, canonical_filename, verbose=False):
             pprint.pprint(native1)
             print("NATIVE2:")
             pprint.pprint(native2)
+
 
 test_constructor.unittest = ['.data', '.canonical']
 

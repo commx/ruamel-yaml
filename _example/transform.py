@@ -34,6 +34,7 @@ def sequence_indent_four(s):
         ret_val += '  ' * len(levels) + line
     return ret_val
 
+
 yaml = YAML()
 yaml.explicit_start = True
 yaml.dump(data, sys.stdout, transform=sequence_indent_four)

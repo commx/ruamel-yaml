@@ -18,7 +18,7 @@ class CanonicalScanner:
                 if isinstance(data, bytes):
                     data = data.decode('utf-8')
             else:
-                data = unicode(data, 'utf-8')
+                data = unicode(data, 'utf-8')  # NOQA
         except UnicodeDecodeError:
             raise CanonicalError("utf-8 stream is expected")
         self.data = data + u'\0'
@@ -48,7 +48,7 @@ class CanonicalScanner:
             self.scan()
         token = self.tokens.pop(0)
         if choice and not isinstance(token, choice):
-            raise CanonicalError("unexpected token "+repr(token))
+            raise CanonicalError("unexpected token " + repr(token))
         return token
 
     def get_token_value(self):
@@ -65,7 +65,7 @@ class CanonicalScanner:
                 break
             elif ch == u'%':
                 self.tokens.append(self.scan_directive())
-            elif ch == u'-' and self.data[self.index:self.index+3] == u'---':
+            elif ch == u'-' and self.data[self.index:self.index + 3] == u'---':
                 self.index += 3
                 self.tokens.append(ruamel.yaml.DocumentStartToken(None, None))
             elif ch == u'[':
@@ -102,8 +102,8 @@ class CanonicalScanner:
     DIRECTIVE = u'%YAML 1.1'
 
     def scan_directive(self):
-        if self.data[self.index:self.index+len(self.DIRECTIVE)] == self.DIRECTIVE and \
-                self.data[self.index+len(self.DIRECTIVE)] in u' \n\0':
+        if self.data[self.index:self.index + len(self.DIRECTIVE)] == self.DIRECTIVE and \
+                self.data[self.index + len(self.DIRECTIVE)] in u' \n\0':
             self.index += len(self.DIRECTIVE)
             return ruamel.yaml.DirectiveToken('YAML', (1, 1), None, None)
         else:
@@ -130,11 +130,11 @@ class CanonicalScanner:
         if not value:
             value = u'!'
         elif value[0] == u'!':
-            value = 'tag:yaml.org,2002:'+value[1:]
+            value = 'tag:yaml.org,2002:' + value[1:]
         elif value[0] == u'<' and value[-1] == u'>':
             value = value[1:-1]
         else:
-            value = u'!'+value
+            value = u'!' + value
         return ruamel.yaml.TagToken(value, None, None)
 
     QUOTE_CODES = {
@@ -179,7 +179,7 @@ class CanonicalScanner:
                     ignore_spaces = True
                 elif ch in self.QUOTE_CODES:
                     length = self.QUOTE_CODES[ch]
-                    code = int(self.data[self.index:self.index+length], 16)
+                    code = int(self.data[self.index:self.index + length], 16)
                     chunks.append(unichr(code))
                     self.index += length
                 else:
@@ -233,7 +233,7 @@ class CanonicalParser:
             if self.check_token(ruamel.yaml.DirectiveToken, ruamel.yaml.DocumentStartToken):
                 self.parse_document()
             else:
-                raise CanonicalError("document is expected, got "+repr(self.tokens[0]))
+                raise CanonicalError("document is expected, got " + repr(self.tokens[0]))
         self.get_token(ruamel.yaml.StreamEndToken)
         self.events.append(ruamel.yaml.StreamEndEvent(None, None))
 
@@ -340,11 +340,13 @@ class CanonicalLoader(CanonicalScanner, CanonicalParser,
         Constructor.__init__(self)
         Resolver.__init__(self)
 
+
 ruamel.yaml.CanonicalLoader = CanonicalLoader
 
 
 def canonical_scan(stream):
     return ruamel.yaml.scan(stream, Loader=CanonicalLoader)
+
 
 ruamel.yaml.canonical_scan = canonical_scan
 
@@ -352,11 +354,13 @@ ruamel.yaml.canonical_scan = canonical_scan
 def canonical_parse(stream):
     return ruamel.yaml.parse(stream, Loader=CanonicalLoader)
 
+
 ruamel.yaml.canonical_parse = canonical_parse
 
 
 def canonical_compose(stream):
     return ruamel.yaml.compose(stream, Loader=CanonicalLoader)
+
 
 ruamel.yaml.canonical_compose = canonical_compose
 
@@ -364,16 +368,19 @@ ruamel.yaml.canonical_compose = canonical_compose
 def canonical_compose_all(stream):
     return ruamel.yaml.compose_all(stream, Loader=CanonicalLoader)
 
+
 ruamel.yaml.canonical_compose_all = canonical_compose_all
 
 
 def canonical_load(stream):
     return ruamel.yaml.load(stream, Loader=CanonicalLoader)
 
+
 ruamel.yaml.canonical_load = canonical_load
 
 
 def canonical_load_all(stream):
     return ruamel.yaml.load_all(stream, Loader=CanonicalLoader)
+
 
 ruamel.yaml.canonical_load_all = canonical_load_all

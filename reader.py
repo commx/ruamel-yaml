@@ -127,21 +127,21 @@ class Reader(object):
     def peek(self, index=0):
         # type: (int) -> Text
         try:
-            return self.buffer[self.pointer+index]
+            return self.buffer[self.pointer + index]
         except IndexError:
-            self.update(index+1)
-            return self.buffer[self.pointer+index]
+            self.update(index + 1)
+            return self.buffer[self.pointer + index]
 
     def prefix(self, length=1):
         # type: (int) -> Any
-        if self.pointer+length >= len(self.buffer):
+        if self.pointer + length >= len(self.buffer):
             self.update(length)
-        return self.buffer[self.pointer:self.pointer+length]
+        return self.buffer[self.pointer:self.pointer + length]
 
     def forward(self, length=1):
         # type: (int) -> None
-        if self.pointer+length+1 >= len(self.buffer):
-            self.update(length+1)
+        if self.pointer + length + 1 >= len(self.buffer):
+            self.update(length + 1)
         while length != 0:
             ch = self.buffer[self.pointer]
             self.pointer += 1
@@ -203,7 +203,7 @@ class Reader(object):
         match = self.NON_PRINTABLE.search(data)
         if bool(match):
             character = match.group()
-            position = self.index+(len(self.buffer)-self.pointer)+match.start()
+            position = self.index + (len(self.buffer) - self.pointer) + match.start()
             raise ReaderError(self.name, position, ord(character),
                               'unicode', "special characters are not allowed")
 

@@ -39,6 +39,7 @@ def test_representer_types(code_filename, verbose=False):
                     print("OUTPUT:")
                     print(output)
 
+
 test_representer_types.unittest = ['.code']
 
 if __name__ == '__main__':

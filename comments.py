@@ -389,7 +389,7 @@ class CommentedSeq(list, CommentedBase):
         for list_index in sorted(self.ca.items, reverse=True):
             if list_index < idx:
                 break
-            self.ca.items[list_index+1] = self.ca.items.pop(list_index)
+            self.ca.items[list_index + 1] = self.ca.items.pop(list_index)
 
     def pop(self, idx=None):
         # type: (Any) -> Any
@@ -398,14 +398,14 @@ class CommentedSeq(list, CommentedBase):
         for list_index in sorted(self.ca.items):
             if list_index < idx:
                 continue
-            self.ca.items[list_index-1] = self.ca.items.pop(list_index)
+            self.ca.items[list_index - 1] = self.ca.items.pop(list_index)
         return res
 
     def _yaml_get_column(self, key):
         # type: (Any) -> Any
         column = None
         sel_idx = None
-        pre, post = key-1, key+1
+        pre, post = key - 1, key + 1
         if pre in self.ca.items:
             sel_idx = pre
         elif post in self.ca.items:
@@ -472,7 +472,7 @@ class CommentedKeySeq(tuple, CommentedBase):
         # type: (Any) -> Any
         column = None
         sel_idx = None
-        pre, post = key-1, key+1
+        pre, post = key - 1, key + 1
         if pre in self.ca.items:
             sel_idx = pre
         elif post in self.ca.items:
@@ -677,8 +677,8 @@ class CommentedMap(ordereddict, CommentedBase):
             if level >= len(key_list):
                 if level > len(key_list):
                     raise IndexError
-                return d[key_list[level-1]]
-            return get_one_level(key_list, level+1, d[key_list[level-1]])
+                return d[key_list[level - 1]]
+            return get_one_level(key_list, level + 1, d[key_list[level - 1]])
 
         try:
             return get_one_level(key, 1, self)

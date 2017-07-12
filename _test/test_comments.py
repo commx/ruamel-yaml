@@ -736,6 +736,7 @@ class TestEmptyValueBeforeComments:
           b:   # comment b
         """)
 
+
 test_block_scalar_commented_line_template = """\
 y: p
 # Some comment

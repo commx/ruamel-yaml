@@ -17,6 +17,7 @@ class XXX(yaml.comments.CommentedMap):
         yield data
         constructor.construct_mapping(node, data)
 
+
 yaml.add_constructor(u'!xxx', XXX.yaml_load, constructor=yaml.RoundTripConstructor)
 yaml.add_representer(XXX, XXX.yaml_dump, representer=yaml.RoundTripRepresenter)
 

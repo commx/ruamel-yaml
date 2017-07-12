@@ -14,6 +14,7 @@ def test_canonical_scanner(canonical_filename, verbose=False):
         for token in tokens:
             print(token)
 
+
 test_canonical_scanner.unittest = ['.canonical']
 
 
@@ -25,6 +26,7 @@ def test_canonical_parser(canonical_filename, verbose=False):
     if verbose:
         for event in events:
             print(event)
+
 
 test_canonical_parser.unittest = ['.canonical']
 
@@ -39,6 +41,7 @@ def test_canonical_error(data_filename, canonical_filename, verbose=False):
             print(exc)
     else:
         raise AssertionError("expected an exception")
+
 
 test_canonical_error.unittest = ['.data', '.canonical']
 test_canonical_error.skip = ['.empty']

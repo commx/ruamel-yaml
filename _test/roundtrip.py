@@ -19,7 +19,7 @@ def dedent(data):
     except ValueError:
         pass
     else:
-        data = data[position_of_first_newline+1:]
+        data = data[position_of_first_newline + 1:]
     return textwrap.dedent(data)
 
 

@@ -131,7 +131,7 @@ def _make_objects():
             return self
 
         def __cmp__(self, other):
-            return cmp((type(self), self.foo, self.bar, self.baz),
+            return cmp((type(self), self.foo, self.bar, self.baz),  # NOQA
                        (type(other), other.foo, other.bar, other.baz))
 
         def __eq__(self, other):
@@ -145,7 +145,7 @@ def _make_objects():
             self.baz = baz
 
         def __cmp__(self, other):
-            return cmp((type(self), self.foo, self.bar, self.baz),
+            return cmp((type(self), self.foo, self.bar, self.baz),  # NOQA
                        (type(other), other.foo, other.bar, other.baz))
 
         def __eq__(self, other):
@@ -225,7 +225,7 @@ def _make_objects():
 
     class MyList(list):
         def __init__(self, n=1):
-            self.extend([None]*n)
+            self.extend([None] * n)
 
         def __eq__(self, other):
             return type(self) is type(other) and list(self) == list(other)
@@ -254,6 +254,7 @@ def _make_objects():
 
     today = datetime.date.today()
 
+
 try:
     from ruamel.ordereddict import ordereddict
 except:
@@ -281,7 +282,7 @@ def _serialize_value(data):
         return '{%s}' % ', '.join(items)
     elif isinstance(data, datetime.datetime):
         return repr(data.utctimetuple())
-    elif PY2 and isinstance(data, unicode):
+    elif PY2 and isinstance(data, unicode):  # NOQA
         return data.encode('utf-8')
     elif isinstance(data, float) and data != data:
         return '?'
@@ -319,6 +320,7 @@ def test_constructor_types(data_filename, code_filename, verbose=False):
             print("NATIVE2:")
             pprint.pprint(native2)
 
+
 test_constructor_types.unittest = ['.data', '.code']
 
 
@@ -343,6 +345,7 @@ def test_roundtrip_data(code_filename, roundtrip_filename, verbose=False):
         if verbose:
             print("NATIVE2:")
             pprint.pprint(native2)
+
 
 test_roundtrip_data.unittest = ['.data', '.roundtrip']
 

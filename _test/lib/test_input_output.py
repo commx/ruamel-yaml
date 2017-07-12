@@ -31,9 +31,9 @@ if PY3:
         output = yaml.load(StringIO(data))
         assert output == value, (output, value)
         for input in [data.encode('utf-8'),
-                      codecs.BOM_UTF8+data.encode('utf-8'),
-                      codecs.BOM_UTF16_BE+data.encode('utf-16-be'),
-                      codecs.BOM_UTF16_LE+data.encode('utf-16-le')]:
+                      codecs.BOM_UTF8 + data.encode('utf-8'),
+                      codecs.BOM_UTF16_BE + data.encode('utf-16-be'),
+                      codecs.BOM_UTF16_LE + data.encode('utf-16-le')]:
             if verbose:
                 print("INPUT:", repr(input[:10]), "...")
             output = yaml.load(input)
@@ -48,9 +48,9 @@ else:
         output = yaml.load(_unicode_open(StringIO(data.encode('utf-8')), 'utf-8'))
         assert output == value, (output, value)
         for input in [data, data.encode('utf-8'),
-                      codecs.BOM_UTF8+data.encode('utf-8'),
-                      codecs.BOM_UTF16_BE+data.encode('utf-16-be'),
-                      codecs.BOM_UTF16_LE+data.encode('utf-16-le')]:
+                      codecs.BOM_UTF8 + data.encode('utf-8'),
+                      codecs.BOM_UTF16_BE + data.encode('utf-16-be'),
+                      codecs.BOM_UTF16_LE + data.encode('utf-16-le')]:
             if verbose:
                 print("INPUT:", repr(input[:10]), "...")
             output = yaml.load(input)
@@ -66,9 +66,9 @@ def test_unicode_input_errors(unicode_filename, verbose=False):
         data = fp.read().decode('utf-8')
     for input in [data.encode('latin1', 'ignore'),
                   data.encode('utf-16-be'), data.encode('utf-16-le'),
-                  codecs.BOM_UTF8+data.encode('utf-16-be'),
-                  codecs.BOM_UTF16_BE+data.encode('utf-16-le'),
-                  codecs.BOM_UTF16_LE+data.encode('utf-8')+b'!']:
+                  codecs.BOM_UTF8 + data.encode('utf-16-be'),
+                  codecs.BOM_UTF16_BE + data.encode('utf-16-le'),
+                  codecs.BOM_UTF16_LE + data.encode('utf-8') + b'!']:
         try:
             yaml.load(input)
         except yaml.YAMLError as exc:
@@ -83,6 +83,7 @@ def test_unicode_input_errors(unicode_filename, verbose=False):
                 print(exc)
         else:
             raise AssertionError("expected an exception")
+
 
 test_unicode_input_errors.unittest = ['.unicode']
 
@@ -166,13 +167,14 @@ else:
                 assert isinstance(data2, str), (type(data2), encoding)
                 data2.decode('utf-8')
                 if encoding is None:
-                    assert isinstance(data3, unicode), (type(data3), encoding)
-                    assert isinstance(data4, unicode), (type(data4), encoding)
+                    assert isinstance(data3, unicode), (type(data3), encoding) # NOQA
+                    assert isinstance(data4, unicode), (type(data4), encoding) # NOQA
                 else:
                     assert isinstance(data3, str), (type(data3), encoding)
                     data3.decode(encoding)
                     assert isinstance(data4, str), (type(data4), encoding)
                     data4.decode(encoding)
+
 
 test_unicode_output.unittest = ['.unicode']
 
@@ -220,6 +222,7 @@ def test_file_output(unicode_filename, verbose=False):
         if os.path.exists(filename):
             os.unlink(filename)
 
+
 test_file_output.unittest = ['.unicode']
 
 
@@ -230,7 +233,7 @@ def test_unicode_transfer(unicode_filename, verbose=False):
         input = data
         if PY3:
             if encoding is not None:
-                input = ('\ufeff'+input).encode(encoding)
+                input = ('\ufeff' + input).encode(encoding)
             output1 = yaml.emit(yaml.parse(input), allow_unicode=True)
             if encoding is None:
                 stream = StringIO()
@@ -246,18 +249,19 @@ def test_unicode_transfer(unicode_filename, verbose=False):
                 output2.decode(encoding)
         else:
             if encoding is not None:
-                input = (u'\ufeff'+input).encode(encoding)
+                input = (u'\ufeff' + input).encode(encoding)
             output1 = yaml.emit(yaml.parse(input), allow_unicode=True)
             stream = StringIO()
             yaml.emit(yaml.parse(input), _unicode_open(stream, 'utf-8'), allow_unicode=True)
             output2 = stream.getvalue()
             if encoding is None:
-                assert isinstance(output1, unicode), (type(output1), encoding)
+                assert isinstance(output1, unicode), (type(output1), encoding)  # NOQA
             else:
                 assert isinstance(output1, str), (type(output1), encoding)
                 output1.decode(encoding)
             assert isinstance(output2, str), (type(output2), encoding)
             output2.decode('utf-8')
+
 
 test_unicode_transfer.unittest = ['.unicode']
 

@@ -360,12 +360,12 @@ class SafeConstructor(BaseConstructor):
 
     # YAML 1.2 spec doesn't mention yes/no etc any more, 1.1 does
     bool_values = {
-        u'yes':     True,
-        u'no':      False,
-        u'true':    True,
-        u'false':   False,
-        u'on':      True,
-        u'off':     False,
+        u'yes': True,
+        u'no': False,
+        u'true': True,
+        u'false': False,
+        u'on': True,
+        u'off': False,
     }
 
     def construct_yaml_bool(self, node):
@@ -385,29 +385,29 @@ class SafeConstructor(BaseConstructor):
         if value_s == '0':
             return 0
         elif value_s.startswith('0b'):
-            return sign*int(value_s[2:], 2)
+            return sign * int(value_s[2:], 2)
         elif value_s.startswith('0x'):
-            return sign*int(value_s[2:], 16)
+            return sign * int(value_s[2:], 16)
         elif value_s.startswith('0o'):
-            return sign*int(value_s[2:], 8)
+            return sign * int(value_s[2:], 8)
         elif self.resolver.processing_version != (1, 2) and value_s[0] == '0':
-            return sign*int(value_s, 8)
+            return sign * int(value_s, 8)
         elif self.resolver.processing_version != (1, 2) and ':' in value_s:
             digits = [int(part) for part in value_s.split(':')]
             digits.reverse()
             base = 1
             value = 0
             for digit in digits:
-                value += digit*base
+                value += digit * base
                 base *= 60
-            return sign*value
+            return sign * value
         else:
-            return sign*int(value_s)
+            return sign * int(value_s)
 
     inf_value = 1e300
-    while inf_value != inf_value*inf_value:
+    while inf_value != inf_value * inf_value:
         inf_value *= inf_value
-    nan_value = -inf_value/inf_value   # Trying to make a quiet NaN (like C99).
+    nan_value = -inf_value / inf_value   # Trying to make a quiet NaN (like C99).
 
     def construct_yaml_float(self, node):
         # type: (Any) -> float
@@ -419,7 +419,7 @@ class SafeConstructor(BaseConstructor):
         if value_s[0] in '+-':
             value_s = value_s[1:]
         if value_s == '.inf':
-            return sign*self.inf_value
+            return sign * self.inf_value
         elif value_s == '.nan':
             return self.nan_value
         elif ':' in value_s:
@@ -428,11 +428,11 @@ class SafeConstructor(BaseConstructor):
             base = 1
             value = 0.0
             for digit in digits:
-                value += digit*base
+                value += digit * base
                 base *= 60
-            return sign*value
+            return sign * value
         else:
-            return sign*float(value_s)
+            return sign * float(value_s)
 
     if PY3:
         def construct_yaml_binary(self, node):
@@ -614,6 +614,7 @@ class SafeConstructor(BaseConstructor):
             "could not determine a constructor for the tag %r" %
             utf8(node.tag),
             node.start_mark)
+
 
 SafeConstructor.add_constructor(
     u'tag:yaml.org,2002:null',
@@ -864,6 +865,7 @@ class Constructor(SafeConstructor):
         # type: (Any, Any) -> Any
         return self.construct_python_object_apply(suffix, node, newobj=True)
 
+
 Constructor.add_constructor(
     u'tag:yaml.org,2002:python/none',
     Constructor.construct_yaml_null)
@@ -981,7 +983,7 @@ class RoundTripConstructor(SafeConstructor):
             if underscore is not None:
                 underscore[1] = value_su[2] == '_'
                 underscore[2] = len(value_su[2:]) > 1 and value_su[-1] == '_'
-            return BinaryInt(sign*int(value_s[2:], 2), width=width,   # type: ignore
+            return BinaryInt(sign * int(value_s[2:], 2), width=width,   # type: ignore
                              underscore=underscore)
         elif value_s.startswith('0x'):
             # default to lower-case if no a-fA-F in string
@@ -997,40 +999,40 @@ class RoundTripConstructor(SafeConstructor):
             if underscore is not None:
                 underscore[1] = value_su[2] == '_'
                 underscore[2] = len(value_su[2:]) > 1 and value_su[-1] == '_'
-            return hex_fun(sign*int(value_s[2:], 16), width=width, underscore=underscore)
+            return hex_fun(sign * int(value_s[2:], 16), width=width, underscore=underscore)
         elif value_s.startswith('0o'):
             if self.resolver.processing_version > (1, 1) and value_s[2] == '0':
                 width = len(value_s[2:])
             if underscore is not None:
                 underscore[1] = value_su[2] == '_'
                 underscore[2] = len(value_su[2:]) > 1 and value_su[-1] == '_'
-            return OctalInt(sign*int(value_s[2:], 8), width=width,  # type: ignore
+            return OctalInt(sign * int(value_s[2:], 8), width=width,  # type: ignore
                             underscore=underscore)
         elif self.resolver.processing_version != (1, 2) and value_s[0] == '0':
-            return sign*int(value_s, 8)
+            return sign * int(value_s, 8)
         elif self.resolver.processing_version != (1, 2) and ':' in value_s:
             digits = [int(part) for part in value_s.split(':')]
             digits.reverse()
             base = 1
             value = 0
             for digit in digits:
-                value += digit*base
+                value += digit * base
                 base *= 60
-            return sign*value
+            return sign * value
         elif self.resolver.processing_version > (1, 1) and value_s[0] == '0':
             # not an octal, an integer with leading zero(s)
             if underscore is not None:
                 # cannot have a leading underscore
                 underscore[2] = len(value_su) > 1 and value_su[-1] == '_'
-            return ScalarInt(sign*int(value_s), width=len(value_s),  # type: ignore
+            return ScalarInt(sign * int(value_s), width=len(value_s),  # type: ignore
                              underscore=underscore)
         elif underscore:
             # cannot have a leading underscore
             underscore[2] = len(value_su) > 1 and value_su[-1] == '_'
-            return ScalarInt(sign*int(value_s), width=None,  # type: ignore
+            return ScalarInt(sign * int(value_s), width=None,  # type: ignore
                              underscore=underscore)
         else:
-            return sign*int(value_s)
+            return sign * int(value_s)
 
     def construct_yaml_str(self, node):
         # type: (Any) -> Any

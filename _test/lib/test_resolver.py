@@ -25,6 +25,7 @@ def test_implicit_resolver(data_filename, detect_filename, verbose=False):
                 print("CHILDREN:")
                 pprint.pprint(node.value)
 
+
 test_implicit_resolver.unittest = ['.data', '.detect']
 
 
@@ -81,6 +82,7 @@ def test_path_resolver_loader(data_filename, path_filename, verbose=False):
         if verbose:
             print(yaml.serialize_all(nodes1))
 
+
 test_path_resolver_loader.unittest = ['.data', '.path']
 
 
@@ -98,6 +100,7 @@ def test_path_resolver_dumper(data_filename, path_filename, verbose=False):
             data1 = _convert_node(node1)
             data2 = _convert_node(node2)
             assert data1 == data2, (data1, data2)
+
 
 test_path_resolver_dumper.unittest = ['.data', '.path']
 

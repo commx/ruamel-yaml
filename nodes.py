@@ -2,6 +2,8 @@
 
 from __future__ import print_function
 
+from .compat import string_types
+
 if False:  # MYPY
     from typing import Dict, Any, Text   # NOQA
 
@@ -39,7 +41,7 @@ class Node(object):
 
     def dump(self, indent=0):
         # type: (int) -> None
-        if isinstance(self.value, basestring):
+        if isinstance(self.value, string_types):
             print('{}{}(tag={!r}, value={!r})'.format(
                 '  ' * indent, self.__class__.__name__, self.tag, self.value))
             if self.comment:
@@ -54,9 +56,9 @@ class Node(object):
         for v in self.value:
             if isinstance(v, tuple):
                 for v1 in v:
-                    v1.dump(indent+1)
+                    v1.dump(indent + 1)
             elif isinstance(v, Node):
-                v.dump(indent+1)
+                v.dump(indent + 1)
             else:
                 print('Node value type?', type(v))
 

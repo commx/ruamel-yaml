@@ -97,8 +97,8 @@ class Parser(object):
     # do not give many comments here.
 
     DEFAULT_TAGS = {
-        u'!':   u'!',
-        u'!!':  u'tag:yaml.org,2002:',
+        u'!': u'!',
+        u'!!': u'tag:yaml.org,2002:',
     }
 
     def __init__(self, loader):
@@ -732,4 +732,4 @@ class RoundTripParser(Parser):
                                          u'timestamp', u'omap', u'pairs', u'set', u'str',
                                          u'seq', u'map'):
             return Parser.transform_tag(self, handle, suffix)
-        return handle+suffix
+        return handle + suffix

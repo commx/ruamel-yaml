@@ -240,7 +240,7 @@ class BaseResolver(object):
     def check_resolver_prefix(self, depth, path, kind,
                               current_node, current_index):
         # type: (int, Text, Any, Any, Any) -> bool
-        node_check, index_check = path[depth-1]
+        node_check, index_check = path[depth - 1]
         if isinstance(node_check, string_types):
             if current_node.tag != node_check:
                 return False
@@ -295,6 +295,7 @@ class BaseResolver(object):
 
 class Resolver(BaseResolver):
     pass
+
 
 Resolver.add_implicit_resolver_base(
     u'tag:yaml.org,2002:bool',

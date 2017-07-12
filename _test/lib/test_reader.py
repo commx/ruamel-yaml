@@ -29,7 +29,7 @@ def test_stream_error(error_filename, verbose=False):
         try:
             if PY2:
                 with open(error_filename, 'rb') as fp0:
-                    data = unicode(fp0.read(), encoding)
+                    data = unicode(fp0.read(), encoding)  # NOQA
             else:
                 with open(error_filename, 'rb') as fp0:
                     data = fp0.read().decode(encoding)
@@ -41,6 +41,7 @@ def test_stream_error(error_filename, verbose=False):
     _run_reader(data, verbose)
     with io.open(error_filename, encoding=encoding) as fp:
         _run_reader(fp, verbose)
+
 
 test_stream_error.unittest = ['.stream-error']
 
