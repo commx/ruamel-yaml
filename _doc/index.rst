@@ -14,6 +14,7 @@ Contents:
    overview
    install
    basicuse
+   dumpcls
    detail
    example
    api

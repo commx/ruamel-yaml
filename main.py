@@ -269,7 +269,9 @@ class YAML(object):
         if not hasattr(stream, 'read') and hasattr(stream, 'open'):
             # pathlib.Path() instance
             with stream.open('r') as fp:  # type: ignore
-                yield self.load_all(fp, _kw=enforce)
+                for d in self.load_all(fp, _kw=enforce):
+                    yield d
+                raise StopIteration()
         # if skip is None:
         #     skip = []
         # elif isinstance(skip, int):
@@ -452,8 +454,60 @@ class YAML(object):
         res = [x.replace(gpbd, '')[1:-3] for x in glob.glob(bd + '/*/__plug_in__.py')]
         return res
 
+    def register_class(self, cls):
+        """
+        register a class for dumping loading
+        - if it has attribute yaml_tag use that to register, else use class name
+        - if it has methods to_yaml/from_yaml use those to dump/load else dump attributes
+          as mapping
+        """
+        tag = getattr(cls, 'yaml_tag', '!' + cls.__name__)
+        try:
+            self.representer.add_representer(cls, cls.to_yaml)
+        except AttributeError:
+            def t_y(representer, data):
+                return representer.represent_yaml_object(
+                    tag, data, cls, flow_style=representer.default_flow_style)
+
+            self.representer.add_representer(cls, t_y)
+        try:
+            self.constructor.add_constructor(tag, cls.from_yaml)
+        except AttributeError:
+            def f_y(constructor, node):
+                return constructor.construct_yaml_object(node, cls)
+
+            self.constructor.add_constructor(tag, f_y)
+
+
+def yaml_object(yml):
+    """ decorator for classes that needs to dump/load objects
+    The tag for such objects is taken from the class attribute yaml_tag (or the
+    class name in lowercase in case unavailable)
+    If methods to_yaml and/or from_yaml are available, these are called for dumping resp.
+    loading, default routines (dumping a mapping of the attributes) used otherwise.
+    """
+    def yo_deco(cls):
+        tag = getattr(cls, 'yaml_tag', '!' + cls.__name__)
+        try:
+            yml.representer.add_representer(cls, cls.to_yaml)
+        except AttributeError:
+            def t_y(representer, data):
+                return representer.represent_yaml_object(
+                    tag, data, cls, flow_style=representer.default_flow_style)
+
+            yml.representer.add_representer(cls, t_y)
+        try:
+            yml.constructor.add_constructor(tag, cls.from_yaml)
+        except AttributeError:
+            def f_y(constructor, node):
+                return constructor.construct_yaml_object(node, cls)
+
+            yml.constructor.add_constructor(tag, f_y)
+        return cls
+    return yo_deco
 
 ########################################################################################
+
 
 def scan(stream, Loader=Loader):
     # type: (StreamTextType, Any) -> Any

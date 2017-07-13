@@ -169,6 +169,7 @@ def _package_data(fn):
                 raise NotImplementedError
     return data
 
+
 # make sure you can run "python ../some/dir/setup.py install"
 pkg_data = _package_data(__file__.replace('setup.py', '__init__.py'))
 
@@ -241,7 +242,7 @@ class MySdist(_sdist):
         # because of unicode_literals
         # self.formats = fmt if fmt else [b'bztar'] if sys.version_info < (3, ) else ['bztar']
         dist_base = os.environ.get('PYDISTBASE')
-        fpn = getattr(getattr(self, 'nsp', self), 'full_package_name',  None)
+        fpn = getattr(getattr(self, 'nsp', self), 'full_package_name', None)
         if fpn and dist_base:
             print('setting  distdir {}/{}'.format(dist_base, fpn))
             self.dist_dir = os.path.join(dist_base, fpn)
@@ -256,7 +257,7 @@ try:
         def initialize_options(self):
             _bdist_wheel.initialize_options(self)
             dist_base = os.environ.get('PYDISTBASE')
-            fpn = getattr(getattr(self, 'nsp', self), 'full_package_name',  None)
+            fpn = getattr(getattr(self, 'nsp', self), 'full_package_name', None)
             if fpn and dist_base:
                 print('setting  distdir {}/{}'.format(dist_base, fpn))
                 self.dist_dir = os.path.join(dist_base, fpn)
@@ -356,7 +357,7 @@ class NameSpacePackager(object):
                 sys.exit(1)
         # If you only support an extension module on Linux, Windows thinks it
         # is pure. That way you would get pure python .whl files that take
-        # precedence for downloading on Linux over source with compilable C
+        # precedence for downloading on Linux over source with compilable C code
         if self._pkg_data.get('universal'):
             Distribution.is_pure = lambda *args: True
         else:
@@ -916,5 +917,6 @@ def main():
                 with InMemoryZipFile(full_name) as imz:
                     imz.delete_from_zip_file(nsp.full_package_name + '.*.pth')
                 break
+
 
 main()

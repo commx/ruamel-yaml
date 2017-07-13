@@ -154,6 +154,19 @@ class TestNoIndent:
         print(d)
         assert d == s + '\n'
 
+    def test_top_literal_multi_doc(self):
+        yaml = YAML(typ='safe', pure=True)
+        s1 = 'abc'
+        s2 = 'klm'
+        for idx, d1 in enumerate(yaml.load_all("""
+        --- |-
+        {}
+        --- |
+        {}
+        """.format(s1, s2))):
+            print('d1:', d1)
+            assert ['abc', 'klm\n'][idx] == d1
+
 
 class Test_RoundTripLiteral:
     def test_rt_top_literal_scalar_no_indent(self):

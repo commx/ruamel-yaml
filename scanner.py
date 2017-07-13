@@ -41,6 +41,10 @@ if False:  # MYPY
 __all__ = ['Scanner', 'RoundTripScanner', 'ScannerError']
 
 
+_THE_END = u'\0\r\n\x85\u2028\u2029'
+_THE_END_SPACE_TAB = u'\0 \t\r\n\x85\u2028\u2029'
+
+
 class ScannerError(MarkedYAMLError):
     pass
 
@@ -726,7 +730,7 @@ class Scanner(object):
         # DOCUMENT-START:   ^ '---' (' '|'\n')
         if self.reader.column == 0:
             if self.reader.prefix(3) == u'---'  \
-                    and self.reader.peek(3) in u'\0 \t\r\n\x85\u2028\u2029':
+                    and self.reader.peek(3) in _THE_END_SPACE_TAB:
                 return True
         return None
 
@@ -735,14 +739,14 @@ class Scanner(object):
         # DOCUMENT-END:     ^ '...' (' '|'\n')
         if self.reader.column == 0:
             if self.reader.prefix(3) == u'...'  \
-                    and self.reader.peek(3) in u'\0 \t\r\n\x85\u2028\u2029':
+                    and self.reader.peek(3) in _THE_END_SPACE_TAB:
                 return True
         return None
 
     def check_block_entry(self):
         # type: () -> Any
         # BLOCK-ENTRY:      '-' (' '|'\n')
-        return self.reader.peek(1) in u'\0 \t\r\n\x85\u2028\u2029'
+        return self.reader.peek(1) in _THE_END_SPACE_TAB
 
     def check_key(self):
         # type: () -> Any
@@ -750,7 +754,7 @@ class Scanner(object):
         if bool(self.flow_level):
             return True
         # KEY(block context):   '?' (' '|'\n')
-        return self.reader.peek(1) in u'\0 \t\r\n\x85\u2028\u2029'
+        return self.reader.peek(1) in _THE_END_SPACE_TAB
 
     def check_value(self):
         # type: () -> Any
@@ -758,7 +762,7 @@ class Scanner(object):
         if bool(self.flow_level):
             return True
         # VALUE(block context): ':' (' '|'\n')
-        return self.reader.peek(1) in u'\0 \t\r\n\x85\u2028\u2029'
+        return self.reader.peek(1) in _THE_END_SPACE_TAB
 
     def check_plain(self):
         # type: () -> Any
@@ -776,7 +780,7 @@ class Scanner(object):
         # independent.
         ch = self.reader.peek()
         return ch not in u'\0 \t\r\n\x85\u2028\u2029-?:,[]{}#&*!|>\'\"%@`' or \
-            (self.reader.peek(1) not in u'\0 \t\r\n\x85\u2028\u2029' and
+            (self.reader.peek(1) not in _THE_END_SPACE_TAB and
              (ch == u'-' or (not self.flow_level and ch in u'?:')))
 
     # Scanners.
@@ -809,7 +813,7 @@ class Scanner(object):
             while self.reader.peek() == u' ':
                 self.reader.forward()
             if self.reader.peek() == u'#':
-                while self.reader.peek() not in u'\0\r\n\x85\u2028\u2029':
+                while self.reader.peek() not in _THE_END:
                     self.reader.forward()
             if self.scan_line_break():
                 if not self.flow_level:
@@ -833,7 +837,7 @@ class Scanner(object):
             end_mark = self.reader.get_mark()
         else:
             end_mark = self.reader.get_mark()
-            while self.reader.peek() not in u'\0\r\n\x85\u2028\u2029':
+            while self.reader.peek() not in _THE_END:
                 self.reader.forward()
         self.scan_directive_ignored_line(start_mark)
         return DirectiveToken(name, value, start_mark, end_mark)
@@ -939,10 +943,10 @@ class Scanner(object):
         while self.reader.peek() == u' ':
             self.reader.forward()
         if self.reader.peek() == u'#':
-            while self.reader.peek() not in u'\0\r\n\x85\u2028\u2029':
+            while self.reader.peek() not in _THE_END:
                 self.reader.forward()
         ch = self.reader.peek()
-        if ch not in u'\0\r\n\x85\u2028\u2029':
+        if ch not in _THE_END:
             raise ScannerError(
                 "while scanning a directive", start_mark,
                 "expected a comment or a line break, but found %r"
@@ -1006,7 +1010,7 @@ class Scanner(object):
                     "expected '>', but found %r" % utf8(self.reader.peek()),
                     self.reader.get_mark())
             self.reader.forward()
-        elif ch in u'\0 \t\r\n\x85\u2028\u2029':
+        elif ch in _THE_END_SPACE_TAB:
             handle = None
             suffix = u'!'
             self.reader.forward()
@@ -1075,12 +1079,17 @@ class Scanner(object):
             chunks.extend(breaks)
             leading_non_space = self.reader.peek() not in u' \t'
             length = 0
-            while self.reader.peek(length) not in u'\0\r\n\x85\u2028\u2029':
+            while self.reader.peek(length) not in _THE_END:
                 length += 1
             chunks.append(self.reader.prefix(length))
             self.reader.forward(length)
             line_break = self.scan_line_break()
             breaks, end_mark = self.scan_block_scalar_breaks(indent)
+            if style in '|>' and min_indent == 0:
+                # at the beginning of a line, if in block style see if
+                # end of document/start_new_document
+                if self.check_document_start() or self.check_document_end():
+                    break
             if self.reader.column == indent and self.reader.peek() != u'\0':
 
                 # Unfortunately, folding rules are ambiguous.
@@ -1187,10 +1196,10 @@ class Scanner(object):
         while self.reader.peek() == u' ':
             self.reader.forward()
         if self.reader.peek() == u'#':
-            while self.reader.peek() not in u'\0\r\n\x85\u2028\u2029':
+            while self.reader.peek() not in _THE_END:
                 self.reader.forward()
         ch = self.reader.peek()
-        if ch not in u'\0\r\n\x85\u2028\u2029':
+        if ch not in _THE_END:
             raise ScannerError(
                 "while scanning a block scalar", start_mark,
                 "expected a comment or a line break, but found %r"
@@ -1364,7 +1373,7 @@ class Scanner(object):
             # separators.
             prefix = self.reader.prefix(3)
             if (prefix == u'---' or prefix == u'...')   \
-                    and self.reader.peek(3) in u'\0 \t\r\n\x85\u2028\u2029':
+                    and self.reader.peek(3) in _THE_END_SPACE_TAB:
                 raise ScannerError("while scanning a quoted scalar",
                                    start_mark,
                                    "found unexpected document separator",
@@ -1399,11 +1408,11 @@ class Scanner(object):
             while True:
                 ch = self.reader.peek(length)
                 if (ch == u':' and
-                   self.reader.peek(length + 1) not in u'\0 \t\r\n\x85\u2028\u2029'):
+                   self.reader.peek(length + 1) not in _THE_END_SPACE_TAB):
                     pass
-                elif (ch in u'\0 \t\r\n\x85\u2028\u2029' or
+                elif (ch in _THE_END_SPACE_TAB or
                       (not self.flow_level and ch == u':' and
-                          self.reader.peek(length + 1) in u'\0 \t\r\n\x85\u2028\u2029') or
+                          self.reader.peek(length + 1) in _THE_END_SPACE_TAB) or
                       (self.flow_level and ch in u',:?[]{}')):
                     break
                 length += 1
@@ -1453,7 +1462,7 @@ class Scanner(object):
             self.allow_simple_key = True
             prefix = self.reader.prefix(3)
             if (prefix == u'---' or prefix == u'...')   \
-                    and self.reader.peek(3) in u'\0 \t\r\n\x85\u2028\u2029':
+                    and self.reader.peek(3) in _THE_END_SPACE_TAB:
                 return
             breaks = []
             while self.reader.peek() in u' \r\n\x85\u2028\u2029':
@@ -1463,7 +1472,7 @@ class Scanner(object):
                     breaks.append(self.scan_line_break())
                     prefix = self.reader.prefix(3)
                     if (prefix == u'---' or prefix == u'...')   \
-                       and self.reader.peek(3) in u'\0 \t\r\n\x85\u2028\u2029':
+                       and self.reader.peek(3) in _THE_END_SPACE_TAB:
                         return
             if line_break != u'\n':
                 chunks.append(line_break)
@@ -1700,7 +1709,7 @@ class RoundTripScanner(Scanner):
                 start_mark = self.reader.get_mark()
                 comment = ch
                 self.reader.forward()
-                while ch not in u'\0\r\n\x85\u2028\u2029':
+                while ch not in _THE_END:
                     ch = self.reader.peek()
                     if ch == u'\0':  # don't gobble the end-of-stream character
                         break

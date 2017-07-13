@@ -1,3 +1,20 @@
+---
+version: 0.1
+output: rst
+fix_inline_single_backquotes: true
+pdf: true
+--- !python-pre |
+import sys
+from io import StringIO
+import ruamel.yaml
+from ruamel.yaml import YAML
+yaml=YAML()
+ostream = s = StringIO()
+istream = stream = doc = "a: 1"
+data = dict(a=1)
+from pathlib import Path  # or: from ruamel.std.pathlib import Path
+--- |
+
 Departure from previous API
 ---------------------------
 
@@ -32,26 +49,27 @@ resp. the data and stram argument. All other parameters  are set on the instance
 of ``YAML`` before calling ``load()`` or ``dump()``
 
 Before 0.15.0::
+--- !python |
+from pathlib import Path
+from ruamel import yaml
 
-  from pathlib import Path
-  from ruamel import yaml
-  
-  data = yaml.safe_load("abc: 1")
-  out = Path('/tmp/out.yaml')
-  with out.open('w') as fp:
-      yaml.safe_dump(data, fp, default_flow_style=False)
-
+data = yaml.safe_load("abc: 1")
+out = Path('/tmp/out.yaml')
+with out.open('w') as fp:
+    yaml.safe_dump(data, fp, default_flow_style=False)
+--- |
 after::
+--- !python |
+from pathlib import Path
+from ruamel.yaml import YAML
 
-  from pathlib import Path
-  from ruamel.yaml import YAML
-  
-  yaml = YAML(typ='safe')
-  yaml.default_flow_style = False
-  data = yaml.load("abc: 1")
-  out = Path('/tmp/out.yaml')
-  yaml.dump(data, out)
+yaml = YAML(typ='safe')
+yaml.default_flow_style = False
+data = yaml.load("abc: 1")
+out = Path('/tmp/out.yaml')
+yaml.dump(data, out)
 
+--- |
 If you previously used an keyword argument ``explicit_start=True`` you
 now do ``yaml.explicit_start = True`` before calling ``dump()``. The
 ``Loader`` and ``Dumper`` keyword arguments are not supported that
@@ -91,10 +109,11 @@ required this.
 In the new API (starting 0.15.1) duplicate keys in mappings are no longer allowed by
 default. To allow duplicate keys in mappings::
 
-  yaml = ruamel.yaml.YAML()
-  yaml.allow_duplicate_keys = True
-  yaml.load(stream)
-
+--- !python |
+yaml = ruamel.yaml.YAML()
+yaml.allow_duplicate_keys = True
+yaml.load(stream)
+--- |
 In the old API this is a warning starting with 0.15.2 and an error in
 0.16.0.
 
@@ -131,62 +150,69 @@ for reading resp.  writing.
 
 Loading and dumping using the ``SafeLoader``::
 
-  if ruamel.yaml.version_info < (0, 15):
-      data = yaml.safe_load(istream)
-      yaml.safe_dump(data, ostream)
-  else:
-      yml = ruamel.yaml.YAML(typ='safe', pure=True)  # 'safe' load and dump
-      data = yml.load(istream)
-      yml.dump(data, ostream)
+--- !python |
+if ruamel.yaml.version_info < (0, 15):
+    data = yaml.safe_load(istream)
+    yaml.safe_dump(data, ostream)
+else:
+    yml = ruamel.yaml.YAML(typ='safe', pure=True)  # 'safe' load and dump
+    data = yml.load(istream)
+    yml.dump(data, ostream)
+--- |
 
 Loading with the ``CSafeLoader``, dumping with
 ``RoundTripLoader``. You need two ``YAML`` instances, but each of them
 can be re-used::
 
-  if ruamel.yaml.version_info < (0, 15):
-      data = yaml.load(istream, Loader=yaml.CSafeLoader)
-      yaml.round_trip_dump(data, ostream, width=1000, explicit_start=True)
-  else:
-      yml = ruamel.yaml.YAML(typ='safe')
-      data = yml.load(istream)
-      ymlo = ruamel.yaml.YAML()   # or yaml.YAML(typ='rt')
-      ymlo.width = 1000
-      ymlo.explicit_start = True
-      ymlo.dump(data, ostream)
+--- !python |
+if ruamel.yaml.version_info < (0, 15):
+    data = yaml.load(istream, Loader=yaml.CSafeLoader)
+    yaml.round_trip_dump(data, ostream, width=1000, explicit_start=True)
+else:
+    yml = ruamel.yaml.YAML(typ='safe')
+    data = yml.load(istream)
+    ymlo = ruamel.yaml.YAML()   # or yaml.YAML(typ='rt')
+    ymlo.width = 1000
+    ymlo.explicit_start = True
+    ymlo.dump(data, ostream)
+--- |
+
 
 Loading and dumping from  ``pathlib.Path`` instances using the
 round-trip-loader::
 
-  # in myyaml.py
-  if ruamel.yaml.version_info < (0, 15):
-      class MyYAML(yaml.YAML):
-          def __init__(self):
-              yaml.YAML.__init__(self)
-              self.preserve_quotes = True
-              self.indent = 4
-              self.block_seq_indent = 2
-  # in your code
-  try:
-      from myyaml import MyYAML
-  except (ModuleNotFoundError, ImportError):
-      if ruamel.yaml.version_info >= (0, 15):
-          raise
-  
-  # some pathlib.Path
-  from pathlib import Path
-  inf = Path('/tmp/in.yaml')
-  outf = Path('/tmp/out.yaml')
-  
-  if ruamel.yaml.version_info < (0, 15):
-      with inf.open() as ifp:
-           data = yaml.round_trip_load(ifp, preserve_quotes=True)
-      with outf.open('w') as ofp:
-           yaml.round_trip_dump(data, ofp, indent=4, block_seq_indent=2)
-  else:
-      yml = MyYAML()
-      # no need for with statement when using pathlib.Path instances
-      data = yml.load(inf)
-      yml.dump(data, outf)
+--- !code |
+# in myyaml.py
+if ruamel.yaml.version_info < (0, 15):
+    class MyYAML(yaml.YAML):
+        def __init__(self):
+            yaml.YAML.__init__(self)
+            self.preserve_quotes = True
+            self.indent = 4
+            self.block_seq_indent = 2
+# in your code
+try:
+    from myyaml import MyYAML
+except (ModuleNotFoundError, ImportError):
+    if ruamel.yaml.version_info >= (0, 15):
+        raise
+
+# some pathlib.Path
+from pathlib import Path
+inf = Path('/tmp/in.yaml')
+outf = Path('/tmp/out.yaml')
+
+if ruamel.yaml.version_info < (0, 15):
+    with inf.open() as ifp:
+         data = yaml.round_trip_load(ifp, preserve_quotes=True)
+    with outf.open('w') as ofp:
+         yaml.round_trip_dump(data, ofp, indent=4, block_seq_indent=2)
+else:
+    yml = MyYAML()
+    # no need for with statement when using pathlib.Path instances
+    data = yml.load(inf)
+    yml.dump(data, outf)
+--- |
 
 Reason for API change
 ---------------------
@@ -241,4 +267,3 @@ information via that instance. Representers, etc., are added to a
 reusable instance and different YAML instances can co-exists.
 
 This change eases development and helps prevent regressions.
-

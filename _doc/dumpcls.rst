@@ -1,0 +1,97 @@
+Dumping Python classes
+======================
+
+Only ``yaml = YAML(typ='unsafe')`` loads and dumps Python objects out-of-the-box. And
+since it loads **any** Python object, this can be unsafe.
+
+If you have instances of some class(es) that you want to dump or load, it is
+easy to allow the YAML instance to that explicitly. You can either registering the
+class with the ``YAML`` instance or decorate the class.
+
+Registering is done with ``YAML.register_class()``::
+
+  import sys
+  import ruamel.yaml
+  
+  
+  class User(object):
+      def __init__(self, name, age):
+          self.name = name
+          self.age = age
+  
+  
+  yaml = ruamel.yaml.YAML()
+  yaml.register_class(User)
+  yaml.dump([User('Anthon', 18)], sys.stdout)
+
+which gives as output::
+
+  - !User
+    name: Anthon
+    age: 18
+
+The tag ``!User`` originates from the name of the class.
+
+You can specify a different tag by adding the attribute `yaml_tag`, and explicitly specify dump and/or load *classmethods* which have to be called ``from_yaml`` resp. ``from_yaml``::
+
+  import sys
+  import ruamel.yaml
+  
+  
+  class User:
+      yaml_tag = u'!user'
+  
+      def __init__(self, name, age):
+          self.name = name
+          self.age = age
+  
+      @classmethod
+      def to_yaml(cls, representer, node):
+          return representer.represent_scalar(cls.yaml_tag,
+                                              u'{.name}-{.age}'.format(node, node))
+  
+      @classmethod
+      def from_yaml(cls, constructor, node):
+          return cls(*node.value.split('-'))
+  
+  
+  yaml = ruamel.yaml.YAML()
+  yaml.register_class(User)
+  yaml.dump([User('Anthon', 18)], sys.stdout)
+
+which gives as output::
+
+  - !user Anthon-18
+
+When using the decorator, which takes the ``YAML()`` instance as a parameter,
+the ``yaml = YAML()`` line needs to be moved up in the file::
+
+  import sys
+  from ruamel.yaml import YAML, yaml_object
+  
+  yaml = YAML()
+  
+  
+  @yaml_object(yaml)
+  class User:
+      yaml_tag = u'!user'
+  
+      def __init__(self, name, age):
+          self.name = name
+          self.age = age
+  
+      @classmethod
+      def to_yaml(cls, representer, node):
+          return representer.represent_scalar(cls.yaml_tag,
+                                              u'{.name}-{.age}'.format(node, node))
+  
+      @classmethod
+      def from_yaml(cls, constructor, node):
+          return cls(*node.value.split('-'))
+  
+  
+  yaml.dump([User('Anthon', 18)], sys.stdout)
+
+The ``yaml_tag``, ``from_yaml`` and ``to_yaml`` work in the same way as when using
+``.register_class()``.
+

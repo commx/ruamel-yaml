@@ -5,3 +5,4 @@ README.pdf
 venv
 TODO.rst
 try_*
+_doc/*.pdf

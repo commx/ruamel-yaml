@@ -102,16 +102,28 @@ class YAML(ruamel.yaml.YAML):
             stream = textwrap.dedent(stream)
         return ruamel.yaml.YAML.load(self, stream)
 
+    def load_all(self, stream):
+        if isinstance(stream, str):
+            if stream and stream[0] == '\n':
+                stream = stream[1:]
+            stream = textwrap.dedent(stream)
+        for d in ruamel.yaml.YAML.load_all(self, stream):
+            yield d
+
     def dump(self, data, **kw):
         assert ('stream' in kw) ^ ('compare' in kw)
         if 'stream' in kw:
             return ruamel.yaml.YAML.dump(data, **kw)
         lkw = kw.copy()
         expected = textwrap.dedent(lkw.pop('compare'))
+        unordered_lines = lkw.pop('unordered_lines', False)
         if expected and expected[0] == '\n':
             expected = expected[1:]
         lkw['stream'] = st = StringIO() if self.encoding is None else BytesIO()
         ruamel.yaml.YAML.dump(self, data, **lkw)
         res = st.getvalue()
         print(res)
+        if unordered_lines:
+            res = sorted(res.splitlines())
+            expected = sorted(expected.splitlines())
         assert res == expected

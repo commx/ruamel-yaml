@@ -1278,6 +1278,17 @@ class RoundTripConstructor(SafeConstructor):
         yield data
         self.construct_mapping(node, data)
 
+    def construct_yaml_object(self, node, cls):
+        # type: (Any, Any) -> Any
+        data = cls.__new__(cls)
+        yield data
+        if hasattr(data, '__setstate__'):
+            state = SafeConstructor.construct_mapping(self, node, deep=True)
+            data.__setstate__(state)
+        else:
+            state = SafeConstructor.construct_mapping(self, node)
+            data.__dict__.update(state)
+
     def construct_yaml_omap(self, node):
         # type: (Any) -> Any
         # Note: we do now check for duplicate keys
