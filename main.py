@@ -455,6 +455,7 @@ class YAML(object):
         return res
 
     def register_class(self, cls):
+        # type:(Any) -> None
         """
         register a class for dumping loading
         - if it has attribute yaml_tag use that to register, else use class name
@@ -466,6 +467,7 @@ class YAML(object):
             self.representer.add_representer(cls, cls.to_yaml)
         except AttributeError:
             def t_y(representer, data):
+                # type: (Any, Any) -> Any
                 return representer.represent_yaml_object(
                     tag, data, cls, flow_style=representer.default_flow_style)
 
@@ -474,12 +476,14 @@ class YAML(object):
             self.constructor.add_constructor(tag, cls.from_yaml)
         except AttributeError:
             def f_y(constructor, node):
+                # type: (Any, Any) -> Any
                 return constructor.construct_yaml_object(node, cls)
 
             self.constructor.add_constructor(tag, f_y)
 
 
 def yaml_object(yml):
+    # type: (Any) -> Any
     """ decorator for classes that needs to dump/load objects
     The tag for such objects is taken from the class attribute yaml_tag (or the
     class name in lowercase in case unavailable)
@@ -487,11 +491,13 @@ def yaml_object(yml):
     loading, default routines (dumping a mapping of the attributes) used otherwise.
     """
     def yo_deco(cls):
+        # type: (Any) -> Any
         tag = getattr(cls, 'yaml_tag', '!' + cls.__name__)
         try:
             yml.representer.add_representer(cls, cls.to_yaml)
         except AttributeError:
             def t_y(representer, data):
+                # type: (Any, Any) -> Any
                 return representer.represent_yaml_object(
                     tag, data, cls, flow_style=representer.default_flow_style)
 
@@ -500,6 +506,7 @@ def yaml_object(yml):
             yml.constructor.add_constructor(tag, cls.from_yaml)
         except AttributeError:
             def f_y(constructor, node):
+                # type: (Any, Any) -> Any
                 return constructor.construct_yaml_object(node, cls)
 
             yml.constructor.add_constructor(tag, f_y)
