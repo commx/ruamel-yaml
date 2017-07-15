@@ -1,6 +1,7 @@
 
+***********
 ruamel.yaml
-===========
+***********
 
 `BitBucket <https://bitbucket.org/ruamel/yaml>`_ |
 `PyPI <https://pypi.python.org/pypi/ruamel.yaml/>`_

@@ -1,5 +1,6 @@
+**********
 Installing
-==========
+**********
 
 Make sure you have a recent version of ``pip`` and ``setuptools``
 installed. The later needs environment marker support
@@ -29,7 +30,7 @@ that allows for round-trip testing/re-indenting and conversion of YAML
 files (JSON,INI,HTML tables)
 
 Optional requirements
----------------------
++++++++++++++++++++++
 
 If you have the the header files for your Python executables installed
 then you can use the (non-roundtrip), but faster, C loader and emitter.

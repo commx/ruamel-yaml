@@ -1,13 +1,18 @@
+---
+version: 0.1
+output: rst
+fix_inline_single_backquotes: true
+--- |
 ********
 Examples
 ********
 
 Basic round trip of parsing YAML to Python objects, modifying
 and generating YAML::
-
+--- !python |
   import sys
   from ruamel.yaml import YAML
-  
+
   inp = """\
   # example
   name:
@@ -15,28 +20,23 @@ and generating YAML::
     family: Smith   # very common
     given: Alice    # one of the siblings
   """
-  
+
   yaml = YAML()
   code = yaml.load(inp)
   code['name']['given'] = 'Bob'
-  
+
   yaml.dump(code, sys.stdout)
 
+--- !stdout |
 Resulting in::
-
-  # example
-  name:
-    # details
-    family: Smith   # very common
-    given: Bob      # one of the siblings
-
+--- |
 with the old API::
-
+--- !python |
   from __future__ import print_function
-  
+
   import sys
   import ruamel.yaml
-  
+
   inp = """\
   # example
   name:
@@ -44,32 +44,26 @@ with the old API::
     family: Smith   # very common
     given: Alice    # one of the siblings
   """
-  
+
   code = ruamel.yaml.load(inp, ruamel.yaml.RoundTripLoader)
   code['name']['given'] = 'Bob'
-  
+
   ruamel.yaml.dump(code, sys.stdout, Dumper=ruamel.yaml.RoundTripDumper)
-  
+
   # the last statement can be done less efficient in time and memory with
   # leaving out the end='' would cause a double newline at the end
   # print(ruamel.yaml.dump(code, Dumper=ruamel.yaml.RoundTripDumper), end='')
-
+--- !stdout |
 Resulting in ::
-
-  # example
-  name:
-    # details
-    family: Smith   # very common
-    given: Bob      # one of the siblings
-
+--- |
 ----
 
 YAML handcrafted anchors and references as well as key merging
 are preserved. The merged keys can transparently be accessed
 using ``[]`` and ``.get()``::
-
+--- !python |
   from ruamel.yaml import YAML
-  
+
   inp = """\
   - &CENTER {x: 1, y: 2}
   - &LEFT {x: 0, y: 2}
@@ -93,36 +87,32 @@ using ``[]`` and ``.get()``::
     x: 1
     label: center/big
   """
-  
+
   yaml = YAML()
   data = yaml.load(inp)
   assert data[7]['y'] == 2
-
+--- |
 
 The ``CommentedMap``, which is the ``dict`` like construct one gets when round-trip loading,
 supports insertion of a key into a particular position, while optionally adding a comment::
-
+--- !python |
   import sys
   from ruamel.yaml import YAML
-  
+
   yaml_str = """\
   first_name: Art
   occupation: Architect  # This is an occupation comment
   about: Art Vandelay is a fictional character that George invents...
   """
-  
+
   yaml = YAML()
   data = yaml.load(yaml_str)
   data.insert(1, 'last name', 'Vandelay', comment="new key")
   yaml.dump(data, sys.stdout)
 
+--- !stdout |
 gives::
-
-  first_name: Art
-  last name: Vandelay    # new key
-  occupation: Architect  # This is an occupation comment
-  about: Art Vandelay is a fictional character that George invents...
-
+--- |
 Please note that the comment is aligned with that of its neighbour (if available).
 
 The above was inspired by a `question <http://stackoverflow.com/a/36970608/1307905>`_
@@ -135,20 +125,20 @@ both mappings and sequences. For sequences the indent is counted to the beginnin
 scalar, with the dash taking the first position of the indented "space".
 
 The following program with three dumps::
-
+--- !python |
   import sys
   from ruamel.yaml import YAML
-  
+
   data = {1: {1: [{1: 1, 2: 2}, {1: 1, 2: 2}], 2: 2}, 2: 42}
-  
+
   yaml = YAML()
   yaml.explicit_start = True
   yaml.dump(data, sys.stdout)
   yaml.indent = 4
   yaml.block_seq_indent = 2
   yaml.dump(data, sys.stdout)
-  
-  
+
+
   def sequence_indent_four(s):
       # this will fail on direclty nested lists: {1; [[2, 3], 4]}
       levels = []
@@ -170,41 +160,14 @@ The following program with three dumps::
                           levels = levels[:-1]
           ret_val += '  ' * len(levels) + line
       return ret_val
-  
+
   yaml = YAML()
   yaml.explicit_start = True
   yaml.dump(data, sys.stdout, transform=sequence_indent_four)
-
+--- !stdout |
 gives as output::
 
-  ---
-  1:
-    1:
-    - 1: 1
-      2: 2
-    - 1: 1
-      2: 2
-    2: 2
-  2: 42
-  ---
-  1:
-      1:
-        - 1: 1
-          2: 2
-        - 1: 1
-          2: 2
-      2: 2
-  2: 42
-  ---
-  1:
-    1:
-      - 1: 1
-        2: 2
-      - 1: 1
-        2: 2
-    2: 2
-  2: 42
-
+--- |
 The transform example was inspired by a `question
 <https://stackoverflow.com/q/44388701/1307905>`_ posted by *nowox* on
 StackOverflow.

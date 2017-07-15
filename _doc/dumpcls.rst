@@ -1,5 +1,7 @@
+
+**********************
 Dumping Python classes
-======================
+**********************
 
 Only ``yaml = YAML(typ='unsafe')`` loads and dumps Python objects out-of-the-box. And
 since it loads **any** Python object, this can be unsafe.
@@ -32,7 +34,9 @@ which gives as output::
 
 The tag ``!User`` originates from the name of the class.
 
-You can specify a different tag by adding the attribute `yaml_tag`, and explicitly specify dump and/or load *classmethods* which have to be called ``from_yaml`` resp. ``from_yaml``::
+You can specify a different tag by adding the attribute ``yaml_tag``, and
+explicitly specify dump and/or load *classmethods* which have to be called
+``from_yaml`` resp. ``from_yaml``::
 
   import sys
   import ruamel.yaml
@@ -62,6 +66,7 @@ You can specify a different tag by adding the attribute `yaml_tag`, and explicit
 which gives as output::
 
   - !user Anthon-18
+
 
 When using the decorator, which takes the ``YAML()`` instance as a parameter,
 the ``yaml = YAML()`` line needs to be moved up in the file::
@@ -94,4 +99,3 @@ the ``yaml = YAML()`` line needs to be moved up in the file::
 
 The ``yaml_tag``, ``from_yaml`` and ``to_yaml`` work in the same way as when using
 ``.register_class()``.
-

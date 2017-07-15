@@ -1,5 +1,6 @@
++++++++++++++++++++++++++++
 Departure from previous API
----------------------------
++++++++++++++++++++++++++++
 
 With version 0.15.0 ``ruamel.yaml`` starts to depart from the previous (PyYAML) way
 of loading and dumping.  During a transition period the original
@@ -52,7 +53,7 @@ after::
   out = Path('/tmp/out.yaml')
   yaml.dump(data, out)
 
-If you previously used an keyword argument ``explicit_start=True`` you
+If you previously used a keyword argument ``explicit_start=True`` you
 now do ``yaml.explicit_start = True`` before calling ``dump()``. The
 ``Loader`` and ``Dumper`` keyword arguments are not supported that
 way. You can provide the ``typ`` keyword to ``rt``  (default),
@@ -62,7 +63,7 @@ is possible by setting the attributes ``.Parser``, ``.Constructor``,
 ``.Emitter``, etc., to the class of the type to create for that stage
 (typically a subclass of an existing class implementing that).
 
-The default loader (`rt`) is a direct derivative of the safe loader, without the
+The default loader (``t`` is a direct derivative of the safe loader, without the
 methods to construct arbitrary Python objects that make the ``unsafe`` loader
 unsafe, but with the changes needed for round-trip preservation of comments,
 etc.. For trusted Python classes a constructor can of course be added to the round-trip
@@ -79,10 +80,10 @@ all functionality of the old interface will be available via
 ``YAML`` instances (if you are using something that isn't let me know).
 
 Loading
--------
++++++++
 
 Duplicate keys
-++++++++++++++
+^^^^^^^^^^^^^^
 
 In JSON mapping keys should be unique, in YAML they must be unique.
 PyYAML never enforced this although the YAML 1.1 specification already
@@ -99,10 +100,10 @@ In the old API this is a warning starting with 0.15.2 and an error in
 0.16.0.
 
 Dumping
--------
++++++++
 
 Controls
-++++++++
+^^^^^^^^
 
 On your ``YAML()`` instance you can set attributes e.g with::
 
@@ -116,7 +117,7 @@ available attributes include:
    enforce output of the form ``\U0001f601`` (ignored if ``allow_unicode`` is ``False``)
 
 Transparent usage of new and old API
-------------------------------------
+++++++++++++++++++++++++++++++++++++
 
 If you have multiple packages depending on ``ruamel.yaml``, or install
 your utility together with other packages not under your control, then
@@ -188,8 +189,9 @@ round-trip-loader::
       data = yml.load(inf)
       yml.dump(data, outf)
 
++++++++++++++++++++++
 Reason for API change
----------------------
++++++++++++++++++++++
 
 ``ruamel.yaml`` inherited the way of doing things from ``PyYAML``. In
 particular when calling the function ``load()`` or ``dump()`` a
@@ -230,8 +232,8 @@ This way of doing things leads to several problems:
   to enable that another 50+ line changes (non-contiguous) in 3 more files resulting
   in diff that is far over 200 lines long.
 
-- replacing libyaml with something that doesn't both support `0o52`
-  and `052` for the integer ``42`` (instead of ``52`` as per YAML 1.2)
+- replacing libyaml with something that doesn't both support ``0o52``
+  and ``052`` for the integer ``42`` (instead of ``52`` as per YAML 1.2)
   is difficult
 
 
@@ -241,4 +243,3 @@ information via that instance. Representers, etc., are added to a
 reusable instance and different YAML instances can co-exists.
 
 This change eases development and helps prevent regressions.
-

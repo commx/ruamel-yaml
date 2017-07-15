@@ -12,8 +12,9 @@ s = StringIO()
 doc = "a: 1"
 data = dict(a=1)
 --- |
+***********
 Basic Usage
-===========
+***********
 
 *This is the new (0.15+) interface for ``ruamel.yaml``, it is still in
 the process of being fleshed out*. Please pin your dependency to
@@ -30,9 +31,9 @@ yaml.load(doc)
 
 --- |
 in this ``doc`` can be a file pointer (i.e. an object that has the
-`.read()` method, a string or a ``pathlib.Path()``. `typ='safe'`
+``.read()`` method, a string or a ``pathlib.Path()``. ``typ='safe'``
 accomplishes the same as what ``safe_load()`` did before: loading of a
-document without resolving unknow tags. Provide  `pure=True` to
+document without resolving unknow tags. Provide  ``pure=True`` to
 enforce using the pure Python implementation (faster C libraries will be used
 when possible/available)
 
@@ -45,8 +46,8 @@ yaml.default_flow_style = False
 yaml.dump({'a': [1, 2]}, s)
 --- |
 in this ``s`` can be a file pointer (i.e. an object that has the
-`.write()` method, or a ``pathlib.Path()``. If you want to display
-your output, just stream to `sys.stdout`.
+``.write()`` method, or a ``pathlib.Path()``. If you want to display
+your output, just stream to ``sys.stdout``.
 
 If you need to transform a string representation of the output provide
 a function that takes a string as input and returns one::
@@ -59,7 +60,8 @@ yaml.dump(data, sys.stdout, transform=tr)
 
 --- |
 More examples
--------------
+=============
+
 Using the C based SafeLoader (at this time is inherited from
 libyaml/PyYAML and e.g. loads ``0o52`` as well as ``052`` load as integer ``42``)::
 

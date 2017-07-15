@@ -6,8 +6,9 @@ pdf: true
 # code_directory: ../_example
 --- |
 
+**********************
 Dumping Python classes
-======================
+**********************
 
 Only ``yaml = YAML(typ='unsafe')`` loads and dumps Python objects out-of-the-box. And
 since it loads **any** Python object, this can be unsafe.
@@ -35,11 +36,12 @@ yaml.register_class(User)
 yaml.dump([User('Anthon', 18)], sys.stdout)
 --- !stdout |
 which gives as output::
-
 --- |
 The tag ``!User`` originates from the name of the class.
 
-You can specify a different tag by adding the attribute `yaml_tag`, and explicitly specify dump and/or load *classmethods* which have to be called ``from_yaml`` resp. ``from_yaml``::
+You can specify a different tag by adding the attribute ``yaml_tag``, and
+explicitly specify dump and/or load *classmethods* which have to be called
+``from_yaml`` resp. ``from_yaml``::
 
 --- !python |
 import sys
