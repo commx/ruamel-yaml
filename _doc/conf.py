@@ -56,21 +56,22 @@ author = u'Anthon van der Neut'
 try:
     from ruamel.yaml import __version__, version_info
     # The short X.Y version.
-    version = '.'.join([str(l) for l in version_info[:2]])
+    version = '.'.join([str(l) for l in version_info[:3]])
     # The full version, including alpha/beta/rc tags.
-    version = release = __version__
+    release = version # = __version__
 except Exception as e:
     print('exception', e)
     version = release = 'dev'
 print('ruamel.yaml version', version)
-print('cwd:', os.getcwd())
+# print('cwd:', os.getcwd())
+# current working directory is the one with `conf.py` !
 
 try:
     from ryd.__main__ import RYDCmd
     from ruamel.std.pathlib import Path
     oldargv = sys.argv
     for fn in Path('.').glob('*.ryd'):
-        sys.argv = ['ryd', 'convert', fn]
+        sys.argv = ['ryd', 'convert', str(fn)]
         rc = RYDCmd()
         rc.parse_args()
         print(*sys.argv, '->',  rc.run())
