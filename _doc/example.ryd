@@ -170,6 +170,6 @@ The following program with three dumps::
 gives as output::
 
 --- |
-The transform example was inspired by a `question
-<https://stackoverflow.com/q/44388701/1307905>`_ posted by *nowox* on
+The transform example was inspired by a `question posted by *nowox* 
+<https://stackoverflow.com/q/44388701/1307905>`_ on
 StackOverflow.
