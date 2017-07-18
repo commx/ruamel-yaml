@@ -1,0 +1,122 @@
+---
+version: 0.1
+output: rst
+fix_inline_single_backquotes: true
+pdf: true
+--- |
+************
+Contributing
+************
+
+Any contribution to ``ruamel.yaml`` is welcome, be it in the form of an
+email, a question on stackoverflow (I'll get notified of that when you tag it
+with ``ruamel.yaml``), an issue or pull-request (PR) on bitbucket.
+
+Contributing via stackoverflow is, for most, easiest to make. When I answer your
+question there and the answer warrants an extension to the documentation or
+code, I will include it in a documnetation update and/or future (normally the
+next) release of ``ruamel.yaml``.
+
+Please don't post support questions as an issue on Bitbucket.
+
+Documentation
+=============
+
+The documentation for ``ruamel.yaml`` is in YAML, more specifically in `ryd
+<https://pypi.python.org/pypi/ryd>`_ ( /rɑɪt/, pronounced like the verb “write”
+). This is reStructuredText mixed with Python, each in separate YAML documents
+within a single file. If you know a bit of YAML, Python and reStructuredText it
+will be clear how that works.
+
+If you want to contribute to the documentation, you can sent me a clear
+description of the needed changes, e.g. as a unified diff. If the changes
+encompass multiple documents in a ``.ryd`` file, it is best to install ``ryd``
+(use a virtualenv!), clone the ``ruamel.yaml`` repository on Bitbucket, edit
+documentation, run ``ryd``::
+
+      ryd --pdf '**/*.ryd'
+
+(quoting might not be necessary depending on your shell), and once the PDF(s)
+look acceptable, submit a pull-request.
+
+``ryd`` will check your file for single backquotes (my most common mistake going
+back and forth between reStructuredText and other mark up).
+
+If you contribute example programs, note that ``ryd`` will automatically run you
+program (so it should be correct) and can include the output of the program in
+the resulting ``.rst`` (and PDF) file.
+
+Code
+====
+
+Code changes are welcome as well, but anything beyond a minor change should be
+tested (``tox``/``pytest``), checked for typing conformance (``mypy``) and pass
+pep8 conformance (``flake8``).
+
+In my experience it is best to use two ``virtualenv`` environments, one with the
+latest Python from the 2.7 series, the other with 3.5 or 3.6. In the
+site-packages directory of each virtualenv make a soft link to the ruamel
+directory of your (cloned and checked out) copy of the repository. Do not under
+any circumstances run ``pip install -e .`` or ``python setup.py -e .`` it will
+not work (at least not until these commands are fixed to support packages with
+namespaces).
+
+You can install ``tox``, ``pytest``, ``mypy`` and ``flake8`` in the Python3
+``virtualenv``, or in ``virtualenv``s of their own. If all of these commands
+pass without warning/error, you can create your pull-request.
+
+Flake
++++++
+
+My ``~/.config/flake8`` file::
+
+  [flake8]
+  show-source = True
+  max-line-length = 95
+  ignore = F405
+
+The suppress of F405 is necessary to allow ``from xxx import *``, which I have
+not removed in all places (yet).
+
+First make sure your checked out source passes ``flake8`` without test (it should).
+Then make your changes pass without any warnings/errors.
+
+Tox/pytest
+++++++++++
+
+Wether you add something or fix some bug with your code changes, first add one
+or more tests that fail in the unmodified source when running ``tox``. Once that
+is in place add your code, which should have as a result that your added test(s)
+no longer fail, and neither should any other existing tests.
+
+Typing/mypy
++++++++++++
+
+If you add methods or functions to ``ruamel.yaml``, you will need to add Python
+2.7 compatible typing information in order for ``mypy`` to pass without error.
+
+I run ``mypy`` from the directory where the (link to) ruamel directory is
+using::
+
+    mypy --py2 --strict --follow-imports silent ruamel/yaml/*.py
+
+This should give no errors or warnings
+
+
+Generated files
+===============
+
+I use a minimal environment when developing, void of most artifacts needed for
+packaging, testing etc. These artifact files are *generated*, just before committing to
+Bitbucket and pushing to PyPI, with nuances coming from the ``_package_data``
+information in ``__init__.py``. Including changes in these files will
+automatically be reverted, even assuming your PR is accepted as is.
+
+Consider the following files **read-only** (if you think changes need to made these,
+contact me)::
+
+   setup.py
+   tox.ini
+   LICENSE
+   _ryd/conf.py
+   -ryd/Makefile

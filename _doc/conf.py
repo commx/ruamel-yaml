@@ -141,7 +141,7 @@ html_theme = 'default'
 
 # The name for this set of Sphinx documents.  If None, it defaults to
 # "<project> v<release> documentation".
-html_title = "python YAML package documentation"
+html_title = "Python YAML package documentation"
 
 # A shorter title for the navigation bar.  Default is the same as html_title.
 # html_short_title = None
@@ -243,7 +243,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'yaml.tex', u'yaml Documentation',
+    (master_doc, 'yaml.tex', u'Python YAML package documentation',
      u'Anthon van der Neut', 'manual'),
 ]
 
