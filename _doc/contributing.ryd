@@ -62,7 +62,7 @@ not work (at least not until these commands are fixed to support packages with
 namespaces).
 
 You can install ``tox``, ``pytest``, ``mypy`` and ``flake8`` in the Python3
-``virtualenv``, or in ``virtualenv``s of their own. If all of these commands
+``virtualenv``, or in a ``virtualenv``  of their own. If all of these commands
 pass without warning/error, you can create your pull-request.
 
 Flake
@@ -120,3 +120,16 @@ contact me)::
    LICENSE
    _ryd/conf.py
    -ryd/Makefile
+
+
+Vulnerabilities
+===============
+
+If you find a vulnerability in ``ruamel.yaml`` (e.g. that would show the ``safe``
+and ``rt`` loader are not safe due to a bug in the software)), please contact me
+directly via email, or by leaving a comment on StackOverflow (below any of my
+posts), without going into the details of the vulnerability. After contact is
+estabilished I will work to eliminate the vulnerability in a timely fashion.
+After the vulnerability is removed, and affected parties notified to allow them
+to update versions, the vulnerability will be published, and your role in
+finding/resolving this properly attributed.
