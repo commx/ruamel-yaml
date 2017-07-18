@@ -71,7 +71,7 @@ try:
     from ruamel.std.pathlib import Path
     oldargv = sys.argv
     for fn in Path('.').glob('*.ryd'):
-        sys.argv = ['ryd', 'convert', str(fn)]
+        sys.argv = ['ryd', 'convert', '--no-pdf', str(fn)]
         rc = RYDCmd()
         rc.parse_args()
         print(*sys.argv, '->',  rc.run())
