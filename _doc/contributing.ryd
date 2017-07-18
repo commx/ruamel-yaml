@@ -84,7 +84,7 @@ Then make your changes pass without any warnings/errors.
 Tox/pytest
 ++++++++++
 
-Wether you add something or fix some bug with your code changes, first add one
+Whether you add something or fix some bug with your code changes, first add one
 or more tests that fail in the unmodified source when running ``tox``. Once that
 is in place add your code, which should have as a result that your added test(s)
 no longer fail, and neither should any other existing tests.
