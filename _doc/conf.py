@@ -56,7 +56,7 @@ author = u'Anthon van der Neut'
 try:
     from ruamel.yaml import __version__, version_info
     # The short X.Y version.
-    version = '.'.join(version_info[:2])
+    version = '.'.join([str(l) for l in version_info[:2]])
     # The full version, including alpha/beta/rc tags.
     version = release = __version__
 except Exception as e:
@@ -69,7 +69,7 @@ try:
     from ryd.__main__ import RYDCmd
     from ruamel.std.pathlib import Path
     oldargv = sys.argv
-    for fn in Path('_doc').glob('*.ryd'):
+    for fn in Path('.').glob('*.ryd'):
         sys.argv = ['ryd', 'convert', fn]
         rc = RYDCmd()
         rc.parse_args()
