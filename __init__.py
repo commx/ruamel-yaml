@@ -18,6 +18,7 @@ _package_data = dict(
         ':platform_python_implementation=="CPython" and python_version<="2.7"':
         ['ruamel.ordereddict'],
         'jinja2': ['ruamel.yaml.jinja2>=0.2'],
+        'docs': ['ryd'],
     },
     ext_modules=[dict(
         name='_ruamel_yaml',

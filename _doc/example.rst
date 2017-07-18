@@ -130,9 +130,10 @@ posted by *demux* on StackOverflow.
 
 ----
 
-By default `ruamel.yaml` indents with two positions in block style, for
-both mappings and sequences. For sequences the indent is counted to the beginning of the
-scalar, with the dash taking the first position of the indented "space".
+By default ``ruamel.yaml`` indents with two positions in block style, for
+both mappings and sequences. For sequences the indent is counted to the 
+beginning of the scalar, with the dash taking the first position of the 
+indented "space".
 
 The following program with three dumps::
 
