@@ -77,8 +77,9 @@ supported Python versions, on PyPI as well as flake8/pep8
 API
 +++
 
-Starting with 0.15 the API for using ``ruamel.yaml`` has diverged allowing easier
-addition of new features.
+Starting with 0.15 the API for using ``ruamel.yaml`` has diverged allowing 
+easier addition of new features.
 
+-----
 
 .. include:: links.rst
