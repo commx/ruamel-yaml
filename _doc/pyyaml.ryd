@@ -80,4 +80,5 @@ API
 Starting with 0.15 the API for using ``ruamel.yaml`` has diverged allowing 
 easier addition of new features.
 
-.. include:: links.rst
+--- !incraw |
+links.rydinc

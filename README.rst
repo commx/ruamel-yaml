@@ -27,6 +27,9 @@ when the status of the API is stable enough to make the transition.
 .. image:: https://readthedocs.org/projects/yaml/badge/?version=stable
    :target: https://yaml.readthedocs.org/en/stable
 
+.. image:: https://bestpractices.coreinfrastructure.org/projects/1128/badge
+   :target: https://bestpractices.coreinfrastructure.org/projects/1128
+
 ChangeLog
 =========
 
