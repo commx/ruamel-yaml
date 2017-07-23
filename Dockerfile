@@ -6,18 +6,23 @@ RUN echo '[global]' > /etc/pip.conf
 RUN echo 'disable-pip-version-check = true' >> /etc/pip.conf
 
 RUN echo 'cd /src' > /usr/bin/makewheel
-RUN echo 'rm -f /tmp/*.whl'                         >> /usr/bin/makewheel
-RUN echo 'for PYBIN in /opt/python/$1*/bin/; do'    >> /usr/bin/makewheel
-RUN echo '  echo "$PYBIN"'                          >> /usr/bin/makewheel
-RUN echo '  ${PYBIN}/pip install -U pip'            >> /usr/bin/makewheel
-RUN echo '  ${PYBIN}/pip wheel . -w /tmp'           >> /usr/bin/makewheel
-RUN echo 'done'                                     >> /usr/bin/makewheel
-RUN echo ''                                         >> /usr/bin/makewheel
-RUN echo 'for whl in /tmp/*.whl; do'                >> /usr/bin/makewheel
-RUN echo '  auditwheel repair "$whl" -w /src/dist/' >> /usr/bin/makewheel
-RUN echo 'done'                                     >> /usr/bin/makewheel
+RUN echo 'rm -f /tmp/*.whl'                               >> /usr/bin/makewheel
+RUN echo 'for PYVER in $*; do'                            >> /usr/bin/makewheel
+RUN echo '  for PYBIN in /opt/python/cp$PYVER*/bin/; do'  >> /usr/bin/makewheel
+RUN echo '     echo "$PYBIN"'                             >> /usr/bin/makewheel
+RUN echo '     ${PYBIN}/pip install -Uq pip'              >> /usr/bin/makewheel
+RUN echo '     ${PYBIN}/pip wheel . -w /tmp'              >> /usr/bin/makewheel
+RUN echo '  done'                                         >> /usr/bin/makewheel
+RUN echo 'done'                                           >> /usr/bin/makewheel
+RUN echo ''                                               >> /usr/bin/makewheel
+RUN echo 'for whl in /tmp/*.whl; do'                      >> /usr/bin/makewheel
+RUN echo '  auditwheel repair "$whl" -w /src/dist/'       >> /usr/bin/makewheel
+RUN echo 'done'                                           >> /usr/bin/makewheel
 RUN chmod 755 /usr/bin/makewheel
 
-RUN yum install -y libyaml-devel
+# RUN yum install -y libyaml-devel
 
-CMD /usr/bin/makewheel
+CMD /usr/bin/makewheel 27 33 34 35 36
+
+#cp26-cp26m cp27-cp27m cp33-cp33m cp35-cp35m cp26-cp26mu cp27-cp27mu cp34-cp34m  cp36-cp36m
+

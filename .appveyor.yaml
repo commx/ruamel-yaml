@@ -1,24 +1,27 @@
+# based on: https://packaging.python.org/guides/supporting-windows-using-appveyor/
+
 environment:
   matrix:
-#    - PYTHON: C:\Python27
-#    - PYTHON: C:\Python33
-#    - PYTHON: C:\Python34
+    - PYTHON: C:\Python27
+    - PYTHON: C:\Python27-x64
+    # - PYTHON: C:\Python33
+    # - PYTHON: C:\Python33-x64
+    #   DISTUTILS_USE_SDK: '1'
+    # - PYTHON: C:\Python34
+    # - PYTHON: C:\Python34-x64
+    #   DISTUTILS_USE_SDK: '1'
     - PYTHON: C:\Python35
-#    - PYTHON: C:\Python27-x64
-#    - PYTHON: C:\Python33-x64
-#      DISTUTILS_USE_SDK: '1'
-#    - PYTHON: 'C:\Python34-x64'
-      DISTUTILS_USE_SDK: '1'
-    - PYTHON: 'C:\Python35-x64'
+    - PYTHON: C:\Python35-x64
+    - PYTHON: C:\Python36
+    - PYTHON: C:\Python36-x64
 
 install:
   - |
     %PYTHON%\python.exe -m pip install --upgrade pip
     %PYTHON%\python.exe -m pip install wheel
-    %PYTHON%\python.exe -m pip list
+    %PYTHON%\python.exe -m pip list --format columns
 
-#    %PYTHON%\python.exe -m pip install wheel==0.24
-
+# only used when compiling (for Python with C extensions this is done in the after_test)
 build: off
 
 test_script:
