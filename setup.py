@@ -712,8 +712,8 @@ class NameSpacePackager(object):
             return None
         if platform.python_implementation() == 'Jython':
             return None
-        # if sys.platform == "win32" and not self._pkg_data.get('win32bin'):
-        #     return None
+        if sys.platform == "win32" and not self._pkg_data.get('win32bin'):
+            return None
         # if sys.platform == "win32":
         #    if os.getenv("RUAMEL_FORCE_EXT_BUILD") is None:
         #        return None

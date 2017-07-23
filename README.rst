@@ -35,6 +35,9 @@ ChangeLog
 
 .. should insert NEXT: at the beginning of line for next key
 
+NEXT:
+  - wheels for windows including C extensions
+
 0.15.19 (2017-07-13):
   - added object constructor for rt, decorator ``yaml_object`` to replace YAMLObject.
   - fix for problem using load_all with Path() instance
