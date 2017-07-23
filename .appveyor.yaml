@@ -17,7 +17,7 @@ environment:
 
 install:
   - |
-    %PYTHON%\python.exe -m pip install --upgrade -q pip wheel
+    %PYTHON%\python.exe -m pip install --upgrade -q pip wheel setuptools
     %PYTHON%\python.exe -m pip list --format columns
 
 # only used when compiling (for Python with C extensions this is done in the after_test)
