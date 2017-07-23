@@ -35,7 +35,7 @@ ChangeLog
 
 .. should insert NEXT: at the beginning of line for next key
 
-NEXT:
+0.15.20 (2017-07-23):
   - wheels for windows including C extensions
 
 0.15.19 (2017-07-13):
