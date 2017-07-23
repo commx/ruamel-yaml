@@ -27,7 +27,7 @@ _package_data = dict(
                  'ext/emitter.c',
             ],
             lib=[],
-            test='#include "ext/yaml.h"\n\nint main(int argc, char* argv[])\n{\nyaml_parser_t parser;\nparser = parser;  /* prevent warning */\nreturn 0;\n}\n',  # NOQA
+            # test='#include "ext/yaml.h"\n\nint main(int argc, char* argv[])\n{\nyaml_parser_t parser;\nparser = parser;  /* prevent warning */\nreturn 0;\n}\n',  # NOQA
         )],
     classifiers=[
         'Programming Language :: Python :: 2.7',
