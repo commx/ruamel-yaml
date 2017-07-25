@@ -74,7 +74,7 @@ try:
         sys.argv = ['ryd', 'convert', '--no-pdf', str(fn)]
         rc = RYDCmd()
         rc.parse_args()
-        print(*sys.argv, '->', rc.run())
+        print(sys.argv, '->', rc.run())
     sys.argv = oldargv
 
 except Exception as e:

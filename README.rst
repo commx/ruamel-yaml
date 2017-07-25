@@ -35,6 +35,9 @@ ChangeLog
 
 .. should insert NEXT: at the beginning of line for next key
 
+0.15.21 (2017-07-25):
+  - fix for writing unicode in new API, https://stackoverflow.com/a/45281922/1307905
+
 0.15.20 (2017-07-23):
   - wheels for windows including C extensions
 

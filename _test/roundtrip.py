@@ -119,7 +119,7 @@ class YAML(ruamel.yaml.YAML):
         unordered_lines = lkw.pop('unordered_lines', False)
         if expected and expected[0] == '\n':
             expected = expected[1:]
-        lkw['stream'] = st = StringIO() if self.encoding is None else BytesIO()
+        lkw['stream'] = st = StringIO()
         ruamel.yaml.YAML.dump(self, data, **lkw)
         res = st.getvalue()
         print(res)

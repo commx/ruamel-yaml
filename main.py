@@ -94,7 +94,8 @@ class YAML(object):
             self.Composer = ruamel.yaml.composer.Composer
             self.Constructor = ruamel.yaml.constructor.BaseConstructor
         elif self.typ == 'unsafe':
-            self.Emitter = ruamel.yaml.emitter.Emitter
+            self.Emitter = ruamel.yaml.emitter.Emitter if pure or CEmitter is None \
+                else CEmitter
             self.Representer = ruamel.yaml.representer.Representer
             self.Parser = ruamel.yaml.parser.Parser if pure or CParser is None else CParser
             self.Composer = ruamel.yaml.composer.Composer
@@ -118,7 +119,7 @@ class YAML(object):
         self.version = None
         self.preserve_quotes = None
         self.allow_duplicate_keys = False  # duplicate keys in map, set
-        self.encoding = None
+        self.encoding = 'utf-8'
         self.explicit_start = None
         self.explicit_end = None
         self.tags = None
@@ -382,7 +383,10 @@ class YAML(object):
             delattr(self, "_serializer")
             delattr(self, "_emitter")
         if transform:
-            fstream.write(transform(stream.getvalue()))   # type: ignore
+            val = stream.getvalue()
+            if self.encoding:
+                val = val.decode(self.encoding)
+            fstream.write(transform(val))   # type: ignore
         return None
 
     def get_serializer_representer_emitter(self, stream, tlca):
@@ -425,7 +429,12 @@ class YAML(object):
                                           default_flow_style=default_flow_style)
                 rslvr.__init__(selfx)
         self._stream = stream
-        dumper = XDumper(stream)
+        dumper = XDumper(stream, default_style=self.default_style,
+                         default_flow_style=self.default_flow_style,
+                         allow_unicode=self.allow_unicode, line_break=self.line_break,
+                         explicit_start=self.explicit_start,
+                         explicit_end=self.explicit_end,
+                         version=self.version, tags=self.tags)
         self._emitter = self._serializer = dumper
         return dumper, dumper, dumper
 
