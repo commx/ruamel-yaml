@@ -988,9 +988,10 @@ class RoundTripRepresenter(SafeRepresenter):
         except AttributeError:
             t = None
         if t:
-            while t and t[0] == '!':
-                t = t[1:]
-            tag = 'tag:yaml.org,2002:' + t
+            if t.startswith('!!'):
+                tag = 'tag:yaml.org,2002:' + t[2:]
+            else:
+                tag = t
         else:
             tag = u'tag:yaml.org,2002:map'
         return self.represent_mapping(tag, data)

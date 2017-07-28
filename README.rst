@@ -35,6 +35,9 @@ ChangeLog
 
 .. should insert NEXT: at the beginning of line for next key
 
+0.15.22 (2017-07-28):
+  - fix for round_tripping singe excl. mark tags doubling (reported and fix by Jan Brezina)
+
 0.15.21 (2017-07-25):
   - fix for writing unicode in new API, https://stackoverflow.com/a/45281922/1307905
 

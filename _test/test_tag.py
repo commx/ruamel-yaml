@@ -48,9 +48,25 @@ class TestIndentFailures:
         language: python
         """)
 
+    def test_Y1(self):
+        round_trip("""\
+        !yyy
+        name: Anthon
+        location: Germany
+        language: python
+        """)
+
+    def test_Y2(self):
+        round_trip("""\
+        !!yyy
+        name: Anthon
+        location: Germany
+        language: python
+        """)
+
 
 class TestRoundTripCustom:
-    def test_X(self):
+    def test_X1(self):
         round_trip("""\
         !xxx
         name: Anthon

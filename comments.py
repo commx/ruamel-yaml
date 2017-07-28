@@ -176,6 +176,9 @@ class Tag(object):
         # type: () -> None
         self.value = None
 
+    def __repr__(self):
+        return '{0.__class__.__name__}({0.value!r})'.format(self)
+
 
 class CommentedBase(object):
     @property
