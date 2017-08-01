@@ -35,6 +35,9 @@ ChangeLog
 
 .. should insert NEXT: at the beginning of line for next key
 
+0.15.23 (2017-08-01):
+  - fix for round_tripping integers on 2.7.X > sys.maxint (reported by ccatterina)
+
 0.15.22 (2017-07-28):
   - fix for round_tripping singe excl. mark tags doubling (reported and fix by Jan Brezina)
 

@@ -98,3 +98,12 @@ class TestBinHexOct:
         assert d[0] == 42424242
         assert d[1] == '_42_42_'
         assert d[2] == 4242
+
+    def test_big(self):
+        # bitbucket issue 144 reported by ccatterina
+        d = round_trip_load("""\
+        - 2_147_483_647
+        - 9_223_372_036_854_775_808
+        """)
+        assert d[0] == 2147483647
+        assert d[1] == 9223372036854775808

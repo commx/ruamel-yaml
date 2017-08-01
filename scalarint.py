@@ -7,13 +7,15 @@ if False:  # MYPY
 
 __all__ = ["ScalarInt", "BinaryInt", "OctalInt", "HexInt", "HexCapsInt"]
 
+from .compat import no_limit_int  # NOQA
 
-class ScalarInt(int):
+
+class ScalarInt(no_limit_int):
     def __new__(cls, *args, **kw):
         # type: (Any, Any, Any) -> Any
         width = kw.pop('width', None)            # type: ignore
         underscore = kw.pop('underscore', None)  # type: ignore
-        v = int.__new__(cls, *args, **kw)        # type: ignore
+        v = no_limit_int.__new__(cls, *args, **kw)        # type: ignore
         v._width = width
         v._underscore = underscore
         return v

@@ -81,6 +81,8 @@ if PY3:
     import io
     StringIO = io.StringIO
     BytesIO = io.BytesIO
+    # have unlimited precision
+    no_limit_int = int
 
 else:
     string_types = basestring    # NOQA
@@ -95,6 +97,8 @@ else:
     StringIO = _StringIO
     import cStringIO
     BytesIO = cStringIO.StringIO
+    # have unlimited precision
+    no_limit_int = long  # NOQA not available on Python 3
 
 if False:  # MYPY
     # StreamType = Union[BinaryIO, IO[str], IO[unicode],  StringIO]
