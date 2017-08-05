@@ -11,7 +11,8 @@ import sys
 import types
 import warnings
 
-from ruamel.yaml.error import (MarkedYAMLError, MarkedYAMLFutureWarning)
+from ruamel.yaml.error import (MarkedYAMLError, MarkedYAMLFutureWarning,
+                               MantissaNoDotYAML1_1Warning)
 from ruamel.yaml.nodes import *                               # NOQA
 from ruamel.yaml.nodes import (SequenceNode, MappingNode, ScalarNode)
 from ruamel.yaml.compat import (utf8, builtins_module, to_str, PY2, PY3,  # NOQA
@@ -411,8 +412,8 @@ class SafeConstructor(BaseConstructor):
 
     def construct_yaml_float(self, node):
         # type: (Any) -> float
-        value_s = to_str(self.construct_scalar(node))
-        value_s = value_s.replace('_', '').lower()
+        value_so = to_str(self.construct_scalar(node))
+        value_s = value_so.replace('_', '').lower()
         sign = +1
         if value_s[0] == '-':
             sign = -1
@@ -432,6 +433,11 @@ class SafeConstructor(BaseConstructor):
                 base *= 60
             return sign * value
         else:
+            if self.resolver.processing_version != (1, 2) and 'e' in value_s:
+                # value_s is lower case independent of input
+                mantissa, exponent = value_s.split('e')
+                if '.' not in mantissa:
+                    warnings.warn(MantissaNoDotYAML1_1Warning(node, value_so))
             return sign * float(value_s)
 
     if PY3:

@@ -193,6 +193,32 @@ In most other cases you should consider using 'safe_load(stream)'"""
 warnings.simplefilter('once', UnsafeLoaderWarning)
 
 
+class MantissaNoDotYAML1_1Warning(YAMLWarning):
+    def __init__(self, node, flt_str):
+        self.node = node
+        self.flt = flt_str
+
+    def __str__(self):
+        line = self.node.start_mark.line
+        col = self.node.start_mark.column
+        return """
+In YAML 1.1 floating point values should have a dot ('.') in their mantissa.
+See the Floating-Point Language-Independent Type for YAML™ Version 1.1 specification
+( http://yaml.org/type/float.html ). This dot is not required for JSON nor for YAML 1.2
+
+Correct your float: "{}" on line: {}, column: {}
+
+or alternatively include the following in your code:
+
+  import warnings
+  warnings.simplefilter('ignore', ruamel.yaml.error.MantissaNoDotYAML1_1Warning)
+
+""".format(self.flt, line, col)
+
+
+warnings.simplefilter('once', MantissaNoDotYAML1_1Warning)
+
+
 class YAMLFutureWarning(Warning):
     pass
 
