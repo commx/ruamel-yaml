@@ -423,7 +423,7 @@ class SafeConstructor(BaseConstructor):
             return sign * self.inf_value
         elif value_s == '.nan':
             return self.nan_value
-        elif ':' in value_s:
+        elif self.resolver.processing_version != (1, 2) and ':' in value_s:
             digits = [float(part) for part in value_s.split(':')]
             digits.reverse()
             base = 1
