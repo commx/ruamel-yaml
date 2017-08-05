@@ -241,3 +241,6 @@ class CommentToken(Token):
         # type: () -> None
         if hasattr(self, 'pre_done'):
             delattr(self, 'pre_done')
+
+    def __repr__(self):
+        return 'CommentToken({!r})'.format(self.value)
