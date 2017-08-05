@@ -9,6 +9,7 @@ from ruamel.yaml.compat import text_type, binary_type, to_unicode, PY2, PY3, ord
 from ruamel.yaml.scalarstring import (PreservedScalarString, SingleQuotedScalarString,
                                       DoubleQuotedScalarString)
 from ruamel.yaml.scalarint import ScalarInt, BinaryInt, OctalInt, HexInt, HexCapsInt
+from ruamel.yaml.scalarfloat import ScalarFloat
 from ruamel.yaml.timestamp import TimeStamp
 
 import datetime
@@ -308,14 +309,14 @@ class SafeRepresenter(BaseRepresenter):
             value = u'-.inf'
         else:
             value = to_unicode(repr(data)).lower()
-            # Note that in some cases `repr(data)` represents a float number
-            # without the decimal parts.  For instance:
-            #   >>> repr(1e17)
-            #   '1e17'
-            # Unfortunately, this is not a valid float representation according
-            # to the definition of the `!!float` tag.  We fix this by adding
-            # '.0' before the 'e' symbol.
-            if u'.' not in value and u'e' in value:
+            if self.dumper.version == (1, 1) and u'.' not in value and u'e' in value:
+                # Note that in some cases `repr(data)` represents a float number
+                # without the decimal parts.  For instance:
+                #   >>> repr(1e17)
+                #   '1e17'
+                # Unfortunately, this is not a valid float representation according
+                # to the definition of the `!!float` tag in YAML 1.1.  We fix this by adding
+                # '.0' before the 'e' symbol.
                 value = value.replace(u'e', u'.0e', 1)
         return self.represent_scalar(u'tag:yaml.org,2002:float', value)
 
@@ -751,6 +752,70 @@ class RoundTripRepresenter(SafeRepresenter):
             s = format(data, 'X')
         return self.insert_underscore('0x', s, data._underscore)
 
+    def represent_scalar_float(self, data):
+        # type: (Any) -> Any
+        value = None
+        if data != data or (data == 0.0 and data == 1.0):
+            value = u'.nan'
+        elif data == self.inf_value:
+            value = u'.inf'
+        elif data == -self.inf_value:
+            value = u'-.inf'
+        if value:
+            return self.represent_scalar(u'tag:yaml.org,2002:float', value)
+        if data._exp is None:
+            prec = data._prec
+            if prec < 1:
+                prec = 1
+            # print('dw2', data._width, prec)
+            value = '{:{}.{}f}'.format(data, data._width, data._width-prec-1)
+            while len(value) < data._width:
+                value += '0'
+        else:
+            # print('pr', data._width, prec)
+            # if data._prec > 0:
+            #     prec =  data._width - data.prec
+            # prec = data._prec
+            # if prec < 1:
+            #     prec = 1
+            m, es = '{:{}e}'.format(data, data._width).split('e')
+            w = data._width if data._prec > 0 else (data._width + 1)
+            if data < 0:
+                w += 1
+            m = m[:w]
+            e = int(es)
+            m1, m2 = m.split('.')  # always second?
+            while len(m1) + len(m2) < data._width - (1 if data._prec >= 0 else 0):
+                m2 += '0'
+            if data._m_sign and data > 0:
+                m1 = '+' + m1
+            esgn = '+' if data._e_sign else ''
+            if data._prec < 0:   # mantissa without dot
+                # print('ew2', m2, len(m2), e)
+                if m2 != '0':
+                    e -= len(m2)
+                else:
+                    m2 = ''
+                value = m1 + m2 + data._exp + '{:{}0{}d}'.format(e, esgn, data._e_width)
+            elif data._prec == 0:   # mantissa with trailind dot
+                e -= len(m2)
+                value = m1 + m2 + '.' + data._exp + '{:{}0{}d}'.format(e, esgn, data._e_width)
+            else:
+                while len(m1) < data._prec:
+                    m1 += m2[0]
+                    m2 = m2[1:]
+                    e -= 1
+                value = m1 + '.' + m2 + data._exp + '{:{}0{}d}'.format(e, esgn, data._e_width)
+
+        if value is None:
+            value = to_unicode(repr(data)).lower()
+        return self.represent_scalar(u'tag:yaml.org,2002:float', value)
+        #if data._width is not None:
+        #    s = '{:0{}d}'.format(data, data._width)
+        #else:
+        #    s = format(data, 'f')
+        #return self.insert_underscore('', s, data._underscore)
+
     def represent_sequence(self, tag, sequence, flow_style=None):
         # type: (Any, Any, Any) -> Any
         value = []  # type: List[Any]
@@ -1047,6 +1112,10 @@ RoundTripRepresenter.add_representer(
 RoundTripRepresenter.add_representer(
     HexCapsInt,
     RoundTripRepresenter.represent_hex_caps_int)
+
+RoundTripRepresenter.add_representer(
+    ScalarFloat,
+    RoundTripRepresenter.represent_scalar_float)
 
 RoundTripRepresenter.add_representer(CommentedSeq,
                                      RoundTripRepresenter.represent_list)

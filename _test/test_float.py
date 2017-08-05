@@ -1,0 +1,105 @@
+# coding: utf-8
+
+from __future__ import print_function, absolute_import, division, unicode_literals
+
+import pytest  # NOQA
+
+from roundtrip import round_trip, dedent, round_trip_load, round_trip_dump
+from ruamel.yaml.error import MantissaNoDotYAML1_1Warning
+
+# http://yaml.org/type/int.html is where underscores in integers are defined
+
+
+class TestFloat:
+    def test_round_trip_non_exp(self):
+        data = round_trip("""\
+        - 1.0
+        - 1.00
+        - 23.100
+        """)
+        print(data)
+        assert 0.999 < data[0] < 1.001
+        assert 0.999 < data[1] < 1.001
+        assert 23.099 < data[2] < 23.101
+
+    @pytest.mark.xfail(strict=True)
+    def test_round_trip_non_exp_trailing_dot(self):
+        data = round_trip("""\
+        - 42.
+        """)
+        print(data)
+        assert 41.999 < data[0] < 42.001
+
+    def test_round_trip_exp_00(self):
+        data = round_trip("""\
+        - 42e56
+        - 42E56
+        - 42.0E56
+        - +42.0e56
+        - 42.0E+056
+        - +42.00e+056
+        """)
+        print(data)
+        for d in data:
+            assert 41.99e56 < d < 42.01e56
+
+    @pytest.mark.xfail(strict=True)
+    def test_round_trip_exp_00f(self):
+        data = round_trip("""\
+        - 42.E56
+        """)
+        print(data)
+        for d in data:
+            assert 41.99e56 < d < 42.01e56
+
+    def test_round_trip_exp_01(self):
+        data = round_trip("""\
+        - -42e56
+        - -42E56
+        - -42.0e56
+        - -42.0E+056
+        """)
+        print(data)
+        for d in data:
+            assert -41.99e56 > d > -42.01e56
+
+    def test_round_trip_exp_02(self):
+        data = round_trip("""\
+        - 42e-56
+        - 42E-56
+        - 42.0E-56
+        - +42.0e-56
+        - 42.0E-056
+        - +42.0e-056
+        """)
+        print(data)
+        for d in data:
+            assert 41.99e-56 < d < 42.01e-56
+
+    def test_round_trip_exp_03(self):
+        data = round_trip("""\
+        - -42e-56
+        - -42E-56
+        - -42.0e-56
+        - -42.0E-056
+        """)
+        print(data)
+        for d in data:
+            assert -41.99e-56 > d > -42.01e-56
+
+    def test_round_trip_exp_04(self):
+        data = round_trip("""\
+        - 1.2e+34
+        - 1.23e+034
+        - 1.230e+34
+        - 1.023e+34
+        - -1.023e+34
+        """)
+
+    def test_yaml_1_1_no_dot(self):
+        with pytest.warns(MantissaNoDotYAML1_1Warning):
+            data = round_trip_load("""\
+            %YAML 1.1
+            ---
+            - 1e6
+            """)

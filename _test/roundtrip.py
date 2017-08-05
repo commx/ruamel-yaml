@@ -91,6 +91,7 @@ def round_trip(inp, outp=None, extra=None, intermediate=None, indent=None,
                           version=version)
     print('roundtrip second round data:\n', res, sep='')
     assert res == doutp
+    return data
 
 
 class YAML(ruamel.yaml.YAML):

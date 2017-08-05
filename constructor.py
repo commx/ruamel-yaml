@@ -24,6 +24,7 @@ from ruamel.yaml.scalarstring import *                           # NOQA
 from ruamel.yaml.scalarstring import (PreservedScalarString, SingleQuotedScalarString,
                                       DoubleQuotedScalarString, ScalarString)
 from ruamel.yaml.scalarint import ScalarInt, BinaryInt, OctalInt, HexInt, HexCapsInt
+from ruamel.yaml.scalarfloat import ScalarFloat
 from ruamel.yaml.timestamp import TimeStamp
 
 if False:  # MYPY
@@ -1039,6 +1040,58 @@ class RoundTripConstructor(SafeConstructor):
                              underscore=underscore)
         else:
             return sign * int(value_s)
+
+    def construct_yaml_float(self, node):
+        # type: (Any) -> float
+        underscore = None
+        m_sign = False
+        value_so = to_str(self.construct_scalar(node))
+        value_s = value_so.replace('_', '').lower()
+        sign = +1
+        if value_s[0] == '-':
+            sign = -1
+        if value_s[0] in '+-':
+            m_sign = True
+            value_s = value_s[1:]
+        if value_s == '.inf':
+            return sign * self.inf_value
+        if value_s == '.nan':
+            return self.nan_value
+        if self.resolver.processing_version != (1, 2) and ':' in value_s:
+            digits = [float(part) for part in value_s.split(':')]
+            digits.reverse()
+            base = 1
+            value = 0.0
+            for digit in digits:
+                value += digit * base
+                base *= 60
+            return sign * value
+        if 'e' in value_s:
+            try:
+                mantissa, exponent = value_so.split('e')
+                exp = 'e'
+            except ValueError:
+                mantissa, exponent = value_so.split('E')
+                exp = 'E'
+            if self.resolver.processing_version != (1, 2):
+                # value_s is lower case independent of input
+                if '.' not in mantissa:
+                    warnings.warn(MantissaNoDotYAML1_1Warning(node, value_so))
+            width = len(mantissa)
+            prec = mantissa.find('.')
+            if prec > width - 2:
+                prec = 0
+            if m_sign:
+                width -= 1
+            e_width = len(exponent)
+            e_sign = exponent[0] in '+-'
+            # print('sf', width, prec, m_sign, exp, e_width, e_sign)
+            return ScalarFloat(sign * float(value_s), width=width, prec=prec, m_sign=m_sign,
+                               exp=exp, e_width=e_width, e_sign=e_sign)
+        width = len(value_so)
+        prec = value_so.index('.')
+        return ScalarFloat(sign * float(value_s), width=width, prec=prec)
+        # return sign * float(value_s)
 
     def construct_yaml_str(self, node):
         # type: (Any) -> Any
