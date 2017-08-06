@@ -1042,16 +1042,25 @@ class RoundTripConstructor(SafeConstructor):
             return sign * int(value_s)
 
     def construct_yaml_float(self, node):
-        # type: (Any) -> float
+        # type: (Any) -> Any
+        def leading_zeros(v):
+            # type: (Any) -> int
+            lead0 = 0
+            idx = 0
+            while idx < len(v) and v[idx] in '0.':
+                if v[idx] == '0':
+                    lead0 += 1
+                idx += 1
+            return lead0
         underscore = None
-        m_sign = False
+        m_sign = False  # type: Any
         value_so = to_str(self.construct_scalar(node))
         value_s = value_so.replace('_', '').lower()
         sign = +1
         if value_s[0] == '-':
             sign = -1
         if value_s[0] in '+-':
-            m_sign = True
+            m_sign = value_s[0]
             value_s = value_s[1:]
         if value_s == '.inf':
             return sign * self.inf_value
@@ -1077,21 +1086,22 @@ class RoundTripConstructor(SafeConstructor):
                 # value_s is lower case independent of input
                 if '.' not in mantissa:
                     warnings.warn(MantissaNoDotYAML1_1Warning(node, value_so))
+            lead0 = leading_zeros(mantissa)
             width = len(mantissa)
             prec = mantissa.find('.')
-            if prec > width - 2:
-                prec = 0
             if m_sign:
                 width -= 1
             e_width = len(exponent)
             e_sign = exponent[0] in '+-'
             # print('sf', width, prec, m_sign, exp, e_width, e_sign)
-            return ScalarFloat(sign * float(value_s), width=width, prec=prec, m_sign=m_sign,
-                               exp=exp, e_width=e_width, e_sign=e_sign)
+            return ScalarFloat(sign * float(value_s),  # type: ignore
+                               width=width, prec=prec, m_sign=m_sign,
+                               m_lead0=lead0, exp=exp, e_width=e_width, e_sign=e_sign)
         width = len(value_so)
-        prec = value_so.index('.')
-        return ScalarFloat(sign * float(value_s), width=width, prec=prec)
-        # return sign * float(value_s)
+        prec = value_so.index('.')  # you can use index, this would not be float without dot
+        lead0 = leading_zeros(value_so)
+        return ScalarFloat(sign * float(value_s),  # type: ignore
+                           width=width, prec=prec, m_sign=m_sign, m_lead0=lead0)
 
     def construct_yaml_str(self, node):
         # type: (Any) -> Any

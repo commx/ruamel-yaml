@@ -7,6 +7,7 @@ if False:  # MYPY
 
 __all__ = ["ScalarFloat", "ExponentialFloat", "ExponentialCapsFloat"]
 
+import sys
 from .compat import no_limit_int  # NOQA
 
 
@@ -16,6 +17,7 @@ class ScalarFloat(float):
         width = kw.pop('width', None)            # type: ignore
         prec = kw.pop('prec', None)              # type: ignore
         m_sign = kw.pop('m_sign', None)          # type: ignore
+        m_lead0 = kw.pop('m_lead0', 0)           # type: ignore
         exp = kw.pop('exp', None)                # type: ignore
         e_width = kw.pop('e_width', None)        # type: ignore
         e_sign = kw.pop('e_sign', None)          # type: ignore
@@ -24,6 +26,7 @@ class ScalarFloat(float):
         v._width = width
         v._prec = prec
         v._m_sign = m_sign
+        v._m_lead0 = m_lead0
         v._exp = exp
         v._e_width = e_width
         v._e_sign = e_sign
@@ -65,6 +68,11 @@ class ScalarFloat(float):
         x._underscore = self._underscore[:] if self._underscore is not None else None  # type: ignore  # NOQA
         return x
 
+    def dump(self, out=sys.stdout):
+        # type: (Any) -> Any
+        print('ScalarFloat({}| w:{}, p:{}, s:{}, lz:{}|{}, w:{}, s:{})'.format(
+            self, self._width, self._prec, self._m_sign, self._m_lead0,  # type: ignore
+            self._exp, self._e_width, self._e_sign), file=out)           # type: ignore
 
 class ExponentialFloat(ScalarFloat):
     def __new__(cls, value, width=None, underscore=None):

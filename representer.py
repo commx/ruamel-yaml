@@ -277,7 +277,7 @@ class SafeRepresenter(BaseRepresenter):
     def represent_bool(self, data):
         # type: (Any) -> Any
         try:
-            value = self.dumper.boolean_representation[bool(data)]
+            value = self.dumper.boolean_representation[bool(data)]  # type: ignore
         except AttributeError:
             if data:
                 value = u'true'
@@ -309,15 +309,16 @@ class SafeRepresenter(BaseRepresenter):
             value = u'-.inf'
         else:
             value = to_unicode(repr(data)).lower()
-            if self.dumper.version == (1, 1) and u'.' not in value and u'e' in value:
-                # Note that in some cases `repr(data)` represents a float number
-                # without the decimal parts.  For instance:
-                #   >>> repr(1e17)
-                #   '1e17'
-                # Unfortunately, this is not a valid float representation according
-                # to the definition of the `!!float` tag in YAML 1.1.  We fix this by adding
-                # '.0' before the 'e' symbol.
-                value = value.replace(u'e', u'.0e', 1)
+            if self.dumper.version == (1, 1):  # type: ignore
+                if u'.' not in value and u'e' in value:
+                    # Note that in some cases `repr(data)` represents a float number
+                    # without the decimal parts.  For instance:
+                    #   >>> repr(1e17)
+                    #   '1e17'
+                    # Unfortunately, this is not a valid float representation according
+                    # to the definition of the `!!float` tag in YAML 1.1.  We fix this by adding
+                    # '.0' before the 'e' symbol.
+                    value = value.replace(u'e', u'.0e', 1)
         return self.represent_scalar(u'tag:yaml.org,2002:float', value)
 
     def represent_list(self, data):
@@ -763,21 +764,22 @@ class RoundTripRepresenter(SafeRepresenter):
             value = u'-.inf'
         if value:
             return self.represent_scalar(u'tag:yaml.org,2002:float', value)
-        if data._exp is None:
+        if data._exp is None and data._prec > 0 and data._prec == data._width - 1:
+            # no exponent, but trailing dot
+            value = '{}{:d}.'.format(data._m_sign if data._m_sign else '', abs(int(data)))
+        elif data._exp is None:
+            # no exponent, "normal" dot
             prec = data._prec
             if prec < 1:
                 prec = 1
             # print('dw2', data._width, prec)
-            value = '{:{}.{}f}'.format(data, data._width, data._width-prec-1)
+            ms = data._m_sign if data._m_sign else ''
+            # -1 for the dot
+            value = '{}{:0{}.{}f}'.format(ms, abs(data), data._width-len(ms), data._width-prec-1)
             while len(value) < data._width:
                 value += '0'
         else:
-            # print('pr', data._width, prec)
-            # if data._prec > 0:
-            #     prec =  data._width - data.prec
-            # prec = data._prec
-            # if prec < 1:
-            #     prec = 1
+            # exponent
             m, es = '{:{}e}'.format(data, data._width).split('e')
             w = data._width if data._prec > 0 else (data._width + 1)
             if data < 0:
@@ -791,16 +793,23 @@ class RoundTripRepresenter(SafeRepresenter):
                 m1 = '+' + m1
             esgn = '+' if data._e_sign else ''
             if data._prec < 0:   # mantissa without dot
-                # print('ew2', m2, len(m2), e)
                 if m2 != '0':
                     e -= len(m2)
                 else:
                     m2 = ''
+                while (len(m1) + len(m2) - (1 if data._m_sign else 0)) < data._width:
+                    m2 += '0'
+                    e -= 1
                 value = m1 + m2 + data._exp + '{:{}0{}d}'.format(e, esgn, data._e_width)
-            elif data._prec == 0:   # mantissa with trailind dot
+            elif data._prec == 0:   # mantissa with trailing dot
                 e -= len(m2)
                 value = m1 + m2 + '.' + data._exp + '{:{}0{}d}'.format(e, esgn, data._e_width)
             else:
+                if data._m_lead0 > 0:
+                    m2 = '0' * (data._m_lead0 - 1) + m1 + m2
+                    m1 = '0'
+                    m2 =  m2[:-data._m_lead0]  # these should be zeros
+                    e += data._m_lead0
                 while len(m1) < data._prec:
                     m1 += m2[0]
                     m2 = m2[1:]

@@ -243,4 +243,5 @@ class CommentToken(Token):
             delattr(self, 'pre_done')
 
     def __repr__(self):
+        # type: () -> Any
         return 'CommentToken({!r})'.format(self.value)

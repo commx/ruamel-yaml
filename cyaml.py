@@ -92,7 +92,7 @@ class CSafeDumper(CEmitter, SafeRepresenter, Resolver):  # type: ignore
                           explicit_start=explicit_start,
                           explicit_end=explicit_end,
                           version=version, tags=tags)
-        self._emitter = self._serializer = self._representer = self
+        self._emitter = self._serializer = self._representer = self  # type: ignore
         SafeRepresenter.__init__(self, default_style=default_style,
                                  default_flow_style=default_flow_style)
         Resolver.__init__(self)

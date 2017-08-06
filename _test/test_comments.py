@@ -715,6 +715,14 @@ class TestEmptyValueBeforeComments:
           - e: f
         """)
 
+    def test_issue_25a1(self):
+        round_trip("""\
+        - a: b
+          c: d
+          d:  # foo
+            e: f
+        """)
+
     def test_issue_25b(self):
         round_trip("""\
         var1: #empty
@@ -729,12 +737,54 @@ class TestEmptyValueBeforeComments:
           c: 3 # comment c
         """)
 
+    def test_issue_25c1(self):
+        round_trip("""\
+        params:
+          a: 1 # comment a
+          b:   # comment b
+          # extra
+          c: 3 # comment c
+        """)
+
     def test_issue_25_00(self):
         round_trip("""\
         params:
           a: 1 # comment a
           b:   # comment b
         """)
+
+    @pytest.mark.xfail(strict=True)
+    def test_issue_25_01(self):
+        round_trip("""\
+        a:        # comment 1
+                  #  comment 2
+        - b:      #   comment 3
+            c: 1  #    comment 4
+        """)
+
+    @pytest.mark.xfail(strict=True)
+    def test_issue_25_02(self):
+        round_trip("""\
+        a:        # comment 1
+                  #  comment 2
+        - b: 2    #   comment 3
+        """)
+
+    @pytest.mark.xfail(strict=True)
+    def test_issue_25_03(self):
+        round_trip("""\
+        a:        # comment 1
+                  #  comment 2
+          - b: 2  #   comment 3
+        """)
+
+    def test_issue_25_04(self):
+        round_trip("""\
+        a:        # comment 1
+                  #  comment 2
+          b: 1    #   comment 3
+        """)
+
 
 
 test_block_scalar_commented_line_template = """\

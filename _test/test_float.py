@@ -16,19 +16,56 @@ class TestFloat:
         - 1.0
         - 1.00
         - 23.100
+        - -1.0
+        - -1.00
+        - -23.100
+        - 42.
+        - -42.
+        - +42.
         """)
         print(data)
         assert 0.999 < data[0] < 1.001
         assert 0.999 < data[1] < 1.001
         assert 23.099 < data[2] < 23.101
+        assert 0.999 < -data[3] < 1.001
+        assert 0.999 < -data[4] < 1.001
+        assert 23.099 < -data[5] < 23.101
+        assert 41.999 < data[6] < 42.001
+        assert 41.999 < -data[7] < 42.001
+        assert 41.999 < data[8] < 42.001
 
-    @pytest.mark.xfail(strict=True)
-    def test_round_trip_non_exp_trailing_dot(self):
+    def test_round_trip_zeros_0(self):
         data = round_trip("""\
-        - 42.
+        - 0.
+        - +0.
+        - -0.
+        - 0.0
+        - +0.0
+        - -0.0
+        - 0.00
+        - +0.00
+        - -0.00
         """)
         print(data)
-        assert 41.999 < data[0] < 42.001
+        for d in data:
+            assert -0.00001 < d < 0.00001
+
+    # @pytest.mark.xfail(strict=True)
+    def test_round_trip_zeros_1(self):
+        # not sure if this should be supported, but it is
+        data = round_trip("""\
+        - 00.0
+        - +00.0
+        - -00.0
+        """)
+        print(data)
+        for d in data:
+            assert -0.00001 < d < 0.00001
+
+    def Xtest_round_trip_non_exp_trailing_dot(self):
+        data = round_trip("""\
+        """)
+        print(data)
 
     def test_round_trip_exp_00(self):
         data = round_trip("""\
@@ -43,7 +80,7 @@ class TestFloat:
         for d in data:
             assert 41.99e56 < d < 42.01e56
 
-    @pytest.mark.xfail(strict=True)
+    # @pytest.mark.xfail(strict=True)
     def test_round_trip_exp_00f(self):
         data = round_trip("""\
         - 42.E56
@@ -94,6 +131,7 @@ class TestFloat:
         - 1.230e+34
         - 1.023e+34
         - -1.023e+34
+        - 250e6
         """)
 
     def test_yaml_1_1_no_dot(self):

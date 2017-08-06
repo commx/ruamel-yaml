@@ -177,6 +177,7 @@ class Tag(object):
         self.value = None
 
     def __repr__(self):
+        # type: () -> Any
         return '{0.__class__.__name__}({0.value!r})'.format(self)
 
 

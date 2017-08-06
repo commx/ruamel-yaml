@@ -195,10 +195,12 @@ warnings.simplefilter('once', UnsafeLoaderWarning)
 
 class MantissaNoDotYAML1_1Warning(YAMLWarning):
     def __init__(self, node, flt_str):
+        # type: (Any, Any) -> None
         self.node = node
         self.flt = flt_str
 
     def __str__(self):
+        # type: () -> Any
         line = self.node.start_mark.line
         col = self.node.start_mark.column
         return """
