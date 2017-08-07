@@ -532,6 +532,8 @@ class Parser(object):
 
     def parse_block_mapping_key(self):
         # type: () -> Any
+        next_token = self.scanner.peek_token()
+        # print('>>>> tk', type(self), next_token, getattr(next_token, 'comment', None))
         if self.scanner.check_token(KeyToken):
             token = self.scanner.get_token()
             token.move_comment(self.scanner.peek_token())
@@ -560,17 +562,23 @@ class Parser(object):
         if self.scanner.check_token(ValueToken):
             token = self.scanner.get_token()
             # value token might have post comment move it to e.g. block
+            # pt = self.scanner.peek_token()
+            # print('pt', pt)
             if self.scanner.check_token(ValueToken):
                 token.move_comment(self.scanner.peek_token())
             else:
-                token.move_comment(self.scanner.peek_token(), empty=True)
+                if not self.scanner.check_token(KeyToken):
+                    token.move_comment(self.scanner.peek_token(), empty=True)
+                # else: empty value for this key cannot move token.comment
             if not self.scanner.check_token(KeyToken, ValueToken, BlockEndToken):
                 self.states.append(self.parse_block_mapping_key)
                 return self.parse_block_node_or_indentless_sequence()
             else:
                 self.state = self.parse_block_mapping_key
-                return self.process_empty_scalar(token.end_mark,
-                                                 comment=self.scanner.peek_token().comment)
+                comment = token.comment
+                if comment is None:
+                    comment=self.scanner.peek_token().comment
+                return self.process_empty_scalar(token.end_mark, comment=comment)
         else:
             self.state = self.parse_block_mapping_key
             token = self.scanner.peek_token()

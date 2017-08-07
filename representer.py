@@ -766,21 +766,21 @@ class RoundTripRepresenter(SafeRepresenter):
             return self.represent_scalar(u'tag:yaml.org,2002:float', value)
         if data._exp is None and data._prec > 0 and data._prec == data._width - 1:
             # no exponent, but trailing dot
-            value = '{}{:d}.'.format(data._m_sign if data._m_sign else '', abs(int(data)))
+            value = u'{}{:d}.'.format(data._m_sign if data._m_sign else u'', abs(int(data)))
         elif data._exp is None:
             # no exponent, "normal" dot
             prec = data._prec
             if prec < 1:
                 prec = 1
             # print('dw2', data._width, prec)
-            ms = data._m_sign if data._m_sign else ''
+            ms = data._m_sign if data._m_sign else u''
             # -1 for the dot
-            value = '{}{:0{}.{}f}'.format(ms, abs(data), data._width-len(ms), data._width-prec-1)
+            value = u'{}{:0{}.{}f}'.format(ms, abs(data), data._width-len(ms), data._width-prec-1)
             while len(value) < data._width:
-                value += '0'
+                value += u'0'
         else:
             # exponent
-            m, es = '{:{}e}'.format(data, data._width).split('e')
+            m, es = u'{:{}e}'.format(data, data._width).split('e')
             w = data._width if data._prec > 0 else (data._width + 1)
             if data < 0:
                 w += 1
@@ -788,39 +788,39 @@ class RoundTripRepresenter(SafeRepresenter):
             e = int(es)
             m1, m2 = m.split('.')  # always second?
             while len(m1) + len(m2) < data._width - (1 if data._prec >= 0 else 0):
-                m2 += '0'
+                m2 += u'0'
             if data._m_sign and data > 0:
                 m1 = '+' + m1
-            esgn = '+' if data._e_sign else ''
+            esgn = u'+' if data._e_sign else u''
             if data._prec < 0:   # mantissa without dot
-                if m2 != '0':
+                if m2 != u'0':
                     e -= len(m2)
                 else:
-                    m2 = ''
+                    m2 = u''
                 while (len(m1) + len(m2) - (1 if data._m_sign else 0)) < data._width:
-                    m2 += '0'
+                    m2 += u'0'
                     e -= 1
-                value = m1 + m2 + data._exp + '{:{}0{}d}'.format(e, esgn, data._e_width)
+                value = m1 + m2 + data._exp + u'{:{}0{}d}'.format(e, esgn, data._e_width)
             elif data._prec == 0:   # mantissa with trailing dot
                 e -= len(m2)
-                value = m1 + m2 + '.' + data._exp + '{:{}0{}d}'.format(e, esgn, data._e_width)
+                value = m1 + m2 + u'.' + data._exp + u'{:{}0{}d}'.format(e, esgn, data._e_width)
             else:
                 if data._m_lead0 > 0:
-                    m2 = '0' * (data._m_lead0 - 1) + m1 + m2
-                    m1 = '0'
+                    m2 = u'0' * (data._m_lead0 - 1) + m1 + m2
+                    m1 = u'0'
                     m2 =  m2[:-data._m_lead0]  # these should be zeros
                     e += data._m_lead0
                 while len(m1) < data._prec:
                     m1 += m2[0]
                     m2 = m2[1:]
                     e -= 1
-                value = m1 + '.' + m2 + data._exp + '{:{}0{}d}'.format(e, esgn, data._e_width)
+                value = m1 + u'.' + m2 + data._exp + u'{:{}0{}d}'.format(e, esgn, data._e_width)
 
         if value is None:
             value = to_unicode(repr(data)).lower()
         return self.represent_scalar(u'tag:yaml.org,2002:float', value)
         #if data._width is not None:
-        #    s = '{:0{}d}'.format(data, data._width)
+        #    s = u'{:0{}d}'.format(data, data._width)
         #else:
         #    s = format(data, 'f')
         #return self.insert_underscore('', s, data._underscore)

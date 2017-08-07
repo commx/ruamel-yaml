@@ -1329,7 +1329,11 @@ class Emitter(object):
                     self.column += len(data)
                     if self.encoding:
                         data = data.encode(self.encoding)
-                    self.stream.write(data)
+                    try:
+                        self.stream.write(data)
+                    except:
+                        print(repr(data))
+                        raise
                     start = end
             if ch is not None:
                 spaces = (ch == u' ')
