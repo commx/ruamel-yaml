@@ -139,9 +139,20 @@ class TestComments:
           - Sammy Sosa
         rbi:
           # 1998 rbi ranking
+          - Sammy Sosa
+          - Ken Griffey
+        """)
+
+    def test_09a(self):   
+        round_trip("""
+        hr: # 1998 hr ranking
+        - Mark McGwire
+        - Sammy Sosa
+        rbi:
+          # 1998 rbi ranking
         - Sammy Sosa
         - Ken Griffey
-        """)
+        """, indent=4, block_seq_indent=2)
 
     def test_simple_map_middle_comment(self):
         round_trip("""
@@ -706,7 +717,6 @@ class TestUnicodeComments:
 
 
 class TestEmptyValueBeforeComments:
-    @pytest.mark.xfail(strict=True)
     def test_issue_25a(self):
         round_trip("""\
         - a: b
@@ -753,7 +763,6 @@ class TestEmptyValueBeforeComments:
           b:   # comment b
         """)
 
-    @pytest.mark.xfail(strict=True)
     def test_issue_25_01(self):
         round_trip("""\
         a:        # comment 1
@@ -762,7 +771,6 @@ class TestEmptyValueBeforeComments:
             c: 1  #    comment 4
         """)
 
-    @pytest.mark.xfail(strict=True)
     def test_issue_25_02(self):
         round_trip("""\
         a:        # comment 1
@@ -776,7 +784,7 @@ class TestEmptyValueBeforeComments:
         a:        # comment 1
                   #  comment 2
           - b: 2  #   comment 3
-        """)
+        """, indent=4, block_seq_indent=2)
 
     def test_issue_25_04(self):
         round_trip("""\
@@ -799,11 +807,11 @@ a: |
 
 class TestBlockScalarWithComments:
     # issue 99 reported by Colm O'Connor
-
-    for x in ['', '\n', '\n# Another comment\n', '\n\n', '\n\n# abc\n#xyz\n',
+    def test_scalar_with_comments(self):
+        for x in ['', '\n', '\n# Another comment\n', '\n\n', '\n\n# abc\n#xyz\n',
               '\n\n# abc\n#xyz\n', '# abc\n\n#xyz\n', '\n\n  # abc\n  #xyz\n']:
 
-        commented_line = test_block_scalar_commented_line_template.format(x)
-        data = ruamel.yaml.round_trip_load(commented_line)
+            commented_line = test_block_scalar_commented_line_template.format(x)
+            data = ruamel.yaml.round_trip_load(commented_line)
 
-        assert ruamel.yaml.round_trip_dump(data) == commented_line
+            assert ruamel.yaml.round_trip_dump(data) == commented_line

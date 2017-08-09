@@ -4,6 +4,7 @@ from __future__ import print_function
 """
 helper routines for testing round trip of commented YAML data
 """
+import sys
 import textwrap
 
 import ruamel.yaml
@@ -54,6 +55,19 @@ def round_trip_dump(data, indent=None, block_seq_indent=None, top_level_colon_al
                                        version=version)
 
 
+def diff(inp, outp, file_name='stdin'):
+    import difflib
+    inl = inp.splitlines(True)  # True for keepends
+    outl = outp.splitlines(True)
+    diff = difflib.unified_diff(inl, outl, file_name, 'round trip YAML')
+    # 2.6 difflib has trailing space on filename lines %-)
+    strip_trailing_space = sys.version_info < (2, 7)
+    for line in diff:
+        if strip_trailing_space and line[:4] in ['--- ', '+++ ']:
+            line = line.rstrip() + '\n'
+        sys.stdout.write(line)
+
+
 def round_trip(inp, outp=None, extra=None, intermediate=None, indent=None,
                block_seq_indent=None, top_level_colon_align=None, prefix_colon=None,
                preserve_quotes=None,
@@ -81,7 +95,9 @@ def round_trip(inp, outp=None, extra=None, intermediate=None, indent=None,
                           explicit_start=explicit_start,
                           explicit_end=explicit_end,
                           version=version)
-    print('roundtrip data:\n', res, sep='')
+    if res != doutp:
+        diff(doutp, res, "input string")
+    print('\nroundtrip data:\n', res, sep='')
     assert res == doutp
     res = round_trip_dump(data, indent=indent, block_seq_indent=block_seq_indent,
                           top_level_colon_align=top_level_colon_align,

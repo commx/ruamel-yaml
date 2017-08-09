@@ -11,8 +11,8 @@ def load(s):
     return round_trip_load(dedent(s))
 
 
-def compare(data, s):
-    assert round_trip_dump(data) == dedent(s)
+def compare(data, s, **kw):
+    assert round_trip_dump(data, **kw) == dedent(s)
 
 
 def compare_eol(data, s):
@@ -385,9 +385,27 @@ class TestCommentsManipulation:
         b:
           # Hello
           # World
+        - c
+        - d
+        """.format(comment='#'))
+
+    def test_before_nested_seq_from_scratch_block_seq_indent(self):
+        from ruamel.yaml.comments import CommentedMap, CommentedSeq
+        data = CommentedMap()
+        datab = CommentedSeq()
+        data['a'] = 1
+        data['b'] = datab
+        datab.append('c')
+        datab.append('d')
+        data['b'].yaml_set_start_comment('Hello\nWorld\n', indent=2)
+        compare(data, """
+        a: 1
+        b:
+          # Hello
+          # World
           - c
           - d
-        """.format(comment='#'))
+        """.format(comment='#'), indent=4, block_seq_indent=2)
 
     def test_map_set_comment_before_and_after_non_first_key_00(self):
         # http://stackoverflow.com/a/40705671/1307905
