@@ -80,7 +80,7 @@ from ruamel.yaml.error import MarkedYAMLError
 from ruamel.yaml.tokens import *                               # NOQA
 from ruamel.yaml.events import *                               # NOQA
 from ruamel.yaml.scanner import Scanner, RoundTripScanner, ScannerError      # NOQA
-from ruamel.yaml.compat import utf8                            # NOQA
+from ruamel.yaml.compat import utf8, nprint                    # NOQA
 
 if False:  # MYPY
     from typing import Any, Dict, Optional, List  # NOQA
@@ -342,121 +342,131 @@ class Parser(object):
             token = self.scanner.get_token()
             event = AliasEvent(token.value, token.start_mark, token.end_mark)  # type: Any
             self.state = self.states.pop()
-        else:
-            anchor = None
-            tag = None
-            start_mark = end_mark = tag_mark = None
-            if self.scanner.check_token(AnchorToken):
+            return event
+
+        anchor = None
+        tag = None
+        start_mark = end_mark = tag_mark = None
+        if self.scanner.check_token(AnchorToken):
+            token = self.scanner.get_token()
+            start_mark = token.start_mark
+            end_mark = token.end_mark
+            anchor = token.value
+            if self.scanner.check_token(TagToken):
                 token = self.scanner.get_token()
-                start_mark = token.start_mark
+                tag_mark = token.start_mark
                 end_mark = token.end_mark
-                anchor = token.value
-                if self.scanner.check_token(TagToken):
-                    token = self.scanner.get_token()
-                    tag_mark = token.start_mark
-                    end_mark = token.end_mark
-                    tag = token.value
-            elif self.scanner.check_token(TagToken):
+                tag = token.value
+        elif self.scanner.check_token(TagToken):
+            token = self.scanner.get_token()
+            start_mark = tag_mark = token.start_mark
+            end_mark = token.end_mark
+            tag = token.value
+            if self.scanner.check_token(AnchorToken):
                 token = self.scanner.get_token()
                 start_mark = tag_mark = token.start_mark
                 end_mark = token.end_mark
-                tag = token.value
-                if self.scanner.check_token(AnchorToken):
-                    token = self.scanner.get_token()
-                    end_mark = token.end_mark
-                    anchor = token.value
-            if tag is not None:
-                handle, suffix = tag
-                if handle is not None:
-                    if handle not in self.tag_handles:
-                        raise ParserError(
-                            "while parsing a node", start_mark,
-                            "found undefined tag handle %r" % utf8(handle),
-                            tag_mark)
-                    tag = self.transform_tag(handle, suffix)
-                else:
-                    tag = suffix
-            # if tag == u'!':
-            #     raise ParserError("while parsing a node", start_mark,
-            #             "found non-specific tag '!'", tag_mark,
-            #      "Please check 'http://pyyaml.org/wiki/YAMLNonSpecificTag'
-            #     and share your opinion.")
-            if start_mark is None:
-                start_mark = end_mark = self.scanner.peek_token().start_mark
-            event = None
-            implicit = (tag is None or tag == u'!')
-            if indentless_sequence and self.scanner.check_token(BlockEntryToken):
-                end_mark = self.scanner.peek_token().end_mark
-                event = SequenceStartEvent(anchor, tag, implicit,
-                                           start_mark, end_mark)
-                self.state = self.parse_indentless_sequence_entry
-            else:
-                if self.scanner.check_token(ScalarToken):
-                    token = self.scanner.get_token()
-                    end_mark = token.end_mark
-                    if (token.plain and tag is None) or tag == u'!':
-                        implicit = (True, False)
-                    elif tag is None:
-                        implicit = (False, True)
-                    else:
-                        implicit = (False, False)
-                    event = ScalarEvent(
-                        anchor, tag, implicit, token.value,
-                        start_mark, end_mark, style=token.style,
-                        comment=token.comment
-                    )
-                    self.state = self.states.pop()
-                elif self.scanner.check_token(FlowSequenceStartToken):
-                    end_mark = self.scanner.peek_token().end_mark
-                    event = SequenceStartEvent(
-                        anchor, tag, implicit,
-                        start_mark, end_mark, flow_style=True)
-                    self.state = self.parse_flow_sequence_first_entry
-                elif self.scanner.check_token(FlowMappingStartToken):
-                    end_mark = self.scanner.peek_token().end_mark
-                    event = MappingStartEvent(
-                        anchor, tag, implicit,
-                        start_mark, end_mark, flow_style=True)
-                    self.state = self.parse_flow_mapping_first_key
-                elif block and self.scanner.check_token(BlockSequenceStartToken):
-                    end_mark = self.scanner.peek_token().start_mark
-                    # should inserting the comment be dependent on the
-                    # indentation?
-                    pt = self.scanner.peek_token()
-                    comment = pt.comment
-                    # print('pt0', type(pt))
-                    if comment is None or comment[1] is None:
-                        comment = pt.split_comment()
-                    # print('pt1', comment)
-                    event = SequenceStartEvent(
-                        anchor, tag, implicit, start_mark, end_mark,
-                        flow_style=False,
-                        comment=comment,
-                    )
-                    self.state = self.parse_block_sequence_first_entry
-                elif block and self.scanner.check_token(BlockMappingStartToken):
-                    end_mark = self.scanner.peek_token().start_mark
-                    comment = self.scanner.peek_token().comment
-                    event = MappingStartEvent(
-                        anchor, tag, implicit, start_mark, end_mark,
-                        flow_style=False, comment=comment)
-                    self.state = self.parse_block_mapping_first_key
-                elif anchor is not None or tag is not None:
-                    # Empty scalars are allowed even if a tag or an anchor is
-                    # specified.
-                    event = ScalarEvent(anchor, tag, (implicit, False), u'',
-                                        start_mark, end_mark)
-                    self.state = self.states.pop()
-                else:
-                    if block:
-                        node = 'block'
-                    else:
-                        node = 'flow'
-                    token = self.scanner.peek_token()
+                anchor = token.value
+        if tag is not None:
+            handle, suffix = tag
+            if handle is not None:
+                if handle not in self.tag_handles:
                     raise ParserError(
-                        "while parsing a %s node" % node, start_mark,
-                        "expected the node content, but found %r" % token.id,
-                        token.start_mark)
+                        "while parsing a node", start_mark,
+                        "found undefined tag handle %r" % utf8(handle),
+                        tag_mark)
+                tag = self.transform_tag(handle, suffix)
+            else:
+                tag = suffix
+        # if tag == u'!':
+        #     raise ParserError("while parsing a node", start_mark,
+        #             "found non-specific tag '!'", tag_mark,
+        #      "Please check 'http://pyyaml.org/wiki/YAMLNonSpecificTag'
+        #     and share your opinion.")
+        if start_mark is None:
+            start_mark = end_mark = self.scanner.peek_token().start_mark
+        event = None
+        implicit = (tag is None or tag == u'!')
+        if indentless_sequence and self.scanner.check_token(BlockEntryToken):
+            comment = None
+            pt = self.scanner.peek_token()
+            if pt.comment and pt.comment[0]:
+                comment = [pt.comment[0], []]
+                pt.comment[0] = None
+            end_mark = self.scanner.peek_token().end_mark
+            event = SequenceStartEvent(anchor, tag, implicit,
+                                       start_mark, end_mark, comment=comment)
+            self.state = self.parse_indentless_sequence_entry
+            return event
+
+        if self.scanner.check_token(ScalarToken):
+            token = self.scanner.get_token()
+            # self.scanner.peek_token_same_line_comment(token)
+            end_mark = token.end_mark
+            if (token.plain and tag is None) or tag == u'!':
+                implicit = (True, False)
+            elif tag is None:
+                implicit = (False, True)
+            else:
+                implicit = (False, False)
+            # nprint('se', token.value, token.comment)
+            event = ScalarEvent(
+                anchor, tag, implicit, token.value,
+                start_mark, end_mark, style=token.style,
+                comment=token.comment
+            )
+            self.state = self.states.pop()
+        elif self.scanner.check_token(FlowSequenceStartToken):
+            end_mark = self.scanner.peek_token().end_mark
+            event = SequenceStartEvent(
+                anchor, tag, implicit,
+                start_mark, end_mark, flow_style=True)
+            self.state = self.parse_flow_sequence_first_entry
+        elif self.scanner.check_token(FlowMappingStartToken):
+            end_mark = self.scanner.peek_token().end_mark
+            event = MappingStartEvent(
+                anchor, tag, implicit,
+                start_mark, end_mark, flow_style=True)
+            self.state = self.parse_flow_mapping_first_key
+        elif block and self.scanner.check_token(BlockSequenceStartToken):
+            end_mark = self.scanner.peek_token().start_mark
+            # should inserting the comment be dependent on the
+            # indentation?
+            pt = self.scanner.peek_token()
+            comment = pt.comment
+            # nprint('pt0', type(pt))
+            if comment is None or comment[1] is None:
+                comment = pt.split_comment()
+            # nprint('pt1', comment)
+            event = SequenceStartEvent(
+                anchor, tag, implicit, start_mark, end_mark,
+                flow_style=False,
+                comment=comment,
+            )
+            self.state = self.parse_block_sequence_first_entry
+        elif block and self.scanner.check_token(BlockMappingStartToken):
+            end_mark = self.scanner.peek_token().start_mark
+            comment = self.scanner.peek_token().comment
+            event = MappingStartEvent(
+                anchor, tag, implicit, start_mark, end_mark,
+                flow_style=False, comment=comment)
+            self.state = self.parse_block_mapping_first_key
+        elif anchor is not None or tag is not None:
+            # Empty scalars are allowed even if a tag or an anchor is
+            # specified.
+            event = ScalarEvent(anchor, tag, (implicit, False), u'',
+                                start_mark, end_mark)
+            self.state = self.states.pop()
+        else:
+            if block:
+                node = 'block'
+            else:
+                node = 'flow'
+            token = self.scanner.peek_token()
+            raise ParserError(
+                "while parsing a %s node" % node, start_mark,
+                "expected the node content, but found %r" % token.id,
+                token.start_mark)
         return event
 
     # block_sequence ::= BLOCK-SEQUENCE-START (BLOCK-ENTRY block_node?)*

@@ -318,10 +318,13 @@ class Emitter(object):
                 self.expect_scalar()
             elif isinstance(self.event, SequenceStartEvent):
                 if self.event.comment:
-                    self.write_pre_comment(self.event)
+                    if self.write_pre_comment(self.event):
+                        self.indention = False
+                        self.no_newline = True
                     if self.event.flow_style is False and self.event.comment:
-                        self.write_post_comment(self.event)
-                # print('seq event', self.event)
+                        if self.write_post_comment(self.event):
+                            self.indention = False
+                            self.no_newline = True
                 if self.flow_level or self.canonical or self.event.flow_style or \
                         self.check_empty_sequence():
                     self.expect_flow_sequence()
@@ -490,7 +493,9 @@ class Emitter(object):
         else:
             if self.event.comment and self.event.comment[1]:
                 self.write_pre_comment(self.event)
+            nonl = self.no_newline
             self.write_indent()
+            self.no_newline = nonl
             self.write_indicator((u' ' * self.block_seq_indent) + u'-', True, indention=True)
             if self.block_seq_indent + 2 > self.best_indent:
                 self.no_newline = True
@@ -1372,27 +1377,29 @@ class Emitter(object):
         self.write_line_break()
 
     def write_pre_comment(self, event):
-        # type: (Any) -> None
+        # type: (Any) -> bool
         comments = event.comment[1]
         if comments is None:
-            return
+            return False
         try:
             for comment in comments:
                 if isinstance(event, MappingStartEvent) and \
                    getattr(comment, 'pre_done', None):
                     continue
                 if self.column != 0:
-                        self.write_line_break()
+                    self.write_line_break()
                 self.write_comment(comment)
                 if isinstance(event, MappingStartEvent):
                     comment.pre_done = True
         except TypeError:
             print('eventtt', type(event), event)
             raise
+        return True
 
     def write_post_comment(self, event):
-        # type: (Any) -> None
+        # type: (Any) -> bool
         if self.event.comment[0] is None:
-            return
+            return False
         comment = event.comment[0]
         self.write_comment(comment)
+        return True

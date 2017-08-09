@@ -4,6 +4,7 @@
 if False:  # MYPY
     from typing import Any, Dict, Optional, List  # NOQA
 
+SHOWLINES = True
 
 class Token(object):
     __slots__ = 'start_mark', 'end_mark', '_comment',
@@ -15,12 +16,18 @@ class Token(object):
 
     def __repr__(self):
         # type: () -> Any
-        attributes = [key for key in self.__slots__ if not key.endswith('_mark') and
-                      hasattr('self', key)]
+        # attributes = [key for key in self.__slots__ if not key.endswith('_mark') and
+        #               hasattr('self', key)]
+        attributes = [key for key in self.__slots__ if not key.endswith('_mark')]
         attributes.sort()
         arguments = ', '.join(['%s=%r' % (key, getattr(self, key))
                                for key in attributes])
-        return '%s(%s)' % (self.__class__.__name__, arguments)
+        if SHOWLINES:
+            try:
+                arguments += u', line: ' + str(self.start_mark.line)
+            except:
+                pass
+        return u'{}({})'.format(self.__class__.__name__, arguments)
 
     def add_post_comment(self, comment):
         # type: (Any) -> None
@@ -261,4 +268,10 @@ class CommentToken(Token):
 
     def __repr__(self):
         # type: () -> Any
-        return 'CommentToken({!r})'.format(self.value)
+        v = self.value
+        if SHOWLINES:
+            try:
+                v += u', line: ' + str(self.start_mark.line)
+            except:
+                pass
+        return 'CommentToken({!r})'.format(v)

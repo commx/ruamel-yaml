@@ -141,9 +141,9 @@ class TestComments:
           # 1998 rbi ranking
           - Sammy Sosa
           - Ken Griffey
-        """)
+        """, indent=4, block_seq_indent=2)
 
-    def test_09a(self):   
+    def test_09a(self):
         round_trip("""
         hr: # 1998 hr ranking
         - Mark McGwire
@@ -152,7 +152,7 @@ class TestComments:
           # 1998 rbi ranking
         - Sammy Sosa
         - Ken Griffey
-        """, indent=4, block_seq_indent=2)
+        """)
 
     def test_simple_map_middle_comment(self):
         round_trip("""

@@ -125,6 +125,13 @@ DBG_NODE = 4
 
 
 _debug = None  # type: Union[None, int]
+if 'RUAMELDEBUG' in os.environ:
+    _debugx = os.environ.get('RUAMELDEBUG')
+    if _debugx is None:
+        _debug = 0
+    else:
+        _debug = int(_debugx)
+
 
 if bool(_debug):
     class ObjectCounter(object):
