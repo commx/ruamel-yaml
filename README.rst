@@ -35,6 +35,9 @@ ChangeLog
 
 .. should insert NEXT: at the beginning of line for next key
 
+0.15.25 (2017-08-09):
+  - fix for problem with dumping (unloaded) floats (reported by eyenseo)
+
 0.15.24 (2017-08-09):
   - added ScalarFloat which supports roundtripping of 23.1, 23.100,
     42.00E+56, 0.0, -0.0 etc. while keeping the format. Underscores in mantissas
