@@ -1052,7 +1052,7 @@ class RoundTripConstructor(SafeConstructor):
                     lead0 += 1
                 idx += 1
             return lead0
-        underscore = None
+        # underscore = None
         m_sign = False  # type: Any
         value_so = to_str(self.construct_scalar(node))
         value_s = value_so.replace('_', '').lower()

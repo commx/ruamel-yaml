@@ -35,6 +35,18 @@ ChangeLog
 
 .. should insert NEXT: at the beginning of line for next key
 
+0.15.24 (2017-08-09):
+  - added ScalarFloat which supports roundtripping of 23.1, 23.100,
+    42.00E+56, 0.0, -0.0 etc. while keeping the format. Underscores in mantissas
+    are not preserved/supported (yet, is anybody using that?).
+  - (finally) fixed longstanding issue 23 (reported by `Antony Sottile
+    <https://bitbucket.org/asottile/>`_), now handling comment between block
+    mapping key and value correctly
+  - warn on YAML 1.1 float input that is incorrect (triggered by invalid YAML
+    provided by Cecil Curry)
+  - allow setting of boolean representation (`false`, `true`) by using:
+    ``yaml.boolean_representation = [u'False', u'True']``
+
 0.15.23 (2017-08-01):
   - fix for round_tripping integers on 2.7.X > sys.maxint (reported by ccatterina)
 

@@ -6,6 +6,7 @@ if False:  # MYPY
 
 SHOWLINES = True
 
+
 class Token(object):
     __slots__ = 'start_mark', 'end_mark', '_comment',
 
@@ -20,7 +21,7 @@ class Token(object):
         #               hasattr('self', key)]
         attributes = [key for key in self.__slots__ if not key.endswith('_mark')]
         attributes.sort()
-        arguments = ', '.join(['%s=%r' % (key, getattr(self, key))
+        arguments = u', '.join([u'%s=%r' % (key, getattr(self, key))
                                for key in attributes])
         if SHOWLINES:
             try:
@@ -58,19 +59,12 @@ class Token(object):
         ScalarToken that follows it
         empty is a special for empty values -> comment after key
         """
-        # if self.comment is not None:
-        #     print('mci:', self, target, getattr(self, '_comment', None),
-        #          getattr(target, '_comment', None), empty)
         c = self.comment
         if c is None:
             return
         # don't push beyond last element
         if isinstance(target, StreamEndToken):
             return
-        #if isinstance(self, ValueToken) and isinstance(target, BlockEntryToken):
-            # if target._comment:
-            #     target._comment[0] = c[0]
-        #    return
         delattr(self, '_comment')
         tc = target.comment
         if not tc:  # target comment, just insert
@@ -86,14 +80,6 @@ class Token(object):
             tc[0] = c[0]
         if c[1]:
             tc[1] = c[1]
-        #if empty:
-        #    if len(tc) == 2:
-        #        tc.extend([None, None, c[0]])
-        #    elif len(tc) == 4:
-        #        tc.append(d[0])
-        #    else:
-        #        raise NotImplementedError
-        # nprint('mco:', self, target, target.comment, empty)
         return self
 
     def split_comment(self):
@@ -191,9 +177,10 @@ class KeyToken(Token):
     __slots__ = ()
     id = '?'
 
-    def x__repr__(self):
-        return 'KeyToken({})'.format(
-            self.start_mark.buffer[self.start_mark.index:].split(None, 1)[0])
+    # def x__repr__(self):
+    #     return 'KeyToken({})'.format(
+    #         self.start_mark.buffer[self.start_mark.index:].split(None, 1)[0])
+
 
 class ValueToken(Token):
     __slots__ = ()

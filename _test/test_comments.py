@@ -778,7 +778,6 @@ class TestEmptyValueBeforeComments:
         - b: 2    #   comment 3
         """)
 
-    @pytest.mark.xfail(strict=True)
     def test_issue_25_03(self):
         round_trip("""\
         a:        # comment 1
@@ -792,7 +791,6 @@ class TestEmptyValueBeforeComments:
                   #  comment 2
           b: 1    #   comment 3
         """)
-
 
 
 test_block_scalar_commented_line_template = """\
@@ -809,7 +807,7 @@ class TestBlockScalarWithComments:
     # issue 99 reported by Colm O'Connor
     def test_scalar_with_comments(self):
         for x in ['', '\n', '\n# Another comment\n', '\n\n', '\n\n# abc\n#xyz\n',
-              '\n\n# abc\n#xyz\n', '# abc\n\n#xyz\n', '\n\n  # abc\n  #xyz\n']:
+                  '\n\n# abc\n#xyz\n', '# abc\n\n#xyz\n', '\n\n  # abc\n  #xyz\n']:
 
             commented_line = test_block_scalar_commented_line_template.format(x)
             data = ruamel.yaml.round_trip_load(commented_line)

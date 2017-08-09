@@ -318,13 +318,14 @@ class Emitter(object):
                 self.expect_scalar()
             elif isinstance(self.event, SequenceStartEvent):
                 if self.event.comment:
-                    if self.write_pre_comment(self.event):
-                        self.indention = False
-                        self.no_newline = True
+                    # print(' >enc', self.event.comment, end=' ')
                     if self.event.flow_style is False and self.event.comment:
                         if self.write_post_comment(self.event):
                             self.indention = False
                             self.no_newline = True
+                    if self.write_pre_comment(self.event):
+                        self.indention = False
+                        self.no_newline = True
                 if self.flow_level or self.canonical or self.event.flow_style or \
                         self.check_empty_sequence():
                     self.expect_flow_sequence()

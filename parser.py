@@ -542,7 +542,6 @@ class Parser(object):
 
     def parse_block_mapping_key(self):
         # type: () -> Any
-        next_token = self.scanner.peek_token()
         # print('>>>> tk', type(self), next_token, getattr(next_token, 'comment', None))
         if self.scanner.check_token(KeyToken):
             token = self.scanner.get_token()
@@ -587,7 +586,7 @@ class Parser(object):
                 self.state = self.parse_block_mapping_key
                 comment = token.comment
                 if comment is None:
-                    comment=self.scanner.peek_token().comment
+                    comment = self.scanner.peek_token().comment
                 return self.process_empty_scalar(token.end_mark, comment=comment)
         else:
             self.state = self.parse_block_mapping_key

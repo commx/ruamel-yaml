@@ -2,13 +2,13 @@
 
 from __future__ import print_function, absolute_import, division, unicode_literals
 
+import sys
+from .compat import no_limit_int  # NOQA
+
 if False:  # MYPY
     from typing import Text, Any, Dict, List  # NOQA
 
 __all__ = ["ScalarFloat", "ExponentialFloat", "ExponentialCapsFloat"]
-
-import sys
-from .compat import no_limit_int  # NOQA
 
 
 class ScalarFloat(float):
@@ -74,10 +74,12 @@ class ScalarFloat(float):
             self, self._width, self._prec, self._m_sign, self._m_lead0,  # type: ignore
             self._exp, self._e_width, self._e_sign), file=out)           # type: ignore
 
+
 class ExponentialFloat(ScalarFloat):
     def __new__(cls, value, width=None, underscore=None):
         # type: (Any, Any, Any) -> Any
         return ScalarFloat.__new__(cls, value, width=width, underscore=underscore)
+
 
 class ExponentialCapsFloat(ScalarFloat):
     def __new__(cls, value, width=None, underscore=None):

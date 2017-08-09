@@ -316,8 +316,8 @@ class SafeRepresenter(BaseRepresenter):
                     #   >>> repr(1e17)
                     #   '1e17'
                     # Unfortunately, this is not a valid float representation according
-                    # to the definition of the `!!float` tag in YAML 1.1.  We fix this by adding
-                    # '.0' before the 'e' symbol.
+                    # to the definition of the `!!float` tag in YAML 1.1.  We fix
+                    # this by adding '.0' before the 'e' symbol.
                     value = value.replace(u'e', u'.0e', 1)
         return self.represent_scalar(u'tag:yaml.org,2002:float', value)
 
@@ -755,6 +755,7 @@ class RoundTripRepresenter(SafeRepresenter):
 
     def represent_scalar_float(self, data):
         # type: (Any) -> Any
+        """ this is way more complicated """
         value = None
         if data != data or (data == 0.0 and data == 1.0):
             value = u'.nan'
@@ -775,7 +776,8 @@ class RoundTripRepresenter(SafeRepresenter):
             # print('dw2', data._width, prec)
             ms = data._m_sign if data._m_sign else u''
             # -1 for the dot
-            value = u'{}{:0{}.{}f}'.format(ms, abs(data), data._width-len(ms), data._width-prec-1)
+            value = u'{}{:0{}.{}f}'.format(ms, abs(data), data._width - len(ms),
+                                           data._width - prec - 1)
             while len(value) < data._width:
                 value += u'0'
         else:
@@ -803,27 +805,24 @@ class RoundTripRepresenter(SafeRepresenter):
                 value = m1 + m2 + data._exp + u'{:{}0{}d}'.format(e, esgn, data._e_width)
             elif data._prec == 0:   # mantissa with trailing dot
                 e -= len(m2)
-                value = m1 + m2 + u'.' + data._exp + u'{:{}0{}d}'.format(e, esgn, data._e_width)
+                value = m1 + m2 + u'.' + data._exp + u'{:{}0{}d}'.format(
+                    e, esgn, data._e_width)
             else:
                 if data._m_lead0 > 0:
                     m2 = u'0' * (data._m_lead0 - 1) + m1 + m2
                     m1 = u'0'
-                    m2 =  m2[:-data._m_lead0]  # these should be zeros
+                    m2 = m2[:-data._m_lead0]  # these should be zeros
                     e += data._m_lead0
                 while len(m1) < data._prec:
                     m1 += m2[0]
                     m2 = m2[1:]
                     e -= 1
-                value = m1 + u'.' + m2 + data._exp + u'{:{}0{}d}'.format(e, esgn, data._e_width)
+                value = m1 + u'.' + m2 + data._exp + u'{:{}0{}d}'.format(
+                    e, esgn, data._e_width)
 
         if value is None:
             value = to_unicode(repr(data)).lower()
         return self.represent_scalar(u'tag:yaml.org,2002:float', value)
-        #if data._width is not None:
-        #    s = u'{:0{}d}'.format(data, data._width)
-        #else:
-        #    s = format(data, 'f')
-        #return self.insert_underscore('', s, data._underscore)
 
     def represent_sequence(self, tag, sequence, flow_style=None):
         # type: (Any, Any, Any) -> Any
