@@ -51,9 +51,9 @@ class Token(object):
         ScalarToken that follows it
         empty is a special for empty values -> comment after key
         """
-        if self.comment is not None:
-            print('mci:', self, target, getattr(self, '_comment', None),
-                  getattr(target, '_comment', None), empty)
+        # if self.comment is not None:
+        #     print('mci:', self, target, getattr(self, '_comment', None),
+        #          getattr(target, '_comment', None), empty)
         c = self.comment
         if c is None:
             return
@@ -71,7 +71,7 @@ class Token(object):
             if empty:
                 c = [c[0], c[1], None, None, c[0]]
             target._comment = c
-            print('mco2:', self, target, target.comment, empty)
+            # nprint('mco2:', self, target, target.comment, empty)
             return self
         if c[0] and tc[0] or c[1] and tc[1]:
             raise NotImplementedError('overlap in comment %r %r' % c, tc)
@@ -86,7 +86,7 @@ class Token(object):
         #        tc.append(d[0])
         #    else:
         #        raise NotImplementedError
-        print('mco:', self, target, target.comment, empty)
+        # nprint('mco:', self, target, target.comment, empty)
         return self
 
     def split_comment(self):

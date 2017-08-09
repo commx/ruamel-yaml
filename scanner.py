@@ -1651,7 +1651,7 @@ class RoundTripScanner(Scanner):
             self.fetch_more_tokens()
         self._gather_comments()
         if bool(self.tokens):
-            print('tk', self.tokens)
+            # nprint('tk', self.tokens)
             # only add post comment to single line tokens:
             # scalar, value token. FlowXEndToken, otherwise
             # hidden streamtokens could get them (leave them and they will be
