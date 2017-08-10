@@ -8,6 +8,7 @@ these are not really related, formatting could be factored out as
 a separate base
 """
 
+import sys
 import copy
 
 from collections import MutableSet, Sized, Set
@@ -938,3 +939,22 @@ class CommentedSet(MutableSet, CommentedMap):
     def __repr__(self):
         # type: () -> str
         return 'set({0!r})'.format(self.odict.keys())
+
+
+def dump_comments(d, name='', sep='.', out=sys.stdout):
+    """
+    recurisively dump domments all but the toplevel preceded by the path
+    in dotted form x.0.a
+    """
+    if isinstance(d, dict):
+        if name:
+            print(name)
+        print(d.ca, file=out)
+        for k in d:
+            dump_comments(d[k], name=name + sep + k if name else k, sep=sep, out=out)
+    elif isinstance(d, list):
+        if name:
+            print(name)
+        print(d.ca, file=out)
+        for idx, k in enumerate(d):
+            dump_comments(k, name=name + sep + str(idx) if name else k, sep=sep, out=out)
