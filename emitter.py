@@ -375,6 +375,8 @@ class Emitter(object):
             if self.event.comment and self.event.comment[0]:
                 # eol comment on empty flow sequence
                 self.write_post_comment(self.event)
+            else:
+                self.write_line_break()
             self.state = self.states.pop()
         else:
             if self.canonical or self.column > self.best_width:
@@ -394,6 +396,8 @@ class Emitter(object):
             if self.event.comment and self.event.comment[0]:
                 # eol comment on flow sequence
                 self.write_post_comment(self.event)
+            else:
+                self.no_newline = False
             self.state = self.states.pop()
         else:
             self.write_indicator(u',', False)
@@ -496,11 +500,10 @@ class Emitter(object):
         else:
             if self.event.comment and self.event.comment[1]:
                 self.write_pre_comment(self.event)
-            nonl = self.no_newline
+            nonl = self.no_newline if self.column == 0 else False
             self.write_indent()
-            self.no_newline = nonl
             self.write_indicator((u' ' * self.block_seq_indent) + u'-', True, indention=True)
-            if self.block_seq_indent + 2 > self.best_indent:
+            if nonl or self.block_seq_indent + 2 > self.best_indent:
                 self.no_newline = True
             self.states.append(self.expect_block_sequence_item)
             self.expect_node(sequence=True)

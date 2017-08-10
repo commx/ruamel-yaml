@@ -35,6 +35,10 @@ ChangeLog
 
 .. should insert NEXT: at the beginning of line for next key
 
+0.15.26 (2017-08-10):
+  - fix for disappearing comment after empty flow sequence (reported by
+    oit-tzhimmash)
+
 0.15.25 (2017-08-09):
   - fix for problem with dumping (unloaded) floats (reported by eyenseo)
 
