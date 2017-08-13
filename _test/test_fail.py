@@ -73,48 +73,6 @@ class TestCommentFailures:
 class TestIndentFailures:
 
     @pytest.mark.xfail(strict=True)
-    def test_roundtrip_four_space_indents(self):
-        s = (
-            'a:\n'
-            '-   foo\n'
-            '-   bar\n'
-        )
-        output = round_trip(s)
-        assert s == output
-
-    def test_roundtrip_four_space_indents_no_fail(self):
-        assert round_trip_dump(round_trip_load("""
-        a:
-        -   foo
-        -   bar
-        """)) == dedent("""
-        a:
-        - foo
-        - bar
-        """)
-
-    @pytest.mark.xfail(strict=True)
-    def test_roundtrip_four_space_indents_expl_indent(self):
-        s = (
-            'a:\n'
-            '- foo\n'
-            '- bar\n'
-        )
-        output = round_trip_dump(round_trip_load(s), indent=4)
-        assert s == output
-
-    def test_roundtrip_four_space_indents_expl_indent_no_fail(self):
-        assert round_trip_dump(round_trip_load("""
-        a:
-        -   foo
-        -   bar
-        """), indent=4) == dedent("""
-        a:
-        -   foo
-        -   bar
-        """)
-
-    @pytest.mark.xfail(strict=True)
     def test_indent_not_retained(self):
         round_trip("""
         verbosity: 1                  # 0 is minimal output, -1 none

@@ -792,6 +792,21 @@ class TestEmptyValueBeforeComments:
           b: 1    #   comment 3
         """)
 
+    def test_flow_seq_within_seq(self):
+        round_trip("""\
+        # comment 1
+        - a
+        - b
+        # comment 2
+        - c
+        - d
+        # comment 3
+        - [e]
+        - f
+        # comment 4
+        - []
+        """)
+
 
 test_block_scalar_commented_line_template = """\
 y: p

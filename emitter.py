@@ -1388,14 +1388,15 @@ class Emitter(object):
         if comments is None:
             return False
         try:
+            start_events = (MappingStartEvent, SequenceStartEvent)
             for comment in comments:
-                if isinstance(event, MappingStartEvent) and \
+                if isinstance(event, start_events) and \
                    getattr(comment, 'pre_done', None):
                     continue
                 if self.column != 0:
                     self.write_line_break()
                 self.write_comment(comment)
-                if isinstance(event, MappingStartEvent):
+                if isinstance(event, start_events):
                     comment.pre_done = True
         except TypeError:
             print('eventtt', type(event), event)

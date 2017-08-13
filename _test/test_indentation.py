@@ -5,14 +5,12 @@ from __future__ import print_function
 from __future__ import unicode_literals
 
 
-from textwrap import dedent
-
 import pytest  # NOQA
 
 import ruamel.yaml
 from ruamel.yaml.util import load_yaml_guess_indent
 
-from roundtrip import round_trip
+from roundtrip import round_trip, round_trip_load, round_trip_dump, dedent
 
 
 def rt(s):
@@ -168,6 +166,26 @@ class TestIndent:
           - d:
             - 2
         """, indent=2, block_seq_indent=2)
+
+    # have to set indent!
+    def test_roundtrip_four_space_indents(self):
+        s = (
+            'a:\n'
+            '-   foo\n'
+            '-   bar\n'
+        )
+        round_trip(s, indent=4)
+
+    def test_roundtrip_four_space_indents_no_fail(self):
+        assert round_trip_dump(round_trip_load("""
+        a:
+        -   foo
+        -   bar
+        """)) == dedent("""
+        a:
+        - foo
+        - bar
+        """)
 
 
 class TestYpkgIndent:

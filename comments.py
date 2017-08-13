@@ -951,10 +951,11 @@ def dump_comments(d, name='', sep='.', out=sys.stdout):
             print(name)
         print(d.ca, file=out)
         for k in d:
-            dump_comments(d[k], name=name + sep + k if name else k, sep=sep, out=out)
+            dump_comments(d[k], name=(name + sep + k) if name else k, sep=sep, out=out)
     elif isinstance(d, list):
         if name:
             print(name)
         print(d.ca, file=out)
         for idx, k in enumerate(d):
-            dump_comments(k, name=name + sep + str(idx) if name else k, sep=sep, out=out)
+            dump_comments(k, name=(name + sep + str(idx)) if name else str(idx),
+                          sep=sep, out=out)

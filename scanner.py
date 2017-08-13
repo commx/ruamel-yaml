@@ -43,6 +43,7 @@ __all__ = ['Scanner', 'RoundTripScanner', 'ScannerError']
 
 _THE_END = u'\0\r\n\x85\u2028\u2029'
 _THE_END_SPACE_TAB = u'\0 \t\r\n\x85\u2028\u2029'
+_SPACE_TAB = u' \t'
 
 
 class ScannerError(MarkedYAMLError):
@@ -80,6 +81,7 @@ class Scanner(object):
         if self.loader is not None and getattr(self.loader, '_scanner', None) is None:
             self.loader._scanner = self
         self.reset_scanner()
+        self.first_time = False
 
     def reset_scanner(self):
         # type: () -> None
@@ -612,7 +614,7 @@ class Scanner(object):
         else:
 
             # Block context needs additional checks.
-            # (Do we really need them? They will be catched by the parser
+            # (Do we really need them? They will be caught by the parser
             # anyway.)
             if not self.flow_level:
 
@@ -759,8 +761,12 @@ class Scanner(object):
     def check_value(self):
         # type: () -> Any
         # VALUE(flow context):  ':'
-        if bool(self.flow_level):
-            return True
+        if self.scanner_processing_version == (1, 1):
+            if bool(self.flow_level):
+                return True
+        else:
+            if bool(self.flow_level) and self.reader.peek(1) in '\'"':
+                return True
         # VALUE(block context): ':' (' '|'\n')
         return self.reader.peek(1) in _THE_END_SPACE_TAB
 
@@ -779,9 +785,22 @@ class Scanner(object):
         # '-' character) because we want the flow context to be space
         # independent.
         ch = self.reader.peek()
-        return ch not in u'\0 \t\r\n\x85\u2028\u2029-?:,[]{}#&*!|>\'\"%@`' or \
-            (self.reader.peek(1) not in _THE_END_SPACE_TAB and
-             (ch == u'-' or (not self.flow_level and ch in u'?:')))
+        if self.scanner_processing_version == (1, 1):
+            return ch not in u'\0 \t\r\n\x85\u2028\u2029-?:,[]{}#&*!|>\'\"%@`' or \
+                (self.reader.peek(1) not in _THE_END_SPACE_TAB and
+                 (ch == u'-' or (not self.flow_level and ch in u'?:')))
+        # YAML 1.2
+        if ch not in u'\0 \t\r\n\x85\u2028\u2029-?:,[]{}#&*!|>\'\"%@`':
+            # ###################                ^ ???
+            return True
+        ch1 = self.reader.peek(1)
+        if ch == '-' and ch1 not in _THE_END_SPACE_TAB:
+            return True
+        if ch == ':' and bool(self.flow_level) and ch1 not in _SPACE_TAB:
+            return True
+
+        return (self.reader.peek(1) not in _THE_END_SPACE_TAB and
+                (ch == u'-' or (not self.flow_level and ch in u'?:')))
 
     # Scanners.
 
@@ -1410,6 +1429,8 @@ class Scanner(object):
                 if (ch == u':' and
                    self.reader.peek(length + 1) not in _THE_END_SPACE_TAB):
                     pass
+                elif (ch == u'?' and self.scanner_processing_version != (1, 1)):
+                    pass
                 elif (ch in _THE_END_SPACE_TAB or
                       (not self.flow_level and ch == u':' and
                           self.reader.peek(length + 1) in _THE_END_SPACE_TAB) or
@@ -1624,7 +1645,6 @@ class RoundTripScanner(Scanner):
         if isinstance(self.tokens[0], CommentToken):
             comment = self.tokens.pop(0)
             self.tokens_taken += 1
-            # print('################ dropping', comment)
             comments.append(comment)
         while self.need_more_tokens():
             self.fetch_more_tokens()
@@ -1636,9 +1656,6 @@ class RoundTripScanner(Scanner):
                 # print 'dropping2', comment
                 comments.append(comment)
         if len(comments) >= 1:
-            # print('  len', len(comments), comments)
-            # print('  com', comments[0], comments[0].start_mark.line)
-            # print('  tok', self.tokens[0].end_mark.line)
             self.tokens[0].add_pre_comments(comments)
         # pull in post comment on e.g. ':'
         if not self.done and len(self.tokens) < 2:

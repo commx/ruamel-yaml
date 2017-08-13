@@ -844,6 +844,16 @@ class RoundTripRepresenter(SafeRepresenter):
         best_style = True
         try:
             comment = getattr(sequence, comment_attrib)
+            node.comment = comment.comment
+            # reset any comment already printed information
+            if node.comment and node.comment[1]:
+                for ct in node.comment[1]:
+                    ct.reset()
+            item_comments = comment.items
+            for v in item_comments.values():
+                if v and v[1]:
+                    for ct in v[1]:
+                        ct.reset()
             item_comments = comment.items
             node.comment = comment.comment
             try:

@@ -44,9 +44,10 @@ def round_trip_load_all(inp, preserve_quotes=None, version=None):
     )
 
 
-def round_trip_dump(data, indent=None, block_seq_indent=None, top_level_colon_align=None,
+def round_trip_dump(data, stream=None,
+                    indent=None, block_seq_indent=None, top_level_colon_align=None,
                     prefix_colon=None, explicit_start=None, explicit_end=None, version=None):
-    return ruamel.yaml.round_trip_dump(data,
+    return ruamel.yaml.round_trip_dump(data, stream=stream,
                                        indent=indent, block_seq_indent=block_seq_indent,
                                        top_level_colon_align=top_level_colon_align,
                                        prefix_colon=prefix_colon,
