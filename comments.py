@@ -942,6 +942,7 @@ class CommentedSet(MutableSet, CommentedMap):
 
 
 def dump_comments(d, name='', sep='.', out=sys.stdout):
+    # type: (Any, str, str, Any) -> None
     """
     recurisively dump domments all but the toplevel preceded by the path
     in dotted form x.0.a
@@ -949,13 +950,13 @@ def dump_comments(d, name='', sep='.', out=sys.stdout):
     if isinstance(d, dict):
         if name:
             print(name)
-        print(d.ca, file=out)
+        print(d.ca, file=out)  # type: ignore
         for k in d:
             dump_comments(d[k], name=(name + sep + k) if name else k, sep=sep, out=out)
     elif isinstance(d, list):
         if name:
             print(name)
-        print(d.ca, file=out)
+        print(d.ca, file=out)  # type: ignore
         for idx, k in enumerate(d):
             dump_comments(k, name=(name + sep + str(idx)) if name else str(idx),
                           sep=sep, out=out)

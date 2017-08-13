@@ -3,7 +3,7 @@
 import pytest                        # NOQA
 
 import ruamel.yaml
-from roundtrip import dedent
+from roundtrip import dedent, round_trip
 
 
 def load(s, version=None):
@@ -106,3 +106,46 @@ class TestVersions:
         assert l[7] is True
         assert l[8] is False
         assert l[9] is True
+
+
+class TestIssue62:
+    # bitbucket issue 62, issue_62
+    def test_00(self):
+        s = dedent("""\
+        {}# Outside flow collection:
+        - ::vector
+        - ": - ()"
+        - Up, up, and away!
+        - -123
+        - http://example.com/foo#bar
+        # Inside flow collection:
+        - [::vector, ": - ()", "Down, down and away!", -456, http://example.com/foo#bar]
+        """)
+        with pytest.raises(ruamel.yaml.parser.ParserError):
+            round_trip(s.format('%YAML 1.1\n---\n'), preserve_quotes=True)
+        round_trip(s.format(''), preserve_quotes=True)
+
+    def test_00_single_comment(self):
+        s = dedent("""\
+        {}# Outside flow collection:
+        - ::vector
+        - ": - ()"
+        - Up, up, and away!
+        - -123
+        - http://example.com/foo#bar
+        - [::vector, ": - ()", "Down, down and away!", -456, http://example.com/foo#bar]
+        """)
+        with pytest.raises(ruamel.yaml.parser.ParserError):
+            round_trip(s.format('%YAML 1.1\n---\n'), preserve_quotes=True)
+        round_trip(s.format(''), preserve_quotes=True)
+        # round_trip(s.format('%YAML 1.2\n---\n'), preserve_quotes=True, version=(1, 2))
+
+    def test_01(self):
+        s = dedent("""\
+        {}[random plain value that contains a ? character]
+        """)
+        with pytest.raises(ruamel.yaml.parser.ParserError):
+            round_trip(s.format('%YAML 1.1\n---\n'), preserve_quotes=True)
+        round_trip(s.format(''), preserve_quotes=True)
+        # note the flow seq on the --- line!
+        round_trip(s.format('%YAML 1.2\n--- '), preserve_quotes=True, version="1.2")

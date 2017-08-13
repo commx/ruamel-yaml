@@ -152,6 +152,16 @@ class Emitter(object):
             raise YAMLStreamError('stream argument needs to have a write() method')
         self._stream = val
 
+    @property
+    def serializer(self):
+        # type: () -> Any
+        try:
+            if hasattr(self.dumper, 'typ'):
+                return self.dumper.serializer  # type: ignore
+            return self.dumper._serializer  # type: ignore
+        except AttributeError:
+            return self  # cyaml
+
     def dispose(self):
         # type: () -> None
         # Reset the state attributes (to clear self-references)
@@ -850,8 +860,9 @@ class Emitter(object):
                 if ch in u'#,[]{}&*!|>\'\"%@`':
                     flow_indicators = True
                     block_indicators = True
-                if ch in u'?:':
-                    flow_indicators = True
+                if ch in u'?:':  # ToDo
+                    if self.serializer.use_version == (1, 1):
+                        flow_indicators = True
                     if followed_by_whitespace:
                         block_indicators = True
                 if ch == u'-' and followed_by_whitespace:
@@ -859,7 +870,9 @@ class Emitter(object):
                     block_indicators = True
             else:
                 # Some indicators cannot appear within a scalar as well.
-                if ch in u',?[]{}':
+                if ch in u',[]{}':  # http://yaml.org/spec/1.2/spec.html#id2788859
+                    flow_indicators = True
+                if ch == u'?' and self.serializer.use_version == (1, 1):
                     flow_indicators = True
                 if ch == u':':
                     if followed_by_whitespace:

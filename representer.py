@@ -309,7 +309,7 @@ class SafeRepresenter(BaseRepresenter):
             value = u'-.inf'
         else:
             value = to_unicode(repr(data)).lower()
-            if self.serializer.use_version == (1, 1):  # type: ignore
+            if self.serializer.use_version == (1, 1):
                 if u'.' not in value and u'e' in value:
                     # Note that in some cases `repr(data)` represents a float number
                     # without the decimal parts.  For instance:

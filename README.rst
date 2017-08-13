@@ -35,6 +35,11 @@ ChangeLog
 
 .. should insert NEXT: at the beginning of line for next key
 
+0.15.27 (2017-08-13):
+  - fix issue 62, YAML 1.2 allows ``?`` and ``:`` in plain scalars if non-ambigious
+    (reported by nowox)
+  - fix lists within lists which would make comments disappear
+
 0.15.26 (2017-08-10):
   - fix for disappearing comment after empty flow sequence (reported by
     oit-tzhimmash)
