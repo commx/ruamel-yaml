@@ -851,14 +851,14 @@ class CommentedMap(ordereddict, CommentedBase):
             yield x, ordereddict.__getitem__(self, x)
         done = []  # type: List[Any]  # list of processed merge items, kept for masking
         for merged in getattr(self, merge_attrib, []):
-            for x in merged[1]:
+            for x, v in merged[1].items():
                 if ordereddict.__contains__(self, x):
                     continue
                 for y in done:
                     if x in y:
                         break
                 else:
-                    yield x, ordereddict.__getitem__(merged[1], x)
+                    yield x, v  # ordereddict.__getitem__(merged[1], x)
             done.append(merged[1])
 
     if PY2:

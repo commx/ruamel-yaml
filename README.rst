@@ -35,6 +35,9 @@ ChangeLog
 
 .. should insert NEXT: at the beginning of line for next key
 
+0.15.28 (2017-08-13):
+  - fix issue #61: merge of merge cannot be __repr__-ed (reported by Tal Liron)
+
 0.15.27 (2017-08-13):
   - fix issue 62, YAML 1.2 allows ``?`` and ``:`` in plain scalars if non-ambigious
     (reported by nowox)
