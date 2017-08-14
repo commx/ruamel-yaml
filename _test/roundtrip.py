@@ -145,3 +145,18 @@ class YAML(ruamel.yaml.YAML):
             res = sorted(res.splitlines())
             expected = sorted(expected.splitlines())
         assert res == expected
+
+    def round_trip(self, stream, **kw):
+        assert isinstance(stream, ruamel.yaml.compat.text_type)
+        lkw = kw.copy()
+        if stream and stream[0] == '\n':
+            stream = stream[1:]
+        stream = textwrap.dedent(stream)
+        data = ruamel.yaml.YAML.load(self, stream)
+        outp = lkw.pop('outp', stream)
+        lkw['stream'] = st = StringIO()
+        ruamel.yaml.YAML.dump(self, data, **lkw)
+        res = st.getvalue()
+        if res != outp:
+            diff(outp, res, "input string")
+        assert res == outp

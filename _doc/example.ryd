@@ -136,8 +136,7 @@ The following program with three dumps::
   yaml = YAML()
   yaml.explicit_start = True
   yaml.dump(data, sys.stdout)
-  yaml.indent = 4
-  yaml.block_seq_indent = 2
+  yaml.indent(sequence=4, offset=2)
   yaml.dump(data, sys.stdout)
 
 
@@ -204,7 +203,7 @@ you really need to have it (or think you do)::
 
 --- !python |
 import sys
-from ruamel.yaml import YAML 
+from ruamel.yaml import YAML
 from ruamel.yaml.compat import StringIO
 
 class MyYAML(YAML):

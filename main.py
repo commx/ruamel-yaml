@@ -110,10 +110,14 @@ class YAML(object):
                     'typ "{}"not recognised (need to install plug-in?)'.format(self.typ))
         self.stream = None
         self.canonical = None
-        self.indent = None
+        self.old_indent = None
         self.width = None
         self.line_break = None
-        self.block_seq_indent = None
+
+        self.map_indent = None
+        self.sequence_indent = None
+        self.sequence_dash_offset = 0
+
         self.top_level_colon_align = None
         self.prefix_colon = None
         self.version = None
@@ -198,12 +202,19 @@ class YAML(object):
         attr = '_' + sys._getframe().f_code.co_name
         if not hasattr(self, attr):
             if self.Emitter is not CEmitter:
-                setattr(self, attr, self.Emitter(
+                _emitter = self.Emitter(
                     None, canonical=self.canonical,
-                    indent=self.indent, width=self.width,
+                    indent=self.old_indent, width=self.width,
                     allow_unicode=self.allow_unicode, line_break=self.line_break,
-                    block_seq_indent=self.block_seq_indent,
-                    dumper=self))
+                    dumper=self)
+                setattr(self, attr, _emitter)
+                if self.map_indent is not None:
+                    _emitter.best_map_indent = self.map_indent
+                if self.sequence_indent is not None:
+                    _emitter.best_sequence_indent = self.sequence_indent
+                if self.sequence_dash_offset is not None:
+                    _emitter.sequence_dash_offset = self.sequence_dash_offset
+                    # _emitter.block_seq_indent = self.sequence_dash_offset
             else:
                 if getattr(self, '_stream', None) is None:
                     # wait for the stream
@@ -489,6 +500,36 @@ class YAML(object):
                 return constructor.construct_yaml_object(node, cls)
 
             self.constructor.add_constructor(tag, f_y)
+
+    # ### backwards compatibility
+    def _indent(self, mapping=None, sequence=None, offset=None):
+        # type: (Any, Any, Any) -> None
+        if mapping is not None:
+            self.map_indent = mapping
+        if sequence is not None:
+            self.sequence_indent = sequence
+        if offset is not None:
+            self.sequence_dash_offset = offset
+
+    @property
+    def indent(self):
+        # type: () -> Any
+        return self._indent
+
+    @indent.setter
+    def indent(self, val):
+        # type: (Any) -> None
+        self.old_indent = val
+
+    @property
+    def block_seq_indent(self):
+        # type: () -> Any
+        return self.sequence_dash_offset
+
+    @block_seq_indent.setter
+    def block_seq_indent(self, val):
+        # type: (Any) -> None
+        self.sequence_dash_offset = val
 
 
 def yaml_object(yml):

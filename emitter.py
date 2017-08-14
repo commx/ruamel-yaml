@@ -17,7 +17,7 @@ from ruamel.yaml.compat import utf8, text_type, PY2, nprint, dbg, DBG_EVENT, \
     check_anchorname_char
 
 if False:  # MYPY
-    from typing import Any, Dict, List, Union, Text  # NOQA
+    from typing import Any, Dict, List, Union, Text, Tuple  # NOQA
     from ruamel.yaml.compat import StreamType  # NOQA
 
 __all__ = ['Emitter', 'EmitterError']
@@ -41,6 +41,38 @@ class ScalarAnalysis(object):
         self.allow_single_quoted = allow_single_quoted
         self.allow_double_quoted = allow_double_quoted
         self.allow_block = allow_block
+
+
+class Indents(object):
+    # replacement for the list based stack of None/int
+    def __init__(self):
+        # type: () -> None
+        self.values = []  # type: List[Tuple[int, bool]]
+
+    def append(self, val, seq):
+        # type: (Any, Any) -> None
+        self.values.append((val, seq))
+
+    def pop(self):
+        # type: () -> Any
+        return self.values.pop()[0]
+
+    def last_seq(self):
+        # type: () -> bool
+        # return the seq(uence) value for the element added before the last one
+        # in increase_indent()
+        try:
+            return self.values[-2][1]
+        except IndexError:
+            return False
+
+    def seq_flow_align(self, seq_indent, column):
+        # type: (int, int) -> int
+        # extra spaces because of dash
+        if len(self.values) < 2 or not self.values[-1][1]:
+            return 0
+        # -1 for the dash
+        return self.values[-1][0] + seq_indent - column - 1
 
 
 class Emitter(object):
@@ -74,7 +106,7 @@ class Emitter(object):
         self.event = None  # type: Any
 
         # The current indentation level and the stack of previous indents.
-        self.indents = []  # type: List[Union[None, int]]
+        self.indents = Indents()
         self.indent = None  # type: Union[None, int]
 
         # Flow level.
@@ -109,16 +141,17 @@ class Emitter(object):
         self.allow_unicode = allow_unicode
         # set to False to get "\Uxxxxxxxx" for non-basic unicode like emojis
         self.unicode_supplementary = sys.maxunicode > 0xffff
-        self.block_seq_indent = block_seq_indent if block_seq_indent else 0
+        self.sequence_dash_offset = block_seq_indent if block_seq_indent else 0
         self.top_level_colon_align = top_level_colon_align
-        self.best_indent = 2
+        self.best_sequence_indent = 2
         self.requested_indent = indent  # specific for literal zero indent
         if indent and 1 < indent < 10:
-            self.best_indent = indent
-        # if self.best_indent < self.block_seq_indent + 1:
-        #     self.best_indent = self.block_seq_indent + 1
+            self.best_sequence_indent = indent
+        self.best_map_indent = self.best_sequence_indent
+        # if self.best_sequence_indent < self.sequence_dash_offset + 1:
+        #     self.best_sequence_indent = self.sequence_dash_offset + 1
         self.best_width = 80
-        if width and width > self.best_indent * 2:
+        if width and width > self.best_sequence_indent * 2:
             self.best_width = width
         self.best_line_break = u'\n'  # type: Any
         if line_break in [u'\r', u'\n', u'\r\n']:
@@ -210,16 +243,21 @@ class Emitter(object):
 
     def increase_indent(self, flow=False, sequence=None, indentless=False):
         # type: (bool, bool, bool) -> None
-        self.indents.append(self.indent)
-        if self.indent is None:
+        self.indents.append(self.indent, sequence)
+        if self.indent is None:  # top level
             if flow:
-                self.indent = self.best_indent
+                # self.indent = self.best_sequence_indent if self.indents.last_seq() else \
+                #              self.best_map_indent
+                # self.indent = self.best_sequence_indent
+                self.indent = self.requested_indent
             else:
                 self.indent = 0
         elif not indentless:
-            self.indent += self.best_indent
-            # if self.sequence_context and (self.block_seq_indent + 2) > self.best_indent:
-            #    self.indent = self.block_seq_indent + 2
+            self.indent += (self.best_sequence_indent if self.indents.last_seq() else
+                            self.best_map_indent)
+            # if ()self.sequence_context and (self.sequence_dash_offset + 2) >
+            #     self.best_sequence_indent):
+            #    self.indent = self.sequence_dash_offset + 2
 
     # States.
 
@@ -371,9 +409,10 @@ class Emitter(object):
 
     def expect_flow_sequence(self):
         # type: () -> None
-        self.write_indicator(u'[', True, whitespace=True)
-        self.flow_level += 1
+        ind = self.indents.seq_flow_align(self.best_sequence_indent, self.column)
+        self.write_indicator(u' ' * ind + u'[', True, whitespace=True)
         self.increase_indent(flow=True, sequence=True)
+        self.flow_level += 1
         self.state = self.expect_first_flow_sequence_item
 
     def expect_first_flow_sequence_item(self):
@@ -420,7 +459,8 @@ class Emitter(object):
 
     def expect_flow_mapping(self):
         # type: () -> None
-        self.write_indicator(u'{', True, whitespace=True)
+        ind = self.indents.seq_flow_align(self.best_sequence_indent, self.column)
+        self.write_indicator(u' ' * ind + u'{', True, whitespace=True)
         self.flow_level += 1
         self.increase_indent(flow=True, sequence=False)
         self.state = self.expect_first_flow_mapping_key
@@ -512,8 +552,9 @@ class Emitter(object):
                 self.write_pre_comment(self.event)
             nonl = self.no_newline if self.column == 0 else False
             self.write_indent()
-            self.write_indicator((u' ' * self.block_seq_indent) + u'-', True, indention=True)
-            if nonl or self.block_seq_indent + 2 > self.best_indent:
+            self.write_indicator((u' ' * self.sequence_dash_offset) + u'-', True,
+                                 indention=True)
+            if nonl or self.sequence_dash_offset + 2 > self.best_sequence_indent:
                 self.no_newline = True
             self.states.append(self.expect_block_sequence_item)
             self.expect_node(sequence=True)
@@ -1197,7 +1238,7 @@ class Emitter(object):
         hints = u''
         if text:
             if text[0] in u' \n\x85\u2028\u2029':
-                hints += text_type(self.best_indent)
+                hints += text_type(self.best_sequence_indent)
             if text[-1] not in u'\n\x85\u2028\u2029':
                 hints += u'-'
             elif len(text) == 1 or text[-2] in u'\n\x85\u2028\u2029':

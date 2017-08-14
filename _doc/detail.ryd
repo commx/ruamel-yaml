@@ -55,7 +55,8 @@ back to::
   -   b: 1
   -   2
 
-if you specify ``yaml.indent = 4``.
+if you specify ``yaml.indent(sequence=4)`` (indentation is counted to the
+beginning of the sequence element).
 
 PyYAML (and older versions of ruamel.yaml) gives you non-indented
 scalars (when specifying default_flow_style=False)::
@@ -64,27 +65,30 @@ scalars (when specifying default_flow_style=False)::
   -   b: 1
   - 2
 
-The dump also observes an additional ``block_seq_indent`` settingr that
-can be used to push the dash inwards, *within the space defined by* ``indent``.
+You can use ``mapping=4`` to also have the mappings values indented.
+The dump also observes an additional ``offset=2`` setting that
+can be used to push the dash inwards, *within the space defined by* ``sequence``.
 
-The above example with the often seen ``yaml.indent = 4; yaml.block_seq_indent = 2``
+The above example with the often seen ``yaml.indent(mapping=2, sequence=4, offset=2)``
 indentation::
 
   x:
-    - b: 1
-    - 2
+    y:
+      - b: 1
+      - 2
 
+The defaults are as if you specified ``yaml.indent(mapping=2, sequence=2, offset=0)``.
 
-If the ``block_seq_indent`` equals ``indent``, there is not enough
-room for the dash and the space that has to follow. In that case the
+If the ``offset`` equals ``sequence``, there is not enough
+room for the dash and the space that has to follow it. In that case the
 element itself would normally be pushed to the next line (and older versions
 of ruamel.yaml did so). But this is
 prevented from happening. However the ``indent`` level is what is used
 for calculating the cumulative indent for deeper levels and specifying
-``yaml.indent = 3`` resp. ``yaml.block_seq_indent = 2``, migth give correct, but counter
+``sequence=3`` resp. ``offset=2``, might give correct, but counter
 intuitive results.
 
-**It is best to always have** ``indent >= block_seq_indent + 2``
+**It is best to always have** ``sequence >= offset + 2``
 **but this is not enforced**. Depending on your structure, not following
 this advice **might lead to invalid output**.
 

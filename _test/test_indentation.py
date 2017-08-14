@@ -10,7 +10,7 @@ import pytest  # NOQA
 import ruamel.yaml
 from ruamel.yaml.util import load_yaml_guess_indent
 
-from roundtrip import round_trip, round_trip_load, round_trip_dump, dedent
+from roundtrip import round_trip, round_trip_load, round_trip_dump, dedent, YAML
 
 
 def rt(s):
@@ -239,5 +239,79 @@ class TestGuessIndent:
         b:
            a: 1
         """) == (3, None)
+
+
+class TestSeparateMapSeqIndents:
+    # using uncommon 6 indent with 3 push in as 2 push in automatically
+    # gets you 4 indent even if not set
+    def test_00(self):
+        # old style
+        yaml = YAML()
+        yaml.indent = 6
+        yaml.block_seq_indent = 3
+        yaml.round_trip("""
+        a:
+           -  1
+           -  [1, 2]
+        """)
+
+    def test_01(self):
+        yaml = YAML()
+        yaml.indent(sequence=6)
+        yaml.indent(offset=3)
+        yaml.round_trip("""
+        a:
+           -  1
+           -  {b: 3}
+        """)
+
+    def test_02(self):
+        yaml = YAML()
+        yaml.indent(mapping=5, sequence=6, offset=3)
+        yaml.round_trip("""
+        a:
+             b:
+                -  1
+                -  [1, 2]
+        """)
+
+    def test_03(self):
+        round_trip("""
+        a:
+            b:
+                c:
+                -   1
+                -   [1, 2]
+        """, indent=4)
+
+    def test_04(self):
+        yaml = YAML()
+        yaml.indent(mapping=5, sequence=6)
+        yaml.round_trip("""
+        a:
+             b:
+             -     1
+             -     [1, 2]
+             -     {d: 3.14}
+        """)
+
+    def test_issue_51(self):
+        yaml = YAML()
+        # yaml.map_indent = 2 # the default
+        yaml.sequence_indent = 4
+        yaml.sequence_dash_offset = 2
+        yaml.preserve_quotes = True
+        yaml.round_trip("""
+        role::startup::author::rsyslog_inputs:
+          imfile:
+            - ruleset: 'AEM-slinglog'
+              File: '/opt/aem/author/crx-quickstart/logs/error.log'
+              startmsg.regex: '^[-+T.:[:digit:]]*'
+              tag: 'error'
+            - ruleset: 'AEM-slinglog'
+              File: '/opt/aem/author/crx-quickstart/logs/stdout.log'
+              startmsg.regex: '^[-+T.:[:digit:]]*'
+              tag: 'stdout'
+        """)
 
 # ############ indentation

@@ -183,8 +183,7 @@ if ruamel.yaml.version_info < (0, 15):
         def __init__(self):
             yaml.YAML.__init__(self)
             self.preserve_quotes = True
-            self.indent = 4
-            self.block_seq_indent = 2
+            self.indent(mapping=4, sequence=4, offset=2)
 # in your code
 try:
     from myyaml import MyYAML

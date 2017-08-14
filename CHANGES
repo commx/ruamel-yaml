@@ -1,3 +1,9 @@
+[0, 15, 29]: 2017-08-14
+  - fix issue #51: different indents for mappings and sequences (reported by 
+    Alex Harvey)
+  - fix for flow sequence/mapping as element/value of block sequence with 
+    sequence-indent minus dash-offset not equal two.
+
 [0, 15, 28]: 2017-08-13
   - fix issue #61: merge of merge cannot be __repr__-ed (reported by Tal Liron)
 

@@ -28,12 +28,10 @@ Reassigning values or replacing list items, etc., is fine.
 
 For the specific 1.2 differences see :ref:`yaml-1-2-support`
 
-Although individual indentation of lines is not preserved, you can
-specify both indentation (counting for this does **not** include the
-dash for a sequence element) and specific offset of block sequence
-dashes within that indentation. There is a utility function that tries
-to determine the correct values for ``indent`` and
-``block_seq_indent`` that can then be passed to the dumper.
+Although individual indentation of lines is not preserved, you can specify
+separate indentation levels for mappings and sequences (counting for sequences
+does **not** include the dash for a sequence element) and specific offset of
+block sequence dashes within that indentation.
 
 
 Although ``ruamel.yaml`` still allows most of the PyYAML way of doing
