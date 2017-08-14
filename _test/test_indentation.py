@@ -298,8 +298,7 @@ class TestSeparateMapSeqIndents:
     def test_issue_51(self):
         yaml = YAML()
         # yaml.map_indent = 2 # the default
-        yaml.sequence_indent = 4
-        yaml.sequence_dash_offset = 2
+        yaml.indent(sequence=4, offset=2)
         yaml.preserve_quotes = True
         yaml.round_trip("""
         role::startup::author::rsyslog_inputs:

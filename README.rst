@@ -35,10 +35,15 @@ ChangeLog
 
 .. should insert NEXT: at the beginning of line for next key
 
+0.15.30 (2017-08-14):
+  - fix for issue with "compact JSON" not parsing: ``{"in":{},"out":{}}``
+    (reported on `StackOverflow <https://stackoverflow.com/q/45681626/1307905>`_ by
+    `mjalkio <https://stackoverflow.com/users/5130525/mjalkio>`_
+
 0.15.29 (2017-08-14):
-  - fix issue #51: different indents for mappings and sequences (reported by 
+  - fix issue #51: different indents for mappings and sequences (reported by
     Alex Harvey)
-  - fix for flow sequence/mapping as element/value of block sequence with 
+  - fix for flow sequence/mapping as element/value of block sequence with
     sequence-indent minus dash-offset not equal two.
 
 0.15.28 (2017-08-13):

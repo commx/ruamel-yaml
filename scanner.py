@@ -765,7 +765,7 @@ class Scanner(object):
             if bool(self.flow_level):
                 return True
         else:
-            if bool(self.flow_level) and self.reader.peek(1) in '\'"':
+            if bool(self.flow_level) and self.reader.peek(1) in '\'"{[]}':
                 return True
         # VALUE(block context): ':' (' '|'\n')
         return self.reader.peek(1) in _THE_END_SPACE_TAB

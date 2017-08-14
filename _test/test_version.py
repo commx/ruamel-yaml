@@ -3,7 +3,7 @@
 import pytest                        # NOQA
 
 import ruamel.yaml
-from roundtrip import dedent, round_trip
+from roundtrip import dedent, round_trip, round_trip_load
 
 
 def load(s, version=None):
@@ -149,3 +149,7 @@ class TestIssue62:
         round_trip(s.format(''), preserve_quotes=True)
         # note the flow seq on the --- line!
         round_trip(s.format('%YAML 1.2\n--- '), preserve_quotes=True, version="1.2")
+
+    def test_so_45681626(self):
+        # was not properly parsing
+        round_trip_load('{"in":{},"out":{}}')
