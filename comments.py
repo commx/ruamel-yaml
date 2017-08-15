@@ -250,13 +250,15 @@ class CommentedBase(object):
 
         if after_indent is None:
             after_indent = indent + 2
-        if before and before[-1] == '\n':
+        if before and (len(before) > 1) and before[-1] == '\n':
             before = before[:-1]  # strip final newline if there
         if after and after[-1] == '\n':
             after = after[:-1]  # strip final newline if there
         start_mark = CommentMark(indent)
         c = self.ca.items.setdefault(key, [None, [], None, None])
-        if before:
+        if before == '\n':
+            c[1].append(comment_token('', start_mark))
+        elif before:
             for com in before.split('\n'):
                 c[1].append(comment_token(com, start_mark))
         if after:
@@ -947,13 +949,13 @@ def dump_comments(d, name='', sep='.', out=sys.stdout):
     recurisively dump domments all but the toplevel preceded by the path
     in dotted form x.0.a
     """
-    if isinstance(d, dict):
+    if isinstance(d, dict) and hasattr(d, 'ca'):
         if name:
             print(name)
         print(d.ca, file=out)  # type: ignore
         for k in d:
             dump_comments(d[k], name=(name + sep + k) if name else k, sep=sep, out=out)
-    elif isinstance(d, list):
+    elif isinstance(d, list) and hasattr(d, 'ca'):
         if name:
             print(name)
         print(d.ca, file=out)  # type: ignore

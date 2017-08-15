@@ -255,10 +255,10 @@ class CommentToken(Token):
 
     def __repr__(self):
         # type: () -> Any
-        v = self.value
+        v = u'{!r}'.format(self.value)
         if SHOWLINES:
             try:
                 v += u', line: ' + str(self.start_mark.line)
             except:
                 pass
-        return 'CommentToken({!r})'.format(v)
+        return 'CommentToken({})'.format(v)

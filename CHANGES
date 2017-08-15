@@ -1,3 +1,6 @@
+[0, 15, 31]: 2017-08-15
+  - fix Comment dumping
+
 [0, 15, 30]: 2017-08-14
   - fix for issue with "compact JSON" not parsing: ``{"in":{},"out":{}}``
     (reported on `StackOverflow <https://stackoverflow.com/q/45681626/1307905>`_ by

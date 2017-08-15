@@ -92,6 +92,27 @@ intuitive results.
 **but this is not enforced**. Depending on your structure, not following
 this advice **might lead to invalid output**.
 
+Inconsistently indented YAML
+++++++++++++++++++++++++++++
+
+If your input is inconsistently indented, such indentation cannot be preserverd.
+The first round-trip will make it consistent/normalize it. Here are some
+inconsistently indented YAML examples.
+
+``b`` indented 3, ``c`` indented 4 positions::
+
+  a:
+     b:
+         c: 1
+
+Top level sequence is indented 2 without offset, the other sequence 4 (with offset 2)::
+
+  - key:
+      - foo
+      - bar
+
+
+
 Positioning ':' in top level mappings, prefixing ':'
 ====================================================
 

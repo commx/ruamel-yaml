@@ -74,6 +74,10 @@ class Indents(object):
         # -1 for the dash
         return self.values[-1][0] + seq_indent - column - 1
 
+    def __len__(self):
+        # type: () -> int
+        return len(self.values)
+
 
 class Emitter(object):
     DEFAULT_TAG_PREFIXES = {
@@ -255,9 +259,13 @@ class Emitter(object):
         elif not indentless:
             self.indent += (self.best_sequence_indent if self.indents.last_seq() else
                             self.best_map_indent)
-            # if ()self.sequence_context and (self.sequence_dash_offset + 2) >
-            #     self.best_sequence_indent):
-            #    self.indent = self.sequence_dash_offset + 2
+            # if self.indents.last_seq():
+            #     if self.indent == 0: # top level block sequence
+            #         self.indent = self.best_sequence_indent - self.sequence_dash_offset
+            #     else:
+            #         self.indent += self.best_sequence_indent
+            # else:
+            #     self.indent += self.best_map_indent
 
     # States.
 
@@ -552,8 +560,8 @@ class Emitter(object):
                 self.write_pre_comment(self.event)
             nonl = self.no_newline if self.column == 0 else False
             self.write_indent()
-            self.write_indicator((u' ' * self.sequence_dash_offset) + u'-', True,
-                                 indention=True)
+            ind = self.sequence_dash_offset  # if  len(self.indents) > 1 else 0
+            self.write_indicator(u' ' * ind + u'-', True, indention=True)
             if nonl or self.sequence_dash_offset + 2 > self.best_sequence_indent:
                 self.no_newline = True
             self.states.append(self.expect_block_sequence_item)
