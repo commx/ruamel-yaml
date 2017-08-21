@@ -652,8 +652,8 @@ class RoundTripRepresenter(SafeRepresenter):
 
     def __init__(self, default_style=None, default_flow_style=None, dumper=None):
         # type: (Any, Any, Any) -> None
-        if default_flow_style is None:
-            default_flow_style = False
+        if not hasattr(dumper, 'typ') and default_flow_style is None:
+             default_flow_style = False
         SafeRepresenter.__init__(self, default_style=default_style,
                                  default_flow_style=default_flow_style,
                                  dumper=dumper)
@@ -992,6 +992,7 @@ class RoundTripRepresenter(SafeRepresenter):
         for item_key in omap:
             item_val = omap[item_key]
             node_item = self.represent_data({item_key: item_val})
+            # node_item.flow_style = False
             # node item has two scalars in value: node_key and node_value
             item_comment = item_comments.get(item_key)
             if item_comment:

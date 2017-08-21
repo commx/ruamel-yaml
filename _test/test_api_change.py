@@ -126,7 +126,6 @@ class TestDuplSet:
             ? a
             """))
 
-
 class TestDumpLoadUnicode:
     # test triggered by SamH on stackoverflow (https://stackoverflow.com/q/45281596/1307905)
     # and answer by randomir (https://stackoverflow.com/a/45281922/1307905)
@@ -144,3 +143,16 @@ class TestDumpLoadUnicode:
             fp.write(u'text: HELLO_WORLD©\n'.encode('utf-8'))
         text_dict = yaml.load(open(file_name, 'r'))
         assert text_dict["text"] == u"HELLO_WORLD©"
+
+
+class TestFlowStyle:
+    def test_flow_style(self, capsys):
+        # https://stackoverflow.com/questions/45791712/
+        yaml = YAML()
+        yaml.default_flow_style = None
+        data = yaml.map()
+        data['b'] = 1
+        data['a'] = [[1, 2],[3, 4]]
+        yaml.dump(data, sys.stdout)
+        out, err = capsys.readouterr()
+        assert out == "b: 1\na:\n- [1, 2]\n- [3, 4]\n"

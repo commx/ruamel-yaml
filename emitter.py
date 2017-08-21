@@ -72,7 +72,8 @@ class Indents(object):
         if len(self.values) < 2 or not self.values[-1][1]:
             return 0
         # -1 for the dash
-        return self.values[-1][0] + seq_indent - column - 1
+        base = self.values[-1][0] if self.values[-1][0] is not None else 0
+        return base + seq_indent - column - 1
 
     def __len__(self):
         # type: () -> int

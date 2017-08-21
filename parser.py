@@ -394,8 +394,8 @@ class Parser(object):
                 comment = [pt.comment[0], []]
                 pt.comment[0] = None
             end_mark = self.scanner.peek_token().end_mark
-            event = SequenceStartEvent(anchor, tag, implicit,
-                                       start_mark, end_mark, comment=comment)
+            event = SequenceStartEvent(anchor, tag, implicit, start_mark, end_mark,
+                                       flow_style=False, comment=comment)
             self.state = self.parse_indentless_sequence_entry
             return event
 

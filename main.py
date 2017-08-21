@@ -70,7 +70,9 @@ class YAML(object):
         self.Reader = None       # type: Any
         self.Scanner = None      # type: Any
         self.Serializer = None   # type: Any
+        self.default_flow_style = None  # type: Any
         if self.typ == 'rt':
+            self.default_flow_style = False
             # no optimized rt-dumper yet
             self.Emitter = ruamel.yaml.emitter.Emitter                       # type: Any
             self.Serializer = ruamel.yaml.serializer.Serializer              # type: Any
@@ -128,7 +130,6 @@ class YAML(object):
         self.explicit_end = None
         self.tags = None
         self.default_style = None
-        self.default_flow_style = None
         self.top_level_block_style_scalar_no_indent_error_1_1 = False
 
     @property
@@ -206,6 +207,7 @@ class YAML(object):
                     None, canonical=self.canonical,
                     indent=self.old_indent, width=self.width,
                     allow_unicode=self.allow_unicode, line_break=self.line_break,
+                    prefix_colon=self.prefix_colon,
                     dumper=self)
                 setattr(self, attr, _emitter)
                 if self.map_indent is not None:
