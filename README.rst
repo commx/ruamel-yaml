@@ -35,6 +35,11 @@ ChangeLog
 
 .. should insert NEXT: at the beginning of line for next key
 
+0.15.32 (2017-08-21):
+  - allow setting ``yaml.default_flow_style = None`` (default: ``False``) for
+    for ``typ='rt'``.
+  - fix for issue 149: multiplications on ``ScalarFloat`` now return ``float``
+
 0.15.31 (2017-08-15):
   - fix Comment dumping
 

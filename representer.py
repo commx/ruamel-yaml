@@ -653,7 +653,7 @@ class RoundTripRepresenter(SafeRepresenter):
     def __init__(self, default_style=None, default_flow_style=None, dumper=None):
         # type: (Any, Any, Any) -> None
         if not hasattr(dumper, 'typ') and default_flow_style is None:
-             default_flow_style = False
+            default_flow_style = False
         SafeRepresenter.__init__(self, default_style=default_style,
                                  default_flow_style=default_flow_style,
                                  dumper=dumper)

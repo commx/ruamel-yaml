@@ -141,3 +141,14 @@ class TestFloat:
             ---
             - 1e6
             """)
+
+
+class TestCalculations(object):
+    def test_mul_00(self):
+        # issue 149 reported by jan.brezina@tul.cz
+        d = round_trip_load("""\
+        - 0.1
+        """)
+        d[0] *= -1
+        x = round_trip_dump(d)
+        assert x == '- -0.1\n'
