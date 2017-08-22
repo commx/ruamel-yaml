@@ -486,7 +486,15 @@ class SafeConstructor(BaseConstructor):
     def construct_yaml_timestamp(self, node, values=None):
         # type: (Any, Any) -> Any
         if values is None:
-            match = self.timestamp_regexp.match(node.value)
+            try:
+                match = self.timestamp_regexp.match(node.value)
+            except TypeError:
+                match = None
+            if match is None:
+                raise ConstructorError(
+                    None, None,
+                    'failed to construct timestamp from "{}"'.format(node.value),
+                    node.start_mark)
             values = match.groupdict()
         year = int(values['year'])
         month = int(values['month'])
@@ -1429,7 +1437,15 @@ class RoundTripConstructor(SafeConstructor):
 
     def construct_yaml_timestamp(self, node, values=None):
         # type: (Any, Any) -> Any
-        match = self.timestamp_regexp.match(node.value)
+        try:
+            match = self.timestamp_regexp.match(node.value)
+        except TypeError:
+            match = None
+        if match is None:
+            raise ConstructorError(
+                None, None,
+                'failed to construct timestamp from "{}"'.format(node.value),
+                node.start_mark)
         values = match.groupdict()
         if not values['hour']:
             return SafeConstructor.construct_yaml_timestamp(self, node, values)
