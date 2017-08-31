@@ -943,6 +943,12 @@ class CommentedSet(MutableSet, CommentedMap):
         return 'set({0!r})'.format(self.odict.keys())
 
 
+class TaggedScalar(CommentedBase):
+    # the value and style attributes are set during roundtrip construction
+    def __str__(self):
+        return self.value
+
+
 def dump_comments(d, name='', sep='.', out=sys.stdout):
     # type: (Any, str, str, Any) -> None
     """

@@ -26,7 +26,7 @@ You load a YAML document using::
 --- !python |
 from ruamel.yaml import YAML
 
-yaml=YAML(typ='safe')   # default if not specfied is round-trip
+yaml=YAML(typ='safe')   # default, if not specfied, is 'rt' (round-trip)
 yaml.load(doc)
 
 --- |

@@ -35,17 +35,25 @@ ChangeLog
 
 .. should insert NEXT: at the beginning of line for next key
 
+0.15.33 (2017-08-31):
+  - support for "undefined" round-tripping tagged scalar objects (in addition to
+    tagged mapping object). Inspired by a use case presented by Matthew Patton
+    on `StackOverflow <https://stackoverflow.com/a/45967047/1307905>`__.
+  - fix issue 148: replace cryptic error message when using !!timestamp with an
+    incorrectly formatted or non- scalar. Reported by FichteFoll.
+
 0.15.32 (2017-08-21):
   - allow setting ``yaml.default_flow_style = None`` (default: ``False``) for
     for ``typ='rt'``.
   - fix for issue 149: multiplications on ``ScalarFloat`` now return ``float``
+    (reported by jan.brezina@tul.cz)
 
 0.15.31 (2017-08-15):
   - fix Comment dumping
 
 0.15.30 (2017-08-14):
   - fix for issue with "compact JSON" not parsing: ``{"in":{},"out":{}}``
-    (reported on `StackOverflow <https://stackoverflow.com/q/45681626/1307905>`_ by
+    (reported on `StackOverflow <https://stackoverflow.com/q/45681626/1307905>`__ by
     `mjalkio <https://stackoverflow.com/users/5130525/mjalkio>`_
 
 0.15.29 (2017-08-14):
@@ -74,7 +82,7 @@ ChangeLog
     42.00E+56, 0.0, -0.0 etc. while keeping the format. Underscores in mantissas
     are not preserved/supported (yet, is anybody using that?).
   - (finally) fixed longstanding issue 23 (reported by `Antony Sottile
-    <https://bitbucket.org/asottile/>`_), now handling comment between block
+    <https://bitbucket.org/asottile/>`__), now handling comment between block
     mapping key and value correctly
   - warn on YAML 1.1 float input that is incorrect (triggered by invalid YAML
     provided by Cecil Curry)
@@ -102,28 +110,28 @@ ChangeLog
 0.15.18 (2017-07-04):
   - missing ``pure`` attribute on ``YAML`` useful for implementing `!include` tag
     constructor for `including YAML files in a YAML file
-    <https://stackoverflow.com/a/44913652/1307905>`_
+    <https://stackoverflow.com/a/44913652/1307905>`__
   - some documentation improvements
   - trigger of doc build on new revision
 
 0.15.17 (2017-07-03):
   - support for Unicode supplementary Plane **output**
     (input was already supported, triggered by
-    `this <https://stackoverflow.com/a/44875714/1307905>`_ Stack Overflow Q&A)
+    `this <https://stackoverflow.com/a/44875714/1307905>`__ Stack Overflow Q&A)
 
 0.15.16 (2017-07-01):
   - minor typing issues (reported and fix provided by
-    `Manvendra Singh <https://bitbucket.org/manu-chroma/>`_
+    `Manvendra Singh <https://bitbucket.org/manu-chroma/>`__
   - small doc improvements
 
 0.15.15 (2017-06-27):
   - fix for issue 135, typ='safe' not dumping in Python 2.7
-    (reported by Andrzej Ostrowski <https://bitbucket.org/aostr123/>`_)
+    (reported by Andrzej Ostrowski <https://bitbucket.org/aostr123/>`__)
 
 0.15.14 (2017-06-25):
   - fix for issue 133, in setup.py: change ModuleNotFoundError to
     ImportError (reported and fix by
-    `Asley Drake  <https://github.com/aldraco>`_)
+    `Asley Drake  <https://github.com/aldraco>`__)
 
 0.15.13 (2017-06-24):
   - suppress duplicate key warning on mappings with merge keys (reported by
@@ -135,7 +143,7 @@ ChangeLog
 
 0.15.11 (2017-06-24):
   - fix for issue 130, regression in nested merge keys (reported by
-    `David Fee <https://bitbucket.org/dfee/>`_)
+    `David Fee <https://bitbucket.org/dfee/>`__)
 
 0.15.10 (2017-06-23):
   - top level PreservedScalarString not indented if not explicitly asked to
@@ -145,7 +153,7 @@ ChangeLog
 0.15.9 (2017-06-16):
   - fix for issue 127: tagged scalars were always quoted and seperated
     by a newline when in a block sequence (reported and largely fixed by
-    `Tommy Wang <https://bitbucket.org/twang817/>`_)
+    `Tommy Wang <https://bitbucket.org/twang817/>`__)
 
 0.15.8 (2017-06-15):
   - allow plug-in install via ``install ruamel.yaml[jinja2]``
@@ -175,7 +183,7 @@ ChangeLog
   - update to conform to mypy 0.511: mypy --strict
 
 0.15.1 (2017-06-07):
-  - `duplicate keys  <http://yaml.readthedocs.io/en/latest/api.html#duplicate-keys>`_
+  - `duplicate keys  <http://yaml.readthedocs.io/en/latest/api.html#duplicate-keys>`__
     in mappings generate an error (in the old API this change generates a warning until 0.16)
   - dependecy on ruamel.ordereddict for 2.7 now via extras_require
 
@@ -206,7 +214,7 @@ ChangeLog
 
 0.14.8 (2017-04-19):
   - fix Text not available on 3.5.0 and 3.5.1, now proactively setting version guards
-    on all files (reported by `João Paulo Magalhães <https://bitbucket.org/jpmag/>`_)
+    on all files (reported by `João Paulo Magalhães <https://bitbucket.org/jpmag/>`__)
 
 0.14.7 (2017-04-18):
   - round trip of integers (decimal, octal, hex, binary) now preserve
@@ -233,8 +241,8 @@ ChangeLog
 
 0.14.3 (2017-03-31):
   - fix for 0o52 not being a string in YAML 1.1 (reported on
-    `StackOverflow Q&A 43138503 <http://stackoverflow.com/a/43138503/1307905>`_ by
-    `Frank D <http://stackoverflow.com/users/7796630/frank-d>`_)
+    `StackOverflow Q&A 43138503 <http://stackoverflow.com/a/43138503/1307905>`__ by
+    `Frank D <http://stackoverflow.com/users/7796630/frank-d>`__)
 
 0.14.2 (2017-03-23):
   - fix for old default pip on Ubuntu 14.04 (reported by Sébastien Maccagnoni-Munch)

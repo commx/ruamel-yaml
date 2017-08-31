@@ -19,7 +19,7 @@ from ruamel.yaml.compat import (utf8, builtins_module, to_str, PY2, PY3,  # NOQA
                                 ordereddict, text_type, nprint, version_tnf)
 from ruamel.yaml.comments import *                               # NOQA
 from ruamel.yaml.comments import (CommentedMap, CommentedOrderedMap, CommentedSet,
-                                  CommentedKeySeq, CommentedSeq)
+                                  CommentedKeySeq, CommentedSeq, TaggedScalar)
 from ruamel.yaml.scalarstring import *                           # NOQA
 from ruamel.yaml.scalarstring import (PreservedScalarString, SingleQuotedScalarString,
                                       DoubleQuotedScalarString, ScalarString)
@@ -1419,21 +1419,31 @@ class RoundTripConstructor(SafeConstructor):
     def construct_undefined(self, node):
         # type: (Any) -> Any
         try:
-            data = CommentedMap()
-            data._yaml_set_line_col(node.start_mark.line, node.start_mark.column)
-            if node.flow_style is True:
-                data.fa.set_flow_style()
-            elif node.flow_style is False:
-                data.fa.set_block_style()
-            data.yaml_set_tag(node.tag)
-            yield data
-            self.construct_mapping(node, data)
+            if isinstance(node, MappingNode):
+                data = CommentedMap()
+                data._yaml_set_line_col(node.start_mark.line, node.start_mark.column)
+                if node.flow_style is True:
+                    data.fa.set_flow_style()
+                elif node.flow_style is False:
+                    data.fa.set_block_style()
+                data.yaml_set_tag(node.tag)
+                yield data
+                self.construct_mapping(node, data)
+                return
+            elif isinstance(node, ScalarNode):
+                data = TaggedScalar()
+                data.value = self.construct_scalar(node)
+                data.style = node.style
+                data.yaml_set_tag(node.tag)
+                yield data
+                return
         except:
-            raise ConstructorError(
-                None, None,
-                "could not determine a constructor for the tag %r" %
-                utf8(node.tag),
-                node.start_mark)
+            pass
+        raise ConstructorError(
+            None, None,
+            "could not determine a constructor for the tag %r" %
+            utf8(node.tag),
+            node.start_mark)
 
     def construct_yaml_timestamp(self, node, values=None):
         # type: (Any, Any) -> Any

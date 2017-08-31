@@ -642,8 +642,8 @@ Representer.add_multi_representer(object,
                                   Representer.represent_object)
 
 
-from ruamel.yaml.comments import CommentedMap, CommentedOrderedMap, CommentedSeq, \
-    CommentedKeySeq, CommentedSet, comment_attrib, merge_attrib    # NOQA
+from ruamel.yaml.comments import (CommentedMap, CommentedOrderedMap, CommentedSeq,
+    CommentedKeySeq, CommentedSet, comment_attrib, merge_attrib, TaggedScalar)    # NOQA
 
 
 class RoundTripRepresenter(SafeRepresenter):
@@ -1096,6 +1096,13 @@ class RoundTripRepresenter(SafeRepresenter):
             value += _yaml['tz']
         return self.represent_scalar(u'tag:yaml.org,2002:timestamp', to_unicode(value))
 
+    def represent_tagged_scalar(self, data):
+        try:
+            tag = data.tag.value
+        except AttributeError:
+            tag = None
+        return self.represent_scalar(tag, data.value, style=data.style)
+
 
 RoundTripRepresenter.add_representer(type(None),
                                      RoundTripRepresenter.represent_none)
@@ -1152,6 +1159,9 @@ if sys.version_info >= (2, 7):
 
 RoundTripRepresenter.add_representer(CommentedSet,
                                      RoundTripRepresenter.represent_set)
+
+RoundTripRepresenter.add_representer(TaggedScalar,
+                                     RoundTripRepresenter.represent_tagged_scalar)
 
 RoundTripRepresenter.add_representer(TimeStamp,
                                      RoundTripRepresenter.represent_datetime)

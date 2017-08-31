@@ -94,3 +94,13 @@ class TestRoundTripCustom:
           location: Germany
           language: python
         """)
+
+    def test_scalar_00(self):
+        # https://stackoverflow.com/a/45967047/1307905
+        round_trip("""\
+        Outputs:
+          Vpc:
+            Value: !Ref: vpc    # first tag
+            Export:
+              Name: !Sub "${AWS::StackName}-Vpc"  # second tag
+        """)

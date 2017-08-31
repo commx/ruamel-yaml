@@ -1,3 +1,10 @@
+[0, 15, 33]: 2017-08-31
+  - support for "undefined" round-tripping tagged scalar objects (in addition to
+    tagged mapping object). Inspired by a use case presented by Matthew Patton
+    on `StackOverflow <https://stackoverflow.com/a/45967047/1307905>`__.
+  - fix issue 148: replace cryptic error message when using !!timestamp with an
+    incorrectly formatted or non- scalar. Reported by FichteFoll.
+
 [0, 15, 32]: 2017-08-21
   - allow setting ``yaml.default_flow_style = None`` (default: ``False``) for
     for ``typ='rt'``.
