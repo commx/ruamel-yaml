@@ -444,6 +444,7 @@ class YAML(object):
         self._stream = stream
         dumper = XDumper(stream, default_style=self.default_style,
                          default_flow_style=self.default_flow_style,
+                         canonical=self.canonical, indent=self.old_indent, width=self.width,
                          allow_unicode=self.allow_unicode, line_break=self.line_break,
                          explicit_start=self.explicit_start,
                          explicit_end=self.explicit_end,
