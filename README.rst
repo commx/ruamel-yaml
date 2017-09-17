@@ -35,6 +35,9 @@ ChangeLog
 
 .. should insert NEXT: at the beginning of line for next key
 
+0.15.34 (2017-09-17):
+  - fix for issue 157: CDumper not dumping floats (reported by Jan Smitka)
+
 0.15.33 (2017-08-31):
   - support for "undefined" round-tripping tagged scalar objects (in addition to
     tagged mapping object). Inspired by a use case presented by Matthew Patton
@@ -96,7 +99,8 @@ ChangeLog
   - fix for round_tripping singe excl. mark tags doubling (reported and fix by Jan Brezina)
 
 0.15.21 (2017-07-25):
-  - fix for writing unicode in new API, https://stackoverflow.com/a/45281922/1307905
+  - fix for writing unicode in new API, (reported on 
+    `StackOverflow <https://stackoverflow.com/a/45281922/1307905>`__
 
 0.15.20 (2017-07-23):
   - wheels for windows including C extensions
