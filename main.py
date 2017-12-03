@@ -399,7 +399,10 @@ class YAML(object):
             val = stream.getvalue()  # type: ignore
             if self.encoding:
                 val = val.decode(self.encoding)
-            fstream.write(transform(val))
+            if fstream is None:
+                transform(val)
+            else:
+                fstream.write(transform(val))
         return None
 
     def get_serializer_representer_emitter(self, stream, tlca):

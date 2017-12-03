@@ -33,7 +33,14 @@ when the status of the API is stable enough to make the transition.
 ChangeLog
 =========
 
-.. should insert NEXT: at the beginning of line for next key
+.. should insert NEXT: at the beginning of line for next key (with empty line)
+
+0.15.35 (2017-12-03):
+  - allow ``None`` as stream when specifying ``transform`` parameters to
+    ``YAML.dump()``.
+    This is useful if the transforming function doesn't return a meaningful value
+    (inspired by `StackOverflow <https://stackoverflow.com/q/47614862/1307905>`__ by
+    `rsaw <https://stackoverflow.com/users/406281/rsaw>`__).
 
 0.15.34 (2017-09-17):
   - fix for issue 157: CDumper not dumping floats (reported by Jan Smitka)
@@ -99,7 +106,7 @@ ChangeLog
   - fix for round_tripping singe excl. mark tags doubling (reported and fix by Jan Brezina)
 
 0.15.21 (2017-07-25):
-  - fix for writing unicode in new API, (reported on 
+  - fix for writing unicode in new API, (reported on
     `StackOverflow <https://stackoverflow.com/a/45281922/1307905>`__
 
 0.15.20 (2017-07-23):
