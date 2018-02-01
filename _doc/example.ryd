@@ -183,14 +183,14 @@ stream parameter to one of the ``dump()`` variants, in order to get a monolithic
 representation of the stream back.
 
 Apart from being memory inefficient and slow, quite often people using this did not
-realiase that ``print(round_trip_dump(dict(a=1, b=2)))`` gets you an extra,
+realise that ``print(round_trip_dump(dict(a=1, b=2)))`` gets you an extra,
 empty, line after ``b: 2``.
 
-The real quesiton is why is this functionality, which is seldom really
+The real question is why this functionality, which is seldom really
 necessary, is available in the old API (and in PyYAML) in the first place. One
 explanation you get by looking at what someone would need to do to make this
 available if it weren't there already. Apart from subclassing the ``Serializer``
-and providing a new ``dump`` method,which would ten or so lines, another
+and providing a new ``dump`` method, which would ten or so lines, another
 **hundred** lines, essentially the whole ``dumper.py`` file, would need to be
 copied and to make use of this serializer.
 

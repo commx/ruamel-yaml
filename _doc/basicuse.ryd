@@ -33,7 +33,7 @@ yaml.load(doc)
 in this ``doc`` can be a file pointer (i.e. an object that has the
 ``.read()`` method, a string or a ``pathlib.Path()``. ``typ='safe'``
 accomplishes the same as what ``safe_load()`` did before: loading of a
-document without resolving unknow tags. Provide  ``pure=True`` to
+document without resolving unknown tags. Provide  ``pure=True`` to
 enforce using the pure Python implementation (faster C libraries will be used
 when possible/available)
 
