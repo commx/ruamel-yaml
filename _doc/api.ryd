@@ -37,7 +37,7 @@ preserve quotes.
 
 Up to 0.15.0, the dumpers (``dump()``, ``safe_dump``,
 ``round_trip_dump()``, ``dump_all()``, etc.) had a plethora of
-arguments, some inhereted from ``PyYAML``, some added in
+arguments, some inherited from ``PyYAML``, some added in
 ``ruamel.yaml``. The only required argument is the ``data`` to be
 dumped. If the stream argument is not provided to the dumper, then a
 string representation is build up in memory and returned to the
@@ -45,7 +45,7 @@ caller.
 
 Starting with 0.15.0 ``load()`` and ``dump()`` are methods on a
 ``YAML`` instance and only take the stream,
-resp. the data and stram argument. All other parameters  are set on the instance
+resp. the data and stream argument. All other parameters are set on the instance
 of ``YAML`` before calling ``load()`` or ``dump()``
 
 Before 0.15.0::
@@ -212,7 +212,7 @@ Reason for API change
 +++++++++++++++++++++
 
 ``ruamel.yaml`` inherited the way of doing things from ``PyYAML``. In
-particular when calling the function ``load()`` or ``dump()`` a
+particular when calling the function ``load()`` or ``dump()``
 temporary instances of  ``Loader()`` resp. ``Dumper()``  were
 created that were discarded on termination of the function.
 

@@ -14,7 +14,7 @@ Only ``yaml = YAML(typ='unsafe')`` loads and dumps Python objects out-of-the-box
 since it loads **any** Python object, this can be unsafe.
 
 If you have instances of some class(es) that you want to dump or load, it is
-easy to allow the YAML instance to that explicitly. You can either registering the
+easy to allow the YAML instance to do that explicitly. You can either register the
 class with the ``YAML`` instance or decorate the class.
 
 Registering is done with ``YAML.register_class()``::
