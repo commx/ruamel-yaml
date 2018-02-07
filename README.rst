@@ -35,6 +35,10 @@ ChangeLog
 
 .. should insert NEXT: at the beginning of line for next key (with empty line)
 
+NEXT:
+  - fix issue 187, incompatibility of C extension with 3.7 (reported by
+    Daniel Blanchard)
+
 0.15.35 (2017-12-03):
   - allow ``None`` as stream when specifying ``transform`` parameters to
     ``YAML.dump()``.
