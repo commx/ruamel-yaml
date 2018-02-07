@@ -35,7 +35,7 @@ ChangeLog
 
 .. should insert NEXT: at the beginning of line for next key (with empty line)
 
-NEXT:
+0.15.36 (2018-02-07):
   - fix issue 187, incompatibility of C extension with 3.7 (reported by
     Daniel Blanchard)
 
