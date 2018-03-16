@@ -28,7 +28,7 @@ from ruamel.yaml.compat import text_type, binary_type, PY3
 from ruamel.yaml.util import RegExp
 
 if False:  # MYPY
-    from typing import Any, Dict, Optional, List, Union, Text  # NOQA
+    from typing import Any, Dict, Optional, List, Union, Text, Tuple  # NOQA
     from ruamel.yaml.compat import StreamTextType  # NOQA
 
 __all__ = ['Reader', 'ReaderError']
@@ -204,6 +204,7 @@ class Reader(object):
     @classmethod
     def _get_non_printable_ascii(
             cls, data, printable=b'\x09\x0A\x0D' + bytes(range(0x20, 0x7E+1))):
+        # type: (Text, bytes) -> Union[None, Tuple[int, Text]]
         ascii_bytes = data.encode('ascii')
         non_printables = ascii_bytes.translate(None, printable)
         if not non_printables:
@@ -213,6 +214,7 @@ class Reader(object):
 
     @classmethod
     def _get_non_printable_regex(cls, data):
+        # type: (Text) -> Union[None, Tuple[int, Text]]
         match = cls.NON_PRINTABLE.search(data)
         if not bool(match):
             return None
@@ -220,6 +222,7 @@ class Reader(object):
 
     @classmethod
     def _get_non_printable(cls, data):
+        # type: (Text) -> Union[None, Tuple[int, Text]]
         try:
             return cls._get_non_printable_ascii(data)
         except UnicodeEncodeError:
