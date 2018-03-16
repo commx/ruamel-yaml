@@ -6,12 +6,35 @@ some helper functions that might be generally useful
 
 from __future__ import absolute_import, print_function
 
+from functools import partial
+import re
+
 from .compat import text_type, binary_type
 
 if False:  # MYPY
     from typing import Any, Dict, Optional, List, Text  # NOQA
     from .compat import StreamTextType  # NOQA
 
+
+class LazyEval(object):
+    def __init__(self, func, *args, **kwargs):
+        def lazy_self():
+            return_value = func(*args, **kwargs)
+            object.__setattr__(self, "lazy_self", lambda: return_value)
+            return return_value
+        object.__setattr__(self, "lazy_self", lazy_self)
+
+    def __getattribute__(self, name):
+        lazy_self = object.__getattribute__(self, "lazy_self")
+        if name == "lazy_self":
+            return lazy_self
+        return getattr(lazy_self(), name)
+
+    def __setattr__(self, name, value):
+        setattr(self.lazy_self(), name, value)
+
+
+RegExp = partial(LazyEval, re.compile)
 
 # originally as comment
 # https://github.com/pre-commit/pre-commit/pull/211#issuecomment-186466605

@@ -2,10 +2,9 @@
 
 from __future__ import absolute_import
 
-import re
-
 from ruamel.yaml.error import YAMLError
 from ruamel.yaml.compat import nprint, DBG_NODE, dbg, string_types
+from ruamel.yaml.util import RegExp
 
 from ruamel.yaml.events import (
     StreamStartEvent, StreamEndEvent, MappingStartEvent, MappingEndEvent,
@@ -31,7 +30,7 @@ class Serializer(object):
 
     # 'id' and 3+ numbers, but not 000
     ANCHOR_TEMPLATE = u'id%03d'
-    ANCHOR_RE = re.compile(u'id(?!000$)\\d{3,}')
+    ANCHOR_RE = RegExp(u'id(?!000$)\\d{3,}')
 
     def __init__(self, encoding=None, explicit_start=None, explicit_end=None,
                  version=None, tags=None, dumper=None):

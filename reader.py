@@ -25,6 +25,7 @@ import re
 
 from ruamel.yaml.error import YAMLError, FileMark, StringMark, YAMLStreamError
 from ruamel.yaml.compat import text_type, binary_type, PY3
+from ruamel.yaml.util import RegExp
 
 if False:  # MYPY
     from typing import Any, Dict, Optional, List, Union, Text  # NOQA
@@ -181,7 +182,17 @@ class Reader(object):
 
     # 4 if 32 bit unicode supported, 2 e.g. on MacOS (issue 56)
     try:
-        NON_PRINTABLE = re.compile(
+        re.compile(u'[^\U00010000]')
+    except:
+        NON_PRINTABLE = RegExp(
+            u'[^\x09\x0A\x0D\x20-\x7E\x85'
+            u'\xA0-\uD7FF'
+            u'\uE000-\uFFFD'
+            u']'
+        )
+        UNICODE_SIZE = 2
+    else:
+        NON_PRINTABLE = RegExp(
             u'[^\x09\x0A\x0D\x20-\x7E\x85'
             u'\xA0-\uD7FF'
             u'\uE000-\uFFFD'
@@ -189,14 +200,6 @@ class Reader(object):
             u']'
         )
         UNICODE_SIZE = 4
-    except:
-        NON_PRINTABLE = re.compile(
-            u'[^\x09\x0A\x0D\x20-\x7E\x85'
-            u'\xA0-\uD7FF'
-            u'\uE000-\uFFFD'
-            u']'
-        )
-        UNICODE_SIZE = 2
 
     def check_printable(self, data):
         # type: (Any) -> None

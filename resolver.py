@@ -11,6 +11,7 @@ if False:  # MYPY
 from ruamel.yaml.compat import string_types, _DEFAULT_YAML_VERSION  # NOQA
 from ruamel.yaml.error import *                               # NOQA
 from ruamel.yaml.nodes import *                               # NOQA
+from ruamel.yaml.util import RegExp  # NOQA
 
 __all__ = ['BaseResolver', 'Resolver', 'VersionedResolver']
 
@@ -23,17 +24,17 @@ __all__ = ['BaseResolver', 'Resolver', 'VersionedResolver']
 implicit_resolvers = [
     ([(1, 2)],
         u'tag:yaml.org,2002:bool',
-        re.compile(u'''^(?:true|True|TRUE|false|False|FALSE)$''', re.X),
+        RegExp(u'''^(?:true|True|TRUE|false|False|FALSE)$''', re.X),
         list(u'tTfF')),
     ([(1, 1)],
         u'tag:yaml.org,2002:bool',
-        re.compile(u'''^(?:yes|Yes|YES|no|No|NO
+        RegExp(u'''^(?:yes|Yes|YES|no|No|NO
         |true|True|TRUE|false|False|FALSE
         |on|On|ON|off|Off|OFF)$''', re.X),
         list(u'yYnNtTfFoO')),
     ([(1, 2)],
         u'tag:yaml.org,2002:float',
-        re.compile(u'''^(?:
+        RegExp(u'''^(?:
          [-+]?(?:[0-9][0-9_]*)\\.[0-9_]*(?:[eE][-+]?[0-9]+)?
         |[-+]?(?:[0-9][0-9_]*)(?:[eE][-+]?[0-9]+)
         |\\.[0-9_]+(?:[eE][-+][0-9]+)?
@@ -42,7 +43,7 @@ implicit_resolvers = [
         list(u'-+0123456789.')),
     ([(1, 1)],
         u'tag:yaml.org,2002:float',
-        re.compile(u'''^(?:
+        RegExp(u'''^(?:
          [-+]?(?:[0-9][0-9_]*)\\.[0-9_]*(?:[eE][-+]?[0-9]+)?
         |[-+]?(?:[0-9][0-9_]*)(?:[eE][-+]?[0-9]+)
         |\\.[0-9_]+(?:[eE][-+][0-9]+)?
@@ -52,14 +53,14 @@ implicit_resolvers = [
         list(u'-+0123456789.')),
     ([(1, 2)],
         u'tag:yaml.org,2002:int',
-        re.compile(u'''^(?:[-+]?0b[0-1_]+
+        RegExp(u'''^(?:[-+]?0b[0-1_]+
         |[-+]?0o?[0-7_]+
         |[-+]?(?:0|[1-9][0-9_]*)
         |[-+]?0x[0-9a-fA-F_]+)$''', re.X),
         list(u'-+0123456789')),
     ([(1, 1)],
         u'tag:yaml.org,2002:int',
-        re.compile(u'''^(?:[-+]?0b[0-1_]+
+        RegExp(u'''^(?:[-+]?0b[0-1_]+
         |[-+]?0?[0-7_]+
         |[-+]?(?:0|[1-9][0-9_]*)
         |[-+]?0x[0-9a-fA-F_]+
@@ -67,17 +68,17 @@ implicit_resolvers = [
         list(u'-+0123456789')),
     ([(1, 2), (1, 1)],
         u'tag:yaml.org,2002:merge',
-        re.compile(u'^(?:<<)$'),
+        RegExp(u'^(?:<<)$'),
         [u'<']),
     ([(1, 2), (1, 1)],
         u'tag:yaml.org,2002:null',
-        re.compile(u'''^(?: ~
+        RegExp(u'''^(?: ~
         |null|Null|NULL
         | )$''', re.X),
         [u'~', u'n', u'N', u'']),
     ([(1, 2), (1, 1)],
         u'tag:yaml.org,2002:timestamp',
-        re.compile(u'''^(?:[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]
+        RegExp(u'''^(?:[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]
         |[0-9][0-9][0-9][0-9] -[0-9][0-9]? -[0-9][0-9]?
         (?:[Tt]|[ \\t]+)[0-9][0-9]?
         :[0-9][0-9] :[0-9][0-9] (?:\\.[0-9]*)?
@@ -85,13 +86,13 @@ implicit_resolvers = [
         list(u'0123456789')),
     ([(1, 2), (1, 1)],
         u'tag:yaml.org,2002:value',
-        re.compile(u'^(?:=)$'),
+        RegExp(u'^(?:=)$'),
         [u'=']),
     # The following resolver is only for documentation purposes. It cannot work
     # because plain scalars cannot start with '!', '&', or '*'.
     ([(1, 2), (1, 1)],
         u'tag:yaml.org,2002:yaml',
-        re.compile(u'^(?:!|&|\\*)$'),
+        RegExp(u'^(?:!|&|\\*)$'),
         list(u'!&*')),
 ]
 
@@ -308,14 +309,14 @@ class Resolver(BaseResolver):
 
 Resolver.add_implicit_resolver_base(
     u'tag:yaml.org,2002:bool',
-    re.compile(u'''^(?:yes|Yes|YES|no|No|NO
+    RegExp(u'''^(?:yes|Yes|YES|no|No|NO
     |true|True|TRUE|false|False|FALSE
     |on|On|ON|off|Off|OFF)$''', re.X),
     list(u'yYnNtTfFoO'))
 
 Resolver.add_implicit_resolver_base(
     u'tag:yaml.org,2002:float',
-    re.compile(u'''^(?:
+    RegExp(u'''^(?:
      [-+]?(?:[0-9][0-9_]*)\\.[0-9_]*(?:[eE][-+]?[0-9]+)?
     |[-+]?(?:[0-9][0-9_]*)(?:[eE][-+]?[0-9]+)
     |\\.[0-9_]+(?:[eE][-+][0-9]+)?
@@ -326,7 +327,7 @@ Resolver.add_implicit_resolver_base(
 
 Resolver.add_implicit_resolver_base(
     u'tag:yaml.org,2002:int',
-    re.compile(u'''^(?:[-+]?0b[0-1_]+
+    RegExp(u'''^(?:[-+]?0b[0-1_]+
     |[-+]?0o?[0-7_]+
     |[-+]?(?:0|[1-9][0-9_]*)
     |[-+]?0x[0-9a-fA-F_]+
@@ -335,19 +336,19 @@ Resolver.add_implicit_resolver_base(
 
 Resolver.add_implicit_resolver_base(
     u'tag:yaml.org,2002:merge',
-    re.compile(u'^(?:<<)$'),
+    RegExp(u'^(?:<<)$'),
     [u'<'])
 
 Resolver.add_implicit_resolver_base(
     u'tag:yaml.org,2002:null',
-    re.compile(u'''^(?: ~
+    RegExp(u'''^(?: ~
     |null|Null|NULL
     | )$''', re.X),
     [u'~', u'n', u'N', u''])
 
 Resolver.add_implicit_resolver_base(
     u'tag:yaml.org,2002:timestamp',
-    re.compile(u'''^(?:[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]
+    RegExp(u'''^(?:[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]
     |[0-9][0-9][0-9][0-9] -[0-9][0-9]? -[0-9][0-9]?
     (?:[Tt]|[ \\t]+)[0-9][0-9]?
     :[0-9][0-9] :[0-9][0-9] (?:\\.[0-9]*)?
@@ -356,14 +357,14 @@ Resolver.add_implicit_resolver_base(
 
 Resolver.add_implicit_resolver_base(
     u'tag:yaml.org,2002:value',
-    re.compile(u'^(?:=)$'),
+    RegExp(u'^(?:=)$'),
     [u'='])
 
 # The following resolver is only for documentation purposes. It cannot work
 # because plain scalars cannot start with '!', '&', or '*'.
 Resolver.add_implicit_resolver_base(
     u'tag:yaml.org,2002:yaml',
-    re.compile(u'^(?:!|&|\\*)$'),
+    RegExp(u'^(?:!|&|\\*)$'),
     list(u'!&*'))
 
 
