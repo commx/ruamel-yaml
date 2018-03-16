@@ -184,29 +184,35 @@ class Reader(object):
     try:
         re.compile(u'[^\U00010000]')
     except:
-        NON_PRINTABLE = RegExp(
-            u'[^\x09\x0A\x0D\x20-\x7E\x85'
-            u'\xA0-\uD7FF'
-            u'\uE000-\uFFFD'
-            u']'
-        )
         UNICODE_SIZE = 2
     else:
-        NON_PRINTABLE = RegExp(
-            u'[^\x09\x0A\x0D\x20-\x7E\x85'
-            u'\xA0-\uD7FF'
-            u'\uE000-\uFFFD'
-            u'\U00010000-\U0010FFFF'
-            u']'
-        )
         UNICODE_SIZE = 4
+
+    class _NonPrintable:
+        def __getitem__(self, i):
+            if (
+                    0x20 <= i <= 0x7E or
+                    i in {0x09, 0x0A, 0x0D, 0x85} or
+                    0xA0 <= i <= 0xD7FF or
+                    0xE000 <= i <= 0xFFFD or
+                    0x00010000 <= i <= 0x0010FFFF):
+                return None
+            return i
+
+    @classmethod
+    def _get_non_printable(cls, data):
+        non_printables = data.translate(cls._NonPrintable())
+        if not non_printables:
+            return None
+        non_printable = non_printables[:1]
+        return data.index(non_printable), non_printable
 
     def check_printable(self, data):
         # type: (Any) -> None
-        match = self.NON_PRINTABLE.search(data)
-        if bool(match):
-            character = match.group()
-            position = self.index + (len(self.buffer) - self.pointer) + match.start()
+        non_printable_match = self._get_non_printable(data)
+        if non_printable_match is not None:
+            start, character = non_printable_match
+            position = self.index + (len(self.buffer) - self.pointer) + start
             raise ReaderError(self.name, position, ord(character),
                               'unicode', "special characters are not allowed")
 
