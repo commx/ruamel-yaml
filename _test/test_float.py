@@ -134,6 +134,17 @@ class TestFloat:
         - 250e6
         """)
 
+    def test_round_trip_exp_05(self):
+        data = round_trip("""\
+        - 3.0517578123e-56
+        - 3.0517578123E-56
+        - 3.0517578123e-056
+        - 3.0517578123E-056
+        """)
+        print(data)
+        for d in data:
+            assert 3.0517578122e-56 < d < 3.0517578124e-56
+            
     def test_yaml_1_1_no_dot(self):
         with pytest.warns(MantissaNoDotYAML1_1Warning):
             round_trip_load("""\
