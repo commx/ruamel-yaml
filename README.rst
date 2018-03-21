@@ -35,6 +35,9 @@ ChangeLog
 
 .. should insert NEXT: at the beginning of line for next key (with empty line)
 
+0.15.37 (2018-03-21):
+  - again trying to create installable files for 187
+
 0.15.36 (2018-02-07):
   - fix issue 187, incompatibility of C extension with 3.7 (reported by
     Daniel Blanchard)
