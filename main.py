@@ -63,7 +63,7 @@ class YAML(object):
         self.pure = pure
         self.plug_ins = []  # type: List[Any]
         for pu in ([] if plug_ins is None else plug_ins) + self.official_plug_ins():
-            file_name = pu.replace('/', '.')
+            file_name = pu.replace(os.sep, '.')
             self.plug_ins.append(import_module(file_name))
         self.Resolver = ruamel.yaml.resolver.VersionedResolver               # type: Any
         self.allow_unicode = True
