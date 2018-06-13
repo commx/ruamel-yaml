@@ -35,6 +35,13 @@ ChangeLog
 
 .. should insert NEXT: at the beginning of line for next key (with empty line)
 
+0.15.37 (2018-06-13):
+  - fix for losing precision when roundtripping floats by
+    `Rolf Wojtech <https://bitbucket.org/asomov/>`__
+  - fix for hardcoded dir separator not working for Windows by
+    `Nuno André <https://bitbucket.org/nu_no/>`__
+  - typo fix by `Andrey Somov <https://bitbucket.org/asomov/>`__
+
 0.15.37 (2018-03-21):
   - again trying to create installable files for 187
 

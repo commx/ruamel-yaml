@@ -1,3 +1,10 @@
+# this should only include project specific files. Ignores that are valid for other
+# ruamel. projects like e.g. the directory .tox should go in the file pointed to by
+# the ui->ignore entry in ~/.hgrc (mercurial doesn't conform to the XDG Base Directory
+# Specification):
+# [ui]
+# ignore = ~/.hgext/hgignore
+
 syntax: glob
 
 # _yaml.so
