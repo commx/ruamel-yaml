@@ -782,7 +782,9 @@ class RoundTripRepresenter(SafeRepresenter):
                 value += u'0'
         else:
             # exponent
-            m, es = u'{:{}e}'.format(data, data._width).split('e')
+            m, es = u'{:{}.{}e}'.format(
+                data, data._width, data._width - data._prec + (1 if data._m_sign else 0)
+            ).split('e')
             w = data._width if data._prec > 0 else (data._width + 1)
             if data < 0:
                 w += 1
