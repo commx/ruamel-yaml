@@ -952,7 +952,7 @@ class TaggedScalar(CommentedBase):
 def dump_comments(d, name='', sep='.', out=sys.stdout):
     # type: (Any, str, str, Any) -> None
     """
-    recurisively dump domments all but the toplevel preceded by the path
+    recursively dump comments, all but the toplevel preceded by the path
     in dotted form x.0.a
     """
     if isinstance(d, dict) and hasattr(d, 'ca'):
