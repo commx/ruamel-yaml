@@ -201,12 +201,13 @@ class Reader(object):
         )
         UNICODE_SIZE = 4
 
+    _printable_ascii = ('\x09\x0A\x0D' + ''.join(map(chr, range(0x20, 0x7F)))).encode('ascii')
+
     @classmethod
-    def _get_non_printable_ascii(
-            cls, data, printable=b'\x09\x0A\x0D' + bytes(range(0x20, 0x7E+1))):
+    def _get_non_printable_ascii(cls, data):
         # type: (Text, bytes) -> Union[None, Tuple[int, Text]]
         ascii_bytes = data.encode('ascii')
-        non_printables = ascii_bytes.translate(None, printable)
+        non_printables = ascii_bytes.translate(None, cls._printable_ascii)
         if not non_printables:
             return None
         non_printable = non_printables[:1]
