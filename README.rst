@@ -35,6 +35,11 @@ ChangeLog
 
 .. should insert NEXT: at the beginning of line for next key (with empty line)
 
+0.15.39 (2018-06-16):
+  - merge PR27 improving package startup time (and loading when regexp not 
+    actually used), provided by 
+    `Marcel Bargull <https://bitbucket.org/mbargull/>`__
+
 0.15.38 (2018-06-13):
   - fix for losing precision when roundtripping floats by
     `Rolf Wojtech <https://bitbucket.org/asomov/>`__

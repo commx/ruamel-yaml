@@ -25,9 +25,10 @@ import re
 
 from ruamel.yaml.error import YAMLError, FileMark, StringMark, YAMLStreamError
 from ruamel.yaml.compat import text_type, binary_type, PY3
+from ruamel.yaml.util import RegExp
 
 if False:  # MYPY
-    from typing import Any, Dict, Optional, List, Union, Text  # NOQA
+    from typing import Any, Dict, Optional, List, Union, Text, Tuple  # NOQA
     from ruamel.yaml.compat import StreamTextType  # NOQA
 
 __all__ = ['Reader', 'ReaderError']
@@ -181,7 +182,17 @@ class Reader(object):
 
     # 4 if 32 bit unicode supported, 2 e.g. on MacOS (issue 56)
     try:
-        NON_PRINTABLE = re.compile(
+        re.compile(u'[^\U00010000]')
+    except:
+        NON_PRINTABLE = RegExp(
+            u'[^\x09\x0A\x0D\x20-\x7E\x85'
+            u'\xA0-\uD7FF'
+            u'\uE000-\uFFFD'
+            u']'
+        )
+        UNICODE_SIZE = 2
+    else:
+        NON_PRINTABLE = RegExp(
             u'[^\x09\x0A\x0D\x20-\x7E\x85'
             u'\xA0-\uD7FF'
             u'\uE000-\uFFFD'
@@ -189,21 +200,41 @@ class Reader(object):
             u']'
         )
         UNICODE_SIZE = 4
-    except:
-        NON_PRINTABLE = re.compile(
-            u'[^\x09\x0A\x0D\x20-\x7E\x85'
-            u'\xA0-\uD7FF'
-            u'\uE000-\uFFFD'
-            u']'
-        )
-        UNICODE_SIZE = 2
+
+    _printable_ascii = ('\x09\x0A\x0D' + ''.join(map(chr, range(0x20, 0x7F)))).encode('ascii')
+
+    @classmethod
+    def _get_non_printable_ascii(cls, data):
+        # type: (Text, bytes) -> Union[None, Tuple[int, Text]]
+        ascii_bytes = data.encode('ascii')
+        non_printables = ascii_bytes.translate(None, cls._printable_ascii)
+        if not non_printables:
+            return None
+        non_printable = non_printables[:1]
+        return ascii_bytes.index(non_printable), non_printable.decode('ascii')
+
+    @classmethod
+    def _get_non_printable_regex(cls, data):
+        # type: (Text) -> Union[None, Tuple[int, Text]]
+        match = cls.NON_PRINTABLE.search(data)
+        if not bool(match):
+            return None
+        return match.start(), match.group()
+
+    @classmethod
+    def _get_non_printable(cls, data):
+        # type: (Text) -> Union[None, Tuple[int, Text]]
+        try:
+            return cls._get_non_printable_ascii(data)
+        except UnicodeEncodeError:
+            return cls._get_non_printable_regex(data)
 
     def check_printable(self, data):
         # type: (Any) -> None
-        match = self.NON_PRINTABLE.search(data)
-        if bool(match):
-            character = match.group()
-            position = self.index + (len(self.buffer) - self.pointer) + match.start()
+        non_printable_match = self._get_non_printable(data)
+        if non_printable_match is not None:
+            start, character = non_printable_match
+            position = self.index + (len(self.buffer) - self.pointer) + start
             raise ReaderError(self.name, position, ord(character),
                               'unicode', "special characters are not allowed")
 
