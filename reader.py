@@ -184,7 +184,7 @@ class Reader(object):
     try:
         re.compile(u'[^\U00010000]')
     except:
-        NON_PRINTABLE = re.compile(
+        NON_PRINTABLE = RegExp(
             u'[^\x09\x0A\x0D\x20-\x7E\x85'
             u'\xA0-\uD7FF'
             u'\uE000-\uFFFD'
