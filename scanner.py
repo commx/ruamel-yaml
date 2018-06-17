@@ -1582,7 +1582,7 @@ class Scanner(object):
             if PY3:
                 value = bytes(code_bytes).decode('utf-8')
             else:
-                value = unicode(''.join(code_bytes), 'utf-8')  # type: ignore
+                value = unicode(b''.join(code_bytes), 'utf-8')  # type: ignore
         except UnicodeDecodeError as exc:
             raise ScannerError("while scanning a %s" % name, start_mark,
                                str(exc), mark)

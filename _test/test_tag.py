@@ -3,7 +3,7 @@
 import pytest   # NOQA
 
 from ruamel import yaml
-from roundtrip import round_trip
+from roundtrip import round_trip, round_trip_load
 
 
 class XXX(yaml.comments.CommentedMap):
@@ -23,7 +23,6 @@ yaml.add_representer(XXX, XXX.yaml_dump, representer=yaml.RoundTripRepresenter)
 
 
 class TestIndentFailures:
-
     def test_tag(self):
         round_trip("""\
         !!python/object:__main__.Developer
@@ -103,4 +102,11 @@ class TestRoundTripCustom:
             Value: !Ref: vpc    # first tag
             Export:
               Name: !Sub "${AWS::StackName}-Vpc"  # second tag
+        """)
+
+
+class TestIssue201:
+    def  test_encoded_unicode_tag(self):
+        round_trip_load("""
+        s: !!python/%75nicode 'abc'
         """)

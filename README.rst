@@ -35,6 +35,10 @@ ChangeLog
 
 .. should insert NEXT: at the beginning of line for next key (with empty line)
 
+NEXT:
+  - fixes issue #201: decoding unicode escaped tags on Python2, reported
+    by `Dan Abolafia <https://bitbucket.org/danabo/>`__
+
 0.15.39 (2018-06-17):
   - merge PR27 improving package startup time (and loading when regexp not 
     actually used), provided by 
