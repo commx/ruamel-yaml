@@ -4,6 +4,13 @@ ruamel.yaml
 
 ``ruamel.yaml`` is a YAML 1.2 loader/dumper package for Python.
 
+:version:       0.15.40
+:updated:       2018-06-18
+:documentation: http://yaml.readthedocs.io
+:repository:    https://bitbucket.org/ruamel/
+:pypi:          https://pypi.org/project/ruamel.yaml/
+
+
 Starting with version 0.15.0 the way YAML files are loaded and dumped
 is changing. See the API doc for details.  Currently existing
 functionality will throw a warning before being changed/removed.
@@ -36,12 +43,14 @@ ChangeLog
 .. should insert NEXT: at the beginning of line for next key (with empty line)
 
 NEXT:
+  - added links to landing places as suggested in issue 190 by
+    `KostisA <https://bitbucket.org/ankostis/>`__
   - fixes issue #201: decoding unicode escaped tags on Python2, reported
     by `Dan Abolafia <https://bitbucket.org/danabo/>`__
 
 0.15.39 (2018-06-17):
-  - merge PR27 improving package startup time (and loading when regexp not 
-    actually used), provided by 
+  - merge PR27 improving package startup time (and loading when regexp not
+    actually used), provided by
     `Marcel Bargull <https://bitbucket.org/mbargull/>`__
 
 0.15.38 (2018-06-13):
