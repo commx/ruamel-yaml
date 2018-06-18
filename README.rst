@@ -42,7 +42,7 @@ ChangeLog
 
 .. should insert NEXT: at the beginning of line for next key (with empty line)
 
-NEXT:
+0.15.40 (2018-06-18):
   - added links to landing places as suggested in issue 190 by
     `KostisA <https://bitbucket.org/ankostis/>`__
   - fixes issue #201: decoding unicode escaped tags on Python2, reported

@@ -106,7 +106,7 @@ class TestRoundTripCustom:
 
 
 class TestIssue201:
-    def  test_encoded_unicode_tag(self):
+    def test_encoded_unicode_tag(self):
         round_trip_load("""
         s: !!python/%75nicode 'abc'
         """)
