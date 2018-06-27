@@ -15,7 +15,7 @@ _DEFAULT_YAML_VERSION = (1, 2)
 
 try:
     from ruamel.ordereddict import ordereddict
-except:
+except:  # NOQA
     try:
         from collections import OrderedDict
     except ImportError:

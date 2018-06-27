@@ -1438,7 +1438,7 @@ class RoundTripConstructor(SafeConstructor):
                 data.yaml_set_tag(node.tag)
                 yield data
                 return
-        except:
+        except:  # NOQA
             pass
         raise ConstructorError(
             None, None,

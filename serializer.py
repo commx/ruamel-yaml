@@ -116,7 +116,7 @@ class Serializer(object):
             try:
                 if node.anchor.always_dump:
                     anchor = node.anchor.value
-            except:
+            except:  # NOQA
                 pass
             self.anchors[node] = anchor
             if isinstance(node, SequenceNode):
@@ -131,7 +131,7 @@ class Serializer(object):
         # type: (Any) -> Any
         try:
             anchor = node.anchor.value
-        except:
+        except:  # NOQA
             anchor = None
         if anchor is None:
             self.last_anchor_id += 1

@@ -1405,7 +1405,7 @@ class Emitter(object):
                         data = data.encode(self.encoding)
                     try:
                         self.stream.write(data)
-                    except:
+                    except:  # NOQA
                         print(repr(data))
                         raise
                     start = end

@@ -7,8 +7,8 @@ if False:  # MYPY
 
 _package_data = dict(
     full_package_name='ruamel.yaml',
-    version_info=(0, 15, 40),
-    __version__='0.15.40',
+    version_info=(0, 15, 41),
+    __version__='0.15.41',
     author='Anthon van der Neut',
     author_email='a.van.der.neut@ruamel.eu',
     description='ruamel.yaml is a YAML parser/emitter that supports roundtrip preservation of comments, seq/map flow style, and map key order',  # NOQA
@@ -27,11 +27,17 @@ _package_data = dict(
                     'ext/emitter.c',
             ],
             lib=[],
+            test="""
+            int main(int argc, char* argv[])
+            {
+              /* prevent warning */
+              return 0;
+            }
+            """,  # NOQA
         )],
             # test='#include "ext/yaml.h"\n\nint main(int argc, char* argv[])\n{\nyaml_parser_t parser;\nparser = parser;  /* prevent warning */\nreturn 0;\n}\n',  # NOQA
     classifiers=[
             'Programming Language :: Python :: 2.7',
-            'Programming Language :: Python :: 3.3',
             'Programming Language :: Python :: 3.4',
             'Programming Language :: Python :: 3.5',
             'Programming Language :: Python :: 3.6',
@@ -46,8 +52,9 @@ _package_data = dict(
     windows_wheels=True,
     read_the_docs='yaml',
     many_linux='libyaml-devel',
-    supported=[(2, 7), (3, 3)],  # minimum
+    supported=[(2, 7), (3, 4)],  # minimum
     tox=dict(
+        flake8=dict(version='==2.5.5'),
         env='*p',
         deps='ruamel.std.pathlib',
         fl8excl='_test/lib',

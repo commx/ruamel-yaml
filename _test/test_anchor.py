@@ -127,10 +127,10 @@ class TestAnchorsAliases:
          - *blake
          - *alice
         """)
-        l = data['nut1']
-        assert isinstance(l, CommentedSeq)
-        assert l.yaml_anchor() is not None
-        assert l.yaml_anchor().value == 'alice'
+        r = data['nut1']
+        assert isinstance(r, CommentedSeq)
+        assert r.yaml_anchor() is not None
+        assert r.yaml_anchor().value == 'alice'
 
     merge_yaml = dedent("""
         - &CENTER {x: 1, y: 2}

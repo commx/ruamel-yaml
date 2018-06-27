@@ -167,8 +167,8 @@ else:
                 assert isinstance(data2, str), (type(data2), encoding)
                 data2.decode('utf-8')
                 if encoding is None:
-                    assert isinstance(data3, unicode), (type(data3), encoding) # NOQA
-                    assert isinstance(data4, unicode), (type(data4), encoding) # NOQA
+                    assert isinstance(data3, unicode), (type(data3), encoding)  # NOQA
+                    assert isinstance(data4, unicode), (type(data4), encoding)  # NOQA
                 else:
                     assert isinstance(data3, str), (type(data3), encoding)
                     data3.decode(encoding)

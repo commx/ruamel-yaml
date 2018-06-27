@@ -26,7 +26,7 @@ class Token(object):
         if SHOWLINES:
             try:
                 arguments += u', line: ' + str(self.start_mark.line)
-            except:
+            except:  # NOQA
                 pass
         return u'{}({})'.format(self.__class__.__name__, arguments)
 
@@ -259,6 +259,6 @@ class CommentToken(Token):
         if SHOWLINES:
             try:
                 v += u', line: ' + str(self.start_mark.line)
-            except:
+            except:  # NOQA
                 pass
         return 'CommentToken({})'.format(v)

@@ -183,7 +183,7 @@ class Reader(object):
     # 4 if 32 bit unicode supported, 2 e.g. on MacOS (issue 56)
     try:
         re.compile(u'[^\U00010000]')
-    except:
+    except:  # NOQA
         NON_PRINTABLE = RegExp(
             u'[^\x09\x0A\x0D\x20-\x7E\x85'
             u'\xA0-\uD7FF'

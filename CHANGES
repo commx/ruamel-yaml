@@ -1,3 +1,17 @@
+[0, 15, 41]: 2018-06-27
+  - add detection of C-compile failure (investigation prompted by 
+    `StackOverlow <https://stackoverflow.com/a/51057399/1307905>`__ by 
+    `Emmanuel Blot <https://stackoverflow.com/users/8233409/emmanuel-blot>`__),
+    which was removed while no longer dependent on ``libyaml``, C-extensions
+    compilation still needs a compiler though.
+
+[0, 15, 41]: 2018-06-27
+  - add detection of C-compile failure (investigation prompted by 
+    `StackOverlow <https://stackoverflow.com/a/51057399/1307905>`__ by 
+    `Emmanuel Blot <https://stackoverflow.com/users/8233409/emmanuel-blot>`__),
+    which was removed while no longer dependent on ``libyaml``, C-extensions
+    compilation still needs a compiler though.
+
 [0, 15, 40]: 2018-06-18
   - added links to landing places as suggested in issue 190 by
     `KostisA <https://bitbucket.org/ankostis/>`__

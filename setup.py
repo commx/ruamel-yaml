@@ -51,6 +51,17 @@ if sys.version_info < (2, 7) or platform.python_implementation() == 'Jython':
     class Set():
         pass
 
+if os.environ.get('DVDEBUG', '') == '':
+    def debug(*args, **kw):
+        pass
+else:
+    def debug(*args, **kw):
+        with open(os.environ['DVDEBUG'], 'a') as fp:
+            kw1 = kw.copy()
+            kw1['file'] = fp
+            print('{:%Y-%d-%mT%H:%M:%S}'.format(datetime.datetime.now()), file=fp, end=' ')
+            print(*args, **kw1)
+
 
 def literal_eval(node_or_string):
     """
@@ -696,8 +707,9 @@ class NameSpacePackager(object):
 
     @property
     def ext_modules(self):
-        """check if all modules specified in the value for 'ext_modules' can be build
-        that value (if not None) is a list of dicts with 'name', 'src', 'lib'
+        """
+        Check if all modules specified in the value for 'ext_modules' can be build.
+        That value (if not None) is a list of dicts with 'name', 'src', 'lib'
         Optional 'test' can be used to make sure trying to compile will work on the host
 
         creates and return the external modules as Extensions, unless that
@@ -749,6 +761,7 @@ class NameSpacePackager(object):
                 sources=[self.pn(x) for x in target['src']],
                 libraries=[self.pn(x) for x in target.get('lib')],
             )
+            # debug('test in target', 'test' in target, target)
             if 'test' not in target:  # no test just hope it works
                 self._ext_modules.append(ext)
                 continue
@@ -783,13 +796,16 @@ class NameSpacePackager(object):
                         libraries=ext.libraries,
                     )
                 except CompileError:
+                    debug('compile error:', file_name)
                     print('compile error:', file_name)
                     continue
                 except LinkError:
+                    debug('libyaml link error', file_name)
                     print('libyaml link error', file_name)
                     continue
                 self._ext_modules.append(ext)
             except Exception as e:  # NOQA
+                debug('Exception:', e)
                 print('Exception:', e)
                 pass
             finally:
@@ -814,7 +830,7 @@ class NameSpacePackager(object):
                 fp.write('[bdist_wheel]\nuniversal = 1\n')
         try:
             setup(**kw)
-        except:
+        except Exception:
             raise
         finally:
             os.remove(file_name)
@@ -877,7 +893,7 @@ def main():
     try:
         with open('README.rst') as fp:
             kw['long_description'] = fp.read()
-    except:
+    except Exception:
         pass
     if nsp.wheel(kw, setup):
         return

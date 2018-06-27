@@ -79,7 +79,7 @@ is possible by setting the attributes ``.Parser``, ``.Constructor``,
 ``.Emitter``, etc., to the class of the type to create for that stage
 (typically a subclass of an existing class implementing that).
 
-The default loader (``t`` is a direct derivative of the safe loader, without the
+The default loader (``typ='rt'``) is a direct derivative of the safe loader, without the
 methods to construct arbitrary Python objects that make the ``unsafe`` loader
 unsafe, but with the changes needed for round-trip preservation of comments,
 etc.. For trusted Python classes a constructor can of course be added to the round-trip

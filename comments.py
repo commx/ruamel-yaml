@@ -200,25 +200,25 @@ class CommentedBase(object):
 
     def yaml_key_comment_extend(self, key, comment, clear=False):
         # type: (Any, Any, bool) -> None
-        l = self.ca._items.setdefault(key, [None, None, None, None])
-        if clear or l[1] is None:
+        r = self.ca._items.setdefault(key, [None, None, None, None])
+        if clear or r[1] is None:
             if comment[1] is not None:
                 assert isinstance(comment[1], list)
-            l[1] = comment[1]
+            r[1] = comment[1]
         else:
-            l[1].extend(comment[0])
-        l[0] = comment[0]
+            r[1].extend(comment[0])
+        r[0] = comment[0]
 
     def yaml_value_comment_extend(self, key, comment, clear=False):
         # type: (Any, Any, bool) -> None
-        l = self.ca._items.setdefault(key, [None, None, None, None])
-        if clear or l[3] is None:
+        r = self.ca._items.setdefault(key, [None, None, None, None])
+        if clear or r[3] is None:
             if comment[1] is not None:
                 assert isinstance(comment[1], list)
-            l[3] = comment[1]
+            r[3] = comment[1]
         else:
-            l[3].extend(comment[0])
-        l[2] = comment[0]
+            r[3].extend(comment[0])
+        r[2] = comment[0]
 
     def yaml_set_start_comment(self, comment, indent=0):
         # type: (Any, Any) -> None
@@ -736,7 +736,7 @@ class CommentedMap(ordereddict, CommentedBase):
         # type: (Any, Any) -> Any
         try:
             return self.__getitem__(key)
-        except:
+        except:  # NOQA
             return default
 
     def __repr__(self):

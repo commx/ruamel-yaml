@@ -32,7 +32,7 @@ if False:  # MYPY
 
 try:
     from _ruamel_yaml import CParser, CEmitter   # type: ignore
-except:
+except:  # NOQA
     CParser = CEmitter = None
 
 # import io

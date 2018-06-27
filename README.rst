@@ -4,8 +4,8 @@ ruamel.yaml
 
 ``ruamel.yaml`` is a YAML 1.2 loader/dumper package for Python.
 
-:version:       0.15.40
-:updated:       2018-06-18
+:version:       0.15.41
+:updated:       2018-06-27
 :documentation: http://yaml.readthedocs.io
 :repository:    https://bitbucket.org/ruamel/
 :pypi:          https://pypi.org/project/ruamel.yaml/
@@ -41,6 +41,13 @@ ChangeLog
 =========
 
 .. should insert NEXT: at the beginning of line for next key (with empty line)
+
+0.15.41 (2018-06-27):
+  - add detection of C-compile failure (investigation prompted by 
+    `StackOverlow <https://stackoverflow.com/a/51057399/1307905>`__ by 
+    `Emmanuel Blot <https://stackoverflow.com/users/8233409/emmanuel-blot>`__),
+    which was removed while no longer dependent on ``libyaml``, C-extensions
+    compilation still needs a compiler though.
 
 0.15.40 (2018-06-18):
   - added links to landing places as suggested in issue 190 by

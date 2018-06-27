@@ -4,7 +4,7 @@ from __future__ import print_function, absolute_import, division, unicode_litera
 
 try:
     import numpy
-except:
+except:  # NOQA
     numpy = None
 
 import ruamel.yaml
