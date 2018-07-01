@@ -1,3 +1,11 @@
+[0, 15, 42]: 2018-07-01
+  - fix regression showing only on narrow Python 2.7 (py27mu) builds
+    (with help from
+    `Marcel Bargull <https://bitbucket.org/mbargull/>`__ and
+    `Colm O'Connor <>`__).
+  - run pre-commit ``tox`` on Python 2.7 wide and narrow, as well as
+    3.4/3.5/3.6/3.7/pypy
+
 [0, 15, 41]: 2018-06-27
   - add detection of C-compile failure (investigation prompted by 
     `StackOverlow <https://stackoverflow.com/a/51057399/1307905>`__ by 

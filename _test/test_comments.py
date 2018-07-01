@@ -695,7 +695,7 @@ class TestEmptyLines:
 
 
 class TestUnicodeComments:
-    @pytest.mark.skipif(ruamel.yaml.reader.Reader.UNICODE_SIZE < 4,
+    @pytest.mark.skipif(ruamel.yaml.compat.UNICODE_SIZE < 4,
                         reason="unicode not wide enough")
     def test_issue_55(self):  # reported by Haraguroicha Hsu
         round_trip("""\

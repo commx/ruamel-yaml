@@ -22,7 +22,7 @@ RUN chmod 755 /usr/bin/makewheel
 
 # RUN yum install -y libyaml-devel
 
-CMD /usr/bin/makewheel 27 33 34 35 36
+CMD /usr/bin/makewheel 27 34 35 36 37
 
-#cp26-cp26m cp27-cp27m cp33-cp33m cp35-cp35m cp26-cp26mu cp27-cp27mu cp34-cp34m  cp36-cp36m
+# cp27-cp27m p27-cp27mu cp34-cp34m cp35-cp35m cp36-cp36m cp37-cp37m
 

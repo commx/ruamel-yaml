@@ -21,10 +21,9 @@ from __future__ import absolute_import
 #      character.
 
 import codecs
-import re
 
 from ruamel.yaml.error import YAMLError, FileMark, StringMark, YAMLStreamError
-from ruamel.yaml.compat import text_type, binary_type, PY3
+from ruamel.yaml.compat import text_type, binary_type, PY3, UNICODE_SIZE
 from ruamel.yaml.util import RegExp
 
 if False:  # MYPY
@@ -180,17 +179,13 @@ class Reader(object):
                 self.encoding = 'utf-8'
         self.update(1)
 
-    # 4 if 32 bit unicode supported, 2 e.g. on MacOS (issue 56)
-    try:
-        re.compile(u'[^\U00010000]')
-    except:  # NOQA
+    if UNICODE_SIZE == 2:
         NON_PRINTABLE = RegExp(
             u'[^\x09\x0A\x0D\x20-\x7E\x85'
             u'\xA0-\uD7FF'
             u'\uE000-\uFFFD'
             u']'
         )
-        UNICODE_SIZE = 2
     else:
         NON_PRINTABLE = RegExp(
             u'[^\x09\x0A\x0D\x20-\x7E\x85'
@@ -199,7 +194,6 @@ class Reader(object):
             u'\U00010000-\U0010FFFF'
             u']'
         )
-        UNICODE_SIZE = 4
 
     _printable_ascii = ('\x09\x0A\x0D' + ''.join(map(chr, range(0x20, 0x7F)))).encode('ascii')
 

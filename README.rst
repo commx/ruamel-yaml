@@ -4,8 +4,8 @@ ruamel.yaml
 
 ``ruamel.yaml`` is a YAML 1.2 loader/dumper package for Python.
 
-:version:       0.15.41
-:updated:       2018-06-27
+:version:       0.15.42
+:updated:       2018-07-01
 :documentation: http://yaml.readthedocs.io
 :repository:    https://bitbucket.org/ruamel/
 :pypi:          https://pypi.org/project/ruamel.yaml/
@@ -42,9 +42,17 @@ ChangeLog
 
 .. should insert NEXT: at the beginning of line for next key (with empty line)
 
+0.15.42 (2018-07-01):
+  - fix regression showing only on narrow Python 2.7 (py27mu) builds
+    (with help from
+    `Marcel Bargull <https://bitbucket.org/mbargull/>`__ and
+    `Colm O'Connor <>`__).
+  - run pre-commit ``tox`` on Python 2.7 wide and narrow, as well as
+    3.4/3.5/3.6/3.7/pypy
+
 0.15.41 (2018-06-27):
-  - add detection of C-compile failure (investigation prompted by 
-    `StackOverlow <https://stackoverflow.com/a/51057399/1307905>`__ by 
+  - add detection of C-compile failure (investigation prompted by
+    `StackOverlow <https://stackoverflow.com/a/51057399/1307905>`__ by
     `Emmanuel Blot <https://stackoverflow.com/users/8233409/emmanuel-blot>`__),
     which was removed while no longer dependent on ``libyaml``, C-extensions
     compilation still needs a compiler though.

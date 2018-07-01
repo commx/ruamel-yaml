@@ -2,7 +2,8 @@ version: '2'
 user-data:
   author: Anthon van der Neut <a.van.der.neut@ruamel.eu>
   description: manylinux1 wheel build container for ruamel.yaml
-  # env-defaults:
+  env-defaults:
+    PYDISTBASE: /tmp    # for building, normally set by `dv --distbase`
 services:
   yamlmanylinux1:
     container_name: yamlmanylinux1
