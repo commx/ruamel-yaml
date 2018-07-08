@@ -8,6 +8,7 @@ from __future__ import print_function, absolute_import, division, unicode_litera
 import sys
 import os
 import datetime
+import traceback
 sys.path = [path for path in sys.path if path not in [os.getcwd(), '']]
 import platform          # NOQA
 from _ast import *       # NOQA
@@ -762,9 +763,14 @@ class NameSpacePackager(object):
                 libraries=[self.pn(x) for x in target.get('lib')],
             )
             # debug('test in target', 'test' in target, target)
-            if 'test' not in target:  # no test just hope it works
+            if 'test' not in target:  # no test, just hope it works
                 self._ext_modules.append(ext)
                 continue
+            if sys.version_info[:2] == (3, 4) and platform.system() == 'Windows':
+                # this is giving problems on appveyor, so skip
+                if not 'FORCE_C_BUILD_TEST' in os.environ:
+                    self._ext_modules.append(ext)
+                    continue
             # write a temporary .c file to compile
             c_code = dedent(target['test'])
             try:
@@ -807,7 +813,8 @@ class NameSpacePackager(object):
             except Exception as e:  # NOQA
                 debug('Exception:', e)
                 print('Exception:', e)
-                pass
+                if sys.version_info[:2] == (3, 4) and platform.system() == 'Windows':
+                    traceback.print_exc()
             finally:
                 shutil.rmtree(tmp_dir)
         return self._ext_modules
