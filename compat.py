@@ -7,7 +7,6 @@ from __future__ import print_function
 import sys
 import os
 import types
-import sysconfig
 
 if False:  # MYPY
     from typing import Any, Dict, Optional, List, Union, BinaryIO, IO, Text, Tuple   # NOQA
@@ -113,9 +112,7 @@ if PY3:
 else:
     builtins_module = '__builtin__'
 
-UNICODE_SIZE = sysconfig.get_config_var('Py_UNICODE_SIZE')
-if UNICODE_SIZE is None:  # on Python >= 3.3 unicode has no fixed bytesize
-    UNICODE_SIZE = 4
+UNICODE_SIZE = 4 if sys.maxunicode > 65535 else 2
 
 
 def with_metaclass(meta, *bases):
