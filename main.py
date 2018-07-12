@@ -481,7 +481,7 @@ class YAML(object):
         return res
 
     def register_class(self, cls):
-        # type:(Any) -> None
+        # type:(Any) -> Any
         """
         register a class for dumping loading
         - if it has attribute yaml_tag use that to register, else use class name
@@ -506,6 +506,7 @@ class YAML(object):
                 return constructor.construct_yaml_object(node, cls)
 
             self.constructor.add_constructor(tag, f_y)
+        return cls
 
     # ### backwards compatibility
     def _indent(self, mapping=None, sequence=None, offset=None):
