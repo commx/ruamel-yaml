@@ -255,7 +255,7 @@ class BaseConstructor(object):
                         http://yaml.readthedocs.io/en/latest/api.html#duplicate-keys
                     """,
                     """\
-                    Duplicate keys will become and error in future releases, and are errors
+                    Duplicate keys will become an error in future releases, and are errors
                     by default when using the new API.
                     """,
                 ]

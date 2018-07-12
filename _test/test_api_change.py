@@ -9,8 +9,8 @@ testing of anchors and the aliases referring to them
 import sys
 import textwrap
 import pytest
-from ruamel.yaml import YAML
-from ruamel.yaml.constructor import DuplicateKeyError
+from ruamel.yaml import YAML, safe_load
+from ruamel.yaml.constructor import DuplicateKeyError, DuplicateKeyFutureWarning
 from ruamel.std.pathlib import Path
 
 
@@ -157,3 +157,12 @@ class TestFlowStyle:
         yaml.dump(data, sys.stdout)
         out, err = capsys.readouterr()
         assert out == "b: 1\na:\n- [1, 2]\n- [3, 4]\n"
+
+
+class TestOldAPI:
+    @pytest.mark.skipif(sys.version_info >= (3, 0), reason="ok on Py3")
+    @pytest.mark.xfail(strict=True)
+    def test_duplicate_keys_02(self):
+        # Issue 165 unicode keys in error/warning
+        with pytest.warns(DuplicateKeyFutureWarning):
+            safe_load('type: Doméstica\ntype: International')

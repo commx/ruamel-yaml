@@ -4,8 +4,8 @@ ruamel.yaml
 
 ``ruamel.yaml`` is a YAML 1.2 loader/dumper package for Python.
 
-:version:       0.15.42
-:updated:       2018-07-01
+:version:       0.15.43
+:updated:       2018-07-12
 :documentation: http://yaml.readthedocs.io
 :repository:    https://bitbucket.org/ruamel/
 :pypi:          https://pypi.org/project/ruamel.yaml/
@@ -41,6 +41,13 @@ ChangeLog
 =========
 
 .. should insert NEXT: at the beginning of line for next key (with empty line)
+
+0.15.43 (2018-07-12):
+  - merge PR33: Python2.7 on Windows is narrow, but has no
+    ``sysconfig.get_config_var('Py_UNICODE_SIZE')``. (merge provided by
+    `Marcel Bargull <https://bitbucket.org/mbargull/>`__)
+  - ``register_class()`` now returns class (proposed by
+    `Mike Nerone <https://bitbucket.org/Manganeez/>`__}
 
 0.15.42 (2018-07-01):
   - fix regression showing only on narrow Python 2.7 (py27mu) builds

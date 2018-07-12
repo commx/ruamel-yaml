@@ -768,7 +768,7 @@ class NameSpacePackager(object):
                 continue
             if sys.version_info[:2] == (3, 4) and platform.system() == 'Windows':
                 # this is giving problems on appveyor, so skip
-                if not 'FORCE_C_BUILD_TEST' in os.environ:
+                if 'FORCE_C_BUILD_TEST' not in os.environ:
                     self._ext_modules.append(ext)
                     continue
             # write a temporary .c file to compile
