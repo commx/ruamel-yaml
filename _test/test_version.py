@@ -27,7 +27,7 @@ class TestVersions:
         """)
         assert r[0] == '12:34:56'
         assert r[1] == 12
-        assert r[2] == '012345678'
+        assert r[2] == 12345678
         assert r[3] == 10
         assert r[4] == 'on'
         assert r[5] == 'off'
@@ -75,7 +75,7 @@ class TestVersions:
         assert r[0] == '12:34:56'
         assert r[1] == '12:34:56.78'
         assert r[2] == 12
-        assert r[3] == '012345678'
+        assert r[3] == 12345678
         assert r[4] == 10
         assert r[5] == 'on'
         assert r[6] == 'off'

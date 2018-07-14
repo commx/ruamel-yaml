@@ -4,8 +4,8 @@ ruamel.yaml
 
 ``ruamel.yaml`` is a YAML 1.2 loader/dumper package for Python.
 
-:version:       0.15.43
-:updated:       2018-07-12
+:version:       0.15.44
+:updated:       2018-07-14
 :documentation: http://yaml.readthedocs.io
 :repository:    https://bitbucket.org/ruamel/
 :pypi:          https://pypi.org/project/ruamel.yaml/
@@ -41,6 +41,13 @@ ChangeLog
 =========
 
 .. should insert NEXT: at the beginning of line for next key (with empty line)
+
+0.15.44 (2018-07-14):
+  - Correct loading plain scalars consisting of numerals only and
+    starting with `0`, when not explicitly specifying YAML version
+    1.1. This also fixes the issue about dumping string `'019'` as
+    plain scalars as reported by `Min RK
+    <https://bitbucket.org/minrk/>`__, that prompted this chance.
 
 0.15.43 (2018-07-12):
   - merge PR33: Python2.7 on Windows is narrow, but has no
