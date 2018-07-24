@@ -285,7 +285,7 @@ class YAML(object):
             with stream.open('r') as fp:  # type: ignore
                 for d in self.load_all(fp, _kw=enforce):
                     yield d
-                raise StopIteration()
+                return
         # if skip is None:
         #     skip = []
         # elif isinstance(skip, int):
