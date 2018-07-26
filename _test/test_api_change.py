@@ -113,6 +113,21 @@ class TestRead:
         yaml.load('a: 1')  # did not work in 0.15.4
 
 
+class TestLoadAll:
+    def test_multi_document_load(self, tmpdir):
+        """this went wrong on 3.7 because of StopIteration, PR 37 and Issue 211"""
+        fn = Path(str(tmpdir)) / 'test.yaml'
+        fn.write_text(textwrap.dedent("""\
+        ---
+        - a
+        ---
+        - b
+        ...
+        """))
+        yaml = YAML()
+        assert list(yaml.load_all(fn)) == [['a'], ['b']]
+
+
 class TestDuplSet:
     def test_dupl_set_00(self):
         # round-trip-loader should except

@@ -5,48 +5,6 @@
     plain scalars as reported by `Min RK
     <https://bitbucket.org/minrk/>`__, that prompted this chance.
 
-[0, 15, 43]: 2018-07-14
-  - Correct loading plain scalars consisting of numerals only and
-    starting with `0`, when not explicitly specifying YAML version
-    1.1. This also fixes the issue about dumping string `'019'` as
-    plain scalars as reported by `Min RK
-    <https://bitbucket.org/minrk/>`__, that prompted this chance.
-
-[0, 15, 43]: 2018-07-12
-  - merge PR33: Python2.7 on Windows is narrow, but has no
-    ``sysconfig.get_config_var('Py_UNICODE_SIZE')``. (merge provided by
-    `Marcel Bargull <https://bitbucket.org/mbargull/>`__)
-  - ``register_class()`` now returns class (proposed by
-    `Mike Nerone <https://bitbucket.org/Manganeez/>`__}
-
-[0, 15, 43]: 2018-07-12
-  - merge PR33: Python2.7 on Windows is narrow, but has no
-    ``sysconfig.get_config_var('Py_UNICODE_SIZE')``. (merge provided by
-    `Marcel Bargull <https://bitbucket.org/mbargull/>`__)
-  - ``register_class()`` now returns class (proposed by
-    `Mike Nerone <https://bitbucket.org/Manganeez/>`__}
-
-[0, 15, 43]: 2018-07-12
-  - merge PR33: Python2.7 on Windows is narrow, but has no
-    ``sysconfig.get_config_var('Py_UNICODE_SIZE')``. (merge provided by
-    `Marcel Bargull <https://bitbucket.org/mbargull/>`__)
-  - ``register_class()`` now returns class (proposed by
-    `Mike Nerone <https://bitbucket.org/Manganeez/>`__}
-
-[0, 15, 43]: 2018-07-12
-  - merge PR33: Python2.7 on Windows is narrow, but has no
-    ``sysconfig.get_config_var('Py_UNICODE_SIZE')``. (merge provided by
-    `Marcel Bargull <https://bitbucket.org/mbargull/>`__)
-  - ``register_class()`` now returns class (proposed by
-    `Mike Nerone <https://bitbucket.org/Manganeez/>`__}
-
-[0, 15, 43]: 2018-07-12
-  - merge PR33: Python2.7 on Windows is narrow, but has no
-    ``sysconfig.get_config_var('Py_UNICODE_SIZE')``. (merge provided by
-    `Marcel Bargull <https://bitbucket.org/mbargull/>`__)
-  - ``register_class()`` now returns class (proposed by
-    `Mike Nerone <https://bitbucket.org/Manganeez/>`__}
-
 [0, 15, 43]: 2018-07-12
   - merge PR33: Python2.7 on Windows is narrow, but has no
     ``sysconfig.get_config_var('Py_UNICODE_SIZE')``. (merge provided by
@@ -69,13 +27,6 @@
     which was removed while no longer dependent on ``libyaml``, C-extensions
     compilation still needs a compiler though.
 
-[0, 15, 41]: 2018-06-27
-  - add detection of C-compile failure (investigation prompted by 
-    `StackOverlow <https://stackoverflow.com/a/51057399/1307905>`__ by 
-    `Emmanuel Blot <https://stackoverflow.com/users/8233409/emmanuel-blot>`__),
-    which was removed while no longer dependent on ``libyaml``, C-extensions
-    compilation still needs a compiler though.
-
 [0, 15, 40]: 2018-06-18
   - added links to landing places as suggested in issue 190 by
     `KostisA <https://bitbucket.org/ankostis/>`__
@@ -87,7 +38,7 @@
     actually used), provided by 
     `Marcel Bargull <https://bitbucket.org/mbargull/>`__
 
-[0, 15, 37]: 2018-06-13
+[0, 15, 38]: 2018-06-13
   - fix for losing precision when roundtripping floats by
     `Rolf Wojtech <https://bitbucket.org/asomov/>`__
   - fix for hardcoded dir separator not working for Windows by
@@ -95,9 +46,6 @@
   - typo fix by `Andrey Somov <https://bitbucket.org/asomov/>`__
 
 [0, 15, 37]: 2018-03-21
-  - again trying to create installable files for 187
-
-[0, 15, 36]: 2018-03-21
   - again trying to create installable files for 187
 
 [0, 15, 36]: 2018-02-07

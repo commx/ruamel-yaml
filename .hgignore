@@ -8,7 +8,6 @@
 syntax: glob
 
 # _yaml.so
-README.pdf
 venv
 TODO.rst
 try_*
