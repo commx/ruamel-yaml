@@ -4,8 +4,8 @@ ruamel.yaml
 
 ``ruamel.yaml`` is a YAML 1.2 loader/dumper package for Python.
 
-:version:       0.15.44
-:updated:       2018-07-14
+:version:       0.15.45
+:updated:       2018-07-26
 :documentation: http://yaml.readthedocs.io
 :repository:    https://bitbucket.org/ruamel/
 :pypi:          https://pypi.org/project/ruamel.yaml/
@@ -41,6 +41,11 @@ ChangeLog
 =========
 
 .. should insert NEXT: at the beginning of line for next key (with empty line)
+
+0.15.45 (2018-07-26):
+  - After adding failing test for ``YAML.load_all(Path())``, remove StopIteration 
+    (PR provided by `Zachary Buhman <https://bitbucket.org/buhman/>`__,
+    also reported by `Steven Hiscocks <https://bitbucket.org/sdhiscocks/>`__.
 
 0.15.44 (2018-07-14):
   - Correct loading plain scalars consisting of numerals only and
