@@ -5,7 +5,6 @@ from __future__ import print_function, absolute_import, division, unicode_litera
 import pytest  # NOQA
 
 from roundtrip import round_trip, dedent, round_trip_load, round_trip_dump  # NOQA
-from ruamel.yaml.error import MantissaNoDotYAML1_1Warning
 
 # http://yaml.org/type/int.html is where underscores in integers are defined
 
@@ -146,6 +145,7 @@ class TestFloat:
             assert 3.0517578122e-56 < d < 3.0517578124e-56
 
     def test_yaml_1_1_no_dot(self):
+        from ruamel.yaml.error import MantissaNoDotYAML1_1Warning
         with pytest.warns(MantissaNoDotYAML1_1Warning):
             round_trip_load("""\
             %YAML 1.1

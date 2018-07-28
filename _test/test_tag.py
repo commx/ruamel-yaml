@@ -2,24 +2,25 @@
 
 import pytest   # NOQA
 
-from ruamel import yaml
 from roundtrip import round_trip, round_trip_load
 
 
-class XXX(yaml.comments.CommentedMap):
-    @staticmethod
-    def yaml_dump(dumper, data):
-        return dumper.represent_mapping(u'!xxx', data)
+def register_xxx(**kw):
+    from ruamel import yaml
 
-    @classmethod
-    def yaml_load(cls, constructor, node):
-        data = cls()
-        yield data
-        constructor.construct_mapping(node, data)
+    class XXX(yaml.comments.CommentedMap):
+        @staticmethod
+        def yaml_dump(dumper, data):
+            return dumper.represent_mapping(u'!xxx', data)
 
+        @classmethod
+        def yaml_load(cls, constructor, node):
+            data = cls()
+            yield data
+            constructor.construct_mapping(node, data)
 
-yaml.add_constructor(u'!xxx', XXX.yaml_load, constructor=yaml.RoundTripConstructor)
-yaml.add_representer(XXX, XXX.yaml_dump, representer=yaml.RoundTripRepresenter)
+    yaml.add_constructor(u'!xxx', XXX.yaml_load, constructor=yaml.RoundTripConstructor)
+    yaml.add_representer(XXX, XXX.yaml_dump, representer=yaml.RoundTripRepresenter)
 
 
 class TestIndentFailures:
@@ -66,6 +67,7 @@ class TestIndentFailures:
 
 class TestRoundTripCustom:
     def test_X1(self):
+        register_xxx()
         round_trip("""\
         !xxx
         name: Anthon
@@ -75,6 +77,7 @@ class TestRoundTripCustom:
 
     @pytest.mark.xfail(strict=True)
     def test_X_pre_tag_comment(self):
+        register_xxx()
         round_trip("""\
         -
           # hello
@@ -86,6 +89,7 @@ class TestRoundTripCustom:
 
     @pytest.mark.xfail(strict=True)
     def test_X_post_tag_comment(self):
+        register_xxx()
         round_trip("""\
         - !xxx
           # hello

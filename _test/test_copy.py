@@ -7,7 +7,6 @@ Testing copy and deepcopy, instigated by Issue 84 (Peter Amstutz)
 import copy
 
 import pytest            # NOQA
-import ruamel.yaml       # NOQA
 
 from roundtrip import dedent, round_trip_load, round_trip_dump
 

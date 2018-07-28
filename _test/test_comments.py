@@ -11,7 +11,7 @@ roundtrip changes
 """
 
 import pytest
-import ruamel.yaml
+import sys
 
 from roundtrip import round_trip, dedent, round_trip_load, round_trip_dump
 
@@ -262,6 +262,7 @@ class TestComments:
         """)
 
     def test_dump_utf8(self):
+        import ruamel.yaml  # NOQA
         x = dedent("""\
         ab:
         - x  # comment
@@ -275,6 +276,7 @@ class TestComments:
             assert y == x
 
     def test_dump_unicode_utf8(self):
+        import ruamel.yaml  # NOQA
         x = dedent(u"""\
         ab:
         - x  # comment
@@ -695,8 +697,8 @@ class TestEmptyLines:
 
 
 class TestUnicodeComments:
-    @pytest.mark.skipif(ruamel.yaml.compat.UNICODE_SIZE < 4,
-                        reason="unicode not wide enough")
+
+    @pytest.mark.skipif(sys.version_info < (2, 7), reason="wide unicode")
     def test_issue_55(self):  # reported by Haraguroicha Hsu
         round_trip("""\
         name: TEST
@@ -821,6 +823,7 @@ a: |
 class TestBlockScalarWithComments:
     # issue 99 reported by Colm O'Connor
     def test_scalar_with_comments(self):
+        import ruamel.yaml  # NOQA
         for x in ['', '\n', '\n# Another comment\n', '\n\n', '\n\n# abc\n#xyz\n',
                   '\n\n# abc\n#xyz\n', '# abc\n\n#xyz\n', '\n\n  # abc\n  #xyz\n']:
 

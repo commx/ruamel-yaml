@@ -1,26 +1,30 @@
 # coding: utf-8
 
 import pytest   # NOQA
-import ruamel.yaml
 
 from roundtrip import round_trip, dedent, round_trip_load, round_trip_dump  # NOQA
 
 
-class Monster(ruamel.yaml.YAMLObject):
-    yaml_tag = u'!Monster'
+def register_monster():
+    import ruamel.yaml  # NOQA
 
-    def __init__(self, name, hp, ac, attacks):
-        self.name = name
-        self.hp = hp
-        self.ac = ac
-        self.attacks = attacks
+    class Monster(ruamel.yaml.YAMLObject):
+        yaml_tag = u'!Monster'
 
-    def __repr__(self):
-        return "%s(name=%r, hp=%r, ac=%r, attacks=%r)" % (
-            self.__class__.__name__, self.name, self.hp, self.ac, self.attacks)
+        def __init__(self, name, hp, ac, attacks):
+            self.name = name
+            self.hp = hp
+            self.ac = ac
+            self.attacks = attacks
+
+        def __repr__(self):
+            return "%s(name=%r, hp=%r, ac=%r, attacks=%r)" % (
+                self.__class__.__name__, self.name, self.hp, self.ac, self.attacks)
 
 
 def test_monster():
+    import ruamel.yaml  # NOQA
+    register_monster()
     data = ruamel.yaml.load(dedent("""\
     --- !Monster
     name: Cave spider

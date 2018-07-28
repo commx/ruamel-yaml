@@ -2,11 +2,11 @@
 
 import pytest                        # NOQA
 
-import ruamel.yaml
 from roundtrip import dedent, round_trip, round_trip_load
 
 
 def load(s, version=None):
+    import ruamel.yaml  # NOQA
     return ruamel.yaml.round_trip_load(dedent(s), version)
 
 
@@ -111,6 +111,7 @@ class TestVersions:
 class TestIssue62:
     # bitbucket issue 62, issue_62
     def test_00(self):
+        import ruamel.yaml  # NOQA
         s = dedent("""\
         {}# Outside flow collection:
         - ::vector
@@ -126,6 +127,7 @@ class TestIssue62:
         round_trip(s.format(''), preserve_quotes=True)
 
     def test_00_single_comment(self):
+        import ruamel.yaml  # NOQA
         s = dedent("""\
         {}# Outside flow collection:
         - ::vector
@@ -141,6 +143,7 @@ class TestIssue62:
         # round_trip(s.format('%YAML 1.2\n---\n'), preserve_quotes=True, version=(1, 2))
 
     def test_01(self):
+        import ruamel.yaml  # NOQA
         s = dedent("""\
         {}[random plain value that contains a ? character]
         """)

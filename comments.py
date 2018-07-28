@@ -11,10 +11,14 @@ a separate base
 import sys
 import copy
 
-from collections import MutableSet, Sized, Set
 
 from ruamel.yaml.compat import ordereddict, PY2, string_types
 from ruamel.yaml.scalarstring import ScalarString
+
+if PY2:
+    from collections import MutableSet, Sized, Set
+else:
+    from collections.abc import MutableSet, Sized, Set
 
 if False:  # MYPY
     from typing import Any, Dict, Optional, List, Union  # NOQA

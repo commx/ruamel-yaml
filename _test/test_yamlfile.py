@@ -9,8 +9,6 @@ import sys
 import pytest      # NOQA
 import platform
 
-import ruamel.yaml
-from ruamel.yaml.compat import ordereddict
 from roundtrip import round_trip, dedent, round_trip_load, round_trip_dump  # NOQA
 
 
@@ -23,6 +21,8 @@ class TestYAML:
 
     def test_omap_out(self):
         # ordereddict mapped to !!omap
+        from ruamel.yaml.compat import ordereddict
+        import ruamel.yaml  # NOQA
         x = ordereddict([('a', 1), ('b', 2)])
         res = ruamel.yaml.dump(x, default_flow_style=False)
         assert res == dedent("""
@@ -43,6 +43,7 @@ class TestYAML:
     @pytest.mark.skipif(sys.version_info < (2, 7), reason="collections not available")
     def test_dump_collections_ordereddict(self):
         from collections import OrderedDict
+        import ruamel.yaml  # NOQA
         # OrderedDict mapped to !!omap
         x = OrderedDict([('a', 1), ('b', 2)])
         res = ruamel.yaml.dump(x,
@@ -59,6 +60,7 @@ class TestYAML:
                         reason="ruamel.yaml not available")
     def test_dump_ruamel_ordereddict(self):
         from ruamel.ordereddict import ordereddict
+        import ruamel.yaml  # NOQA
         # OrderedDict mapped to !!omap
         x = ordereddict([('a', 1), ('b', 2)])
         res = ruamel.yaml.dump(x,
@@ -83,7 +85,7 @@ class TestYAML:
 
     def test_set_out(self):
         # preferable would be the shorter format without the ': null'
-        # from ruamel.yaml.compat import ordereddict
+        import ruamel.yaml  # NOQA
         x = set(['a', 'b', 'c'])
         res = ruamel.yaml.dump(x, default_flow_style=False)
         assert res == dedent("""
@@ -194,6 +196,7 @@ class TestYAML:
         assert d['c'][1].split('line.')[1] == ''
 
     def test_load_all_perserve_quotes(self):
+        import ruamel.yaml  # NOQA
         s = dedent("""\
         a: 'hello'
         ---

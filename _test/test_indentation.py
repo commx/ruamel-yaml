@@ -7,13 +7,11 @@ from __future__ import unicode_literals
 
 import pytest  # NOQA
 
-import ruamel.yaml
-from ruamel.yaml.util import load_yaml_guess_indent
-
 from roundtrip import round_trip, round_trip_load, round_trip_dump, dedent, YAML
 
 
 def rt(s):
+    import ruamel.yaml
     return ruamel.yaml.dump(
         ruamel.yaml.load(s, Loader=ruamel.yaml.RoundTripLoader),
         Dumper=ruamel.yaml.RoundTripDumper,
@@ -55,6 +53,7 @@ class TestIndent:
 
     # first test by explicitly setting flow style
     def test_added_inline_list(self):
+        import ruamel.yaml
         s1 = dedent("""
         a:
         - b
@@ -72,6 +71,7 @@ class TestIndent:
     # ############ flow mappings
 
     def test_roundtrip_flow_mapping(self):
+        import ruamel.yaml
         s = dedent("""\
         - {a: 1, b: hallo}
         - {j: fka, k: 42}
@@ -209,6 +209,7 @@ class TestYpkgIndent:
 
 
 def guess(s):
+    from ruamel.yaml.util import load_yaml_guess_indent
     x, y, z = load_yaml_guess_indent(dedent(s))
     return y, z
 

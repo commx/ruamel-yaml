@@ -9,9 +9,6 @@ from textwrap import dedent
 import platform
 
 from roundtrip import round_trip, dedent, round_trip_load, round_trip_dump  # NOQA
-from ruamel.yaml.compat import PY3
-from ruamel.yaml.error import ReusedAnchorWarning
-from ruamel.yaml import version_info
 
 
 def load(s):
@@ -233,6 +230,7 @@ class TestAnchorsAliases:
 
     # this is an error in PyYAML
     def test_reused_anchor(self):
+        from ruamel.yaml.error import ReusedAnchorWarning
         yaml = '''
         - &a
           x: 1
@@ -354,6 +352,7 @@ class TestMergeKeysValues:
 
     def test_len_items_delete(self):
         from ruamel.yaml import safe_load
+        from ruamel.yaml.compat import PY3
         d = safe_load(self.yaml_str)
         data = round_trip_load(self.yaml_str)
         x = data[2].items()
@@ -375,6 +374,7 @@ class TestMergeKeysValues:
 
 class TestDuplicateKeyThroughAnchor:
     def test_duplicate_key_00(self):
+        from ruamel.yaml import version_info
         from ruamel.yaml import safe_load, round_trip_load
         from ruamel.yaml.constructor import DuplicateKeyFutureWarning, DuplicateKeyError
         s = dedent("""\

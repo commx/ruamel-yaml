@@ -2,9 +2,8 @@
 
 import re
 import pytest   # NOQA
-import ruamel.yaml
 
-from roundtrip import round_trip, dedent, round_trip_load, round_trip_dump  # NOQA
+from roundtrip import dedent
 
 
 # from PyYAML docs
@@ -27,18 +26,21 @@ def dice_representer(dumper, data):
 
 
 def test_dice_constructor():
+    import ruamel.yaml  # NOQA
     ruamel.yaml.add_constructor(u'!dice', dice_constructor)
     data = ruamel.yaml.load('initial hit points: !dice 8d4', Loader=ruamel.yaml.Loader)
     assert str(data) == "{'initial hit points': Dice(8,4)}"
 
 
 def test_dice_constructor_with_loader():
+    import ruamel.yaml  # NOQA
     ruamel.yaml.add_constructor(u'!dice', dice_constructor, Loader=ruamel.yaml.Loader)
     data = ruamel.yaml.load('initial hit points: !dice 8d4', Loader=ruamel.yaml.Loader)
     assert str(data) == "{'initial hit points': Dice(8,4)}"
 
 
 def test_dice_representer():
+    import ruamel.yaml  # NOQA
     ruamel.yaml.add_representer(Dice, dice_representer)
     # ruamel.yaml 0.15.8+ no longer forces quotes tagged scalars
     assert ruamel.yaml.dump(dict(gold=Dice(10, 6)), default_flow_style=False) == \
@@ -46,6 +48,7 @@ def test_dice_representer():
 
 
 def test_dice_implicit_resolver():
+    import ruamel.yaml  # NOQA
     pattern = re.compile(r'^\d+d\d+$')
     ruamel.yaml.add_implicit_resolver(u'!dice', pattern)
     assert ruamel.yaml.dump(dict(treasure=Dice(10, 20)), default_flow_style=False) == \
@@ -74,6 +77,7 @@ class YAMLObj1(object):
 
     @classmethod
     def from_yaml(cls, loader, suffix, node):
+        import ruamel.yaml  # NOQA
         obj1 = Obj1(suffix)
         if isinstance(node, ruamel.yaml.MappingNode):
             obj1.add_node(loader.construct_mapping(node))
@@ -87,6 +91,7 @@ class YAMLObj1(object):
 
 
 def test_yaml_obj():
+    import ruamel.yaml  # NOQA
     ruamel.yaml.add_representer(Obj1, YAMLObj1.to_yaml)
     ruamel.yaml.add_multi_constructor(YAMLObj1.yaml_tag, YAMLObj1.from_yaml)
     x = ruamel.yaml.load('!obj:x.2\na: 1', Loader=ruamel.yaml.Loader)
@@ -95,6 +100,7 @@ def test_yaml_obj():
 
 
 def test_yaml_obj_with_loader_and_dumper():
+    import ruamel.yaml  # NOQA
     ruamel.yaml.add_representer(Obj1, YAMLObj1.to_yaml, Dumper=ruamel.yaml.Dumper)
     ruamel.yaml.add_multi_constructor(YAMLObj1.yaml_tag, YAMLObj1.from_yaml,
                                       Loader=ruamel.yaml.Loader)
@@ -109,28 +115,30 @@ def test_yaml_obj_with_loader_and_dumper():
 
 # Issue 127 reported by Tommy Wang
 
-class Ref(ruamel.yaml.YAMLObject):
-    yaml_constructor = ruamel.yaml.RoundTripConstructor
-    yaml_representer = ruamel.yaml.RoundTripRepresenter
-    yaml_tag = u'!Ref'
-
-    def __init__(self, logical_id):
-        self.logical_id = logical_id
-
-    @classmethod
-    def from_yaml(cls, loader, node):
-        return cls(loader.construct_scalar(node))
-
-    @classmethod
-    def to_yaml(cls, dumper, data):
-        if isinstance(data.logical_id, ruamel.yaml.scalarstring.ScalarString):
-            style = data.logical_id.style   # ruamel.yaml>0.15.8
-        else:
-            style = None
-        return dumper.represent_scalar(cls.yaml_tag, data.logical_id, style=style)
-
 
 def test_issue_127():
+    import ruamel.yaml  # NOQA
+
+    class Ref(ruamel.yaml.YAMLObject):
+        yaml_constructor = ruamel.yaml.RoundTripConstructor
+        yaml_representer = ruamel.yaml.RoundTripRepresenter
+        yaml_tag = u'!Ref'
+
+        def __init__(self, logical_id):
+            self.logical_id = logical_id
+
+        @classmethod
+        def from_yaml(cls, loader, node):
+            return cls(loader.construct_scalar(node))
+
+        @classmethod
+        def to_yaml(cls, dumper, data):
+            if isinstance(data.logical_id, ruamel.yaml.scalarstring.ScalarString):
+                style = data.logical_id.style   # ruamel.yaml>0.15.8
+            else:
+                style = None
+            return dumper.represent_scalar(cls.yaml_tag, data.logical_id, style=style)
+
     document = dedent('''\
     AList:
       - !Ref One

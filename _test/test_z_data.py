@@ -9,16 +9,14 @@ import platform  # NOQA
 
 sys.path.insert(0, os.path.dirname(__file__) + '/lib')
 
-import ruamel.yaml     # NOQA
-import test_appliance  # NOQA
 import warnings        # NOQA
-warnings.simplefilter('ignore', ruamel.yaml.error.UnsafeLoaderWarning)
 
 
 args = []
 
 
 def test_data():
+    import test_appliance  # NOQA
     collections = []
     import test_yaml
     collections.append(test_yaml)
@@ -30,6 +28,9 @@ def test_data():
 
 def test_data_ext():
     collections = []
+    import ruamel.yaml     # NOQA
+    import test_appliance  # NOQA
+    warnings.simplefilter('ignore', ruamel.yaml.error.UnsafeLoaderWarning)
     if ruamel.yaml.__with_libyaml__:
         import test_yaml_ext
         collections.append(test_yaml_ext)

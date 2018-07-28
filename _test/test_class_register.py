@@ -5,7 +5,6 @@ testing of YAML.register_class and @yaml_object
 """
 
 from roundtrip import YAML
-from ruamel.yaml import yaml_object
 
 
 class User0(object):
@@ -91,36 +90,18 @@ class TestRegisterClass(object):
         yaml.dump(d, compare=ys)
 
 
-yml = YAML()
-
-
-@yaml_object(yml)
-class User2(object):
-    def __init__(self, name, age):
-        self.name = name
-        self.age = age
-
-
-@yaml_object(yml)
-class User3(object):
-    yaml_tag = u'!USER'
-
-    def __init__(self, name, age):
-        self.name = name
-        self.age = age
-
-    @classmethod
-    def to_yaml(cls, representer, node):
-        return representer.represent_scalar(cls.yaml_tag,
-                                            u'{.name}-{.age}'.format(node, node))
-
-    @classmethod
-    def from_yaml(cls, constructor, node):
-        return cls(*node.value.split('-'))
-
-
 class TestDecorator(object):
+
     def test_decorator_implicit(self):
+        from ruamel.yaml import yaml_object
+        yml = YAML()
+
+        @yaml_object(yml)
+        class User2(object):
+            def __init__(self, name, age):
+                self.name = name
+                self.age = age
+
         ys = '''
         - !User2
           name: Anthon
@@ -130,6 +111,26 @@ class TestDecorator(object):
         yml.dump(d, compare=ys, unordered_lines=True)
 
     def test_decorator_explicit(self):
+        from ruamel.yaml import yaml_object
+        yml = YAML()
+
+        @yaml_object(yml)
+        class User3(object):
+            yaml_tag = u'!USER'
+
+            def __init__(self, name, age):
+                self.name = name
+                self.age = age
+
+            @classmethod
+            def to_yaml(cls, representer, node):
+                return representer.represent_scalar(cls.yaml_tag,
+                                                    u'{.name}-{.age}'.format(node, node))
+
+            @classmethod
+            def from_yaml(cls, constructor, node):
+                return cls(*node.value.split('-'))
+
         ys = '''
         - !USER Anthon-18
         '''

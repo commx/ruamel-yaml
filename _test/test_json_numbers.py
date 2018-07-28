@@ -4,11 +4,11 @@ from __future__ import print_function
 
 import pytest  # NOQA
 
-import ruamel.yaml
 import json
 
 
 def load(s, typ=float):
+    import ruamel.yaml
     x = '{"low": %s }' % (s)
     print('input: [%s]' % (s), repr(x))
     # just to check it is loadable json
