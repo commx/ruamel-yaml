@@ -1,4 +1,4 @@
-FROM quay.io/pypa/manylinux1_x86_64
+FROM quay.io/pypa/manylinux1_x86_64:01a75168a06f
 
 MAINTAINER Anthon van der Neut <a.van.der.neut@ruamel.eu>
 
@@ -16,13 +16,15 @@ RUN echo '  done'                                         >> /usr/bin/makewheel
 RUN echo 'done'                                           >> /usr/bin/makewheel
 RUN echo ''                                               >> /usr/bin/makewheel
 RUN echo 'for whl in /tmp/*.whl; do'                      >> /usr/bin/makewheel
+RUN echo '  echo processing "$whl"'                       >> /usr/bin/makewheel
+RUN echo '  auditwheel show "$whl"'                       >> /usr/bin/makewheel
 RUN echo '  auditwheel repair "$whl" -w /src/dist/'       >> /usr/bin/makewheel
 RUN echo 'done'                                           >> /usr/bin/makewheel
 RUN chmod 755 /usr/bin/makewheel
 
-# RUN yum install -y libyaml-devel
 
-CMD /usr/bin/makewheel 27 34 35 36 37
+#CMD /usr/bin/makewheel 27 34 35 36 37
+CMD /usr/bin/makewheel 36
 
 # cp27-cp27m p27-cp27mu cp34-cp34m cp35-cp35m cp36-cp36m cp37-cp37m
 
