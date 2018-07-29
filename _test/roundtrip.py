@@ -7,6 +7,9 @@ helper routines for testing round trip of commented YAML data
 """
 import sys
 import textwrap
+from ruamel.std.pathlib import Path
+
+enforce = object()
 
 
 def dedent(data):
@@ -168,3 +171,28 @@ def YAML(**kw):
             assert res == outp
 
     return MyYAML(**kw)
+
+
+def save_and_run(program, base_dir=None, file_name=None):
+    """
+    safe and run a python program, thereby circumventing any restrictions on module level
+    imports
+    """
+    from subprocess import check_output, STDOUT, CalledProcessError
+
+    if not hasattr(base_dir, 'hash'):
+        base_dir = Path(str(base_dir))
+    if file_name is None:
+        file_name = 'safe_and_run_tmp.py'
+    file_name = base_dir / file_name
+    file_name.write_text(dedent(program))
+
+    try:
+        cmd = [sys.executable, str(file_name)]
+        print('running:', *cmd)
+        check_output(cmd, stderr=STDOUT, universal_newlines=True)
+    except CalledProcessError as exception:
+        print("##### Running '{} {}' FAILED #####".format(sys.exeutable, file_name))
+        print(exception.output)
+        return exception.returncode
+    return 0

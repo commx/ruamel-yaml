@@ -4,8 +4,8 @@ ruamel.yaml
 
 ``ruamel.yaml`` is a YAML 1.2 loader/dumper package for Python.
 
-:version:       0.15.45
-:updated:       2018-07-26
+:version:       0.15.46
+:updated:       2018-07-29
 :documentation: http://yaml.readthedocs.io
 :repository:    https://bitbucket.org/ruamel/
 :pypi:          https://pypi.org/project/ruamel.yaml/
@@ -42,6 +42,15 @@ ChangeLog
 
 .. should insert NEXT: at the beginning of line for next key (with empty line)
 
+0.15.46 (2018-07-29):
+  - fixed DeprecationWarning for importing from ``collections`` on 3.7
+    (issue 210, reported by `Reinoud Elhorst
+    <https://bitbucket.org/reinhrst/>`__). It was `difficult to find
+    why tox/pytest did not report
+    <https://stackoverflow.com/q/51573204/1307905>`__ and as time
+    consuming to actually `fix
+    <https://stackoverflow.com/a/51573205/1307905>`__ the tests.
+
 0.15.45 (2018-07-26):
   - After adding failing test for ``YAML.load_all(Path())``, remove StopIteration 
     (PR provided by `Zachary Buhman <https://bitbucket.org/buhman/>`__,
@@ -65,7 +74,7 @@ ChangeLog
   - fix regression showing only on narrow Python 2.7 (py27mu) builds
     (with help from
     `Marcel Bargull <https://bitbucket.org/mbargull/>`__ and
-    `Colm O'Connor <>`__).
+    `Colm O'Connor <https://bitbucket.org/colmoconnorgithub/>`__).
   - run pre-commit ``tox`` on Python 2.7 wide and narrow, as well as
     3.4/3.5/3.6/3.7/pypy
 
