@@ -1,4 +1,5 @@
-FROM quay.io/pypa/manylinux1_x86_64:01a75168a06f
+
+FROM quay.io/pypa/manylinux1_x86_64:latest
 
 MAINTAINER Anthon van der Neut <a.van.der.neut@ruamel.eu>
 
@@ -23,8 +24,6 @@ RUN echo 'done'                                           >> /usr/bin/makewheel
 RUN chmod 755 /usr/bin/makewheel
 
 
-#CMD /usr/bin/makewheel 27 34 35 36 37
-CMD /usr/bin/makewheel 36
+CMD /usr/bin/makewheel 27 34 35 36 37
 
 # cp27-cp27m p27-cp27mu cp34-cp34m cp35-cp35m cp36-cp36m cp37-cp37m
-
