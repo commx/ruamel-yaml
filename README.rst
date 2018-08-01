@@ -43,9 +43,7 @@ when the status of the API is stable enough to make the transition.
 .. image:: https://img.shields.io/pypi/v/ruamel.yaml.svg
    :target: https://pypi.org/project/ruamel.yaml/
 
-.. image: https://img.shields.io/badge/code%20style-oitnb-orange.svg
-
-
+.. image:: https://img.shields.io/badge/code%20style-oitnb-orange.svg
 
 
 ChangeLog
