@@ -257,7 +257,7 @@ def _make_objects():
 
 try:
     from ruamel.ordereddict import ordereddict
-except:
+except ImportError:
     from collections import OrderedDict
     # to get the right name import ... as ordereddict doesn't do that
 

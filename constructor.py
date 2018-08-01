@@ -111,7 +111,7 @@ class BaseConstructor(object):
             state_generators = self.state_generators
             self.state_generators = []
             for generator in state_generators:
-                for dummy in generator:
+                for _dummy in generator:
                     pass
         self.constructed_objects = {}
         self.recursive_objects = {}
@@ -163,7 +163,7 @@ class BaseConstructor(object):
             generator = data
             data = next(generator)  # type: ignore
             if self.deep_construct:
-                for dummy in generator:  # type: ignore
+                for _dummy in generator:  # type: ignore
                     pass
             else:
                 self.state_generators.append(generator)

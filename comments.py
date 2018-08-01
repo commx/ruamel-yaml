@@ -423,7 +423,7 @@ class CommentedSeq(list, CommentedBase):
             sel_idx = post
         else:
             # self.ca.items is not ordered
-            for row_idx, k1 in enumerate(self):
+            for row_idx, _k1 in enumerate(self):
                 if row_idx >= key:
                     break
                 if row_idx not in self.ca.items:
@@ -490,7 +490,7 @@ class CommentedKeySeq(tuple, CommentedBase):
             sel_idx = post
         else:
             # self.ca.items is not ordered
-            for row_idx, k1 in enumerate(self):
+            for row_idx, _k1 in enumerate(self):
                 if row_idx >= key:
                     break
                 if row_idx not in self.ca.items:
@@ -637,7 +637,7 @@ class CommentedMap(ordereddict, CommentedBase):
             sel_idx = post
         else:
             # self.ca.items is not ordered
-            for row_idx, k1 in enumerate(self):
+            for k1 in self:
                 if k1 >= key:
                     break
                 if k1 not in self.ca.items:
