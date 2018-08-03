@@ -12,7 +12,7 @@ def CommentCheck():
 
 
 class Event(object):
-    __slots__ = 'start_mark', 'end_mark', 'comment',
+    __slots__ = 'start_mark', 'end_mark', 'comment'
 
     def __init__(self, start_mark=None, end_mark=None, comment=CommentCheck):
         # type: (Any, Any, Any) -> None
@@ -25,18 +25,19 @@ class Event(object):
 
     def __repr__(self):
         # type: () -> Any
-        attributes = [key for key in ['anchor', 'tag', 'implicit', 'value',
-                                      'flow_style', 'style']
-                      if hasattr(self, key)]
-        arguments = ', '.join(['%s=%r' % (key, getattr(self, key))
-                               for key in attributes])
+        attributes = [
+            key
+            for key in ['anchor', 'tag', 'implicit', 'value', 'flow_style', 'style']
+            if hasattr(self, key)
+        ]
+        arguments = ', '.join(['%s=%r' % (key, getattr(self, key)) for key in attributes])
         if self.comment not in [None, CommentCheck]:
             arguments += ', comment={!r}'.format(self.comment)
         return '%s(%s)' % (self.__class__.__name__, arguments)
 
 
 class NodeEvent(Event):
-    __slots__ = 'anchor',
+    __slots__ = ('anchor',)
 
     def __init__(self, anchor, start_mark=None, end_mark=None, comment=None):
         # type: (Any, Any, Any, Any) -> None
@@ -45,10 +46,18 @@ class NodeEvent(Event):
 
 
 class CollectionStartEvent(NodeEvent):
-    __slots__ = 'tag', 'implicit', 'flow_style',
+    __slots__ = 'tag', 'implicit', 'flow_style'
 
-    def __init__(self, anchor, tag, implicit, start_mark=None, end_mark=None,
-                 flow_style=None, comment=None):
+    def __init__(
+        self,
+        anchor,
+        tag,
+        implicit,
+        start_mark=None,
+        end_mark=None,
+        flow_style=None,
+        comment=None,
+    ):
         # type: (Any, Any, Any, Any, Any, Any, Any) -> None
         NodeEvent.__init__(self, anchor, start_mark, end_mark, comment)
         self.tag = tag
@@ -62,11 +71,11 @@ class CollectionEndEvent(Event):
 
 # Implementations.
 
-class StreamStartEvent(Event):
-    __slots__ = 'encoding',
 
-    def __init__(self, start_mark=None, end_mark=None, encoding=None,
-                 comment=None):
+class StreamStartEvent(Event):
+    __slots__ = ('encoding',)
+
+    def __init__(self, start_mark=None, end_mark=None, encoding=None, comment=None):
         # type: (Any, Any, Any, Any) -> None
         Event.__init__(self, start_mark, end_mark, comment)
         self.encoding = encoding
@@ -77,10 +86,17 @@ class StreamEndEvent(Event):
 
 
 class DocumentStartEvent(Event):
-    __slots__ = 'explicit', 'version', 'tags',
+    __slots__ = 'explicit', 'version', 'tags'
 
-    def __init__(self, start_mark=None, end_mark=None,
-                 explicit=None, version=None, tags=None, comment=None):
+    def __init__(
+        self,
+        start_mark=None,
+        end_mark=None,
+        explicit=None,
+        version=None,
+        tags=None,
+        comment=None,
+    ):
         # type: (Any, Any, Any, Any, Any, Any) -> None
         Event.__init__(self, start_mark, end_mark, comment)
         self.explicit = explicit
@@ -89,10 +105,9 @@ class DocumentStartEvent(Event):
 
 
 class DocumentEndEvent(Event):
-    __slots__ = 'explicit',
+    __slots__ = ('explicit',)
 
-    def __init__(self, start_mark=None, end_mark=None,
-                 explicit=None, comment=None):
+    def __init__(self, start_mark=None, end_mark=None, explicit=None, comment=None):
         # type: (Any, Any, Any, Any) -> None
         Event.__init__(self, start_mark, end_mark, comment)
         self.explicit = explicit
@@ -103,10 +118,19 @@ class AliasEvent(NodeEvent):
 
 
 class ScalarEvent(NodeEvent):
-    __slots__ = 'tag', 'implicit', 'value', 'style',
+    __slots__ = 'tag', 'implicit', 'value', 'style'
 
-    def __init__(self, anchor, tag, implicit, value,
-                 start_mark=None, end_mark=None, style=None, comment=None):
+    def __init__(
+        self,
+        anchor,
+        tag,
+        implicit,
+        value,
+        start_mark=None,
+        end_mark=None,
+        style=None,
+        comment=None,
+    ):
         # type: (Any, Any, Any, Any, Any, Any, Any, Any) -> None
         NodeEvent.__init__(self, anchor, start_mark, end_mark, comment)
         self.tag = tag

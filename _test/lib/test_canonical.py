@@ -40,7 +40,7 @@ def test_canonical_error(data_filename, canonical_filename, verbose=False):
         if verbose:
             print(exc)
     else:
-        raise AssertionError("expected an exception")
+        raise AssertionError('expected an exception')
 
 
 test_canonical_error.unittest = ['.data', '.canonical']
@@ -48,4 +48,5 @@ test_canonical_error.skip = ['.empty']
 
 if __name__ == '__main__':
     import test_appliance
+
     test_appliance.run(globals())

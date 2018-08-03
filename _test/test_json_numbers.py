@@ -9,6 +9,7 @@ import json
 
 def load(s, typ=float):
     import ruamel.yaml
+
     x = '{"low": %s }' % (s)
     print('input: [%s]' % (s), repr(x))
     # just to check it is loadable json
@@ -27,23 +28,29 @@ class TestJSONNumbers:
     #
     # which is not a superset of the JSON numbers
     def test_json_number_float(self):
-        for x in (y.split('#')[0].strip() for y in """
+        for x in (
+            y.split('#')[0].strip()
+            for y in """
         1.0  # should fail on YAML spec on 1-9 allowed as single digit
         -1.0
         1e-06
         3.1e-5
         3.1e+5
         3.1e5  # should fail on YAML spec: no +- after e
-        """.splitlines()):
+        """.splitlines()
+        ):
             if not x:
                 continue
             res = load(x)
             assert isinstance(res, float)
 
     def test_json_number_int(self):
-        for x in (y.split('#')[0].strip() for y in """
+        for x in (
+            y.split('#')[0].strip()
+            for y in """
         42
-        """.splitlines()):
+        """.splitlines()
+        ):
             if not x:
                 continue
             res = load(x, int)

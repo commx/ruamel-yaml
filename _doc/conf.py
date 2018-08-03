@@ -13,7 +13,7 @@
 # serve to show the default.
 
 import sys  # NOQA
-import os   # NOQA
+import os  # NOQA
 
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
@@ -55,6 +55,7 @@ author = u'Anthon van der Neut'
 #
 try:
     from ruamel.yaml import __version__, version_info  # NOQA
+
     # The short X.Y version.
     version = '.'.join([str(l) for l in version_info[:3]])
     # The full version, including alpha/beta/rc tags.
@@ -69,6 +70,7 @@ print('ruamel.yaml version', version)
 try:
     from ryd.__main__ import RYDCmd
     from ruamel.std.pathlib import Path
+
     oldargv = sys.argv
     for fn in Path('.').glob('*.ryd'):
         sys.argv = ['ryd', 'convert', '--no-pdf', str(fn)]
@@ -141,7 +143,7 @@ html_theme = 'default'
 
 # The name for this set of Sphinx documents.  If None, it defaults to
 # "<project> v<release> documentation".
-html_title = "Python YAML package documentation"
+html_title = 'Python YAML package documentation'
 
 # A shorter title for the navigation bar.  Default is the same as html_title.
 # html_short_title = None
@@ -228,13 +230,10 @@ htmlhelp_basename = 'yamldoc'
 latex_elements = {
     # The paper size ('letterpaper' or 'a4paper').
     'papersize': 'a4paper',
-
     # The font size ('10pt', '11pt' or '12pt').
     # 'pointsize': '10pt',
-
     # Additional stuff for the LaTeX preamble.
     # 'preamble': '',
-
     # Latex figure (float) alignment
     # 'figure_align': 'htbp',
 }
@@ -243,8 +242,13 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'yaml.tex', u'Python YAML package documentation',
-     u'Anthon van der Neut', 'manual'),
+    (
+        master_doc,
+        'yaml.tex',
+        u'Python YAML package documentation',
+        u'Anthon van der Neut',
+        'manual',
+    )
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
@@ -272,10 +276,7 @@ latex_documents = [
 
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
-man_pages = [
-    (master_doc, 'yaml', u'yaml Documentation',
-     [author], 1)
-]
+man_pages = [(master_doc, 'yaml', u'yaml Documentation', [author], 1)]
 
 # If true, show URL addresses after external links.
 # man_show_urls = False
@@ -287,9 +288,15 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'yaml', u'yaml Documentation',
-     author, 'yaml', 'One line description of project.',
-     'Miscellaneous'),
+    (
+        master_doc,
+        'yaml',
+        u'yaml Documentation',
+        author,
+        'yaml',
+        'One line description of project.',
+        'Miscellaneous',
+    )
 ]
 
 # Documents to append as an appendix to all manuals.

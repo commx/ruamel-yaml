@@ -23,7 +23,7 @@ def test_emitter_on_data(data_filename, canonical_filename, verbose=False):
         events = list(yaml.parse(fp0))
     output = yaml.emit(events)
     if verbose:
-        print("OUTPUT:")
+        print('OUTPUT:')
         print(output)
     new_events = list(yaml.parse(output))
     _compare_events(events, new_events)
@@ -38,7 +38,7 @@ def test_emitter_on_canonical(canonical_filename, verbose=False):
     for canonical in [False, True]:
         output = yaml.emit(events, canonical=canonical)
         if verbose:
-            print("OUTPUT (canonical=%s):" % canonical)
+            print('OUTPUT (canonical=%s):' % canonical)
             print(output)
         new_events = list(yaml.parse(output))
         _compare_events(events, new_events)
@@ -52,23 +52,28 @@ def test_emitter_styles(data_filename, canonical_filename, verbose=False):
         with open(filename, 'rb') as fp0:
             events = list(yaml.parse(fp0))
         for flow_style in [False, True]:
-            for style in ['|', '>', '"', '\'', '']:
+            for style in ['|', '>', '"', "'", ""]:
                 styled_events = []
                 for event in events:
                     if isinstance(event, yaml.ScalarEvent):
-                        event = yaml.ScalarEvent(event.anchor, event.tag,
-                                                 event.implicit, event.value, style=style)
+                        event = yaml.ScalarEvent(
+                            event.anchor, event.tag, event.implicit, event.value, style=style
+                        )
                     elif isinstance(event, yaml.SequenceStartEvent):
-                        event = yaml.SequenceStartEvent(event.anchor, event.tag,
-                                                        event.implicit, flow_style=flow_style)
+                        event = yaml.SequenceStartEvent(
+                            event.anchor, event.tag, event.implicit, flow_style=flow_style
+                        )
                     elif isinstance(event, yaml.MappingStartEvent):
-                        event = yaml.MappingStartEvent(event.anchor, event.tag,
-                                                       event.implicit, flow_style=flow_style)
+                        event = yaml.MappingStartEvent(
+                            event.anchor, event.tag, event.implicit, flow_style=flow_style
+                        )
                     styled_events.append(event)
                 output = yaml.emit(styled_events)
                 if verbose:
-                    print("OUTPUT (filename=%r, flow_style=%r, style=%r)" %
-                          (filename, flow_style, style))
+                    print(
+                        'OUTPUT (filename=%r, flow_style=%r, style=%r)'
+                        % (filename, flow_style, style)
+                    )
                     print(output)
                 new_events = list(yaml.parse(output))
                 _compare_events(events, new_events)
@@ -78,15 +83,18 @@ test_emitter_styles.unittest = ['.data', '.canonical']
 
 
 class EventsLoader(yaml.Loader):
-
     def construct_event(self, node):
         if isinstance(node, yaml.ScalarNode):
             mapping = {}
         else:
             mapping = self.construct_mapping(node)
         class_name = str(node.tag[1:]) + 'Event'
-        if class_name in ['AliasEvent', 'ScalarEvent', 'SequenceStartEvent',
-                          'MappingStartEvent']:
+        if class_name in [
+            'AliasEvent',
+            'ScalarEvent',
+            'SequenceStartEvent',
+            'MappingStartEvent',
+        ]:
             mapping.setdefault('anchor', None)
         if class_name in ['ScalarEvent', 'SequenceStartEvent', 'MappingStartEvent']:
             mapping.setdefault('tag', None)
@@ -94,9 +102,10 @@ class EventsLoader(yaml.Loader):
             mapping.setdefault('implicit', True)
         if class_name == 'ScalarEvent':
             mapping.setdefault('implicit', (False, True))
-            mapping.setdefault('value', '')
+            mapping.setdefault('value', "")
         value = getattr(yaml, class_name)(**mapping)
         return value
+
 
 # if Loader is not a composite, add this function
 # EventsLoader.add_constructor = yaml.constructor.Constructor.add_constructor
@@ -110,7 +119,7 @@ def test_emitter_events(events_filename, verbose=False):
         events = list(yaml.load(fp0, Loader=EventsLoader))
     output = yaml.emit(events)
     if verbose:
-        print("OUTPUT:")
+        print('OUTPUT:')
         print(output)
     new_events = list(yaml.parse(output))
     _compare_events(events, new_events)
@@ -118,4 +127,5 @@ def test_emitter_events(events_filename, verbose=False):
 
 if __name__ == '__main__':
     import test_appliance
+
     test_appliance.run(globals())

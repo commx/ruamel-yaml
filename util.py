@@ -26,20 +26,26 @@ class LazyEval(object):
     The sole additional attribute is the lazy_self function which holds the
     return value (or, prior to evaluation, func and arguments), in its closure.
     """
+
     def __init__(self, func, *args, **kwargs):
+        # type: (Any, Any, Any) -> None
         def lazy_self():
+            # type: () -> Any
             return_value = func(*args, **kwargs)
-            object.__setattr__(self, "lazy_self", lambda: return_value)
+            object.__setattr__(self, 'lazy_self', lambda: return_value)
             return return_value
-        object.__setattr__(self, "lazy_self", lazy_self)
+
+        object.__setattr__(self, 'lazy_self', lazy_self)
 
     def __getattribute__(self, name):
-        lazy_self = object.__getattribute__(self, "lazy_self")
-        if name == "lazy_self":
+        # type: (Any) -> Any
+        lazy_self = object.__getattribute__(self, 'lazy_self')
+        if name == 'lazy_self':
             return lazy_self
         return getattr(lazy_self(), name)
 
     def __setattr__(self, name, value):
+        # type: (Any, Any) -> None
         setattr(self.lazy_self(), name, value)
 
 
@@ -90,7 +96,7 @@ def load_yaml_guess_indent(stream, **kw):
             idx = l_s + 1
             while line[idx] == ' ':  # this will end as we rstripped
                 idx += 1
-            if line[idx] == '#':     # comment after -
+            if line[idx] == '#':  # comment after -
                 continue
             indent = idx - key_indent
             break
@@ -120,6 +126,7 @@ def configobj_walker(cfg):
     corresponding YAML output (including comments
     """
     from configobj import ConfigObj  # type: ignore
+
     assert isinstance(cfg, ConfigObj)
     for c in cfg.initial_comment:
         if c.strip():
@@ -135,6 +142,7 @@ def configobj_walker(cfg):
 def _walk_section(s, level=0):
     # type: (Any, int) -> Any
     from configobj import Section
+
     assert isinstance(s, Section)
     indent = u'  ' * level
     for name in s.scalars:
@@ -161,6 +169,7 @@ def _walk_section(s, level=0):
         yield line
         for val in _walk_section(s[name], level=level + 1):
             yield val
+
 
 # def config_obj_2_rt_yaml(cfg):
 #     from .comments import CommentedMap, CommentedSeq

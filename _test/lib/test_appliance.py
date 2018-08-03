@@ -44,31 +44,34 @@ def find_test_filenames(directory):
 
 def parse_arguments(args):
     """"""
-    parser = argparse.ArgumentParser(usage=""" run the yaml tests. By default
+    parser = argparse.ArgumentParser(
+        usage=""" run the yaml tests. By default
     all functions on all appropriate test_files are run. Functions have
     unittest attributes that determine the required extensions to filenames
     that need to be available in order to run that test. E.g.\n\n
     python test_yaml.py test_constructor_types\n
     python test_yaml.py --verbose test_tokens spec-02-05\n\n
     The presence of an extension in the .skip attribute of a function
-    disables the test for that function.""")
+    disables the test for that function."""
+    )
     # ToDo: make into int and test > 0 in functions
     parser.add_argument(
-        '--verbose', '-v', action="store_true",
+        '--verbose',
+        '-v',
+        action='store_true',
         default='YAML_TEST_VERBOSE' in os.environ,
-        help="set verbosity output",
+        help='set verbosity output',
     )
     parser.add_argument(
-        '--list-functions', action="store_true",
+        '--list-functions',
+        action='store_true',
         help="""list all functions with required file extensions for test files
-        """
+        """,
     )
+    parser.add_argument('function', nargs='?', help="""restrict function to run""")
     parser.add_argument(
-        'function', nargs='?',
-        help="""restrict function to run""",
-    )
-    parser.add_argument(
-        'filenames', nargs='*',
+        'filenames',
+        nargs='*',
         help="""basename of filename set, extensions (.code, .data) have to
         be a superset of those in the unittest attribute of the selected
         function""",
@@ -194,7 +197,7 @@ def run(collections, args=None):
     results = []
     for function in test_functions:
         if include_functions and function.__name__ not in include_functions:
-                continue
+            continue
         if function.unittest:
             for base, exts in test_filenames:
                 if include_filenames and base not in include_filenames:

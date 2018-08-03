@@ -4,8 +4,8 @@ ruamel.yaml
 
 ``ruamel.yaml`` is a YAML 1.2 loader/dumper package for Python.
 
-:version:       0.15.47
-:updated:       2018-07-31
+:version:       0.15.48
+:updated:       2018-08-03
 :documentation: http://yaml.readthedocs.io
 :repository:    https://bitbucket.org/ruamel/
 :pypi:          https://pypi.org/project/ruamel.yaml/
@@ -46,11 +46,16 @@ when the status of the API is stable enough to make the transition.
 .. image:: https://bitbucket.org/ruamel/oitnb/raw/default/_doc/_static/oitnb.svg
    :target: https://pypi.org/project/oitnb/
 
+.. image:: http://www.mypy-lang.org/static/mypy_badge.svg
+   :target: http://mypy-lang.org/
 
 ChangeLog
 =========
 
 .. should insert NEXT: at the beginning of line for next key (with empty line)
+
+0.15.48 (2018-08-03):
+  - housekeeping: ``oitnb`` for formatting, mypy 0.620 upgrade and conformity
 
 0.15.47 (2018-07-31):
   - fix broken 3.6 manylinux1, the result of an unclean ``build`` (reported by 

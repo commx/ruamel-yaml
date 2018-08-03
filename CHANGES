@@ -1,3 +1,6 @@
+[0, 15, 48]: 2018-08-03
+  - housekeeping: ``oitnb`` for formatting, mypy 0.620 upgrade and conformity
+
 [0, 15, 47]: 2018-07-31
   - fix broken 3.6 manylinux1 (result of an unclean ``build`` (reported by 
     `Roman Sichnyi <https://bitbucket.org/rsichnyi-gl/>`__)

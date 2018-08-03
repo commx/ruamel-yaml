@@ -10,6 +10,7 @@ except:  # NOQA
 
 def Xtest_numpy():
     import ruamel.yaml
+
     if numpy is None:
         return
     data = numpy.arange(10)

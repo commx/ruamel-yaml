@@ -12,23 +12,27 @@ from roundtrip import round_trip, dedent, round_trip_load, round_trip_dump
 class TestBinHexOct:
     # @pytest.mark.xfail(strict=True)
     def test_round_trip_hex_oct(self):
-        round_trip("""\
+        round_trip(
+            """\
         - 42
         - 0b101010
         - 0x2a
         - 0x2A
         - 0o52
-        """)
+        """
+        )
 
     def test_calculate(self):
         # make sure type, leading zero(s) and underscore are preserved
-        s = dedent("""\
+        s = dedent(
+            """\
         - 42
         - 0b101010
         - 0x_2a
         - 0x2A
         - 0o00_52
-        """)
+        """
+        )
         x = round_trip_load(s)
         for idx, elem in enumerate(x):
             # x[idx] = type(elem)(elem - 21)
@@ -51,7 +55,8 @@ class TestBinHexOct:
     # the old octal representation.
 
     def test_leading_zero_hex_oct_bin(self):
-        round_trip("""\
+        round_trip(
+            """\
         - 0b0101010
         - 0b00101010
         - 0x02a
@@ -60,26 +65,32 @@ class TestBinHexOct:
         - 0x002A
         - 0o052
         - 0o0052
-        """)
+        """
+        )
 
     def test_leading_zero_int(self):
-        round_trip("""\
+        round_trip(
+            """\
         - 042
         - 0042
-        """)
+        """
+        )
 
     def test_leading_zero_YAML_1_1(self):
-        d = round_trip_load("""\
+        d = round_trip_load(
+            """\
         %YAML 1.1
         ---
         - 042
         - 0o42
-        """)
+        """
+        )
         assert d[0] == 0o42
         assert d[1] == '0o42'
 
     def test_underscore(self):
-        round_trip("""\
+        round_trip(
+            """\
         - 0b10000_10010010
         - 0b0_0000_1001_0010
         - 0x2_87_57_b2_
@@ -87,23 +98,28 @@ class TestBinHexOct:
         - 0x_0_2_8_7_5_7_B_2
         - 0o2416_53662
         - 42_42_
-        """)
+        """
+        )
 
     def test_leading_underscore(self):
-        d = round_trip_load("""\
+        d = round_trip_load(
+            """\
         - 0x_2_8_7_5_7_B_2
         - _42_42_
         - 42_42_
-        """)
+        """
+        )
         assert d[0] == 42424242
         assert d[1] == '_42_42_'
         assert d[2] == 4242
 
     def test_big(self):
         # bitbucket issue 144 reported by ccatterina
-        d = round_trip_load("""\
+        d = round_trip_load(
+            """\
         - 2_147_483_647
         - 9_223_372_036_854_775_808
-        """)
+        """
+        )
         assert d[0] == 2147483647
         assert d[1] == 9223372036854775808

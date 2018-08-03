@@ -7,8 +7,12 @@ from ruamel.yaml.compat import text_type
 if False:  # MYPY
     from typing import Text, Any, Dict, List  # NOQA
 
-__all__ = ["ScalarString", "PreservedScalarString", "SingleQuotedScalarString",
-           "DoubleQuotedScalarString"]
+__all__ = [
+    'ScalarString',
+    'PreservedScalarString',
+    'SingleQuotedScalarString',
+    'DoubleQuotedScalarString',
+]
 
 
 class ScalarString(text_type):
@@ -26,7 +30,7 @@ class ScalarString(text_type):
 class PreservedScalarString(ScalarString):
     __slots__ = ()
 
-    style = "|"
+    style = '|'
 
     def __new__(cls, value):
         # type: (Text) -> Any

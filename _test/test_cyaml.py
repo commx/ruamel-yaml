@@ -4,18 +4,26 @@ import platform
 import pytest
 
 
-@pytest.mark.skipif(platform.python_implementation() == 'Jython',
-                    reason="Jython throws RepresenterError")
+@pytest.mark.skipif(
+    platform.python_implementation() == 'Jython', reason='Jython throws RepresenterError'
+)
 def test_load_cyaml():
     import ruamel.yaml
+
     assert ruamel.yaml.__with_libyaml__
     from ruamel.yaml.cyaml import CLoader
-    ruamel.yaml.load("abc: 1", Loader=CLoader)
+
+    ruamel.yaml.load('abc: 1', Loader=CLoader)
 
 
 def test_dump_cyaml():
     import ruamel.yaml
+
     data = {'a': 1, 'b': 2}
-    res = ruamel.yaml.dump(data, Dumper=ruamel.yaml.cyaml.CSafeDumper,
-                           default_flow_style=False, allow_unicode=True)
-    assert res == "a: 1\nb: 2\n"
+    res = ruamel.yaml.dump(
+        data,
+        Dumper=ruamel.yaml.cyaml.CSafeDumper,
+        default_flow_style=False,
+        allow_unicode=True,
+    )
+    assert res == 'a: 1\nb: 2\n'

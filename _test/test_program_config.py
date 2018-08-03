@@ -8,7 +8,8 @@ from roundtrip import round_trip
 class TestProgramConfig:
     def test_application_arguments(self):
         # application configur
-        round_trip("""
+        round_trip(
+            """
         args:
           username: anthon
           passwd: secret
@@ -17,11 +18,13 @@ class TestProgramConfig:
             session-name: test
           loop:
             wait: 10
-        """)
+        """
+        )
 
     def test_single(self):
         # application configuration
-        round_trip("""
+        round_trip(
+            """
         # default arguments for the program
         args:  # needed to prevent comment wrapping
         # this should be your username
@@ -36,11 +39,13 @@ class TestProgramConfig:
             # experiment with the following
             wait: 10
           # no more argument info to pass
-        """)
+        """
+        )
 
     def test_multi(self):
         # application configuration
-        round_trip("""
+        round_trip(
+            """
         # default arguments for the program
         args:  # needed to prevent comment wrapping
         # this should be your username
@@ -55,4 +60,5 @@ class TestProgramConfig:
             # experiment with the following
             wait: 10
           # no more argument info to pass
-        """)
+        """
+        )

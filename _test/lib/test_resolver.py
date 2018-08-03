@@ -20,9 +20,9 @@ def test_implicit_resolver(data_filename, detect_filename, verbose=False):
             assert scalar.tag == correct_tag, (scalar.tag, correct_tag)
     finally:
         if verbose:
-            print("CORRECT TAG:", correct_tag)
+            print('CORRECT TAG:', correct_tag)
             if hasattr(node, 'value'):
-                print("CHILDREN:")
+                print('CHILDREN:')
                 pprint.pprint(node.value)
 
 
@@ -38,16 +38,19 @@ def _make_path_loader_and_dumper():
     class MyDumper(yaml.Dumper):
         pass
 
-    yaml.add_path_resolver(u'!root', [],
-                           Loader=MyLoader, Dumper=MyDumper)
-    yaml.add_path_resolver(u'!root/scalar', [], str,
-                           Loader=MyLoader, Dumper=MyDumper)
-    yaml.add_path_resolver(u'!root/key11/key12/*', ['key11', 'key12'],
-                           Loader=MyLoader, Dumper=MyDumper)
-    yaml.add_path_resolver(u'!root/key21/1/*', ['key21', 1],
-                           Loader=MyLoader, Dumper=MyDumper)
-    yaml.add_path_resolver(u'!root/key31/*/*/key14/map', ['key31', None, None, 'key14'], dict,
-                           Loader=MyLoader, Dumper=MyDumper)
+    yaml.add_path_resolver(u'!root', [], Loader=MyLoader, Dumper=MyDumper)
+    yaml.add_path_resolver(u'!root/scalar', [], str, Loader=MyLoader, Dumper=MyDumper)
+    yaml.add_path_resolver(
+        u'!root/key11/key12/*', ['key11', 'key12'], Loader=MyLoader, Dumper=MyDumper
+    )
+    yaml.add_path_resolver(u'!root/key21/1/*', ['key21', 1], Loader=MyLoader, Dumper=MyDumper)
+    yaml.add_path_resolver(
+        u'!root/key31/*/*/key14/map',
+        ['key31', None, None, 'key14'],
+        dict,
+        Loader=MyLoader,
+        Dumper=MyDumper,
+    )
 
     return MyLoader, MyDumper
 
@@ -106,4 +109,5 @@ test_path_resolver_dumper.unittest = ['.data', '.path']
 
 if __name__ == '__main__':
     import test_appliance
+
     test_appliance.run(globals())

@@ -9,6 +9,7 @@ import os.path
 from ruamel.yaml.compat import PY2, PY3, StringIO, BytesIO
 
 if PY2:
+
     def _unicode_open(file, encoding, errors='strict'):
         info = codecs.lookup(encoding)
         if isinstance(info, tuple):
@@ -21,7 +22,9 @@ if PY2:
         srw.encoding = encoding
         return srw
 
+
 if PY3:
+
     def test_unicode_input(unicode_filename, verbose=False):
         with open(unicode_filename, 'rb') as fp:
             data = fp.read().decode('utf-8')
@@ -30,33 +33,42 @@ if PY3:
         assert output == value, (output, value)
         output = yaml.load(StringIO(data))
         assert output == value, (output, value)
-        for input in [data.encode('utf-8'),
-                      codecs.BOM_UTF8 + data.encode('utf-8'),
-                      codecs.BOM_UTF16_BE + data.encode('utf-16-be'),
-                      codecs.BOM_UTF16_LE + data.encode('utf-16-le')]:
+        for input in [
+            data.encode('utf-8'),
+            codecs.BOM_UTF8 + data.encode('utf-8'),
+            codecs.BOM_UTF16_BE + data.encode('utf-16-be'),
+            codecs.BOM_UTF16_LE + data.encode('utf-16-le'),
+        ]:
             if verbose:
-                print("INPUT:", repr(input[:10]), "...")
+                print('INPUT:', repr(input[:10]), '...')
             output = yaml.load(input)
             assert output == value, (output, value)
             output = yaml.load(BytesIO(input))
             assert output == value, (output, value)
+
+
 else:
+
     def test_unicode_input(unicode_filename, verbose=False):
         with open(unicode_filename, 'rb') as fp:
             data = fp.read().decode('utf-8')
         value = ' '.join(data.split())
         output = yaml.load(_unicode_open(StringIO(data.encode('utf-8')), 'utf-8'))
         assert output == value, (output, value)
-        for input in [data, data.encode('utf-8'),
-                      codecs.BOM_UTF8 + data.encode('utf-8'),
-                      codecs.BOM_UTF16_BE + data.encode('utf-16-be'),
-                      codecs.BOM_UTF16_LE + data.encode('utf-16-le')]:
+        for input in [
+            data,
+            data.encode('utf-8'),
+            codecs.BOM_UTF8 + data.encode('utf-8'),
+            codecs.BOM_UTF16_BE + data.encode('utf-16-be'),
+            codecs.BOM_UTF16_LE + data.encode('utf-16-le'),
+        ]:
             if verbose:
-                print("INPUT:", repr(input[:10]), "...")
+                print('INPUT:', repr(input[:10]), '...')
             output = yaml.load(input)
             assert output == value, (output, value)
             output = yaml.load(StringIO(input))
             assert output == value, (output, value)
+
 
 test_unicode_input.unittest = ['.unicode']
 
@@ -64,30 +76,34 @@ test_unicode_input.unittest = ['.unicode']
 def test_unicode_input_errors(unicode_filename, verbose=False):
     with open(unicode_filename, 'rb') as fp:
         data = fp.read().decode('utf-8')
-    for input in [data.encode('latin1', 'ignore'),
-                  data.encode('utf-16-be'), data.encode('utf-16-le'),
-                  codecs.BOM_UTF8 + data.encode('utf-16-be'),
-                  codecs.BOM_UTF16_BE + data.encode('utf-16-le'),
-                  codecs.BOM_UTF16_LE + data.encode('utf-8') + b'!']:
+    for input in [
+        data.encode('latin1', 'ignore'),
+        data.encode('utf-16-be'),
+        data.encode('utf-16-le'),
+        codecs.BOM_UTF8 + data.encode('utf-16-be'),
+        codecs.BOM_UTF16_BE + data.encode('utf-16-le'),
+        codecs.BOM_UTF16_LE + data.encode('utf-8') + b'!',
+    ]:
         try:
             yaml.load(input)
         except yaml.YAMLError as exc:
             if verbose:
                 print(exc)
         else:
-            raise AssertionError("expected an exception")
+            raise AssertionError('expected an exception')
         try:
             yaml.load(BytesIO(input) if PY3 else StringIO(input))
         except yaml.YAMLError as exc:
             if verbose:
                 print(exc)
         else:
-            raise AssertionError("expected an exception")
+            raise AssertionError('expected an exception')
 
 
 test_unicode_input_errors.unittest = ['.unicode']
 
 if PY3:
+
     def test_unicode_output(unicode_filename, verbose=False):
         with open(unicode_filename, 'rb') as fp:
             data = fp.read().decode('utf-8')
@@ -105,19 +121,20 @@ if PY3:
                 stream = BytesIO()
                 if encoding is None:
                     try:
-                        yaml.dump(value, stream, encoding=encoding,
-                                  allow_unicode=allow_unicode)
+                        yaml.dump(
+                            value, stream, encoding=encoding, allow_unicode=allow_unicode
+                        )
                     except TypeError as exc:
                         if verbose:
                             print(exc)
                         data4 = None
                     else:
-                        raise AssertionError("expected an exception")
+                        raise AssertionError('expected an exception')
                 else:
                     yaml.dump(value, stream, encoding=encoding, allow_unicode=allow_unicode)
                     data4 = stream.getvalue()
                     if verbose:
-                        print("BYTES:", data4[:50])
+                        print('BYTES:', data4[:50])
                     data4 = data4.decode(encoding)
                 for copy in [data1, data2, data3, data4]:
                     if copy is None:
@@ -130,12 +147,15 @@ if PY3:
                             if verbose:
                                 print(exc)
                         else:
-                            raise AssertionError("expected an exception")
+                            raise AssertionError('expected an exception')
                     else:
                         copy[4:].encode('ascii')
                 assert isinstance(data1, str), (type(data1), encoding)
                 assert isinstance(data2, str), (type(data2), encoding)
+
+
 else:
+
     def test_unicode_output(unicode_filename, verbose=False):
         with open(unicode_filename, 'rb') as fp:
             data = fp.read().decode('utf-8')
@@ -144,8 +164,12 @@ else:
             data1 = yaml.dump(value, allow_unicode=allow_unicode)
             for encoding in [None, 'utf-8', 'utf-16-be', 'utf-16-le']:
                 stream = StringIO()
-                yaml.dump(value, _unicode_open(stream, 'utf-8'), encoding=encoding,
-                          allow_unicode=allow_unicode)
+                yaml.dump(
+                    value,
+                    _unicode_open(stream, 'utf-8'),
+                    encoding=encoding,
+                    allow_unicode=allow_unicode,
+                )
                 data2 = stream.getvalue()
                 data3 = yaml.dump(value, encoding=encoding, allow_unicode=allow_unicode)
                 stream = StringIO()
@@ -159,7 +183,7 @@ else:
                             if verbose:
                                 print(exc)
                         else:
-                            raise AssertionError("expected an exception")
+                            raise AssertionError('expected an exception')
                     else:
                         copy[4:].encode('ascii')
                 assert isinstance(data1, str), (type(data1), encoding)
@@ -206,8 +230,7 @@ def test_file_output(unicode_filename, verbose=False):
             with open(filename, 'rb') as fp0:
                 data2 = fp0.read()
             with open(filename, 'wb') as stream:
-                yaml.dump(data, stream, encoding='utf-16-le',
-                          allow_unicode=True)
+                yaml.dump(data, stream, encoding='utf-16-le', allow_unicode=True)
             with open(filename, 'rb') as fp0:
                 data3 = fp0.read().decode('utf-16-le')[1:].encode('utf-8')
             stream = _unicode_open(open(filename, 'wb'), 'utf-8')
@@ -267,4 +290,5 @@ test_unicode_transfer.unittest = ['.unicode']
 
 if __name__ == '__main__':
     import test_appliance
+
     test_appliance.run(globals())

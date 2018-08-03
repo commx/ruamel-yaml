@@ -53,13 +53,12 @@ def test_tokens(data_filename, tokens_filename, verbose=False):
     try:
         with open(data_filename, 'rb') as fp1:
             for token in yaml.scan(fp1):
-                if not isinstance(
-                        token, (yaml.StreamStartToken, yaml.StreamEndToken)):
+                if not isinstance(token, (yaml.StreamStartToken, yaml.StreamEndToken)):
                     tokens1.append(_replaces[token.__class__])
     finally:
         if verbose:
-            print("TOKENS1:", ' '.join(tokens1))
-            print("TOKENS2:", ' '.join(tokens2))
+            print('TOKENS1:', ' '.join(tokens1))
+            print('TOKENS2:', ' '.join(tokens2))
     assert len(tokens1) == len(tokens2), (tokens1, tokens2)
     for token1, token2 in zip(tokens1, tokens2):
         assert token1 == token2, (token1, token2)
@@ -84,4 +83,5 @@ test_scanner.unittest = ['.data', '.canonical']
 
 if __name__ == '__main__':
     import test_appliance
+
     test_appliance.run(globals())

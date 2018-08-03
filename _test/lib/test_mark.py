@@ -19,8 +19,7 @@ def test_marks(marks_filename, verbose=False):
             else:
                 column += 1
             index += 1
-        mark = yaml.Mark(marks_filename, index, line, column, text_type(input),
-                         index)
+        mark = yaml.Mark(marks_filename, index, line, column, text_type(input), index)
         snippet = mark.get_snippet(indent=2, max_length=79)
         if verbose:
             print(snippet)
@@ -35,4 +34,5 @@ test_marks.unittest = ['.marks']
 
 if __name__ == '__main__':
     import test_appliance
+
     test_appliance.run(globals())

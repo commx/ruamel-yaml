@@ -21,12 +21,13 @@ def dedent(data):
     except ValueError:
         pass
     else:
-        data = data[position_of_first_newline + 1:]
+        data = data[position_of_first_newline + 1 :]
     return textwrap.dedent(data)
 
 
 def round_trip_load(inp, preserve_quotes=None, version=None):
     import ruamel.yaml  # NOQA
+
     dinp = dedent(inp)
     return ruamel.yaml.load(
         dinp,
@@ -38,6 +39,7 @@ def round_trip_load(inp, preserve_quotes=None, version=None):
 
 def round_trip_load_all(inp, preserve_quotes=None, version=None):
     import ruamel.yaml  # NOQA
+
     dinp = dedent(inp)
     return ruamel.yaml.load_all(
         dinp,
@@ -47,21 +49,35 @@ def round_trip_load_all(inp, preserve_quotes=None, version=None):
     )
 
 
-def round_trip_dump(data, stream=None,
-                    indent=None, block_seq_indent=None, top_level_colon_align=None,
-                    prefix_colon=None, explicit_start=None, explicit_end=None, version=None):
+def round_trip_dump(
+    data,
+    stream=None,
+    indent=None,
+    block_seq_indent=None,
+    top_level_colon_align=None,
+    prefix_colon=None,
+    explicit_start=None,
+    explicit_end=None,
+    version=None,
+):
     import ruamel.yaml  # NOQA
-    return ruamel.yaml.round_trip_dump(data, stream=stream,
-                                       indent=indent, block_seq_indent=block_seq_indent,
-                                       top_level_colon_align=top_level_colon_align,
-                                       prefix_colon=prefix_colon,
-                                       explicit_start=explicit_start,
-                                       explicit_end=explicit_end,
-                                       version=version)
+
+    return ruamel.yaml.round_trip_dump(
+        data,
+        stream=stream,
+        indent=indent,
+        block_seq_indent=block_seq_indent,
+        top_level_colon_align=top_level_colon_align,
+        prefix_colon=prefix_colon,
+        explicit_start=explicit_start,
+        explicit_end=explicit_end,
+        version=version,
+    )
 
 
 def diff(inp, outp, file_name='stdin'):
     import difflib
+
     inl = inp.splitlines(True)  # True for keepends
     outl = outp.splitlines(True)
     diff = difflib.unified_diff(inl, outl, file_name, 'round trip YAML')
@@ -73,11 +89,20 @@ def diff(inp, outp, file_name='stdin'):
         sys.stdout.write(line)
 
 
-def round_trip(inp, outp=None, extra=None, intermediate=None, indent=None,
-               block_seq_indent=None, top_level_colon_align=None, prefix_colon=None,
-               preserve_quotes=None,
-               explicit_start=None, explicit_end=None,
-               version=None):
+def round_trip(
+    inp,
+    outp=None,
+    extra=None,
+    intermediate=None,
+    indent=None,
+    block_seq_indent=None,
+    top_level_colon_align=None,
+    prefix_colon=None,
+    preserve_quotes=None,
+    explicit_start=None,
+    explicit_end=None,
+    version=None,
+):
     """
     inp:    input string to parse
     outp:   expected output (equals input if not specified)
@@ -94,23 +119,31 @@ def round_trip(inp, outp=None, extra=None, intermediate=None, indent=None,
                 if data[k] != v:
                     print('{0!r} <> {1!r}'.format(data[k], v))
                     raise ValueError
-    res = round_trip_dump(data, indent=indent, block_seq_indent=block_seq_indent,
-                          top_level_colon_align=top_level_colon_align,
-                          prefix_colon=prefix_colon,
-                          explicit_start=explicit_start,
-                          explicit_end=explicit_end,
-                          version=version)
+    res = round_trip_dump(
+        data,
+        indent=indent,
+        block_seq_indent=block_seq_indent,
+        top_level_colon_align=top_level_colon_align,
+        prefix_colon=prefix_colon,
+        explicit_start=explicit_start,
+        explicit_end=explicit_end,
+        version=version,
+    )
     if res != doutp:
-        diff(doutp, res, "input string")
-    print('\nroundtrip data:\n', res, sep='')
+        diff(doutp, res, 'input string')
+    print('\nroundtrip data:\n', res, sep="")
     assert res == doutp
-    res = round_trip_dump(data, indent=indent, block_seq_indent=block_seq_indent,
-                          top_level_colon_align=top_level_colon_align,
-                          prefix_colon=prefix_colon,
-                          explicit_start=explicit_start,
-                          explicit_end=explicit_end,
-                          version=version)
-    print('roundtrip second round data:\n', res, sep='')
+    res = round_trip_dump(
+        data,
+        indent=indent,
+        block_seq_indent=block_seq_indent,
+        top_level_colon_align=top_level_colon_align,
+        prefix_colon=prefix_colon,
+        explicit_start=explicit_start,
+        explicit_end=explicit_end,
+        version=version,
+    )
+    print('roundtrip second round data:\n', res, sep="")
     assert res == doutp
     return data
 
@@ -120,6 +153,7 @@ def YAML(**kw):
 
     class MyYAML(ruamel.yaml.YAML):
         """auto dedent string parameters on load"""
+
         def load(self, stream):
             if isinstance(stream, str):
                 if stream and stream[0] == '\n':
@@ -137,6 +171,7 @@ def YAML(**kw):
 
         def dump(self, data, **kw):
             from ruamel.yaml.compat import StringIO, BytesIO  # NOQA
+
             assert ('stream' in kw) ^ ('compare' in kw)
             if 'stream' in kw:
                 return ruamel.yaml.YAML.dump(data, **kw)
@@ -156,6 +191,7 @@ def YAML(**kw):
 
         def round_trip(self, stream, **kw):
             from ruamel.yaml.compat import StringIO, BytesIO  # NOQA
+
             assert isinstance(stream, ruamel.yaml.compat.text_type)
             lkw = kw.copy()
             if stream and stream[0] == '\n':
@@ -167,7 +203,7 @@ def YAML(**kw):
             ruamel.yaml.YAML.dump(self, data, **lkw)
             res = st.getvalue()
             if res != outp:
-                diff(outp, res, "input string")
+                diff(outp, res, 'input string')
             assert res == outp
 
     return MyYAML(**kw)

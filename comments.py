@@ -23,9 +23,11 @@ else:
 if False:  # MYPY
     from typing import Any, Dict, Optional, List, Union  # NOQA
 
+# fmt: off
 __all__ = ["CommentedSeq", "CommentedKeySeq",
            "CommentedMap", "CommentedOrderedMap",
            "CommentedSet", 'comment_attrib', 'merge_attrib']
+# fmt: on
 
 comment_attrib = '_yaml_comment'
 format_attrib = '_yaml_format'
@@ -38,7 +40,7 @@ tag_attrib = '_yaml_tag'
 class Comment(object):
     # sys.getsize tested the Comment objects, __slots__ makes them bigger
     # and adding self.end did not matter
-    __slots__ = 'comment', '_items', '_end', '_start',
+    __slots__ = 'comment', '_items', '_end', '_start'
     attrib = comment_attrib
 
     def __init__(self):
@@ -56,9 +58,8 @@ class Comment(object):
         if bool(self._end):
             end = ',\n  end=' + str(self._end)
         else:
-            end = ''
-        return "Comment(comment={0},\n  items={1}{2})".format(
-            self.comment, self._items, end)
+            end = ""
+        return 'Comment(comment={0},\n  items={1}{2})'.format(self.comment, self._items, end)
 
     @property
     def items(self):
@@ -93,7 +94,7 @@ def NoComment():
 
 
 class Format(object):
-    __slots__ = '_flow_style',
+    __slots__ = ('_flow_style',)
     attrib = format_attrib
 
     def __init__(self):
@@ -163,7 +164,7 @@ class LineCol(object):
 
 
 class Anchor(object):
-    __slots__ = 'value', 'always_dump',
+    __slots__ = 'value', 'always_dump'
     attrib = anchor_attrib
 
     def __init__(self):
@@ -174,7 +175,8 @@ class Anchor(object):
 
 class Tag(object):
     """store tag information for roundtripping"""
-    __slots__ = 'value',
+
+    __slots__ = ('value',)
     attrib = tag_attrib
 
     def __init__(self):
@@ -231,6 +233,7 @@ class CommentedBase(object):
         """
         from .error import CommentMark
         from .tokens import CommentToken
+
         pre_comments = self._yaml_get_pre_comment()
         if comment[-1] == '\n':
             comment = comment[:-1]  # strip final newline if there
@@ -238,8 +241,9 @@ class CommentedBase(object):
         for com in comment.split('\n'):
             pre_comments.append(CommentToken('# ' + com + '\n', start_mark, None))
 
-    def yaml_set_comment_before_after_key(self, key, before=None, indent=0,
-                                          after=None, after_indent=None):
+    def yaml_set_comment_before_after_key(
+        self, key, before=None, indent=0, after=None, after_indent=None
+    ):
         # type: (Any, Any, Any, Any, Any) -> None
         """
         expects comment (before/after) to be without `#` and possible have multiple lines
@@ -250,7 +254,7 @@ class CommentedBase(object):
         def comment_token(s, mark):
             # type: (Any, Any) -> Any
             # handle empty lines as having no comment
-            return CommentToken(('# ' if s else '') + s + '\n', mark, None)
+            return CommentToken(('# ' if s else "") + s + '\n', mark, None)
 
         if after_indent is None:
             after_indent = indent + 2
@@ -261,7 +265,7 @@ class CommentedBase(object):
         start_mark = CommentMark(indent)
         c = self.ca.items.setdefault(key, [None, [], None, None])
         if before == '\n':
-            c[1].append(comment_token('', start_mark))
+            c[1].append(comment_token("", start_mark))
         elif before:
             for com in before.split('\n'):
                 c[1].append(comment_token(com, start_mark))
@@ -291,6 +295,7 @@ class CommentedBase(object):
         """
         from .tokens import CommentToken
         from .error import CommentMark
+
         if column is None:
             column = self._yaml_get_column(key)
         if comment[0] != '#':
@@ -354,6 +359,7 @@ class CommentedBase(object):
 
     def copy_attributes(self, t, deep=False):
         # type: (Any, bool) -> None
+        # fmt: off
         for a in [Comment.attrib, Format.attrib, LineCol.attrib, Anchor.attrib,
                   Tag.attrib, merge_attrib]:
             if hasattr(self, a):
@@ -361,6 +367,7 @@ class CommentedBase(object):
                     setattr(t, a, copy.deepcopy(getattr(self, a)))
                 else:
                     setattr(t, a, getattr(self, a))
+        # fmt: on
 
     def _yaml_add_eol_comment(self, comment, key):
         # type: (Any, Any) -> None
@@ -376,7 +383,7 @@ class CommentedBase(object):
 
 
 class CommentedSeq(list, CommentedBase):
-    __slots__ = Comment.attrib,
+    __slots__ = (Comment.attrib,)
 
     def _yaml_add_comment(self, comment, key=NoComment):
         # type: (Any, Optional[Any]) -> None
@@ -404,7 +411,7 @@ class CommentedSeq(list, CommentedBase):
 
     def pop(self, idx=None):
         # type: (Any) -> Any
-        res = list.pop(self, idx)  # type: ignore
+        res = list.pop(self, idx)
         self.ca.items.pop(idx, None)  # might not be there -> default value
         for list_index in sorted(self.ca.items):
             if list_index < idx:
@@ -455,15 +462,18 @@ class CommentedSeq(list, CommentedBase):
         # type: (Any, Any) -> None
         # try to preserve the scalarstring type if setting an existing key to a new value
         if idx < len(self):
-            if isinstance(value, string_types) and \
-               not isinstance(value, ScalarString) and \
-               isinstance(self[idx], ScalarString):
+            if (
+                isinstance(value, string_types)
+                and not isinstance(value, ScalarString)
+                and isinstance(self[idx], ScalarString)
+            ):
                 value = type(self[idx])(value)
         list.__setitem__(self, idx, value)
 
 
 class CommentedKeySeq(tuple, CommentedBase):
     """This primarily exists to be able to roundtrip keys that are sequences"""
+
     def _yaml_add_comment(self, comment, key=NoComment):
         # type: (Any, Optional[Any]) -> None
         if key is not NoComment:
@@ -511,7 +521,7 @@ class CommentedKeySeq(tuple, CommentedBase):
 
 
 class CommentedMapView(Sized):
-    __slots__ = '_mapping',
+    __slots__ = ('_mapping',)
 
     def __init__(self, mapping):
         # type: (Any) -> None
@@ -597,7 +607,7 @@ class CommentedMapValuesView(CommentedMapView):
 
 
 class CommentedMap(ordereddict, CommentedBase):
-    __slots__ = Comment.attrib,
+    __slots__ = (Comment.attrib,)
 
     def _yaml_add_comment(self, comment, key=NoComment, value=NoComment):
         # type: (Any, Optional[Any], Optional[Any]) -> None
@@ -714,9 +724,11 @@ class CommentedMap(ordereddict, CommentedBase):
         # type: (Any, Any) -> None
         # try to preserve the scalarstring type if setting an existing key to a new value
         if key in self:
-            if isinstance(value, string_types) and \
-               not isinstance(value, ScalarString) and \
-               isinstance(self[key], ScalarString):
+            if (
+                isinstance(value, string_types)
+                and not isinstance(value, ScalarString)
+                and isinstance(self[key], ScalarString)
+            ):
                 value = type(self[key])(value)
         ordereddict.__setitem__(self, key, value)
 
@@ -802,6 +814,7 @@ class CommentedMap(ordereddict, CommentedBase):
             done.append(merged[1])
 
     if PY2:
+
         def keys(self):
             # type: () -> Any
             return list(self._keys())
@@ -813,7 +826,9 @@ class CommentedMap(ordereddict, CommentedBase):
         def viewkeys(self):
             # type: () -> Any
             return CommentedMapKeysView(self)
+
     else:
+
         def keys(self):
             # type: () -> Any
             return CommentedMapKeysView(self)
@@ -835,6 +850,7 @@ class CommentedMap(ordereddict, CommentedBase):
             done.append(merged[1])
 
     if PY2:
+
         def values(self):
             # type: () -> Any
             return list(self._values())
@@ -846,7 +862,9 @@ class CommentedMap(ordereddict, CommentedBase):
         def viewvalues(self):
             # type: () -> Any
             return CommentedMapValuesView(self)
+
     else:
+
         def values(self):
             # type: () -> Any
             return CommentedMapValuesView(self)
@@ -868,6 +886,7 @@ class CommentedMap(ordereddict, CommentedBase):
             done.append(merged[1])
 
     if PY2:
+
         def items(self):
             # type: () -> Any
             return list(self._items())
@@ -879,7 +898,9 @@ class CommentedMap(ordereddict, CommentedBase):
         def viewitems(self):
             # type: () -> Any
             return CommentedMapItemsView(self)
+
     else:
+
         def items(self):
             # type: () -> Any
             return CommentedMapItemsView(self)
@@ -906,11 +927,11 @@ class CommentedMap(ordereddict, CommentedBase):
 
 
 class CommentedOrderedMap(CommentedMap):
-    __slots__ = Comment.attrib,
+    __slots__ = (Comment.attrib,)
 
 
 class CommentedSet(MutableSet, CommentedMap):
-    __slots__ = Comment.attrib, 'odict',
+    __slots__ = Comment.attrib, 'odict'
 
     def __init__(self, values=None):
         # type: (Any) -> None
@@ -949,11 +970,17 @@ class CommentedSet(MutableSet, CommentedMap):
 
 class TaggedScalar(CommentedBase):
     # the value and style attributes are set during roundtrip construction
+    def __init__(self):
+        # type: () -> None
+        self.value = None
+        self.style = None
+
     def __str__(self):
+        # type: () -> Any
         return self.value
 
 
-def dump_comments(d, name='', sep='.', out=sys.stdout):
+def dump_comments(d, name="", sep='.', out=sys.stdout):
     # type: (Any, str, str, Any) -> None
     """
     recursively dump comments, all but the toplevel preceded by the path
@@ -970,5 +997,6 @@ def dump_comments(d, name='', sep='.', out=sys.stdout):
             print(name)
         print(d.ca, file=out)  # type: ignore
         for idx, k in enumerate(d):
-            dump_comments(k, name=(name + sep + str(idx)) if name else str(idx),
-                          sep=sep, out=out)
+            dump_comments(
+                k, name=(name + sep + str(idx)) if name else str(idx), sep=sep, out=out
+            )

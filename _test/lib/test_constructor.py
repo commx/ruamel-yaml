@@ -6,6 +6,7 @@ import pprint
 from ruamel.yaml.compat import PY2
 
 import datetime
+
 try:
     set
 except NameError:
@@ -20,10 +21,7 @@ def execute(code):
 
 
 def _make_objects():
-    global MyLoader, MyDumper, MyTestClass1, MyTestClass2, MyTestClass3, YAMLobject1, \
-        YAMLobject2, AnObject, AnInstance, AState, ACustomState, InitArgs, InitArgsWithState, \
-        NewArgs, NewArgsWithState, Reduce, ReduceWithState, MyInt, MyList, MyDict,  \
-        FixedOffset, today, execute
+    global MyLoader, MyDumper, MyTestClass1, MyTestClass2, MyTestClass3, YAMLobject1, YAMLobject2, AnObject, AnInstance, AState, ACustomState, InitArgs, InitArgsWithState, NewArgs, NewArgsWithState, Reduce, ReduceWithState, MyInt, MyList, MyDict, FixedOffset, today, execute
 
     class MyLoader(ruamel.yaml.Loader):
         pass
@@ -48,27 +46,29 @@ def _make_objects():
         return MyTestClass1(**mapping)
 
     def represent1(representer, native):
-        return representer.represent_mapping("!tag1", native.__dict__)
+        return representer.represent_mapping('!tag1', native.__dict__)
 
-    ruamel.yaml.add_constructor("!tag1", construct1, Loader=MyLoader)
+    ruamel.yaml.add_constructor('!tag1', construct1, Loader=MyLoader)
     ruamel.yaml.add_representer(MyTestClass1, represent1, Dumper=MyDumper)
 
     class MyTestClass2(MyTestClass1, ruamel.yaml.YAMLObject):
         ruamel.yaml.loader = MyLoader
         ruamel.yaml.dumper = MyDumper
-        ruamel.yaml.tag = "!tag2"
+        ruamel.yaml.tag = '!tag2'
 
         def from_yaml(cls, constructor, node):
             x = constructor.construct_yaml_int(node)
             return cls(x=x)
+
         from_yaml = classmethod(from_yaml)
 
         def to_yaml(cls, representer, native):
             return representer.represent_scalar(cls.yaml_tag, str(native.x))
+
         to_yaml = classmethod(to_yaml)
 
     class MyTestClass3(MyTestClass2):
-        ruamel.yaml.tag = "!tag3"
+        ruamel.yaml.tag = '!tag3'
 
         def from_yaml(cls, constructor, node):
             mapping = constructor.construct_mapping(node)
@@ -77,10 +77,12 @@ def _make_objects():
                 del mapping['=']
                 mapping['x'] = x
             return cls(**mapping)
+
         from_yaml = classmethod(from_yaml)
 
         def to_yaml(cls, representer, native):
             return representer.represent_mapping(cls.yaml_tag, native.__dict__)
+
         to_yaml = classmethod(to_yaml)
 
     class YAMLobject1(ruamel.yaml.YAMLObject):
@@ -131,12 +133,17 @@ def _make_objects():
             return self
 
         def __cmp__(self, other):
-            return cmp((type(self), self.foo, self.bar, self.baz),  # NOQA
-                       (type(other), other.foo, other.bar, other.baz))
+            return cmp(
+                (type(self), self.foo, self.bar, self.baz),  # NOQA
+                (type(other), other.foo, other.bar, other.baz),
+            )
 
         def __eq__(self, other):
-            return type(self) is type(other) and    \
-                (self.foo, self.bar, self.baz) == (other.foo, other.bar, other.baz)
+            return type(self) is type(other) and (self.foo, self.bar, self.baz) == (
+                other.foo,
+                other.bar,
+                other.baz,
+            )
 
     class AnInstance:
         def __init__(self, foo=None, bar=None, baz=None):
@@ -145,20 +152,21 @@ def _make_objects():
             self.baz = baz
 
         def __cmp__(self, other):
-            return cmp((type(self), self.foo, self.bar, self.baz),  # NOQA
-                       (type(other), other.foo, other.bar, other.baz))
+            return cmp(
+                (type(self), self.foo, self.bar, self.baz),  # NOQA
+                (type(other), other.foo, other.bar, other.baz),
+            )
 
         def __eq__(self, other):
-            return type(self) is type(other) and    \
-                (self.foo, self.bar, self.baz) == (other.foo, other.bar, other.baz)
+            return type(self) is type(other) and (self.foo, self.bar, self.baz) == (
+                other.foo,
+                other.bar,
+                other.baz,
+            )
 
     class AState(AnInstance):
         def __getstate__(self):
-            return {
-                '_foo': self.foo,
-                '_bar': self.bar,
-                '_baz': self.baz,
-            }
+            return {'_foo': self.foo, '_bar': self.bar, '_baz': self.baz}
 
         def __setstate__(self, state):
             self.foo = state['_foo']
@@ -259,6 +267,7 @@ try:
     from ruamel.ordereddict import ordereddict
 except ImportError:
     from collections import OrderedDict
+
     # to get the right name import ... as ordereddict doesn't do that
 
     class ordereddict(OrderedDict):
@@ -277,7 +286,7 @@ def _serialize_value(data):
         for key, value in data.items():
             key = _serialize_value(key)
             value = _serialize_value(value)
-            items.append("%s: %s" % (key, value))
+            items.append('%s: %s' % (key, value))
         items.sort()
         return '{%s}' % ', '.join(items)
     elif isinstance(data, datetime.datetime):
@@ -308,16 +317,16 @@ def test_constructor_types(data_filename, code_filename, verbose=False):
             pass
         # print('native1', native1)
         if verbose:
-            print("SERIALIZED NATIVE1:")
+            print('SERIALIZED NATIVE1:')
             print(_serialize_value(native1))
-            print("SERIALIZED NATIVE2:")
+            print('SERIALIZED NATIVE2:')
             print(_serialize_value(native2))
         assert _serialize_value(native1) == _serialize_value(native2), (native1, native2)
     finally:
         if verbose:
-            print("NATIVE1:")
+            print('NATIVE1:')
             pprint.pprint(native1)
-            print("NATIVE2:")
+            print('NATIVE2:')
             pprint.pprint(native2)
 
 
@@ -327,23 +336,28 @@ test_constructor_types.unittest = ['.data', '.code']
 def test_roundtrip_data(code_filename, roundtrip_filename, verbose=False):
     _make_objects()
     with open(code_filename, 'rb') as fp0:
-        value1 = fp0 .read()
+        value1 = fp0.read()
     native2 = list(ruamel.yaml.load_all(value1, Loader=MyLoader))
     if len(native2) == 1:
         native2 = native2[0]
     try:
-        value2 = ruamel.yaml.dump(native2, Dumper=MyDumper, default_flow_style=False,
-                                  allow_unicode=True, encoding='utf-8')
+        value2 = ruamel.yaml.dump(
+            native2,
+            Dumper=MyDumper,
+            default_flow_style=False,
+            allow_unicode=True,
+            encoding='utf-8',
+        )
         # value2 += x
         if verbose:
-            print("SERIALIZED NATIVE1:")
+            print('SERIALIZED NATIVE1:')
             print(value1)
-            print("SERIALIZED NATIVE2:")
+            print('SERIALIZED NATIVE2:')
             print(value2)
         assert value1 == value2, (value1, value2)
     finally:
         if verbose:
-            print("NATIVE2:")
+            print('NATIVE2:')
             pprint.pprint(native2)
 
 
@@ -353,6 +367,8 @@ test_roundtrip_data.unittest = ['.data', '.roundtrip']
 if __name__ == '__main__':
     import sys
     import test_constructor  # NOQA
+
     sys.modules['test_constructor'] = sys.modules['__main__']
     import test_appliance
+
     test_appliance.run(globals())

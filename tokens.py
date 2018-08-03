@@ -8,7 +8,7 @@ SHOWLINES = True
 
 
 class Token(object):
-    __slots__ = 'start_mark', 'end_mark', '_comment',
+    __slots__ = 'start_mark', 'end_mark', '_comment'
 
     def __init__(self, start_mark, end_mark):
         # type: (Any, Any) -> None
@@ -21,8 +21,7 @@ class Token(object):
         #               hasattr('self', key)]
         attributes = [key for key in self.__slots__ if not key.endswith('_mark')]
         attributes.sort()
-        arguments = u', '.join([u'%s=%r' % (key, getattr(self, key))
-                               for key in attributes])
+        arguments = u', '.join([u'%s=%r' % (key, getattr(self, key)) for key in attributes])
         if SHOWLINES:
             try:
                 arguments += u', line: ' + str(self.start_mark.line)
@@ -102,8 +101,9 @@ class Token(object):
 # class BOMToken(Token):
 #     id = '<byte order mark>'
 
+
 class DirectiveToken(Token):
-    __slots__ = 'name', 'value',
+    __slots__ = 'name', 'value'
     id = '<directive>'
 
     def __init__(self, name, value, start_mark, end_mark):
@@ -124,7 +124,7 @@ class DocumentEndToken(Token):
 
 
 class StreamStartToken(Token):
-    __slots__ = 'encoding',
+    __slots__ = ('encoding',)
     id = '<stream start>'
 
     def __init__(self, start_mark=None, end_mark=None, encoding=None):
@@ -198,7 +198,7 @@ class FlowEntryToken(Token):
 
 
 class AliasToken(Token):
-    __slots__ = 'value',
+    __slots__ = ('value',)
     id = '<alias>'
 
     def __init__(self, value, start_mark, end_mark):
@@ -208,7 +208,7 @@ class AliasToken(Token):
 
 
 class AnchorToken(Token):
-    __slots__ = 'value',
+    __slots__ = ('value',)
     id = '<anchor>'
 
     def __init__(self, value, start_mark, end_mark):
@@ -218,7 +218,7 @@ class AnchorToken(Token):
 
 
 class TagToken(Token):
-    __slots__ = 'value',
+    __slots__ = ('value',)
     id = '<tag>'
 
     def __init__(self, value, start_mark, end_mark):
@@ -228,7 +228,7 @@ class TagToken(Token):
 
 
 class ScalarToken(Token):
-    __slots__ = 'value', 'plain', 'style',
+    __slots__ = 'value', 'plain', 'style'
     id = '<scalar>'
 
     def __init__(self, value, plain, start_mark, end_mark, style=None):
@@ -240,7 +240,7 @@ class ScalarToken(Token):
 
 
 class CommentToken(Token):
-    __slots__ = 'value', 'pre_done',
+    __slots__ = 'value', 'pre_done'
     id = '<comment>'
 
     def __init__(self, value, start_mark, end_mark):

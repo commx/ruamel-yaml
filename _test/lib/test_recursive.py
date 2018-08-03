@@ -11,14 +11,12 @@ class AnInstance:
 
     def __repr__(self):
         try:
-            return "%s(foo=%r, bar=%r)" % (self.__class__.__name__,
-                                           self.foo, self.bar)
+            return '%s(foo=%r, bar=%r)' % (self.__class__.__name__, self.foo, self.bar)
         except RuntimeError:
-            return "%s(foo=..., bar=...)" % self.__class__.__name__
+            return '%s(foo=..., bar=...)' % self.__class__.__name__
 
 
 class AnInstanceWithState(AnInstance):
-
     def __getstate__(self):
         return {'attributes': [self.foo, self.bar]}
 
@@ -41,11 +39,11 @@ def test_recursive(recursive_filename, verbose=False):
         assert output1 == output2, (output1, output2)
     finally:
         if verbose:
-            print("VALUE1:", value1)
-            print("VALUE2:", value2)
-            print("OUTPUT1:")
+            print('VALUE1:', value1)
+            print('VALUE2:', value2)
+            print('OUTPUT1:')
             print(output1)
-            print("OUTPUT2:")
+            print('OUTPUT2:')
             print(output2)
 
 
@@ -53,4 +51,5 @@ test_recursive.unittest = ['.recursive']
 
 if __name__ == '__main__':
     import test_appliance
+
     test_appliance.run(globals())

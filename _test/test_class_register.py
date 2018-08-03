@@ -22,8 +22,7 @@ class User1(object):
 
     @classmethod
     def to_yaml(cls, representer, node):
-        return representer.represent_scalar(cls.yaml_tag,
-                                            u'{.name}-{.age}'.format(node, node))
+        return representer.represent_scalar(cls.yaml_tag, u'{.name}-{.age}'.format(node, node))
 
     @classmethod
     def from_yaml(cls, constructor, node):
@@ -34,66 +33,66 @@ class TestRegisterClass(object):
     def test_register_0_rt(self):
         yaml = YAML()
         yaml.register_class(User0)
-        ys = '''
+        ys = """
         - !User0
           name: Anthon
           age: 18
-        '''
+        """
         d = yaml.load(ys)
         yaml.dump(d, compare=ys, unordered_lines=True)
 
     def test_register_0_safe(self):
         # default_flow_style = None
-        yaml = YAML(typ="safe")
+        yaml = YAML(typ='safe')
         yaml.register_class(User0)
-        ys = '''
+        ys = """
         - !User0 {age: 18, name: Anthon}
-        '''
+        """
         d = yaml.load(ys)
         yaml.dump(d, compare=ys)
 
     def test_register_0_unsafe(self):
         # default_flow_style = None
-        yaml = YAML(typ="unsafe")
+        yaml = YAML(typ='unsafe')
         yaml.register_class(User0)
-        ys = '''
+        ys = """
         - !User0 {age: 18, name: Anthon}
-        '''
+        """
         d = yaml.load(ys)
         yaml.dump(d, compare=ys)
 
     def test_register_1_rt(self):
         yaml = YAML()
         yaml.register_class(User1)
-        ys = '''
+        ys = """
         - !user Anthon-18
-        '''
+        """
         d = yaml.load(ys)
         yaml.dump(d, compare=ys)
 
     def test_register_1_safe(self):
-        yaml = YAML(typ="safe")
+        yaml = YAML(typ='safe')
         yaml.register_class(User1)
-        ys = '''
+        ys = """
         [!user Anthon-18]
-        '''
+        """
         d = yaml.load(ys)
         yaml.dump(d, compare=ys)
 
     def test_register_1_unsafe(self):
-        yaml = YAML(typ="unsafe")
+        yaml = YAML(typ='unsafe')
         yaml.register_class(User1)
-        ys = '''
+        ys = """
         [!user Anthon-18]
-        '''
+        """
         d = yaml.load(ys)
         yaml.dump(d, compare=ys)
 
 
 class TestDecorator(object):
-
     def test_decorator_implicit(self):
         from ruamel.yaml import yaml_object
+
         yml = YAML()
 
         @yaml_object(yml)
@@ -102,16 +101,17 @@ class TestDecorator(object):
                 self.name = name
                 self.age = age
 
-        ys = '''
+        ys = """
         - !User2
           name: Anthon
           age: 18
-        '''
+        """
         d = yml.load(ys)
         yml.dump(d, compare=ys, unordered_lines=True)
 
     def test_decorator_explicit(self):
         from ruamel.yaml import yaml_object
+
         yml = YAML()
 
         @yaml_object(yml)
@@ -124,15 +124,16 @@ class TestDecorator(object):
 
             @classmethod
             def to_yaml(cls, representer, node):
-                return representer.represent_scalar(cls.yaml_tag,
-                                                    u'{.name}-{.age}'.format(node, node))
+                return representer.represent_scalar(
+                    cls.yaml_tag, u'{.name}-{.age}'.format(node, node)
+                )
 
             @classmethod
             def from_yaml(cls, constructor, node):
                 return cls(*node.value.split('-'))
 
-        ys = '''
+        ys = """
         - !USER Anthon-18
-        '''
+        """
         d = yml.load(ys)
         yml.dump(d, compare=ys)

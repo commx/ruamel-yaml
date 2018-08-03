@@ -24,26 +24,35 @@ from roundtrip import round_trip, dedent, round_trip_load, round_trip_dump  # NO
 
 class TestPreservedScalarString:
     def test_basic_string(self):
-        round_trip("""
+        round_trip(
+            """
         a: abcdefg
-        """, )
+        """
+        )
 
     def test_quoted_integer_string(self):
-        round_trip("""
+        round_trip(
+            """
         a: '12345'
-        """)
+        """
+        )
 
-    @pytest.mark.skipif(platform.python_implementation() == 'Jython',
-                        reason="Jython throws RepresenterError")
+    @pytest.mark.skipif(
+        platform.python_implementation() == 'Jython', reason='Jython throws RepresenterError'
+    )
     def test_preserve_string(self):
-        round_trip("""
+        round_trip(
+            """
             a: |
               abc
               def
-            """, intermediate=dict(a='abc\ndef\n'))
+            """,
+            intermediate=dict(a='abc\ndef\n'),
+        )
 
-    @pytest.mark.skipif(platform.python_implementation() == 'Jython',
-                        reason="Jython throws RepresenterError")
+    @pytest.mark.skipif(
+        platform.python_implementation() == 'Jython', reason='Jython throws RepresenterError'
+    )
     def test_preserve_string_strip(self):
         s = """
             a: |-
@@ -53,105 +62,140 @@ class TestPreservedScalarString:
             """
         round_trip(s, intermediate=dict(a='abc\ndef'))
 
-    @pytest.mark.skipif(platform.python_implementation() == 'Jython',
-                        reason="Jython throws RepresenterError")
+    @pytest.mark.skipif(
+        platform.python_implementation() == 'Jython', reason='Jython throws RepresenterError'
+    )
     def test_preserve_string_keep(self):
-            # with pytest.raises(AssertionError) as excinfo:
-            round_trip("""
+        # with pytest.raises(AssertionError) as excinfo:
+        round_trip(
+            """
             a: |+
               ghi
               jkl
 
 
             b: x
-            """, intermediate=dict(a='ghi\njkl\n\n\n', b='x'))
+            """,
+            intermediate=dict(a='ghi\njkl\n\n\n', b='x'),
+        )
 
-    @pytest.mark.skipif(platform.python_implementation() == 'Jython',
-                        reason="Jython throws RepresenterError")
+    @pytest.mark.skipif(
+        platform.python_implementation() == 'Jython', reason='Jython throws RepresenterError'
+    )
     def test_preserve_string_keep_at_end(self):
         # at EOF you have to specify the ... to get proper "closure"
         # of the multiline scalar
-        round_trip("""
+        round_trip(
+            """
             a: |+
               ghi
               jkl
 
             ...
-            """, intermediate=dict(a='ghi\njkl\n\n'))
+            """,
+            intermediate=dict(a='ghi\njkl\n\n'),
+        )
 
     def test_fold_string(self):
         with pytest.raises(AssertionError) as excinfo:  # NOQA
-            round_trip("""
+            round_trip(
+                """
             a: >
               abc
               def
 
-            """, intermediate=dict(a='abc def\n'))
+            """,
+                intermediate=dict(a='abc def\n'),
+            )
 
     def test_fold_string_strip(self):
         with pytest.raises(AssertionError) as excinfo:  # NOQA
-            round_trip("""
+            round_trip(
+                """
             a: >-
               abc
               def
 
-            """, intermediate=dict(a='abc def'))
+            """,
+                intermediate=dict(a='abc def'),
+            )
 
     def test_fold_string_keep(self):
         with pytest.raises(AssertionError) as excinfo:  # NOQA
-            round_trip("""
+            round_trip(
+                """
             a: >+
               abc
               def
 
-            """, intermediate=dict(a='abc def\n\n'))
+            """,
+                intermediate=dict(a='abc def\n\n'),
+            )
 
 
 class TestQuotedScalarString:
     def test_single_quoted_string(self):
-        round_trip("""
+        round_trip(
+            """
         a: 'abc'
-        """, preserve_quotes=True)
+        """,
+            preserve_quotes=True,
+        )
 
     def test_double_quoted_string(self):
-        round_trip("""
+        round_trip(
+            """
         a: "abc"
-        """, preserve_quotes=True)
+        """,
+            preserve_quotes=True,
+        )
 
     def test_non_preserved_double_quoted_string(self):
-        round_trip("""
+        round_trip(
+            """
         a: "abc"
-        """, outp="""
+        """,
+            outp="""
         a: abc
-        """)
+        """,
+        )
 
 
 class TestReplace:
     """inspired by issue 110 from sandres23"""
+
     def test_replace_preserved_scalar_string(self):
         import ruamel
-        s = dedent("""\
+
+        s = dedent(
+            """\
         foo: |
           foo
           foo
           bar
           foo
-        """)
+        """
+        )
         data = round_trip_load(s, preserve_quotes=True)
         so = data['foo'].replace('foo', 'bar', 2)
         assert isinstance(so, ruamel.yaml.scalarstring.PreservedScalarString)
-        assert so == dedent("""
+        assert so == dedent(
+            """
         bar
         bar
         bar
         foo
-        """)
+        """
+        )
 
     def test_replace_double_quoted_scalar_string(self):
         import ruamel
-        s = dedent("""\
+
+        s = dedent(
+            """\
         foo: "foo foo bar foo"
-        """)
+        """
+        )
         data = round_trip_load(s, preserve_quotes=True)
         so = data['foo'].replace('foo', 'bar', 2)
         assert isinstance(so, ruamel.yaml.scalarstring.DoubleQuotedScalarString)

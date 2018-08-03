@@ -173,8 +173,10 @@ def test_c_version(verbose=False):
     if verbose:
         print(_ruamel_yaml.get_version())
         print(_ruamel_yaml.get_version_string())
-    assert ("%s.%s.%s" % _ruamel_yaml.get_version()) == _ruamel_yaml.get_version_string(), \
-           (_ruamel_yaml.get_version(), _ruamel_yaml.get_version_string())
+    assert ('%s.%s.%s' % _ruamel_yaml.get_version()) == _ruamel_yaml.get_version_string(), (
+        _ruamel_yaml.get_version(),
+        _ruamel_yaml.get_version_string(),
+    )
 
 
 def _compare_scanners(py_data, c_data, verbose):
@@ -190,20 +192,29 @@ def _compare_scanners(py_data, c_data, verbose):
                 assert py_token.value == c_token.value, (py_token, c_token)
             if isinstance(py_token, ruamel.yaml.StreamEndToken):
                 continue
-            py_start = (py_token.start_mark.index, py_token.start_mark.line,
-                        py_token.start_mark.column)
-            py_end = (py_token.end_mark.index, py_token.end_mark.line,
-                      py_token.end_mark.column)
-            c_start = (c_token.start_mark.index, c_token.start_mark.line,
-                       c_token.start_mark.column)
+            py_start = (
+                py_token.start_mark.index,
+                py_token.start_mark.line,
+                py_token.start_mark.column,
+            )
+            py_end = (
+                py_token.end_mark.index,
+                py_token.end_mark.line,
+                py_token.end_mark.column,
+            )
+            c_start = (
+                c_token.start_mark.index,
+                c_token.start_mark.line,
+                c_token.start_mark.column,
+            )
             c_end = (c_token.end_mark.index, c_token.end_mark.line, c_token.end_mark.column)
             assert py_start == c_start, (py_start, c_start)
             assert py_end == c_end, (py_end, c_end)
     finally:
         if verbose:
-            print("PY_TOKENS:")
+            print('PY_TOKENS:')
             pprint.pprint(py_tokens)
-            print("C_TOKENS:")
+            print('C_TOKENS:')
             pprint.pprint(c_tokens)
 
 
@@ -234,16 +245,24 @@ def _compare_parsers(py_data, c_data, verbose):
             c_events.append(event)
         assert len(py_events) == len(c_events), (len(py_events), len(c_events))
         for py_event, c_event in zip(py_events, c_events):
-            for attribute in ['__class__', 'anchor', 'tag', 'implicit',
-                              'value', 'explicit', 'version', 'tags']:
+            for attribute in [
+                '__class__',
+                'anchor',
+                'tag',
+                'implicit',
+                'value',
+                'explicit',
+                'version',
+                'tags',
+            ]:
                 py_value = getattr(py_event, attribute, None)
                 c_value = getattr(c_event, attribute, None)
                 assert py_value == c_value, (py_event, c_event, attribute)
     finally:
         if verbose:
-            print("PY_EVENTS:")
+            print('PY_EVENTS:')
             pprint.pprint(py_events)
-            print("C_EVENTS:")
+            print('C_EVENTS:')
             pprint.pprint(c_events)
 
 
@@ -277,13 +296,25 @@ def _compare_emitters(data, verbose):
         assert len(events) == len(py_events), (len(events), len(py_events))
         assert len(events) == len(c_events), (len(events), len(c_events))
         for event, py_event, c_event in zip(events, py_events, c_events):
-            for attribute in ['__class__', 'anchor', 'tag', 'implicit',
-                              'value', 'explicit', 'version', 'tags']:
+            for attribute in [
+                '__class__',
+                'anchor',
+                'tag',
+                'implicit',
+                'value',
+                'explicit',
+                'version',
+                'tags',
+            ]:
                 value = getattr(event, attribute, None)
                 py_value = getattr(py_event, attribute, None)
                 c_value = getattr(c_event, attribute, None)
-                if attribute == 'tag' and value in [None, u'!'] \
-                        and py_value in [None, u'!'] and c_value in [None, u'!']:
+                if (
+                    attribute == 'tag'
+                    and value in [None, u'!']
+                    and py_value in [None, u'!']
+                    and c_value in [None, u'!']
+                ):
                     continue
                 if attribute == 'explicit' and (py_value or c_value):
                     continue
@@ -291,11 +322,11 @@ def _compare_emitters(data, verbose):
                 assert value == c_value, (event, c_event, attribute)
     finally:
         if verbose:
-            print("EVENTS:")
+            print('EVENTS:')
             pprint.pprint(events)
-            print("PY_EVENTS:")
+            print('PY_EVENTS:')
             pprint.pprint(py_events)
-            print("C_EVENTS:")
+            print('C_EVENTS:')
             pprint.pprint(c_events)
 
 
@@ -317,6 +348,7 @@ def wrap_ext_function(function):
             function(*args, **kwds)
         finally:
             _tear_down()
+
     if PY3:
         wrapper.__name__ = '%s_ext' % function.__name__
     else:
@@ -349,19 +381,33 @@ def wrap_ext(collections):
             assert function.unittest_name not in globals()
             globals()[function.unittest_name] = function
 
-import test_tokens         # NOQA
-import test_structure      # NOQA
-import test_errors         # NOQA
-import test_resolver       # NOQA
-import test_constructor    # NOQA
-import test_emitter        # NOQA
-import test_representer    # NOQA
-import test_recursive      # NOQA
-import test_input_output   # NOQA
-wrap_ext([test_tokens, test_structure, test_errors, test_resolver, test_constructor,
-          test_emitter, test_representer, test_recursive, test_input_output])
+
+import test_tokens  # NOQA
+import test_structure  # NOQA
+import test_errors  # NOQA
+import test_resolver  # NOQA
+import test_constructor  # NOQA
+import test_emitter  # NOQA
+import test_representer  # NOQA
+import test_recursive  # NOQA
+import test_input_output  # NOQA
+
+wrap_ext(
+    [
+        test_tokens,
+        test_structure,
+        test_errors,
+        test_resolver,
+        test_constructor,
+        test_emitter,
+        test_representer,
+        test_recursive,
+        test_input_output,
+    ]
+)
 
 if __name__ == '__main__':
     import sys
     import test_appliance
+
     sys.exit(test_appliance.run(globals()))

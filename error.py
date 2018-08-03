@@ -12,14 +12,20 @@ if False:  # MYPY
 
 
 __all__ = [
-    'FileMark', 'StringMark', 'CommentMark', 'YAMLError', 'MarkedYAMLError',
-    'ReusedAnchorWarning', 'UnsafeLoaderWarning', 'MarkedYAMLWarning',
+    'FileMark',
+    'StringMark',
+    'CommentMark',
+    'YAMLError',
+    'MarkedYAMLError',
+    'ReusedAnchorWarning',
+    'UnsafeLoaderWarning',
+    'MarkedYAMLWarning',
     'MarkedYAMLFutureWarning',
 ]
 
 
 class StreamMark(object):
-    __slots__ = 'name', 'index', 'line', 'column',
+    __slots__ = 'name', 'index', 'line', 'column'
 
     def __init__(self, name, index, line, column):
         # type: (Any, int, int, int) -> None
@@ -30,8 +36,7 @@ class StreamMark(object):
 
     def __str__(self):
         # type: () -> Any
-        where = "  in \"%s\", line %d, column %d"   \
-                % (self.name, self.line + 1, self.column + 1)
+        where = '  in "%s", line %d, column %d' % (self.name, self.line + 1, self.column + 1)
         return where
 
 
@@ -40,7 +45,7 @@ class FileMark(StreamMark):
 
 
 class StringMark(StreamMark):
-    __slots__ = 'name', 'index', 'line', 'column', 'buffer', 'pointer',
+    __slots__ = 'name', 'index', 'line', 'column', 'buffer', 'pointer'
 
     def __init__(self, name, index, line, column, buffer, pointer):
         # type: (Any, int, int, int, Any, Any) -> None
@@ -52,19 +57,17 @@ class StringMark(StreamMark):
         # type: (int, int) -> Any
         if self.buffer is None:  # always False
             return None
-        head = ''
+        head = ""
         start = self.pointer
-        while (start > 0 and
-               self.buffer[start - 1] not in u'\0\r\n\x85\u2028\u2029'):
+        while start > 0 and self.buffer[start - 1] not in u'\0\r\n\x85\u2028\u2029':
             start -= 1
             if self.pointer - start > max_length / 2 - 1:
                 head = ' ... '
                 start += 5
                 break
-        tail = ''
+        tail = ""
         end = self.pointer
-        while (end < len(self.buffer) and
-               self.buffer[end] not in u'\0\r\n\x85\u2028\u2029'):
+        while end < len(self.buffer) and self.buffer[end] not in u'\0\r\n\x85\u2028\u2029':
             end += 1
             if end - self.pointer > max_length / 2 - 1:
                 tail = ' ... '
@@ -73,21 +76,27 @@ class StringMark(StreamMark):
         snippet = utf8(self.buffer[start:end])
         caret = '^'
         caret = '^ (line: {})'.format(self.line + 1)
-        return ' ' * indent + head + snippet + tail + '\n' \
-               + ' ' * (indent + self.pointer - start + len(head)) + caret
+        return (
+            ' ' * indent
+            + head
+            + snippet
+            + tail
+            + '\n'
+            + ' ' * (indent + self.pointer - start + len(head))
+            + caret
+        )
 
     def __str__(self):
         # type: () -> Any
         snippet = self.get_snippet()
-        where = "  in \"%s\", line %d, column %d"   \
-                % (self.name, self.line + 1, self.column + 1)
+        where = '  in "%s", line %d, column %d' % (self.name, self.line + 1, self.column + 1)
         if snippet is not None:
-            where += ":\n" + snippet
+            where += ':\n' + snippet
         return where
 
 
 class CommentMark(object):
-    __slots__ = 'column',
+    __slots__ = ('column',)
 
     def __init__(self, column):
         # type: (Any) -> None
@@ -99,8 +108,15 @@ class YAMLError(Exception):
 
 
 class MarkedYAMLError(YAMLError):
-    def __init__(self, context=None, context_mark=None,
-                 problem=None, problem_mark=None, note=None, warn=None):
+    def __init__(
+        self,
+        context=None,
+        context_mark=None,
+        problem=None,
+        problem_mark=None,
+        note=None,
+        warn=None,
+    ):
         # type: (Any, Any, Any, Any, Any, Any) -> None
         self.context = context
         self.context_mark = context_mark
@@ -114,18 +130,20 @@ class MarkedYAMLError(YAMLError):
         lines = []  # type: List[str]
         if self.context is not None:
             lines.append(self.context)
-        if self.context_mark is not None  \
-           and (self.problem is None or self.problem_mark is None or
-                self.context_mark.name != self.problem_mark.name or
-                self.context_mark.line != self.problem_mark.line or
-                self.context_mark.column != self.problem_mark.column):
+        if self.context_mark is not None and (
+            self.problem is None
+            or self.problem_mark is None
+            or self.context_mark.name != self.problem_mark.name
+            or self.context_mark.line != self.problem_mark.line
+            or self.context_mark.column != self.problem_mark.column
+        ):
             lines.append(str(self.context_mark))
         if self.problem is not None:
             lines.append(self.problem)
         if self.problem_mark is not None:
             lines.append(str(self.problem_mark))
         if self.note is not None and self.note:
-            note = textwrap.dedent(self.note)  # type: ignore
+            note = textwrap.dedent(self.note)
             lines.append(note)
         return '\n'.join(lines)
 
@@ -139,8 +157,15 @@ class YAMLWarning(Warning):
 
 
 class MarkedYAMLWarning(YAMLWarning):
-    def __init__(self, context=None, context_mark=None,
-                 problem=None, problem_mark=None, note=None, warn=None):
+    def __init__(
+        self,
+        context=None,
+        context_mark=None,
+        problem=None,
+        problem_mark=None,
+        note=None,
+        warn=None,
+    ):
         # type: (Any, Any, Any, Any, Any, Any) -> None
         self.context = context
         self.context_mark = context_mark
@@ -154,21 +179,23 @@ class MarkedYAMLWarning(YAMLWarning):
         lines = []  # type: List[str]
         if self.context is not None:
             lines.append(self.context)
-        if self.context_mark is not None  \
-           and (self.problem is None or self.problem_mark is None or
-                self.context_mark.name != self.problem_mark.name or
-                self.context_mark.line != self.problem_mark.line or
-                self.context_mark.column != self.problem_mark.column):
+        if self.context_mark is not None and (
+            self.problem is None
+            or self.problem_mark is None
+            or self.context_mark.name != self.problem_mark.name
+            or self.context_mark.line != self.problem_mark.line
+            or self.context_mark.column != self.problem_mark.column
+        ):
             lines.append(str(self.context_mark))
         if self.problem is not None:
             lines.append(self.problem)
         if self.problem_mark is not None:
             lines.append(str(self.problem_mark))
         if self.note is not None and self.note:
-            note = textwrap.dedent(self.note)  # type: ignore
+            note = textwrap.dedent(self.note)
             lines.append(note)
         if self.warn is not None and self.warn:
-            warn = textwrap.dedent(self.warn)  # type: ignore
+            warn = textwrap.dedent(self.warn)
             lines.append(warn)
         return '\n'.join(lines)
 
@@ -215,7 +242,9 @@ or alternatively include the following in your code:
   import warnings
   warnings.simplefilter('ignore', ruamel.yaml.error.MantissaNoDotYAML1_1Warning)
 
-""".format(self.flt, line, col)
+""".format(
+            self.flt, line, col
+        )
 
 
 warnings.simplefilter('once', MantissaNoDotYAML1_1Warning)
@@ -226,8 +255,15 @@ class YAMLFutureWarning(Warning):
 
 
 class MarkedYAMLFutureWarning(YAMLFutureWarning):
-    def __init__(self, context=None, context_mark=None,
-                 problem=None, problem_mark=None, note=None, warn=None):
+    def __init__(
+        self,
+        context=None,
+        context_mark=None,
+        problem=None,
+        problem_mark=None,
+        note=None,
+        warn=None,
+    ):
         # type: (Any, Any, Any, Any, Any, Any) -> None
         self.context = context
         self.context_mark = context_mark
@@ -242,20 +278,22 @@ class MarkedYAMLFutureWarning(YAMLFutureWarning):
         if self.context is not None:
             lines.append(self.context)
 
-        if self.context_mark is not None  \
-           and (self.problem is None or self.problem_mark is None or
-                self.context_mark.name != self.problem_mark.name or
-                self.context_mark.line != self.problem_mark.line or
-                self.context_mark.column != self.problem_mark.column):
+        if self.context_mark is not None and (
+            self.problem is None
+            or self.problem_mark is None
+            or self.context_mark.name != self.problem_mark.name
+            or self.context_mark.line != self.problem_mark.line
+            or self.context_mark.column != self.problem_mark.column
+        ):
             lines.append(str(self.context_mark))
         if self.problem is not None:
             lines.append(self.problem)
         if self.problem_mark is not None:
             lines.append(str(self.problem_mark))
         if self.note is not None and self.note:
-            note = textwrap.dedent(self.note)  # type: ignore
+            note = textwrap.dedent(self.note)
             lines.append(note)
         if self.warn is not None and self.warn:
-            warn = textwrap.dedent(self.warn)  # type: ignore
+            warn = textwrap.dedent(self.warn)
             lines.append(warn)
         return '\n'.join(lines)

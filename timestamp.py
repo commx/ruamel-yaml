@@ -20,7 +20,6 @@ class TimeStamp(datetime.datetime):
 
     def __deepcopy__(self, memo):
         # type: (Any) -> Any
-        ts = TimeStamp(self.year, self.month, self.day,
-                       self.hour, self.minute, self.second)
+        ts = TimeStamp(self.year, self.month, self.day, self.hour, self.minute, self.second)
         ts._yaml = copy.deepcopy(self._yaml)
         return ts

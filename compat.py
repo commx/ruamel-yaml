@@ -9,7 +9,7 @@ import os
 import types
 
 if False:  # MYPY
-    from typing import Any, Dict, Optional, List, Union, BinaryIO, IO, Text, Tuple   # NOQA
+    from typing import Any, Dict, Optional, List, Union, BinaryIO, IO, Text, Tuple  # NOQA
 
 _DEFAULT_YAML_VERSION = (1, 2)
 
@@ -22,8 +22,9 @@ except:  # NOQA
         from ordereddict import OrderedDict  # type: ignore
     # to get the right name import ... as ordereddict doesn't do that
 
-    class ordereddict(OrderedDict):   # type: ignore
+    class ordereddict(OrderedDict):  # type: ignore
         if not hasattr(OrderedDict, 'insert'):
+
             def insert(self, pos, key, value):
                 # type: (int, Any, Any) -> None
                 if pos >= len(self):
@@ -44,6 +45,7 @@ PY3 = sys.version_info[0] == 3
 
 
 if PY3:
+
     def utf8(s):
         # type: (str) -> str
         return s
@@ -56,7 +58,9 @@ if PY3:
         # type: (str) -> str
         return s
 
+
 else:
+
     def utf8(s):
         # type: (unicode) -> str
         return s.encode('utf-8')
@@ -67,7 +71,8 @@ else:
 
     def to_unicode(s):
         # type: (str) -> unicode
-        return unicode(s)    # NOQA
+        return unicode(s)  # NOQA
+
 
 if PY3:
     string_types = str
@@ -79,6 +84,7 @@ if PY3:
     MAXSIZE = sys.maxsize
     unichr = chr
     import io
+
     StringIO = io.StringIO
     BytesIO = io.BytesIO
     # have unlimited precision
@@ -86,17 +92,19 @@ if PY3:
     from collections.abc import Hashable  # NOQA
 
 else:
-    string_types = basestring    # NOQA
+    string_types = basestring  # NOQA
     integer_types = (int, long)  # NOQA
     class_types = (type, types.ClassType)
-    text_type = unicode          # NOQA
+    text_type = unicode  # NOQA
     binary_type = str
 
     # to allow importing
     unichr = unichr  # type: ignore
     from StringIO import StringIO as _StringIO
+
     StringIO = _StringIO
     import cStringIO
+
     BytesIO = cStringIO.StringIO
     # have unlimited precision
     no_limit_int = long  # NOQA not available on Python 3
@@ -120,7 +128,7 @@ UNICODE_SIZE = 4 if sys.maxunicode > 65535 else 2
 def with_metaclass(meta, *bases):
     # type: (Any, Any) -> Any
     """Create a base class with a metaclass."""
-    return meta("NewBase", bases, {})
+    return meta('NewBase', bases, {})
 
 
 DBG_TOKEN = 1
@@ -138,6 +146,7 @@ if 'RUAMELDEBUG' in os.environ:
 
 
 if bool(_debug):
+
     class ObjectCounter(object):
         def __init__(self):
             # type: () -> None
@@ -176,6 +185,7 @@ def nprint(*args, **kw):
     if bool(dbg):
         print(*args, **kw)
 
+
 # char checkers following production rules
 
 
@@ -202,6 +212,7 @@ def check_anchorname_char(ch):
 def version_tnf(t1, t2=None):
     # type: (Any, Any) -> Any
     from ruamel.yaml import version_info  # NOQA
+
     if version_info < t1:
         return True
     if t2 is not None and version_info < t2:
