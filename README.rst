@@ -37,13 +37,14 @@ when the status of the API is stable enough to make the transition.
 .. image:: https://bestpractices.coreinfrastructure.org/projects/1128/badge
    :target: https://bestpractices.coreinfrastructure.org/projects/1128
 
-.. image:: https://img.shields.io/badge/License-MIT-blue.svg
+.. image:: https://bitbucket.org/ruamel/ruamel.yaml/raw/default/_doc/_static/license.svg
    :target: https://opensource.org/licenses/MIT
 
-.. image:: https://badge.fury.io/py//ruamel.yaml.svg
+.. image:: https://bitbucket.org/ruamel/ruamel.yaml/raw/default/_doc/_static/pypi.svg
    :target: https://pypi.org/project/ruamel.yaml/
 
-.. image:: https://img.shields.io/badge/code%20style-oitnb-orange.svg
+.. image:: https://bitbucket.org/ruamel/oitnb/raw/default/_doc/_static/pypi.svg
+   :target: https://pypi.org/project/oitnb/
 
 
 ChangeLog
