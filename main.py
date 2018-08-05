@@ -37,6 +37,10 @@ from ruamel.yaml.loader import Loader as UnsafeLoader
 if False:  # MYPY
     from typing import List, Set, Dict, Union, Any  # NOQA
     from ruamel.yaml.compat import StreamType, StreamTextType, VersionType  # NOQA
+    if PY3:
+        from pathlib import Path
+    else:
+        Path = Any
 
 try:
     from _ruamel_yaml import CParser, CEmitter  # type: ignore
@@ -279,7 +283,7 @@ class YAML(object):
     # separate output resolver?
 
     def load(self, stream):
-        # type: (StreamTextType) -> Any
+        # type: (Union[Path, StreamTextType]) -> Any
         """
         at this point you either have the non-pure Parser (which has its own reader and
         scanner) or you have the pure Parser.
@@ -306,7 +310,7 @@ class YAML(object):
                 pass
 
     def load_all(self, stream, _kw=enforce):  # , skip=None):
-        # type: (StreamTextType, Any) -> Any
+        # type: (Union[Path, StreamTextType], Any) -> Any
         if _kw is not enforce:
             raise TypeError(
                 '{}.__init__() takes no positional argument but at least '
@@ -383,11 +387,11 @@ class YAML(object):
         return self.constructor, self.parser
 
     def dump(self, data, stream, _kw=enforce, transform=None):
-        # type: (Any, StreamType, Any, Any) -> Any
+        # type: (Any, Union[Path, StreamType], Any, Any) -> Any
         return self.dump_all([data], stream, _kw, transform=transform)
 
     def dump_all(self, documents, stream, _kw=enforce, transform=None):
-        # type: (Any, StreamType, Any, Any) -> Any
+        # type: (Any, Union[Path, StreamType], Any, Any) -> Any
         """
         Serialize a sequence of Python objects into a YAML stream.
         """
