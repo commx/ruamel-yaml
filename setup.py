@@ -662,7 +662,7 @@ class NameSpacePackager(object):
 
     @property
     def keywords(self):
-        return self.pn(self._pkg_data.get('keywords'))
+        return self.pn(self._pkg_data.get('keywords', []))
 
     @property
     def install_requires(self):

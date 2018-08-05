@@ -148,7 +148,12 @@ class BaseRepresenter(object):
         # type: (Any, Any, Any) -> Any
         if style is None:
             style = self.default_style
-        node = ScalarNode(tag, value, style=style)
+        comment = None
+        if style and style[0] == '|':
+            comment = getattr(value, 'comment', None)
+            if comment:
+                comment = [None, [comment]]
+        node = ScalarNode(tag, value, style=style, comment=comment)
         if self.alias_key is not None:
             self.represented_objects[self.alias_key] = node
         return node

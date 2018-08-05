@@ -1111,7 +1111,8 @@ class Scanner(object):
         # Scan the header.
         self.reader.forward()
         chomping, increment = self.scan_block_scalar_indicators(start_mark)
-        self.scan_block_scalar_ignored_line(start_mark)
+        # block scalar comment e.g. : |+  # comment text
+        block_scalar_comment = self.scan_block_scalar_ignored_line(start_mark)
 
         # Determine the indentation level and go to the first non-empty line.
         min_indent = self.indent + 1
@@ -1193,6 +1194,8 @@ class Scanner(object):
 
         # We are done.
         token = ScalarToken("".join(chunks), False, start_mark, end_mark, style)
+        if block_scalar_comment is not None:
+            token.add_pre_comments([block_scalar_comment])
         if len(trailing) > 0:
             # print('trailing 1', trailing)  # XXXXX
             # Eat whitespaces and comments until we reach the next token.
@@ -1261,10 +1264,15 @@ class Scanner(object):
     def scan_block_scalar_ignored_line(self, start_mark):
         # type: (Any) -> Any
         # See the specification for details.
+        prefix = ''
+        comment = None
         while self.reader.peek() == ' ':
+            prefix += self.reader.peek()
             self.reader.forward()
         if self.reader.peek() == '#':
+            comment = prefix
             while self.reader.peek() not in _THE_END:
+                comment += self.reader.peek()
                 self.reader.forward()
         ch = self.reader.peek()
         if ch not in _THE_END:
@@ -1275,6 +1283,7 @@ class Scanner(object):
                 self.reader.get_mark(),
             )
         self.scan_line_break()
+        return comment
 
     def scan_block_scalar_indentation(self):
         # type: () -> Any

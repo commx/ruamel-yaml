@@ -811,7 +811,7 @@ class Emitter(object):
         elif self.style == '>':
             self.write_folded(self.analysis.scalar)
         elif self.style == '|':
-            self.write_literal(self.analysis.scalar)
+            self.write_literal(self.analysis.scalar, self.event.comment)
         else:
             self.write_plain(self.analysis.scalar, split)
         self.analysis = None
@@ -1337,7 +1337,7 @@ class Emitter(object):
         # type: (Any) -> Any
         hints = ""
         if text:
-            if text[0] in u' \n\x85\u2028\u2029':
+            if not self.root_context and text[0] in u' \n\x85\u2028\u2029':
                 hints += text_type(self.best_sequence_indent)
             if text[-1] not in u'\n\x85\u2028\u2029':
                 hints += u'-'
@@ -1404,10 +1404,16 @@ class Emitter(object):
                 spaces = ch == u' '
             end += 1
 
-    def write_literal(self, text):
+    def write_literal(self, text, comment=None):
         # type: (Any) -> None
         hints = self.determine_block_hints(text)
         self.write_indicator(u'|' + hints, True)
+        try:
+            comment = comment[1][0]
+            if comment:
+                self.stream.write(comment)
+        except (TypeError, IndexError):
+            pass
         if hints[-1:] == u'+':
             self.open_ended = True
         self.write_line_break()

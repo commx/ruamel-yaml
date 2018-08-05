@@ -4,8 +4,8 @@ ruamel.yaml
 
 ``ruamel.yaml`` is a YAML 1.2 loader/dumper package for Python.
 
-:version:       0.15.48
-:updated:       2018-08-03
+:version:       0.15.49
+:updated:       2018-08-05
 :documentation: http://yaml.readthedocs.io
 :repository:    https://bitbucket.org/ruamel/
 :pypi:          https://pypi.org/project/ruamel.yaml/
@@ -53,6 +53,12 @@ ChangeLog
 =========
 
 .. should insert NEXT: at the beginning of line for next key (with empty line)
+
+0.15.49 (2018-08-05):
+  - fix preservation of leading newlines in root level literal style scalar,
+    and preserve comment after literal style indicator (``|  # some comment``)
+    Both needed for round-tripping multi-doc streams in 
+    `ryd <https://pypi.org/project/ryd/>`__.
 
 0.15.48 (2018-08-03):
   - housekeeping: ``oitnb`` for formatting, mypy 0.620 upgrade and conformity

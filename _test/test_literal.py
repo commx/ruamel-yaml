@@ -240,6 +240,33 @@ class Test_RoundTripLiteral:
         d = yaml.load(ys)
         yaml.dump(d, compare=ys)
 
+    def test_rt_top_literal_scalar_no_indent_comment(self):
+        yaml = YAML()
+        yaml.explicit_start = True
+        s = 'testing123'
+        ys = """
+        --- | # a comment
+        {}
+        """.format(
+            s
+        )
+        d = yaml.load(ys)
+        yaml.dump(d, compare=ys)
+
+    def test_rt_top_literal_scalar_no_indent_leading_empty_line(self):
+        yaml = YAML()
+        yaml.explicit_start = True
+        s = 'testing123'
+        ys = """
+        --- |
+
+        {}
+        """.format(
+            s
+        )
+        d = yaml.load(ys)
+        yaml.dump(d, compare=ys)
+
     def test_rt_top_literal_scalar_indent(self):
         yaml = YAML()
         yaml.explicit_start = True

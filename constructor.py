@@ -979,7 +979,10 @@ class RoundTripConstructor(SafeConstructor):
             )
 
         if node.style == '|' and isinstance(node.value, text_type):
-            return PreservedScalarString(node.value)
+            pss = PreservedScalarString(node.value)
+            if node.comment and node.comment[1]:
+                pss.comment = node.comment[1][0]
+            return pss
         elif bool(self._preserve_quotes) and isinstance(node.value, text_type):
             if node.style == "'":
                 return SingleQuotedScalarString(node.value)
