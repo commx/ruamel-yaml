@@ -1335,7 +1335,7 @@ class Emitter(object):
 
     def determine_block_hints(self, text):
         # type: (Any) -> Any
-        hints = ""
+        hints = u""
         if text:
             if not self.root_context and text[0] in u' \n\x85\u2028\u2029':
                 hints += text_type(self.best_sequence_indent)
@@ -1405,7 +1405,7 @@ class Emitter(object):
             end += 1
 
     def write_literal(self, text, comment=None):
-        # type: (Any) -> None
+        # type: (Any, Any) -> None
         hints = self.determine_block_hints(text)
         self.write_indicator(u'|' + hints, True)
         try:

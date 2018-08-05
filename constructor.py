@@ -981,7 +981,7 @@ class RoundTripConstructor(SafeConstructor):
         if node.style == '|' and isinstance(node.value, text_type):
             pss = PreservedScalarString(node.value)
             if node.comment and node.comment[1]:
-                pss.comment = node.comment[1][0]
+                pss.comment = node.comment[1][0]  # type: ignore
             return pss
         elif bool(self._preserve_quotes) and isinstance(node.value, text_type):
             if node.style == "'":
