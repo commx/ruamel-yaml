@@ -13,8 +13,7 @@ class TestIssue61:
     def test_issue_61(self):
         import ruamel.yaml
 
-        s = dedent(
-            """
+        s = dedent("""
         def1: &ANCHOR1
             key1: value1
         def: &ANCHOR
@@ -22,8 +21,7 @@ class TestIssue61:
             key: value
         comb:
             <<: *ANCHOR
-        """
-        )
+        """)
         data = ruamel.yaml.round_trip_load(s)
         assert str(data['comb']) == str(data['def'])
         assert str(data['comb']) == "ordereddict([('key', 'value'), ('key1', 'value1')])"

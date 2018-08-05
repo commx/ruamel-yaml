@@ -12,14 +12,10 @@ from roundtrip import round_trip, round_trip_load, round_trip_dump, dedent, YAML
 
 def rt(s):
     import ruamel.yaml
-
-    return (
-        ruamel.yaml.dump(
-            ruamel.yaml.load(s, Loader=ruamel.yaml.RoundTripLoader),
-            Dumper=ruamel.yaml.RoundTripDumper,
-        ).strip()
-        + '\n'
-    )
+    return ruamel.yaml.dump(
+        ruamel.yaml.load(s, Loader=ruamel.yaml.RoundTripLoader),
+        Dumper=ruamel.yaml.RoundTripDumper,
+    ).strip() + '\n'
 
 
 class TestIndent:
@@ -29,35 +25,29 @@ class TestIndent:
         assert s == output
 
     def test_roundtrip_mapping_of_inline_lists(self):
-        s = dedent(
-            """\
+        s = dedent("""\
         a: [a, b, c]
         j: [k, l, m]
-        """
-        )
+        """)
         output = rt(s)
         assert s == output
 
     def test_roundtrip_mapping_of_inline_lists_comments(self):
-        s = dedent(
-            """\
+        s = dedent("""\
         # comment A
         a: [a, b, c]
         # comment B
         j: [k, l, m]
-        """
-        )
+        """)
         output = rt(s)
         assert s == output
 
     def test_roundtrip_mapping_of_inline_sequence_eol_comments(self):
-        s = dedent(
-            """\
+        s = dedent("""\
         # comment A
         a: [a, b, c]  # comment B
         j: [k, l, m]  # comment C
-        """
-        )
+        """)
         output = rt(s)
         assert s == output
 
@@ -65,14 +55,12 @@ class TestIndent:
     def test_added_inline_list(self):
         import ruamel.yaml
 
-        s1 = dedent(
-            """
+        s1 = dedent("""
         a:
         - b
         - c
         - d
-        """
-        )
+        """)
         s = 'a: [b, c, d]\n'
         data = ruamel.yaml.load(s1, Loader=ruamel.yaml.RoundTripLoader)
         val = data['a']
@@ -86,78 +74,58 @@ class TestIndent:
     def test_roundtrip_flow_mapping(self):
         import ruamel.yaml
 
-        s = dedent(
-            """\
+        s = dedent("""\
         - {a: 1, b: hallo}
         - {j: fka, k: 42}
-        """
-        )
+        """)
         data = ruamel.yaml.load(s, Loader=ruamel.yaml.RoundTripLoader)
         output = ruamel.yaml.dump(data, Dumper=ruamel.yaml.RoundTripDumper)
         assert s == output
 
     def test_roundtrip_sequence_of_inline_mappings_eol_comments(self):
-        s = dedent(
-            """\
+        s = dedent("""\
         # comment A
         - {a: 1, b: hallo}  # comment B
         - {j: fka, k: 42}  # comment C
-        """
-        )
+        """)
         output = rt(s)
         assert s == output
 
     def test_indent_top_level(self):
-        round_trip(
-            """
+        round_trip("""
         -   a:
             -   b
-        """,
-            indent=4,
-        )
+        """, indent=4)
 
     def test_set_indent_5_block_list_indent_1(self):
-        round_trip(
-            """
+        round_trip("""
         a:
          -   b: c
          -   1
          -   d:
               -   2
-        """,
-            indent=5,
-            block_seq_indent=1,
-        )
+        """, indent=5, block_seq_indent=1)
 
     def test_set_indent_4_block_list_indent_2(self):
-        round_trip(
-            """
+        round_trip("""
         a:
           - b: c
           - 1
           - d:
               - 2
-        """,
-            indent=4,
-            block_seq_indent=2,
-        )
+        """, indent=4, block_seq_indent=2)
 
     def test_set_indent_3_block_list_indent_0(self):
-        round_trip(
-            """
+        round_trip("""
         a:
         -  b: c
         -  1
         -  d:
            -  2
-        """,
-            indent=3,
-            block_seq_indent=0,
-        )
+        """, indent=3, block_seq_indent=0)
 
     def Xtest_set_indent_3_block_list_indent_2(self):
-        round_trip(
-            """
+        round_trip("""
         a:
           -
            b: c
@@ -167,27 +135,19 @@ class TestIndent:
            d:
              -
               2
-        """,
-            indent=3,
-            block_seq_indent=2,
-        )
+        """, indent=3, block_seq_indent=2)
 
     def test_set_indent_3_block_list_indent_2(self):
-        round_trip(
-            """
+        round_trip("""
         a:
           - b: c
           - 1
           - d:
              - 2
-        """,
-            indent=3,
-            block_seq_indent=2,
-        )
+        """, indent=3, block_seq_indent=2)
 
     def Xtest_set_indent_2_block_list_indent_2(self):
-        round_trip(
-            """
+        round_trip("""
         a:
           -
            b: c
@@ -197,55 +157,42 @@ class TestIndent:
            d:
              -
               2
-        """,
-            indent=2,
-            block_seq_indent=2,
-        )
+        """, indent=2, block_seq_indent=2)
 
     # this is how it should be: block_seq_indent stretches the indent
     def test_set_indent_2_block_list_indent_2(self):
-        round_trip(
-            """
+        round_trip("""
         a:
           - b: c
           - 1
           - d:
             - 2
-        """,
-            indent=2,
-            block_seq_indent=2,
-        )
+        """, indent=2, block_seq_indent=2)
 
     # have to set indent!
     def test_roundtrip_four_space_indents(self):
-        s = 'a:\n' '-   foo\n' '-   bar\n'
+        s = (
+            'a:\n'
+            '-   foo\n'
+            '-   bar\n'
+        )
         round_trip(s, indent=4)
 
     def test_roundtrip_four_space_indents_no_fail(self):
-        assert (
-            round_trip_dump(
-                round_trip_load(
-                    """
+        assert round_trip_dump(round_trip_load("""
         a:
         -   foo
         -   bar
-        """
-                )
-            )
-            == dedent(
-                """
+        """)) == dedent("""
         a:
         - foo
         - bar
-        """
-            )
-        )
+        """)
 
 
 class TestYpkgIndent:
     def test_00(self):
-        round_trip(
-            """
+        round_trip("""
         name       : nano
         version    : 2.3.2
         release    : 1
@@ -260,12 +207,7 @@ class TestYpkgIndent:
             GNU nano is an easy-to-use text editor originally designed
             as a replacement for Pico, the ncurses-based editor from the non-free mailer
             package Pine (itself now available under the Apache License as Alpine).
-        """,
-            indent=4,
-            block_seq_indent=2,
-            top_level_colon_align=True,
-            prefix_colon=' ',
-        )
+        """, indent=4, block_seq_indent=2, top_level_colon_align=True, prefix_colon=' ')
 
 
 def guess(s):
@@ -277,50 +219,30 @@ def guess(s):
 
 class TestGuessIndent:
     def test_guess_20(self):
-        assert (
-            guess(
-                """\
+        assert guess("""\
         a:
         - 1
-        """
-            )
-            == (2, 0)
-        )
+        """) == (2, 0)
 
     def test_guess_42(self):
-        assert (
-            guess(
-                """\
+        assert guess("""\
         a:
           - 1
-        """
-            )
-            == (4, 2)
-        )
+        """) == (4, 2)
 
     def test_guess_42a(self):
         # block seq indent prevails over nested key indent level
-        assert (
-            guess(
-                """\
+        assert guess("""\
         b:
               a:
                 - 1
-        """
-            )
-            == (4, 2)
-        )
+        """) == (4, 2)
 
     def test_guess_3None(self):
-        assert (
-            guess(
-                """\
+        assert guess("""\
         b:
            a: 1
-        """
-            )
-            == (3, None)
-        )
+        """) == (3, None)
 
 
 class TestSeparateMapSeqIndents:
@@ -331,70 +253,58 @@ class TestSeparateMapSeqIndents:
         yaml = YAML()
         yaml.indent = 6
         yaml.block_seq_indent = 3
-        yaml.round_trip(
-            """
+        yaml.round_trip("""
         a:
            -  1
            -  [1, 2]
-        """
-        )
+        """)
 
     def test_01(self):
         yaml = YAML()
         yaml.indent(sequence=6)
         yaml.indent(offset=3)
-        yaml.round_trip(
-            """
+        yaml.round_trip("""
         a:
            -  1
            -  {b: 3}
-        """
-        )
+        """)
 
     def test_02(self):
         yaml = YAML()
         yaml.indent(mapping=5, sequence=6, offset=3)
-        yaml.round_trip(
-            """
+        yaml.round_trip("""
         a:
              b:
                 -  1
                 -  [1, 2]
-        """
-        )
+        """)
 
     def test_03(self):
-        round_trip(
-            """
+        round_trip("""
         a:
             b:
                 c:
                 -   1
                 -   [1, 2]
-        """,
-            indent=4,
-        )
+        """, indent=4)
 
     def test_04(self):
         yaml = YAML()
         yaml.indent(mapping=5, sequence=6)
-        yaml.round_trip(
-            """
+        yaml.round_trip("""
         a:
              b:
              -     1
              -     [1, 2]
              -     {d: 3.14}
-        """
-        )
+        """)
 
     def test_issue_51(self):
         yaml = YAML()
         # yaml.map_indent = 2 # the default
         yaml.indent(sequence=4, offset=2)
         yaml.preserve_quotes = True
-        yaml.round_trip(
-            """
+        yaml.round_trip("""
         role::startup::author::rsyslog_inputs:
           imfile:
             - ruleset: 'AEM-slinglog'
@@ -405,8 +315,7 @@ class TestSeparateMapSeqIndents:
               File: '/opt/aem/author/crx-quickstart/logs/stdout.log'
               startmsg.regex: '^[-+T.:[:digit:]]*'
               tag: 'stdout'
-        """
-        )
+        """)
 
 
 # ############ indentation

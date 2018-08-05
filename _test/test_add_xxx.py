@@ -152,8 +152,7 @@ def test_issue_127():
                 style = None
             return dumper.represent_scalar(cls.yaml_tag, data.logical_id, style=style)
 
-    document = dedent(
-        """\
+    document = dedent("""\
     AList:
       - !Ref One
       - !Ref 'Two'
@@ -163,8 +162,7 @@ def test_issue_127():
     CList:
       - Five Six
       - 'Seven Eight'
-    """
-    )
+    """)
     data = ruamel.yaml.round_trip_load(document, preserve_quotes=True)
     assert ruamel.yaml.round_trip_dump(data, indent=4, block_seq_indent=2) == document.replace(
         '\n    Two and', ' Two and'

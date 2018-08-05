@@ -14,12 +14,10 @@ from roundtrip import round_trip, dedent, round_trip_load, round_trip_dump  # NO
 
 class TestYAML:
     def test_backslash(self):
-        round_trip(
-            """
+        round_trip("""
         handlers:
           static_files: applications/\\1/static/\\2
-        """
-        )
+        """)
 
     def test_omap_out(self):
         # ordereddict mapped to !!omap
@@ -28,24 +26,20 @@ class TestYAML:
 
         x = ordereddict([('a', 1), ('b', 2)])
         res = ruamel.yaml.dump(x, default_flow_style=False)
-        assert res == dedent(
-            """
+        assert res == dedent("""
         !!omap
         - a: 1
         - b: 2
-        """
-        )
+        """)
 
     def test_omap_roundtrip(self):
-        round_trip(
-            """
+        round_trip("""
         !!omap
         - a: 1
         - b: 2
         - c: 3
         - d: 4
-        """
-        )
+        """)
 
     @pytest.mark.skipif(sys.version_info < (2, 7), reason='collections not available')
     def test_dump_collections_ordereddict(self):
@@ -55,13 +49,11 @@ class TestYAML:
         # OrderedDict mapped to !!omap
         x = OrderedDict([('a', 1), ('b', 2)])
         res = ruamel.yaml.dump(x, Dumper=ruamel.yaml.RoundTripDumper, default_flow_style=False)
-        assert res == dedent(
-            """
+        assert res == dedent("""
         !!omap
         - a: 1
         - b: 2
-        """
-        )
+        """)
 
     @pytest.mark.skipif(
         sys.version_info >= (3, 0) or platform.python_implementation() != 'CPython',
@@ -74,13 +66,11 @@ class TestYAML:
         # OrderedDict mapped to !!omap
         x = ordereddict([('a', 1), ('b', 2)])
         res = ruamel.yaml.dump(x, Dumper=ruamel.yaml.RoundTripDumper, default_flow_style=False)
-        assert res == dedent(
-            """
+        assert res == dedent("""
         !!omap
         - a: 1
         - b: 2
-        """
-        )
+        """)
 
     def test_CommentedSet(self):
         from ruamel.yaml.constructor import CommentedSet
@@ -100,49 +90,41 @@ class TestYAML:
 
         x = set(['a', 'b', 'c'])
         res = ruamel.yaml.dump(x, default_flow_style=False)
-        assert res == dedent(
-            """
+        assert res == dedent("""
         !!set
         a: null
         b: null
         c: null
-        """
-        )
+        """)
 
     # @pytest.mark.xfail
     # ordering is not preserved in a set
     def test_set_compact(self):
         # this format is read and also should be written by default
-        round_trip(
-            """
+        round_trip("""
         !!set
         ? a
         ? b
         ? c
-        """
-        )
+        """)
 
     def test_blank_line_after_comment(self):
-        round_trip(
-            """
+        round_trip("""
         # Comment with spaces after it.
 
 
         a: 1
-        """
-        )
+        """)
 
     def test_blank_line_between_seq_items(self):
-        round_trip(
-            """
+        round_trip("""
         # Seq with spaces in between items.
         b:
         - bar
 
 
         - baz
-        """
-        )
+        """)
 
     @pytest.mark.skipif(
         platform.python_implementation() == 'Jython', reason='Jython throws RepresenterError'
@@ -221,13 +203,11 @@ class TestYAML:
     def test_load_all_perserve_quotes(self):
         import ruamel.yaml  # NOQA
 
-        s = dedent(
-            """\
+        s = dedent("""\
         a: 'hello'
         ---
         b: "goodbye"
-        """
-        )
+        """)
         data = []
         for x in ruamel.yaml.round_trip_load_all(s, preserve_quotes=True):
             data.append(x)

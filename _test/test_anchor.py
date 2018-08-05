@@ -24,14 +24,12 @@ class TestAnchorsAliases:
         from ruamel.yaml.serializer import Serializer
 
         assert Serializer.ANCHOR_TEMPLATE == 'id%03d'
-        data = load(
-            """
+        data = load("""
         a: &id002
           b: 1
           c: 2
         d: *id002
-        """
-        )
+        """)
         compare(
             data,
             """
@@ -64,8 +62,7 @@ class TestAnchorsAliases:
     def test_anchor_assigned(self):
         from ruamel.yaml.comments import CommentedMap
 
-        data = load(
-            """
+        data = load("""
         a: &id002
           b: 1
           c: 2
@@ -74,8 +71,7 @@ class TestAnchorsAliases:
           b: 1
           c: 2
         f: *etemplate
-        """
-        )
+        """)
         d = data['d']
         assert isinstance(d, CommentedMap)
         assert d.yaml_anchor() is None  # got dropped as it matches pattern
@@ -85,8 +81,7 @@ class TestAnchorsAliases:
         assert e.yaml_anchor().always_dump is False
 
     def test_anchor_id_retained(self):
-        data = load(
-            """
+        data = load("""
         a: &id002
           b: 1
           c: 2
@@ -95,8 +90,7 @@ class TestAnchorsAliases:
           b: 1
           c: 2
         f: *etemplate
-        """
-        )
+        """)
         compare(
             data,
             """
@@ -118,14 +112,12 @@ class TestAnchorsAliases:
         from ruamel.yaml.composer import ComposerError
 
         with pytest.raises(ComposerError):
-            data = load(
-                """
+            data = load("""
             d: *id002
             a: &id002
               b: 1
               c: 2
-            """
-            )
+            """)
             data = data
 
     def test_anchor_on_sequence(self):
@@ -133,8 +125,7 @@ class TestAnchorsAliases:
         # https://bitbucket.org/ruamel/yaml/issue/7/anchor-names-not-preserved
         from ruamel.yaml.comments import CommentedSeq
 
-        data = load(
-            """
+        data = load("""
         nut1: &alice
          - 1
          - 2
@@ -144,15 +135,13 @@ class TestAnchorsAliases:
         nut3:
          - *blake
          - *alice
-        """
-        )
+        """)
         r = data['nut1']
         assert isinstance(r, CommentedSeq)
         assert r.yaml_anchor() is not None
         assert r.yaml_anchor().value == 'alice'
 
-    merge_yaml = dedent(
-        """
+    merge_yaml = dedent("""
         - &CENTER {x: 1, y: 2}
         - &LEFT {x: 0, y: 2}
         - &BIG {r: 10}
@@ -174,8 +163,7 @@ class TestAnchorsAliases:
         - <<: [*BIG, *LEFT, *SMALL]
           x: 1
           label: center/huge
-        """
-    )
+        """)
 
     def test_merge_00(self):
         data = load(self.merge_yaml)
@@ -196,16 +184,14 @@ class TestAnchorsAliases:
     def test_merge_accessible(self):
         from ruamel.yaml.comments import CommentedMap, merge_attrib
 
-        data = load(
-            """
+        data = load("""
         k: &level_2 { a: 1, b2 }
         l: &level_1 { a: 10, c: 3 }
         m:
           <<: *level_1
           c: 30
           d: 40
-        """
-        )
+        """)
         d = data['m']
         assert isinstance(d, CommentedMap)
         assert hasattr(d, merge_attrib)
@@ -278,8 +264,7 @@ class TestAnchorsAliases:
         # issue 130 reported by Devid Fee
         import ruamel.yaml
 
-        ys = dedent(
-            """\
+        ys = dedent("""\
         components:
           server: &server_component
             type: spark.server:ServerComponent
@@ -295,8 +280,7 @@ class TestAnchorsAliases:
             <<: *shell_component
             components:
               server: {<<: *server_service}
-        """
-        )
+        """)
         data = ruamel.yaml.safe_load(ys)
         assert data['services']['shell']['components']['server']['port'] == 8000
 
@@ -304,8 +288,7 @@ class TestAnchorsAliases:
         # issue 130 reported by Devid Fee
         import ruamel.yaml
 
-        ys = dedent(
-            """\
+        ys = dedent("""\
         components:
           server: &server_component
             type: spark.server:ServerComponent
@@ -322,16 +305,14 @@ class TestAnchorsAliases:
             <<: *shell_component
             components:
               server: {<<: *server_service}
-        """
-        )
+        """)
         data = ruamel.yaml.safe_load(ys)
         assert data['services']['shell']['components']['server']['port'] == 4000
 
 
 class TestMergeKeysValues:
 
-    yaml_str = dedent(
-        """\
+    yaml_str = dedent("""\
     - &mx
       a: x1
       b: x2
@@ -345,8 +326,7 @@ class TestMergeKeysValues:
       <<: *mx
       m: 6
       <<: *my
-        """
-    )
+    """)
 
     # in the following d always has "expanded" the merges
 
@@ -423,15 +403,13 @@ class TestDuplicateKeyThroughAnchor:
         from ruamel.yaml import safe_load, round_trip_load
         from ruamel.yaml.constructor import DuplicateKeyFutureWarning, DuplicateKeyError
 
-        s = dedent(
-            """\
+        s = dedent("""\
         &anchor foo:
             foo: bar
             *anchor : duplicate key
             baz: bat
             *anchor : duplicate key
-        """
-        )
+        """)
         if version_info < (0, 15, 1):
             pass
         elif version_info < (0, 16, 0):

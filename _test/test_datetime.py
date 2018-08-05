@@ -27,140 +27,103 @@ from roundtrip import round_trip, dedent, round_trip_load, round_trip_dump  # NO
 
 class TestDateTime:
     def test_date_only(self):
-        round_trip(
-            """
+        round_trip("""
         - 2011-10-02
-        """,
-            """
+        """, """
         - 2011-10-02
-        """,
-        )
+        """)
 
     def test_zero_fraction(self):
-        round_trip(
-            """
+        round_trip("""
         - 2011-10-02 16:45:00.0
-        """,
-            """
+        """, """
         - 2011-10-02 16:45:00
-        """,
-        )
+        """)
 
     def test_long_fraction(self):
-        round_trip(
-            """
+        round_trip("""
         - 2011-10-02 16:45:00.1234      # expand with zeros
         - 2011-10-02 16:45:00.123456
         - 2011-10-02 16:45:00.12345612  # round to microseconds
         - 2011-10-02 16:45:00.1234565   # round up
         - 2011-10-02 16:45:00.12345678  # round up
-        """,
-            """
+        """, """
         - 2011-10-02 16:45:00.123400    # expand with zeros
         - 2011-10-02 16:45:00.123456
         - 2011-10-02 16:45:00.123456    # round to microseconds
         - 2011-10-02 16:45:00.123457    # round up
         - 2011-10-02 16:45:00.123457    # round up
-        """,
-        )
+        """)
 
     def test_canonical(self):
-        round_trip(
-            """
+        round_trip("""
         - 2011-10-02T16:45:00.1Z
-        """,
-            """
+        """, """
         - 2011-10-02T16:45:00.100000Z
-        """,
-        )
+        """)
 
     def test_spaced_timezone(self):
-        round_trip(
-            """
+        round_trip("""
         - 2011-10-02T11:45:00 -5
-        """,
-            """
+        """, """
         - 2011-10-02T11:45:00-5
-        """,
-        )
+        """)
 
     def test_normal_timezone(self):
-        round_trip(
-            """
+        round_trip("""
         - 2011-10-02T11:45:00-5
         - 2011-10-02 11:45:00-5
         - 2011-10-02T11:45:00-05:00
         - 2011-10-02 11:45:00-05:00
-        """
-        )
+        """)
 
     def test_no_timezone(self):
-        round_trip(
-            """
+        round_trip("""
         - 2011-10-02 6:45:00
-        """,
-            """
+        """, """
         - 2011-10-02 06:45:00
-        """,
-        )
+        """)
 
     def test_explicit_T(self):
-        round_trip(
-            """
+        round_trip("""
         - 2011-10-02T16:45:00
-        """,
-            """
+        """, """
         - 2011-10-02T16:45:00
-        """,
-        )
+        """)
 
     def test_explicit_t(self):  # to upper
-        round_trip(
-            """
+        round_trip("""
         - 2011-10-02t16:45:00
-        """,
-            """
+        """, """
         - 2011-10-02T16:45:00
-        """,
-        )
+        """)
 
     def test_no_T_multi_space(self):
-        round_trip(
-            """
+        round_trip("""
         - 2011-10-02   16:45:00
-        """,
-            """
+        """, """
         - 2011-10-02 16:45:00
-        """,
-        )
+        """)
 
     def test_iso(self):
-        round_trip(
-            """
+        round_trip("""
         - 2011-10-02T15:45:00+01:00
-        """
-        )
+        """)
 
     def test_zero_tz(self):
-        round_trip(
-            """
+        round_trip("""
         - 2011-10-02T15:45:00+0
-        """
-        )
+        """)
 
     def test_issue_45(self):
-        round_trip(
-            """
+        round_trip("""
         dt: 2016-08-19T22:45:47Z
-        """
-        )
+        """)
 
     def test_deepcopy_datestring(self):
         # reported by Quuxplusone, http://stackoverflow.com/a/41577841/1307905
-        x = dedent(
-            """\
+        x = dedent("""\
         foo: 2016-10-12T12:34:56
-        """
-        )
+        """)
         data = copy.deepcopy(round_trip_load(x))
         assert round_trip_dump(data) == x
