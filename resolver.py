@@ -5,7 +5,7 @@ from __future__ import absolute_import
 import re
 
 if False:  # MYPY
-    from typing import Any, Dict, List, Union, Text  # NOQA
+    from typing import Any, Dict, List, Union, Text, Optional  # NOQA
     from ruamel.yaml.compat import VersionType  # NOQA
 
 from ruamel.yaml.compat import string_types, _DEFAULT_YAML_VERSION  # NOQA
@@ -377,7 +377,7 @@ class VersionedResolver(BaseResolver):
     """
 
     def __init__(self, version=None, loader=None):
-        # type: (Union[None, VersionType], Any) -> None
+        # type: (Optional[VersionType], Any) -> None
         BaseResolver.__init__(self, loader)
         self._loader_version = self.get_loader_version(version)
         self._version_implicit_resolver = {}  # type: Dict[Any, Any]
@@ -391,7 +391,7 @@ class VersionedResolver(BaseResolver):
             impl_resolver.setdefault(ch, []).append((tag, regexp))
 
     def get_loader_version(self, version):
-        # type: (Union[VersionType, None]) -> Any
+        # type: (Optional[VersionType]) -> Any
         if version is None or isinstance(version, tuple):
             return version
         if isinstance(version, list):

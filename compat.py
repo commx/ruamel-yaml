@@ -9,7 +9,7 @@ import os
 import types
 
 if False:  # MYPY
-    from typing import Any, Dict, Optional, List, Union, BinaryIO, IO, Text, Tuple  # NOQA
+    from typing import Any, Dict, Optional, List, Union, BinaryIO, IO, Text, Tuple, Optional  # NOQA
 
 _DEFAULT_YAML_VERSION = (1, 2)
 
@@ -136,7 +136,7 @@ DBG_EVENT = 2
 DBG_NODE = 4
 
 
-_debug = None  # type: Union[None, int]
+_debug = None  # type: Optional[int]
 if 'RUAMELDEBUG' in os.environ:
     _debugx = os.environ.get('RUAMELDEBUG')
     if _debugx is None:

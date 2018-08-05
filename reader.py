@@ -28,7 +28,7 @@ from ruamel.yaml.compat import text_type, binary_type, PY3, UNICODE_SIZE
 from ruamel.yaml.util import RegExp
 
 if False:  # MYPY
-    from typing import Any, Dict, Optional, List, Union, Text, Tuple  # NOQA
+    from typing import Any, Dict, Optional, List, Union, Text, Tuple, Optional  # NOQA
     from ruamel.yaml.compat import StreamTextType  # NOQA
 
 __all__ = ['Reader', 'ReaderError']
@@ -93,7 +93,7 @@ class Reader(object):
         self.pointer = 0
         self.raw_buffer = None  # type: Any
         self.raw_decode = None
-        self.encoding = None  # type: Union[None, Text]
+        self.encoding = None  # type: Optional[Text]
         self.index = 0
         self.line = 0
         self.column = 0
@@ -202,7 +202,7 @@ class Reader(object):
 
     @classmethod
     def _get_non_printable_ascii(cls, data):  # type: ignore
-        # type: (Text, bytes) -> Union[None, Tuple[int, Text]]
+        # type: (Text, bytes) -> Optional[Tuple[int, Text]]
         ascii_bytes = data.encode('ascii')
         non_printables = ascii_bytes.translate(None, cls._printable_ascii)  # type: ignore
         if not non_printables:
@@ -212,7 +212,7 @@ class Reader(object):
 
     @classmethod
     def _get_non_printable_regex(cls, data):
-        # type: (Text) -> Union[None, Tuple[int, Text]]
+        # type: (Text) -> Optional[Tuple[int, Text]]
         match = cls.NON_PRINTABLE.search(data)
         if not bool(match):
             return None
@@ -220,7 +220,7 @@ class Reader(object):
 
     @classmethod
     def _get_non_printable(cls, data):
-        # type: (Text) -> Union[None, Tuple[int, Text]]
+        # type: (Text) -> Optional[Tuple[int, Text]]
         try:
             return cls._get_non_printable_ascii(data)  # type: ignore
         except UnicodeEncodeError:
@@ -276,7 +276,7 @@ class Reader(object):
                 break
 
     def update_raw(self, size=None):
-        # type: (Union[None, int]) -> None
+        # type: (Optional[int]) -> None
         if size is None:
             size = 4096 if PY3 else 1024
         data = self.stream.read(size)

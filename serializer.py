@@ -21,7 +21,7 @@ from ruamel.yaml.events import (
 from ruamel.yaml.nodes import MappingNode, ScalarNode, SequenceNode
 
 if False:  # MYPY
-    from typing import Any, Dict, Union, Text  # NOQA
+    from typing import Any, Dict, Union, Text, Optional  # NOQA
     from ruamel.yaml.compat import VersionType  # NOQA
 
 __all__ = ['Serializer', 'SerializerError']
@@ -46,7 +46,7 @@ class Serializer(object):
         tags=None,
         dumper=None,
     ):
-        # type: (Any, Union[None, bool], Union[None, bool], Union[None, VersionType], Any, Any) -> None  # NOQA
+        # type: (Any, Optional[bool], Optional[bool], Optional[VersionType], Any, Any) -> None  # NOQA
         self.dumper = dumper
         if self.dumper is not None:
             self.dumper._serializer = self
@@ -61,7 +61,7 @@ class Serializer(object):
         self.serialized_nodes = {}  # type: Dict[Any, Any]
         self.anchors = {}  # type: Dict[Any, Any]
         self.last_anchor_id = 0
-        self.closed = None  # type: Union[None, bool]
+        self.closed = None  # type: Optional[bool]
         self._templated_id = None
 
     @property

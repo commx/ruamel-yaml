@@ -9,7 +9,7 @@ from ruamel.yaml.representer import Representer, SafeRepresenter, BaseRepresente
 from ruamel.yaml.resolver import Resolver, BaseResolver
 
 if False:  # MYPY
-    from typing import Any, Union  # NOQA
+    from typing import Any, Union, Optional  # NOQA
     from ruamel.yaml.compat import StreamTextType, StreamType, VersionType  # NOQA
 
 __all__ = ['CBaseLoader', 'CSafeLoader', 'CLoader', 'CBaseDumper', 'CSafeDumper', 'CDumper']
@@ -21,7 +21,7 @@ __all__ = ['CBaseLoader', 'CSafeLoader', 'CLoader', 'CBaseDumper', 'CSafeDumper'
 
 class CBaseLoader(CParser, BaseConstructor, BaseResolver):  # type: ignore
     def __init__(self, stream, version=None, preserve_quotes=None):
-        # type: (StreamTextType, Union[None, VersionType], Union[None, bool]) -> None
+        # type: (StreamTextType, Optional[VersionType], Optional[bool]) -> None
         CParser.__init__(self, stream)
         self._parser = self._composer = self
         BaseConstructor.__init__(self, loader=self)
@@ -33,7 +33,7 @@ class CBaseLoader(CParser, BaseConstructor, BaseResolver):  # type: ignore
 
 class CSafeLoader(CParser, SafeConstructor, Resolver):  # type: ignore
     def __init__(self, stream, version=None, preserve_quotes=None):
-        # type: (StreamTextType, Union[None, VersionType], Union[None, bool]) -> None
+        # type: (StreamTextType, Optional[VersionType], Optional[bool]) -> None
         CParser.__init__(self, stream)
         self._parser = self._composer = self
         SafeConstructor.__init__(self, loader=self)
@@ -45,7 +45,7 @@ class CSafeLoader(CParser, SafeConstructor, Resolver):  # type: ignore
 
 class CLoader(CParser, Constructor, Resolver):  # type: ignore
     def __init__(self, stream, version=None, preserve_quotes=None):
-        # type: (StreamTextType, Union[None, VersionType], Union[None, bool]) -> None
+        # type: (StreamTextType, Optional[VersionType], Optional[bool]) -> None
         CParser.__init__(self, stream)
         self._parser = self._composer = self
         Constructor.__init__(self, loader=self)
@@ -75,7 +75,7 @@ class CBaseDumper(CEmitter, BaseRepresenter, BaseResolver):  # type: ignore
         top_level_colon_align=None,
         prefix_colon=None,
     ):
-        # type: (StreamType, Any, Any, Any, Union[None, bool], Union[None, int], Union[None, int], Union[None, bool], Any, Any, Union[None, bool], Union[None, bool], Any, Any, Any, Any, Any) -> None   # NOQA
+        # type: (StreamType, Any, Any, Any, Optional[bool], Optional[int], Optional[int], Optional[bool], Any, Any, Optional[bool], Optional[bool], Any, Any, Any, Any, Any) -> None   # NOQA
         CEmitter.__init__(
             self,
             stream,
@@ -120,7 +120,7 @@ class CSafeDumper(CEmitter, SafeRepresenter, Resolver):  # type: ignore
         top_level_colon_align=None,
         prefix_colon=None,
     ):
-        # type: (StreamType, Any, Any, Any, Union[None, bool], Union[None, int], Union[None, int], Union[None, bool], Any, Any, Union[None, bool], Union[None, bool], Any, Any, Any, Any, Any) -> None   # NOQA
+        # type: (StreamType, Any, Any, Any, Optional[bool], Optional[int], Optional[int], Optional[bool], Any, Any, Optional[bool], Optional[bool], Any, Any, Any, Any, Any) -> None   # NOQA
         self._emitter = self._serializer = self._representer = self
         CEmitter.__init__(
             self,
@@ -163,7 +163,7 @@ class CDumper(CEmitter, Representer, Resolver):  # type: ignore
         top_level_colon_align=None,
         prefix_colon=None,
     ):
-        # type: (StreamType, Any, Any, Any, Union[None, bool], Union[None, int], Union[None, int], Union[None, bool], Any, Any, Union[None, bool], Union[None, bool], Any, Any, Any, Any, Any) -> None   # NOQA
+        # type: (StreamType, Any, Any, Any, Optional[bool], Optional[int], Optional[int], Optional[bool], Any, Any, Optional[bool], Optional[bool], Any, Any, Any, Any, Any) -> None   # NOQA
         CEmitter.__init__(
             self,
             stream,

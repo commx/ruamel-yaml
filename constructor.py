@@ -29,7 +29,7 @@ from ruamel.yaml.timestamp import TimeStamp
 from ruamel.yaml.util import RegExp
 
 if False:  # MYPY
-    from typing import Any, Dict, List, Set, Generator, Union  # NOQA
+    from typing import Any, Dict, List, Set, Generator, Union, Optional  # NOQA
 
 
 __all__ = ['BaseConstructor', 'SafeConstructor', 'Constructor',
@@ -55,7 +55,7 @@ class BaseConstructor(object):
     yaml_multi_constructors = {}  # type: Dict[Any, Any]
 
     def __init__(self, preserve_quotes=None, loader=None):
-        # type: (Union[None, bool], Any) -> None
+        # type: (Optional[bool], Any) -> None
         self.loader = loader
         if self.loader is not None and getattr(self.loader, '_constructor', None) is None:
             self.loader._constructor = self

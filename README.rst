@@ -4,7 +4,7 @@ ruamel.yaml
 
 ``ruamel.yaml`` is a YAML 1.2 loader/dumper package for Python.
 
-:version:       0.15.49
+:version:       0.15.50
 :updated:       2018-08-05
 :documentation: http://yaml.readthedocs.io
 :repository:    https://bitbucket.org/ruamel/
@@ -53,6 +53,12 @@ ChangeLog
 =========
 
 .. should insert NEXT: at the beginning of line for next key (with empty line)
+
+0.15.50 (2018-08-05):
+  - Allow ``YAML()`` as a context manager for output, thereby making it much easier
+    to generate multi-documents in a stream. 
+  - Fix issue with incorrect type information for `load()` and `dump()` (reported 
+    by `Jimbo Jim <https://bitbucket.org/jimbo1qaz/>`__)
 
 0.15.49 (2018-08-05):
   - fix preservation of leading newlines in root level literal style scalar,

@@ -116,6 +116,62 @@ yaml.load(stream)
 In the old API this is a warning starting with 0.15.2 and an error in
 0.16.0.
 
+Dumping a multi-documents YAML stream
++++++++++++++++++++++++++++++++++++++
+
+The "normal" ``dump_all`` expected as first element a list of documents, or 
+something else the internals of the method can iterate over. To read
+and write a multi-document you would either make a ``list``::
+
+--- !code |
+   yaml = YAML()
+   data = list(yaml.load_all(in_path))
+   # do something on data[0], data[1], etc.
+   yaml.dump_all(data, out_path)
+--- |
+
+or create some function/object that would yield the ``data`` values.
+
+What you now can do is create ``YAML()`` as an context manager. This
+works for output (dumping) only, requires you to specify the output
+(file, buffer, ``Path``) at creation time, and doesn't support
+``transform`` (yet).
+
+::
+
+--- !code |
+    with YAML(output=sys.stdout) as yaml:
+            yaml.explicit_start = True
+            for data in yaml.load_all(Path(multi_document_filename)):
+                # do something on data
+                yaml.dump(data)
+--- |
+
+Within the context manager, you cannot use the ``dump()`` with a
+second (stream) argument, nor can you use ``dump_all()``. The
+``dump()`` within the context of the ``YAML()`` automatically creates
+ multi-document if called more than once.
+
+To combine multiple YAML documents from multiple files:
+
+::
+
+--- !code |
+    list_of_filenames = ['x.yaml', 'y.yaml', ]
+    with YAML(output=sys.stdout) as yaml:
+            yaml.explicit_start = True
+            for path in list_of_filename:
+                with open(path) as fp:
+                    yaml.dump(yaml.load(fp))
+--- |
+
+The output will be a valid, uniformly indented YAML file. Doing
+``cat {x,y}.yaml`` might result in a single document if there is not
+document start marker at the beginning of ``y.yaml``
+
+
+
+
 Dumping
 +++++++
 

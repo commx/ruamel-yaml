@@ -13,7 +13,7 @@ from ruamel.yaml.representer import (
 from ruamel.yaml.resolver import Resolver, BaseResolver, VersionedResolver
 
 if False:  # MYPY
-    from typing import Any, Dict, List, Union  # NOQA
+    from typing import Any, Dict, List, Union, Optional  # NOQA
     from ruamel.yaml.compat import StreamType, VersionType  # NOQA
 
 __all__ = ['BaseDumper', 'SafeDumper', 'Dumper', 'RoundTripDumper']
@@ -39,7 +39,7 @@ class BaseDumper(Emitter, Serializer, BaseRepresenter, BaseResolver):
         top_level_colon_align=None,
         prefix_colon=None,
     ):
-        # type: (Any, StreamType, Any, Any, Union[None, bool], Union[None, int], Union[None, int], Union[None, bool], Any, Any, Union[None, bool], Union[None, bool], Any, Any, Any, Any, Any) -> None   # NOQA
+        # type: (Any, StreamType, Any, Any, Optional[bool], Optional[int], Optional[int], Optional[bool], Any, Any, Optional[bool], Optional[bool], Any, Any, Any, Any, Any) -> None   # NOQA
         Emitter.__init__(
             self,
             stream,
@@ -89,7 +89,7 @@ class SafeDumper(Emitter, Serializer, SafeRepresenter, Resolver):
         top_level_colon_align=None,
         prefix_colon=None,
     ):
-        # type: (StreamType, Any, Any, Union[None, bool], Union[None, int], Union[None, int], Union[None, bool], Any, Any, Union[None, bool], Union[None, bool], Any, Any, Any, Any, Any) -> None  # NOQA
+        # type: (StreamType, Any, Any, Optional[bool], Optional[int], Optional[int], Optional[bool], Any, Any, Optional[bool], Optional[bool], Any, Any, Any, Any, Any) -> None  # NOQA
         Emitter.__init__(
             self,
             stream,
@@ -139,7 +139,7 @@ class Dumper(Emitter, Serializer, Representer, Resolver):
         top_level_colon_align=None,
         prefix_colon=None,
     ):
-        # type: (StreamType, Any, Any, Union[None, bool], Union[None, int], Union[None, int], Union[None, bool], Any, Any, Union[None, bool], Union[None, bool], Any, Any, Any, Any, Any) -> None   # NOQA
+        # type: (StreamType, Any, Any, Optional[bool], Optional[int], Optional[int], Optional[bool], Any, Any, Optional[bool], Optional[bool], Any, Any, Any, Any, Any) -> None   # NOQA
         Emitter.__init__(
             self,
             stream,
@@ -189,7 +189,7 @@ class RoundTripDumper(Emitter, Serializer, RoundTripRepresenter, VersionedResolv
         top_level_colon_align=None,
         prefix_colon=None,
     ):
-        # type: (StreamType, Any, Union[None, bool], Union[None, int], Union[None, int], Union[None, int], Union[None, bool], Any, Any, Union[None, bool], Union[None, bool], Any, Any, Any, Any, Any) -> None  # NOQA
+        # type: (StreamType, Any, Optional[bool], Optional[int], Optional[int], Optional[int], Optional[bool], Any, Any, Optional[bool], Optional[bool], Any, Any, Any, Any, Any) -> None  # NOQA
         Emitter.__init__(
             self,
             stream,

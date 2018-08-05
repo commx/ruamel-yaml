@@ -20,7 +20,7 @@ from ruamel.yaml.compat import utf8, text_type, PY2, nprint, dbg, DBG_EVENT, \
 # fmt: on
 
 if False:  # MYPY
-    from typing import Any, Dict, List, Union, Text, Tuple  # NOQA
+    from typing import Any, Dict, List, Union, Text, Tuple, Optional  # NOQA
     from ruamel.yaml.compat import StreamType  # NOQA
 
 __all__ = ['Emitter', 'EmitterError']
@@ -113,14 +113,14 @@ class Emitter(object):
         prefix_colon=None,
         dumper=None,
     ):
-        # type: (StreamType, Any, Union[None, int], Union[None, int], Union[None, bool], Any, Union[None, int], Union[None, bool], Any, Any) -> None  # NOQA
+        # type: (StreamType, Any, Optional[int], Optional[int], Optional[bool], Any, Optional[int], Optional[bool], Any, Any) -> None  # NOQA
         self.dumper = dumper
         if self.dumper is not None and getattr(self.dumper, '_emitter', None) is None:
             self.dumper._emitter = self
         self.stream = stream
 
         # Encoding can be overriden by STREAM-START.
-        self.encoding = None  # type: Union[None, Text]
+        self.encoding = None  # type: Optional[Text]
         self.allow_space_break = None
 
         # Emitter is a state machine with a stack of states to handle nested
@@ -134,7 +134,7 @@ class Emitter(object):
 
         # The current indentation level and the stack of previous indents.
         self.indents = Indents()
-        self.indent = None  # type: Union[None, int]
+        self.indent = None  # type: Optional[int]
 
         # Flow level.
         self.flow_level = 0
@@ -154,7 +154,7 @@ class Emitter(object):
         self.column = 0
         self.whitespace = True
         self.indention = True
-        self.no_newline = None  # type: Union[None, bool]  # set if directly after `- `
+        self.no_newline = None  # type: Optional[bool]  # set if directly after `- `
 
         # Whether the document requires an explicit document indicator
         self.open_ended = False
@@ -269,7 +269,7 @@ class Emitter(object):
         return len(self.events) < count + 1
 
     def increase_indent(self, flow=False, sequence=None, indentless=False):
-        # type: (bool, Union[None, bool], bool) -> None
+        # type: (bool, Optional[bool], bool) -> None
         self.indents.append(self.indent, sequence)
         if self.indent is None:  # top level
             if flow:

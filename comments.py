@@ -21,7 +21,7 @@ else:
     from collections.abc import MutableSet, Sized, Set
 
 if False:  # MYPY
-    from typing import Any, Dict, Optional, List, Union  # NOQA
+    from typing import Any, Dict, Optional, List, Union, Optional  # NOQA
 
 # fmt: off
 __all__ = ["CommentedSeq", "CommentedKeySeq",
@@ -127,7 +127,7 @@ class LineCol(object):
         # type: () -> None
         self.line = None
         self.col = None
-        self.data = None  # type: Union[None, Dict[Any, Any]]
+        self.data = None  # type: Optional[Dict[Any, Any]]
 
     def add_kv_line_col(self, key, data):
         # type: (Any, Any) -> None

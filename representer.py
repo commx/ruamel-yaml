@@ -26,7 +26,7 @@ else:
     import copy_reg as copyreg  # type: ignore
 
 if False:  # MYPY
-    from typing import Dict, List, Any, Union, Text  # NOQA
+    from typing import Dict, List, Any, Union, Text, Optional  # NOQA
 
 # fmt: off
 __all__ = ['BaseRepresenter', 'SafeRepresenter', 'Representer',
@@ -62,7 +62,7 @@ class BaseRepresenter(object):
         self.default_flow_style = default_flow_style
         self.represented_objects = {}  # type: Dict[Any, Any]
         self.object_keeper = []  # type: List[Any]
-        self.alias_key = None  # type: Union[None, int]
+        self.alias_key = None  # type: Optional[int]
 
     @property
     def serializer(self):

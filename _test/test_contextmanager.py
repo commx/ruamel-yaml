@@ -98,3 +98,15 @@ class TestContextManager:
     #     with YAML(input=multi_doc) as yaml:
     #         for idx, data in enumerate(yaml.load()):
     #             assert data == multi_doc_data[0]
+
+    def test_roundtrip(self, capsys):
+        from ruamel.yaml import YAML
+
+        with YAML(output=sys.stdout) as yaml:
+            yaml.explicit_start = True
+            for data in yaml.load_all(multi_doc):
+                yaml.dump(data)
+
+        out, err = capsys.readouterr()
+        print(err)
+        assert out == multi_doc

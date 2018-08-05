@@ -38,7 +38,7 @@ enforce using the pure Python implementation (faster C libraries will be used
 when possible/available)
 
 Dumping works in the same way::
---- !python |
+--- !code |
 from ruamel.yaml import YAML
 
 yaml=YAML()
