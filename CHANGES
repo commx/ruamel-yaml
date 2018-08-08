@@ -1,3 +1,12 @@
+[0, 15, 51]: 2018-08-08
+  - Fix method name dumps (were not dotted) and loads (reported by `Douglas Raillard 
+    <https://bitbucket.org/DouglasRaillard/>`__)
+  - Fix spurious trailing white-space caused when the comment start
+    column was no longer reached and there was no actual EOL comment
+    (e.g. following empty line) and doing substitutions, or when
+    quotes around scalars got dropped.  (reported by `Thomas Guillet
+    <https://bitbucket.org/guillett/>`__)
+
 [0, 15, 50]: 2018-08-05
   - Allow ``YAML()`` as a context manager for output, thereby making it much easier
     to generate multi-documents in a stream. 

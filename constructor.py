@@ -801,12 +801,11 @@ class Constructor(SafeConstructor):
         obj = module
         while lobject_name:
             if not hasattr(obj, lobject_name[0]):
-                
+
                 raise ConstructorError(
                     'while constructing a Python object',
                     mark,
-                    'cannot find %r in the module %r' % (
-                        utf8(object_name), module.__name__),
+                    'cannot find %r in the module %r' % (utf8(object_name), module.__name__),
                     mark,
                 )
             obj = getattr(obj, lobject_name.pop(0))

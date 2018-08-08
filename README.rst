@@ -4,8 +4,8 @@ ruamel.yaml
 
 ``ruamel.yaml`` is a YAML 1.2 loader/dumper package for Python.
 
-:version:       0.15.50
-:updated:       2018-08-05
+:version:       0.15.51
+:updated:       2018-08-08
 :documentation: http://yaml.readthedocs.io
 :repository:    https://bitbucket.org/ruamel/
 :pypi:          https://pypi.org/project/ruamel.yaml/
@@ -53,6 +53,15 @@ ChangeLog
 =========
 
 .. should insert NEXT: at the beginning of line for next key (with empty line)
+
+0.15.51 (2018-08-08):
+  - Fix method name dumps (were not dotted) and loads (reported by `Douglas Raillard 
+    <https://bitbucket.org/DouglasRaillard/>`__)
+  - Fix spurious trailing white-space caused when the comment start
+    column was no longer reached and there was no actual EOL comment
+    (e.g. following empty line) and doing substitutions, or when
+    quotes around scalars got dropped.  (reported by `Thomas Guillet
+    <https://bitbucket.org/guillett/>`__)
 
 0.15.50 (2018-08-05):
   - Allow ``YAML()`` as a context manager for output, thereby making it much easier

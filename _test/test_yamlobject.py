@@ -45,11 +45,10 @@ def test_monster(tmpdir):
     assert save_and_run(program_src, tmpdir) == 0
 
 
-
 @pytest.mark.skipif(sys.version_info < (3, 0), reason='no __qualname__')
 def test_qualified_name00(tmpdir):
     """issue 214"""
-    program_src = u'''\
+    program_src = u"""\
     from ruamel.yaml import YAML
     from ruamel.yaml.compat import StringIO
 
@@ -64,7 +63,7 @@ def test_qualified_name00(tmpdir):
     assert res == '!!python/name:__main__.A.f \\n...\\n'
     x = yaml.load(res)
     assert x == A.f
-    '''
+    """
     assert save_and_run(program_src, tmpdir) == 0
 
 
