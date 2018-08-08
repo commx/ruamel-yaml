@@ -912,6 +912,13 @@ class CommentedMap(ordereddict, CommentedBase):
             setattr(self, merge_attrib, [])
         return getattr(self, merge_attrib)
 
+    def copy(self):
+        x = {}  # update doesn't work
+        for k, v in self._items():
+            print(k, v)
+            x[k] = v
+        return x
+
     def add_yaml_merge(self, value):
         # type: (Any) -> None
         self.merge.extend(value)

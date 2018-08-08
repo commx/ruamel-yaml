@@ -396,6 +396,23 @@ class TestMergeKeysValues:
             ref -= 1
         assert len(x) == ref
 
+    def test_issue_213_copy_of_merge(self):
+        from ruamel.yaml import YAML
+        yaml = YAML()
+        d = yaml.load("""\
+        foo: &foo
+          a: a
+        foo2:
+          <<: *foo
+          b: b
+        """)['foo2']
+        assert d['a'] == 'a'
+        d2 = d.copy()
+        assert d2['a'] == 'a'
+        d.pop('a')
+        assert 'a' not in d
+        assert 'a' in d2
+
 
 class TestDuplicateKeyThroughAnchor:
     def test_duplicate_key_00(self):
