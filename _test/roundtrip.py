@@ -228,7 +228,7 @@ def save_and_run(program, base_dir=None, file_name=None):
         print('running:', *cmd)
         check_output(cmd, stderr=STDOUT, universal_newlines=True)
     except CalledProcessError as exception:
-        print("##### Running '{} {}' FAILED #####".format(sys.exeutable, file_name))
+        print("##### Running '{} {}' FAILED #####".format(sys.executable, file_name))
         print(exception.output)
         return exception.returncode
     return 0

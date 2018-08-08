@@ -773,10 +773,20 @@ class Constructor(SafeConstructor):
                 mark,
             )
         if u'.' in name:
-            module_name, object_name = name.rsplit('.', 1)
+            lname = name.split('.')
+            lmodule_name, lobject_name = lname, []
+            while len(lmodule_name) > 1:
+                lobject_name.insert(0, lmodule_name.pop())
+                module_name = '.'.join(lmodule_name)
+                try:
+                    __import__(module_name)
+                    # object_name = '.'.join(object_name)
+                    break
+                except ImportError as exc:
+                    continue
         else:
             module_name = builtins_module
-            object_name = name
+            object_name = [name]
         try:
             __import__(module_name)
         except ImportError as exc:
@@ -787,14 +797,20 @@ class Constructor(SafeConstructor):
                 mark,
             )
         module = sys.modules[module_name]
-        if not hasattr(module, object_name):
-            raise ConstructorError(
-                'while constructing a Python object',
-                mark,
-                'cannot find %r in the module %r' % (utf8(object_name), module.__name__),
-                mark,
-            )
-        return getattr(module, object_name)
+        object_name = '.'.join(lobject_name)
+        obj = module
+        while lobject_name:
+            if not hasattr(obj, lobject_name[0]):
+                
+                raise ConstructorError(
+                    'while constructing a Python object',
+                    mark,
+                    'cannot find %r in the module %r' % (
+                        utf8(object_name), module.__name__),
+                    mark,
+                )
+            obj = getattr(obj, lobject_name.pop(0))
+        return obj
 
     def construct_python_name(self, suffix, node):
         # type: (Any, Any) -> Any

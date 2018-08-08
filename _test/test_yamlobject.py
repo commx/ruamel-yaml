@@ -2,6 +2,7 @@
 
 from __future__ import print_function
 
+import sys
 import pytest  # NOQA
 
 from roundtrip import save_and_run  # NOQA
@@ -42,3 +43,42 @@ def test_monster(tmpdir):
     """)
     '''
     assert save_and_run(program_src, tmpdir) == 0
+
+
+
+@pytest.mark.skipif(sys.version_info < (3, 0), reason='no __qualname__')
+def test_qualified_name00(tmpdir):
+    """issue 214"""
+    program_src = u'''\
+    from ruamel.yaml import YAML
+    from ruamel.yaml.compat import StringIO
+
+    class A:
+        def f(self):
+            pass
+
+    yaml = YAML(typ='unsafe')
+    buf = StringIO()
+    yaml.dump(A.f, buf)
+    res = buf.getvalue()
+    assert res == '!!python/name:__main__.A.f \\n...\\n'
+    x = yaml.load(res)
+    assert x == A.f
+    '''
+    assert save_and_run(program_src, tmpdir) == 0
+
+
+@pytest.mark.skipif(sys.version_info < (3, 0), reason='no __qualname__')
+def test_qualified_name01(tmpdir):
+    """issue 214"""
+    from ruamel.yaml import YAML
+    import ruamel.yaml.comments
+    from ruamel.yaml.compat import StringIO
+
+    yaml = YAML(typ='unsafe')
+    buf = StringIO()
+    yaml.dump(ruamel.yaml.comments.CommentedBase.yaml_anchor, buf)
+    res = buf.getvalue()
+    assert res == '!!python/name:ruamel.yaml.comments.CommentedBase.yaml_anchor \n...\n'
+    x = yaml.load(res)
+    assert x == ruamel.yaml.comments.CommentedBase.yaml_anchor

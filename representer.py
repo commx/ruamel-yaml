@@ -483,7 +483,11 @@ class Representer(SafeRepresenter):
 
     def represent_name(self, data):
         # type: (Any) -> Any
-        name = u'%s.%s' % (data.__module__, data.__name__)
+        try:
+            name = u'%s.%s' % (data.__module__, data.__qualname__)
+        except AttributeError:
+            # probably PY2
+            name = u'%s.%s' % (data.__module__, data.__name__)
         return self.represent_scalar(u'tag:yaml.org,2002:python/name:' + name, "")
 
     def represent_module(self, data):
