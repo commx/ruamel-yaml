@@ -774,7 +774,8 @@ class Constructor(SafeConstructor):
             )
         if u'.' in name:
             lname = name.split('.')
-            lmodule_name, lobject_name = lname, []
+            lmodule_name = lname
+            lobject_name = []  # type: List[Any]
             while len(lmodule_name) > 1:
                 lobject_name.insert(0, lmodule_name.pop())
                 module_name = '.'.join(lmodule_name)
@@ -786,7 +787,7 @@ class Constructor(SafeConstructor):
                     continue
         else:
             module_name = builtins_module
-            object_name = [name]
+            lobject_name = [name]
         try:
             __import__(module_name)
         except ImportError as exc:
