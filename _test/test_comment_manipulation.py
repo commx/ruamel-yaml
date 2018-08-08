@@ -16,6 +16,7 @@ def compare(data, s, **kw):
 
 
 def compare_eol(data, s):
+    assert 'EOL' in s
     assert round_trip_dump(data).replace('\n', '|\n') == \
         dedent(s).replace('EOL', '').replace('\n', '|\n')
 # @pytest.mark.xfail
@@ -440,7 +441,7 @@ class TestCommentsManipulation:
             test3: 3
         """)
 
-    def test_map_set_comment_before_and_after_non_first_key_01(self):
+    def Xtest_map_set_comment_before_and_after_non_first_key_01(self):
         data = load("""
         xyz:
           a: 1    # comment 1
@@ -469,7 +470,37 @@ class TestCommentsManipulation:
             test3: 3
         """)
 
-    def test_map_set_comment_before_and_after_non_first_key_02(self):
+    # EOL is no longer necessary
+    # fixed together with issue # 216
+    def test_map_set_comment_before_and_after_non_first_key_01(self):
+        data = load("""
+        xyz:
+          a: 1    # comment 1
+          b: 2
+
+        test1:
+          test2:
+            test3: 3
+        """)
+        data.yaml_set_comment_before_after_key(
+            'test1', 'before test1 (top level)', after='before test2\n\n'
+        )
+        data['test1']['test2'].yaml_set_start_comment('after test2', indent=4)
+        compare(data, """
+        xyz:
+          a: 1    # comment 1
+          b: 2
+
+        # before test1 (top level)
+        test1:
+          # before test2
+
+          test2:
+            # after test2
+            test3: 3
+        """)
+
+    def Xtest_map_set_comment_before_and_after_non_first_key_02(self):
         data = load("""
         xyz:
           a: 1    # comment 1
@@ -494,6 +525,36 @@ class TestCommentsManipulation:
         # before test1 (top level)
         test1:
             EOL
+            # before test2
+          test2:
+            # after test2
+            test3: 3
+        """)
+
+    def test_map_set_comment_before_and_after_non_first_key_02(self):
+        data = load("""
+        xyz:
+          a: 1    # comment 1
+          b: 2
+
+        test1:
+          test2:
+            test3: 3
+        """)
+        data.yaml_set_comment_before_after_key(
+            'test1', 'xyz\n\nbefore test1 (top level)', after='\nbefore test2', after_indent=4
+        )
+        data['test1']['test2'].yaml_set_start_comment('after test2', indent=4)
+        compare(data, """
+        xyz:
+          a: 1    # comment 1
+          b: 2
+
+        # xyz
+
+        # before test1 (top level)
+        test1:
+
             # before test2
           test2:
             # after test2

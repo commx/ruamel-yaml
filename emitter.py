@@ -1524,7 +1524,11 @@ class Emitter(object):
         try:
             # get original column position
             col = comment.start_mark.column
-            if col < self.column + 1:
+            if comment.value and comment.value.startswith('\n'):
+                # never inject extra spaces if the comment starts with a newline
+                # and not a real comment (e.g. if you have an empty line following a key-value
+                col = self.column
+            elif col < self.column + 1:
                 ValueError
         except ValueError:
             col = self.column + 1
