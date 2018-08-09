@@ -4,8 +4,8 @@ ruamel.yaml
 
 ``ruamel.yaml`` is a YAML 1.2 loader/dumper package for Python.
 
-:version:       0.15.51
-:updated:       2018-08-08
+:version:       0.15.52
+:updated:       2018-08-09
 :documentation: http://yaml.readthedocs.io
 :repository:    https://bitbucket.org/ruamel/
 :pypi:          https://pypi.org/project/ruamel.yaml/
@@ -53,6 +53,15 @@ ChangeLog
 =========
 
 .. should insert NEXT: at the beginning of line for next key (with empty line)
+
+0.15.52 (2018-08-09):
+  - added `.copy()` mapping representation for round-tripping
+    (``CommentedMap``) to fix incomplete copies of merged mappings
+    (reported by `Will Richards
+    <https://bitbucket.org/will_richards/>`__) 
+  - Also unmade that class a subclass of ordereddict to solve incorrect behaviour
+    for ``{**merged-mapping}`` and ``dict(**merged-mapping)`` (reported by
+    `Filip Matzner <https://bitbucket.org/FloopCZ/>`__)
 
 0.15.51 (2018-08-08):
   - Fix method name dumps (were not dotted) and loads (reported by `Douglas Raillard 

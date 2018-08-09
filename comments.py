@@ -532,6 +532,7 @@ class CommentedMapView(Sized):
         count = len(self._mapping)
         return count
 
+
 class CommentedMapKeysView(CommentedMapView, Set):
     __slots__ = ()
 
@@ -591,8 +592,12 @@ class CommentedMapValuesView(CommentedMapView):
             yield self._mapping[key]
 
 
-class CommentedMap(ordereddict, CommentedBase):
-    __slots__ = (Comment.attrib,)
+class CommentedMap(CommentedBase, MutableMapping):
+    __slots__ = (Comment.attrib, '_od')
+
+    def __init__(self, *args, **kw):
+        # type: (Any, Any) -> None
+        self._od = ordereddict(*args, **kw)
 
     def _yaml_add_comment(self, comment, key=NoComment, value=NoComment):
         # type: (Any, Optional[Any], Optional[Any]) -> None
@@ -654,7 +659,7 @@ class CommentedMap(ordereddict, CommentedBase):
     def update(self, vals):
         # type: (Any) -> None
         try:
-            ordereddict.update(self, vals)
+            self._od.update(vals)
         except TypeError:
             # probably a dict that is used
             for x in vals:
@@ -665,7 +670,7 @@ class CommentedMap(ordereddict, CommentedBase):
         """insert key value into given position
         attach comment if provided
         """
-        ordereddict.insert(self, pos, key, value)
+        self._od.insert(pos, key, value)
         if comment is not None:
             self.yaml_add_eol_comment(comment, key=key)
 
@@ -698,7 +703,7 @@ class CommentedMap(ordereddict, CommentedBase):
     def __getitem__(self, key):
         # type: (Any) -> Any
         try:
-            return ordereddict.__getitem__(self, key)
+            return self._od.__getitem__(key)
         except KeyError:
             for merged in getattr(self, merge_attrib, []):
                 if key in merged[1]:
@@ -715,17 +720,17 @@ class CommentedMap(ordereddict, CommentedBase):
                 and isinstance(self[key], ScalarString)
             ):
                 value = type(self[key])(value)
-        ordereddict.__setitem__(self, key, value)
+        self._od.__setitem__(key, value)
 
     def _unmerged_contains(self, key):
         # type: (Any) -> Any
-        if ordereddict.__contains__(self, key):
+        if self._od.__contains__(key):
             return True
         return None
 
     def __contains__(self, key):
         # type: (Any) -> bool
-        if ordereddict.__contains__(self, key):
+        if self._od.__contains__(key):
             return True
         # this will only work once the mapping/dict is built to completion
         for merged in getattr(self, merge_attrib, []):
@@ -743,13 +748,13 @@ class CommentedMap(ordereddict, CommentedBase):
     def __repr__(self):
         # type: () -> Any
         if not hasattr(self, merge_attrib):
-            return ordereddict.__repr__(self)
+            return self._od.__repr__()
         return 'ordereddict(' + repr(list(self._items())) + ')'
 
     def non_merged_items(self):
         # type: () -> Any
-        for x in ordereddict.__iter__(self):
-            yield x, ordereddict.__getitem__(self, x)
+        for x in self._od.__iter__():
+            yield x, self._od.__getitem__(x)
 
     def __delitem__(self, key):
         # type: (Any) -> None
@@ -761,19 +766,19 @@ class CommentedMap(ordereddict, CommentedBase):
             except KeyError:
                 pass
         try:
-            ordereddict.__delitem__(self, key)
+            self._od.__delitem__(key)
         except KeyError:
             if not found:
                 raise
 
     def __iter__(self):
         # type: () -> Any
-        for x in ordereddict.__iter__(self):
+        for x in self._od.__iter__():
             yield x
         done = []  # type: List[Any]  # list of processed merge items, kept for masking
         for merged in getattr(self, merge_attrib, []):
             for x in merged[1]:
-                if ordereddict.__contains__(self, x):
+                if self._od.__contains__(x):
                     continue
                 for y in done:
                     if x in y:
@@ -784,12 +789,12 @@ class CommentedMap(ordereddict, CommentedBase):
 
     def _keys(self):
         # type: () -> Any
-        for x in ordereddict.__iter__(self):
+        for x in self._od.__iter__():
             yield x
         done = []  # type: List[Any]  # list of processed merge items, kept for masking
         for merged in getattr(self, merge_attrib, []):
             for x in merged[1].keys():
-                if ordereddict.__contains__(self, x):
+                if self._od.__contains__(x):
                     continue
                 for y in done:
                     if x in y:
@@ -799,11 +804,12 @@ class CommentedMap(ordereddict, CommentedBase):
             done.append(merged[1])
 
     def __len__(self):
-        count = ordereddict.__len__(self)
+        # type: () -> int
+        count = self._od.__len__()  # type: int
         done = []  # type: List[Any] # list of processed merge items, kept for masking
         for merged in getattr(self, merge_attrib, []):
             for x in merged[1]:
-                if ordereddict.__contains__(self, x):
+                if self._od.__contains__(x):
                     continue
                 for y in done:
                     if x in y:
@@ -812,6 +818,10 @@ class CommentedMap(ordereddict, CommentedBase):
                     count += 1
             done.append(merged[1])
         return count
+
+    def __eq__(self, other):
+        # type: (Any) -> bool
+        return bool(dict(self) == other)
 
     if PY2:
 
@@ -833,23 +843,23 @@ class CommentedMap(ordereddict, CommentedBase):
             # type: () -> Any
             return CommentedMapKeysView(self)
 
-    def _values(self):
-        # type: () -> Any
-        for x in ordereddict.__iter__(self):
-            yield ordereddict.__getitem__(self, x)
-        done = []  # type: List[Any]  # list of processed merge items, kept for masking
-        for merged in getattr(self, merge_attrib, []):
-            for x in merged[1]:
-                if ordereddict.__contains__(self, x):
-                    continue
-                for y in done:
-                    if x in y:
-                        break
-                else:
-                    yield ordereddict.__getitem__(merged[1], x)
-            done.append(merged[1])
-
     if PY2:
+
+        def _values(self):
+            # type: () -> Any
+            for x in self._od.__iter__():
+                yield self._od.__getitem__(x)
+            done = []  # type: List[Any]  # list of processed merge items, kept for masking
+            for merged in getattr(self, merge_attrib, []):
+                for x in merged[1]:
+                    if self._od.__contains__(x):
+                        continue
+                    for y in done:
+                        if x in y:
+                            break
+                    else:
+                        yield merged[1]._od.__getitem__(x)
+                done.append(merged[1])
 
         def values(self):
             # type: () -> Any
@@ -871,18 +881,18 @@ class CommentedMap(ordereddict, CommentedBase):
 
     def _items(self):
         # type: () -> Any
-        for x in ordereddict.__iter__(self):
-            yield x, ordereddict.__getitem__(self, x)
+        for x in self._od.__iter__():
+            yield x, self._od.__getitem__(x)
         done = []  # type: List[Any]  # list of processed merge items, kept for masking
         for merged in getattr(self, merge_attrib, []):
             for x, v in merged[1].items():
-                if ordereddict.__contains__(self, x):
+                if self._od.__contains__(x):
                     continue
                 for y in done:
                     if x in y:
                         break
                 else:
-                    yield x, v  # ordereddict.__getitem__(merged[1], x)
+                    yield x, v  # self._od.__getitem__(merged[1], x)
             done.append(merged[1])
 
     if PY2:
@@ -913,6 +923,7 @@ class CommentedMap(ordereddict, CommentedBase):
         return getattr(self, merge_attrib)
 
     def copy(self):
+        # type: () -> Any
         x = {}  # update doesn't work
         for k, v in self._items():
             x[k] = v
@@ -936,7 +947,7 @@ class CommentedOrderedMap(CommentedMap):
     __slots__ = (Comment.attrib,)
 
 
-class CommentedSet(MutableSet, CommentedMap):
+class CommentedSet(MutableSet, CommentedMap):  # NOQA
     __slots__ = Comment.attrib, 'odict'
 
     def __init__(self, values=None):

@@ -46,7 +46,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'yaml'
-copyright = u'2017, Anthon van der Neut, Ruamel bvba'
+copyright = u'2017-2018, Anthon van der Neut, Ruamel bvba'
 author = u'Anthon van der Neut'
 
 # The version info for the project you're documenting, acts as replacement for

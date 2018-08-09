@@ -8,8 +8,10 @@ import sys
 import os
 import types
 
+# fmt: off
 if False:  # MYPY
     from typing import Any, Dict, Optional, List, Union, BinaryIO, IO, Text, Tuple, Optional  # NOQA
+# fmt: on
 
 _DEFAULT_YAML_VERSION = (1, 2)
 

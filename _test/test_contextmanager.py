@@ -41,7 +41,10 @@ def get_yaml():
 
 class TestOldStyle:
     def test_single_load(self):
-        assert get_yaml().load(single_doc) == single_data
+        d = get_yaml().load(single_doc)
+        print(d)
+        print(type(d[0]))
+        assert d == single_data
 
     def test_single_load_no_arg(self):
         with pytest.raises(TypeError):

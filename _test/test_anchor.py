@@ -402,11 +402,12 @@ class TestMergeKeysValues:
 
     def test_issue_196_cast_of_dict(self, capsys):
         from ruamel.yaml import YAML
+
         yaml = YAML()
         mapping = yaml.load("""\
         anchored: &anchor
           a : 1
-        
+
         mapping:
           <<: *anchor
           b: 2
@@ -416,7 +417,7 @@ class TestMergeKeysValues:
             print('k', k)
         for k in mapping.copy():
             print('kc', k)
-        
+
         print('v', list(mapping.keys()))
         print('v', list(mapping.values()))
         print('v', list(mapping.items()))
@@ -436,9 +437,17 @@ class TestMergeKeysValues:
         assert mapping.__getitem__('a') == 1
         assert 'a' in dict(mapping)
         assert 'a' in dict(mapping.items())
-        
+
+    def test_values_of_merged(self):
+        from ruamel.yaml import YAML
+
+        yaml = YAML()
+        data = yaml.load(dedent(self.yaml_str))
+        assert list(data[2].values()) == [1, 6, 'x2', 'x3', 'y4']
+
     def test_issue_213_copy_of_merge(self):
         from ruamel.yaml import YAML
+
         yaml = YAML()
         d = yaml.load("""\
         foo: &foo

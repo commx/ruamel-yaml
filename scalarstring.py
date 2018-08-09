@@ -28,7 +28,7 @@ class ScalarString(text_type):
 
 
 class PreservedScalarString(ScalarString):
-    __slots__ = ('comment')  # the comment after the | on the first line
+    __slots__ = 'comment'  # the comment after the | on the first line
 
     style = '|'
 
