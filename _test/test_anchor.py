@@ -1,5 +1,7 @@
 # coding: utf-8
 
+from __future__ import print_function
+
 """
 testing of anchors and the aliases referring to them
 """
@@ -381,7 +383,9 @@ class TestMergeKeysValues:
         d = safe_load(self.yaml_str)
         data = round_trip_load(self.yaml_str)
         x = data[2].items()
+        print('d2 items', d[2].items(), len(d[2].items()), x, len(x))
         ref = len(d[2].items())
+        print('ref', ref)
         assert len(x) == ref
         del data[2]['m']
         if PY3:
@@ -396,6 +400,43 @@ class TestMergeKeysValues:
             ref -= 1
         assert len(x) == ref
 
+    def test_issue_196_cast_of_dict(self, capsys):
+        from ruamel.yaml import YAML
+        yaml = YAML()
+        mapping = yaml.load("""\
+        anchored: &anchor
+          a : 1
+        
+        mapping:
+          <<: *anchor
+          b: 2
+        """)['mapping']
+
+        for k in mapping:
+            print('k', k)
+        for k in mapping.copy():
+            print('kc', k)
+        
+        print('v', list(mapping.keys()))
+        print('v', list(mapping.values()))
+        print('v', list(mapping.items()))
+        print(len(mapping))
+        print('-----')
+
+        # print({**mapping})
+        # print(type({**mapping}))
+        # assert 'a' in {**mapping}
+        assert 'a' in mapping
+        x = {}
+        for k in mapping:
+            x[k] = mapping[k]
+        assert 'a' in x
+        assert 'a' in mapping.keys()
+        assert mapping['a'] == 1
+        assert mapping.__getitem__('a') == 1
+        assert 'a' in dict(mapping)
+        assert 'a' in dict(mapping.items())
+        
     def test_issue_213_copy_of_merge(self):
         from ruamel.yaml import YAML
         yaml = YAML()
@@ -409,7 +450,8 @@ class TestMergeKeysValues:
         assert d['a'] == 'a'
         d2 = d.copy()
         assert d2['a'] == 'a'
-        d.pop('a')
+        print('d', d)
+        del d['a']
         assert 'a' not in d
         assert 'a' in d2
 

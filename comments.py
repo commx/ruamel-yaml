@@ -16,9 +16,9 @@ from ruamel.yaml.compat import ordereddict, PY2, string_types
 from ruamel.yaml.scalarstring import ScalarString
 
 if PY2:
-    from collections import MutableSet, Sized, Set
+    from collections import MutableSet, Sized, Set, MutableMapping
 else:
-    from collections.abc import MutableSet, Sized, Set
+    from collections.abc import MutableSet, Sized, Set, MutableMapping
 
 if False:  # MYPY
     from typing import Any, Dict, Optional, List, Union, Optional  # NOQA
@@ -530,23 +530,7 @@ class CommentedMapView(Sized):
     def __len__(self):
         # type: () -> int
         count = len(self._mapping)
-        done = []  # type: List[Any] # list of processed merge items, kept for masking
-        for merged in getattr(self._mapping, merge_attrib, []):
-            for x in merged[1]:
-                if self._mapping._unmerged_contains(x):
-                    continue
-                for y in done:
-                    if x in y:
-                        break
-                else:
-                    count += 1
-            done.append(merged[1])
         return count
-
-    def __repr__(self):
-        # type: () -> str
-        return '{0.__class__.__name__}({0._mapping!r})'.format(self)
-
 
 class CommentedMapKeysView(CommentedMapView, Set):
     __slots__ = ()
@@ -562,6 +546,7 @@ class CommentedMapKeysView(CommentedMapView, Set):
 
     def __iter__(self):
         # type: () -> Any  # yield from self._mapping  # not in py27, pypy
+        # for x in self._mapping._keys():
         for x in self._mapping:
             yield x
 
@@ -602,7 +587,7 @@ class CommentedMapValuesView(CommentedMapView):
 
     def __iter__(self):
         # type: () -> Any
-        for key in self._mapping:
+        for key in self._mapping._keys():
             yield self._mapping[key]
 
 
@@ -803,7 +788,7 @@ class CommentedMap(ordereddict, CommentedBase):
             yield x
         done = []  # type: List[Any]  # list of processed merge items, kept for masking
         for merged in getattr(self, merge_attrib, []):
-            for x in merged[1]:
+            for x in merged[1].keys():
                 if ordereddict.__contains__(self, x):
                     continue
                 for y in done:
@@ -812,6 +797,21 @@ class CommentedMap(ordereddict, CommentedBase):
                 else:
                     yield x
             done.append(merged[1])
+
+    def __len__(self):
+        count = ordereddict.__len__(self)
+        done = []  # type: List[Any] # list of processed merge items, kept for masking
+        for merged in getattr(self, merge_attrib, []):
+            for x in merged[1]:
+                if ordereddict.__contains__(self, x):
+                    continue
+                for y in done:
+                    if x in y:
+                        break
+                else:
+                    count += 1
+            done.append(merged[1])
+        return count
 
     if PY2:
 
@@ -915,7 +915,6 @@ class CommentedMap(ordereddict, CommentedBase):
     def copy(self):
         x = {}  # update doesn't work
         for k, v in self._items():
-            print(k, v)
             x[k] = v
         return x
 
