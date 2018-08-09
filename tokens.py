@@ -74,7 +74,7 @@ class Token(object):
             # nprint('mco2:', self, target, target.comment, empty)
             return self
         if c[0] and tc[0] or c[1] and tc[1]:
-            raise NotImplementedError('overlap in comment %r %r' % c, tc)
+            raise NotImplementedError('overlap in comment %r %r' % (c, tc))
         if c[0]:
             tc[0] = c[0]
         if c[1]:
