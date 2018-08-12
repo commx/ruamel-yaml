@@ -656,7 +656,7 @@ class CommentedMap(CommentedBase, MutableMapping):
             self.ca.comment[1] = pre_comments
         return pre_comments
 
-    def update(self, vals):
+    def update(self, vals):  # type: ignore
         # type: (Any) -> None
         try:
             self._od.update(vals)
@@ -947,7 +947,7 @@ class CommentedOrderedMap(CommentedMap):
     __slots__ = (Comment.attrib,)
 
 
-class CommentedSet(MutableSet, CommentedMap):  # NOQA
+class CommentedSet(MutableSet, CommentedBase):  # NOQA
     __slots__ = Comment.attrib, 'odict'
 
     def __init__(self, values=None):
@@ -956,6 +956,22 @@ class CommentedSet(MutableSet, CommentedMap):  # NOQA
         MutableSet.__init__(self)
         if values is not None:
             self |= values  # type: ignore
+
+    def _yaml_add_comment(self, comment, key=NoComment, value=NoComment):
+        # type: (Any, Optional[Any], Optional[Any]) -> None
+        """values is set to key to indicate a value attachment of comment"""
+        if key is not NoComment:
+            self.yaml_key_comment_extend(key, comment)
+            return
+        if value is not NoComment:
+            self.yaml_value_comment_extend(value, comment)
+        else:
+            self.ca.comment = comment
+
+    def _yaml_add_eol_comment(self, comment, key):
+        # type: (Any, Any) -> None
+        """add on the value line, with value specified by the key"""
+        self._yaml_add_comment(comment, value=key)
 
     def add(self, value):
         # type: (Any) -> None

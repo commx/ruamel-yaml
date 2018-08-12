@@ -267,6 +267,29 @@ class BaseConstructor(object):
                 else:
                     raise DuplicateKeyError(*args)
 
+    def check_set_key(self, node, key_node, setting, key):
+        # type: (Any, Any, Any, Any, Any) -> None
+        if key in setting:
+            if not self.allow_duplicate_keys:
+                args = [
+                    'while constructing a set',
+                    node.start_mark,
+                    'found duplicate key "{}"'.format(key),
+                    key_node.start_mark,
+                    """
+                    To suppress this check see:
+                        http://yaml.readthedocs.io/en/latest/api.html#duplicate-keys
+                    """,
+                    """\
+                    Duplicate keys will become an error in future releases, and are errors
+                    by default when using the new API.
+                    """,
+                ]
+                if self.allow_duplicate_keys is None:
+                    warnings.warn(DuplicateKeyFutureWarning(*args))
+                else:
+                    raise DuplicateKeyError(*args)
+
     def construct_pairs(self, node, deep=False):
         # type: (Any, bool) -> Any
         if not isinstance(node, MappingNode):
@@ -1387,7 +1410,7 @@ class RoundTripConstructor(SafeConstructor):
                     )
             # construct but should be null
             value = self.construct_object(value_node, deep=deep)  # NOQA
-            self.check_mapping_key(node, key_node, typ, key, value)
+            self.check_set_key(node, key_node, typ, key)
             if key_node.comment:
                 typ._yaml_add_comment(key_node.comment, key=key)
             if value_node.comment:
