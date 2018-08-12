@@ -1,3 +1,10 @@
+[0, 15, 53]: 2018-08-12
+  - fix issue with flow style mapping with comments gobbled newline (reported
+    by `Christopher Lambert <https://bitbucket.org/XN137/>`__)
+  - fix issue where single '+' under YAML 1.2 was interpreted as
+    integer, erroring out (reported by `Jethro Yu
+    <https://bitbucket.org/jcppkkk/>`__)
+
 [0, 15, 52]: 2018-08-09
   - added `.copy()` mapping representation for round-tripping
     (``CommentedMap``) to fix incomplete copies of merged mappings

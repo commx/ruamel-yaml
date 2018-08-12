@@ -31,10 +31,9 @@ class TestIssues:
         root:
             # a comment
             - {some_key: "value"}
-        
+
         foo: 32
         bar: 32
         """)
         x = round_trip(s, block_seq_indent=4, preserve_quotes=True)
         assert x['bar'] == 32
-        

@@ -579,10 +579,11 @@ class Emitter(object):
         # type: (bool) -> None
         if not first and isinstance(self.event, SequenceEndEvent):
             if self.event.comment and self.event.comment[1]:
-                # final comments from a doc
+                # final comments on a block list e.g. empty line
                 self.write_pre_comment(self.event)
             self.indent = self.indents.pop()
             self.state = self.states.pop()
+            self.no_newline = False
         else:
             if self.event.comment and self.event.comment[1]:
                 self.write_pre_comment(self.event)

@@ -4,8 +4,8 @@ ruamel.yaml
 
 ``ruamel.yaml`` is a YAML 1.2 loader/dumper package for Python.
 
-:version:       0.15.52
-:updated:       2018-08-09
+:version:       0.15.53
+:updated:       2018-08-12
 :documentation: http://yaml.readthedocs.io
 :repository:    https://bitbucket.org/ruamel/
 :pypi:          https://pypi.org/project/ruamel.yaml/
@@ -54,13 +54,21 @@ ChangeLog
 
 .. should insert NEXT: at the beginning of line for next key (with empty line)
 
+0.15.53 (2018-08-12):
+  - fix issue with flow style mapping with comments gobbled newline (reported
+    by `Christopher Lambert <https://bitbucket.org/XN137/>`__)
+  - fix issue where single '+' under YAML 1.2 was interpreted as
+    integer, erroring out (reported by `Jethro Yu
+    <https://bitbucket.org/jcppkkk/>`__)
+
 0.15.52 (2018-08-09):
   - added `.copy()` mapping representation for round-tripping
     (``CommentedMap``) to fix incomplete copies of merged mappings
     (reported by `Will Richards
     <https://bitbucket.org/will_richards/>`__) 
   - Also unmade that class a subclass of ordereddict to solve incorrect behaviour
-    for ``{**merged-mapping}`` and ``dict(**merged-mapping)`` (reported by
+    for ``{**merged-mapping}`` and ``dict(**merged-mapping)`` (reported independently by
+    `Tim Olsson <https://bitbucket.org/tgolsson/>`__ and 
     `Filip Matzner <https://bitbucket.org/FloopCZ/>`__)
 
 0.15.51 (2018-08-08):
