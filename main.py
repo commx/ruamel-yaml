@@ -639,7 +639,6 @@ class YAML(object):
             self.constructor.add_constructor(tag, f_y)
         return cls
 
-
     def parse(self, stream):
         # type: (StreamTextType, Any) -> Any
         """
@@ -920,6 +919,14 @@ def load(stream, Loader=None, version=None, preserve_quotes=None):
         return loader._constructor.get_single_data()
     finally:
         loader._parser.dispose()
+        try:
+            loader._reader.reset_reader()  # type: ignore
+        except AttributeError:
+            pass
+        try:
+            loader._scanner.reset_scanner()  # type: ignore
+        except AttributeError:
+            pass
 
 
 def load_all(stream, Loader=None, version=None, preserve_quotes=None):
@@ -937,6 +944,14 @@ def load_all(stream, Loader=None, version=None, preserve_quotes=None):
             yield loader._constructor.get_data()
     finally:
         loader._parser.dispose()
+        try:
+            loader._reader.reset_reader()  # type: ignore
+        except AttributeError:
+            pass
+        try:
+            loader._scanner.reset_scanner()  # type: ignore
+        except AttributeError:
+            pass
 
 
 def safe_load(stream, version=None):

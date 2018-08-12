@@ -44,7 +44,7 @@ class TestIssues:
           key-A:{}
         mapping-B:
         """)
-        for comment in ['', ' # no-newline', '  # some comment\n', '\n', ]:
+        for comment in ['', ' # no-newline', '  # some comment\n', '\n']:
             s = yaml_str.format(comment)
             res = round_trip(s)  # NOQA
 
@@ -65,3 +65,15 @@ class TestIssues:
         - {}
         """)
         x = round_trip(s, preserve_quotes=True)  # NOQA
+
+    json_str = (
+        '{"sshKeys":[{"name":"AETROS\/google-k80-1","uses":0,"getLastUse":0,'
+        '"fingerprint":"MD5:19:dd:41:93:a1:a3:f5:91:4a:8e:9b:d0:ae:ce:66:4c",'
+        '"created":1509497961}]}'
+    )
+
+    json_str2 = '{"abc":[{"a":"1", "uses":0}]}'
+
+    def test_issue_172(self):
+        x = round_trip_load(TestIssues.json_str2)
+        x = round_trip_load(TestIssues.json_str)
