@@ -46,7 +46,7 @@ class TestIssues:
         """)
         for comment in ['', ' # no-newline', '  # some comment\n', '\n', ]:
             s = yaml_str.format(comment)
-            res = round_trip(s)
+            res = round_trip(s)  # NOQA
 
     def test_issue_161a(self):
         yaml_str = dedent("""\
@@ -56,7 +56,12 @@ class TestIssues:
         """)
         for comment in ['\n# between']:
             s = yaml_str.format(comment)
-            res = round_trip(s)
-            # print(s)
-            # print('------------')
-        # assert False
+            res = round_trip(s)  # NOQA
+
+    def test_issue_163(self):
+        s = dedent("""\
+        some-list:
+        # List comment
+        - {}
+        """)
+        x = round_trip(s, preserve_quotes=True)  # NOQA

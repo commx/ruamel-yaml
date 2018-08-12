@@ -27,6 +27,10 @@ class Token(object):
                 arguments += u', line: ' + str(self.start_mark.line)
             except:  # NOQA
                 pass
+        try:
+            arguments += u', comment: ' + str(self._comment)
+        except:  # NOQA
+            pass
         return u'{}({})'.format(self.__class__.__name__, arguments)
 
     def add_post_comment(self, comment):

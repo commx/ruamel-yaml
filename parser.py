@@ -434,9 +434,16 @@ class Parser(object):
             )
             self.state = self.parse_flow_sequence_first_entry
         elif self.scanner.check_token(FlowMappingStartToken):
+            pt = self.scanner.peek_token()
             end_mark = self.scanner.peek_token().end_mark
             event = MappingStartEvent(
-                anchor, tag, implicit, start_mark, end_mark, flow_style=True
+                anchor,
+                tag,
+                implicit,
+                start_mark,
+                end_mark,
+                flow_style=True,
+                comment=pt.comment,
             )
             self.state = self.parse_flow_mapping_first_key
         elif block and self.scanner.check_token(BlockSequenceStartToken):
