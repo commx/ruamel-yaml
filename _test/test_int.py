@@ -107,3 +107,10 @@ class TestBinHexOct:
         """)
         assert d[0] == 2147483647
         assert d[1] == 9223372036854775808
+
+class TestIntIssues:
+    def test_issue_218_single_plus_sign_is_not_int(self):
+        d = round_trip_load("""\
+        +: 1
+        """)
+        assert d == {'+': 1}
