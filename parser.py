@@ -598,7 +598,11 @@ class Parser(object):
                 self.state = self.parse_block_mapping_key
                 comment = token.comment
                 if comment is None:
-                    comment = self.scanner.peek_token().comment
+                    token = self.scanner.peek_token()
+                    comment = token.comment
+                    if comment:
+                        token._comment = [None, comment[1]]
+                        comment = [comment[0], None]
                 return self.process_empty_scalar(token.end_mark, comment=comment)
         else:
             self.state = self.parse_block_mapping_key

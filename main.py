@@ -639,6 +639,27 @@ class YAML(object):
             self.constructor.add_constructor(tag, f_y)
         return cls
 
+
+    def parse(self, stream):
+        # type: (StreamTextType, Any) -> Any
+        """
+        Parse a YAML stream and produce parsing events.
+        """
+        _, parser = self.get_constructor_parser(stream)
+        try:
+            while parser.check_event():
+                yield parser.get_event()
+        finally:
+            parser.dispose()
+            try:
+                self._reader.reset_reader()  # type: ignore
+            except AttributeError:
+                pass
+            try:
+                self._scanner.reset_scanner()  # type: ignore
+            except AttributeError:
+                pass
+
     # ### context manager
 
     def __enter__(self):

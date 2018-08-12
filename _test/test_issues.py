@@ -37,3 +37,26 @@ class TestIssues:
         """)
         x = round_trip(s, block_seq_indent=4, preserve_quotes=True)
         assert x['bar'] == 32
+
+    def test_issue_161(self):
+        yaml_str = dedent("""\
+        mapping-A:
+          key-A:{}
+        mapping-B:
+        """)
+        for comment in ['', ' # no-newline', '  # some comment\n', '\n', ]:
+            s = yaml_str.format(comment)
+            res = round_trip(s)
+
+    def test_issue_161a(self):
+        yaml_str = dedent("""\
+        mapping-A:
+          key-A:{}
+        mapping-B:
+        """)
+        for comment in ['\n# between']:
+            s = yaml_str.format(comment)
+            res = round_trip(s)
+            # print(s)
+            # print('------------')
+        # assert False
