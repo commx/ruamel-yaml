@@ -297,7 +297,10 @@ class CommentedBase(object):
         from .error import CommentMark
 
         if column is None:
-            column = self._yaml_get_column(key)
+            try:
+                column = self._yaml_get_column(key)
+            except AttributeError:
+                column = 0
         if comment[0] != '#':
             comment = '# ' + comment
         if column is None:
