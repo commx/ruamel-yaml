@@ -26,6 +26,16 @@ class TestIssues:
         assert str(data['comb']) == str(data['def'])
         assert str(data['comb']) == "ordereddict([('key', 'value'), ('key1', 'value1')])"
 
+    def test_issue_102(self):
+        yaml_str = dedent("""
+        var1: #empty
+        var2: something #notempty
+        var3: {} #empty object
+        var4: {a: 1} #filled object
+        var5: [] #empty array
+        """)
+        x = round_trip(s, preserve_quotes=True)  # NOQA
+
     def test_issue_160(self):
         s = dedent("""\
         root:
@@ -77,3 +87,5 @@ class TestIssues:
     def test_issue_172(self):
         x = round_trip_load(TestIssues.json_str2)
         x = round_trip_load(TestIssues.json_str)
+
+
