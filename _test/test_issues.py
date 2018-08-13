@@ -86,4 +86,16 @@ class TestIssues:
 
     def test_issue_172(self):
         x = round_trip_load(TestIssues.json_str2)  # NOQA
-        x = round_trip_load(TestIssues.json_str)   # NOQA
+        x = round_trip_load(TestIssues.json_str)  # NOQA
+
+    def test_issue_184(self):
+        yaml_str = dedent("""\
+        test::test:
+          # test
+          foo:
+            bar: baz
+        """)
+        d = round_trip_load(yaml_str)
+        d['bar'] = 'foo'
+        d.yaml_add_eol_comment('test1', 'bar')
+        assert round_trip_dump(d) == yaml_str + 'bar: foo # test1\n'
