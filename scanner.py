@@ -84,11 +84,8 @@ class Scanner(object):
 
     @property
     def flow_level(self):
+        # type: () -> int
         return len(self.flow_context)
-
-    # @flow_level.setter
-    # def flow_level(self):
-    #     self.flow_context = []
 
     def reset_scanner(self):
         # type: () -> None
@@ -96,11 +93,8 @@ class Scanner(object):
         self.done = False
 
         # flow_context is an expanding/shrinking list consisting of '{' and '['
-        # in general len(flow_context) == flow_level
-        self.flow_context = []
-        # The number of unclosed '{' and '['. `flow_level == 0` means block
-        # context.
-        self.flow_level_org = 0
+        # for each unclosed flow context. If empty list that means block context
+        self.flow_context = []  # type: List[Text]
 
         # List of processed tokens that are not yet emitted.
         self.tokens = []  # type: List[Any]
@@ -507,13 +501,11 @@ class Scanner(object):
         self.fetch_flow_collection_start(FlowMappingStartToken, to_push='{')
 
     def fetch_flow_collection_start(self, TokenClass, to_push):
-        # type: (Any) -> None
+        # type: (Any, Text) -> None
         # '[' and '{' may start a simple key.
         self.save_possible_simple_key()
         # Increase the flow level.
-        self.flow_level_org += 1
         self.flow_context.append(to_push)
-        # assert self.flow_level == len(self.flow_context)
         # Simple keys are allowed after '[' and '{'.
         self.allow_simple_key = True
         # Add FLOW-SEQUENCE-START or FLOW-MAPPING-START.
@@ -531,13 +523,11 @@ class Scanner(object):
         self.fetch_flow_collection_end(FlowMappingEndToken, to_pop='{')
 
     def fetch_flow_collection_end(self, TokenClass, to_pop):
-        # type: (Any) -> None
+        # type: (Any, Text) -> None
         # Reset possible simple key on the current level.
         self.remove_possible_simple_key()
         # Decrease the flow level.
-        self.flow_level_org -= 1
         assert self.flow_context.pop() == to_pop
-        assert self.flow_level_org == len(self.flow_context)
         # No simple keys after ']' or '}'.
         self.allow_simple_key = False
         # Add FLOW-SEQUENCE-END or FLOW-MAPPING-END.

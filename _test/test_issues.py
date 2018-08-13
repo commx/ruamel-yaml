@@ -34,7 +34,7 @@ class TestIssues:
         var4: {a: 1} #filled object
         var5: [] #empty array
         """)
-        x = round_trip(s, preserve_quotes=True)  # NOQA
+        x = round_trip(yaml_str, preserve_quotes=True)  # NOQA
 
     def test_issue_160(self):
         s = dedent("""\
@@ -85,7 +85,5 @@ class TestIssues:
     json_str2 = '{"abc":[{"a":"1", "uses":0}]}'
 
     def test_issue_172(self):
-        x = round_trip_load(TestIssues.json_str2)
-        x = round_trip_load(TestIssues.json_str)
-
-
+        x = round_trip_load(TestIssues.json_str2)  # NOQA
+        x = round_trip_load(TestIssues.json_str)   # NOQA

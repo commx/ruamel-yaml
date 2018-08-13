@@ -59,7 +59,7 @@ class TestComments:
         # comment
         scalar
         ...
-        """, "scalar\n...\n")
+        """, 'scalar\n...\n')
 
     def test_main_mapping_begin_end(self):
         round_trip("""

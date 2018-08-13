@@ -1,3 +1,13 @@
+[0, 15, 54]: 2018-08-13
+
+  - fix issue where a comment could pop-up twice in the output (reported by 
+    `Mike Kazantsev <https://bitbucket.org/mk_fg/>`__ and by 
+    `Nate Peterson <https://bitbucket.org/ndpete21/>`__)
+  - fix issue where JSON object (mapping) without spaces was not parsed
+    properly (reported by `Marc Schmidt <https://bitbucket.org/marcj/>`__)
+  - fix issue where comments after empty flow-style mappings were not emitted
+    (reported by `Qinfench Chen <https://bitbucket.org/flyin5ish/>`__)
+
 [0, 15, 53]: 2018-08-12
   - fix issue with flow style mapping with comments gobbled newline (reported
     by `Christopher Lambert <https://bitbucket.org/XN137/>`__)

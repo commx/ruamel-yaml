@@ -640,7 +640,7 @@ class YAML(object):
         return cls
 
     def parse(self, stream):
-        # type: (StreamTextType, Any) -> Any
+        # type: (StreamTextType) -> Any
         """
         Parse a YAML stream and produce parsing events.
         """
@@ -920,11 +920,11 @@ def load(stream, Loader=None, version=None, preserve_quotes=None):
     finally:
         loader._parser.dispose()
         try:
-            loader._reader.reset_reader()  # type: ignore
+            loader._reader.reset_reader()
         except AttributeError:
             pass
         try:
-            loader._scanner.reset_scanner()  # type: ignore
+            loader._scanner.reset_scanner()
         except AttributeError:
             pass
 
@@ -945,11 +945,11 @@ def load_all(stream, Loader=None, version=None, preserve_quotes=None):
     finally:
         loader._parser.dispose()
         try:
-            loader._reader.reset_reader()  # type: ignore
+            loader._reader.reset_reader()
         except AttributeError:
             pass
         try:
-            loader._scanner.reset_scanner()  # type: ignore
+            loader._scanner.reset_scanner()
         except AttributeError:
             pass
 

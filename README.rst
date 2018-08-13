@@ -4,8 +4,8 @@ ruamel.yaml
 
 ``ruamel.yaml`` is a YAML 1.2 loader/dumper package for Python.
 
-:version:       0.15.53
-:updated:       2018-08-12
+:version:       0.15.54
+:updated:       2018-08-13
 :documentation: http://yaml.readthedocs.io
 :repository:    https://bitbucket.org/ruamel/
 :pypi:          https://pypi.org/project/ruamel.yaml/
@@ -53,6 +53,16 @@ ChangeLog
 =========
 
 .. should insert NEXT: at the beginning of line for next key (with empty line)
+
+0.15.54 (2018-08-13):
+
+  - fix issue where a comment could pop-up twice in the output (reported by 
+    `Mike Kazantsev <https://bitbucket.org/mk_fg/>`__ and by 
+    `Nate Peterson <https://bitbucket.org/ndpete21/>`__)
+  - fix issue where JSON object (mapping) without spaces was not parsed
+    properly (reported by `Marc Schmidt <https://bitbucket.org/marcj/>`__)
+  - fix issue where comments after empty flow-style mappings were not emitted
+    (reported by `Qinfench Chen <https://bitbucket.org/flyin5ish/>`__)
 
 0.15.53 (2018-08-12):
   - fix issue with flow style mapping with comments gobbled newline (reported
