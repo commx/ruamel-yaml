@@ -6,7 +6,13 @@ from __future__ import absolute_import, print_function, unicode_literals
 import pytest  # NOQA
 
 
-from roundtrip import round_trip, round_trip_load, round_trip_dump, dedent  # NOQA
+from roundtrip import (
+    round_trip,
+    round_trip_load,
+    round_trip_dump,
+    dedent,
+    save_and_run,
+)  # NOQA
 
 
 class TestIssues:
@@ -25,6 +31,58 @@ class TestIssues:
         data = ruamel.yaml.round_trip_load(s)
         assert str(data['comb']) == str(data['def'])
         assert str(data['comb']) == "ordereddict([('key', 'value'), ('key1', 'value1')])"
+
+    def test_issue_82(self, tmpdir):
+        program_src = dedent('''\
+        from __future__ import print_function
+
+        from ruamel import yaml
+
+        import re
+        
+        
+        class SINumber(yaml.YAMLObject):
+            PREFIXES = {'k': 1e3, 'M': 1e6, 'G': 1e9}
+            yaml_loader = yaml.Loader
+            yaml_dumper = yaml.Dumper
+            yaml_tag = u'!si'
+            yaml_implicit_pattern = re.compile(
+                r'^(?P<value>[0-9]+(?:\.[0-9]+)?)(?P<prefix>[kMG])$')
+        
+            @classmethod
+            def from_yaml(cls, loader, node):
+                return cls(node.value)
+        
+            @classmethod
+            def to_yaml(cls, dumper, data):
+                return dumper.represent_scalar(cls.yaml_tag, str(data))
+        
+            def __init__(self, *args):
+                m = self.yaml_implicit_pattern.match(args[0])
+                self.value = float(m.groupdict()['value'])
+                self.prefix = m.groupdict()['prefix']
+        
+            def __str__(self):
+                return str(self.value)+self.prefix
+        
+            def __int__(self):
+                return int(self.value*self.PREFIXES[self.prefix])
+        
+        # This fails:
+        yaml.add_implicit_resolver(SINumber.yaml_tag, SINumber.yaml_implicit_pattern)
+        
+        ret = yaml.load("""
+        [1,2,3, !si 10k, 100G]
+        """, Loader=yaml.Loader)
+        for idx, l in enumerate([1, 2, 3, 10000, 100000000000]):
+            assert int(ret[idx]) == l
+        ''')
+        assert save_and_run(program_src, tmpdir) == 0
+
+    def test_issue_82rt(self, tmpdir):
+        yaml_str = "[1, 2, 3, !si 10k, 100G]\n"
+        x = round_trip(yaml_str, preserve_quotes=True)  # NOQA
+
 
     def test_issue_102(self):
         yaml_str = dedent("""
