@@ -80,7 +80,7 @@ class TestIssues:
         assert save_and_run(program_src, tmpdir) == 0
 
     def test_issue_82rt(self, tmpdir):
-        yaml_str = "[1, 2, 3, !si 10k, 100G]\n"
+        yaml_str = '[1, 2, 3, !si 10k, 100G]\n'
         x = round_trip(yaml_str, preserve_quotes=True)  # NOQA
 
     def test_issue_102(self):
@@ -144,6 +144,82 @@ class TestIssues:
     def test_issue_172(self):
         x = round_trip_load(TestIssues.json_str2)  # NOQA
         x = round_trip_load(TestIssues.json_str)  # NOQA
+
+    def test_issue_176(self):
+        # basic request by Stuart Berg
+        from ruamel.yaml import YAML
+
+        yaml = YAML()
+        seq = yaml.load('[1,2,3]')
+        seq[:] = [1, 2, 3, 4]
+
+    def test_issue_176_preserve_comments_on_extended_slice_assignment(self):
+        yaml_str = dedent("""\
+        - a
+        - b  # comment
+        - c  # commment c
+        # comment c+
+        - d
+
+        - e # comment
+        """)
+        seq = round_trip_load(yaml_str)
+        seq[1::2] = ['B', 'D']
+        res = round_trip_dump(seq)
+        assert res == yaml_str.replace(' b ', ' B ').replace(' d\n', ' D\n')
+
+    def test_issue_176_test_slicing(self):
+        from ruamel.yaml.comments import CommentedSeq
+
+        mss = round_trip_load('[0, 1, 2, 3, 4]')
+        assert len(mss) == 5
+        assert mss[2:2] == []
+        assert mss[2:4] == [2, 3]
+        assert isinstance(mss[2:4], CommentedSeq)
+        assert mss[1::2] == [1, 3]
+
+        # slice assignment
+        m = mss[:]
+        m[2:2] = [42]
+        assert m == [0, 1, 42, 2, 3, 4]
+
+        m = mss[:]
+        m[:3] = [42, 43, 44]
+        assert m == [42, 43, 44, 3, 4]
+        m = mss[:]
+        m[2:] = [42, 43, 44]
+        assert m == [0, 1, 42, 43, 44]
+        m = mss[:]
+        m[:] = [42, 43, 44]
+        assert m == [42, 43, 44]
+
+        # extend slice assignment
+        m = mss[:]
+        m[2:4] = [42, 43, 44]
+        assert m == [0, 1, 42, 43, 44, 4]
+        m = mss[:]
+        m[1::2] = [42, 43]
+        assert m == [0, 42, 2, 43, 4]
+        m = mss[:]
+        with pytest.raises(TypeError, match='too many'):
+            m[1::2] = [42, 43, 44]
+        with pytest.raises(TypeError, match='not enough'):
+            m[1::2] = [42]
+        m = mss[:]
+        m += [5]
+        m[1::2] = [42, 43, 44]
+        assert m == [0, 42, 2, 43, 4, 44]
+
+        # deleting
+        m = mss[:]
+        del m[1:3]
+        assert m == [0, 3, 4]
+        m = mss[:]
+        del m[::2]
+        assert m == [1, 3]
+        m = mss[:]
+        del m[:]
+        assert m == []
 
     def test_issue_184(self):
         yaml_str = dedent("""\

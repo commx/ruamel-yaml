@@ -12,7 +12,7 @@ import sys
 import copy
 
 
-from ruamel.yaml.compat import ordereddict, PY2, string_types, MutableSequence
+from ruamel.yaml.compat import ordereddict, PY2, string_types, MutableSliceableSequence
 from ruamel.yaml.scalarstring import ScalarString
 
 if PY2:
@@ -385,18 +385,18 @@ class CommentedBase(object):
         raise NotImplementedError
 
 
-class CommentedSeq(MutableSequence, CommentedBase):
+class CommentedSeq(MutableSliceableSequence, CommentedBase):
     __slots__ = (Comment.attrib, '_lst')
 
     def __init__(self, *args, **kw):
         # type: (Any, Any) -> None
         self._lst = list(*args, **kw)
 
-    def __getitem__(self, idx):
+    def __getsingleitem__(self, idx):
         # type: (Any) -> Any
         return self._lst[idx]
 
-    def __setitem__(self, idx, value):
+    def __setsingleitem__(self, idx, value):
         # type: (Any, Any) -> None
         # try to preserve the scalarstring type if setting an existing key to a new value
         if idx < len(self):
@@ -408,7 +408,7 @@ class CommentedSeq(MutableSequence, CommentedBase):
                 value = type(self[idx])(value)
         self._lst.__setitem__(idx, value)
 
-    def __delitem__(self, idx=None):
+    def __delsingleitem__(self, idx=None):
         # type: (Any) -> Any
         del self._lst[idx]
         self.ca.items.pop(idx, None)  # might not be there -> default value

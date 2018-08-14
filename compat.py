@@ -7,6 +7,7 @@ from __future__ import print_function
 import sys
 import os
 import types
+from abc import abstractmethod
 
 # fmt: off
 if False:  # MYPY
@@ -220,3 +221,63 @@ def version_tnf(t1, t2=None):
     if t2 is not None and version_info < t2:
         return None
     return False
+
+
+class MutableSliceableSequence(MutableSequence):
+    __slots__ = ()
+
+    def __getitem__(self, index):
+        # type: (Any) -> Any
+        if not isinstance(index, slice):
+            return self.__getsingleitem__(index)
+        return type(self)([self[i] for i in range(*index.indices(len(self)))])  # type: ignore
+
+    def __setitem__(self, index, value):
+        # type: (Any, Any) -> None
+        if not isinstance(index, slice):
+            return self.__setsingleitem__(index, value)
+        assert iter(value)
+        print(index.start, index.stop, index.step, index.indices(len(self)))
+        if index.step is None:
+            del self[index.start : index.stop]
+            for elem in reversed(value):
+                self.insert(0 if index.start is None else index.start, elem)
+        else:
+            range_parms = index.indices(len(self))
+            nr_assigned_items = (range_parms[1] - range_parms[0] - 1) // range_parms[2] + 1
+            # need to test before changing, in case TypeError is caught
+            if nr_assigned_items < len(value):
+                raise TypeError(
+                    'too many elements in value {} < {}'.format(nr_assigned_items, len(value))
+                )
+            elif nr_assigned_items > len(value):
+                raise TypeError(
+                    'not enough elements in value {} > {}'.format(
+                        nr_assigned_items, len(value)
+                    )
+                )
+            for idx, i in enumerate(range(*range_parms)):
+                self[i] = value[idx]
+
+    def __delitem__(self, index):
+        # type: (Any) -> None
+        if not isinstance(index, slice):
+            return self.__delsingleitem__(index)
+        print(index.start, index.stop, index.step, index.indices(len(self)))
+        for i in reversed(range(*index.indices(len(self)))):
+            del self[i]
+
+    @abstractmethod
+    def __getsingleitem__(self, index):
+        # type: (Any) -> Any
+        raise IndexError
+
+    @abstractmethod
+    def __setsingleitem__(self, index, value):
+        # type: (Any, Any) -> None
+        raise IndexError
+
+    @abstractmethod
+    def __delsingleitem__(self, index):
+        # type: (Any) -> None
+        raise IndexError
