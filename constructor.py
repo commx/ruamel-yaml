@@ -1288,7 +1288,7 @@ class RoundTripConstructor(SafeConstructor):
         # type: () -> None
         pass
 
-    def construct_mapping(self, node, maptyp=None, deep=False):  # type: ignore
+    def construct_mapping(self, node, maptyp, deep=False):  # type: ignore
         # type: (Any, Any, bool) -> Any
         if not isinstance(node, MappingNode):
             raise ConstructorError(
