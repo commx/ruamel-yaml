@@ -248,11 +248,19 @@ class BaseConstructor(object):
         # type: (Any, Any, Any, Any, Any) -> None
         if key in mapping:
             if not self.allow_duplicate_keys:
+                mk = mapping.get(key)
+                if PY2:
+                    if isinstance(key, unicode):
+                        key = key.encode('utf-8')
+                    if isinstance(value, unicode):
+                        value = value.encode('utf-8')
+                    if isinstance(mk, unicode):
+                        mk = mk.encode('utf-8')
                 args = [
                     'while constructing a mapping',
                     node.start_mark,
                     'found duplicate key "{}" with value "{}" '
-                    '(original value: "{}")'.format(key, value, mapping.get(key)),
+                    '(original value: "{}")'.format(key, value, mk),
                     key_node.start_mark,
                     """
                     To suppress this check see:
@@ -272,6 +280,9 @@ class BaseConstructor(object):
         # type: (Any, Any, Any, Any, Any) -> None
         if key in setting:
             if not self.allow_duplicate_keys:
+                if PY2:
+                    if isinstance(key, unicode):
+                        key = key.encode('utf-8')
                 args = [
                     'while constructing a set',
                     node.start_mark,

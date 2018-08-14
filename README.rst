@@ -4,8 +4,8 @@ ruamel.yaml
 
 ``ruamel.yaml`` is a YAML 1.2 loader/dumper package for Python.
 
-:version:       0.15.54
-:updated:       2018-08-13
+:version:       0.15.55
+:updated:       2018-08-14
 :documentation: http://yaml.readthedocs.io
 :repository:    https://bitbucket.org/ruamel/
 :pypi:          https://pypi.org/project/ruamel.yaml/
@@ -53,6 +53,22 @@ ChangeLog
 =========
 
 .. should insert NEXT: at the beginning of line for next key (with empty line)
+
+0.15.55 (2018-08-14):
+
+  - unmade ``CommentedSeq`` a subclass of ``list``. It is now
+    indirectly a subclass of the standard
+    ``collections.abc.MutableSequence`` (without .abc if you are
+    still on Python2.7). If you do ``isinstance(yaml.load('[1, 2]'),
+    list)``) anywhere in your code replace ``list`` with
+    ``MutableSequence``.  Directly, ``CommentedSeq`` is a subclass of
+    the abstract baseclass ``ruamel.yaml.compat.MutableScliceableSequence``,
+    with the result that *(extended) slicing is supported on 
+    ``CommentedSeq``*.
+    (reported by `Stuart Berg <https://bitbucket.org/stuarteberg/>`__)
+  - duplicate keys (or their values) with non-ascii now correctly
+    report in Python2, instead of raising a Unicode error.
+    (Reported by `Jonathan Pyle <https://bitbucket.org/jonathan_pyle/>`__)
 
 0.15.54 (2018-08-13):
 

@@ -215,7 +215,6 @@ class TestFlowStyle:
 
 class TestOldAPI:
     @pytest.mark.skipif(sys.version_info >= (3, 0), reason='ok on Py3')
-    @pytest.mark.xfail(strict=True)
     def test_duplicate_keys_02(self):
         # Issue 165 unicode keys in error/warning
         from ruamel.yaml import safe_load
