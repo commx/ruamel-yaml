@@ -12,7 +12,7 @@ import sys
 import copy
 
 
-from ruamel.yaml.compat import ordereddict, PY2, string_types
+from ruamel.yaml.compat import ordereddict, PY2, string_types, MutableSequence
 from ruamel.yaml.scalarstring import ScalarString
 
 if PY2:
@@ -385,8 +385,58 @@ class CommentedBase(object):
         raise NotImplementedError
 
 
-class CommentedSeq(list, CommentedBase):
-    __slots__ = (Comment.attrib,)
+class CommentedSeq(MutableSequence, CommentedBase):
+    __slots__ = (Comment.attrib, '_lst')
+
+    def __init__(self, *args, **kw):
+        # type: (Any, Any) -> None
+        self._lst = list(*args, **kw)
+
+    def __getitem__(self, idx):
+        # type: (Any) -> Any
+        return self._lst[idx]
+
+    def __setitem__(self, idx, value):
+        # type: (Any, Any) -> None
+        # try to preserve the scalarstring type if setting an existing key to a new value
+        if idx < len(self):
+            if (
+                isinstance(value, string_types)
+                and not isinstance(value, ScalarString)
+                and isinstance(self[idx], ScalarString)
+            ):
+                value = type(self[idx])(value)
+        self._lst.__setitem__(idx, value)
+
+    def __delitem__(self, idx=None):
+        # type: (Any) -> Any
+        del self._lst[idx]
+        self.ca.items.pop(idx, None)  # might not be there -> default value
+        for list_index in sorted(self.ca.items):
+            if list_index < idx:
+                continue
+            self.ca.items[list_index - 1] = self.ca.items.pop(list_index)
+
+    def __len__(self):
+        # type: () -> int
+        return len(self._lst)
+
+    def insert(self, idx, val):
+        # type: (Any, Any) -> None
+        """the comments after the insertion have to move forward"""
+        self._lst.insert(idx, val)
+        for list_index in sorted(self.ca.items, reverse=True):
+            if list_index < idx:
+                break
+            self.ca.items[list_index + 1] = self.ca.items.pop(list_index)
+
+    def extend(self, val):
+        # type: (Any) -> None
+        self._lst.extend(val)
+
+    def __eq__(self, other):
+        # type: (Any) -> bool
+        return bool(self._lst == other)
 
     def _yaml_add_comment(self, comment, key=NoComment):
         # type: (Any, Optional[Any]) -> None
@@ -402,25 +452,6 @@ class CommentedSeq(list, CommentedBase):
     def _yaml_get_columnX(self, key):
         # type: (Any) -> Any
         return self.ca.items[key][0].start_mark.column
-
-    def insert(self, idx, val):
-        # type: (Any, Any) -> None
-        """the comments after the insertion have to move forward"""
-        list.insert(self, idx, val)
-        for list_index in sorted(self.ca.items, reverse=True):
-            if list_index < idx:
-                break
-            self.ca.items[list_index + 1] = self.ca.items.pop(list_index)
-
-    def pop(self, idx=None):
-        # type: (Any) -> Any
-        res = list.pop(self, idx)
-        self.ca.items.pop(idx, None)  # might not be there -> default value
-        for list_index in sorted(self.ca.items):
-            if list_index < idx:
-                continue
-            self.ca.items[list_index - 1] = self.ca.items.pop(list_index)
-        return res
 
     def _yaml_get_column(self, key):
         # type: (Any) -> Any
@@ -460,18 +491,6 @@ class CommentedSeq(list, CommentedBase):
             res.append(copy.deepcopy(k))
             self.copy_attributes(res, deep=True)
         return res
-
-    def __setitem__(self, idx, value):
-        # type: (Any, Any) -> None
-        # try to preserve the scalarstring type if setting an existing key to a new value
-        if idx < len(self):
-            if (
-                isinstance(value, string_types)
-                and not isinstance(value, ScalarString)
-                and isinstance(self[idx], ScalarString)
-            ):
-                value = type(self[idx])(value)
-        list.__setitem__(self, idx, value)
 
 
 class CommentedKeySeq(tuple, CommentedBase):

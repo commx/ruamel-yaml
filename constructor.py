@@ -16,7 +16,8 @@ from ruamel.yaml.error import (MarkedYAMLError, MarkedYAMLFutureWarning,
 from ruamel.yaml.nodes import *                               # NOQA
 from ruamel.yaml.nodes import (SequenceNode, MappingNode, ScalarNode)
 from ruamel.yaml.compat import (utf8, builtins_module, to_str, PY2, PY3,  # NOQA
-                                ordereddict, text_type, nprint, version_tnf, Hashable)
+                                ordereddict, text_type, nprint, version_tnf, Hashable,
+                                MutableSequence)
 from ruamel.yaml.comments import *                               # NOQA
 from ruamel.yaml.comments import (CommentedMap, CommentedOrderedMap, CommentedSet,
                                   CommentedKeySeq, CommentedSeq, TaggedScalar)
@@ -1311,7 +1312,7 @@ class RoundTripConstructor(SafeConstructor):
             key = self.construct_object(key_node, deep=True)
             # lists are not hashable, but tuples are
             if not isinstance(key, Hashable):
-                if isinstance(key, list):
+                if isinstance(key, MutableSequence):
                     key_a = CommentedKeySeq(key)
                     if key_node.flow_style is True:
                         key_a.fa.set_flow_style()
