@@ -55,7 +55,6 @@ ChangeLog
 .. should insert NEXT: at the beginning of line for next key (with empty line)
 
 0.15.55 (2018-08-14):
-
   - unmade ``CommentedSeq`` a subclass of ``list``. It is now
     indirectly a subclass of the standard
     ``collections.abc.MutableSequence`` (without .abc if you are
@@ -71,7 +70,6 @@ ChangeLog
     (Reported by `Jonathan Pyle <https://bitbucket.org/jonathan_pyle/>`__)
 
 0.15.54 (2018-08-13):
-
   - fix issue where a comment could pop-up twice in the output (reported by 
     `Mike Kazantsev <https://bitbucket.org/mk_fg/>`__ and by 
     `Nate Peterson <https://bitbucket.org/ndpete21/>`__)
