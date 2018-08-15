@@ -247,3 +247,24 @@ class TestIssues:
         print(d)
         '''
         assert save_and_run(dedent(program_src), tmpdir, optimized=True) == 0
+
+    @pytest.mark.xfail(strict=True)
+    def test_issue_221_add(self):
+        from ruamel.yaml.comments import CommentedSeq
+        a = CommentedSeq([1, 2, 3])
+        a + [4, 5]
+
+    @pytest.mark.xfail(strict=True)
+    def test_issue_221_copy(self):
+        from ruamel.yaml import YAML
+        yaml = YAML()
+        inp = dedent("""\
+        - d  # 4
+        - a  # 1
+        - c  # 3
+        - e  # 5
+        - b  # 2
+        """)
+        a = yaml.load(dedent(inp))
+        print(a)
+        a.sort()
