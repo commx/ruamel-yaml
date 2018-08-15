@@ -527,7 +527,8 @@ class Scanner(object):
         # Reset possible simple key on the current level.
         self.remove_possible_simple_key()
         # Decrease the flow level.
-        assert self.flow_context.pop() == to_pop
+        popped = self.flow_context.pop()
+        assert popped == to_pop
         # No simple keys after ']' or '}'.
         self.allow_simple_key = False
         # Add FLOW-SEQUENCE-END or FLOW-MAPPING-END.
