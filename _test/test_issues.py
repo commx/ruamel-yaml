@@ -33,7 +33,7 @@ class TestIssues:
         assert str(data['comb']) == "ordereddict([('key', 'value'), ('key1', 'value1')])"
 
     def test_issue_82(self, tmpdir):
-        program_src = dedent('''\
+        program_src = r'''
         from __future__ import print_function
 
         from ruamel import yaml
@@ -76,8 +76,8 @@ class TestIssues:
         """, Loader=yaml.Loader)
         for idx, l in enumerate([1, 2, 3, 10000, 100000000000]):
             assert int(ret[idx]) == l
-        ''')
-        assert save_and_run(program_src, tmpdir) == 0
+        '''
+        assert save_and_run(dedent(program_src), tmpdir) == 0
 
     def test_issue_82rt(self, tmpdir):
         yaml_str = '[1, 2, 3, !si 10k, 100G]\n'
@@ -232,3 +232,18 @@ class TestIssues:
         d['bar'] = 'foo'
         d.yaml_add_eol_comment('test1', 'bar')
         assert round_trip_dump(d) == yaml_str + 'bar: foo # test1\n'
+
+    def test_issue_220(self, tmpdir):
+        program_src = r'''
+        from ruamel.yaml import YAML
+
+        yaml_str = u"""\
+        ---
+        foo: ["bar"]
+        """
+
+        yaml = YAML(typ='safe', pure=True)
+        d = yaml.load(yaml_str)
+        print(d)
+        '''
+        assert save_and_run(dedent(program_src), tmpdir, optimized=True) == 0

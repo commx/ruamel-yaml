@@ -209,7 +209,7 @@ def YAML(**kw):
     return MyYAML(**kw)
 
 
-def save_and_run(program, base_dir=None, file_name=None):
+def save_and_run(program, base_dir=None, file_name=None, optimized=False):
     """
     safe and run a python program, thereby circumventing any restrictions on module level
     imports
@@ -224,7 +224,10 @@ def save_and_run(program, base_dir=None, file_name=None):
     file_name.write_text(dedent(program))
 
     try:
-        cmd = [sys.executable, str(file_name)]
+        cmd = [sys.executable]
+        if optimized:
+            cmd.append('-O')
+        cmd.append(str(file_name))
         print('running:', *cmd)
         check_output(cmd, stderr=STDOUT, universal_newlines=True)
     except CalledProcessError as exception:
