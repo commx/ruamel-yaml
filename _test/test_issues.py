@@ -248,23 +248,33 @@ class TestIssues:
         '''
         assert save_and_run(dedent(program_src), tmpdir, optimized=True) == 0
 
-    @pytest.mark.xfail(strict=True)
     def test_issue_221_add(self):
         from ruamel.yaml.comments import CommentedSeq
+
         a = CommentedSeq([1, 2, 3])
         a + [4, 5]
 
-    @pytest.mark.xfail(strict=True)
-    def test_issue_221_copy(self):
+    def test_issue_221_sort(self):
         from ruamel.yaml import YAML
+        from ruamel.yaml.compat import StringIO
+
         yaml = YAML()
         inp = dedent("""\
-        - d  # 4
+        - d
         - a  # 1
         - c  # 3
         - e  # 5
         - b  # 2
         """)
         a = yaml.load(dedent(inp))
-        print(a)
         a.sort()
+        buf = StringIO()
+        yaml.dump(a, buf)
+        exp = dedent("""\
+        - a  # 1
+        - b  # 2
+        - c  # 3
+        - d
+        - e  # 5
+        """)
+        assert buf.getvalue() == exp

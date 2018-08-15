@@ -492,6 +492,19 @@ class CommentedSeq(MutableSliceableSequence, CommentedBase):
             self.copy_attributes(res, deep=True)
         return res
 
+    def __add__(self, other):
+        return self._lst + other
+
+    def sort(self):
+        tmp_lst = sorted(zip(self._lst, range(len(self._lst))))
+        self._lst = [x[0] for x in tmp_lst]
+        itm = self.ca.items
+        self.ca._items = {}
+        for idx, x in enumerate(tmp_lst):
+            old_index = x[1]
+            if old_index in itm:
+                self.ca.items[idx] = itm[old_index]
+
 
 class CommentedKeySeq(tuple, CommentedBase):
     """This primarily exists to be able to roundtrip keys that are sequences"""

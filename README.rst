@@ -4,7 +4,7 @@ ruamel.yaml
 
 ``ruamel.yaml`` is a YAML 1.2 loader/dumper package for Python.
 
-:version:       0.15.56
+:version:       0.15.57
 :updated:       2018-08-15
 :documentation: http://yaml.readthedocs.io
 :repository:    https://bitbucket.org/ruamel/
@@ -54,9 +54,13 @@ ChangeLog
 
 .. should insert NEXT: at the beginning of line for next key (with empty line)
 
+0.15.57 (2018-08-15):
+  - Fix that CommentedSeq could no longer be used in adding or do a copy
+    (reported by `Christopher Wright <https://bitbucket.org/CJ-Wright4242/>`__)
+
 0.15.56 (2018-08-15):
   - fix issue with ``python -O`` optimizing away code (reported, and detailed cause
-    pinpointed, by `Alex Grönholm <https://bitbucket.org/agronholm/>`__
+    pinpointed, by `Alex Grönholm <https://bitbucket.org/agronholm/>`__)
 
 0.15.55 (2018-08-14):
   - unmade ``CommentedSeq`` a subclass of ``list``. It is now

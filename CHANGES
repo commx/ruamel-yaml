@@ -1,3 +1,7 @@
+[0, 15, 57]: 2018-08-15
+  - Fix that CommentedSeq could no longer be used in adding or do a copy
+    (reported by `Christopher Wright <https://bitbucket.org/CJ-Wright4242/>`__)
+
 [0, 15, 56]: 2018-08-15
   - fix issue with ``python -O`` optimizing away code (reported, and detailed cause
     pinpointed, by `Alex Grönholm <https://bitbucket.org/agronholm/>`__
