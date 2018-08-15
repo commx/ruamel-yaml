@@ -17,8 +17,10 @@ def compare(data, s, **kw):
 
 def compare_eol(data, s):
     assert 'EOL' in s
-    assert round_trip_dump(data).replace('\n', '|\n') == \
-        dedent(s).replace('EOL', '').replace('\n', '|\n')
+    ds = dedent(s).replace('EOL', '').replace('\n', '|\n')
+    assert round_trip_dump(data).replace('\n', '|\n') == ds
+
+
 # @pytest.mark.xfail
 
 
@@ -32,11 +34,12 @@ class TestCommentsManipulation:
         - c
         """)
         data.yaml_add_eol_comment('comment 2', key=1, column=6)
-        compare(data, """
+        exp = """
         - a   # comment 1
         - b   # comment 2
         - c
-        """)
+        """
+        compare(data, exp)
 
     def test_seq_overwrite_comment_on_existing_explicit_column(self):
         data = load("""
@@ -45,11 +48,12 @@ class TestCommentsManipulation:
         - c
         """)
         data.yaml_add_eol_comment('comment 2', key=0, column=6)
-        compare(data, """
+        exp = """
         - a   # comment 2
         - b
         - c
-        """)
+        """
+        compare(data, exp)
 
     def test_seq_first_comment_explicit_column(self):
         data = load("""
@@ -58,11 +62,12 @@ class TestCommentsManipulation:
         - c
         """)
         data.yaml_add_eol_comment('comment 1', key=1, column=6)
-        compare(data, """
+        exp = """
         - a
         - b   # comment 1
         - c
-        """)
+        """
+        compare(data, exp)
 
     def test_seq_set_comment_on_existing_column_prev(self):
         data = load("""
@@ -72,12 +77,13 @@ class TestCommentsManipulation:
         - d     # comment 3
         """)
         data.yaml_add_eol_comment('comment 2', key=1)
-        compare(data, """
+        exp = """
         - a   # comment 1
         - b   # comment 2
         - c
         - d     # comment 3
-        """)
+        """
+        compare(data, exp)
 
     def test_seq_set_comment_on_existing_column_next(self):
         data = load("""
@@ -91,12 +97,13 @@ class TestCommentsManipulation:
         # ruamel.yaml.error.Mark
         # print(type(data._yaml_comment._items[0][0].start_mark))
         data.yaml_add_eol_comment('comment 2', key=2)
-        compare(data, """
+        exp = """
         - a   # comment 1
         - b
         - c     # comment 2
         - d     # comment 3
-        """)
+        """
+        compare(data, exp)
 
     def test_seq_set_comment_on_existing_column_further_away(self):
         """
@@ -116,14 +123,15 @@ class TestCommentsManipulation:
         # ruamel.yaml.error.Mark
         # print(type(data._yaml_comment._items[0][0].start_mark))
         data.yaml_add_eol_comment('comment 2', key=3)
-        compare(data, """
+        exp = """
         - a   # comment 1
         - b
         - c
         - d   # comment 2
         - e
         - f     # comment 3
-        """)
+        """
+        compare(data, exp)
 
     def test_seq_set_comment_on_existing_explicit_column_with_hash(self):
         data = load("""
@@ -132,11 +140,12 @@ class TestCommentsManipulation:
         - c
         """)
         data.yaml_add_eol_comment('#  comment 2', key=1, column=6)
-        compare(data, """
+        exp = """
         - a   # comment 1
         - b   #  comment 2
         - c
-        """)
+        """
+        compare(data, exp)
 
     # dict
 
@@ -149,13 +158,14 @@ class TestCommentsManipulation:
         e: 5
         """)
         data.yaml_add_eol_comment('comment 2', key='c', column=7)
-        compare(data, """
+        exp = """
         a: 1   # comment 1
         b: 2
         c: 3   # comment 2
         d: 4
         e: 5
-        """)
+        """
+        compare(data, exp)
 
     def test_dict_overwrite_comment_on_existing_explicit_column(self):
         data = load("""
@@ -166,13 +176,14 @@ class TestCommentsManipulation:
         e: 5
         """)
         data.yaml_add_eol_comment('comment 2', key='a', column=7)
-        compare(data, """
+        exp = """
         a: 1   # comment 2
         b: 2
         c: 3
         d: 4
         e: 5
-        """)
+        """
+        compare(data, exp)
 
     def test_map_set_comment_on_existing_column_prev(self):
         data = load("""
@@ -183,13 +194,14 @@ class TestCommentsManipulation:
             e: 5     # comment 3
             """)
         data.yaml_add_eol_comment('comment 2', key='b')
-        compare(data, """
+        exp = """
             a: 1   # comment 1
             b: 2   # comment 2
             c: 3
             d: 4
             e: 5     # comment 3
-            """)
+            """
+        compare(data, exp)
 
     def test_map_set_comment_on_existing_column_next(self):
         data = load("""
@@ -200,13 +212,14 @@ class TestCommentsManipulation:
             e: 5     # comment 3
             """)
         data.yaml_add_eol_comment('comment 2', key='d')
-        compare(data, """
+        exp = """
             a: 1   # comment 1
             b: 2
             c: 3
             d: 4     # comment 2
             e: 5     # comment 3
-            """)
+            """
+        compare(data, exp)
 
     def test_map_set_comment_on_existing_column_further_away(self):
         """
@@ -222,13 +235,14 @@ class TestCommentsManipulation:
             """)
         data.yaml_add_eol_comment('comment 2', key='c')
         print(round_trip_dump(data))
-        compare(data, """
+        exp = """
             a: 1   # comment 1
             b: 2
             c: 3   # comment 2
             d: 4
             e: 5     # comment 3
-            """)
+            """
+        compare(data, exp)
 
     # @pytest.mark.xfail
     def test_before_top_map_rt(self):
@@ -237,12 +251,13 @@ class TestCommentsManipulation:
         b: 2
         """)
         data.yaml_set_start_comment('Hello\nWorld\n')
-        compare(data, """
+        exp = """
         # Hello
         # World
         a: 1
         b: 2
-        """.format(comment='#'))
+        """
+        compare(data, exp.format(comment='#'))
 
     def test_before_top_map_replace(self):
         data = load("""
@@ -252,12 +267,13 @@ class TestCommentsManipulation:
         b: 2
         """)
         data.yaml_set_start_comment('Hello\nWorld\n')
-        compare(data, """
+        exp = """
         # Hello
         # World
         a: 1 # 1
         b: 2
-        """.format(comment='#'))
+        """
+        compare(data, exp.format(comment='#'))
 
     def test_before_top_map_from_scratch(self):
         from ruamel.yaml.comments import CommentedMap
@@ -268,12 +284,13 @@ class TestCommentsManipulation:
         data.yaml_set_start_comment('Hello\nWorld\n')
         # print(data.ca)
         # print(data.ca._items)
-        compare(data, """
+        exp = """
             # Hello
             # World
             a: 1
             b: 2
-            """.format(comment='#'))
+            """
+        compare(data, exp.format(comment='#'))
 
     def test_before_top_seq_rt(self):
         data = load("""
@@ -282,28 +299,31 @@ class TestCommentsManipulation:
         """)
         data.yaml_set_start_comment('Hello\nWorld\n')
         print(round_trip_dump(data))
-        compare(data, """
+        exp = """
         # Hello
         # World
         - a
         - b
-        """)
+        """
+        compare(data, exp)
 
     def test_before_top_seq_rt_replace(self):
-        data = load("""
+        s = """
         # this
         # that
         - a
         - b
-        """.format(comment='#'))
+        """
+        data = load(s.format(comment='#'))
         data.yaml_set_start_comment('Hello\nWorld\n')
         print(round_trip_dump(data))
-        compare(data, """
+        exp = """
         # Hello
         # World
         - a
         - b
-        """.format(comment='#'))
+        """
+        compare(data, exp.format(comment='#'))
 
     def test_before_top_seq_from_scratch(self):
         from ruamel.yaml.comments import CommentedSeq
@@ -313,12 +333,13 @@ class TestCommentsManipulation:
         data.append('b')
         data.yaml_set_start_comment('Hello\nWorld\n')
         print(round_trip_dump(data))
-        compare(data, """
+        exp = """
         # Hello
         # World
         - a
         - b
-        """.format(comment='#'))
+        """
+        compare(data, exp.format(comment='#'))
 
     # nested variants
     def test_before_nested_map_rt(self):
@@ -329,14 +350,15 @@ class TestCommentsManipulation:
           d: 3
         """)
         data['b'].yaml_set_start_comment('Hello\nWorld\n')
-        compare(data, """
+        exp = """
         a: 1
         b:
         # Hello
         # World
           c: 2
           d: 3
-        """.format(comment='#'))
+        """
+        compare(data, exp.format(comment='#'))
 
     def test_before_nested_map_rt_indent(self):
         data = load("""
@@ -346,14 +368,15 @@ class TestCommentsManipulation:
           d: 3
         """)
         data['b'].yaml_set_start_comment('Hello\nWorld\n', indent=2)
-        compare(data, """
+        exp = """
         a: 1
         b:
           # Hello
           # World
           c: 2
           d: 3
-        """.format(comment='#'))
+        """
+        compare(data, exp.format(comment='#'))
         print(data['b'].ca)
 
     def test_before_nested_map_from_scratch(self):
@@ -366,14 +389,15 @@ class TestCommentsManipulation:
         datab['c'] = 2
         datab['d'] = 3
         data['b'].yaml_set_start_comment('Hello\nWorld\n')
-        compare(data, """
+        exp = """
         a: 1
         b:
         # Hello
         # World
           c: 2
           d: 3
-        """.format(comment='#'))
+        """
+        compare(data, exp.format(comment='#'))
 
     def test_before_nested_seq_from_scratch(self):
         from ruamel.yaml.comments import CommentedMap, CommentedSeq
@@ -385,14 +409,15 @@ class TestCommentsManipulation:
         datab.append('c')
         datab.append('d')
         data['b'].yaml_set_start_comment('Hello\nWorld\n', indent=2)
-        compare(data, """
+        exp = """
         a: 1
         b:
           # Hello
           # World
         - c
         - d
-        """.format(comment='#'))
+        """
+        compare(data, exp.format(comment='#'))
 
     def test_before_nested_seq_from_scratch_block_seq_indent(self):
         from ruamel.yaml.comments import CommentedMap, CommentedSeq
@@ -404,14 +429,15 @@ class TestCommentsManipulation:
         datab.append('c')
         datab.append('d')
         data['b'].yaml_set_start_comment('Hello\nWorld\n', indent=2)
-        compare(data, """
+        exp = """
         a: 1
         b:
           # Hello
           # World
           - c
           - d
-        """.format(comment='#'), indent=4, block_seq_indent=2)
+        """
+        compare(data, exp.format(comment='#'), indent=4, block_seq_indent=2)
 
     def test_map_set_comment_before_and_after_non_first_key_00(self):
         # http://stackoverflow.com/a/40705671/1307905
@@ -428,7 +454,7 @@ class TestCommentsManipulation:
             'test1', 'before test1 (top level)', after='before test2'
         )
         data['test1']['test2'].yaml_set_start_comment('after test2', indent=4)
-        compare(data, """
+        exp = """
         xyz:
           a: 1    # comment 1
           b: 2
@@ -439,7 +465,8 @@ class TestCommentsManipulation:
           test2:
             # after test2
             test3: 3
-        """)
+        """
+        compare(data, exp)
 
     def Xtest_map_set_comment_before_and_after_non_first_key_01(self):
         data = load("""
@@ -456,7 +483,7 @@ class TestCommentsManipulation:
         )
         data['test1']['test2'].yaml_set_start_comment('after test2', indent=4)
         # EOL is needed here as dedenting gets rid of spaces (as well as does Emacs
-        compare_eol(data, """
+        exp = """
         xyz:
           a: 1    # comment 1
           b: 2
@@ -468,7 +495,8 @@ class TestCommentsManipulation:
           test2:
             # after test2
             test3: 3
-        """)
+        """
+        compare_eol(data, exp)
 
     # EOL is no longer necessary
     # fixed together with issue # 216
@@ -486,7 +514,7 @@ class TestCommentsManipulation:
             'test1', 'before test1 (top level)', after='before test2\n\n'
         )
         data['test1']['test2'].yaml_set_start_comment('after test2', indent=4)
-        compare(data, """
+        exp = """
         xyz:
           a: 1    # comment 1
           b: 2
@@ -498,7 +526,8 @@ class TestCommentsManipulation:
           test2:
             # after test2
             test3: 3
-        """)
+        """
+        compare(data, exp)
 
     def Xtest_map_set_comment_before_and_after_non_first_key_02(self):
         data = load("""
@@ -515,7 +544,7 @@ class TestCommentsManipulation:
         )
         data['test1']['test2'].yaml_set_start_comment('after test2', indent=4)
         # EOL is needed here as dedenting gets rid of spaces (as well as does Emacs
-        compare_eol(data, """
+        exp = """
         xyz:
           a: 1    # comment 1
           b: 2
@@ -529,7 +558,8 @@ class TestCommentsManipulation:
           test2:
             # after test2
             test3: 3
-        """)
+        """
+        compare_eol(data, exp)
 
     def test_map_set_comment_before_and_after_non_first_key_02(self):
         data = load("""
@@ -545,7 +575,7 @@ class TestCommentsManipulation:
             'test1', 'xyz\n\nbefore test1 (top level)', after='\nbefore test2', after_indent=4
         )
         data['test1']['test2'].yaml_set_start_comment('after test2', indent=4)
-        compare(data, """
+        exp = """
         xyz:
           a: 1    # comment 1
           b: 2
@@ -559,4 +589,5 @@ class TestCommentsManipulation:
           test2:
             # after test2
             test3: 3
-        """)
+        """
+        compare(data, exp)

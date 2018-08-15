@@ -55,11 +55,12 @@ class TestComments:
         """)
 
     def test_dropped(self):
-        round_trip("""
+        s = """\
         # comment
         scalar
         ...
-        """, 'scalar\n...\n')
+        """
+        round_trip(s, 'scalar\n...\n')
 
     def test_main_mapping_begin_end(self):
         round_trip("""
@@ -133,7 +134,7 @@ class TestComments:
         """)
 
     def test_09(self):  # 2.9 from the examples in the spec
-        round_trip("""
+        s = """\
         hr: # 1998 hr ranking
           - Mark McGwire
           - Sammy Sosa
@@ -141,7 +142,8 @@ class TestComments:
           # 1998 rbi ranking
           - Sammy Sosa
           - Ken Griffey
-        """, indent=4, block_seq_indent=2)
+        """
+        round_trip(s, indent=4, block_seq_indent=2)
 
     def test_09a(self):
         round_trip("""
@@ -784,11 +786,12 @@ class TestEmptyValueBeforeComments:
         """)
 
     def test_issue_25_03(self):
-        round_trip("""\
+        s = """\
         a:        # comment 1
                   #  comment 2
           - b: 2  #   comment 3
-        """, indent=4, block_seq_indent=2)
+        """
+        round_trip(s, indent=4, block_seq_indent=2)
 
     def test_issue_25_04(self):
         round_trip("""\

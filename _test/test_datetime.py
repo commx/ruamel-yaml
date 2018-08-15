@@ -27,47 +27,57 @@ from roundtrip import round_trip, dedent, round_trip_load, round_trip_dump  # NO
 
 class TestDateTime:
     def test_date_only(self):
-        round_trip("""
+        inp = """
         - 2011-10-02
-        """, """
+        """
+        exp = """
         - 2011-10-02
-        """)
+        """
+        round_trip(inp, exp)
 
     def test_zero_fraction(self):
-        round_trip("""
+        inp = """
         - 2011-10-02 16:45:00.0
-        """, """
+        """
+        exp = """
         - 2011-10-02 16:45:00
-        """)
+        """
+        round_trip(inp, exp)
 
     def test_long_fraction(self):
-        round_trip("""
+        inp = """
         - 2011-10-02 16:45:00.1234      # expand with zeros
         - 2011-10-02 16:45:00.123456
         - 2011-10-02 16:45:00.12345612  # round to microseconds
         - 2011-10-02 16:45:00.1234565   # round up
         - 2011-10-02 16:45:00.12345678  # round up
-        """, """
+        """
+        exp = """
         - 2011-10-02 16:45:00.123400    # expand with zeros
         - 2011-10-02 16:45:00.123456
         - 2011-10-02 16:45:00.123456    # round to microseconds
         - 2011-10-02 16:45:00.123457    # round up
         - 2011-10-02 16:45:00.123457    # round up
-        """)
+        """
+        round_trip(inp, exp)
 
     def test_canonical(self):
-        round_trip("""
+        inp = """
         - 2011-10-02T16:45:00.1Z
-        """, """
+        """
+        exp = """
         - 2011-10-02T16:45:00.100000Z
-        """)
+        """
+        round_trip(inp, exp)
 
     def test_spaced_timezone(self):
-        round_trip("""
+        inp = """
         - 2011-10-02T11:45:00 -5
-        """, """
+        """
+        exp = """
         - 2011-10-02T11:45:00-5
-        """)
+        """
+        round_trip(inp, exp)
 
     def test_normal_timezone(self):
         round_trip("""
@@ -78,32 +88,40 @@ class TestDateTime:
         """)
 
     def test_no_timezone(self):
-        round_trip("""
+        inp = """
         - 2011-10-02 6:45:00
-        """, """
+        """
+        exp = """
         - 2011-10-02 06:45:00
-        """)
+        """
+        round_trip(inp, exp)
 
     def test_explicit_T(self):
-        round_trip("""
+        inp = """
         - 2011-10-02T16:45:00
-        """, """
+        """
+        exp = """
         - 2011-10-02T16:45:00
-        """)
+        """
+        round_trip(inp, exp)
 
     def test_explicit_t(self):  # to upper
-        round_trip("""
+        inp = """
         - 2011-10-02t16:45:00
-        """, """
+        """
+        exp = """
         - 2011-10-02T16:45:00
-        """)
+        """
+        round_trip(inp, exp)
 
     def test_no_T_multi_space(self):
-        round_trip("""
+        inp = """
         - 2011-10-02   16:45:00
-        """, """
+        """
+        exp = """
         - 2011-10-02 16:45:00
-        """)
+        """
+        round_trip(inp, exp)
 
     def test_iso(self):
         round_trip("""

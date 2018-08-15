@@ -85,7 +85,7 @@ class TestVersions:
         assert r[9] is True
 
     def test_load_version_1_1(self):
-        r = load("""\
+        inp = """\
         - 12:34:56
         - 12:34:56.78
         - 012
@@ -96,7 +96,8 @@ class TestVersions:
         - yes
         - no
         - true
-        """, version="1.1")
+        """
+        r = load(inp, version='1.1')
         assert r[0] == 45296
         assert r[1] == 45296.78
         assert r[2] == 10

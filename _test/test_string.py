@@ -26,7 +26,7 @@ class TestPreservedScalarString:
     def test_basic_string(self):
         round_trip("""
         a: abcdefg
-        """, )
+        """)
 
     def test_quoted_integer_string(self):
         round_trip("""
@@ -37,37 +37,39 @@ class TestPreservedScalarString:
         platform.python_implementation() == 'Jython', reason='Jython throws RepresenterError'
     )
     def test_preserve_string(self):
-        round_trip("""
-            a: |
-              abc
-              def
-            """, intermediate=dict(a='abc\ndef\n'))
+        inp = """
+        a: |
+          abc
+          def
+        """
+        round_trip(inp, intermediate=dict(a='abc\ndef\n'))
 
     @pytest.mark.skipif(
         platform.python_implementation() == 'Jython', reason='Jython throws RepresenterError'
     )
     def test_preserve_string_strip(self):
         s = """
-            a: |-
-              abc
-              def
+        a: |-
+          abc
+          def
 
-            """
+        """
         round_trip(s, intermediate=dict(a='abc\ndef'))
 
     @pytest.mark.skipif(
         platform.python_implementation() == 'Jython', reason='Jython throws RepresenterError'
     )
     def test_preserve_string_keep(self):
-            # with pytest.raises(AssertionError) as excinfo:
-            round_trip("""
+        # with pytest.raises(AssertionError) as excinfo:
+        inp = """
             a: |+
               ghi
               jkl
 
 
             b: x
-            """, intermediate=dict(a='ghi\njkl\n\n\n', b='x'))
+            """
+        round_trip(inp, intermediate=dict(a='ghi\njkl\n\n\n', b='x'))
 
     @pytest.mark.skipif(
         platform.python_implementation() == 'Jython', reason='Jython throws RepresenterError'
@@ -75,59 +77,67 @@ class TestPreservedScalarString:
     def test_preserve_string_keep_at_end(self):
         # at EOF you have to specify the ... to get proper "closure"
         # of the multiline scalar
-        round_trip("""
+        inp = """
             a: |+
               ghi
               jkl
 
             ...
-            """, intermediate=dict(a='ghi\njkl\n\n'))
+            """
+        round_trip(inp, intermediate=dict(a='ghi\njkl\n\n'))
 
     def test_fold_string(self):
         with pytest.raises(AssertionError) as excinfo:  # NOQA
-            round_trip("""
+            inp = """
             a: >
               abc
               def
 
-            """, intermediate=dict(a='abc def\n'))
+            """
+            round_trip(inp, intermediate=dict(a='abc def\n'))
 
     def test_fold_string_strip(self):
         with pytest.raises(AssertionError) as excinfo:  # NOQA
-            round_trip("""
+            inp = """
             a: >-
               abc
               def
 
-            """, intermediate=dict(a='abc def'))
+            """
+            round_trip(inp, intermediate=dict(a='abc def'))
 
     def test_fold_string_keep(self):
         with pytest.raises(AssertionError) as excinfo:  # NOQA
-            round_trip("""
+            inp = """
             a: >+
               abc
               def
 
-            """, intermediate=dict(a='abc def\n\n'))
+            """
+            round_trip(inp, intermediate=dict(a='abc def\n\n'))
 
 
 class TestQuotedScalarString:
     def test_single_quoted_string(self):
-        round_trip("""
+        inp = """
         a: 'abc'
-        """, preserve_quotes=True)
+        """
+        round_trip(inp, preserve_quotes=True)
 
     def test_double_quoted_string(self):
-        round_trip("""
+        inp = """
         a: "abc"
-        """, preserve_quotes=True)
+        """
+        round_trip(inp, preserve_quotes=True)
 
     def test_non_preserved_double_quoted_string(self):
-        round_trip("""
+        inp = """
         a: "abc"
-        """, outp="""
+        """
+        exp = """
         a: abc
-        """)
+        """
+        round_trip(inp, outp=exp)
 
 
 class TestReplace:
