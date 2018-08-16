@@ -637,6 +637,7 @@ from ruamel.yaml.comments import (
     CommentedOrderedMap,
     CommentedSeq,
     CommentedKeySeq,
+    CommentedKeyMap,
     CommentedSet,
     comment_attrib,
     merge_attrib,
@@ -886,6 +887,9 @@ class RoundTripRepresenter(SafeRepresenter):
         if isinstance(data, CommentedKeySeq):
             self.alias_key = None
             return self.represent_sequence(u'tag:yaml.org,2002:seq', data, flow_style=True)
+        if isinstance(data, CommentedKeyMap):
+            self.alias_key = None
+            return self.represent_mapping(u'tag:yaml.org,2002:map', data, flow_style=True)
         return SafeRepresenter.represent_key(self, data)
 
     def represent_mapping(self, tag, mapping, flow_style=None):

@@ -92,7 +92,7 @@ if PY3:
     BytesIO = io.BytesIO
     # have unlimited precision
     no_limit_int = int
-    from collections.abc import Hashable, MutableSequence  # NOQA
+    from collections.abc import Hashable, MutableSequence, MutableMapping, Mapping  # NOQA
 
 else:
     string_types = basestring  # NOQA
@@ -111,7 +111,7 @@ else:
     BytesIO = cStringIO.StringIO
     # have unlimited precision
     no_limit_int = long  # NOQA not available on Python 3
-    from collections import Hashable, MutableSequence  # NOQA
+    from collections import Hashable, MutableSequence, MutableMapping, Mapping  # NOQA
 
 if False:  # MYPY
     # StreamType = Union[BinaryIO, IO[str], IO[unicode],  StringIO]

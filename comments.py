@@ -16,9 +16,9 @@ from ruamel.yaml.compat import ordereddict, PY2, string_types, MutableSliceableS
 from ruamel.yaml.scalarstring import ScalarString
 
 if PY2:
-    from collections import MutableSet, Sized, Set, MutableMapping
+    from collections import MutableSet, Sized, Set, MutableMapping, Mapping
 else:
-    from collections.abc import MutableSet, Sized, Set, MutableMapping
+    from collections.abc import MutableSet, Sized, Set, MutableMapping, Mapping
 
 if False:  # MYPY
     from typing import Any, Dict, Optional, List, Union, Optional  # NOQA
@@ -976,6 +976,94 @@ class CommentedMap(CommentedBase, MutableMapping):
             res[k] = copy.deepcopy(self[k])
             self.copy_attributes(res, deep=True)
         return res
+
+
+# based on brownie mappings
+@classmethod
+def raise_immutable(cls, *args, **kwargs):
+    raise TypeError('{} objects are immutable'.format(cls.__name__))
+
+
+class CommentedKeyMap(CommentedBase, Mapping):
+    __slots__ = Comment.attrib, '_od'
+    """This primarily exists to be able to roundtrip keys that are mappings"""
+
+    def __init__(self, *args, **kw):
+        # type: (Any, Any) -> None
+        if hasattr(self, '_od'):
+            raise_immutable(self)
+        self._od = ordereddict(*args, **kw)
+
+    __delitem__ = __setitem__ = clear = pop = popitem = setdefault = update = raise_immutable
+
+    # need to implement __getitem__, __iter__ and __len__
+    def __getitem__(self, index):
+        return self._od[index]
+
+    def __iter__(self):
+        for x in self._od.__iter__():
+            yield x
+
+    def __len__(self):
+        return len(self._od)
+
+    def __hash__(self):
+        return hash(tuple(self.items()))
+
+    def __repr__(self):
+        # type: () -> Any
+        if not hasattr(self, merge_attrib):
+            return self._od.__repr__()
+        return 'ordereddict(' + repr(list(self._items())) + ')'
+
+    @classmethod
+    def fromkeys(keys, v=None):
+        return CommentedKeyMap(dict.fromkeys(keys, v))
+
+    def _yaml_add_comment(self, comment, key=NoComment):
+        # type: (Any, Optional[Any]) -> None
+        if key is not NoComment:
+            self.yaml_key_comment_extend(key, comment)
+        else:
+            self.ca.comment = comment
+
+    def _yaml_add_eol_comment(self, comment, key):
+        # type: (Any, Any) -> None
+        self._yaml_add_comment(comment, key=key)
+
+    def _yaml_get_columnX(self, key):
+        # type: (Any) -> Any
+        return self.ca.items[key][0].start_mark.column
+
+    def _yaml_get_column(self, key):
+        # type: (Any) -> Any
+        column = None
+        sel_idx = None
+        pre, post = key - 1, key + 1
+        if pre in self.ca.items:
+            sel_idx = pre
+        elif post in self.ca.items:
+            sel_idx = post
+        else:
+            # self.ca.items is not ordered
+            for row_idx, _k1 in enumerate(self):
+                if row_idx >= key:
+                    break
+                if row_idx not in self.ca.items:
+                    continue
+                sel_idx = row_idx
+        if sel_idx is not None:
+            column = self._yaml_get_columnX(sel_idx)
+        return column
+
+    def _yaml_get_pre_comment(self):
+        # type: () -> Any
+        pre_comments = []  # type: List[Any]
+        if self.ca.comment is None:
+            self.ca.comment = [None, pre_comments]
+        else:
+            self.ca.comment[1] = pre_comments
+        return pre_comments
 
 
 class CommentedOrderedMap(CommentedMap):

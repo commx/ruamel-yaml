@@ -54,8 +54,24 @@ ChangeLog
 
 .. should insert NEXT: at the beginning of line for next key (with empty line)
 
+NEXT:
+  - simple mappings can now be used as keys when round-tripping::
+
+      {a: 1, b: 2}: hello world
+      
+    although using the obvious operations (del, popitem) on the key will
+    fail, you can mutilate it by going through its attributes. If you load the
+    above YAML in `d`, then changing the value is cumbersome:
+
+        d = {CommentedKeyMap([('a', 1), ('b', 2)]): "goodbye"}
+    and changing the key even more so:
+
+        d[CommentedKeyMap([('b', 1), ('a', 2)])]= d.pop(CommentedKeyMap([('a', 1), ('b', 2)]))
+    (you can use a `dict` instead of a list of tuples (or ordereddict), but that might result
+    in a different order, of the keys of the key, in the output)
+
 0.15.57 (2018-08-15):
-  - Fix that CommentedSeq could no longer be used in adding or do a copy
+  - Fix that CommentedSeq could no longer be used in adding or do a sort
     (reported by `Christopher Wright <https://bitbucket.org/CJ-Wright4242/>`__)
 
 0.15.56 (2018-08-15):

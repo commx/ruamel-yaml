@@ -102,6 +102,7 @@ def round_trip(
     explicit_start=None,
     explicit_end=None,
     version=None,
+    dump_data=None,
 ):
     """
     inp:    input string to parse
@@ -113,6 +114,8 @@ def round_trip(
     if extra is not None:
         doutp += extra
     data = round_trip_load(inp, preserve_quotes=preserve_quotes)
+    if dump_data:
+        print('data', data)
     if intermediate is not None:
         if isinstance(intermediate, dict):
             for k, v in intermediate.items():

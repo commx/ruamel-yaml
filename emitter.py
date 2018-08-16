@@ -621,7 +621,9 @@ class Emitter(object):
                 self.write_pre_comment(self.event)
             self.write_indent()
             if self.check_simple_key():
-                if not isinstance(self.event, SequenceStartEvent):  # sequence keys
+                if not isinstance(
+                    self.event, (SequenceStartEvent, MappingStartEvent)
+                ):  # sequence keys
                     if self.event.style == '?':
                         self.write_indicator(u'?', True, indention=True)
                 self.states.append(self.expect_block_mapping_simple_value)
@@ -703,6 +705,7 @@ class Emitter(object):
         return length < self.MAX_SIMPLE_KEY_LENGTH and (
             isinstance(self.event, AliasEvent)
             or (isinstance(self.event, SequenceStartEvent) and self.event.flow_style is True)
+            or (isinstance(self.event, MappingStartEvent) and self.event.flow_style is True)
             or (
                 isinstance(self.event, ScalarEvent)
                 and not self.analysis.empty

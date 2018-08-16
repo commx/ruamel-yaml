@@ -17,10 +17,10 @@ from ruamel.yaml.nodes import *                               # NOQA
 from ruamel.yaml.nodes import (SequenceNode, MappingNode, ScalarNode)
 from ruamel.yaml.compat import (utf8, builtins_module, to_str, PY2, PY3,  # NOQA
                                 ordereddict, text_type, nprint, version_tnf, Hashable,
-                                MutableSequence)
+                                MutableSequence, MutableMapping)
 from ruamel.yaml.comments import *                               # NOQA
 from ruamel.yaml.comments import (CommentedMap, CommentedOrderedMap, CommentedSet,
-                                  CommentedKeySeq, CommentedSeq, TaggedScalar)
+                                  CommentedKeySeq, CommentedSeq, TaggedScalar, CommentedKeyMap)
 from ruamel.yaml.scalarstring import *                           # NOQA
 from ruamel.yaml.scalarstring import (PreservedScalarString, SingleQuotedScalarString,
                                       DoubleQuotedScalarString, ScalarString)
@@ -1330,7 +1330,13 @@ class RoundTripConstructor(SafeConstructor):
                     elif key_node.flow_style is False:
                         key_a.fa.set_block_style()
                     key = key_a
-                    # key = tuple(key)
+                elif isinstance(key, MutableMapping):
+                    key_a = CommentedKeyMap(key)
+                    if key_node.flow_style is True:
+                        key_a.fa.set_flow_style()
+                    elif key_node.flow_style is False:
+                        key_a.fa.set_block_style()
+                    key = key_a
             if PY2:
                 try:
                     hash(key)
