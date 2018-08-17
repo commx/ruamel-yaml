@@ -992,7 +992,13 @@ class CommentedKeyMap(CommentedBase, Mapping):
         # type: (Any, Any) -> None
         if hasattr(self, '_od'):
             raise_immutable(self)
-        self._od = ordereddict(*args, **kw)
+        try:
+            self._od = ordereddict(*args, **kw)
+        except TypeError:
+            if PY2:
+                self._od = ordereddict(args[0].items())
+            else:
+                raise
 
     __delitem__ = __setitem__ = clear = pop = popitem = setdefault = update = raise_immutable
 
