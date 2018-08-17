@@ -279,10 +279,16 @@ class TestIssues:
         """)
         assert buf.getvalue() == exp
 
-    def test_issue_22(self):
+    def test_issue_222(self):
         import ruamel.yaml
         from ruamel.yaml.compat import StringIO
 
         buf = StringIO()
         ruamel.yaml.safe_dump(['012923'], buf)
         assert buf.getvalue() == "['012923']\n"
+
+    @pytest.mark.xfail(strict=True)
+    def test_issue_223(self):
+        import ruamel.yaml
+        yaml = ruamel.yaml.YAML(typ='safe')
+        yaml.load("phone: 0123456789")
