@@ -418,6 +418,7 @@ class SafeConstructor(BaseConstructor):
 
     def construct_yaml_int(self, node):
         # type: (Any) -> int
+        print('ver', self.resolver.processing_version)
         value_s = to_str(self.construct_scalar(node))
         value_s = value_s.replace('_', "")
         sign = +1
@@ -433,9 +434,9 @@ class SafeConstructor(BaseConstructor):
             return sign * int(value_s[2:], 16)
         elif value_s.startswith('0o'):
             return sign * int(value_s[2:], 8)
-        elif self.resolver.processing_version != (1, 2) and value_s[0] == '0':
+        elif self.resolver.processing_version == (1, 1) and value_s[0] == '0':
             return sign * int(value_s, 8)
-        elif self.resolver.processing_version != (1, 2) and ':' in value_s:
+        elif self.resolver.processing_version == (1, 1) and ':' in value_s:
             digits = [int(part) for part in value_s.split(':')]
             digits.reverse()
             base = 1

@@ -4,7 +4,7 @@ ruamel.yaml
 
 ``ruamel.yaml`` is a YAML 1.2 loader/dumper package for Python.
 
-:version:       0.15.58
+:version:       0.15.59
 :updated:       2018-08-17
 :documentation: http://yaml.readthedocs.io
 :repository:    https://bitbucket.org/ruamel/
@@ -53,6 +53,10 @@ ChangeLog
 =========
 
 .. should insert NEXT: at the beginning of line for next key (with empty line)
+
+0.15.59 (2018-08-17):
+  - issue with C based loader and leading zeros (reported by 
+    `Tom Hamilton Stubber <https://bitbucket.org/TomHamiltonStubber/>`__)
 
 0.15.58 (2018-08-17):
   - simple mappings can now be used as keys when round-tripping::
