@@ -305,67 +305,9 @@ class Resolver(BaseResolver):
     pass
 
 
-# fmt: off
-Resolver.add_implicit_resolver_base(
-    u'tag:yaml.org,2002:bool',
-    RegExp(u'''^(?:yes|Yes|YES|no|No|NO
-    |true|True|TRUE|false|False|FALSE
-    |on|On|ON|off|Off|OFF)$''', re.X),
-    list(u'yYnNtTfFoO'))
-
-Resolver.add_implicit_resolver_base(
-    u'tag:yaml.org,2002:float',
-    RegExp(u'''^(?:
-     [-+]?(?:[0-9][0-9_]*)\\.[0-9_]*(?:[eE][-+]?[0-9]+)?
-    |[-+]?(?:[0-9][0-9_]*)(?:[eE][-+]?[0-9]+)
-    |\\.[0-9_]+(?:[eE][-+][0-9]+)?
-    |[-+]?[0-9][0-9_]*(?::[0-5]?[0-9])+\\.[0-9_]*
-    |[-+]?\\.(?:inf|Inf|INF)
-    |\\.(?:nan|NaN|NAN))$''', re.X),
-    list(u'-+0123456789.'))
-
-Resolver.add_implicit_resolver_base(
-    u'tag:yaml.org,2002:int',
-    RegExp(u'''^(?:[-+]?0b[0-1_]+
-    |[-+]?0o?[0-7_]+
-    |[-+]?(?:0|[1-9][0-9_]*)
-    |[-+]?0x[0-9a-fA-F_]+
-    |[-+]?[1-9][0-9_]*(?::[0-5]?[0-9])+)$''', re.X),
-    list(u'-+0123456789'))
-
-Resolver.add_implicit_resolver_base(
-    u'tag:yaml.org,2002:merge',
-    RegExp(u'^(?:<<)$'),
-    [u'<'])
-
-Resolver.add_implicit_resolver_base(
-    u'tag:yaml.org,2002:null',
-    RegExp(u'''^(?: ~
-    |null|Null|NULL
-    | )$''', re.X),
-    [u'~', u'n', u'N', u''])
-
-Resolver.add_implicit_resolver_base(
-    u'tag:yaml.org,2002:timestamp',
-    RegExp(u'''^(?:[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]
-    |[0-9][0-9][0-9][0-9] -[0-9][0-9]? -[0-9][0-9]?
-    (?:[Tt]|[ \\t]+)[0-9][0-9]?
-    :[0-9][0-9] :[0-9][0-9] (?:\\.[0-9]*)?
-    (?:[ \\t]*(?:Z|[-+][0-9][0-9]?(?::[0-9][0-9])?))?)$''', re.X),
-    list(u'0123456789'))
-
-Resolver.add_implicit_resolver_base(
-    u'tag:yaml.org,2002:value',
-    RegExp(u'^(?:=)$'),
-    [u'='])
-
-# The following resolver is only for documentation purposes. It cannot work
-# because plain scalars cannot start with '!', '&', or '*'.
-Resolver.add_implicit_resolver_base(
-    u'tag:yaml.org,2002:yaml',
-    RegExp(u'^(?:!|&|\\*)$'),
-    list(u'!&*'))
-# fmt: on
+for ir in implicit_resolvers:
+    if (1, 2) in ir[0]:
+        Resolver.add_implicit_resolver_base(*ir[1:])
 
 
 class VersionedResolver(BaseResolver):

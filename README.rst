@@ -4,8 +4,8 @@ ruamel.yaml
 
 ``ruamel.yaml`` is a YAML 1.2 loader/dumper package for Python.
 
-:version:       0.15.57
-:updated:       2018-08-15
+:version:       0.15.58
+:updated:       2018-08-17
 :documentation: http://yaml.readthedocs.io
 :repository:    https://bitbucket.org/ruamel/
 :pypi:          https://pypi.org/project/ruamel.yaml/
@@ -54,7 +54,7 @@ ChangeLog
 
 .. should insert NEXT: at the beginning of line for next key (with empty line)
 
-NEXT:
+0.15.58 (2018-08-17):
   - simple mappings can now be used as keys when round-tripping::
 
       {a: 1, b: 2}: hello world
@@ -64,11 +64,17 @@ NEXT:
     above YAML in `d`, then changing the value is cumbersome:
 
         d = {CommentedKeyMap([('a', 1), ('b', 2)]): "goodbye"}
+
     and changing the key even more so:
 
-        d[CommentedKeyMap([('b', 1), ('a', 2)])]= d.pop(CommentedKeyMap([('a', 1), ('b', 2)]))
+        d[CommentedKeyMap([('b', 1), ('a', 2)])] = d.pop(
+                     CommentedKeyMap([('a', 1), ('b', 2)]))
+
     (you can use a `dict` instead of a list of tuples (or ordereddict), but that might result
     in a different order, of the keys of the key, in the output)
+  - check integers to dump with 1.2 patterns instead of 1.1 (reported by 
+    `Lele Gaifax <https://bitbucket.org/lele/>`__)
+  
 
 0.15.57 (2018-08-15):
   - Fix that CommentedSeq could no longer be used in adding or do a sort

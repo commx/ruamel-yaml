@@ -282,7 +282,7 @@ class TestIssues:
     def test_issue_22(self):
         import ruamel.yaml
         from ruamel.yaml.compat import StringIO
+
         buf = StringIO()
         ruamel.yaml.safe_dump(['012923'], buf)
         assert buf.getvalue() == "['012923']\n"
-        
