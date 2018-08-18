@@ -233,13 +233,19 @@ class TestIssues:
         d.yaml_add_eol_comment('test1', 'bar')
         assert round_trip_dump(d) == yaml_str + 'bar: foo # test1\n'
 
-    @pytest.mark.xfail(strict=True)
     def test_issue_219(self):
         yaml_str = dedent("""\
         [StackName: AWS::StackName]
         """)
-        d = round_trip_load(yaml_str)
-        
+        d = round_trip_load(yaml_str)  # NOQA
+
+    def test_issue_219a(self):
+        yaml_str = dedent("""\
+        [StackName:
+        AWS::StackName]
+        """)
+        d = round_trip_load(yaml_str)  # NOQA
+
     def test_issue_220(self, tmpdir):
         program_src = r'''
         from ruamel.yaml import YAML

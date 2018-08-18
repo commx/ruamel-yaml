@@ -51,7 +51,8 @@ class Node(object):
                 sys.stdout.write('    {}comment: {})\n'.format('  ' * indent, self.comment))
             return
         sys.stdout.write(
-            '{}{}(tag={!r})\n'.format('  ' * indent, self.__class__.__name__, self.tag))
+            '{}{}(tag={!r})\n'.format('  ' * indent, self.__class__.__name__, self.tag)
+        )
         if self.comment:
             sys.stdout.write('    {}comment: {})\n'.format('  ' * indent, self.comment))
         for v in self.value:

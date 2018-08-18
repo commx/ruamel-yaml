@@ -786,7 +786,8 @@ class Scanner(object):
         else:
             if bool(self.flow_level):
                 if self.flow_context[-1] == '[':
-                    return False
+                    if self.reader.peek(1) not in _THE_END_SPACE_TAB:
+                        return False
                 # if self.reader.peek(1) in '\'"{[]}':
                 return True
         # VALUE(block context): ':' (' '|'\n')

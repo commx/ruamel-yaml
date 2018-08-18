@@ -1,3 +1,8 @@
+[0, 15, 60]: 2018-08-18
+  - cleanup for mypy 
+  - spurious print in library (reported by 
+    `Lele Gaifax <https://bitbucket.org/lele/>`__), now automatically checked 
+
 [0, 15, 59]: 2018-08-17
   - issue with C based loader and leading zeros (reported by 
     `Tom Hamilton Stubber <https://bitbucket.org/TomHamiltonStubber/>`__)
