@@ -507,6 +507,10 @@ class CommentedSeq(MutableSliceableSequence, CommentedBase):
             if old_index in itm:
                 self.ca.items[idx] = itm[old_index]
 
+    def __repr__(self):
+        # type: () -> Any
+        return self._lst.__repr__()
+
 
 class CommentedKeySeq(tuple, CommentedBase):
     """This primarily exists to be able to roundtrip keys that are sequences"""
