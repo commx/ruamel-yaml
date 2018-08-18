@@ -76,9 +76,9 @@ class BaseConstructor(object):
         try:
             return self.loader._composer
         except AttributeError:
-            print('slt', type(self))
-            print('slc', self.loader._composer)
-            print(dir(self))
+            sys.stdout.write('slt {}\n'.format(type(self)))
+            sys.stdout.write('slc {}\n'.format(self.loader._composer))
+            sys.stdout.write('{}\n'.format(dir(self)))
             raise
 
     @property
@@ -418,7 +418,6 @@ class SafeConstructor(BaseConstructor):
 
     def construct_yaml_int(self, node):
         # type: (Any) -> int
-        print('ver', self.resolver.processing_version)
         value_s = to_str(self.construct_scalar(node))
         value_s = value_s.replace('_', "")
         sign = +1
@@ -1175,7 +1174,7 @@ class RoundTripConstructor(SafeConstructor):
                 width -= 1
             e_width = len(exponent)
             e_sign = exponent[0] in '+-'
-            # print('sf', width, prec, m_sign, exp, e_width, e_sign)
+            # nprint('sf', width, prec, m_sign, exp, e_width, e_sign)
             return ScalarFloat(  # type: ignore
                 sign * float(value_s),
                 width=width,
@@ -1325,19 +1324,19 @@ class RoundTripConstructor(SafeConstructor):
             # lists are not hashable, but tuples are
             if not isinstance(key, Hashable):
                 if isinstance(key, MutableSequence):
-                    key_a = CommentedKeySeq(key)
+                    key_s = CommentedKeySeq(key)
                     if key_node.flow_style is True:
-                        key_a.fa.set_flow_style()
+                        key_s.fa.set_flow_style()
                     elif key_node.flow_style is False:
-                        key_a.fa.set_block_style()
-                    key = key_a
+                        key_s.fa.set_block_style()
+                    key = key_s
                 elif isinstance(key, MutableMapping):
-                    key_a = CommentedKeyMap(key)
+                    key_m = CommentedKeyMap(key)
                     if key_node.flow_style is True:
-                        key_a.fa.set_flow_style()
+                        key_m.fa.set_flow_style()
                     elif key_node.flow_style is False:
-                        key_a.fa.set_block_style()
-                    key = key_a
+                        key_m.fa.set_block_style()
+                    key = key_m
             if PY2:
                 try:
                     hash(key)

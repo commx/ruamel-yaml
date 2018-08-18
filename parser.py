@@ -560,7 +560,6 @@ class Parser(object):
 
     def parse_block_mapping_key(self):
         # type: () -> Any
-        # print('>>>> tk', type(self), next_token, getattr(next_token, 'comment', None))
         if self.scanner.check_token(KeyToken):
             token = self.scanner.get_token()
             token.move_comment(self.scanner.peek_token())
@@ -590,8 +589,6 @@ class Parser(object):
         if self.scanner.check_token(ValueToken):
             token = self.scanner.get_token()
             # value token might have post comment move it to e.g. block
-            # pt = self.scanner.peek_token()
-            # print('pt', pt)
             if self.scanner.check_token(ValueToken):
                 token.move_comment(self.scanner.peek_token())
             else:

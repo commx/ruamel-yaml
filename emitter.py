@@ -1511,7 +1511,7 @@ class Emitter(object):
                     try:
                         self.stream.write(data)
                     except:  # NOQA
-                        print(repr(data))
+                        sys.stdout.write(repr(data) + '\n')
                         raise
                     start = end
             if ch is not None:
@@ -1522,7 +1522,7 @@ class Emitter(object):
     def write_comment(self, comment):
         # type: (Any) -> None
         value = comment.value
-        # print('{:02d} {:02d} {!r}'.format(self.column, comment.start_mark.column, value))
+        # nprint('{:02d} {:02d} {!r}'.format(self.column, comment.start_mark.column, value))
         if value[-1] == '\n':
             value = value[:-1]
         try:
@@ -1536,7 +1536,7 @@ class Emitter(object):
                 ValueError
         except ValueError:
             col = self.column + 1
-        # print('post_comment', self.line, self.column, value)
+        # nprint('post_comment', self.line, self.column, value)
         try:
             # at least one space if the current column >= the start column of the comment
             # but not at the start of a line
@@ -1570,7 +1570,7 @@ class Emitter(object):
                 if isinstance(event, start_events):
                     comment.pre_done = True
         except TypeError:
-            print('eventtt', type(event), event)
+            sys.stdout.write('eventtt {} {}'.format(type(event), event))
             raise
         return True
 

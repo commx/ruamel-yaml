@@ -76,8 +76,8 @@ class ScalarFloat(float):
 
     def dump(self, out=sys.stdout):
         # type: (Any) -> Any
-        print(
-            'ScalarFloat({}| w:{}, p:{}, s:{}, lz:{}|{}, w:{}, s:{})'.format(
+        out.write(
+            'ScalarFloat({}| w:{}, p:{}, s:{}, lz:{}|{}, w:{}, s:{})\n'.format(
                 self,
                 self._width,  # type: ignore
                 self._prec,  # type: ignore
@@ -86,8 +86,7 @@ class ScalarFloat(float):
                 self._exp,  # type: ignore
                 self._e_width,  # type: ignore
                 self._e_sign,  # type: ignore
-            ),
-            file=out,
+            )
         )
 
 

@@ -193,7 +193,7 @@ class YAML(object):
                     # else:
                     setattr(self, attr, CParser(self._stream))
                     # self._parser = self._composer = self
-                    # print('scanner', self.loader.scanner)
+                    # nprint('scanner', self.loader.scanner)
 
         return getattr(self, attr)
 
@@ -478,7 +478,7 @@ class YAML(object):
                 try:
                     self.representer.represent(data)
                 except AttributeError:
-                    # print(dir(dumper._representer))
+                    # nprint(dir(dumper._representer))
                     raise
             self.serializer.close()
         finally:
@@ -669,7 +669,7 @@ class YAML(object):
     def __exit__(self, typ, value, traceback):
         # type: (Any, Any, Any) -> None
         if typ:
-            print('typ', typ)
+            nprint('typ', typ)
         self._context_manager.teardown_output()
         # self._context_manager.teardown_input()
         self._context_manager = None
@@ -784,7 +784,7 @@ class YAMLContextManager(object):
         try:
             self._yaml.representer.represent(data)
         except AttributeError:
-            # print(dir(dumper._representer))
+            # nprint(dir(dumper._representer))
             raise
 
     # def teardown_input(self):
@@ -1159,7 +1159,7 @@ def dump_all(
             try:
                 dumper._representer.represent(data)
             except AttributeError:
-                # print(dir(dumper._representer))
+                # nprint(dir(dumper._representer))
                 raise
         dumper._serializer.close()
     finally:

@@ -1206,7 +1206,7 @@ class Scanner(object):
         if block_scalar_comment is not None:
             token.add_pre_comments([block_scalar_comment])
         if len(trailing) > 0:
-            # print('trailing 1', trailing)  # XXXXX
+            # nprint('trailing 1', trailing)  # XXXXX
             # Eat whitespaces and comments until we reach the next token.
             comment = self.scan_to_next_token()
             while comment:

@@ -21,7 +21,7 @@ else:
     from collections.abc import MutableSet, Sized, Set, MutableMapping, Mapping
 
 if False:  # MYPY
-    from typing import Any, Dict, Optional, List, Union, Optional  # NOQA
+    from typing import Any, Dict, Optional, List, Union, Optional, Iterator  # NOQA
 
 # fmt: off
 __all__ = ["CommentedSeq", "CommentedKeySeq",
@@ -493,9 +493,11 @@ class CommentedSeq(MutableSliceableSequence, CommentedBase):
         return res
 
     def __add__(self, other):
+        # type: (Any) -> Any
         return self._lst + other
 
     def sort(self):
+        # type: () -> None
         tmp_lst = sorted(zip(self._lst, range(len(self._lst))))
         self._lst = [x[0] for x in tmp_lst]
         itm = self.ca.items
@@ -979,8 +981,9 @@ class CommentedMap(CommentedBase, MutableMapping):
 
 
 # based on brownie mappings
-@classmethod
+@classmethod  # type: ignore
 def raise_immutable(cls, *args, **kwargs):
+    # type: (Any, *Any, **Any) -> None
     raise TypeError('{} objects are immutable'.format(cls.__name__))
 
 
@@ -1004,26 +1007,31 @@ class CommentedKeyMap(CommentedBase, Mapping):
 
     # need to implement __getitem__, __iter__ and __len__
     def __getitem__(self, index):
+        # type: (Any) -> Any
         return self._od[index]
 
     def __iter__(self):
+        # type: () -> Iterator[Any]
         for x in self._od.__iter__():
             yield x
 
     def __len__(self):
+        # type: () -> int
         return len(self._od)
 
     def __hash__(self):
+        # type: () -> Any
         return hash(tuple(self.items()))
 
     def __repr__(self):
         # type: () -> Any
         if not hasattr(self, merge_attrib):
             return self._od.__repr__()
-        return 'ordereddict(' + repr(list(self._items())) + ')'
+        return 'ordereddict(' + repr(list(self._od.items())) + ')'
 
     @classmethod
     def fromkeys(keys, v=None):
+        # type: (Any, Any) -> Any
         return CommentedKeyMap(dict.fromkeys(keys, v))
 
     def _yaml_add_comment(self, comment, key=NoComment):
@@ -1150,14 +1158,14 @@ def dump_comments(d, name="", sep='.', out=sys.stdout):
     """
     if isinstance(d, dict) and hasattr(d, 'ca'):
         if name:
-            print(name)
-        print(d.ca, file=out)  # type: ignore
+            sys.stdout.write('{}\n'.format(name))
+        out.write('{}\n'.format(d.ca))  # type: ignore
         for k in d:
             dump_comments(d[k], name=(name + sep + k) if name else k, sep=sep, out=out)
     elif isinstance(d, list) and hasattr(d, 'ca'):
         if name:
-            print(name)
-        print(d.ca, file=out)  # type: ignore
+            sys.stdout.write('{}\n'.format(name))
+        out.write('{}\n'.format(d.ca))  # type: ignore
         for idx, k in enumerate(d):
             dump_comments(
                 k, name=(name + sep + str(idx)) if name else str(idx), sep=sep, out=out

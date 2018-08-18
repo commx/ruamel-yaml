@@ -775,7 +775,6 @@ class RoundTripRepresenter(SafeRepresenter):
             prec = data._prec
             if prec < 1:
                 prec = 1
-            # print('dw2', data._width, prec)
             ms = data._m_sign if data._m_sign else ""
             # -1 for the dot
             value = u'{}{:0{}.{}f}'.format(

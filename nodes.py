@@ -2,6 +2,7 @@
 
 from __future__ import print_function
 
+import sys
 from .compat import string_types
 
 if False:  # MYPY
@@ -41,17 +42,18 @@ class Node(object):
     def dump(self, indent=0):
         # type: (int) -> None
         if isinstance(self.value, string_types):
-            print(
-                '{}{}(tag={!r}, value={!r})'.format(
+            sys.stdout.write(
+                '{}{}(tag={!r}, value={!r})\n'.format(
                     '  ' * indent, self.__class__.__name__, self.tag, self.value
                 )
             )
             if self.comment:
-                print('    {}comment: {})'.format('  ' * indent, self.comment))
+                sys.stdout.write('    {}comment: {})\n'.format('  ' * indent, self.comment))
             return
-        print('{}{}(tag={!r})'.format('  ' * indent, self.__class__.__name__, self.tag))
+        sys.stdout.write(
+            '{}{}(tag={!r})\n'.format('  ' * indent, self.__class__.__name__, self.tag))
         if self.comment:
-            print('    {}comment: {})'.format('  ' * indent, self.comment))
+            sys.stdout.write('    {}comment: {})\n'.format('  ' * indent, self.comment))
         for v in self.value:
             if isinstance(v, tuple):
                 for v1 in v:
@@ -59,7 +61,7 @@ class Node(object):
             elif isinstance(v, Node):
                 v.dump(indent + 1)
             else:
-                print('Node value type?', type(v))
+                sys.stdout.write('Node value type? {}\n'.format(type(v)))
 
 
 class ScalarNode(Node):

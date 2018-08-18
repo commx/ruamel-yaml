@@ -1,12 +1,11 @@
 # coding: utf-8
 
-from __future__ import absolute_import
-from __future__ import print_function
+from __future__ import absolute_import, print_function
 
 import warnings
 
 from ruamel.yaml.error import MarkedYAMLError, ReusedAnchorWarning
-from ruamel.yaml.compat import utf8
+from ruamel.yaml.compat import utf8, nprint
 
 from ruamel.yaml.events import (
     StreamStartEvent,
@@ -182,7 +181,7 @@ class Composer(object):
         end_event = self.parser.get_event()
         if node.flow_style is True and end_event.comment is not None:
             if node.comment is not None:
-                print(
+                nprint(
                     'Warning: unexpected end_event commment in sequence '
                     'node {}'.format(node.flow_style)
                 )

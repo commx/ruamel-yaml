@@ -217,8 +217,6 @@ class BaseResolver(object):
 
     def descend_resolver(self, current_node, current_index):
         # type: (Any, Any) -> None
-        # print('xx2', self)
-        # sys.exit(0)
         if not self.yaml_path_resolvers:
             return
         exact_paths = {}
