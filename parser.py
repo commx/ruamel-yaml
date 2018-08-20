@@ -123,14 +123,14 @@ class Parser(object):
     def scanner(self):
         # type: () -> Any
         if hasattr(self.loader, 'typ'):
-            self.loader.scanner
+            return self.loader.scanner
         return self.loader._scanner
 
     @property
     def resolver(self):
         # type: () -> Any
         if hasattr(self.loader, 'typ'):
-            self.loader.resolver
+            return self.loader.resolver
         return self.loader._resolver
 
     def check_event(self, *choices):

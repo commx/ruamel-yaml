@@ -41,8 +41,8 @@ if False:  # MYPY
 __all__ = ['Scanner', 'RoundTripScanner', 'ScannerError']
 
 
-_THE_END = '\0\r\n\x85\u2028\u2029'
-_THE_END_SPACE_TAB = '\0 \t\r\n\x85\u2028\u2029'
+_THE_END = '\n\0\r\x85\u2028\u2029'
+_THE_END_SPACE_TAB = ' \n\0\t\r\x85\u2028\u2029'
 _SPACE_TAB = ' \t'
 
 
@@ -144,9 +144,17 @@ class Scanner(object):
     @property
     def reader(self):
         # type: () -> Any
-        if hasattr(self.loader, 'typ'):
-            self.loader.reader
-        return self.loader._reader
+        try:
+            return self._scanner_reader
+        except:
+            if hasattr(self.loader, 'typ'):
+                self._scanner_reader = self.loader.reader
+            else:
+                self._scanner_reader = self.loader._reader
+            return self._scanner_reader
+        #if hasattr(self.loader, 'typ'):
+        #    self.loader.reader
+        #return self.loader._reader 
 
     @property
     def scanner_processing_version(self):  # prefix until un-composited
@@ -1378,7 +1386,7 @@ class Scanner(object):
         chunks = []  # type: List[Any]
         while True:
             length = 0
-            while self.reader.peek(length) not in '\'"\\\0 \t\r\n\x85\u2028\u2029':
+            while self.reader.peek(length) not in ' \n\'"\\\0\t\r\x85\u2028\u2029':
                 length += 1
             if length != 0:
                 chunks.append(self.reader.prefix(length))
@@ -1411,7 +1419,7 @@ class Scanner(object):
                     code = int(self.reader.prefix(length), 16)
                     chunks.append(unichr(code))
                     self.reader.forward(length)
-                elif ch in '\r\n\x85\u2028\u2029':
+                elif ch in '\n\r\x85\u2028\u2029':
                     self.scan_line_break()
                     chunks.extend(self.scan_flow_scalar_breaks(double, start_mark))
                 else:

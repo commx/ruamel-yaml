@@ -162,18 +162,20 @@ class YAML(object):
     @property
     def reader(self):
         # type: () -> Any
-        attr = '_' + sys._getframe().f_code.co_name
-        if not hasattr(self, attr):
-            setattr(self, attr, self.Reader(None, loader=self))
-        return getattr(self, attr)
+        try:
+            return self._reader
+        except AttributeError:
+            self._reader = self.Reader(None, loader=self)
+            return self._reader  
 
     @property
     def scanner(self):
         # type: () -> Any
-        attr = '_' + sys._getframe().f_code.co_name
-        if not hasattr(self, attr):
-            setattr(self, attr, self.Scanner(loader=self))
-        return getattr(self, attr)
+        try:
+            return self._scanner
+        except:
+            self._scanner = self.Scanner(loader=self)
+            return self._scanner
 
     @property
     def parser(self):
