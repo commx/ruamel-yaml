@@ -173,3 +173,43 @@ class TestReplace:
         so = data['foo'].replace('foo', 'bar', 2)
         assert isinstance(so, ruamel.yaml.scalarstring.DoubleQuotedScalarString)
         assert so == 'bar bar bar foo'
+
+
+class TestWalkTree:
+    def test_basic(self):
+        from ruamel.yaml.comments import CommentedMap
+        from ruamel.yaml.scalarstring import walk_tree
+        data = CommentedMap()
+        data[1] = 'a'
+        data[2] = 'with\nnewline\n'
+        walk_tree(data)
+        exp = """\
+        1: a
+        2: |
+          with
+          newline
+        """
+        assert round_trip_dump(data) == dedent(exp)
+
+    def test_map(self):
+        from ruamel.yaml.compat import ordereddict
+        from ruamel.yaml.comments import CommentedMap
+        from ruamel.yaml.scalarstring import walk_tree, preserve_literal
+        from ruamel.yaml.scalarstring import DoubleQuotedScalarString as dq
+        from ruamel.yaml.scalarstring import SingleQuotedScalarString as sq
+        data = CommentedMap()
+        data[1] = 'a'
+        data[2] = 'with\nnew : line\n'
+        data[3] = '${abc}'
+        data[4] = 'almost:mapping'
+        m = ordereddict([('\n', preserve_literal), ('${', sq), (':', dq)])
+        walk_tree(data, map=m)
+        exp = """\
+        1: a
+        2: |
+          with
+          new : line
+        3: '${abc}'
+        4: "almost:mapping"
+        """
+        assert round_trip_dump(data) == dedent(exp)

@@ -62,25 +62,41 @@ def preserve_literal(s):
     return PreservedScalarString(s.replace('\r\n', '\n').replace('\r', '\n'))
 
 
-def walk_tree(base):
+def walk_tree(base, map=None):
     # type: (Any) -> None
     """
     the routine here walks over a simple yaml tree (recursing in
     dict values and list items) and converts strings that
     have multiple lines to literal scalars
-    """
-    from ruamel.yaml.compat import string_types
 
-    if isinstance(base, dict):
+    You can also provide an explicit (ordered) mapping for multiple transforms
+    (first of which is executed):
+        map = ruamel.yaml.compat.ordereddict
+        map['\n'] = preserve_literal
+        map[':'] = SingleQuotedScalarString
+        walk_tree(data, map=map)
+    """
+    from ruamel.yaml.compat import string_types, MutableMapping, MutableSequence
+
+    if map is None:
+        map = {'\n': preserve_literal}
+
+    if isinstance(base, MutableMapping):
         for k in base:
             v = base[k]  # type: Text
-            if isinstance(v, string_types) and '\n' in v:
-                base[k] = preserve_literal(v)
+            if isinstance(v, string_types):
+                for ch in map:
+                    if ch in v:
+                        base[k] = map[ch](v)
+                        break
             else:
                 walk_tree(v)
-    elif isinstance(base, list):
+    elif isinstance(base, MutableSequence):
         for idx, elem in enumerate(base):
-            if isinstance(elem, string_types) and '\n' in elem:  # type: ignore
-                base[idx] = preserve_literal(elem)  # type: ignore
+            if isinstance(elem, string_types):
+                for ch in map:
+                    if ch in elem:
+                        base[idx] = map[ch](elem)
+                        break
             else:
                 walk_tree(elem)
