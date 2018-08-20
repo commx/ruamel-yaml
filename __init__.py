@@ -60,9 +60,12 @@ _package_data = dict(
         'Topic :: Text Processing :: Markup',
     ],
     keywords='yaml 1.2 parser round-trip preserve quotes order config',
-    windows_wheels=True,
+    wheels=dict(
+        windows='appveyor',
+        linux='libyaml-devel',
+        macos='builder@macos',
+    ),
     read_the_docs='yaml',
-    many_linux='libyaml-devel',
     supported=[(2, 7), (3, 4)],  # minimum
     tox=dict(
         env='*pn',  # also test narrow Python 2.7.15 for unicode patterns
