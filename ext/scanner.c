@@ -3204,6 +3204,10 @@ yaml_parser_scan_flow_scalar(yaml_parser_t *parser, yaml_token_t *token,
                         code_length = 8;
                         break;
 
+                    case '/':
+		        *(string.pointer++) = '/';  /* JSON -> YAML 1.2 */
+                        break;
+
                     default:
                         yaml_parser_set_scanner_error(parser, "while parsing a quoted scalar",
                                 start_mark, "found unknown escape character");
