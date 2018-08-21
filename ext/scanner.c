@@ -38,8 +38,8 @@
  *      BLOCK-END                       # Indentation decrease.
  *      FLOW-SEQUENCE-START             # '['
  *      FLOW-SEQUENCE-END               # ']'
- *      BLOCK-SEQUENCE-START            # '{'
- *      BLOCK-SEQUENCE-END              # '}'
+ *      FLOW-MAPPING-START              # '{'
+ *      FLOW-MAPPING-END                # '}'
  *      BLOCK-ENTRY                     # '-'
  *      FLOW-ENTRY                      # ','
  *      KEY                             # '?' or nothing (simple keys).
@@ -1638,7 +1638,7 @@ yaml_parser_fetch_key(yaml_parser_t *parser)
 
     if (!parser->flow_level)
     {
-        /* Check if we are allowed to start a new key (not nessesary simple). */
+        /* Check if we are allowed to start a new key (not necessary simple). */
 
         if (!parser->simple_key_allowed) {
             return yaml_parser_set_scanner_error(parser, NULL, parser->mark,
@@ -2401,7 +2401,7 @@ yaml_parser_scan_tag(yaml_parser_t *parser, yaml_token_t *token)
     {
         /* Set the handle to '' */
 
-        handle = yaml_malloc(1);
+        handle = YAML_MALLOC(1);
         if (!handle) goto error;
         handle[0] = '\0';
 
@@ -2453,7 +2453,7 @@ yaml_parser_scan_tag(yaml_parser_t *parser, yaml_token_t *token)
             /* Set the handle to '!'. */
 
             yaml_free(handle);
-            handle = yaml_malloc(2);
+            handle = YAML_MALLOC(2);
             if (!handle) goto error;
             handle[0] = '!';
             handle[1] = '\0';
@@ -3160,10 +3160,6 @@ yaml_parser_scan_flow_scalar(yaml_parser_t *parser, yaml_token_t *token,
 
                     case '"':
                         *(string.pointer++) = '"';
-                        break;
-
-                    case '\'':
-                        *(string.pointer++) = '\'';
                         break;
 
                     case '\\':
