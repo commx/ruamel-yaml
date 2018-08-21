@@ -60,11 +60,7 @@ _package_data = dict(
         'Topic :: Text Processing :: Markup',
     ],
     keywords='yaml 1.2 parser round-trip preserve quotes order config',
-    wheels=dict(
-        windows='appveyor',
-        linux='libyaml-devel',
-        macos='builder@macos',
-    ),
+    wheels=dict(windows='appveyor', linux='libyaml-devel', macos='builder@macos'),
     read_the_docs='yaml',
     supported=[(2, 7), (3, 4)],  # minimum
     tox=dict(

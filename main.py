@@ -166,14 +166,14 @@ class YAML(object):
             return self._reader
         except AttributeError:
             self._reader = self.Reader(None, loader=self)
-            return self._reader  
+            return self._reader
 
     @property
     def scanner(self):
         # type: () -> Any
         try:
             return self._scanner
-        except:
+        except AttributeError:
             self._scanner = self.Scanner(loader=self)
             return self._scanner
 

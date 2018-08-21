@@ -179,6 +179,7 @@ class TestWalkTree:
     def test_basic(self):
         from ruamel.yaml.comments import CommentedMap
         from ruamel.yaml.scalarstring import walk_tree
+
         data = CommentedMap()
         data[1] = 'a'
         data[2] = 'with\nnewline\n'
@@ -197,6 +198,7 @@ class TestWalkTree:
         from ruamel.yaml.scalarstring import walk_tree, preserve_literal
         from ruamel.yaml.scalarstring import DoubleQuotedScalarString as dq
         from ruamel.yaml.scalarstring import SingleQuotedScalarString as sq
+
         data = CommentedMap()
         data[1] = 'a'
         data[2] = 'with\nnew : line\n'
