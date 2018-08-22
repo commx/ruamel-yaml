@@ -86,7 +86,7 @@ class TestPreservedScalarString:
             """
         round_trip(inp, intermediate=dict(a='ghi\njkl\n\n'))
 
-    def test_fold_string(self):
+    def Xtest_fold_string(self):
         with pytest.raises(AssertionError) as excinfo:  # NOQA
             inp = """
             a: >
@@ -95,6 +95,15 @@ class TestPreservedScalarString:
 
             """
             round_trip(inp, intermediate=dict(a='abc def\n'))
+
+    def test_fold_string(self):
+        inp = """
+        a: >
+          abc
+          def
+
+        """
+        round_trip(inp)
 
     def test_fold_string_strip(self):
         with pytest.raises(AssertionError) as excinfo:  # NOQA
@@ -105,6 +114,15 @@ class TestPreservedScalarString:
 
             """
             round_trip(inp, intermediate=dict(a='abc def'))
+
+    def test_fold_string_strip(self):
+        inp = """
+        a: >-
+          abc
+          def
+
+        """
+        round_trip(inp)
 
     def test_fold_string_keep(self):
         with pytest.raises(AssertionError) as excinfo:  # NOQA
