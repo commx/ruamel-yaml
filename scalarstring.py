@@ -13,7 +13,9 @@ __all__ = [
     'FoldedScalarString',
     'SingleQuotedScalarString',
     'DoubleQuotedScalarString',
-    'PreservedScalarString',
+    # PreservedScalarString is the old name, as it was the first to be preserved on rt, 
+    # use LiteralScalarString instead
+    'PreservedScalarString',  
 ]
 
 

@@ -22,7 +22,7 @@ import platform
 from roundtrip import round_trip, dedent, round_trip_load, round_trip_dump  # NOQA
 
 
-class TestPreservedScalarString:
+class TestLiteralScalarString:
     def test_basic_string(self):
         round_trip("""
         a: abcdefg
@@ -153,7 +153,7 @@ class TestReplace:
         """)
         data = round_trip_load(s, preserve_quotes=True)
         so = data['foo'].replace('foo', 'bar', 2)
-        assert isinstance(so, ruamel.yaml.scalarstring.PreservedScalarString)
+        assert isinstance(so, ruamel.yaml.scalarstring.LiteralScalarString)
         assert so == dedent("""
         bar
         bar

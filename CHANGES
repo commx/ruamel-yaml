@@ -4,12 +4,6 @@
   - update of C code
   - speed up of scanning (~30% depending on the input)
 
-[0, 16, 0]: 2018-08-23
-  - initial support for round-tripping folded style scalars (initially requested 
-    by `Johnathan Viduchinsky <https://bitbucket.org/johnathanvidu/>`__)
-  - update of C code
-  - speed up of scanning (~30% depending on the input)
-
 [0, 15, 60]: 2018-08-18
   - cleanup for mypy 
   - spurious print in library (reported by 
