@@ -20,10 +20,11 @@ from ruamel.yaml.compat import (utf8, builtins_module, to_str, PY2, PY3,  # NOQA
                                 MutableSequence, MutableMapping)
 from ruamel.yaml.comments import *                               # NOQA
 from ruamel.yaml.comments import (CommentedMap, CommentedOrderedMap, CommentedSet,
-                                  CommentedKeySeq, CommentedSeq, TaggedScalar, CommentedKeyMap)
-from ruamel.yaml.scalarstring import *                           # NOQA
-from ruamel.yaml.scalarstring import (PreservedScalarString, SingleQuotedScalarString,
-                                      DoubleQuotedScalarString, ScalarString)
+                                  CommentedKeySeq, CommentedSeq, TaggedScalar,
+                                  CommentedKeyMap)
+from ruamel.yaml.scalarstring import (SingleQuotedScalarString, DoubleQuotedScalarString,
+                                      LiteralScalarString, FoldedScalarString,
+                                      ScalarString,)
 from ruamel.yaml.scalarint import ScalarInt, BinaryInt, OctalInt, HexInt, HexCapsInt
 from ruamel.yaml.scalarfloat import ScalarFloat
 from ruamel.yaml.timestamp import TimeStamp
@@ -1030,9 +1031,23 @@ class RoundTripConstructor(SafeConstructor):
             )
 
         if node.style == '|' and isinstance(node.value, text_type):
-            pss = PreservedScalarString(node.value)
+            pss = LiteralScalarString(node.value)
             if node.comment and node.comment[1]:
                 pss.comment = node.comment[1][0]  # type: ignore
+            return pss
+        if node.style == '>' and isinstance(node.value, text_type):
+            fold_positions = []
+            idx = None
+            while True:
+                idx = node.value.find('\a', None if idx is None else idx + 1)
+                if idx < 0:
+                    break
+                fold_positions.append(idx - len(fold_positions))
+            pss = FoldedScalarString(node.value.replace('\a', ''))
+            if node.comment and node.comment[1]:
+                pss.comment = node.comment[1][0]  # type: ignore
+            if fold_positions:
+                pss.fold_pos = fold_positions
             return pss
         elif bool(self._preserve_quotes) and isinstance(node.value, text_type):
             if node.style == "'":

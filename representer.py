@@ -7,7 +7,8 @@ from ruamel.yaml.error import *  # NOQA
 from ruamel.yaml.nodes import *  # NOQA
 from ruamel.yaml.compat import text_type, binary_type, to_unicode, PY2, PY3, ordereddict
 from ruamel.yaml.scalarstring import (
-    PreservedScalarString,
+    LiteralScalarString,
+    FoldedScalarString,
     SingleQuotedScalarString,
     DoubleQuotedScalarString,
 )
@@ -149,7 +150,7 @@ class BaseRepresenter(object):
         if style is None:
             style = self.default_style
         comment = None
-        if style and style[0] == '|':
+        if style and style[0] in '|>':
             comment = getattr(value, 'comment', None)
             if comment:
                 comment = [None, [comment]]
@@ -667,10 +668,24 @@ class RoundTripRepresenter(SafeRepresenter):
             return self.represent_scalar(u'tag:yaml.org,2002:null', u'null')
         return self.represent_scalar(u'tag:yaml.org,2002:null', "")
 
-    def represent_preserved_scalarstring(self, data):
+    def represent_literal_scalarstring(self, data):
         # type: (Any) -> Any
         tag = None
         style = '|'
+        if PY2 and not isinstance(data, unicode):
+            data = unicode(data, 'ascii')
+        tag = u'tag:yaml.org,2002:str'
+        return self.represent_scalar(tag, data, style=style)
+
+    represent_preserved_scalarstring = represent_literal_scalarstring
+
+    def represent_folded_scalarstring(self, data):
+        # type: (Any) -> Any
+        tag = None
+        style = '>'
+        for fold_pos in reversed(getattr(data, 'fold_pos', [])):
+            if data[fold_pos] == ' ':
+                data = data[:fold_pos] + '\a' + data[fold_pos:]
         if PY2 and not isinstance(data, unicode):
             data = unicode(data, 'ascii')
         tag = u'tag:yaml.org,2002:str'
@@ -1113,7 +1128,11 @@ class RoundTripRepresenter(SafeRepresenter):
 RoundTripRepresenter.add_representer(type(None), RoundTripRepresenter.represent_none)
 
 RoundTripRepresenter.add_representer(
-    PreservedScalarString, RoundTripRepresenter.represent_preserved_scalarstring
+    LiteralScalarString, RoundTripRepresenter.represent_literal_scalarstring
+)
+
+RoundTripRepresenter.add_representer(
+    FoldedScalarString, RoundTripRepresenter.represent_folded_scalarstring
 )
 
 RoundTripRepresenter.add_representer(

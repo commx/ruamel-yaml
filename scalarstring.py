@@ -9,9 +9,11 @@ if False:  # MYPY
 
 __all__ = [
     'ScalarString',
-    'PreservedScalarString',
+    'LiteralScalarString',
+    'FoldedScalarString',
     'SingleQuotedScalarString',
     'DoubleQuotedScalarString',
+    'PreservedScalarString',
 ]
 
 
@@ -27,10 +29,23 @@ class ScalarString(text_type):
         return type(self)((text_type.replace(self, old, new, maxreplace)))
 
 
-class PreservedScalarString(ScalarString):
+class LiteralScalarString(ScalarString):
     __slots__ = 'comment'  # the comment after the | on the first line
 
     style = '|'
+
+    def __new__(cls, value):
+        # type: (Text) -> Any
+        return ScalarString.__new__(cls, value)
+
+
+PreservedScalarString = LiteralScalarString
+
+
+class FoldedScalarString(ScalarString):
+    __slots__ = ('fold_pos', 'comment')  # the comment after the > on the first line
+
+    style = '>'
 
     def __new__(cls, value):
         # type: (Text) -> Any
@@ -59,11 +74,11 @@ class DoubleQuotedScalarString(ScalarString):
 
 def preserve_literal(s):
     # type: (Text) -> Text
-    return PreservedScalarString(s.replace('\r\n', '\n').replace('\r', '\n'))
+    return LiteralScalarString(s.replace('\r\n', '\n').replace('\r', '\n'))
 
 
 def walk_tree(base, map=None):
-    # type: (Any) -> None
+    # type: (Any, Any) -> None
     """
     the routine here walks over a simple yaml tree (recursing in
     dict values and list items) and converts strings that
@@ -95,7 +110,7 @@ def walk_tree(base, map=None):
         for idx, elem in enumerate(base):
             if isinstance(elem, string_types):
                 for ch in map:
-                    if ch in elem:
+                    if ch in elem:  # type: ignore
                         base[idx] = map[ch](elem)
                         break
             else:

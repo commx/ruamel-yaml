@@ -1365,7 +1365,7 @@ class Emitter(object):
             if end < len(text):
                 ch = text[end]
             if breaks:
-                if ch is None or ch not in u'\n\x85\u2028\u2029':
+                if ch is None or ch not in u'\n\x85\u2028\u2029\a':
                     if (
                         not leading_space
                         and ch is not None
@@ -1394,12 +1394,16 @@ class Emitter(object):
                         self.stream.write(data)
                     start = end
             else:
-                if ch is None or ch in u' \n\x85\u2028\u2029':
+                if ch is None or ch in u' \n\x85\u2028\u2029\a':
                     data = text[start:end]
                     self.column += len(data)
                     if bool(self.encoding):
                         data = data.encode(self.encoding)
                     self.stream.write(data)
+                    if ch == u'\a':
+                        self.write_line_break()
+                        self.write_indent()
+                        end += 2  # \a and the space that is inserted on the fold
                     if ch is None:
                         self.write_line_break()
                     start = end

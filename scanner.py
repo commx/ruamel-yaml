@@ -145,7 +145,7 @@ class Scanner(object):
     def reader(self):
         # type: () -> Any
         try:
-            return self._scanner_reader
+            return self._scanner_reader  # type: ignore
         except AttributeError:
             if hasattr(self.loader, 'typ'):
                 self._scanner_reader = self.loader.reader
@@ -1172,6 +1172,8 @@ class Scanner(object):
                 #
                 # This is the folding according to the specification:
 
+                if folded and line_break == '\n':
+                    chunks.append('\a')
                 if (
                     folded
                     and line_break == '\n'
