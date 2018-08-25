@@ -18,7 +18,7 @@ from ruamel.yaml.nodes import *  # NOQA
 
 from ruamel.yaml.loader import BaseLoader, SafeLoader, Loader, RoundTripLoader  # NOQA
 from ruamel.yaml.dumper import BaseDumper, SafeDumper, Dumper, RoundTripDumper  # NOQA
-from ruamel.yaml.compat import StringIO, BytesIO, with_metaclass, PY3
+from ruamel.yaml.compat import StringIO, BytesIO, with_metaclass, PY3, nprint
 from ruamel.yaml.resolver import VersionedResolver, Resolver  # NOQA
 from ruamel.yaml.representer import (
     BaseRepresenter,
@@ -163,7 +163,7 @@ class YAML(object):
     def reader(self):
         # type: () -> Any
         try:
-            return self._reader
+            return self._reader  # type: ignore
         except AttributeError:
             self._reader = self.Reader(None, loader=self)
             return self._reader
@@ -172,7 +172,7 @@ class YAML(object):
     def scanner(self):
         # type: () -> Any
         try:
-            return self._scanner
+            return self._scanner  # type: ignore
         except AttributeError:
             self._scanner = self.Scanner(loader=self)
             return self._scanner
@@ -323,11 +323,11 @@ class YAML(object):
         finally:
             parser.dispose()
             try:
-                self._reader.reset_reader()  # type: ignore
+                self._reader.reset_reader()
             except AttributeError:
                 pass
             try:
-                self._scanner.reset_scanner()  # type: ignore
+                self._scanner.reset_scanner()
             except AttributeError:
                 pass
 
@@ -355,11 +355,11 @@ class YAML(object):
         finally:
             parser.dispose()
             try:
-                self._reader.reset_reader()  # type: ignore
+                self._reader.reset_reader()
             except AttributeError:
                 pass
             try:
-                self._scanner.reset_scanner()  # type: ignore
+                self._scanner.reset_scanner()
             except AttributeError:
                 pass
 
@@ -653,11 +653,11 @@ class YAML(object):
         finally:
             parser.dispose()
             try:
-                self._reader.reset_reader()  # type: ignore
+                self._reader.reset_reader()
             except AttributeError:
                 pass
             try:
-                self._scanner.reset_scanner()  # type: ignore
+                self._scanner.reset_scanner()
             except AttributeError:
                 pass
 

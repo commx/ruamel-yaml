@@ -1,8 +1,11 @@
 # # header
 # coding: utf-8
 
+from __future__ import unicode_literals
+
 if False:  # MYPY
-    from typing import Any, Dict, Optional, List  # NOQA
+    from typing import Text, Any, Dict, Optional, List  # NOQA
+    from .error import StreamMark  # NOQA
 
 SHOWLINES = True
 
@@ -11,7 +14,7 @@ class Token(object):
     __slots__ = 'start_mark', 'end_mark', '_comment'
 
     def __init__(self, start_mark, end_mark):
-        # type: (Any, Any) -> None
+        # type: (StreamMark, StreamMark) -> None
         self.start_mark = start_mark
         self.end_mark = end_mark
 
@@ -21,17 +24,17 @@ class Token(object):
         #               hasattr('self', key)]
         attributes = [key for key in self.__slots__ if not key.endswith('_mark')]
         attributes.sort()
-        arguments = u', '.join([u'%s=%r' % (key, getattr(self, key)) for key in attributes])
+        arguments = ', '.join(['%s=%r' % (key, getattr(self, key)) for key in attributes])
         if SHOWLINES:
             try:
-                arguments += u', line: ' + str(self.start_mark.line)
+                arguments += ', line: ' + str(self.start_mark.line)
             except:  # NOQA
                 pass
         try:
-            arguments += u', comment: ' + str(self._comment)
+            arguments += ', comment: ' + str(self._comment)
         except:  # NOQA
             pass
-        return u'{}({})'.format(self.__class__.__name__, arguments)
+        return '{}({})'.format(self.__class__.__name__, arguments)
 
     def add_post_comment(self, comment):
         # type: (Any) -> None
@@ -259,10 +262,10 @@ class CommentToken(Token):
 
     def __repr__(self):
         # type: () -> Any
-        v = u'{!r}'.format(self.value)
+        v = '{!r}'.format(self.value)
         if SHOWLINES:
             try:
-                v += u', line: ' + str(self.start_mark.line)
+                v += ', line: ' + str(self.start_mark.line)
             except:  # NOQA
                 pass
         return 'CommentToken({})'.format(v)

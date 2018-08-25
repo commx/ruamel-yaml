@@ -1031,24 +1031,24 @@ class RoundTripConstructor(SafeConstructor):
             )
 
         if node.style == '|' and isinstance(node.value, text_type):
-            pss = LiteralScalarString(node.value)
+            lss = LiteralScalarString(node.value)
             if node.comment and node.comment[1]:
-                pss.comment = node.comment[1][0]  # type: ignore
-            return pss
+                lss.comment = node.comment[1][0]  # type: ignore
+            return lss
         if node.style == '>' and isinstance(node.value, text_type):
-            fold_positions = []
-            idx = None
+            fold_positions = []  # type: List[int]
+            idx = -1
             while True:
-                idx = node.value.find('\a', None if idx is None else idx + 1)
+                idx = node.value.find('\a', idx + 1)
                 if idx < 0:
                     break
                 fold_positions.append(idx - len(fold_positions))
-            pss = FoldedScalarString(node.value.replace('\a', ''))
+            fss = FoldedScalarString(node.value.replace('\a', ''))
             if node.comment and node.comment[1]:
-                pss.comment = node.comment[1][0]  # type: ignore
+                fss.comment = node.comment[1][0]  # type: ignore
             if fold_positions:
-                pss.fold_pos = fold_positions
-            return pss
+                fss.fold_pos = fold_positions  # type: ignore
+            return fss
         elif bool(self._preserve_quotes) and isinstance(node.value, text_type):
             if node.style == "'":
                 return SingleQuotedScalarString(node.value)
