@@ -29,7 +29,6 @@ class TestNewAPI:
         with pytest.raises(DuplicateKeyError):
             yaml.load('{a: 1, a: 2}')
 
-    # @pytest.mark.xfail(strict=True)
     def test_duplicate_keys_02(self):
         from ruamel.yaml import YAML
         from ruamel.yaml.constructor import DuplicateKeyError

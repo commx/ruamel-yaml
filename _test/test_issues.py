@@ -305,5 +305,3 @@ class TestIssues:
 
         yaml = ruamel.yaml.YAML(typ='safe')
         yaml.load('phone: 0123456789')
-
-    # @pytest.mark.xfail(strict=True)

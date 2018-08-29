@@ -195,7 +195,7 @@ def YAML(**kw):
         def round_trip(self, stream, **kw):
             from ruamel.yaml.compat import StringIO, BytesIO  # NOQA
 
-            assert isinstance(stream, ruamel.yaml.compat.text_type)
+            assert isinstance(stream, (ruamel.yaml.compat.text_type, str))
             lkw = kw.copy()
             if stream and stream[0] == '\n':
                 stream = stream[1:]
@@ -204,6 +204,23 @@ def YAML(**kw):
             outp = lkw.pop('outp', stream)
             lkw['stream'] = st = StringIO()
             ruamel.yaml.YAML.dump(self, data, **lkw)
+            res = st.getvalue()
+            if res != outp:
+                diff(outp, res, 'input string')
+            assert res == outp
+
+        def round_trip_all(self, stream, **kw):
+            from ruamel.yaml.compat import StringIO, BytesIO  # NOQA
+
+            assert isinstance(stream, (ruamel.yaml.compat.text_type, str))
+            lkw = kw.copy()
+            if stream and stream[0] == '\n':
+                stream = stream[1:]
+            stream = textwrap.dedent(stream)
+            data = list(ruamel.yaml.YAML.load_all(self, stream))
+            outp = lkw.pop('outp', stream)
+            lkw['stream'] = st = StringIO()
+            ruamel.yaml.YAML.dump_all(self, data, **lkw)
             res = st.getvalue()
             if res != outp:
                 diff(outp, res, 'input string')

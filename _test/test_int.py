@@ -10,7 +10,6 @@ from roundtrip import round_trip, dedent, round_trip_load, round_trip_dump
 
 
 class TestBinHexOct:
-    # @pytest.mark.xfail(strict=True)
     def test_round_trip_hex_oct(self):
         round_trip("""\
         - 42

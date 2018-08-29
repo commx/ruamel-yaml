@@ -97,7 +97,6 @@ class TestYAML:
         c: null
         """)
 
-    # @pytest.mark.xfail
     # ordering is not preserved in a set
     def test_set_compact(self):
         # this format is read and also should be written by default

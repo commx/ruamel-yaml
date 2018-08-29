@@ -89,6 +89,9 @@ class TestContextManager:
         print(err)
         assert out == multi_doc
 
+    # input is not as simple with a context manager
+    # you need to indicate what you expect hence load and load_all
+
     # @pytest.mark.xfail(strict=True)
     # def test_single_load(self):
     #     from ruamel.yaml import YAML

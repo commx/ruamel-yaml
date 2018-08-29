@@ -49,7 +49,6 @@ class TestFloat:
         for d in data:
             assert -0.00001 < d < 0.00001
 
-    # @pytest.mark.xfail(strict=True)
     def test_round_trip_zeros_1(self):
         # not sure if this should be supported, but it is
         data = round_trip("""\
@@ -79,7 +78,6 @@ class TestFloat:
         for d in data:
             assert 41.99e56 < d < 42.01e56
 
-    # @pytest.mark.xfail(strict=True)
     def test_round_trip_exp_00f(self):
         data = round_trip("""\
         - 42.E56

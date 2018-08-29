@@ -21,9 +21,6 @@ def compare_eol(data, s):
     assert round_trip_dump(data).replace('\n', '|\n') == ds
 
 
-# @pytest.mark.xfail
-
-
 class TestCommentsManipulation:
 
     # list
@@ -244,7 +241,6 @@ class TestCommentsManipulation:
             """
         compare(data, exp)
 
-    # @pytest.mark.xfail
     def test_before_top_map_rt(self):
         data = load("""
         a: 1
