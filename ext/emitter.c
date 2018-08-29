@@ -548,7 +548,7 @@ yaml_emitter_emit_stream_start(yaml_emitter_t *emitter,
  */
 
 /* assume 2 digits + . + 2 digits max and NUL*/
-#define VERSION_BUF_LEN 6
+#define VERSION_BUF_LEN 50
 
 static int
 yaml_emitter_emit_document_start(yaml_emitter_t *emitter,
@@ -609,8 +609,8 @@ yaml_emitter_emit_document_start(yaml_emitter_t *emitter,
             if (!yaml_emitter_write_indicator(emitter, "%YAML", 1, 0, 0))
                 return 0;
             /* if (!yaml_emitter_write_indicator(emitter, "1.1", 1, 0, 0)) */
-	    vdp = (yaml_version_directive_t) *event->data.document_start.version_directive;
-            snprintf(version_buf, VERSION_BUF_LEN, "%d.%d", vdp.major, vdp.minor);
+	    vdp = *event->data.document_start.version_directive;
+            sprintf(version_buf, "%d.%d", vdp.major, vdp.minor);
             if (!yaml_emitter_write_indicator(emitter, version_buf, 1, 0, 0))
                 return 0;
             if (!yaml_emitter_write_indent(emitter))
