@@ -547,10 +547,16 @@ yaml_emitter_emit_stream_start(yaml_emitter_t *emitter,
  * Expect DOCUMENT-START or STREAM-END.
  */
 
+/* assume 2 digits + . + 2 digits max and NUL*/
+#define VERSION_BUF_LEN 6
+
 static int
 yaml_emitter_emit_document_start(yaml_emitter_t *emitter,
         yaml_event_t *event, int first)
 {
+    char version_buf[VERSION_BUF_LEN];
+    yaml_version_directive_t vdp;
+
     if (event->type == YAML_DOCUMENT_START_EVENT)
     {
         yaml_tag_directive_t default_tag_directives[] = {
@@ -602,7 +608,10 @@ yaml_emitter_emit_document_start(yaml_emitter_t *emitter,
             implicit = 0;
             if (!yaml_emitter_write_indicator(emitter, "%YAML", 1, 0, 0))
                 return 0;
-            if (!yaml_emitter_write_indicator(emitter, "1.1", 1, 0, 0))
+            /* if (!yaml_emitter_write_indicator(emitter, "1.1", 1, 0, 0)) */
+	    vdp = (yaml_version_directive_t) *event->data.document_start.version_directive;
+            snprintf(version_buf, VERSION_BUF_LEN, "%d.%d", vdp.major, vdp.minor);
+            if (!yaml_emitter_write_indicator(emitter, version_buf, 1, 0, 0))
                 return 0;
             if (!yaml_emitter_write_indent(emitter))
                 return 0;
@@ -1333,7 +1342,8 @@ static int
 yaml_emitter_analyze_version_directive(yaml_emitter_t *emitter,
         yaml_version_directive_t version_directive)
 {
-    if (version_directive.major != 1 || version_directive.minor != 1) {
+    if (version_directive.major != 1 || (
+           version_directive.minor != 1 && version_directive.minor != 2) ) {
         return yaml_emitter_set_emitter_error(emitter,
                 "incompatible %YAML directive");
     }

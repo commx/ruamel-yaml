@@ -87,7 +87,7 @@ def test_example_2_7():
     - Mark McGwire
     - Sammy Sosa
     - Ken Griffey
-    
+
     # Team ranking
     ---
     - Chicago Cubs
@@ -154,7 +154,7 @@ def test_example_2_11():
       - Chicago cubs
     :
       - 2001-07-23
-    
+
     ? [ New York Yankees,
         Atlanta Braves ]
     : [ 2001-07-02, 2001-08-12,
@@ -193,7 +193,7 @@ def test_example_2_13():
 def test_example_2_14():
     yaml = YAML()
     yaml.explicit_start = True
-    yam.indent(root_scalar=2)  # needs to be added
+    yaml.indent(root_scalar=2)  # needs to be added
     yaml.round_trip("""
     --- >
       Mark McGwire's
@@ -209,10 +209,10 @@ def test_example_2_15():
     >
      Sammy Sosa completed another
      fine season with great stats.
-    
+
        63 Home Runs
        0.288 Batting Average
-    
+
      What a year!
     """)
 
@@ -241,7 +241,7 @@ def test_example_2_17():
     unicode: "Sosa did fine.\u263A"
     control: "\b1998\t1999\t2000\n"
     hex esc: "\x0d\x0a is \r\n"
-    
+
     single: '"Howdy!" he cried.'
     quoted: ' # Not a ''comment''.'
     tie-fighter: '|\-*-/|'
@@ -255,7 +255,7 @@ def test_example_2_18():
     plain:
       This unquoted scalar
       spans many lines.
-    
+
     quoted: "So does this
       quoted scalar.\n"
     """)

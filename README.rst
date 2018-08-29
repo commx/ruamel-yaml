@@ -4,8 +4,8 @@ ruamel.yaml
 
 ``ruamel.yaml`` is a YAML 1.2 loader/dumper package for Python.
 
-:version:       0.15.61
-:updated:       2018-08-23
+:version:       0.15.62
+:updated:       2018-08-29
 :documentation: http://yaml.readthedocs.io
 :repository:    https://bitbucket.org/ruamel/
 :pypi:          https://pypi.org/project/ruamel.yaml/
@@ -53,6 +53,11 @@ ChangeLog
 =========
 
 .. should insert NEXT: at the beginning of line for next key (with empty line)
+
+0.15.62 (2018-08-29):
+  - C based reader/scanner & emitter now allow setting of 1.2 as YAML version.
+    ** The loading/dumping is still YAML 1.1 code**, so use the common subset of
+    YAML 1.2 and 1.1 (reported by `Ge Yang <https://bitbucket.org/yangge/>`__)
 
 0.15.61 (2018-08-23):
   - support for round-tripping folded style scalars (initially requested 
