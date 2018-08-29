@@ -4,7 +4,7 @@ ruamel.yaml
 
 ``ruamel.yaml`` is a YAML 1.2 loader/dumper package for Python.
 
-:version:       0.15.62
+:version:       0.15.63
 :updated:       2018-08-29
 :documentation: http://yaml.readthedocs.io
 :repository:    https://bitbucket.org/ruamel/
@@ -53,6 +53,9 @@ ChangeLog
 =========
 
 .. should insert NEXT: at the beginning of line for next key (with empty line)
+
+0.15.63 (2018-08-29):
+  - small fix only necessary for Windows users that don't use wheels.
 
 0.15.62 (2018-08-29):
   - C based reader/scanner & emitter now allow setting of 1.2 as YAML version.
