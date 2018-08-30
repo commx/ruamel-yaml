@@ -111,9 +111,10 @@ class Emitter(object):
         block_seq_indent=None,
         top_level_colon_align=None,
         prefix_colon=None,
+        brace_single_entry_mapping_in_flow_sequence=None,
         dumper=None,
     ):
-        # type: (StreamType, Any, Optional[int], Optional[int], Optional[bool], Any, Optional[int], Optional[bool], Any, Any) -> None  # NOQA
+        # type: (StreamType, Any, Optional[int], Optional[int], Optional[bool], Any, Optional[int], Optional[bool], Any, Optional[bool], Any) -> None  # NOQA
         self.dumper = dumper
         if self.dumper is not None and getattr(self.dumper, '_emitter', None) is None:
             self.dumper._emitter = self
@@ -136,8 +137,9 @@ class Emitter(object):
         self.indents = Indents()
         self.indent = None  # type: Optional[int]
 
-        # Flow level.
-        self.flow_level = 0
+        # flow_context is an expanding/shrinking list consisting of '{' and '['
+        # for each unclosed flow context. If empty list that means block context
+        self.flow_context = []  # type: List[Text]
 
         # Contexts.
         self.root_context = False
@@ -162,6 +164,10 @@ class Emitter(object):
         # colon handling
         self.colon = u':'
         self.prefixed_colon = self.colon if prefix_colon is None else prefix_colon + self.colon
+        # single entry mappings in flow sequence
+        self.brace_single_entry_mapping_in_flow_sequence = (
+            brace_single_entry_mapping_in_flow_sequence
+        )  # NOQA
 
         # Formatting details.
         self.canonical = canonical
@@ -221,6 +227,11 @@ class Emitter(object):
             return self.dumper._serializer
         except AttributeError:
             return self  # cyaml
+
+    @property
+    def flow_level(self):
+        # type: () -> int
+        return len(self.flow_context)
 
     def dispose(self):
         # type: () -> None
@@ -421,7 +432,7 @@ class Emitter(object):
                     or self.event.flow_style
                     or self.check_empty_mapping()
                 ):
-                    self.expect_flow_mapping()
+                    self.expect_flow_mapping(single=self.event.nr_items == 1)
                 else:
                     self.expect_block_mapping()
         else:
@@ -448,14 +459,15 @@ class Emitter(object):
         ind = self.indents.seq_flow_align(self.best_sequence_indent, self.column)
         self.write_indicator(u' ' * ind + u'[', True, whitespace=True)
         self.increase_indent(flow=True, sequence=True)
-        self.flow_level += 1
+        self.flow_context.append('[')
         self.state = self.expect_first_flow_sequence_item
 
     def expect_first_flow_sequence_item(self):
         # type: () -> None
         if isinstance(self.event, SequenceEndEvent):
             self.indent = self.indents.pop()
-            self.flow_level -= 1
+            popped = self.flow_context.pop()
+            assert popped == '['
             self.write_indicator(u']', False)
             if self.event.comment and self.event.comment[0]:
                 # eol comment on empty flow sequence
@@ -473,7 +485,8 @@ class Emitter(object):
         # type: () -> None
         if isinstance(self.event, SequenceEndEvent):
             self.indent = self.indents.pop()
-            self.flow_level -= 1
+            popped = self.flow_context.pop()
+            assert popped == '['
             if self.canonical:
                 self.write_indicator(u',', False)
                 self.write_indent()
@@ -493,11 +506,21 @@ class Emitter(object):
 
     # Flow mapping handlers.
 
-    def expect_flow_mapping(self):
-        # type: () -> None
+    def expect_flow_mapping(self, single=False):
+        # type: (Optional[bool]) -> None
         ind = self.indents.seq_flow_align(self.best_sequence_indent, self.column)
-        self.write_indicator(u' ' * ind + u'{', True, whitespace=True)
-        self.flow_level += 1
+        map_init = u'{'
+        if (
+            single
+            and self.flow_level
+            and self.flow_context[-1] == '['
+            and not self.canonical
+            and not self.brace_single_entry_mapping_in_flow_sequence
+        ):
+            # single map item with flow context no curly braces necessary
+            map_init = u''
+        self.write_indicator(u' ' * ind + map_init, True, whitespace=True)
+        self.flow_context.append(map_init)
         self.increase_indent(flow=True, sequence=False)
         self.state = self.expect_first_flow_mapping_key
 
@@ -505,7 +528,8 @@ class Emitter(object):
         # type: () -> None
         if isinstance(self.event, MappingEndEvent):
             self.indent = self.indents.pop()
-            self.flow_level -= 1
+            popped = self.flow_context.pop()
+            assert popped == '{'  # empty flow mapping
             self.write_indicator(u'}', False)
             if self.event.comment and self.event.comment[0]:
                 # eol comment on empty mapping
@@ -528,11 +552,13 @@ class Emitter(object):
             # if self.event.comment and self.event.comment[1]:
             #     self.write_pre_comment(self.event)
             self.indent = self.indents.pop()
-            self.flow_level -= 1
+            popped = self.flow_context.pop()
+            assert popped in [u'{', u'']
             if self.canonical:
                 self.write_indicator(u',', False)
                 self.write_indent()
-            self.write_indicator(u'}', False)
+            if popped != u'':
+                self.write_indicator(u'}', False)
             if self.event.comment and self.event.comment[0]:
                 # eol comment on flow mapping, never reached on empty mappings
                 self.write_post_comment(self.event)

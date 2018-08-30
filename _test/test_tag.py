@@ -2,7 +2,7 @@
 
 import pytest  # NOQA
 
-from roundtrip import round_trip, round_trip_load
+from roundtrip import round_trip, round_trip_load, YAML
 
 
 def register_xxx(**kw):
@@ -121,13 +121,23 @@ class TestImplicitTaggedNodes:
         round_trip("""\
         - !Scalar abcdefg
         """)
-        
+
     def test_mapping(self):
         round_trip("""\
         - !Mapping {a: 1, b: 2}
         """)
 
     def test_sequence(self):
-        x = round_trip("""\
+        yaml = YAML()
+        yaml.brace_single_entry_mapping_in_flow_sequence = True
+        yaml.mapping_value_align = True
+        yaml.round_trip("""
         - !Sequence [a, {b: 1}, {c: {d: 3}}]
+        """)
+
+    def test_sequence2(self):
+        yaml = YAML()
+        yaml.mapping_value_align = True
+        yaml.round_trip("""
+        - !Sequence [a, b: 1, c: {d: 3}]
         """)

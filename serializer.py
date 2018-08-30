@@ -225,6 +225,7 @@ class Serializer(object):
                         implicit,
                         flow_style=node.flow_style,
                         comment=node.comment,
+                        nr_items=len(node.value),
                     )
                 )
                 for key, value in node.value:

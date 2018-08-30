@@ -1562,15 +1562,15 @@ class RoundTripConstructor(SafeConstructor):
                 yield data2
                 return
             elif isinstance(node, SequenceNode):
-                data = CommentedSeq()
-                data._yaml_set_line_col(node.start_mark.line, node.start_mark.column)
+                data3 = CommentedSeq()
+                data3._yaml_set_line_col(node.start_mark.line, node.start_mark.column)
                 if node.flow_style is True:
-                    data.fa.set_flow_style()
+                    data3.fa.set_flow_style()
                 elif node.flow_style is False:
-                    data.fa.set_block_style()
-                data.yaml_set_tag(node.tag)
-                yield data
-                data.extend(self.construct_sequence(node))
+                    data3.fa.set_block_style()
+                data3.yaml_set_tag(node.tag)
+                yield data3
+                data3.extend(self.construct_sequence(node))
                 return
         except:  # NOQA
             pass

@@ -158,6 +158,8 @@ class YAML(object):
         self.tags = None
         self.default_style = None
         self.top_level_block_style_scalar_no_indent_error_1_1 = False
+        # [a, b: 1, c: {d: 2}]  vs. [a, {b: 1}, {c: {d: 2}}]
+        self.brace_single_entry_mapping_in_flow_sequence = False
 
     @property
     def reader(self):
@@ -239,6 +241,7 @@ class YAML(object):
                     allow_unicode=self.allow_unicode,
                     line_break=self.line_break,
                     prefix_colon=self.prefix_colon,
+                    brace_single_entry_mapping_in_flow_sequence=self.brace_single_entry_mapping_in_flow_sequence,  # NOQA
                     dumper=self,
                 )
                 setattr(self, attr, _emitter)

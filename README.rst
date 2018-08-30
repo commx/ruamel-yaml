@@ -4,8 +4,8 @@ ruamel.yaml
 
 ``ruamel.yaml`` is a YAML 1.2 loader/dumper package for Python.
 
-:version:       0.15.63
-:updated:       2018-08-29
+:version:       0.15.64
+:updated:       2018-08-30
 :documentation: http://yaml.readthedocs.io
 :repository:    https://bitbucket.org/ruamel/
 :pypi:          https://pypi.org/project/ruamel.yaml/
@@ -54,8 +54,13 @@ ChangeLog
 
 .. should insert NEXT: at the beginning of line for next key (with empty line)
 
-NEXT:
+0.15.64 (2018-08-30):
   - support round-trip of tagged sequences: ``!Arg [a, {b: 1}]``
+  - single entry mappings in flow sequences now written by default without quotes
+    set ``yaml.brace_single_entry_mapping_in_flow_sequence=True`` to force
+    getting ``[a, {b: 1}, {c: {d: 2}}]`` instead of the default ``[a, b: 1, c: {d: 2}]``
+  - fix issue when roundtripping floats starting with a dot such as ``.5``
+    (reported by `Harrison Gregg <https://bitbucket.org/HarrisonGregg/>`__)
 
 0.15.63 (2018-08-29):
   - small fix only necessary for Windows users that don't use wheels.
