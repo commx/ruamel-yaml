@@ -788,13 +788,13 @@ class RoundTripRepresenter(SafeRepresenter):
         elif data._exp is None:
             # no exponent, "normal" dot
             prec = data._prec
-            if prec < 1:
-                prec = 1
             ms = data._m_sign if data._m_sign else ""
             # -1 for the dot
             value = u'{}{:0{}.{}f}'.format(
                 ms, abs(data), data._width - len(ms), data._width - prec - 1
             )
+            if prec == 0 or (prec == 1 and ms != ""):
+                value = value.replace(u'0.', u'.')
             while len(value) < data._width:
                 value += u'0'
         else:
