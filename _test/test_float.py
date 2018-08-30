@@ -21,6 +21,7 @@ class TestFloat:
         - 42.
         - -42.
         - +42.
+        - .5
         """)
         print(data)
         assert 0.999 < data[0] < 1.001
@@ -32,6 +33,7 @@ class TestFloat:
         assert 41.999 < data[6] < 42.001
         assert 41.999 < -data[7] < 42.001
         assert 41.999 < data[8] < 42.001
+        assert .49 < data[9] < .51
 
     def test_round_trip_zeros_0(self):
         data = round_trip("""\
