@@ -114,3 +114,20 @@ class TestIssue201:
         round_trip_load("""
         s: !!python/%75nicode 'abc'
         """)
+
+
+class TestImplicitTaggedNodes:
+    def test_scalar(self):
+        round_trip("""\
+        - !Scalar abcdefg
+        """)
+        
+    def test_mapping(self):
+        round_trip("""\
+        - !Mapping {a: 1, b: 2}
+        """)
+
+    def test_sequence(self):
+        x = round_trip("""\
+        - !Sequence [a, {b: 1}, {c: {d: 3}}]
+        """)

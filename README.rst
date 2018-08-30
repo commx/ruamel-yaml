@@ -54,6 +54,9 @@ ChangeLog
 
 .. should insert NEXT: at the beginning of line for next key (with empty line)
 
+NEXT:
+  - support round-trip of tagged sequences: ``!Arg [a, {b: 1}]``
+
 0.15.63 (2018-08-29):
   - small fix only necessary for Windows users that don't use wheels.
 

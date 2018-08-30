@@ -1103,6 +1103,21 @@ class RoundTripRepresenter(SafeRepresenter):
             tag = u'tag:yaml.org,2002:map'
         return self.represent_mapping(tag, data)
 
+    def represent_list(self, data):
+        # type: (Any) -> Any
+        try:
+            t = data.tag.value
+        except AttributeError:
+            t = None
+        if t:
+            if t.startswith('!!'):
+                tag = 'tag:yaml.org,2002:' + t[2:]
+            else:
+                tag = t
+        else:
+            tag = u'tag:yaml.org,2002:seq'
+        return self.represent_sequence(tag, data)
+
     def represent_datetime(self, data):
         # type: (Any) -> Any
         inter = 'T' if data._yaml['t'] else ' '
