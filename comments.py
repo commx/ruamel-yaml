@@ -496,10 +496,14 @@ class CommentedSeq(MutableSliceableSequence, CommentedBase):
         # type: (Any) -> Any
         return self._lst + other
 
-    def sort(self):
-        # type: () -> None
-        tmp_lst = sorted(zip(self._lst, range(len(self._lst))))
-        self._lst = [x[0] for x in tmp_lst]
+    def sort(self, key=None, reverse=False):
+        # type: (Any, bool) -> None
+        if key is None:
+            tmp_lst = sorted(zip(self._lst, range(len(self._lst))), reverse=reverse)
+            self._lst = [x[0] for x in tmp_lst]
+        else:
+            tmp_lst = sorted(zip(map(key, self._lst), range(len(self._lst))), reverse=reverse)
+            self._lst = [self._lst[x[1]] for x in tmp_lst]
         itm = self.ca.items
         self.ca._items = {}
         for idx, x in enumerate(tmp_lst):

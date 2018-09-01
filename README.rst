@@ -55,6 +55,7 @@ ChangeLog
 .. should insert NEXT: at the beginning of line for next key (with empty line)
 
 NEXT:
+  - added ``key`` and ``reverse`` parameter (suggested by Jannik Klemm via email)
   - indent root level literal scalars that have directive or document end markers
     at the beginning of a line
 

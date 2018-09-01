@@ -292,6 +292,81 @@ class TestIssues:
         """)
         assert buf.getvalue() == exp
 
+    def test_issue_221_sort_reverse(self):
+        from ruamel.yaml import YAML
+        from ruamel.yaml.compat import StringIO
+
+        yaml = YAML()
+        inp = dedent("""\
+        - d
+        - a  # 1
+        - c  # 3
+        - e  # 5
+        - b  # 2
+        """)
+        a = yaml.load(dedent(inp))
+        a.sort(reverse=True)
+        buf = StringIO()
+        yaml.dump(a, buf)
+        exp = dedent("""\
+        - e  # 5
+        - d
+        - c  # 3
+        - b  # 2
+        - a  # 1
+        """)
+        assert buf.getvalue() == exp
+
+    def test_issue_221_sort_key(self):
+        from ruamel.yaml import YAML
+        from ruamel.yaml.compat import StringIO
+
+        yaml = YAML()
+        inp = dedent("""\
+        - four
+        - One    # 1
+        - Three  # 3
+        - five   # 5
+        - two    # 2
+        """)
+        a = yaml.load(dedent(inp))
+        a.sort(key=str.lower)
+        buf = StringIO()
+        yaml.dump(a, buf)
+        exp = dedent("""\
+        - five   # 5
+        - four
+        - One    # 1
+        - Three  # 3
+        - two    # 2
+        """)
+        assert buf.getvalue() == exp
+
+    def test_issue_221_sort_key_reverse(self):
+        from ruamel.yaml import YAML
+        from ruamel.yaml.compat import StringIO
+
+        yaml = YAML()
+        inp = dedent("""\
+        - four
+        - One    # 1
+        - Three  # 3
+        - five   # 5
+        - two    # 2
+        """)
+        a = yaml.load(dedent(inp))
+        a.sort(key=str.lower, reverse=True)
+        buf = StringIO()
+        yaml.dump(a, buf)
+        exp = dedent("""\
+        - two    # 2
+        - Three  # 3
+        - One    # 1
+        - four
+        - five   # 5
+        """)
+        assert buf.getvalue() == exp
+
     def test_issue_222(self):
         import ruamel.yaml
         from ruamel.yaml.compat import StringIO

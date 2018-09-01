@@ -1366,7 +1366,7 @@ class Emitter(object):
     def determine_block_hints(self, text):
         # type: (Any) -> Any
         indent = 0
-        indicator = ''
+        indicator = u''
         hints = u''
         if text:
             if text[0] in u' \n\x85\u2028\u2029':
