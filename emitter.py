@@ -517,7 +517,7 @@ class Emitter(object):
             and not self.canonical
             and not self.brace_single_entry_mapping_in_flow_sequence
         ):
-            # single map item with flow context no curly braces necessary
+            # single map item with flow context, no curly braces necessary
             map_init = u''
         self.write_indicator(u' ' * ind + map_init, True, whitespace=True)
         self.flow_context.append(map_init)
@@ -1365,21 +1365,42 @@ class Emitter(object):
 
     def determine_block_hints(self, text):
         # type: (Any) -> Any
-        hints = u""
+        indent = 0
+        indicator = ''
+        hints = u''
         if text:
-            if not self.root_context and text[0] in u' \n\x85\u2028\u2029':
-                hints += text_type(self.best_sequence_indent)
+            if text[0] in u' \n\x85\u2028\u2029':
+                indent = self.best_sequence_indent
+                hints += text_type(indent)
+            elif self.root_context:
+                for end in ['\n---', '\n...']:
+                    pos = 0
+                    while True:
+                        pos = text.find(end, pos)
+                        if pos == -1:
+                            break
+                        try:
+                            if text[pos + 4] in ' \r\n':
+                                break
+                        except IndexError:
+                            pass
+                        pos += 1
+                    if pos > -1:
+                        break
+                if pos > 0:
+                    indent = self.best_sequence_indent
             if text[-1] not in u'\n\x85\u2028\u2029':
-                hints += u'-'
+                indicator = u'-'
             elif len(text) == 1 or text[-2] in u'\n\x85\u2028\u2029':
-                hints += u'+'
-        return hints
+                indicator = u'+'
+        hints += indicator
+        return hints, indent, indicator
 
     def write_folded(self, text):
         # type: (Any) -> None
-        hints = self.determine_block_hints(text)
+        hints, _indent, _indicator = self.determine_block_hints(text)
         self.write_indicator(u'>' + hints, True)
-        if hints[-1:] == u'+':
+        if _indicator == u'+':
             self.open_ended = True
         self.write_line_break()
         leading_space = True
@@ -1440,7 +1461,7 @@ class Emitter(object):
 
     def write_literal(self, text, comment=None):
         # type: (Any, Any) -> None
-        hints = self.determine_block_hints(text)
+        hints, _indent, _indicator = self.determine_block_hints(text)
         self.write_indicator(u'|' + hints, True)
         try:
             comment = comment[1][0]
@@ -1448,7 +1469,7 @@ class Emitter(object):
                 self.stream.write(comment)
         except (TypeError, IndexError):
             pass
-        if hints[-1:] == u'+':
+        if _indicator == u'+':
             self.open_ended = True
         self.write_line_break()
         breaks = True
@@ -1466,6 +1487,8 @@ class Emitter(object):
                             self.write_line_break(br)
                     if ch is not None and (not self.root_context or self.requested_indent):
                         self.write_indent()
+                    if ch is not None and _indent:
+                        self.stream.write(u' ' * _indent)
                     start = end
             else:
                 if ch is None or ch in u'\n\x85\u2028\u2029':

@@ -54,6 +54,10 @@ ChangeLog
 
 .. should insert NEXT: at the beginning of line for next key (with empty line)
 
+NEXT:
+  - indent root level literal scalars that have directive or document end markers
+    at the beginning of a line
+
 0.15.64 (2018-08-30):
   - support round-trip of tagged sequences: ``!Arg [a, {b: 1}]``
   - single entry mappings in flow sequences now written by default without quotes
