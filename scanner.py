@@ -532,8 +532,12 @@ class Scanner(object):
         # Reset possible simple key on the current level.
         self.remove_possible_simple_key()
         # Decrease the flow level.
+        if not self.flow_context:
+          raise ScannerError(None, None, 'unmatched ending bracket', self.reader.get_mark())
         popped = self.flow_context.pop()
-        assert popped == to_pop
+        if popped != to_pop:
+          raise ScannerError(None, None, 'expected %s found %s' % (to_pop, popped),
+                             self.reader.get_mark())
         # No simple keys after ']' or '}'.
         self.allow_simple_key = False
         # Add FLOW-SEQUENCE-END or FLOW-MAPPING-END.
