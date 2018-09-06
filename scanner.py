@@ -533,11 +533,11 @@ class Scanner(object):
         self.remove_possible_simple_key()
         # Decrease the flow level.
         try:
-          popped = self.flow_context.pop()
+            popped = self.flow_context.pop()
         except IndexError:
-          # We must not be in a list or object.
-          # Defer error handling to the parser.
-          pass
+            # We must not be in a list or object.
+            # Defer error handling to the parser.
+            pass
         # No simple keys after ']' or '}'.
         self.allow_simple_key = False
         # Add FLOW-SEQUENCE-END or FLOW-MAPPING-END.
