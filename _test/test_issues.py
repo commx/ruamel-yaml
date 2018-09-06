@@ -384,11 +384,7 @@ class TestIssues:
     def test_issue_232(self):
         import ruamel.yaml
         from ruamel import yaml
-        with pytest.raises(ruamel.yaml.scanner.ScannerError, match='unmatched'):
+        with pytest.raises(ruamel.yaml.parser.ParserError):
           yaml.safe_load(']')
-        with pytest.raises(ruamel.yaml.scanner.ScannerError, match='unmatched'):
-          yaml.load(']')
-        with pytest.raises(ruamel.yaml.scanner.ScannerError, match='expected'):
+        with pytest.raises(ruamel.yaml.parser.ParserError):
           yaml.safe_load('{]')
-        with pytest.raises(ruamel.yaml.scanner.ScannerError, match='expected'):
-          yaml.load('{]')

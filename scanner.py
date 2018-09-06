@@ -521,23 +521,23 @@ class Scanner(object):
 
     def fetch_flow_sequence_end(self):
         # type: () -> None
-        self.fetch_flow_collection_end(FlowSequenceEndToken, to_pop='[')
+        self.fetch_flow_collection_end(FlowSequenceEndToken)
 
     def fetch_flow_mapping_end(self):
         # type: () -> None
-        self.fetch_flow_collection_end(FlowMappingEndToken, to_pop='{')
+        self.fetch_flow_collection_end(FlowMappingEndToken)
 
-    def fetch_flow_collection_end(self, TokenClass, to_pop):
+    def fetch_flow_collection_end(self, TokenClass):
         # type: (Any, Text) -> None
         # Reset possible simple key on the current level.
         self.remove_possible_simple_key()
         # Decrease the flow level.
-        if not self.flow_context:
-          raise ScannerError(None, None, 'unmatched ending bracket', self.reader.get_mark())
-        popped = self.flow_context.pop()
-        if popped != to_pop:
-          raise ScannerError(None, None, 'expected %s found %s' % (to_pop, popped),
-                             self.reader.get_mark())
+        try:
+          popped = self.flow_context.pop()
+        except IndexError:
+          # We must not be in a list or object.
+          # Defer error handling to the parser.
+          pass
         # No simple keys after ']' or '}'.
         self.allow_simple_key = False
         # Add FLOW-SEQUENCE-END or FLOW-MAPPING-END.
