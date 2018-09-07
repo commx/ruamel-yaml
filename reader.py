@@ -168,9 +168,7 @@ class Reader(object):
             ch = self.buffer[self.pointer]
             self.pointer += 1
             self.index += 1
-            if ch == u'\n' or (
-                ch == u'\r' and self.buffer[self.pointer] != u'\n'
-            ):
+            if ch == u'\n' or (ch == u'\r' and self.buffer[self.pointer] != u'\n'):
                 self.line += 1
                 self.column = 0
             elif ch != u'\uFEFF':

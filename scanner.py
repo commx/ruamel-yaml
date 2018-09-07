@@ -1132,7 +1132,7 @@ class Scanner(object):
         end_mark = self.reader.get_mark()
         return TagToken(value, start_mark, end_mark)
 
-    def scan_block_scalar(self, style):
+    def scan_block_scalar(self, style, rt=False):
         # type: (Any) -> Any
         # See the specification for details.
         srp = self.reader.peek
@@ -1193,14 +1193,9 @@ class Scanner(object):
                 #
                 # This is the folding according to the specification:
 
-                if folded and line_break == '\n':
+                if rt and folded and line_break == '\n':
                     chunks.append('\a')
-                if (
-                    folded
-                    and line_break == '\n'
-                    and leading_non_space
-                    and srp() not in ' \t'
-                ):
+                if folded and line_break == '\n' and leading_non_space and srp() not in ' \t':
                     if not breaks:
                         chunks.append(' ')
                 else:
@@ -1611,9 +1606,7 @@ class Scanner(object):
             line_break = self.scan_line_break()
             self.allow_simple_key = True
             prefix = self.reader.prefix(3)
-            if (prefix == '---' or prefix == '...') and srp(
-                3
-            ) in _THE_END_SPACE_TAB:
+            if (prefix == '---' or prefix == '...') and srp(3) in _THE_END_SPACE_TAB:
                 return
             breaks = []
             while srp() in ' \r\n\x85\u2028\u2029':
@@ -1622,9 +1615,7 @@ class Scanner(object):
                 else:
                     breaks.append(self.scan_line_break())
                     prefix = self.reader.prefix(3)
-                    if (prefix == '---' or prefix == '...') and srp(
-                        3
-                    ) in _THE_END_SPACE_TAB:
+                    if (prefix == '---' or prefix == '...') and srp(3) in _THE_END_SPACE_TAB:
                         return
             if line_break != '\n':
                 chunks.append(line_break)
@@ -1939,6 +1930,10 @@ class RoundTripScanner(Scanner):
             self.reader.forward()
             return ch
         return ""
+
+    def scan_block_scalar(self, style):
+        # type: (Any) -> Any
+        return Scanner.scan_block_scalar(self, style, rt=True)
 
 
 # try:
