@@ -4,8 +4,8 @@ ruamel.yaml
 
 ``ruamel.yaml`` is a YAML 1.2 loader/dumper package for Python.
 
-:version:       0.15.64
-:updated:       2018-08-30
+:version:       0.15.65
+:updated:       2018-09-07
 :documentation: http://yaml.readthedocs.io
 :repository:    https://bitbucket.org/ruamel/
 :pypi:          https://pypi.org/project/ruamel.yaml/
@@ -54,7 +54,10 @@ ChangeLog
 
 .. should insert NEXT: at the beginning of line for next key (with empty line)
 
-NEXT:
+0.15.65 (2018-09-07):
+  - fix issue #232 revert to throw ParserError for unexcpected ``]``
+    and ``}`` instead of IndexError. (Issue reported and PR with fix
+    provided by `Naomi Seyfer <https://bitbucket.org/sixolet/>`__.)
   - added ``key`` and ``reverse`` parameter (suggested by Jannik Klemm via email)
   - indent root level literal scalars that have directive or document end markers
     at the beginning of a line

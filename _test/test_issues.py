@@ -134,7 +134,7 @@ class TestIssues:
         x = round_trip(s, preserve_quotes=True)  # NOQA
 
     json_str = (
-        '{"sshKeys":[{"name":"AETROS\/google-k80-1","uses":0,"getLastUse":0,'
+        r'{"sshKeys":[{"name":"AETROS\/google-k80-1","uses":0,"getLastUse":0,'
         '"fingerprint":"MD5:19:dd:41:93:a1:a3:f5:91:4a:8e:9b:d0:ae:ce:66:4c",'
         '"created":1509497961}]}'
     )
@@ -384,7 +384,8 @@ class TestIssues:
     def test_issue_232(self):
         import ruamel.yaml
         from ruamel import yaml
+
         with pytest.raises(ruamel.yaml.parser.ParserError):
-          yaml.safe_load(']')
+            yaml.safe_load(']')
         with pytest.raises(ruamel.yaml.parser.ParserError):
-          yaml.safe_load('{]')
+            yaml.safe_load('{]')

@@ -533,7 +533,7 @@ class Scanner(object):
         self.remove_possible_simple_key()
         # Decrease the flow level.
         try:
-            popped = self.flow_context.pop()
+            popped = self.flow_context.pop()  # NOQA
         except IndexError:
             # We must not be in a list or object.
             # Defer error handling to the parser.
