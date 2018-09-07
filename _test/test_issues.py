@@ -389,3 +389,22 @@ class TestIssues:
             yaml.safe_load(']')
         with pytest.raises(ruamel.yaml.parser.ParserError):
             yaml.safe_load('{]')
+
+    def test_issue_234(self):
+        import ruamel.yaml
+        from ruamel.yaml import YAML
+
+        inp = dedent("""\
+        - key: key1
+          ctx: [one, two]
+          help: one
+          cmd: >
+            foo bar
+            foo bar
+        """)
+        yaml = YAML(typ='safe', pure=True)
+        data = yaml.load(inp)
+        # data = ruamel.yaml.safe_load(inp)
+        fold = data[0]['cmd']
+        print(repr(fold))
+        assert '\a' not in fold
