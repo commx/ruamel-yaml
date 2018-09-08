@@ -390,6 +390,24 @@ class TestIssues:
         with pytest.raises(ruamel.yaml.parser.ParserError):
             yaml.safe_load('{]')
 
+    @pytest.mark.xfail(strict=True, reason="not a dict subclass", raises=TypeError)
+    def test_issue_233(self):
+        from ruamel.yaml import YAML
+        import json
+        
+        yaml = YAML()
+        data = yaml.load("{}")
+        json_str = json.dumps(data)
+
+    @pytest.mark.xfail(strict=True, reason="not a list subclass", raises=TypeError)
+    def test_issue_233a(self):
+        from ruamel.yaml import YAML
+        import json
+        
+        yaml = YAML()
+        data = yaml.load("[]")
+        json_str = json.dumps(data)
+
     def test_issue_234(self):
         from ruamel.yaml import YAML
 
