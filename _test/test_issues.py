@@ -93,6 +93,23 @@ class TestIssues:
         """)
         x = round_trip(yaml_str, preserve_quotes=True)  # NOQA
 
+    def test_issue_150(self):
+        from ruamel.yaml import YAML
+
+        inp = """\
+        base: &base_key
+          first: 123
+          second: 234
+
+        child:
+          <<: *base_key
+          third: 345
+        """
+        yaml = YAML()
+        data = yaml.load(inp)
+        child = data['child']
+        assert 'second' in {**child}
+
     def test_issue_160(self):
         s = dedent("""\
         root:
