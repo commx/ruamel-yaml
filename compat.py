@@ -185,8 +185,8 @@ def dbg(val=None):
 
 def nprint(*args, **kw):
     # type: (Any, Any) -> None
-    if bool(dbg):
-        dbgprint = print  # to fool checking for print statements
+    if bool(_debug):
+        dbgprint = print  # to fool checking for print statements by dv utility
         dbgprint(*args, **kw)
 
 

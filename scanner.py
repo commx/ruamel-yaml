@@ -528,7 +528,7 @@ class Scanner(object):
         self.fetch_flow_collection_end(FlowMappingEndToken)
 
     def fetch_flow_collection_end(self, TokenClass):
-        # type: (Any, Text) -> None
+        # type: (Any) -> None
         # Reset possible simple key on the current level.
         self.remove_possible_simple_key()
         # Decrease the flow level.
@@ -1133,7 +1133,7 @@ class Scanner(object):
         return TagToken(value, start_mark, end_mark)
 
     def scan_block_scalar(self, style, rt=False):
-        # type: (Any) -> Any
+        # type: (Any, Optional[bool]) -> Any
         # See the specification for details.
         srp = self.reader.peek
         if style == '>':
@@ -1931,9 +1931,9 @@ class RoundTripScanner(Scanner):
             return ch
         return ""
 
-    def scan_block_scalar(self, style):
-        # type: (Any) -> Any
-        return Scanner.scan_block_scalar(self, style, rt=True)
+    def scan_block_scalar(self, style, rt=True):
+        # type: (Any, Optional[bool]) -> Any
+        return Scanner.scan_block_scalar(self, style, rt=rt)
 
 
 # try:
