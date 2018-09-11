@@ -108,7 +108,7 @@ class TestIssues:
         yaml = YAML()
         data = yaml.load(inp)
         child = data['child']
-        assert 'second' in {**child}
+        assert 'second' in dict(**child)
 
     def test_issue_160(self):
         s = dedent("""\
@@ -411,7 +411,7 @@ class TestIssues:
     def test_issue_233(self):
         from ruamel.yaml import YAML
         import json
-        
+
         yaml = YAML()
         data = yaml.load("{}")
         json_str = json.dumps(data)
@@ -420,7 +420,7 @@ class TestIssues:
     def test_issue_233a(self):
         from ruamel.yaml import YAML
         import json
-        
+
         yaml = YAML()
         data = yaml.load("[]")
         json_str = json.dumps(data)
