@@ -7,7 +7,9 @@ from __future__ import print_function
 import sys
 import os
 import types
+import traceback
 from abc import abstractmethod
+
 
 # fmt: off
 if False:  # MYPY
@@ -183,11 +185,36 @@ def dbg(val=None):
     return _debug & val
 
 
-def nprint(*args, **kw):
-    # type: (Any, Any) -> None
-    if bool(_debug):
+class Nprint(object):
+    def __init__(self):
+        # type: () -> None
+        self._max_print = None
+        self._count = None
+
+    def __call__(self, *args, **kw):
+        # type: (Any, Any) -> None
+        if not bool(_debug):
+            return
         dbgprint = print  # to fool checking for print statements by dv utility
         dbgprint(*args, **kw)
+        sys.stdout.flush()
+        if self._max_print is not None:
+            if self._count is None:
+                self._count = self._max_print
+            self._count -= 1
+            if self._count == 0:
+                dbgprint('forced exit\n')
+                traceback.print_stack()
+                sys.stdout.flush()
+                sys.exit(0)
+
+    def set_max_print(self, i):
+        # type: (int) -> None
+        self._max_print = i
+        self._count = None
+
+
+nprint = Nprint()
 
 
 # char checkers following production rules

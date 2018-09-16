@@ -414,7 +414,7 @@ class TestIssues:
 
         yaml = YAML()
         data = yaml.load('{}')
-        json_str = json.dumps(data)
+        json_str = json.dumps(data)  # NOQA
 
     @pytest.mark.xfail(strict=True, reason='not a list subclass', raises=TypeError)
     def test_issue_233a(self):
@@ -423,7 +423,7 @@ class TestIssues:
 
         yaml = YAML()
         data = yaml.load('[]')
-        json_str = json.dumps(data)
+        json_str = json.dumps(data)  # NOQA
 
     def test_issue_234(self):
         from ruamel.yaml import YAML
