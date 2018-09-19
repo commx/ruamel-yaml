@@ -188,8 +188,8 @@ def dbg(val=None):
 class Nprint(object):
     def __init__(self):
         # type: () -> None
-        self._max_print = None
-        self._count = None
+        self._max_print = None  # type: Any
+        self._count = None  # type: Any
 
     def __call__(self, *args, **kw):
         # type: (Any, Any) -> None
