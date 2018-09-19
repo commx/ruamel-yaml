@@ -4,8 +4,8 @@ ruamel.yaml
 
 ``ruamel.yaml`` is a YAML 1.2 loader/dumper package for Python.
 
-:version:       0.15.66
-:updated:       2018-09-07
+:version:       0.15.67
+:updated:       2018-09-19
 :documentation: http://yaml.readthedocs.io
 :repository:    https://bitbucket.org/ruamel/
 :pypi:          https://pypi.org/project/ruamel.yaml/
@@ -53,6 +53,11 @@ ChangeLog
 =========
 
 .. should insert NEXT: at the beginning of line for next key (with empty line)
+
+0.15.67 (2018-09-19):
+  - fix issue with extra space inserted with non-root literal strings 
+    (Issue reported and PR with fix provided by 
+    `Naomi Seyfer <https://bitbucket.org/sixolet/>`__.)
 
 0.15.66 (2018-09-07):
   - fix issue with fold indicating characters inserted in safe_load-ed folded strings

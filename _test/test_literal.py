@@ -230,6 +230,7 @@ class TestNoIndent:
         print(type(d), repr(d))
         yaml.round_trip(inp)
 
+
 class Test_RoundTripLiteral:
     def test_rt_root_literal_scalar_no_indent(self):
         yaml = YAML()
