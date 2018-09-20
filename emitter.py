@@ -472,7 +472,7 @@ class Emitter(object):
             if self.event.comment and self.event.comment[0]:
                 # eol comment on empty flow sequence
                 self.write_post_comment(self.event)
-            else:
+            elif self.flow_level == 0:
                 self.write_line_break()
             self.state = self.states.pop()
         else:
