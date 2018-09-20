@@ -450,37 +450,36 @@ class TestIssues:
         """
         d = round_trip(inp, preserve_quotes=True)  # NOQA
 
-    @pytest.mark.xfail(strict=True, reason='resolving __setstate__', raises=AssertionError)
     def test_issue_238(self, tmpdir):
-        program_src = r'''
+        program_src = r"""
         import ruamel.yaml
         from ruamel.yaml.compat import StringIO
 
         yaml = ruamel.yaml.YAML(typ='unsafe')
-        
-        
+
+
         class A:
             def __setstate__(self, d):
                 self.__dict__ = d
 
-        
+
         class B:
             pass
-        
-        
+
+
         a = A()
         b = B()
-        
+
         a.x = b
         b.y = [b]
         assert a.x.y[0] == a.x
-        
+
         buf = StringIO()
         yaml.dump(a, buf)
-        
+
         data = yaml.load(buf.getvalue())
         assert data.x.y[0] == data.x
-        '''
+        """
         assert save_and_run(dedent(program_src), tmpdir) == 0
 
 

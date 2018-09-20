@@ -4,8 +4,8 @@ ruamel.yaml
 
 ``ruamel.yaml`` is a YAML 1.2 loader/dumper package for Python.
 
-:version:       0.15.67
-:updated:       2018-09-19
+:version:       0.15.68
+:updated:       2018-09-20
 :documentation: http://yaml.readthedocs.io
 :repository:    https://bitbucket.org/ruamel/
 :pypi:          https://pypi.org/project/ruamel.yaml/
@@ -53,6 +53,12 @@ ChangeLog
 =========
 
 .. should insert NEXT: at the beginning of line for next key (with empty line)
+
+0.15.68 (2018-09-20):
+  - fix issue with parsabel, but incorrect output with nested flow-style sequences
+    (reported by `Dougal Seeley <https://bitbucket.org/dseeley/>`__)
+  - fix issue with loading Python objects that have __setstate__ and recursion in parameters
+    (reported by `Douglas RAILLARD <https://bitbucket.org/DouglasRaillard/>`__)
 
 0.15.67 (2018-09-19):
   - fix issue with extra space inserted with non-root literal strings 

@@ -915,8 +915,8 @@ class Constructor(SafeConstructor):
         #   !!python/object:module.name { ... state ... }
         instance = self.make_python_instance(suffix, node, newobj=True)
         yield instance
-        deep = hasattr(instance, '__setstate__')
-        state = self.construct_mapping(node, deep=deep)
+        # deep = hasattr(instance, '__setstate__')
+        state = self.construct_mapping(node, deep=False)
         self.set_python_instance_state(instance, state)
 
     def construct_python_object_apply(self, suffix, node, newobj=False):
