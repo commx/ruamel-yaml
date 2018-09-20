@@ -441,3 +441,18 @@ class TestIssues:
         fold = data[0]['cmd']
         print(repr(fold))
         assert '\a' not in fold
+
+    @pytest.mark.xfail(strict=True, reason='newline in nested flow sequence', 
+                       raises=AssertionError)
+    def test_issue_236(self):
+        inp = """
+        conf:
+          xx: {a: "b", c: []}
+          asd: "nn"        
+        """
+        d = round_trip(inp)  # NOQA
+
+#    def test_issue_xxx(self):
+#        inp = """
+#        """)
+#        d = round_trip(inp)  # NOQA
