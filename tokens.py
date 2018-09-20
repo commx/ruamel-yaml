@@ -69,7 +69,7 @@ class Token(object):
         if c is None:
             return
         # don't push beyond last element
-        if isinstance(target, StreamEndToken):
+        if isinstance(target, (StreamEndToken, DocumentStartToken)):
             return
         delattr(self, '_comment')
         tc = target.comment

@@ -1,3 +1,7 @@
+[0, 15, 69]: 2018-09-20
+  - fix issue with dump_all gobbling end-of-document comments on parsing
+    (reported by `Pierre B. <https://bitbucket.org/octplane/>`__)
+
 [0, 15, 68]: 2018-09-20
   - fix issue with parsabel, but incorrect output with nested flow-style sequences
     (reported by `Dougal Seeley <https://bitbucket.org/dseeley/>`__)

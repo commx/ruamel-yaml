@@ -483,8 +483,7 @@ class TestIssues:
         """
         assert save_and_run(dedent(program_src), tmpdir) == 0
 
-    @pytest.mark.xfail(strict=True, reason='bla bla', raises=AssertionError)
-    def test_issue_xxx(self):
+    def test_issue_239(self):
         inp = """
         first_name: Art
         occupation: Architect
@@ -500,6 +499,7 @@ class TestIssues:
         # Lost again
         ---
         I: knew
+        # final words
         """
         d = YAML().round_trip_all(inp)  # NOQA
 
