@@ -12,6 +12,7 @@ from roundtrip import (
     round_trip_dump,
     dedent,
     save_and_run,
+    YAML,
 )  # NOQA
 
 
@@ -482,8 +483,29 @@ class TestIssues:
         """
         assert save_and_run(dedent(program_src), tmpdir) == 0
 
+    @pytest.mark.xfail(strict=True, reason='bla bla', raises=AssertionError)
+    def test_issue_xxx(self):
+        inp = """
+        first_name: Art
+        occupation: Architect
+        # I'm safe
+        about: Art Vandelay is a fictional character that George invents...
+        # we are not :(
+        # help me!
+        ---
+        # what?!
+        hello: world
+        # someone call the Batman
+        foo: bar # or quz
+        # Lost again
+        ---
+        I: knew
+        """
+        d = YAML().round_trip_all(inp)  # NOQA
 
+
+#    @pytest.mark.xfail(strict=True, reason='bla bla', raises=AssertionError)
 #    def test_issue_xxx(self):
 #        inp = """
-#        """)
+#        """
 #        d = round_trip(inp)  # NOQA
