@@ -385,16 +385,16 @@ class CommentedBase(object):
         raise NotImplementedError
 
 
-class CommentedSeq(MutableSliceableSequence, CommentedBase):
+class CommentedSeq(MutableSliceableSequence, list, CommentedBase):
     __slots__ = (Comment.attrib, '_lst')
 
     def __init__(self, *args, **kw):
         # type: (Any, Any) -> None
-        self._lst = list(*args, **kw)
+        list.__init__(self, *args, **kw)
 
     def __getsingleitem__(self, idx):
         # type: (Any) -> Any
-        return self._lst[idx]
+        return list.__getitem__(self, idx)
 
     def __setsingleitem__(self, idx, value):
         # type: (Any, Any) -> None
@@ -406,11 +406,11 @@ class CommentedSeq(MutableSliceableSequence, CommentedBase):
                 and isinstance(self[idx], ScalarString)
             ):
                 value = type(self[idx])(value)
-        self._lst.__setitem__(idx, value)
+        list.__setitem__(self, idx, value)
 
     def __delsingleitem__(self, idx=None):
         # type: (Any) -> Any
-        del self._lst[idx]
+        list.__delitem__(self, idx)
         self.ca.items.pop(idx, None)  # might not be there -> default value
         for list_index in sorted(self.ca.items):
             if list_index < idx:
@@ -419,12 +419,12 @@ class CommentedSeq(MutableSliceableSequence, CommentedBase):
 
     def __len__(self):
         # type: () -> int
-        return len(self._lst)
+        return list.__len__(self)
 
     def insert(self, idx, val):
         # type: (Any, Any) -> None
         """the comments after the insertion have to move forward"""
-        self._lst.insert(idx, val)
+        list.insert(self, idx, val)
         for list_index in sorted(self.ca.items, reverse=True):
             if list_index < idx:
                 break
@@ -432,11 +432,11 @@ class CommentedSeq(MutableSliceableSequence, CommentedBase):
 
     def extend(self, val):
         # type: (Any) -> None
-        self._lst.extend(val)
+        list.extend(self, val)
 
     def __eq__(self, other):
         # type: (Any) -> bool
-        return bool(self._lst == other)
+        return list.__eq__(self, other)
 
     def _yaml_add_comment(self, comment, key=NoComment):
         # type: (Any, Optional[Any]) -> None
@@ -494,16 +494,18 @@ class CommentedSeq(MutableSliceableSequence, CommentedBase):
 
     def __add__(self, other):
         # type: (Any) -> Any
-        return self._lst + other
+        return list.__add__(self, other)
 
-    def sort(self, key=None, reverse=False):
+    def sort(self, key=None, reverse=False):  # type: ignore
         # type: (Any, bool) -> None
         if key is None:
-            tmp_lst = sorted(zip(self._lst, range(len(self._lst))), reverse=reverse)
-            self._lst = [x[0] for x in tmp_lst]
+            tmp_lst = sorted(zip(self, range(len(self))), reverse=reverse)
+            list.__init__(self, [x[0] for x in tmp_lst])
         else:
-            tmp_lst = sorted(zip(map(key, self._lst), range(len(self._lst))), reverse=reverse)
-            self._lst = [self._lst[x[1]] for x in tmp_lst]
+            tmp_lst = sorted(
+                zip(map(key, list.__iter__(self)), range(len(self))), reverse=reverse
+            )
+            list.__init__(self, [list.__getitem__(self, x[1]) for x in tmp_lst])
         itm = self.ca.items
         self.ca._items = {}
         for idx, x in enumerate(tmp_lst):
@@ -513,7 +515,7 @@ class CommentedSeq(MutableSliceableSequence, CommentedBase):
 
     def __repr__(self):
         # type: () -> Any
-        return self._lst.__repr__()
+        return list.__repr__(self)
 
 
 class CommentedKeySeq(tuple, CommentedBase):
@@ -638,13 +640,13 @@ class CommentedMapValuesView(CommentedMapView):
 
 
 class CommentedMap(MutableMapping, ordereddict, CommentedBase):
-    __slots__ = (Comment.attrib, '_ok', '_ref')  # own keys
+    __slots__ = (Comment.attrib, '_ok', '_ref')
 
     def __init__(self, *args, **kw):
         # type: (Any, Any) -> None
-        ordereddict.__init__(self, *args, **kw)
-        self._ok = set()
-        self._ref = []
+        ordereddict.__init__(self, *args, **kw)  # type: ignore
+        self._ok = set()  # type: MutableSet[Any]  #  own keys
+        self._ref = []  # type: List[CommentedMap]
 
     def _yaml_add_comment(self, comment, key=NoComment, value=NoComment):
         # type: (Any, Optional[Any], Optional[Any]) -> None
@@ -707,7 +709,7 @@ class CommentedMap(MutableMapping, ordereddict, CommentedBase):
         # type: (Any) -> None
         try:
             ordereddict.update(self, vals)
-            self._ok.update(vals.keys())
+            self._ok.update(vals.keys())  # type: ignore
         except TypeError:
             # probably a dict that is used
             for x in vals:
@@ -780,7 +782,7 @@ class CommentedMap(MutableMapping, ordereddict, CommentedBase):
 
     def __contains__(self, key):
         # type: (Any) -> bool
-        return ordereddict.__contains__(self, key)
+        return bool(ordereddict.__contains__(self, key))
 
     def get(self, key, default=None):
         # type: (Any, Any) -> Any
@@ -831,7 +833,7 @@ class CommentedMap(MutableMapping, ordereddict, CommentedBase):
 
     def __len__(self):
         # type: () -> int
-        return ordereddict.__len__(self)
+        return ordereddict.__len__(self)  # type: ignore
 
     def __eq__(self, other):
         # type: (Any) -> bool
@@ -922,6 +924,7 @@ class CommentedMap(MutableMapping, ordereddict, CommentedBase):
         return x
 
     def add_referent(self, cm):
+        # type: (Any) -> None
         if cm not in self._ref:
             self._ref.append(cm)
 
@@ -936,6 +939,7 @@ class CommentedMap(MutableMapping, ordereddict, CommentedBase):
         self.merge.extend(value)
 
     def update_key_value(self, key):
+        # type: (Any) -> None
         if key in self._ok:
             return
         for v in self.merge:

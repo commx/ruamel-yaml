@@ -4,8 +4,8 @@ ruamel.yaml
 
 ``ruamel.yaml`` is a YAML 1.2 loader/dumper package for Python.
 
-:version:       0.15.69
-:updated:       2018-09-20
+:version:       0.15.70
+:updated:       2018-09-21
 :documentation: http://yaml.readthedocs.io
 :repository:    https://bitbucket.org/ruamel/
 :pypi:          https://pypi.org/project/ruamel.yaml/
@@ -53,6 +53,14 @@ ChangeLog
 =========
 
 .. should insert NEXT: at the beginning of line for next key (with empty line)
+
+0.15.70 (2018-09-21):
+  - reverted CommentedMap and CommentedSeq to subclass ordereddict resp. list,
+    reimplemented merge maps so that both ``dict(**commented_map_instance)`` and JSON
+    dumping works. This also allows checking with ``isinstance()`` on ``dict`` resp. ``list``.
+    (Proposed by `Stuart Berg <https://bitbucket.org/stuarteberg/>`__, with feedback
+    from `blhsing <https://stackoverflow.com/users/6890912/blhsing>`__ on
+    `StackOverflow <https://stackoverflow.com/q/52314186/1307905>`__)
 
 0.15.69 (2018-09-20):
   - fix issue with dump_all gobbling end-of-document comments on parsing

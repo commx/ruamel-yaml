@@ -187,13 +187,12 @@ class TestIssues:
         assert res == yaml_str.replace(' b ', ' B ').replace(' d\n', ' D\n')
 
     def test_issue_176_test_slicing(self):
-        from ruamel.yaml.comments import CommentedSeq
+        from ruamel.yaml.compat import PY2
 
         mss = round_trip_load('[0, 1, 2, 3, 4]')
         assert len(mss) == 5
         assert mss[2:2] == []
         assert mss[2:4] == [2, 3]
-        assert isinstance(mss[2:4], CommentedSeq)
         assert mss[1::2] == [1, 3]
 
         # slice assignment
@@ -219,10 +218,18 @@ class TestIssues:
         m[1::2] = [42, 43]
         assert m == [0, 42, 2, 43, 4]
         m = mss[:]
-        with pytest.raises(TypeError, match='too many'):
-            m[1::2] = [42, 43, 44]
-        with pytest.raises(TypeError, match='not enough'):
-            m[1::2] = [42]
+        if PY2:
+            with pytest.raises(ValueError, match='attempt to assign'):
+                m[1::2] = [42, 43, 44]
+        else:
+            with pytest.raises(TypeError, match='too many'):
+                m[1::2] = [42, 43, 44]
+        if PY2:
+            with pytest.raises(ValueError, match='attempt to assign'):
+                m[1::2] = [42]
+        else:
+            with pytest.raises(TypeError, match='not enough'):
+                m[1::2] = [42]
         m = mss[:]
         m += [5]
         m[1::2] = [42, 43, 44]
@@ -408,7 +415,6 @@ class TestIssues:
         with pytest.raises(ruamel.yaml.parser.ParserError):
             yaml.safe_load('{]')
 
-    # @pytest.mark.xfail(strict=True, reason='not a dict subclass', raises=TypeError)
     def test_issue_233(self):
         from ruamel.yaml import YAML
         import json
@@ -417,7 +423,6 @@ class TestIssues:
         data = yaml.load('{}')
         json_str = json.dumps(data)  # NOQA
 
-    @pytest.mark.xfail(strict=True, reason='not a list subclass', raises=TypeError)
     def test_issue_233a(self):
         from ruamel.yaml import YAML
         import json
