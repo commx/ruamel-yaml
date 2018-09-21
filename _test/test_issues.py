@@ -408,7 +408,7 @@ class TestIssues:
         with pytest.raises(ruamel.yaml.parser.ParserError):
             yaml.safe_load('{]')
 
-    @pytest.mark.xfail(strict=True, reason='not a dict subclass', raises=TypeError)
+    # @pytest.mark.xfail(strict=True, reason='not a dict subclass', raises=TypeError)
     def test_issue_233(self):
         from ruamel.yaml import YAML
         import json
