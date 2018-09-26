@@ -4,8 +4,8 @@ ruamel.yaml
 
 ``ruamel.yaml`` is a YAML 1.2 loader/dumper package for Python.
 
-:version:       0.15.70
-:updated:       2018-09-21
+:version:       0.15.71
+:updated:       2018-09-26
 :documentation: http://yaml.readthedocs.io
 :repository:    https://bitbucket.org/ruamel/
 :pypi:          https://pypi.org/project/ruamel.yaml/
@@ -53,6 +53,19 @@ ChangeLog
 =========
 
 .. should insert NEXT: at the beginning of line for next key (with empty line)
+
+0.15.71 (2018-09-26):
+  - some of the tests now live in YAML files in the 
+    `yaml.data <https://bitbucket.org/ruamel/yaml.data>`__ repository. 
+    ``_test/test_z_data.py`` processes these.
+  - fix regression where handcrafted CommentedMaps could not be initiated (reported by 
+    `Dan Helfman <https://bitbucket.org/dhelfman/>`__)
+  - fix regression with non-root literal scalars that needed indent indicator
+    (reported by `Clark Breyman <https://bitbucket.org/clarkbreyman/>`__)
+  - tag:yaml.org,2002:python/object/apply now also uses __qualname__ on PY3
+    (reported by `Douglas RAILLARD <https://bitbucket.org/DouglasRaillard/>`__)
+  - issue with self-referring object creation
+    (reported and fix by `Douglas RAILLARD <https://bitbucket.org/DouglasRaillard/>`__)
 
 0.15.70 (2018-09-21):
   - reverted CommentedMap and CommentedSeq to subclass ordereddict resp. list,
