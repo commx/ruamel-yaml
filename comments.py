@@ -644,9 +644,9 @@ class CommentedMap(MutableMapping, ordereddict, CommentedBase):
 
     def __init__(self, *args, **kw):
         # type: (Any, Any) -> None
-        ordereddict.__init__(self, *args, **kw)  # type: ignore
         self._ok = set()  # type: MutableSet[Any]  #  own keys
         self._ref = []  # type: List[CommentedMap]
+        ordereddict.__init__(self, *args, **kw)  # type: ignore
 
     def _yaml_add_comment(self, comment, key=NoComment, value=NoComment):
         # type: (Any, Optional[Any], Optional[Any]) -> None
