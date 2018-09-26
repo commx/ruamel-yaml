@@ -1486,9 +1486,10 @@ class Emitter(object):
                         else:
                             self.write_line_break(br)
                     if ch is not None:
-                        if _indent:
-                            self.stream.write(u' ' * _indent)
-                        elif not self.root_context or self.requested_indent:
+                        if self.root_context:
+                            idnx = self.indent if self.indent is not None else 0
+                            self.stream.write(u' ' * (_indent + idnx))
+                        else:
                             self.write_indent()
                     start = end
             else:
