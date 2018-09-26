@@ -586,7 +586,11 @@ class Representer(SafeRepresenter):
         else:
             tag = u'tag:yaml.org,2002:python/object/apply:'
             newobj = False
-        function_name = u'%s.%s' % (function.__module__, function.__name__)
+        try:
+            function_name = u'%s.%s' % (function.__module__, function.__qualname__)
+        except AttributeError:
+            # probably PY2
+            function_name = u'%s.%s' % (function.__module__, function.__name__)
         if not args and not listitems and not dictitems and isinstance(state, dict) and newobj:
             return self.represent_mapping(
                 u'tag:yaml.org,2002:python/object:' + function_name, state

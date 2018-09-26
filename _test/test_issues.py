@@ -508,11 +508,10 @@ class TestIssues:
         """
         d = YAML().round_trip_all(inp)  # NOQA
 
-
-    @pytest.mark.xfail(strict=True, reason='faulty initialisation', raises=AttributeError)
     def test_issue_242(self):
         from ruamel.yaml.comments import CommentedMap
         d0 = CommentedMap([('a', 'b')])
+        assert d0['a'] == 'b'
 
 #    @pytest.mark.xfail(strict=True, reason='bla bla', raises=AssertionError)
 #    def test_issue_xxx(self):

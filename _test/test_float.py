@@ -55,98 +55,10 @@ class TestFloat:
         for d in data:
             assert -0.00001 < d < 0.00001
 
-    def test_round_trip_zeros_1(self):
-        # not sure if this should be supported, but it is
-        data = round_trip("""\
-        - 00.0
-        - +00.0
-        - -00.0
-        """)
-        print(data)
-        for d in data:
-            assert -0.00001 < d < 0.00001
-
     def Xtest_round_trip_non_exp_trailing_dot(self):
         data = round_trip("""\
         """)
         print(data)
-
-    def test_round_trip_exp_00(self):
-        data = round_trip("""\
-        - 42e56
-        - 42E56
-        - 42.0E56
-        - +42.0e56
-        - 42.0E+056
-        - +42.00e+056
-        """)
-        print(data)
-        for d in data:
-            assert 41.99e56 < d < 42.01e56
-
-    def test_round_trip_exp_00f(self):
-        data = round_trip("""\
-        - 42.E56
-        """)
-        print(data)
-        for d in data:
-            assert 41.99e56 < d < 42.01e56
-
-    def test_round_trip_exp_01(self):
-        data = round_trip("""\
-        - -42e56
-        - -42E56
-        - -42.0e56
-        - -42.0E+056
-        """)
-        print(data)
-        for d in data:
-            assert -41.99e56 > d > -42.01e56
-
-    def test_round_trip_exp_02(self):
-        data = round_trip("""\
-        - 42e-56
-        - 42E-56
-        - 42.0E-56
-        - +42.0e-56
-        - 42.0E-056
-        - +42.0e-056
-        """)
-        print(data)
-        for d in data:
-            assert 41.99e-56 < d < 42.01e-56
-
-    def test_round_trip_exp_03(self):
-        data = round_trip("""\
-        - -42e-56
-        - -42E-56
-        - -42.0e-56
-        - -42.0E-056
-        """)
-        print(data)
-        for d in data:
-            assert -41.99e-56 > d > -42.01e-56
-
-    def test_round_trip_exp_04(self):
-        round_trip("""\
-        - 1.2e+34
-        - 1.23e+034
-        - 1.230e+34
-        - 1.023e+34
-        - -1.023e+34
-        - 250e6
-        """)
-
-    def test_round_trip_exp_05(self):
-        data = round_trip("""\
-        - 3.0517578123e-56
-        - 3.0517578123E-56
-        - 3.0517578123e-056
-        - 3.0517578123E-056
-        """)
-        print(data)
-        for d in data:
-            assert 3.0517578122e-56 < d < 3.0517578124e-56
 
     def test_yaml_1_1_no_dot(self):
         from ruamel.yaml.error import MantissaNoDotYAML1_1Warning
