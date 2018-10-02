@@ -77,20 +77,12 @@ class Assert(YAMLData):
 
 
 def pytest_generate_tests(metafunc):
-    from ruamel.yaml import YAML
-
-    yaml = YAML(typ='safe', pure=True)
-    yaml.register_class(YAMLData)
-    yaml.register_class(Python)
-    yaml.register_class(Output)
-    yaml.register_class(Assert)
     test_yaml = []
-    paths = sorted(base_path.glob('*.yaml'))
+    paths = sorted(base_path.glob('**/*.yaml'))
     idlist = []
     for path in paths:
         idlist.append(path.stem)
-        x = yaml.load_all(path)
-        test_yaml.append([list(x)])
+        test_yaml.append([path])
     metafunc.parametrize(['yaml'], test_yaml, ids=idlist, scope='class')
 
 
@@ -103,6 +95,16 @@ class TestYAMLData(object):
         if yaml_version:
             y.version = yaml_version
         return y
+
+    def docs(self, path):
+        from ruamel.yaml import YAML
+
+        tyaml = YAML(typ='safe', pure=True)
+        tyaml.register_class(YAMLData)
+        tyaml.register_class(Python)
+        tyaml.register_class(Output)
+        tyaml.register_class(Assert)
+        return list(tyaml.load_all(path))
 
     def yaml_load(self, value, yaml_version=None):
         yaml = self.yaml(yaml_version=yaml_version)
@@ -150,13 +152,15 @@ class TestYAMLData(object):
         idx = 0
         typ = None
         yaml_version = None
-        if isinstance(yaml[0], Mapping):
-            d = yaml[0]
+
+        docs = self.docs(yaml)
+        if isinstance(docs[0], Mapping):
+            d = docs[0]
             typ = d.get('type')
             yaml_version = d.get('yaml_version')
             idx += 1
         data = output = confirm = python = None
-        for doc in yaml[idx:]:
+        for doc in docs[idx:]:
             if isinstance(doc, Output):
                 output = doc
             elif isinstance(doc, Assert):
@@ -184,7 +188,7 @@ class TestYAMLData(object):
         if typ == 'rt':
             self.round_trip(data, output, yaml_version=yaml_version)
         elif typ == 'pyrun':
-            self.run_python(python, data, tmpdir)
+            self.run_python(python, output if output is not None else data, tmpdir)
         elif typ == 'load_assert':
             self.load_assert(data, confirm, yaml_version=yaml_version)
         else:

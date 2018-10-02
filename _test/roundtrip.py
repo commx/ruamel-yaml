@@ -251,7 +251,8 @@ def save_and_run(program, base_dir=None, output=None, file_name=None, optimized=
         print('running:', *cmd)
         res = check_output(cmd, stderr=STDOUT, universal_newlines=True)
         if output is not None:
-            print('res', res)
+            print('result:  ', res, end='')
+            print('expected:', output, end='')
             assert res == output
     except CalledProcessError as exception:
         print("##### Running '{} {}' FAILED #####".format(sys.executable, file_name))
