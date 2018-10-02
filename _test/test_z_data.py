@@ -3,7 +3,6 @@
 from __future__ import print_function, unicode_literals
 
 import pytest  # NOQA
-
 import warnings  # NOQA
 
 from ruamel.std.pathlib import Path
@@ -17,6 +16,7 @@ class YAMLData(object):
     def __init__(self, s):
         self._s = s
 
+    # Conversion tables for input. E.g. "<TAB>" is replaced by "\t"
     # fmt: off
     special = {
         'SPC': ' ',
@@ -54,6 +54,8 @@ class YAMLData(object):
             return cls(constructor.construct_mapping(node))
         return cls(node.value)
 
+class Python(YAMLData):
+    yaml_tag = '!Python'
 
 class Output(YAMLData):
     yaml_tag = '!Output'
@@ -78,8 +80,8 @@ def pytest_generate_tests(metafunc):
     from ruamel.yaml import YAML
 
     yaml = YAML(typ='safe', pure=True)
-    # yaml = YAML()
     yaml.register_class(YAMLData)
+    yaml.register_class(Python)
     yaml.register_class(Output)
     yaml.register_class(Assert)
     test_yaml = []
@@ -107,7 +109,7 @@ class TestYAMLData(object):
         data = yaml.load(value)
         return yaml, data
 
-    def run_rt(self, input, output=None, yaml_version=None):
+    def round_trip(self, input, output=None, yaml_version=None):
         from ruamel.yaml.compat import StringIO
 
         yaml, data = self.yaml_load(input.value, yaml_version=yaml_version)
@@ -116,7 +118,7 @@ class TestYAMLData(object):
         expected = input.value if output is None else output.value
         assert buf.getvalue() == expected
 
-    def run_load_assert(self, input, confirm, yaml_version=None):
+    def load_assert(self, input, confirm, yaml_version=None):
         from ruamel.yaml.compat import Mapping
 
         d = self.yaml_load(input.value, yaml_version=yaml_version)[1]  # NOQA
@@ -135,7 +137,14 @@ class TestYAMLData(object):
                 print(line)
                 exec(line)
 
-    def test_yaml_data(self, yaml):
+    def run_python(self, python, data, tmpdir):
+        from roundtrip import save_and_run
+
+        assert save_and_run(python.value, base_dir=tmpdir, output=data.value) == 0
+
+    # this is executed by pytest the methods with names not starting with test_ 
+    # are helpers
+    def test_yaml_data(self, yaml, tmpdir):
         from ruamel.yaml.compat import Mapping
 
         idx = 0
@@ -146,14 +155,21 @@ class TestYAMLData(object):
             typ = d.get('type')
             yaml_version = d.get('yaml_version')
             idx += 1
-        data = output = confirm = None
+        data = output = confirm = python = None
         for doc in yaml[idx:]:
             if isinstance(doc, Output):
                 output = doc
             elif isinstance(doc, Assert):
                 confirm = doc
+            elif isinstance(doc, Python):
+                python = doc
+                if typ is None:
+                    typ = 'pyrun'
             elif isinstance(doc, YAMLData):
                 data = doc
+            else:
+                print('no handler for type:', type(doc), repr(doc))
+                assert False
         if typ is None:
             if data is not None and output is not None:
                 typ = 'rt'
@@ -163,11 +179,14 @@ class TestYAMLData(object):
                 assert data is not None
                 typ = 'rt'
         print('type:', typ)
-        print('data:', data.value)
+        print('data:', data.value, end='')
         print('output:', output.value if output is not None else output)
         if typ == 'rt':
-            self.run_rt(data, output, yaml_version=yaml_version)
+            self.round_trip(data, output, yaml_version=yaml_version)
+        elif typ == 'pyrun':
+            self.run_python(python, data, tmpdir)
         elif typ == 'load_assert':
-            self.run_load_assert(data, confirm, yaml_version=yaml_version)
+            self.load_assert(data, confirm, yaml_version=yaml_version)
         else:
+            print('\nrun type unknown:', typ)
             assert False
