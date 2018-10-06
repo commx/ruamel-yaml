@@ -1,3 +1,11 @@
+[0, 15, 72]: 2018-10-06
+  - fix regression on explicit 1.1 loading with the C based scanner/parser
+    (reported by `Tomas Vavra <https://bitbucket.org/xtomik/>`__)
+
+[0, 15, 72]: 2018-10-06
+  - fix regression on explicit 1.1 loading with the C based scanner/parser
+    (reported by `Tomas Vavra <https://bitbucket.org/xtomik/>`__)
+
 [0, 15, 71]: 2018-09-26
   - fix regression where handcrafted CommentedMaps could not be initiated (reported by 
     `Dan Helfman <https://bitbucket.org/dhelfman/>`__)

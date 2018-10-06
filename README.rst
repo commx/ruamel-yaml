@@ -4,8 +4,8 @@ ruamel.yaml
 
 ``ruamel.yaml`` is a YAML 1.2 loader/dumper package for Python.
 
-:version:       0.15.71
-:updated:       2018-09-26
+:version:       0.15.72
+:updated:       2018-10-06
 :documentation: http://yaml.readthedocs.io
 :repository:    https://bitbucket.org/ruamel/
 :pypi:          https://pypi.org/project/ruamel.yaml/
@@ -19,7 +19,7 @@ functionality will throw a warning before being changed/removed.
 but new functionality is likely only to be available via the new API.
 
 If your package uses ``ruamel.yaml`` and is not listed on PyPI, drop
-me an email, preferably with some infomormation on how you use the
+me an email, preferably with some information on how you use the
 package (or a link to bitbucket/github) and I'll keep you informed
 when the status of the API is stable enough to make the transition.
 
@@ -53,6 +53,10 @@ ChangeLog
 =========
 
 .. should insert NEXT: at the beginning of line for next key (with empty line)
+
+0.15.72 (2018-10-06):
+  - fix regression on explicit 1.1 loading with the C based scanner/parser
+    (reported by `Tomas Vavra <https://bitbucket.org/xtomik/>`__)
 
 0.15.71 (2018-09-26):
   - some of the tests now live in YAML files in the 

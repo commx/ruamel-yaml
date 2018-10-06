@@ -54,8 +54,10 @@ class YAMLData(object):
             return cls(constructor.construct_mapping(node))
         return cls(node.value)
 
+
 class Python(YAMLData):
     yaml_tag = '!Python'
+
 
 class Output(YAMLData):
     yaml_tag = '!Output'
@@ -144,7 +146,7 @@ class TestYAMLData(object):
 
         assert save_and_run(python.value, base_dir=tmpdir, output=data.value) == 0
 
-    # this is executed by pytest the methods with names not starting with test_ 
+    # this is executed by pytest the methods with names not starting with test_
     # are helpers
     def test_yaml_data(self, yaml, tmpdir):
         from ruamel.yaml.compat import Mapping
@@ -168,7 +170,7 @@ class TestYAMLData(object):
             elif isinstance(doc, Python):
                 python = doc
                 if typ is None:
-                    typ = 'pyrun'
+                    typ = 'python_run'
             elif isinstance(doc, YAMLData):
                 data = doc
             else:
@@ -187,7 +189,7 @@ class TestYAMLData(object):
         print('output:', output.value if output is not None else output)
         if typ == 'rt':
             self.round_trip(data, output, yaml_version=yaml_version)
-        elif typ == 'pyrun':
+        elif typ == 'python_run':
             self.run_python(python, output if output is not None else data, tmpdir)
         elif typ == 'load_assert':
             self.load_assert(data, confirm, yaml_version=yaml_version)

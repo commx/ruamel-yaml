@@ -394,17 +394,17 @@ class YAML(object):
                 # if you just initialise the CParser, to much of resolver.py
                 # is actually used
                 rslvr = self.Resolver
-                if rslvr is ruamel.yaml.resolver.VersionedResolver:
-                    rslvr = ruamel.yaml.resolver.Resolver
+                # if rslvr is ruamel.yaml.resolver.VersionedResolver:
+                #     rslvr = ruamel.yaml.resolver.Resolver
 
                 class XLoader(self.Parser, self.Constructor, rslvr):  # type: ignore
-                    def __init__(selfx, stream, version=None, preserve_quotes=None):
+                    def __init__(selfx, stream, version=self.version, preserve_quotes=None):
                         # type: (StreamTextType, Optional[VersionType], Optional[bool]) -> None  # NOQA
                         CParser.__init__(selfx, stream)
                         selfx._parser = selfx._composer = selfx
                         self.Constructor.__init__(selfx, loader=selfx)
                         selfx.allow_duplicate_keys = self.allow_duplicate_keys
-                        rslvr.__init__(selfx, loadumper=selfx)
+                        rslvr.__init__(selfx, version=version, loadumper=selfx)
 
                 self._stream = stream
                 loader = XLoader(stream)

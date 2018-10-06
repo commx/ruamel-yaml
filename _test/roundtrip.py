@@ -251,6 +251,10 @@ def save_and_run(program, base_dir=None, output=None, file_name=None, optimized=
         print('running:', *cmd)
         res = check_output(cmd, stderr=STDOUT, universal_newlines=True)
         if output is not None:
+            if '__pypy__' in sys.builtin_module_names:
+                res = res.splitlines(True)
+                res = [line for line in res if 'no version info' not in line]
+                res = ''.join(res)
             print('result:  ', res, end='')
             print('expected:', output, end='')
             assert res == output

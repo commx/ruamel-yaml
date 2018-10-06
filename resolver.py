@@ -316,8 +316,10 @@ class VersionedResolver(BaseResolver):
     and Yes/No/On/Off booleans.
     """
 
-    def __init__(self, version=None, loader=None):
-        # type: (Optional[VersionType], Any) -> None
+    def __init__(self, version=None, loader=None, loadumper=None):
+        # type: (Optional[VersionType], Any, Any) -> None
+        if loader is None and loadumper is not None:
+            loader = loadumper
         BaseResolver.__init__(self, loader)
         self._loader_version = self.get_loader_version(version)
         self._version_implicit_resolver = {}  # type: Dict[Any, Any]
@@ -383,10 +385,13 @@ class VersionedResolver(BaseResolver):
         try:
             version = self.parser.yaml_version
         except AttributeError:
-            if hasattr(self.loadumper, 'typ'):
-                version = self.loadumper.version
-            else:
-                version = self.loadumper._serializer.use_version  # dumping
+            try:
+                if hasattr(self.loadumper, 'typ'):
+                    version = self.loadumper.version
+                else:
+                    version = self.loadumper._serializer.use_version  # dumping
+            except AttributeError:
+                version = None
         if version is None:
             version = self._loader_version
             if version is None:

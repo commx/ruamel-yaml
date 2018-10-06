@@ -514,7 +514,6 @@ class TestIssues:
         d0 = CommentedMap([('a', 'b')])
         assert d0['a'] == 'b'
 
-    @pytest.mark.xfail(strict=True, reason='regression on Yes', raises=AssertionError)
     def test_issue_xxx(self):
         from ruamel.yaml import YAML
         inp = """
