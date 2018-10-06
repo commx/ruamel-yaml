@@ -514,6 +514,25 @@ class TestIssues:
         d0 = CommentedMap([('a', 'b')])
         assert d0['a'] == 'b'
 
+    @pytest.mark.xfail(strict=True, reason='regression on Yes', raises=AssertionError)
+    def test_issue_xxx(self):
+        from ruamel.yaml import YAML
+        inp = """
+        d: yes
+        """
+        for typ in ['safepure', 'rt', 'safe']:
+            if typ.endswith('pure'):
+                pure = True
+                typ = typ[:-4]
+            else:
+                pure = None
+
+            yaml = YAML(typ=typ, pure=pure)
+            yaml.version = (1, 1)
+            d = yaml.load(inp)
+            print(typ, yaml.parser, yaml.resolver)
+            assert d['d'] is True
+
 
 #    @pytest.mark.xfail(strict=True, reason='bla bla', raises=AssertionError)
 #    def test_issue_xxx(self):
