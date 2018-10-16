@@ -514,7 +514,7 @@ class TestIssues:
         d0 = CommentedMap([('a', 'b')])
         assert d0['a'] == 'b'
 
-    def test_issue_xxx(self):
+    def test_issue_245(self):
         from ruamel.yaml import YAML
         inp = """
         d: yes
@@ -532,9 +532,27 @@ class TestIssues:
             print(typ, yaml.parser, yaml.resolver)
             assert d['d'] is True
 
+    @pytest.mark.xfail(strict=True, reason='bla bla', raises=AssertionError)
+    def test_issue_249(self):
+        yaml = YAML()
+        inp = dedent("""\
+        # comment
+        -
+          - 1
+          - 2
+          - 3
+        """)
+        exp = dedent("""\
+        # comment
+        - - 1
+          - 2
+          - 3
+        """)
+        yaml.round_trip(inp, outp=exp)  # NOQA
+
 
 #    @pytest.mark.xfail(strict=True, reason='bla bla', raises=AssertionError)
-#    def test_issue_xxx(self):
+#    def test_issue_ xxx(self):
 #        inp = """
 #        """
 #        d = round_trip(inp)  # NOQA

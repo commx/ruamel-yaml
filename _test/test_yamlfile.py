@@ -117,7 +117,7 @@ class TestYAML:
 
     def test_blank_line_between_seq_items(self):
         round_trip("""
-        # Seq with spaces in between items.
+        # Seq with empty lines in between items.
         b:
         - bar
 
