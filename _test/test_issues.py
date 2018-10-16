@@ -532,7 +532,6 @@ class TestIssues:
             print(typ, yaml.parser, yaml.resolver)
             assert d['d'] is True
 
-    @pytest.mark.xfail(strict=True, reason='bla bla', raises=AssertionError)
     def test_issue_249(self):
         yaml = YAML()
         inp = dedent("""\

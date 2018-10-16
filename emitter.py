@@ -16,7 +16,7 @@ from ruamel.yaml.events import *  # NOQA
 
 # fmt: off
 from ruamel.yaml.compat import utf8, text_type, PY2, nprint, dbg, DBG_EVENT, \
-    check_anchorname_char
+    check_anchorname_char, nprintf  # NOQA
 # fmt: on
 
 if False:  # MYPY
@@ -404,14 +404,17 @@ class Emitter(object):
             if isinstance(self.event, ScalarEvent):
                 self.expect_scalar()
             elif isinstance(self.event, SequenceStartEvent):
+                nprintf('@', self.indention, self.no_newline, self.column)
+                i2, n2 = self.indention, self.no_newline
                 if self.event.comment:
                     if self.event.flow_style is False and self.event.comment:
                         if self.write_post_comment(self.event):
                             self.indention = False
                             self.no_newline = True
                     if self.write_pre_comment(self.event):
-                        self.indention = False
-                        self.no_newline = True
+                        pass
+                        self.indention = i2
+                        self.no_newline = not self.indention
                 if (
                     self.flow_level
                     or self.canonical
@@ -1574,11 +1577,11 @@ class Emitter(object):
                 breaks = ch in u'\n\x85\u2028\u2029'
             end += 1
 
-    def write_comment(self, comment):
+    def write_comment(self, comment, pre=False):
         # type: (Any) -> None
         value = comment.value
-        # nprint('{:02d} {:02d} {!r}'.format(self.column, comment.start_mark.column, value))
-        if value[-1] == '\n':
+        nprintf('{:02d} {:02d} {!r}'.format(self.column, comment.start_mark.column, value))
+        if not pre and value[-1] == '\n':
             value = value[:-1]
         try:
             # get original column position
@@ -1607,7 +1610,8 @@ class Emitter(object):
             self.stream.write(value)
         except TypeError:
             raise
-        self.write_line_break()
+        if not pre:
+            self.write_line_break()
 
     def write_pre_comment(self, event):
         # type: (Any) -> bool
@@ -1621,7 +1625,7 @@ class Emitter(object):
                     continue
                 if self.column != 0:
                     self.write_line_break()
-                self.write_comment(comment)
+                self.write_comment(comment, pre=True)
                 if isinstance(event, start_events):
                     comment.pre_done = True
         except TypeError:
