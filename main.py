@@ -716,6 +716,7 @@ class YAML(object):
         self.sequence_dash_offset = val
 
     def compact(self, seq_seq=None, seq_map=None):
+        # type: (Any, Any) -> None
         self.compact_seq_seq = seq_seq
         self.compact_seq_map = seq_map
 

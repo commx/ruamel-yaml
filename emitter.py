@@ -1588,7 +1588,7 @@ class Emitter(object):
             end += 1
 
     def write_comment(self, comment, pre=False):
-        # type: (Any) -> None
+        # type: (Any, bool) -> None
         value = comment.value
         # nprintf('{:02d} {:02d} {!r}'.format(self.column, comment.start_mark.column, value))
         if not pre and value[-1] == '\n':

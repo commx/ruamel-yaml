@@ -125,7 +125,7 @@ both mappings and sequences. For sequences the indent is counted to the
 beginning of the scalar, with the dash taking the first position of the
 indented "space".
 
-You can change this default indentation by e.g. using ``yaml.indent()``:
+You can change this default indentation by e.g. using ``yaml.indent()``::
 
 
 --- !python |
@@ -157,8 +157,7 @@ that the dash of the "parent" sequence is on the same line as the
 first element resp. first key/value pair of the child collection.
 
 If you want either or both of these (sequence within sequence, mapping
-within sequence) to begin on the next line use ``yaml.compact()``.
-
+within sequence) to begin on the next line use ``yaml.compact()``::
 
 --- !python |
 
