@@ -1,3 +1,8 @@
+[0, 15, 73]: 2018-10-16
+  - fix irregular output on pre-comment in sequence within sequence (reported
+    by `Thorsten Kampe <https://bitbucket.org/thorstenkampe/>`__)
+  - allow non-compact (i.e. next line) dumping sequence/mapping within sequence.
+
 [0, 15, 72]: 2018-10-06
   - fix regression on explicit 1.1 loading with the C based scanner/parser
     (reported by `Tomas Vavra <https://bitbucket.org/xtomik/>`__)

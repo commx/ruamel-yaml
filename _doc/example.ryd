@@ -125,52 +125,114 @@ both mappings and sequences. For sequences the indent is counted to the
 beginning of the scalar, with the dash taking the first position of the
 indented "space".
 
-The following program with three dumps::
+You can change this default indentation by e.g. using ``yaml.indent()``:
+
+
 --- !python |
-  import sys
-  from ruamel.yaml import YAML
 
-  data = {1: {1: [{1: 1, 2: 2}, {1: 1, 2: 2}], 2: 2}, 2: 42}
+import sys
+from ruamel.yaml import YAML
 
-  yaml = YAML()
-  yaml.explicit_start = True
-  yaml.dump(data, sys.stdout)
-  yaml.indent(sequence=4, offset=2)
-  yaml.dump(data, sys.stdout)
+d = dict(a=dict(b=2),c=[3, 4])
+yaml = YAML()
+yaml.dump(d, sys.stdout)
+print('0123456789')
+yaml = YAML()
+yaml.indent(mapping=4, sequence=6, offset=3)
+yaml.dump(d, sys.stdout)
+print('0123456789')
 
 
-  def sequence_indent_four(s):
-      # this will fail on direclty nested lists: {1; [[2, 3], 4]}
-      levels = []
-      ret_val = ''
-      for line in s.splitlines(True):
-          ls = line.lstrip()
-          indent = len(line) - len(ls)
-          if ls.startswith('- '):
-              if not levels or indent > levels[-1]:
-                  levels.append(indent)
-              elif levels:
-                  if indent < levels[-1]:
-                      levels = levels[:-1]
-              # same -> do nothing
-          else:
-              if levels:
-                  if indent <= levels[-1]:
-                      while levels and indent <= levels[-1]:
-                          levels = levels[:-1]
-          ret_val += '  ' * len(levels) + line
-      return ret_val
+--- !stdout |
 
-  yaml = YAML()
-  yaml.explicit_start = True
-  yaml.dump(data, sys.stdout, transform=sequence_indent_four)
+giving::
+
+
+--- |
+
+If a block sequence or block mapping is the element of a sequence, the
+are, by default, displayed `compact
+<http://yaml.org/spec/1.2/spec.html#id2797686>`__ notation. This means
+that the dash of the "parent" sequence is on the same line as the
+first element resp. first key/value pair of the child collection.
+
+If you want either or both of these (sequence within sequence, mapping
+within sequence) to begin on the next line use ``yaml.compact()``.
+
+
+--- !python |
+
+import sys
+from ruamel.yaml import YAML
+
+d = [dict(b=2), [3, 4]]
+yaml = YAML()
+yaml.dump(d, sys.stdout)
+print('='*15)
+yaml = YAML()
+yaml.compact(seq_seq=False, seq_map=False)
+yaml.dump(d, sys.stdout)
+
+
+--- !stdout |
+
+giving::
+
+
+--- | 
+
+------
+
+The following program uses three dumps on the same data, resulting in a stream with 
+three documents:
+
+--- !python |
+import sys
+from ruamel.yaml import YAML
+
+data = {1: {1: [{1: 1, 2: 2}, {1: 1, 2: 2}], 2: 2}, 2: 42}
+
+yaml = YAML()
+yaml.explicit_start = True
+yaml.dump(data, sys.stdout)
+yaml.indent(sequence=4, offset=2)
+yaml.dump(data, sys.stdout)
+
+
+def sequence_indent_four(s):
+    # this will fail on direclty nested lists: {1; [[2, 3], 4]}
+    levels = []
+    ret_val = ''
+    for line in s.splitlines(True):
+        ls = line.lstrip()
+        indent = len(line) - len(ls)
+        if ls.startswith('- '):
+            if not levels or indent > levels[-1]:
+                levels.append(indent)
+            elif levels:
+                if indent < levels[-1]:
+                    levels = levels[:-1]
+            # same -> do nothing
+        else:
+            if levels:
+                if indent <= levels[-1]:
+                    while levels and indent <= levels[-1]:
+                        levels = levels[:-1]
+        ret_val += '  ' * len(levels) + line
+    return ret_val
+
+yaml = YAML()
+yaml.explicit_start = True
+yaml.dump(data, sys.stdout, transform=sequence_indent_four)
+
 --- !stdout |
 gives as output::
 
---- |
-The transform example was inspired by a `question posted by *nowox*
-<https://stackoverflow.com/q/44388701/1307905>`_ on
-StackOverflow.
+--- | 
+
+The transform example, in the last document, was inspired by a
+`question posted by *nowox*
+<https://stackoverflow.com/q/44388701/1307905>`_ on StackOverflow.
 
 -----
 

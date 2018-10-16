@@ -146,6 +146,8 @@ class YAML(object):
         self.map_indent = None
         self.sequence_indent = None
         self.sequence_dash_offset = 0
+        self.compact_seq_seq = None
+        self.compact_seq_map = None
 
         self.top_level_colon_align = None
         self.prefix_colon = None
@@ -252,6 +254,10 @@ class YAML(object):
                 if self.sequence_dash_offset is not None:
                     _emitter.sequence_dash_offset = self.sequence_dash_offset
                     # _emitter.block_seq_indent = self.sequence_dash_offset
+                if self.compact_seq_seq is not None:
+                    _emitter.compact_seq_seq = self.compact_seq_seq
+                if self.compact_seq_map is not None:
+                    _emitter.compact_seq_map = self.compact_seq_map
             else:
                 if getattr(self, '_stream', None) is None:
                     # wait for the stream
@@ -708,6 +714,10 @@ class YAML(object):
     def block_seq_indent(self, val):
         # type: (Any) -> None
         self.sequence_dash_offset = val
+
+    def compact(self, seq_seq=None, seq_map=None):
+        self.compact_seq_seq = seq_seq
+        self.compact_seq_map = seq_map
 
 
 class YAMLContextManager(object):

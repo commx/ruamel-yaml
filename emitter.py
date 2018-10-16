@@ -16,7 +16,7 @@ from ruamel.yaml.events import *  # NOQA
 
 # fmt: off
 from ruamel.yaml.compat import utf8, text_type, PY2, nprint, dbg, DBG_EVENT, \
-    check_anchorname_char, nprintf  # NOQA
+    check_anchorname_char
 # fmt: on
 
 if False:  # MYPY
@@ -156,6 +156,9 @@ class Emitter(object):
         self.column = 0
         self.whitespace = True
         self.indention = True
+        self.compact_seq_seq = True   # dash after dash
+        self.compact_seq_map = True   # key after dash
+        # self.compact_ms = False   # dash after key, only when excplicit key with ?
         self.no_newline = None  # type: Optional[bool]  # set if directly after `- `
 
         # Whether the document requires an explicit document indicator
@@ -404,8 +407,8 @@ class Emitter(object):
             if isinstance(self.event, ScalarEvent):
                 self.expect_scalar()
             elif isinstance(self.event, SequenceStartEvent):
-                nprintf('@', self.indention, self.no_newline, self.column)
-                i2, n2 = self.indention, self.no_newline
+                # nprintf('@', self.indention, self.no_newline, self.column)
+                i2, n2 = self.indention, self.no_newline  # NOQA
                 if self.event.comment:
                     if self.event.flow_style is False and self.event.comment:
                         if self.write_post_comment(self.event):
@@ -596,7 +599,12 @@ class Emitter(object):
 
     def expect_block_sequence(self):
         # type: () -> None
-        indentless = self.mapping_context and not self.indention
+        if self.mapping_context:
+            indentless = not self.indention
+        else:
+            indentless = False
+            if not self.compact_seq_seq and self.column != 0:
+                self.write_line_break()
         self.increase_indent(flow=False, sequence=True, indentless=indentless)
         self.state = self.expect_first_block_sequence_item
 
@@ -629,6 +637,8 @@ class Emitter(object):
 
     def expect_block_mapping(self):
         # type: () -> None
+        if not self.mapping_context and not (self.compact_seq_map or self.column == 0):
+            self.write_line_break()
         self.increase_indent(flow=False, sequence=False)
         self.state = self.expect_first_block_mapping_key
 
@@ -1580,7 +1590,7 @@ class Emitter(object):
     def write_comment(self, comment, pre=False):
         # type: (Any) -> None
         value = comment.value
-        nprintf('{:02d} {:02d} {!r}'.format(self.column, comment.start_mark.column, value))
+        # nprintf('{:02d} {:02d} {!r}'.format(self.column, comment.start_mark.column, value))
         if not pre and value[-1] == '\n':
             value = value[:-1]
         try:
