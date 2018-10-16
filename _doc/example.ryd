@@ -183,7 +183,7 @@ giving::
 ------
 
 The following program uses three dumps on the same data, resulting in a stream with 
-three documents:
+three documents::
 
 --- !python |
 import sys
