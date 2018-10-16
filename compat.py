@@ -186,18 +186,22 @@ def dbg(val=None):
 
 
 class Nprint(object):
-    def __init__(self):
-        # type: () -> None
+    def __init__(self, file_name=None):
+        # type: (Any) -> None
         self._max_print = None  # type: Any
         self._count = None  # type: Any
+        self._file_name = file_name
 
     def __call__(self, *args, **kw):
         # type: (Any, Any) -> None
         if not bool(_debug):
             return
+        out = sys.stdout if self._file_name is None else open(self._file_name, 'a')
         dbgprint = print  # to fool checking for print statements by dv utility
-        dbgprint(*args, **kw)
-        sys.stdout.flush()
+        kw1 = kw.copy()
+        kw1['file'] = out
+        dbgprint(*args, **kw1)
+        out.flush()
         if self._max_print is not None:
             if self._count is None:
                 self._count = self._max_print
@@ -205,8 +209,10 @@ class Nprint(object):
             if self._count == 0:
                 dbgprint('forced exit\n')
                 traceback.print_stack()
-                sys.stdout.flush()
+                out.flush()
                 sys.exit(0)
+        if self._file_name:
+            out.close()
 
     def set_max_print(self, i):
         # type: (int) -> None
@@ -215,7 +221,7 @@ class Nprint(object):
 
 
 nprint = Nprint()
-
+nprintf = Nprint('/var/tmp/ruamel.yaml.log')
 
 # char checkers following production rules
 
