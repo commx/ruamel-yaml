@@ -549,7 +549,6 @@ class TestIssues:
         """)
         yaml.round_trip(inp, outp=exp)  # NOQA
 
-    @pytest.mark.xfail(strict=True, reason='bla bla', raises=AssertionError)
     def test_issue_250(self):
         inp = """
         # 1.

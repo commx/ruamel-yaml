@@ -6,6 +6,7 @@ from __future__ import print_function, absolute_import, division
 from ruamel.yaml.error import *  # NOQA
 from ruamel.yaml.nodes import *  # NOQA
 from ruamel.yaml.compat import text_type, binary_type, to_unicode, PY2, PY3, ordereddict
+from ruamel.yaml.compat import nprint, nprintf  # NOQA
 from ruamel.yaml.scalarstring import (
     LiteralScalarString,
     FoldedScalarString,
@@ -889,7 +890,7 @@ class RoundTripRepresenter(SafeRepresenter):
             item_comments = {}
         for idx, item in enumerate(sequence):
             node_item = self.represent_data(item)
-            node_item.comment = item_comments.get(idx)
+            self.merge_comments(node_item, item_comments.get(idx))
             if not (isinstance(node_item, ScalarNode) and not node_item.style):
                 best_style = False
             value.append(node_item)
@@ -898,6 +899,22 @@ class RoundTripRepresenter(SafeRepresenter):
                 node.flow_style = self.default_flow_style
             else:
                 node.flow_style = best_style
+        return node
+
+    def merge_comments(self, node, comments):
+        # type: (Any, Any) -> Any
+        if comments is None:
+            assert hasattr(node, 'comment')
+            return node
+        if getattr(node, 'comment', None) is not None:
+            for idx, val in enumerate(comments):
+                if idx >= len(node.comment):
+                    continue
+                nc = node.comment[idx]
+                if nc is not None:
+                    assert val is None or val == nc
+                    comments[idx] = nc
+        node.comment = comments
         return node
 
     def represent_key(self, data):

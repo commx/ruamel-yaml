@@ -4,8 +4,8 @@ ruamel.yaml
 
 ``ruamel.yaml`` is a YAML 1.2 loader/dumper package for Python.
 
-:version:       0.15.73
-:updated:       2018-10-16
+:version:       0.15.74
+:updated:       2018-10-17
 :documentation: http://yaml.readthedocs.io
 :repository:    https://bitbucket.org/ruamel/
 :pypi:          https://pypi.org/project/ruamel.yaml/
@@ -53,6 +53,10 @@ ChangeLog
 =========
 
 .. should insert NEXT: at the beginning of line for next key (with empty line)
+
+0.15.74 (2018-10-17):
+  - fix dropping of comment on rt before sequence item that is sequence item
+    (reported by `Thorsten Kampe <https://bitbucket.org/thorstenkampe/>`__)
 
 0.15.73 (2018-10-16):
   - fix irregular output on pre-comment in sequence within sequence (reported
