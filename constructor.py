@@ -16,8 +16,8 @@ from ruamel.yaml.error import (MarkedYAMLError, MarkedYAMLFutureWarning,
 from ruamel.yaml.nodes import *                               # NOQA
 from ruamel.yaml.nodes import (SequenceNode, MappingNode, ScalarNode)
 from ruamel.yaml.compat import (utf8, builtins_module, to_str, PY2, PY3,  # NOQA
-                                ordereddict, text_type, nprint, version_tnf, Hashable,
-                                MutableSequence, MutableMapping)
+                                ordereddict, text_type, nprint, nprintf, version_tnf,
+                                Hashable, MutableSequence, MutableMapping)
 from ruamel.yaml.comments import *                               # NOQA
 from ruamel.yaml.comments import (CommentedMap, CommentedOrderedMap, CommentedSet,
                                   CommentedKeySeq, CommentedSeq, TaggedScalar,
