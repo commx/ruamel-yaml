@@ -10,7 +10,7 @@ import pytest
 from textwrap import dedent
 import platform
 
-from roundtrip import round_trip, dedent, round_trip_load, round_trip_dump  # NOQA
+from roundtrip import round_trip, dedent, round_trip_load, round_trip_dump, YAML  # NOQA
 
 
 def load(s):
@@ -325,9 +325,8 @@ class TestMergeKeysValues:
       d: y4
     -
       a: 1
-      <<: *mx
+      <<: [*mx, *my]
       m: 6
-      <<: *my
     """)
 
     # in the following d always has "expanded" the merges
@@ -490,6 +489,29 @@ class TestDuplicateKeyThroughAnchor:
                 safe_load(s)
             with pytest.raises(DuplicateKeyError):
                 round_trip_load(s)
+
+    def test_duplicate_key_01(self):
+        # so issue https://stackoverflow.com/a/52852106/1307905
+        from ruamel.yaml import version_info
+        from ruamel.yaml.constructor import DuplicateKeyFutureWarning, DuplicateKeyError
+
+        s = dedent("""\
+        - &name-name
+          a: 1
+        - &help-name
+          b: 2
+        - <<: *name-name
+          <<: *help-name
+        """)
+        if version_info < (0, 15, 1):
+            pass
+        else:
+            with pytest.raises(DuplicateKeyError):
+                yaml = YAML(typ='safe')
+                yaml.load(s)
+            with pytest.raises(DuplicateKeyError):
+                yaml = YAML()
+                yaml.load(s)
 
 
 class TestFullCharSetAnchors:

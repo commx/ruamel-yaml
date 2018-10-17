@@ -353,6 +353,25 @@ class SafeConstructor(BaseConstructor):
         while index < len(node.value):
             key_node, value_node = node.value[index]
             if key_node.tag == u'tag:yaml.org,2002:merge':
+                if merge:  # double << key
+                    args = [
+                        'while constructing a mapping',
+                        node.start_mark,
+                        'found duplicate key "{}"'.format(key_node.value),
+                        key_node.start_mark,
+                        """
+                        To suppress this check see:
+                           http://yaml.readthedocs.io/en/latest/api.html#duplicate-keys
+                        """,
+                        """\
+                        Duplicate keys will become an error in future releases, and are errors
+                        by default when using the new API.
+                        """,
+                    ]
+                    if self.allow_duplicate_keys is None:
+                        warnings.warn(DuplicateKeyFutureWarning(*args))
+                    else:
+                        raise DuplicateKeyError(*args)
                 del node.value[index]
                 if isinstance(value_node, MappingNode):
                     self.flatten_mapping(value_node)
@@ -1275,6 +1294,25 @@ class RoundTripConstructor(SafeConstructor):
         while index < len(node.value):
             key_node, value_node = node.value[index]
             if key_node.tag == u'tag:yaml.org,2002:merge':
+                if merge_map_list:  # double << key
+                    args = [
+                        'while constructing a mapping',
+                        node.start_mark,
+                        'found duplicate key "{}"'.format(key_node.value),
+                        key_node.start_mark,
+                        """
+                        To suppress this check see:
+                           http://yaml.readthedocs.io/en/latest/api.html#duplicate-keys
+                        """,
+                        """\
+                        Duplicate keys will become an error in future releases, and are errors
+                        by default when using the new API.
+                        """,
+                    ]
+                    if self.allow_duplicate_keys is None:
+                        warnings.warn(DuplicateKeyFutureWarning(*args))
+                    else:
+                        raise DuplicateKeyError(*args)
                 del node.value[index]
                 if isinstance(value_node, MappingNode):
                     merge_map_list.append((index, constructed(value_node)))
