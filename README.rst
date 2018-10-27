@@ -4,8 +4,8 @@ ruamel.yaml
 
 ``ruamel.yaml`` is a YAML 1.2 loader/dumper package for Python.
 
-:version:       0.15.74
-:updated:       2018-10-17
+:version:       0.15.75
+:updated:       2018-10-27
 :documentation: http://yaml.readthedocs.io
 :repository:    https://bitbucket.org/ruamel/
 :pypi:          https://pypi.org/project/ruamel.yaml/
@@ -53,6 +53,14 @@ ChangeLog
 =========
 
 .. should insert NEXT: at the beginning of line for next key (with empty line)
+
+0.15.75 (2018-10-27):
+  - fix issue with single '?' scalar (reported by `Terrance 
+    <https://bitbucket.org/OllieTerrance/>`__)
+  - fix issue with duplicate merge keys (prompted by `answering 
+    <https://stackoverflow.com/a/52852106/1307905>`__ a 
+    `StackOverflow question <https://stackoverflow.com/q/52851168/1307905>`__
+    by `math <https://stackoverflow.com/users/1355634/math>`__)
 
 0.15.74 (2018-10-17):
   - fix dropping of comment on rt before sequence item that is sequence item

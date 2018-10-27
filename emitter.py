@@ -1024,6 +1024,8 @@ class Emitter(object):
                 if ch in u'?:':  # ToDo
                     if self.serializer.use_version == (1, 1):
                         flow_indicators = True
+                    elif len(scalar) == 1:  # single character
+                        flow_indicators = True
                     if followed_by_whitespace:
                         block_indicators = True
                 if ch == u'-' and followed_by_whitespace:

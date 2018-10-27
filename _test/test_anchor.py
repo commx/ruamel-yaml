@@ -493,7 +493,7 @@ class TestDuplicateKeyThroughAnchor:
     def test_duplicate_key_01(self):
         # so issue https://stackoverflow.com/a/52852106/1307905
         from ruamel.yaml import version_info
-        from ruamel.yaml.constructor import DuplicateKeyFutureWarning, DuplicateKeyError
+        from ruamel.yaml.constructor import DuplicateKeyError
 
         s = dedent("""\
         - &name-name

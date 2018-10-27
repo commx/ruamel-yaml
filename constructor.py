@@ -839,14 +839,14 @@ class Constructor(SafeConstructor):
                     __import__(module_name)
                     # object_name = '.'.join(object_name)
                     break
-                except ImportError as exc:
+                except ImportError:
                     continue
         else:
             module_name = builtins_module
             lobject_name = [name]
         try:
             __import__(module_name)
-        except ImportError as exc:
+        except ImportError:
             raise ConstructorError(
                 'while constructing a Python object',
                 mark,
