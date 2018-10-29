@@ -14,6 +14,7 @@ import copy
 
 from ruamel.yaml.compat import ordereddict, PY2, string_types, MutableSliceableSequence
 from ruamel.yaml.scalarstring import ScalarString
+from ruamel.yaml.anchor import Anchor
 
 if PY2:
     from collections import MutableSet, Sized, Set, MutableMapping, Mapping
@@ -24,15 +25,14 @@ if False:  # MYPY
     from typing import Any, Dict, Optional, List, Union, Optional, Iterator  # NOQA
 
 # fmt: off
-__all__ = ["CommentedSeq", "CommentedKeySeq",
-           "CommentedMap", "CommentedOrderedMap",
-           "CommentedSet", 'comment_attrib', 'merge_attrib']
+__all__ = ['CommentedSeq', 'CommentedKeySeq',
+           'CommentedMap', 'CommentedOrderedMap',
+           'CommentedSet', 'comment_attrib', 'merge_attrib']
 # fmt: on
 
 comment_attrib = '_yaml_comment'
 format_attrib = '_yaml_format'
 line_col_attrib = '_yaml_line_col'
-anchor_attrib = '_yaml_anchor'
 merge_attrib = '_yaml_merge'
 tag_attrib = '_yaml_tag'
 
@@ -161,16 +161,6 @@ class LineCol(object):
         if self.data is None:
             self.data = {}  # type: Dict[Any, Any]
         self.data[key] = data
-
-
-class Anchor(object):
-    __slots__ = 'value', 'always_dump'
-    attrib = anchor_attrib
-
-    def __init__(self):
-        # type: () -> None
-        self.value = None
-        self.always_dump = False
 
 
 class Tag(object):
