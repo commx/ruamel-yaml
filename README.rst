@@ -4,8 +4,8 @@ ruamel.yaml
 
 ``ruamel.yaml`` is a YAML 1.2 loader/dumper package for Python.
 
-:version:       0.15.75
-:updated:       2018-10-27
+:version:       0.15.76
+:updated:       2018-11-01
 :documentation: http://yaml.readthedocs.io
 :repository:    https://bitbucket.org/ruamel/
 :pypi:          https://pypi.org/project/ruamel.yaml/
@@ -53,6 +53,11 @@ ChangeLog
 =========
 
 .. should insert NEXT: at the beginning of line for next key (with empty line)
+
+0.15.76 (2018-11-01):
+  - fix issue with empty mapping and sequence loaded as flow-style
+    (mapping reported by `Min RK <https://bitbucket.org/minrk/>`__, sequence
+    by `Maged Ahmed <https://bitbucket.org/maged2/>`__)
 
 0.15.75 (2018-10-27):
   - fix issue with single '?' scalar (reported by `Terrance 

@@ -1,3 +1,8 @@
+[0, 15, 76]: 2018-11-01
+  - fix issue with empty mapping and sequence loaded as flow-style
+    (mapping reported by `Min RK <https://bitbucket.org/minrk/>`__, sequence
+    by `Maged Ahmed <https://bitbucket.org/maged2/>`__)
+
 [0, 15, 75]: 2018-10-27
   - fix issue with single '?' scalar (reported by `Terrance 
     <https://bitbucket.org/OllieTerrance/>`__)

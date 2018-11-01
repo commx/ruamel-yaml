@@ -846,7 +846,7 @@ class Constructor(SafeConstructor):
             lobject_name = [name]
         try:
             __import__(module_name)
-        except ImportError:
+        except ImportError as exc:
             raise ConstructorError(
                 'while constructing a Python object',
                 mark,
@@ -1289,7 +1289,7 @@ class RoundTripConstructor(SafeConstructor):
             return value
 
         # merge = []
-        merge_map_list = []
+        merge_map_list = []  # type: List[Any]
         index = 0
         while index < len(node.value):
             key_node, value_node = node.value[index]
@@ -1494,25 +1494,28 @@ class RoundTripConstructor(SafeConstructor):
         # type: (Any) -> Any
         data = CommentedSeq()
         data._yaml_set_line_col(node.start_mark.line, node.start_mark.column)
-        if node.flow_style is True:
-            data.fa.set_flow_style()
-        elif node.flow_style is False:
-            data.fa.set_block_style()
         if node.comment:
             data._yaml_add_comment(node.comment)
         yield data
         data.extend(self.construct_rt_sequence(node, data))
+        self.set_collection_style(data, node)
 
     def construct_yaml_map(self, node):
         # type: (Any) -> Any
         data = CommentedMap()
         data._yaml_set_line_col(node.start_mark.line, node.start_mark.column)
+        yield data
+        self.construct_mapping(node, data)
+        self.set_collection_style(data, node)
+
+    def set_collection_style(self, data, node):
+        # type: (Any, Any) -> None
+        if len(data) == 0:
+            return
         if node.flow_style is True:
             data.fa.set_flow_style()
         elif node.flow_style is False:
             data.fa.set_block_style()
-        yield data
-        self.construct_mapping(node, data)
 
     def construct_yaml_object(self, node, cls):
         # type: (Any, Any) -> Any

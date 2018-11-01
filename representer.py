@@ -895,7 +895,7 @@ class RoundTripRepresenter(SafeRepresenter):
                 best_style = False
             value.append(node_item)
         if flow_style is None:
-            if self.default_flow_style is not None:
+            if len(sequence) != 0 and self.default_flow_style is not None:
                 node.flow_style = self.default_flow_style
             else:
                 node.flow_style = best_style
@@ -961,11 +961,13 @@ class RoundTripRepresenter(SafeRepresenter):
         except AttributeError:
             item_comments = {}
         merge_list = [m[1] for m in getattr(mapping, merge_attrib, [])]
+        item_count = 0
         if bool(merge_list):
             items = mapping.non_merged_items()
         else:
             items = mapping.items()
         for item_key, item_value in items:
+            item_count += 1
             node_key = self.represent_key(item_key)
             node_value = self.represent_data(item_value)
             item_comment = item_comments.get(item_key)
@@ -984,7 +986,8 @@ class RoundTripRepresenter(SafeRepresenter):
                 best_style = False
             value.append((node_key, node_value))
         if flow_style is None:
-            if self.default_flow_style is not None:
+            if ((item_count != 0) or bool(merge_list)) \
+               and self.default_flow_style is not None:
                 node.flow_style = self.default_flow_style
             else:
                 node.flow_style = best_style
