@@ -148,6 +148,7 @@ class YAML(object):
         self.sequence_dash_offset = 0
         self.compact_seq_seq = None
         self.compact_seq_map = None
+        self.sort_base_mapping_type_on_output = None  # default: sort
 
         self.top_level_colon_align = None
         self.prefix_colon = None
@@ -289,15 +290,14 @@ class YAML(object):
         # type: () -> Any
         attr = '_' + sys._getframe().f_code.co_name
         if not hasattr(self, attr):
-            setattr(
-                self,
-                attr,
-                self.Representer(
-                    default_style=self.default_style,
-                    default_flow_style=self.default_flow_style,
-                    dumper=self,
-                ),
+            repres = self.Representer(
+                default_style=self.default_style,
+                default_flow_style=self.default_flow_style,
+                dumper=self,
             )
+            if self.sort_base_mapping_type_on_output is not None:
+                repres.sort_base_mapping_type_on_output = self.sort_base_mapping_type_on_output
+            setattr(self, attr, repres)
         return getattr(self, attr)
 
     # separate output resolver?

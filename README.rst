@@ -4,8 +4,8 @@ ruamel.yaml
 
 ``ruamel.yaml`` is a YAML 1.2 loader/dumper package for Python.
 
-:version:       0.15.76
-:updated:       2018-11-01
+:version:       0.15.77
+:updated:       2018-11-09
 :documentation: http://yaml.readthedocs.io
 :repository:    https://bitbucket.org/ruamel/
 :pypi:          https://pypi.org/project/ruamel.yaml/
@@ -53,6 +53,13 @@ ChangeLog
 =========
 
 .. should insert NEXT: at the beginning of line for next key (with empty line)
+
+0.15.77 (2018-11-09):
+  - setting `yaml.sort_base_mapping_type_on_output = False`, will prevent
+    explicit sorting by keys in the base representer of mappings. Roundtrip
+    already did not do this. Usage only makes real sense for Python 3.6+
+    (feature request by `Sebastian Gerber <https://bitbucket.org/spacemanspiff2007/>`__).
+  - implement Python version check in YAML metadata in ``_test/test_z_data.py``
 
 0.15.76 (2018-11-01):
   - fix issue with empty mapping and sequence loaded as flow-style

@@ -2,6 +2,7 @@
 
 from __future__ import print_function, unicode_literals
 
+import sys
 import pytest  # NOQA
 import warnings  # NOQA
 
@@ -83,7 +84,10 @@ def pytest_generate_tests(metafunc):
     paths = sorted(base_path.glob('**/*.yaml'))
     idlist = []
     for path in paths:
-        idlist.append(path.stem)
+        stem = path.stem
+        if stem.startswith('.#'):  # skip emacs temporary file
+            continue
+        idlist.append(stem)
         test_yaml.append([path])
     metafunc.parametrize(['yaml'], test_yaml, ids=idlist, scope='class')
 
@@ -160,6 +164,9 @@ class TestYAMLData(object):
             d = docs[0]
             typ = d.get('type')
             yaml_version = d.get('yaml_version')
+            if 'python' in d:
+                if not check_python_version(d['python']):
+                    pytest.skip("unsupported version")
             idx += 1
         data = output = confirm = python = None
         for doc in docs[idx:]:
@@ -196,3 +203,34 @@ class TestYAMLData(object):
         else:
             print('\nrun type unknown:', typ)
             assert False
+
+
+def check_python_version(match, current=None):
+    """
+    version indication, return True if version matches.
+    match should be something like 3.6+, or [2.7, 3.3] etc. Floats
+    are converted to strings. Single values are made into lists.
+    """
+    if current is None:
+        current = list(sys.version_info[:3])
+    if not isinstance(match, list):
+        match = [match]
+    for m in match:
+        minimal = False
+        if isinstance(m, float):
+            m = str(m)
+        if m.endswith('+'):
+            minimal = True
+            m = m[:-1]
+        # assert m[0].isdigit()
+        # assert m[-1].isdigit()
+        m = [int(x) for x in m.split('.')]
+        current_len = current[:len(m)]
+        # print(m, current, current_len)
+        if minimal:
+            if current_len >= m:
+                return True
+        else:
+            if current_len == m:
+                return True
+    return False

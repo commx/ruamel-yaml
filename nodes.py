@@ -12,14 +12,14 @@ if False:  # MYPY
 class Node(object):
     __slots__ = 'tag', 'value', 'start_mark', 'end_mark', 'comment', 'anchor'
 
-    def __init__(self, tag, value, start_mark, end_mark, comment=None):
-        # type: (Any, Any, Any, Any, Any) -> None
+    def __init__(self, tag, value, start_mark, end_mark, comment=None, anchor=None):
+        # type: (Any, Any, Any, Any, Any, Any) -> None
         self.tag = tag
         self.value = value
         self.start_mark = start_mark
         self.end_mark = end_mark
         self.comment = comment
-        self.anchor = None
+        self.anchor = anchor
 
     def __repr__(self):
         # type: () -> str
@@ -78,14 +78,15 @@ class ScalarNode(Node):
     __slots__ = ('style',)
     id = 'scalar'
 
-    def __init__(self, tag, value, start_mark=None, end_mark=None, style=None, comment=None):
-        # type: (Any, Any, Any, Any, Any, Any) -> None
-        Node.__init__(self, tag, value, start_mark, end_mark, comment=comment)
+    def __init__(self, tag, value, start_mark=None, end_mark=None, style=None, comment=None,
+                 anchor=None):
+        # type: (Any, Any, Any, Any, Any, Any, Any) -> None
+        Node.__init__(self, tag, value, start_mark, end_mark, comment=comment, anchor=anchor)
         self.style = style
 
 
 class CollectionNode(Node):
-    __slots__ = 'flow_style', 'anchor'
+    __slots__ = ('flow_style', )
 
     def __init__(
         self,

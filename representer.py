@@ -65,6 +65,7 @@ class BaseRepresenter(object):
         self.represented_objects = {}  # type: Dict[Any, Any]
         self.object_keeper = []  # type: List[Any]
         self.alias_key = None  # type: Optional[int]
+        self.sort_base_mapping_type_on_output = True
 
     @property
     def serializer(self):
@@ -209,10 +210,11 @@ class BaseRepresenter(object):
         best_style = True
         if hasattr(mapping, 'items'):
             mapping = list(mapping.items())
-            try:
-                mapping = sorted(mapping)
-            except TypeError:
-                pass
+            if self.sort_base_mapping_type_on_output:
+                try:
+                    mapping = sorted(mapping)
+                except TypeError:
+                    pass
         for item_key, item_value in mapping:
             node_key = self.represent_key(item_key)
             node_value = self.represent_data(item_value)
@@ -986,8 +988,7 @@ class RoundTripRepresenter(SafeRepresenter):
                 best_style = False
             value.append((node_key, node_value))
         if flow_style is None:
-            if ((item_count != 0) or bool(merge_list)) \
-               and self.default_flow_style is not None:
+            if ((item_count != 0) or bool(merge_list)) and self.default_flow_style is not None:
                 node.flow_style = self.default_flow_style
             else:
                 node.flow_style = best_style

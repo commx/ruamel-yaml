@@ -3,6 +3,7 @@
 from __future__ import print_function, absolute_import, division, unicode_literals
 
 from ruamel.yaml.compat import text_type
+from ruamel.yaml.anchor import Anchor
 
 if False:  # MYPY
     from typing import Text, Any, Dict, List  # NOQA
@@ -20,7 +21,7 @@ __all__ = [
 
 
 class ScalarString(text_type):
-    __slots__ = ()
+    __slots__ = (Anchor.attrib)
 
     def __new__(cls, *args, **kw):
         # type: (Any, Any) -> Any
@@ -29,6 +30,26 @@ class ScalarString(text_type):
     def replace(self, old, new, maxreplace=-1):
         # type: (Any, Any, int) -> Any
         return type(self)((text_type.replace(self, old, new, maxreplace)))
+
+    @property
+    def anchor(self):
+        # type: () -> Any
+        if not hasattr(self, Anchor.attrib):
+            setattr(self, Anchor.attrib, Anchor())
+        return getattr(self, Anchor.attrib)
+
+    def yaml_anchor(self):
+        # type: () -> Any
+        if not hasattr(self, Anchor.attrib):
+            return None
+        if not self.anchor.always_dump:
+            return None
+        return self.anchor
+
+    def yaml_set_anchor(self, value, always_dump=False):
+        # type: (Any, bool) -> None
+        self.anchor.value = value
+        self.anchor.always_dump = always_dump
 
 
 class LiteralScalarString(ScalarString):
