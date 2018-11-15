@@ -1,3 +1,7 @@
+[0, 15, 78]: 2018-11-15
+  - fix setup issue for 3.8 (reported by `Sidney Kuyateh 
+    <https://bitbucket.org/autinerd/>`__)
+
 [0, 15, 77]: 2018-11-09
   - setting `yaml.sort_base_mapping_type_on_output = False`, will prevent
     explicit sorting by keys in the base representer of mappings. Roundtrip

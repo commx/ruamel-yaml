@@ -1,5 +1,6 @@
 # coding: utf-8
 
+import sys
 import platform
 import pytest
 from textwrap import dedent
@@ -11,15 +12,20 @@ from textwrap import dedent
 def test_load_cyaml():
     import ruamel.yaml
 
+    if sys.version_info >= (3, 8):
+        return
     assert ruamel.yaml.__with_libyaml__
     from ruamel.yaml.cyaml import CLoader
 
     ruamel.yaml.load('abc: 1', Loader=CLoader)
 
 
+@pytest.mark.skipif(sys.version_info >= (3, 8), reason='no _PyGC_FINALIZED')
 def test_dump_cyaml():
     import ruamel.yaml
 
+    if sys.version_info >= (3, 8):
+        return
     data = {'a': 1, 'b': 2}
     res = ruamel.yaml.dump(
         data,
@@ -34,6 +40,8 @@ def test_load_cyaml_1_2():
     # issue 155
     import ruamel.yaml
 
+    if sys.version_info >= (3, 8):
+        return
     assert ruamel.yaml.__with_libyaml__
     inp = dedent("""\
     %YAML 1.2
@@ -49,6 +57,8 @@ def test_dump_cyaml_1_2():
     import ruamel.yaml
     from ruamel.yaml.compat import StringIO
 
+    if sys.version_info >= (3, 8):
+        return
     assert ruamel.yaml.__with_libyaml__
     yaml = ruamel.yaml.YAML(typ='safe')
     yaml.version = (1, 2)

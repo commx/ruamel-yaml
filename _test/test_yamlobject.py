@@ -56,11 +56,13 @@ def test_qualified_name00(tmpdir):
         def f(self):
             pass
 
-    yaml = YAML(typ='unsafe')
+    yaml = YAML(typ='unsafe', pure=True)
+    yaml.explicit_end = True
     buf = StringIO()
     yaml.dump(A.f, buf)
     res = buf.getvalue()
-    assert res == '!!python/name:__main__.A.f \\n...\\n'
+    print('res', repr(res))
+    assert res == "!!python/name:__main__.A.f ''\\n...\\n"
     x = yaml.load(res)
     assert x == A.f
     """
@@ -74,10 +76,11 @@ def test_qualified_name01(tmpdir):
     import ruamel.yaml.comments
     from ruamel.yaml.compat import StringIO
 
-    yaml = YAML(typ='unsafe')
+    yaml = YAML(typ='unsafe', pure=True)
+    yaml.explicit_end = True
     buf = StringIO()
     yaml.dump(ruamel.yaml.comments.CommentedBase.yaml_anchor, buf)
     res = buf.getvalue()
-    assert res == '!!python/name:ruamel.yaml.comments.CommentedBase.yaml_anchor \n...\n'
+    assert res == "!!python/name:ruamel.yaml.comments.CommentedBase.yaml_anchor ''\n...\n"
     x = yaml.load(res)
     assert x == ruamel.yaml.comments.CommentedBase.yaml_anchor
