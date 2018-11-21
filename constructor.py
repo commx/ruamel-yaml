@@ -1505,7 +1505,7 @@ class RoundTripConstructor(SafeConstructor):
         data = CommentedMap()
         data._yaml_set_line_col(node.start_mark.line, node.start_mark.column)
         yield data
-        self.construct_mapping(node, data)
+        self.construct_mapping(node, data, deep=True)
         self.set_collection_style(data, node)
 
     def set_collection_style(self, data, node):
