@@ -156,8 +156,8 @@ class Emitter(object):
         self.column = 0
         self.whitespace = True
         self.indention = True
-        self.compact_seq_seq = True   # dash after dash
-        self.compact_seq_map = True   # key after dash
+        self.compact_seq_seq = True  # dash after dash
+        self.compact_seq_map = True  # key after dash
         # self.compact_ms = False   # dash after key, only when excplicit key with ?
         self.no_newline = None  # type: Optional[bool]  # set if directly after `- `
 
@@ -1463,9 +1463,12 @@ class Emitter(object):
                         data = data.encode(self.encoding)
                     self.stream.write(data)
                     if ch == u'\a':
-                        self.write_line_break()
-                        self.write_indent()
-                        end += 2  # \a and the space that is inserted on the fold
+                        if end < (len(text) - 1) and not text[end + 2].isspace():
+                            self.write_line_break()
+                            self.write_indent()
+                            end += 2  # \a and the space that is inserted on the fold
+                        else:
+                            raise EmitterError('unexcpected fold indicator \\a before space')
                     if ch is None:
                         self.write_line_break()
                     start = end

@@ -78,15 +78,16 @@ class ScalarNode(Node):
     __slots__ = ('style',)
     id = 'scalar'
 
-    def __init__(self, tag, value, start_mark=None, end_mark=None, style=None, comment=None,
-                 anchor=None):
+    def __init__(
+        self, tag, value, start_mark=None, end_mark=None, style=None, comment=None, anchor=None
+    ):
         # type: (Any, Any, Any, Any, Any, Any, Any) -> None
         Node.__init__(self, tag, value, start_mark, end_mark, comment=comment, anchor=anchor)
         self.style = style
 
 
 class CollectionNode(Node):
-    __slots__ = ('flow_style', )
+    __slots__ = ('flow_style',)
 
     def __init__(
         self,

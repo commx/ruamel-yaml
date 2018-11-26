@@ -1,3 +1,7 @@
+[0, 15, 80]: 2018-11-26
+ - fix issue emitting BEL character when round-tripping invalid folded input
+   (reported by Isaac on `StackOverflow <https://stackoverflow.com/a/53471217/1307905>`__)
+    
 [0, 15, 79]: 2018-11-21
   - fix issue with anchors nested deeper than alias (reported by gaFF on
     `StackOverflow <https://stackoverflow.com/a/53397781/1307905>`__)

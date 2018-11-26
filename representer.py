@@ -691,7 +691,11 @@ class RoundTripRepresenter(SafeRepresenter):
         tag = None
         style = '>'
         for fold_pos in reversed(getattr(data, 'fold_pos', [])):
-            if data[fold_pos] == ' ':
+            if (
+                data[fold_pos] == ' '
+                and (fold_pos > 0 and not data[fold_pos - 1].isspace())
+                and (fold_pos < len(data) and not data[fold_pos + 1].isspace())
+            ):
                 data = data[:fold_pos] + '\a' + data[fold_pos:]
         if PY2 and not isinstance(data, unicode):
             data = unicode(data, 'ascii')

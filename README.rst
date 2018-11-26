@@ -4,8 +4,8 @@ ruamel.yaml
 
 ``ruamel.yaml`` is a YAML 1.2 loader/dumper package for Python.
 
-:version:       0.15.79
-:updated:       2018-11-21
+:version:       0.15.80
+:updated:       2018-11-26
 :documentation: http://yaml.readthedocs.io
 :repository:    https://bitbucket.org/ruamel/
 :pypi:          https://pypi.org/project/ruamel.yaml/
@@ -54,6 +54,10 @@ ChangeLog
 
 .. should insert NEXT: at the beginning of line for next key (with empty line)
 
+0.15.80 (2018-11-26):
+ - fix issue emitting BEL character when round-tripping invalid folded input
+   (reported by Isaac on `StackOverflow <https://stackoverflow.com/a/53471217/1307905>`__)
+    
 0.15.79 (2018-11-21):
   - fix issue with anchors nested deeper than alias (reported by gaFF on
     `StackOverflow <https://stackoverflow.com/a/53397781/1307905>`__)
@@ -145,7 +149,7 @@ ChangeLog
 
 0.15.64 (2018-08-30):
   - support round-trip of tagged sequences: ``!Arg [a, {b: 1}]``
-  - single entry mappings in flow sequences now written by default without quotes
+  - single entry mappings in flow sequences now written by default without braces,
     set ``yaml.brace_single_entry_mapping_in_flow_sequence=True`` to force
     getting ``[a, {b: 1}, {c: {d: 2}}]`` instead of the default ``[a, b: 1, c: {d: 2}]``
   - fix issue when roundtripping floats starting with a dot such as ``.5``

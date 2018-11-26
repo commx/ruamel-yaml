@@ -21,7 +21,7 @@ __all__ = [
 
 
 class ScalarString(text_type):
-    __slots__ = (Anchor.attrib)
+    __slots__ = Anchor.attrib
 
     def __new__(cls, *args, **kw):
         # type: (Any, Any) -> Any
