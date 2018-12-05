@@ -115,6 +115,9 @@ yaml.load(stream)
 In the old API this is a warning starting with 0.15.2 and an error in
 0.16.0.
 
+When a duplicate key is found it and its value are discarded, as should be done
+according to the `YAML 1.1 specification <http://yaml.org/spec/1.1/#id932806>`__.
+
 Dumping a multi-documents YAML stream
 +++++++++++++++++++++++++++++++++++++
 

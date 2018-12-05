@@ -241,13 +241,16 @@ class BaseConstructor(object):
 
                 value = self.construct_object(value_node, deep=deep)
                 if check:
-                    self.check_mapping_key(node, key_node, mapping, key, value)
-                mapping[key] = value
+                    if self.check_mapping_key(node, key_node, mapping, key, value):
+                        mapping[key] = value
+                else:
+                    mapping[key] = value
             total_mapping.update(mapping)
         return total_mapping
 
     def check_mapping_key(self, node, key_node, mapping, key, value):
-        # type: (Any, Any, Any, Any, Any) -> None
+        # type: (Any, Any, Any, Any, Any) -> bool
+        """return True if key is unique"""
         if key in mapping:
             if not self.allow_duplicate_keys:
                 mk = mapping.get(key)
@@ -277,6 +280,8 @@ class BaseConstructor(object):
                     warnings.warn(DuplicateKeyFutureWarning(*args))
                 else:
                     raise DuplicateKeyError(*args)
+            return False
+        return True
 
     def check_set_key(self, node, key_node, setting, key):
         # type: (Any, Any, Any, Any, Any) -> None
@@ -1411,31 +1416,31 @@ class RoundTripConstructor(SafeConstructor):
                         key_node.start_mark,
                     )
             value = self.construct_object(value_node, deep=deep)
-            self.check_mapping_key(node, key_node, maptyp, key, value)
+            if self.check_mapping_key(node, key_node, maptyp, key, value):
 
-            if key_node.comment and len(key_node.comment) > 4 and key_node.comment[4]:
-                if last_value is None:
-                    key_node.comment[0] = key_node.comment.pop(4)
-                    maptyp._yaml_add_comment(key_node.comment, value=last_key)
-                else:
-                    key_node.comment[2] = key_node.comment.pop(4)
+                if key_node.comment and len(key_node.comment) > 4 and key_node.comment[4]:
+                    if last_value is None:
+                        key_node.comment[0] = key_node.comment.pop(4)
+                        maptyp._yaml_add_comment(key_node.comment, value=last_key)
+                    else:
+                        key_node.comment[2] = key_node.comment.pop(4)
+                        maptyp._yaml_add_comment(key_node.comment, key=key)
+                    key_node.comment = None
+                if key_node.comment:
                     maptyp._yaml_add_comment(key_node.comment, key=key)
-                key_node.comment = None
-            if key_node.comment:
-                maptyp._yaml_add_comment(key_node.comment, key=key)
-            if value_node.comment:
-                maptyp._yaml_add_comment(value_node.comment, value=key)
-            maptyp._yaml_set_kv_line_col(
-                key,
-                [
-                    key_node.start_mark.line,
-                    key_node.start_mark.column,
-                    value_node.start_mark.line,
-                    value_node.start_mark.column,
-                ],
-            )
-            maptyp[key] = value
-            last_key, last_value = key, value  # could use indexing
+                if value_node.comment:
+                    maptyp._yaml_add_comment(value_node.comment, value=key)
+                maptyp._yaml_set_kv_line_col(
+                    key,
+                    [
+                        key_node.start_mark.line,
+                        key_node.start_mark.column,
+                        value_node.start_mark.line,
+                        value_node.start_mark.column,
+                    ],
+                )
+                maptyp[key] = value
+                last_key, last_value = key, value  # could use indexing
         # do this last, or <<: before a key will prevent insertion in instances
         # of collections.OrderedDict (as they have no __contains__
         if merge_map:
