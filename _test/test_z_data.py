@@ -192,7 +192,8 @@ class TestYAMLData(object):
                 assert data is not None
                 typ = 'rt'
         print('type:', typ)
-        print('data:', data.value, end='')
+        if data is not None:
+            print('data:', data.value, end='')
         print('output:', output.value if output is not None else output)
         if typ == 'rt':
             self.round_trip(data, output, yaml_version=yaml_version)

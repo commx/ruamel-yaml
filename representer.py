@@ -639,6 +639,7 @@ if PY2:
 
 Representer.add_multi_representer(object, Representer.represent_object)
 
+Representer.add_multi_representer(type, Representer.represent_name)
 
 from ruamel.yaml.comments import (
     CommentedMap,

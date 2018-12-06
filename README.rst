@@ -4,8 +4,8 @@ ruamel.yaml
 
 ``ruamel.yaml`` is a YAML 1.2 loader/dumper package for Python.
 
-:version:       0.15.80
-:updated:       2018-11-26
+:version:       0.15.81
+:updated:       2018-12-06
 :documentation: http://yaml.readthedocs.io
 :repository:    https://bitbucket.org/ruamel/
 :pypi:          https://pypi.org/project/ruamel.yaml/
@@ -53,6 +53,10 @@ ChangeLog
 =========
 
 .. should insert NEXT: at the beginning of line for next key (with empty line)
+
+0.15.81 (2018-12-06):
+ - fix issue dumping methods of metaclass derived classes (reported and fix provided
+   by `Douglas Raillard <https://bitbucket.org/DouglasRaillard/>`__)
 
 0.15.80 (2018-11-26):
  - fix issue emitting BEL character when round-tripping invalid folded input
