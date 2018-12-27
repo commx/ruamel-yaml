@@ -375,7 +375,7 @@ class CommentedBase(object):
         raise NotImplementedError
 
 
-class CommentedSeq(MutableSliceableSequence, list, CommentedBase):
+class CommentedSeq(MutableSliceableSequence, list, CommentedBase):  # type: ignore
     __slots__ = (Comment.attrib, '_lst')
 
     def __init__(self, *args, **kw):
@@ -508,7 +508,7 @@ class CommentedSeq(MutableSliceableSequence, list, CommentedBase):
         return list.__repr__(self)
 
 
-class CommentedKeySeq(tuple, CommentedBase):
+class CommentedKeySeq(tuple, CommentedBase):  # type: ignore
     """This primarily exists to be able to roundtrip keys that are sequences"""
 
     def _yaml_add_comment(self, comment, key=NoComment):

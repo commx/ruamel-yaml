@@ -4,6 +4,7 @@ from __future__ import print_function, absolute_import, division, unicode_litera
 
 import sys
 from .compat import no_limit_int  # NOQA
+from ruamel.yaml.anchor import Anchor
 
 if False:  # MYPY
     from typing import Text, Any, Dict, List  # NOQA
@@ -22,6 +23,7 @@ class ScalarFloat(float):
         e_width = kw.pop('e_width', None)  # type: ignore
         e_sign = kw.pop('e_sign', None)  # type: ignore
         underscore = kw.pop('underscore', None)  # type: ignore
+        anchor = kw.pop('anchor', None)  # type: ignore
         v = float.__new__(cls, *args, **kw)  # type: ignore
         v._width = width
         v._prec = prec
@@ -31,6 +33,8 @@ class ScalarFloat(float):
         v._e_width = e_width
         v._e_sign = e_sign
         v._underscore = underscore
+        if anchor is not None:
+            v.yaml_set_anchor(anchor, always_dump=True)
         return v
 
     def __iadd__(self, a):  # type: ignore
@@ -74,15 +78,36 @@ class ScalarFloat(float):
         x._underscore = self._underscore[:] if self._underscore is not None else None  # NOQA
         return x
 
+    @property
+    def anchor(self):
+        # type: () -> Any
+        if not hasattr(self, Anchor.attrib):
+            setattr(self, Anchor.attrib, Anchor())
+        return getattr(self, Anchor.attrib)
+
+    def yaml_anchor(self, any=False):
+        # type: (bool) -> Any
+        if not hasattr(self, Anchor.attrib):
+            return None
+        if any or self.anchor.always_dump:
+            return self.anchor
+        return None
+
+    def yaml_set_anchor(self, value, always_dump=False):
+        # type: (Any, bool) -> None
+        self.anchor.value = value
+        self.anchor.always_dump = always_dump
+
     def dump(self, out=sys.stdout):
         # type: (Any) -> Any
         out.write(
-            'ScalarFloat({}| w:{}, p:{}, s:{}, lz:{}|{}, w:{}, s:{})\n'.format(
+            'ScalarFloat({}| w:{}, p:{}, s:{}, lz:{}, _:{}|{}, w:{}, s:{})\n'.format(
                 self,
                 self._width,  # type: ignore
                 self._prec,  # type: ignore
                 self._m_sign,  # type: ignore
                 self._m_lead0,  # type: ignore
+                self._underscore,  # type: ignore
                 self._exp,  # type: ignore
                 self._e_width,  # type: ignore
                 self._e_sign,  # type: ignore

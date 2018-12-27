@@ -24,7 +24,7 @@ from ruamel.yaml.comments import (CommentedMap, CommentedOrderedMap, CommentedSe
                                   CommentedKeyMap)
 from ruamel.yaml.scalarstring import (SingleQuotedScalarString, DoubleQuotedScalarString,
                                       LiteralScalarString, FoldedScalarString,
-                                      ScalarString,)
+                                      PlainScalarString, ScalarString,)
 from ruamel.yaml.scalarint import ScalarInt, BinaryInt, OctalInt, HexInt, HexCapsInt
 from ruamel.yaml.scalarfloat import ScalarFloat
 from ruamel.yaml.timestamp import TimeStamp
@@ -1057,7 +1057,7 @@ class RoundTripConstructor(SafeConstructor):
             )
 
         if node.style == '|' and isinstance(node.value, text_type):
-            lss = LiteralScalarString(node.value)
+            lss = LiteralScalarString(node.value, anchor=node.anchor)
             if node.comment and node.comment[1]:
                 lss.comment = node.comment[1][0]  # type: ignore
             return lss
@@ -1069,7 +1069,7 @@ class RoundTripConstructor(SafeConstructor):
                 if idx < 0:
                     break
                 fold_positions.append(idx - len(fold_positions))
-            fss = FoldedScalarString(node.value.replace('\a', ''))
+            fss = FoldedScalarString(node.value.replace('\a', ''), anchor=node.anchor)
             if node.comment and node.comment[1]:
                 fss.comment = node.comment[1][0]  # type: ignore
             if fold_positions:
@@ -1077,9 +1077,11 @@ class RoundTripConstructor(SafeConstructor):
             return fss
         elif bool(self._preserve_quotes) and isinstance(node.value, text_type):
             if node.style == "'":
-                return SingleQuotedScalarString(node.value)
+                return SingleQuotedScalarString(node.value, anchor=node.anchor)
             if node.style == '"':
-                return DoubleQuotedScalarString(node.value)
+                return DoubleQuotedScalarString(node.value, anchor=node.anchor)
+        if node.anchor:
+            return PlainScalarString(node.value, anchor=node.anchor)
         return node.value
 
     def construct_yaml_int(self, node):
@@ -1108,7 +1110,10 @@ class RoundTripConstructor(SafeConstructor):
                 underscore[1] = value_su[2] == '_'
                 underscore[2] = len(value_su[2:]) > 1 and value_su[-1] == '_'
             return BinaryInt(  # type: ignore
-                sign * int(value_s[2:], 2), width=width, underscore=underscore
+                sign * int(value_s[2:], 2),
+                width=width,
+                underscore=underscore,
+                anchor=node.anchor,
             )
         elif value_s.startswith('0x'):
             # default to lower-case if no a-fA-F in string
@@ -1124,7 +1129,12 @@ class RoundTripConstructor(SafeConstructor):
             if underscore is not None:
                 underscore[1] = value_su[2] == '_'
                 underscore[2] = len(value_su[2:]) > 1 and value_su[-1] == '_'
-            return hex_fun(sign * int(value_s[2:], 16), width=width, underscore=underscore)
+            return hex_fun(
+                sign * int(value_s[2:], 16),
+                width=width,
+                underscore=underscore,
+                anchor=node.anchor,
+            )
         elif value_s.startswith('0o'):
             if self.resolver.processing_version > (1, 1) and value_s[2] == '0':
                 width = len(value_s[2:])
@@ -1132,7 +1142,10 @@ class RoundTripConstructor(SafeConstructor):
                 underscore[1] = value_su[2] == '_'
                 underscore[2] = len(value_su[2:]) > 1 and value_su[-1] == '_'
             return OctalInt(  # type: ignore
-                sign * int(value_s[2:], 8), width=width, underscore=underscore
+                sign * int(value_s[2:], 8),
+                width=width,
+                underscore=underscore,
+                anchor=node.anchor,
             )
         elif self.resolver.processing_version != (1, 2) and value_s[0] == '0':
             return sign * int(value_s, 8)
@@ -1157,7 +1170,11 @@ class RoundTripConstructor(SafeConstructor):
             # cannot have a leading underscore
             underscore[2] = len(value_su) > 1 and value_su[-1] == '_'
             return ScalarInt(  # type: ignore
-                sign * int(value_s), width=None, underscore=underscore
+                sign * int(value_s), width=None, underscore=underscore, anchor=node.anchor
+            )
+        elif node.anchor:
+            return ScalarInt(  # type: ignore
+                sign * int(value_s), width=None, anchor=node.anchor
             )
         else:
             return sign * int(value_s)
@@ -1225,12 +1242,18 @@ class RoundTripConstructor(SafeConstructor):
                 exp=exp,
                 e_width=e_width,
                 e_sign=e_sign,
+                anchor=node.anchor,
             )
         width = len(value_so)
         prec = value_so.index('.')  # you can use index, this would not be float without dot
         lead0 = leading_zeros(value_so)
         return ScalarFloat(  # type: ignore
-            sign * float(value_s), width=width, prec=prec, m_sign=m_sign, m_lead0=lead0
+            sign * float(value_s),
+            width=width,
+            prec=prec,
+            m_sign=m_sign,
+            m_lead0=lead0,
+            anchor=node.anchor,
         )
 
     def construct_yaml_str(self, node):

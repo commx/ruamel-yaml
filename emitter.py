@@ -402,12 +402,14 @@ class Emitter(object):
         if isinstance(self.event, AliasEvent):
             self.expect_alias()
         elif isinstance(self.event, (ScalarEvent, CollectionStartEvent)):
-            self.process_anchor(u'&')
+            if self.process_anchor(u'&') and isinstance(self.event, ScalarEvent):
+                self.no_newline = True
             self.process_tag()
             if isinstance(self.event, ScalarEvent):
+                # nprint('@', self.indention, self.no_newline, self.column)
                 self.expect_scalar()
             elif isinstance(self.event, SequenceStartEvent):
-                # nprintf('@', self.indention, self.no_newline, self.column)
+                # nprint('@', self.indention, self.no_newline, self.column)
                 i2, n2 = self.indention, self.no_newline  # NOQA
                 if self.event.comment:
                     if self.event.flow_style is False and self.event.comment:
@@ -757,15 +759,16 @@ class Emitter(object):
     # Anchor, Tag, and Scalar processors.
 
     def process_anchor(self, indicator):
-        # type: (Any) -> None
+        # type: (Any) -> bool
         if self.event.anchor is None:
             self.prepared_anchor = None
-            return
+            return False
         if self.prepared_anchor is None:
             self.prepared_anchor = self.prepare_anchor(self.event.anchor)
         if self.prepared_anchor:
             self.write_indicator(indicator + self.prepared_anchor, True)
         self.prepared_anchor = None
+        return True
 
     def process_tag(self):
         # type: () -> None

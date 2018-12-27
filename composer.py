@@ -152,6 +152,7 @@ class Composer(object):
             event.end_mark,
             style=event.style,
             comment=event.comment,
+            anchor=anchor,
         )
         if anchor is not None:
             self.anchors[anchor] = node

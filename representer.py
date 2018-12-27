@@ -12,6 +12,7 @@ from ruamel.yaml.scalarstring import (
     FoldedScalarString,
     SingleQuotedScalarString,
     DoubleQuotedScalarString,
+    PlainScalarString,
 )
 from ruamel.yaml.scalarint import ScalarInt, BinaryInt, OctalInt, HexInt, HexCapsInt
 from ruamel.yaml.scalarfloat import ScalarFloat
@@ -147,8 +148,8 @@ class BaseRepresenter(object):
             cls.yaml_multi_representers = cls.yaml_multi_representers.copy()
         cls.yaml_multi_representers[data_type] = representer
 
-    def represent_scalar(self, tag, value, style=None):
-        # type: (Any, Any, Any) -> Any
+    def represent_scalar(self, tag, value, style=None, anchor=None):
+        # type: (Any, Any, Any, Any) -> Any
         if style is None:
             style = self.default_style
         comment = None
@@ -156,7 +157,7 @@ class BaseRepresenter(object):
             comment = getattr(value, 'comment', None)
             if comment:
                 comment = [None, [comment]]
-        node = ScalarNode(tag, value, style=style, comment=comment)
+        node = ScalarNode(tag, value, style=style, comment=comment, anchor=anchor)
         if self.alias_key is not None:
             self.represented_objects[self.alias_key] = node
         return node
@@ -669,6 +670,15 @@ class RoundTripRepresenter(SafeRepresenter):
             dumper=dumper,
         )
 
+    def ignore_aliases(self, data):
+        # type: (Any) -> bool
+        try:
+            if data.anchor is not None and data.anchor.value is not None:
+                return False
+        except AttributeError:
+            pass
+        return SafeRepresenter.ignore_aliases(self, data)
+
     def represent_none(self, data):
         # type: (Any) -> Any
         if len(self.represented_objects) == 0 and not self.serializer.use_explicit_start:
@@ -680,10 +690,11 @@ class RoundTripRepresenter(SafeRepresenter):
         # type: (Any) -> Any
         tag = None
         style = '|'
+        anchor = data.yaml_anchor(any=True)
         if PY2 and not isinstance(data, unicode):
             data = unicode(data, 'ascii')
         tag = u'tag:yaml.org,2002:str'
-        return self.represent_scalar(tag, data, style=style)
+        return self.represent_scalar(tag, data, style=style, anchor=anchor)
 
     represent_preserved_scalarstring = represent_literal_scalarstring
 
@@ -691,6 +702,7 @@ class RoundTripRepresenter(SafeRepresenter):
         # type: (Any) -> Any
         tag = None
         style = '>'
+        anchor = data.yaml_anchor(any=True)
         for fold_pos in reversed(getattr(data, 'fold_pos', [])):
             if (
                 data[fold_pos] == ' '
@@ -701,30 +713,42 @@ class RoundTripRepresenter(SafeRepresenter):
         if PY2 and not isinstance(data, unicode):
             data = unicode(data, 'ascii')
         tag = u'tag:yaml.org,2002:str'
-        return self.represent_scalar(tag, data, style=style)
+        return self.represent_scalar(tag, data, style=style, anchor=anchor)
 
     def represent_single_quoted_scalarstring(self, data):
         # type: (Any) -> Any
         tag = None
         style = "'"
+        anchor = data.yaml_anchor(any=True)
         if PY2 and not isinstance(data, unicode):
             data = unicode(data, 'ascii')
         tag = u'tag:yaml.org,2002:str'
-        return self.represent_scalar(tag, data, style=style)
+        return self.represent_scalar(tag, data, style=style, anchor=anchor)
 
     def represent_double_quoted_scalarstring(self, data):
         # type: (Any) -> Any
         tag = None
         style = '"'
+        anchor = data.yaml_anchor(any=True)
         if PY2 and not isinstance(data, unicode):
             data = unicode(data, 'ascii')
         tag = u'tag:yaml.org,2002:str'
-        return self.represent_scalar(tag, data, style=style)
+        return self.represent_scalar(tag, data, style=style, anchor=anchor)
 
-    def insert_underscore(self, prefix, s, underscore):
-        # type: (Any, Any, Any) -> Any
+    def represent_plain_scalarstring(self, data):
+        # type: (Any) -> Any
+        tag = None
+        style = ''
+        anchor = data.yaml_anchor(any=True)
+        if PY2 and not isinstance(data, unicode):
+            data = unicode(data, 'ascii')
+        tag = u'tag:yaml.org,2002:str'
+        return self.represent_scalar(tag, data, style=style, anchor=anchor)
+
+    def insert_underscore(self, prefix, s, underscore, anchor=None):
+        # type: (Any, Any, Any, Any) -> Any
         if underscore is None:
-            return self.represent_scalar(u'tag:yaml.org,2002:int', prefix + s)
+            return self.represent_scalar(u'tag:yaml.org,2002:int', prefix + s, anchor=anchor)
         if underscore[0]:
             sl = list(s)
             pos = len(s) - underscore[0]
@@ -736,7 +760,7 @@ class RoundTripRepresenter(SafeRepresenter):
             s = '_' + s
         if underscore[2]:
             s += '_'
-        return self.represent_scalar(u'tag:yaml.org,2002:int', prefix + s)
+        return self.represent_scalar(u'tag:yaml.org,2002:int', prefix + s, anchor=anchor)
 
     def represent_scalar_int(self, data):
         # type: (Any) -> Any
@@ -744,7 +768,8 @@ class RoundTripRepresenter(SafeRepresenter):
             s = '{:0{}d}'.format(data, data._width)
         else:
             s = format(data, 'd')
-        return self.insert_underscore("", s, data._underscore)
+        anchor = data.yaml_anchor(any=True)
+        return self.insert_underscore("", s, data._underscore, anchor=anchor)
 
     def represent_binary_int(self, data):
         # type: (Any) -> Any
@@ -753,7 +778,8 @@ class RoundTripRepresenter(SafeRepresenter):
             s = '{:0{}b}'.format(data, data._width)
         else:
             s = format(data, 'b')
-        return self.insert_underscore('0b', s, data._underscore)
+        anchor = data.yaml_anchor(any=True)
+        return self.insert_underscore('0b', s, data._underscore, anchor=anchor)
 
     def represent_octal_int(self, data):
         # type: (Any) -> Any
@@ -762,7 +788,8 @@ class RoundTripRepresenter(SafeRepresenter):
             s = '{:0{}o}'.format(data, data._width)
         else:
             s = format(data, 'o')
-        return self.insert_underscore('0o', s, data._underscore)
+        anchor = data.yaml_anchor(any=True)
+        return self.insert_underscore('0o', s, data._underscore, anchor=anchor)
 
     def represent_hex_int(self, data):
         # type: (Any) -> Any
@@ -771,7 +798,8 @@ class RoundTripRepresenter(SafeRepresenter):
             s = '{:0{}x}'.format(data, data._width)
         else:
             s = format(data, 'x')
-        return self.insert_underscore('0x', s, data._underscore)
+        anchor = data.yaml_anchor(any=True)
+        return self.insert_underscore('0x', s, data._underscore, anchor=anchor)
 
     def represent_hex_caps_int(self, data):
         # type: (Any) -> Any
@@ -780,12 +808,14 @@ class RoundTripRepresenter(SafeRepresenter):
             s = '{:0{}X}'.format(data, data._width)
         else:
             s = format(data, 'X')
-        return self.insert_underscore('0x', s, data._underscore)
+        anchor = data.yaml_anchor(any=True)
+        return self.insert_underscore('0x', s, data._underscore, anchor=anchor)
 
     def represent_scalar_float(self, data):
         # type: (Any) -> Any
         """ this is way more complicated """
         value = None
+        anchor = data.yaml_anchor(any=True)
         if data != data or (data == 0.0 and data == 1.0):
             value = u'.nan'
         elif data == self.inf_value:
@@ -793,7 +823,7 @@ class RoundTripRepresenter(SafeRepresenter):
         elif data == -self.inf_value:
             value = u'-.inf'
         if value:
-            return self.represent_scalar(u'tag:yaml.org,2002:float', value)
+            return self.represent_scalar(u'tag:yaml.org,2002:float', value, anchor=anchor)
         if data._exp is None and data._prec > 0 and data._prec == data._width - 1:
             # no exponent, but trailing dot
             value = u'{}{:d}.'.format(data._m_sign if data._m_sign else "", abs(int(data)))
@@ -812,7 +842,10 @@ class RoundTripRepresenter(SafeRepresenter):
         else:
             # exponent
             m, es = u'{:{}.{}e}'.format(
-                data, data._width, data._width - data._prec + (1 if data._m_sign else 0)
+                # data, data._width, data._width - data._prec + (1 if data._m_sign else 0)
+                data,
+                data._width,
+                data._width + (1 if data._m_sign else 0),
             ).split('e')
             w = data._width if data._prec > 0 else (data._width + 1)
             if data < 0:
@@ -855,7 +888,7 @@ class RoundTripRepresenter(SafeRepresenter):
 
         if value is None:
             value = to_unicode(repr(data)).lower()
-        return self.represent_scalar(u'tag:yaml.org,2002:float', value)
+        return self.represent_scalar(u'tag:yaml.org,2002:float', value, anchor=anchor)
 
     def represent_sequence(self, tag, sequence, flow_style=None):
         # type: (Any, Any, Any) -> Any
@@ -1186,6 +1219,10 @@ RoundTripRepresenter.add_representer(
 
 RoundTripRepresenter.add_representer(
     DoubleQuotedScalarString, RoundTripRepresenter.represent_double_quoted_scalarstring
+)
+
+RoundTripRepresenter.add_representer(
+    PlainScalarString, RoundTripRepresenter.represent_plain_scalarstring
 )
 
 RoundTripRepresenter.add_representer(ScalarInt, RoundTripRepresenter.represent_scalar_int)
