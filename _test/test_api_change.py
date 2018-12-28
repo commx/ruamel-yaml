@@ -135,6 +135,20 @@ class TestRead:
         yaml.load('a: 1')
         yaml.load('a: 1')  # did not work in 0.15.4
 
+    def test_parse(self):
+        # ensure `parse` method is functional and can parse "unsafe" yaml
+        from ruamel.yaml import YAML
+        from ruamel.yaml.constructor import ConstructorError
+
+        yaml = YAML(typ='safe')
+        s = '- !User0 {age: 18, name: Anthon}'
+        # should fail to load
+        with pytest.raises(ConstructorError):
+            yaml.load(s)
+        # should parse fine
+        for _ in yaml.parse(s):
+            pass
+
 
 class TestLoadAll:
     def test_multi_document_load(self, tmpdir):
