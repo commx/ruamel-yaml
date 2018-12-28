@@ -155,11 +155,11 @@ class BaseConstructor(object):
                 elif None in self.yaml_constructors:
                     constructor = self.yaml_constructors[None]
                 elif isinstance(node, ScalarNode):
-                    constructor = self.__class__.construct_scalar  # type: ignore
+                    constructor = self.__class__.construct_scalar
                 elif isinstance(node, SequenceNode):
-                    constructor = self.__class__.construct_sequence  # type: ignore
+                    constructor = self.__class__.construct_sequence
                 elif isinstance(node, MappingNode):
-                    constructor = self.__class__.construct_mapping  # type: ignore
+                    constructor = self.__class__.construct_mapping
         if tag_suffix is None:
             data = constructor(self, node)
         else:
@@ -1109,7 +1109,7 @@ class RoundTripConstructor(SafeConstructor):
             if underscore is not None:
                 underscore[1] = value_su[2] == '_'
                 underscore[2] = len(value_su[2:]) > 1 and value_su[-1] == '_'
-            return BinaryInt(  # type: ignore
+            return BinaryInt(
                 sign * int(value_s[2:], 2),
                 width=width,
                 underscore=underscore,
@@ -1141,7 +1141,7 @@ class RoundTripConstructor(SafeConstructor):
             if underscore is not None:
                 underscore[1] = value_su[2] == '_'
                 underscore[2] = len(value_su[2:]) > 1 and value_su[-1] == '_'
-            return OctalInt(  # type: ignore
+            return OctalInt(
                 sign * int(value_s[2:], 8),
                 width=width,
                 underscore=underscore,
@@ -1163,17 +1163,17 @@ class RoundTripConstructor(SafeConstructor):
             if underscore is not None:
                 # cannot have a leading underscore
                 underscore[2] = len(value_su) > 1 and value_su[-1] == '_'
-            return ScalarInt(  # type: ignore
+            return ScalarInt(
                 sign * int(value_s), width=len(value_s), underscore=underscore
             )
         elif underscore:
             # cannot have a leading underscore
             underscore[2] = len(value_su) > 1 and value_su[-1] == '_'
-            return ScalarInt(  # type: ignore
+            return ScalarInt(
                 sign * int(value_s), width=None, underscore=underscore, anchor=node.anchor
             )
         elif node.anchor:
-            return ScalarInt(  # type: ignore
+            return ScalarInt(
                 sign * int(value_s), width=None, anchor=node.anchor
             )
         else:
@@ -1233,7 +1233,7 @@ class RoundTripConstructor(SafeConstructor):
             e_width = len(exponent)
             e_sign = exponent[0] in '+-'
             # nprint('sf', width, prec, m_sign, exp, e_width, e_sign)
-            return ScalarFloat(  # type: ignore
+            return ScalarFloat(
                 sign * float(value_s),
                 width=width,
                 prec=prec,
@@ -1247,7 +1247,7 @@ class RoundTripConstructor(SafeConstructor):
         width = len(value_so)
         prec = value_so.index('.')  # you can use index, this would not be float without dot
         lead0 = leading_zeros(value_so)
-        return ScalarFloat(  # type: ignore
+        return ScalarFloat(
             sign * float(value_s),
             width=width,
             prec=prec,

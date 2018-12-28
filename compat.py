@@ -117,7 +117,8 @@ else:
 
 if False:  # MYPY
     # StreamType = Union[BinaryIO, IO[str], IO[unicode],  StringIO]
-    StreamType = Union[BinaryIO, IO[str], StringIO]
+    # StreamType = Union[BinaryIO, IO[str], StringIO]  # type: ignore
+    StreamType = Any
 
     StreamTextType = Union[Text, StreamType]
     VersionType = Union[List[int], str, Tuple[int, int]]
@@ -257,7 +258,7 @@ def version_tnf(t1, t2=None):
     return False
 
 
-class MutableSliceableSequence(MutableSequence):
+class MutableSliceableSequence(MutableSequence):  # type: ignore
     __slots__ = ()
 
     def __getitem__(self, index):

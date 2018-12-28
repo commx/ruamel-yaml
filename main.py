@@ -462,7 +462,7 @@ class YAML(object):
         """
         if not hasattr(stream, 'write') and hasattr(stream, 'open'):
             # pathlib.Path() instance
-            with stream.open('w') as fp:  # type: ignore
+            with stream.open('w') as fp:
                 return self.dump_all(documents, fp, _kw, transform=transform)
         if _kw is not enforce:
             raise TypeError(
@@ -501,7 +501,7 @@ class YAML(object):
             delattr(self, '_serializer')
             delattr(self, '_emitter')
         if transform:
-            val = stream.getvalue()  # type: ignore
+            val = stream.getvalue()
             if self.encoding:
                 val = val.decode(self.encoding)
             if fstream is None:
@@ -723,7 +723,7 @@ class YAML(object):
 
 class YAMLContextManager(object):
     def __init__(self, yaml, transform=None):
-        # type: (Any, Optional[Callable]) -> None
+        # type: (Any, Any) -> None  # used to be: (Any, Optional[Callable]) -> None
         self._yaml = yaml
         self._output_inited = False
         self._output_path = None

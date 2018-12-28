@@ -570,7 +570,7 @@ class CommentedMapView(Sized):
         return count
 
 
-class CommentedMapKeysView(CommentedMapView, Set):
+class CommentedMapKeysView(CommentedMapView, Set):  # type: ignore
     __slots__ = ()
 
     @classmethod
@@ -589,7 +589,7 @@ class CommentedMapKeysView(CommentedMapView, Set):
             yield x
 
 
-class CommentedMapItemsView(CommentedMapView, Set):
+class CommentedMapItemsView(CommentedMapView, Set):  # type: ignore
     __slots__ = ()
 
     @classmethod
@@ -629,14 +629,14 @@ class CommentedMapValuesView(CommentedMapView):
             yield self._mapping[key]
 
 
-class CommentedMap(MutableMapping, ordereddict, CommentedBase):
+class CommentedMap(ordereddict, CommentedBase):
     __slots__ = (Comment.attrib, '_ok', '_ref')
 
     def __init__(self, *args, **kw):
         # type: (Any, Any) -> None
         self._ok = set()  # type: MutableSet[Any]  #  own keys
         self._ref = []  # type: List[CommentedMap]
-        ordereddict.__init__(self, *args, **kw)  # type: ignore
+        ordereddict.__init__(self, *args, **kw)
 
     def _yaml_add_comment(self, comment, key=NoComment, value=NoComment):
         # type: (Any, Optional[Any], Optional[Any]) -> None
@@ -823,7 +823,7 @@ class CommentedMap(MutableMapping, ordereddict, CommentedBase):
 
     def __len__(self):
         # type: () -> int
-        return ordereddict.__len__(self)  # type: ignore
+        return ordereddict.__len__(self)
 
     def __eq__(self, other):
         # type: (Any) -> bool
@@ -955,7 +955,7 @@ def raise_immutable(cls, *args, **kwargs):
     raise TypeError('{} objects are immutable'.format(cls.__name__))
 
 
-class CommentedKeyMap(CommentedBase, Mapping):
+class CommentedKeyMap(CommentedBase, Mapping):  # type: ignore
     __slots__ = Comment.attrib, '_od'
     """This primarily exists to be able to roundtrip keys that are mappings"""
 
@@ -1052,7 +1052,7 @@ class CommentedOrderedMap(CommentedMap):
     __slots__ = (Comment.attrib,)
 
 
-class CommentedSet(MutableSet, CommentedBase):  # NOQA
+class CommentedSet(MutableSet, CommentedBase): # type: ignore  # NOQA
     __slots__ = Comment.attrib, 'odict'
 
     def __init__(self, values=None):
