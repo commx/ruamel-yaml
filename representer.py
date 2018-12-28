@@ -16,6 +16,7 @@ from ruamel.yaml.scalarstring import (
 )
 from ruamel.yaml.scalarint import ScalarInt, BinaryInt, OctalInt, HexInt, HexCapsInt
 from ruamel.yaml.scalarfloat import ScalarFloat
+from ruamel.yaml.scalarbool import ScalarBoolean
 from ruamel.yaml.timestamp import TimeStamp
 
 import datetime
@@ -289,8 +290,8 @@ class SafeRepresenter(BaseRepresenter):
             # type: (Any) -> Any
             return self.represent_scalar(u'tag:yaml.org,2002:str', data)
 
-    def represent_bool(self, data):
-        # type: (Any) -> Any
+    def represent_bool(self, data, anchor=None):
+        # type: (Any, Optional[Any]) -> Any
         try:
             value = self.dumper.boolean_representation[bool(data)]
         except AttributeError:
@@ -298,7 +299,7 @@ class SafeRepresenter(BaseRepresenter):
                 value = u'true'
             else:
                 value = u'false'
-        return self.represent_scalar(u'tag:yaml.org,2002:bool', value)
+        return self.represent_scalar(u'tag:yaml.org,2002:bool', value, anchor=anchor)
 
     def represent_int(self, data):
         # type: (Any) -> Any
@@ -1200,7 +1201,19 @@ class RoundTripRepresenter(SafeRepresenter):
             tag = data.tag.value
         except AttributeError:
             tag = None
-        return self.represent_scalar(tag, data.value, style=data.style)
+        try:
+            anchor = data.yaml_anchor()
+        except AttributeError:
+            anchor = None
+        return self.represent_scalar(tag, data.value, style=data.style, anchor=anchor)
+
+    def represent_scalar_bool(self, data):
+        # type: (Any) -> Any
+        try:
+            anchor = data.yaml_anchor()
+        except AttributeError:
+            anchor = None
+        return SafeRepresenter.represent_bool(self, data, anchor=anchor)
 
 
 RoundTripRepresenter.add_representer(type(None), RoundTripRepresenter.represent_none)
@@ -1236,6 +1249,8 @@ RoundTripRepresenter.add_representer(HexInt, RoundTripRepresenter.represent_hex_
 RoundTripRepresenter.add_representer(HexCapsInt, RoundTripRepresenter.represent_hex_caps_int)
 
 RoundTripRepresenter.add_representer(ScalarFloat, RoundTripRepresenter.represent_scalar_float)
+
+RoundTripRepresenter.add_representer(ScalarBoolean, RoundTripRepresenter.represent_scalar_bool)
 
 RoundTripRepresenter.add_representer(CommentedSeq, RoundTripRepresenter.represent_list)
 

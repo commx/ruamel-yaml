@@ -27,6 +27,7 @@ from ruamel.yaml.scalarstring import (SingleQuotedScalarString, DoubleQuotedScal
                                       PlainScalarString, ScalarString,)
 from ruamel.yaml.scalarint import ScalarInt, BinaryInt, OctalInt, HexInt, HexCapsInt
 from ruamel.yaml.scalarfloat import ScalarFloat
+from ruamel.yaml.scalarbool import ScalarBoolean
 from ruamel.yaml.timestamp import TimeStamp
 from ruamel.yaml.util import RegExp
 
@@ -1163,9 +1164,7 @@ class RoundTripConstructor(SafeConstructor):
             if underscore is not None:
                 # cannot have a leading underscore
                 underscore[2] = len(value_su) > 1 and value_su[-1] == '_'
-            return ScalarInt(
-                sign * int(value_s), width=len(value_s), underscore=underscore
-            )
+            return ScalarInt(sign * int(value_s), width=len(value_s), underscore=underscore)
         elif underscore:
             # cannot have a leading underscore
             underscore[2] = len(value_su) > 1 and value_su[-1] == '_'
@@ -1173,9 +1172,7 @@ class RoundTripConstructor(SafeConstructor):
                 sign * int(value_s), width=None, underscore=underscore, anchor=node.anchor
             )
         elif node.anchor:
-            return ScalarInt(
-                sign * int(value_s), width=None, anchor=node.anchor
-            )
+            return ScalarInt(sign * int(value_s), width=None, anchor=node.anchor)
         else:
             return sign * int(value_s)
 
@@ -1623,6 +1620,8 @@ class RoundTripConstructor(SafeConstructor):
                     data.fa.set_block_style()
                 data.yaml_set_tag(node.tag)
                 yield data
+                if node.anchor:
+                    data.yaml_set_anchor(node.anchor)
                 self.construct_mapping(node, data)
                 return
             elif isinstance(node, ScalarNode):
@@ -1631,6 +1630,8 @@ class RoundTripConstructor(SafeConstructor):
                 data2.style = node.style
                 data2.yaml_set_tag(node.tag)
                 yield data2
+                if node.anchor:
+                    data2.yaml_set_anchor(node.anchor, always_dump=True)
                 return
             elif isinstance(node, SequenceNode):
                 data3 = CommentedSeq()
@@ -1641,6 +1642,8 @@ class RoundTripConstructor(SafeConstructor):
                     data3.fa.set_block_style()
                 data3.yaml_set_tag(node.tag)
                 yield data3
+                if node.anchor:
+                    data3.yaml_set_anchor(node.anchor)
                 data3.extend(self.construct_sequence(node))
                 return
         except:  # NOQA
@@ -1712,6 +1715,13 @@ class RoundTripConstructor(SafeConstructor):
         if values['t']:
             data._yaml['t'] = True
         return data
+
+    def construct_yaml_bool(self, node):
+        # type: (Any) -> Any
+        b = SafeConstructor.construct_yaml_bool(self, node)
+        if node.anchor:
+            return ScalarBoolean(b, anchor=node.anchor)
+        return b
 
 
 RoundTripConstructor.add_constructor(

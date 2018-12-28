@@ -1,3 +1,10 @@
+[0, 15, 82]: 2018-12-28
+  - anchors and aliases on scalar int, float, string and bool are now preserved. Anchors
+    do not need a referring alias for these (reported by 
+    `Alex Harvey <https://bitbucket.org/alexharv074/>`__)
+  - anchors no longer lost on tagged objects when roundtripping (reported by `Zaloo 
+    <https://bitbucket.org/zaloo/>`__)
+
 [0, 15, 81]: 2018-12-06
  - fix issue saving methods of metaclass derived classes (reported and fix provided
    by `Douglas Raillard <https://bitbucket.org/DouglasRaillard/>`__)

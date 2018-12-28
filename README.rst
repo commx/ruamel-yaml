@@ -4,8 +4,8 @@ ruamel.yaml
 
 ``ruamel.yaml`` is a YAML 1.2 loader/dumper package for Python.
 
-:version:       0.15.81
-:updated:       2018-12-06
+:version:       0.15.82
+:updated:       2018-12-28
 :documentation: http://yaml.readthedocs.io
 :repository:    https://bitbucket.org/ruamel/
 :pypi:          https://pypi.org/project/ruamel.yaml/
@@ -54,13 +54,20 @@ ChangeLog
 
 .. should insert NEXT: at the beginning of line for next key (with empty line)
 
+0.15.82 (2018-12-28):
+  - anchors and aliases on scalar int, float, string and bool are now preserved. Anchors
+    do not need a referring alias for these (reported by 
+    `Alex Harvey <https://bitbucket.org/alexharv074/>`__)
+  - anchors no longer lost on tagged objects when roundtripping (reported by `Zaloo 
+    <https://bitbucket.org/zaloo/>`__)
+
 0.15.81 (2018-12-06):
- - fix issue dumping methods of metaclass derived classes (reported and fix provided
-   by `Douglas Raillard <https://bitbucket.org/DouglasRaillard/>`__)
+  - fix issue dumping methods of metaclass derived classes (reported and fix provided
+    by `Douglas Raillard <https://bitbucket.org/DouglasRaillard/>`__)
 
 0.15.80 (2018-11-26):
- - fix issue emitting BEL character when round-tripping invalid folded input
-   (reported by Isaac on `StackOverflow <https://stackoverflow.com/a/53471217/1307905>`__)
+  - fix issue emitting BEL character when round-tripping invalid folded input
+    (reported by Isaac on `StackOverflow <https://stackoverflow.com/a/53471217/1307905>`__)
     
 0.15.79 (2018-11-21):
   - fix issue with anchors nested deeper than alias (reported by gaFF on

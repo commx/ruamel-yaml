@@ -17,9 +17,9 @@ from ruamel.yaml.scalarstring import ScalarString
 from ruamel.yaml.anchor import Anchor
 
 if PY2:
-    from collections import MutableSet, Sized, Set, MutableMapping, Mapping
+    from collections import MutableSet, Sized, Set, Mapping
 else:
-    from collections.abc import MutableSet, Sized, Set, MutableMapping, Mapping
+    from collections.abc import MutableSet, Sized, Set, Mapping
 
 if False:  # MYPY
     from typing import Any, Dict, Optional, List, Union, Optional, Iterator  # NOQA
@@ -1052,7 +1052,7 @@ class CommentedOrderedMap(CommentedMap):
     __slots__ = (Comment.attrib,)
 
 
-class CommentedSet(MutableSet, CommentedBase): # type: ignore  # NOQA
+class CommentedSet(MutableSet, CommentedBase):  # type: ignore  # NOQA
     __slots__ = Comment.attrib, 'odict'
 
     def __init__(self, values=None):

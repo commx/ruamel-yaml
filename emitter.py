@@ -402,8 +402,12 @@ class Emitter(object):
         if isinstance(self.event, AliasEvent):
             self.expect_alias()
         elif isinstance(self.event, (ScalarEvent, CollectionStartEvent)):
-            if self.process_anchor(u'&') and isinstance(self.event, ScalarEvent):
-                self.no_newline = True
+            if (
+                self.process_anchor(u'&')
+                and isinstance(self.event, ScalarEvent)
+                and self.sequence_context
+            ):
+                self.sequence_context = False
             self.process_tag()
             if isinstance(self.event, ScalarEvent):
                 # nprint('@', self.indention, self.no_newline, self.column)
@@ -848,6 +852,7 @@ class Emitter(object):
         # if self.analysis.multiline and split    \
         #         and (not self.style or self.style in '\'\"'):
         #     self.write_indent()
+        # nprint('xx', self.sequence_context, self.flow_level)
         if self.sequence_context and not self.flow_level:
             self.write_indent()
         if self.style == '"':
