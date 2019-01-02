@@ -669,10 +669,15 @@ class Emitter(object):
                 if not isinstance(
                     self.event, (SequenceStartEvent, MappingStartEvent)
                 ):  # sequence keys
-                    if self.event.style == '?':
-                        self.write_indicator(u'?', True, indention=True)
+                    try:
+                        if self.event.style == '?':
+                            self.write_indicator(u'?', True, indention=True)
+                    except AttributeError:  # aliases have no style
+                        pass
                 self.states.append(self.expect_block_mapping_simple_value)
                 self.expect_node(mapping=True, simple_key=True)
+                if isinstance(self.event, AliasEvent):
+                    self.stream.write(u' ')
             else:
                 self.write_indicator(u'?', True, indention=True)
                 self.states.append(self.expect_block_mapping_value)

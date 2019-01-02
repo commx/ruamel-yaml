@@ -8,7 +8,7 @@ from ruamel.yaml.anchor import Anchor
 if False:  # MYPY
     from typing import Text, Any, Dict, List  # NOQA
 
-__all__ = ['ScalarInt', 'BinaryInt', 'OctalInt', 'HexInt', 'HexCapsInt']
+__all__ = ['ScalarInt', 'BinaryInt', 'OctalInt', 'HexInt', 'HexCapsInt', 'DecimalInt']
 
 
 class ScalarInt(no_limit_int):
