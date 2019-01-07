@@ -1,3 +1,7 @@
+[0, 15, 84]: 2019-01-07
+  - fix for `CommentedMap.copy()` not returning `CommentedMap`, let alone copying comments etc.
+    (reported by `Anthony Sottile <https://bitbucket.org/asottile/>`__)
+
 [0, 15, 83]: 2019-01-02
   - fix for bug in roundtripping aliases used as key (reported via email by Zaloo)
 

@@ -908,9 +908,10 @@ class CommentedMap(ordereddict, CommentedBase):
 
     def copy(self):
         # type: () -> Any
-        x = {}  # update doesn't work
+        x = type(self)()  # update doesn't work
         for k, v in self._items():
             x[k] = v
+        self.copy_attributes(x)
         return x
 
     def add_referent(self, cm):
@@ -944,7 +945,7 @@ class CommentedMap(ordereddict, CommentedBase):
         memo[id(self)] = res
         for k in self:
             res[k] = copy.deepcopy(self[k])
-            self.copy_attributes(res, deep=True)
+        self.copy_attributes(res, deep=True)
         return res
 
 

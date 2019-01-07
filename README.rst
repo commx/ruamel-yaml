@@ -4,8 +4,8 @@ ruamel.yaml
 
 ``ruamel.yaml`` is a YAML 1.2 loader/dumper package for Python.
 
-:version:       0.15.83
-:updated:       2019-01-02
+:version:       0.15.84
+:updated:       2019-01-07
 :documentation: http://yaml.readthedocs.io
 :repository:    https://bitbucket.org/ruamel/
 :pypi:          https://pypi.org/project/ruamel.yaml/
@@ -53,6 +53,10 @@ ChangeLog
 =========
 
 .. should insert NEXT: at the beginning of line for next key (with empty line)
+
+0.15.84 (2019-01-07):
+  - fix for `CommentedMap.copy()` not returning `CommentedMap`, let alone copying comments etc.
+    (reported by `Anthony Sottile <https://bitbucket.org/asottile/>`__)
 
 0.15.83 (2019-01-02):
   - fix for bug in roundtripping aliases used as key (reported via email by Zaloo)
