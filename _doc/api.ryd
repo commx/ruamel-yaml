@@ -94,6 +94,12 @@ Initially only the typical operations are supported, but in principle
 all functionality of the old interface will be available via
 ``YAML`` instances (if you are using something that isn't let me know).
 
+If a parse or dump fails, and throws and exception, the state of the
+`YAML()` instance is not guaranteed to be able to handle further
+processing. You should, at that point to recreate the YAML instance before
+proceeding.
+
+
 Loading
 +++++++
 
