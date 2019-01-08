@@ -797,7 +797,10 @@ class Scanner(object):
                 if self.flow_context[-1] == '[':
                     if self.reader.peek(1) not in _THE_END_SPACE_TAB:
                         return False
-                # if self.reader.peek(1) in '\'"{[]}':
+                elif self.tokens and isinstance(self.tokens[-1], ValueToken):
+                    # mapping flow context scanning a value token
+                    if self.reader.peek(1) not in _THE_END_SPACE_TAB:
+                        return False
                 return True
         # VALUE(block context): ':' (' '|'\n')
         return self.reader.peek(1) in _THE_END_SPACE_TAB
