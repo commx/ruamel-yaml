@@ -4,8 +4,8 @@ ruamel.yaml
 
 ``ruamel.yaml`` is a YAML 1.2 loader/dumper package for Python.
 
-:version:       0.15.84
-:updated:       2019-01-07
+:version:       0.15.85
+:updated:       2019-01-08
 :documentation: http://yaml.readthedocs.io
 :repository:    https://bitbucket.org/ruamel/
 :pypi:          https://pypi.org/project/ruamel.yaml/
@@ -53,6 +53,14 @@ ChangeLog
 =========
 
 .. should insert NEXT: at the beginning of line for next key (with empty line)
+
+0.15.85 (2019-01-08):
+  - the types used by `SafeConstructor` for mappings and sequences can
+    now by set by assigning to `XXXConstructor.yaml_base_dict_type`
+    (and `..._list_type`), preventing the need to copy two methods
+    with 50+ lines that had `var = {}` hardcoded.  (Implemented to
+    help solve an feature request by `Anthony Sottile
+    <https://bitbucket.org/asottile/>`__ in an easier way)
 
 0.15.84 (2019-01-07):
   - fix for `CommentedMap.copy()` not returning `CommentedMap`, let alone copying comments etc.

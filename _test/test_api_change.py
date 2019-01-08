@@ -146,6 +146,7 @@ class TestRead:
         with pytest.raises(ConstructorError):
             yaml.load(s)
         # should parse fine
+        yaml = YAML(typ='safe')
         for _ in yaml.parse(s):
             pass
 

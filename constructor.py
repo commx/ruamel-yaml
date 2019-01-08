@@ -63,6 +63,8 @@ class BaseConstructor(object):
         if self.loader is not None and getattr(self.loader, '_constructor', None) is None:
             self.loader._constructor = self
         self.loader = loader
+        self.yaml_base_dict_type = dict
+        self.yaml_base_list_type = list
         self.constructed_objects = {}  # type: Dict[Any, Any]
         self.recursive_objects = {}  # type: Dict[Any, Any]
         self.state_generators = []  # type: List[Any]
@@ -207,13 +209,13 @@ class BaseConstructor(object):
             raise ConstructorError(
                 None, None, 'expected a mapping node, but found %s' % node.id, node.start_mark
             )
-        total_mapping = {}
+        total_mapping = self.yaml_base_dict_type()
         if getattr(node, 'merge', None) is not None:
             todo = [(node.merge, False), (node.value, False)]
         else:
             todo = [(node.value, True)]
         for values, check in todo:
-            mapping = {}  # type: Dict[Any, Any]
+            mapping = self.yaml_base_dict_type()  # type: Dict[Any, Any]
             for key_node, value_node in values:
                 # keys can be list -> deep
                 key = self.construct_object(key_node, deep=True)
@@ -686,13 +688,13 @@ class SafeConstructor(BaseConstructor):
 
     def construct_yaml_seq(self, node):
         # type: (Any) -> Any
-        data = []  # type: List[Any]
+        data = self.yaml_base_list_type()  # type: List[Any]
         yield data
         data.extend(self.construct_sequence(node))
 
     def construct_yaml_map(self, node):
         # type: (Any) -> Any
-        data = {}  # type: Dict[Any, Any]
+        data = self.yaml_base_dict_type()  # type: Dict[Any, Any]
         yield data
         value = self.construct_mapping(node)
         data.update(value)
