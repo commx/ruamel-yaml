@@ -231,11 +231,11 @@ def check_namespace_char(ch):
     # type: (Any) -> bool
     if u'\x21' <= ch <= u'\x7E':  # ! to ~
         return True
-    if u'\xA0' <= ch <= u'\xD7FF':
+    if u'\xA0' <= ch <= u'\uD7FF':
         return True
-    if (u'\xE000' <= ch <= u'\xFFFD') and ch != u'\xFEFF':  # excl. byte order mark
+    if (u'\uE000' <= ch <= u'\uFFFD') and ch != u'\uFEFF':  # excl. byte order mark
         return True
-    if u'\x10000' <= ch <= u'\x10FFFF':
+    if u'\U00010000' <= ch <= u'\U0010FFFF':
         return True
     return False
 
