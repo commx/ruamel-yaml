@@ -44,6 +44,7 @@ if sys.version_info < (3, 4):
     class NameConstant:
         pass
 
+
 if sys.version_info >= (3, 8):
 
     from ast import Str, Num, Bytes, NameConstant  # NOQA

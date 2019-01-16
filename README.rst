@@ -4,8 +4,8 @@ ruamel.yaml
 
 ``ruamel.yaml`` is a YAML 1.2 loader/dumper package for Python.
 
-:version:       0.15.85
-:updated:       2019-01-08
+:version:       0.15.86
+:updated:       2019-01-16
 :documentation: http://yaml.readthedocs.io
 :repository:    https://bitbucket.org/ruamel/
 :pypi:          https://pypi.org/project/ruamel.yaml/
@@ -54,16 +54,24 @@ ChangeLog
 
 .. should insert NEXT: at the beginning of line for next key (with empty line)
 
+0.15.86 (2019-01-16):
+  - reinsert merge key in its old position (reported by grumbler on
+    <Stackoverflow <https://stackoverflow.com/a/54206512/1307905>`__)
+  - fix for issue with non-ASCII anchor names (reported and fix
+    provided by Dandaleon Flux via email)
+  - fix for issue when parsing flow mapping value starting with colon (in pure Python only)
+    (reported by `FichteFoll <https://bitbucket.org/FichteFoll/>`__)
+
 0.15.85 (2019-01-08):
-  - the types used by `SafeConstructor` for mappings and sequences can
-    now by set by assigning to `XXXConstructor.yaml_base_dict_type`
-    (and `..._list_type`), preventing the need to copy two methods
-    with 50+ lines that had `var = {}` hardcoded.  (Implemented to
+  - the types used by ``SafeConstructor`` for mappings and sequences can
+    now by set by assigning to ``XXXConstructor.yaml_base_dict_type``
+    (and ``..._list_type``), preventing the need to copy two methods
+    with 50+ lines that had ``var = {}`` hardcoded.  (Implemented to
     help solve an feature request by `Anthony Sottile
     <https://bitbucket.org/asottile/>`__ in an easier way)
 
 0.15.84 (2019-01-07):
-  - fix for `CommentedMap.copy()` not returning `CommentedMap`, let alone copying comments etc.
+  - fix for ``CommentedMap.copy()`` not returning ``CommentedMap``, let alone copying comments etc.
     (reported by `Anthony Sottile <https://bitbucket.org/asottile/>`__)
 
 0.15.83 (2019-01-02):

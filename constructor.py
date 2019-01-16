@@ -599,6 +599,14 @@ class SafeConstructor(BaseConstructor):
             delta = datetime.timedelta(hours=tz_hour, minutes=tz_minute)
             if values['tz_sign'] == '-':
                 delta = -delta
+        # should do something else instead (or hook this up to the preceding if statement
+        # in reverse
+        #  if delta is None:
+        #      return datetime.datetime(year, month, day, hour, minute, second, fraction)
+        #  return datetime.datetime(year, month, day, hour, minute, second, fraction,
+        #                           datetime.timezone.utc)
+        # the above is not good enough though, should provide tzinfo. In Python3 that is easily
+        # doable drop that kind of support for Python2 as it has not native tzinfo
         data = datetime.datetime(year, month, day, hour, minute, second, fraction)
         if delta:
             data -= delta

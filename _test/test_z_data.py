@@ -9,6 +9,7 @@ import warnings  # NOQA
 from ruamel.std.pathlib import Path
 
 base_path = Path('data')  # that is ruamel.yaml.data
+PY2 = sys.version_info[0] == 2
 
 
 class YAMLData(object):
@@ -124,7 +125,10 @@ class TestYAMLData(object):
         buf = StringIO()
         yaml.dump(data, buf)
         expected = input.value if output is None else output.value
-        assert buf.getvalue() == expected
+        value = buf.getvalue()
+        if PY2:
+            value = value.decode('utf-8')
+        assert value == expected
 
     def load_assert(self, input, confirm, yaml_version=None):
         from ruamel.yaml.compat import Mapping

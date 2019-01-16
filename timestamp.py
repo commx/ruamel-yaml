@@ -5,6 +5,9 @@ from __future__ import print_function, absolute_import, division, unicode_litera
 import datetime
 import copy
 
+# ToDo: at least on PY3 you could probably attach the tzinfo correctly to the object
+#       a more complete datetime might be used by safe loading as well
+
 if False:  # MYPY
     from typing import Any, Dict, Optional, List  # NOQA
 

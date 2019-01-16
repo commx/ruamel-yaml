@@ -1,3 +1,19 @@
+[0, 15, 86]: 2019-01-16
+  - reinsert merge key in its old position (reported by grumbler on
+    <Stackoverflow <https://stackoverflow.com/a/54206512/1307905>`__)
+  - fix for issue with non-ASCII anchor names (reported and fix
+    provided by Dandaleon Flux via email)
+  - fix for issue when parsing flow mapping value starting with colon (in pure Python only)
+    (reported by `FichteFoll <https://bitbucket.org/FichteFoll/>`__)
+
+[0, 15, 86]: 2019-01-15
+  - reinsert merge key in its old position (reported by grumbler on
+    <Stackoverflow <https://stackoverflow.com/a/54206512/1307905>`__)
+  - fix for issue with non-ASCII anchor names (reported and fix
+    provided by Dandaleon Flux via email)
+  - fix for issue when parsing flow mapping value starting with colon (in pure Python only)
+    (reported by `FichteFoll <https://bitbucket.org/FichteFoll/>`__)
+
 [0, 15, 85]: 2019-01-08
   - the types used by `SafeConstructor` for mappings and sequences can
     now by set by assigning to `XXXConstructor.yaml_base_dict_type`

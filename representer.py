@@ -1002,6 +1002,7 @@ class RoundTripRepresenter(SafeRepresenter):
         except AttributeError:
             item_comments = {}
         merge_list = [m[1] for m in getattr(mapping, merge_attrib, [])]
+        merge_pos = getattr(mapping, merge_attrib, [[0]])[0][0]
         item_count = 0
         if bool(merge_list):
             items = mapping.non_merged_items()
@@ -1039,7 +1040,7 @@ class RoundTripRepresenter(SafeRepresenter):
             else:
                 arg = self.represent_data(merge_list)
                 arg.flow_style = True
-            value.insert(0, (ScalarNode(u'tag:yaml.org,2002:merge', '<<'), arg))
+            value.insert(merge_pos, (ScalarNode(u'tag:yaml.org,2002:merge', '<<'), arg))
         return node
 
     def represent_omap(self, tag, omap, flow_style=None):
