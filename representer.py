@@ -1002,7 +1002,10 @@ class RoundTripRepresenter(SafeRepresenter):
         except AttributeError:
             item_comments = {}
         merge_list = [m[1] for m in getattr(mapping, merge_attrib, [])]
-        merge_pos = getattr(mapping, merge_attrib, [[0]])[0][0]
+        try:
+            merge_pos = getattr(mapping, merge_attrib, [[0]])[0][0]
+        except IndexError:
+            merge_pos = 0
         item_count = 0
         if bool(merge_list):
             items = mapping.non_merged_items()

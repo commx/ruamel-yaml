@@ -324,7 +324,7 @@ class YAML(object):
         """
         if not hasattr(stream, 'read') and hasattr(stream, 'open'):
             # pathlib.Path() instance
-            with stream.open('r') as fp:  # type: ignore
+            with stream.open('rb') as fp:  # type: ignore
                 return self.load(fp)
         constructor, parser = self.get_constructor_parser(stream)
         try:
