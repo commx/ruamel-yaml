@@ -65,6 +65,8 @@ if PY3:
 
 
 else:
+    if False:
+        unicode = str
 
     def utf8(s):
         # type: (unicode) -> str

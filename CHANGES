@@ -1,3 +1,11 @@
+[0, 15, 88]: 2019-02-12
+  - fix inclusing of python code from the subpackage data (containing extra tests,
+    reported by `Florian Apolloner <https://bitbucket.org/apollo13/>`__)
+
+[0, 15, 88]: 2019-02-12
+  - fix inclusing of python code from the subpackage data (containing extra tests,
+    reported by `Florian Apolloner <https://bitbucket.org/apollo13/>`__)
+
 [0, 15, 87]: 2019-01-22
   - fix problem with empty lists and the code to reinsert merge keys (reported via email 
      by Zaloo)
