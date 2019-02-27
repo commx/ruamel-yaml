@@ -434,7 +434,7 @@ class NameSpacePackager(object):
             while fpn:
                 self._split.insert(0, '.'.join(fpn))
                 fpn = fpn[:-1]
-            for d in os.listdir('.'):
+            for d in sorted(os.listdir('.')):
                 if not os.path.isdir(d) or d == self._split[0] or d[0] in '._':
                     continue
                 # prevent sub-packages in namespace from being included
@@ -450,7 +450,9 @@ class NameSpacePackager(object):
                     (y.encode('utf-8') if isinstance(y, unicode) else y) for y in self._split
                 ]
         if skip:
-            print('skipping sub-packages:', ', '.join(skip))
+            # this interferes with output checking
+            # print('skipping sub-packages:', ', '.join(skip))
+            pass
         return self._split
 
     @property

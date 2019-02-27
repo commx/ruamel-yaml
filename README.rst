@@ -4,8 +4,8 @@ ruamel.yaml
 
 ``ruamel.yaml`` is a YAML 1.2 loader/dumper package for Python.
 
-:version:       0.15.88
-:updated:       2019-02-12
+:version:       0.15.89
+:updated:       2019-02-27
 :documentation: http://yaml.readthedocs.io
 :repository:    https://bitbucket.org/ruamel/
 :pypi:          https://pypi.org/project/ruamel.yaml/
@@ -54,7 +54,9 @@ ChangeLog
 
 .. should insert NEXT: at the beginning of line for next key (with empty line)
 
-NEXT:
+0.15.89 (2019-02-27):
+  - fix for items with flow-mapping in block sequence output on single line
+    (reported by `Zahari Dim <https://bitbucket.org/zahari_dim/>`__)
   - fix for safe dumping erroring in creation of representereror when dumping namedtuple
     (reported and solution by `Jaakko Kantojärvi <https://bitbucket.org/raphendyr/>`__)
 

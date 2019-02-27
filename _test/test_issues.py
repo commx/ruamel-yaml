@@ -560,6 +560,26 @@ class TestIssues:
         """
         d = round_trip(inp)  # NOQA
 
+    # @pytest.mark.xfail(strict=True, reason='bla bla', raises=AssertionError)
+    def test_issue_279(self):
+        from ruamel.yaml import YAML
+        from ruamel.yaml.compat import StringIO
+
+        yaml = YAML()
+        yaml.indent(sequence=4, offset=2)
+        inp = dedent("""\
+        experiments:
+          - datasets:
+        # ATLAS EWK
+              - {dataset: ATLASWZRAP36PB, frac: 1.0}
+              - {dataset: ATLASZHIGHMASS49FB, frac: 1.0}
+        """)
+        a = yaml.load(inp)
+        buf = StringIO()
+        yaml.dump(a, buf)
+        print(buf.getvalue())
+        assert buf.getvalue() == inp
+
     def test_issue_280(self):
         from ruamel.yaml import YAML
         from ruamel.yaml.representer import RepresenterError
@@ -576,6 +596,3 @@ class TestIssues:
 #        inp = """
 #        """
 #        d = round_trip(inp)  # NOQA
-
-
-   

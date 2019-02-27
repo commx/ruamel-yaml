@@ -546,6 +546,8 @@ class Emitter(object):
             if self.event.comment and self.event.comment[0]:
                 # eol comment on empty mapping
                 self.write_post_comment(self.event)
+            elif self.flow_level == 0:
+                self.write_line_break()
             self.state = self.states.pop()
         else:
             if self.canonical or self.column > self.best_width:
@@ -574,6 +576,8 @@ class Emitter(object):
             if self.event.comment and self.event.comment[0]:
                 # eol comment on flow mapping, never reached on empty mappings
                 self.write_post_comment(self.event)
+            else:
+                self.no_newline = False
             self.state = self.states.pop()
         else:
             self.write_indicator(u',', False)
