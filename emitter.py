@@ -321,11 +321,11 @@ class Emitter(object):
             self.write_stream_start()
             self.state = self.expect_first_document_start
         else:
-            raise EmitterError('expected StreamStartEvent, but got %s' % self.event)
+            raise EmitterError('expected StreamStartEvent, but got %s' % (self.event,))
 
     def expect_nothing(self):
         # type: () -> None
-        raise EmitterError('expected nothing, but got %s' % self.event)
+        raise EmitterError('expected nothing, but got %s' % (self.event,))
 
     # Document handlers.
 
@@ -372,7 +372,7 @@ class Emitter(object):
             self.write_stream_end()
             self.state = self.expect_nothing
         else:
-            raise EmitterError('expected DocumentStartEvent, but got %s' % self.event)
+            raise EmitterError('expected DocumentStartEvent, but got %s' % (self.event,))
 
     def expect_document_end(self):
         # type: () -> None
@@ -384,7 +384,7 @@ class Emitter(object):
             self.flush_stream()
             self.state = self.expect_document_start
         else:
-            raise EmitterError('expected DocumentEndEvent, but got %s' % self.event)
+            raise EmitterError('expected DocumentEndEvent, but got %s' % (self.event,))
 
     def expect_document_root(self):
         # type: () -> None
@@ -448,7 +448,7 @@ class Emitter(object):
                 else:
                     self.expect_block_mapping()
         else:
-            raise EmitterError('expected NodeEvent, but got %s' % self.event)
+            raise EmitterError('expected NodeEvent, but got %s' % (self.event,))
 
     def expect_alias(self):
         # type: () -> None

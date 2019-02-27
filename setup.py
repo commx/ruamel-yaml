@@ -424,9 +424,10 @@ class NameSpacePackager(object):
     def split(self):
         """split the full package name in list of compontents traditionally
         done by setuptools.find_packages. This routine skips any directories
-        with __init__.py that start with "_" or ".", or contain a
+        with __init__.py, for which the name starts with "_" or ".", or contain a
         setup.py/tox.ini (indicating a subpackage)
         """
+        skip = []
         if self._split is None:
             fpn = self.full_package_name.split('.')
             self._split = []
@@ -441,12 +442,15 @@ class NameSpacePackager(object):
                 if os.path.exists(x):
                     pd = _package_data(x)
                     if pd.get('nested', False):
+                        skip.append(d)
                         continue
                     self._split.append(self.full_package_name + '.' + d)
             if sys.version_info < (3,):
                 self._split = [
                     (y.encode('utf-8') if isinstance(y, unicode) else y) for y in self._split
                 ]
+        if skip:
+            print('skipping sub-packages:', ', '.join(skip))
         return self._split
 
     @property

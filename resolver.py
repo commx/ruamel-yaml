@@ -186,7 +186,7 @@ class BaseResolver(object):
                     node_check = element[0]
                     index_check = True
                 else:
-                    raise ResolverError('Invalid path element: %s' % element)
+                    raise ResolverError('Invalid path element: %s' % (element,))
             else:
                 node_check = None
                 index_check = element
@@ -201,9 +201,9 @@ class BaseResolver(object):
                 and not isinstance(node_check, string_types)
                 and node_check is not None
             ):
-                raise ResolverError('Invalid node checker: %s' % node_check)
+                raise ResolverError('Invalid node checker: %s' % (node_check,))
             if not isinstance(index_check, (string_types, int)) and index_check is not None:
-                raise ResolverError('Invalid index checker: %s' % index_check)
+                raise ResolverError('Invalid index checker: %s' % (index_check,))
             new_path.append((node_check, index_check))
         if kind is str:
             kind = ScalarNode
@@ -212,7 +212,7 @@ class BaseResolver(object):
         elif kind is dict:
             kind = MappingNode
         elif kind not in [ScalarNode, SequenceNode, MappingNode] and kind is not None:
-            raise ResolverError('Invalid node kind: %s' % kind)
+            raise ResolverError('Invalid node kind: %s' % (kind,))
         cls.yaml_path_resolvers[tuple(new_path), kind] = tag
 
     def descend_resolver(self, current_node, current_index):

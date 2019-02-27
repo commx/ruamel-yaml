@@ -560,8 +560,22 @@ class TestIssues:
         """
         d = round_trip(inp)  # NOQA
 
+    def test_issue_280(self):
+        from ruamel.yaml import YAML
+        from ruamel.yaml.representer import RepresenterError
+        from collections import namedtuple
+        from sys import stdout
+        T = namedtuple('T', ('a', 'b'))
+        t = T(1, 2)
+        yaml = YAML()
+        with pytest.raises(RepresenterError, match='cannot represent'):
+            yaml.dump({'t': t}, stdout)
+
 #    @pytest.mark.xfail(strict=True, reason='bla bla', raises=AssertionError)
 #    def test_issue_ xxx(self):
 #        inp = """
 #        """
 #        d = round_trip(inp)  # NOQA
+
+
+   

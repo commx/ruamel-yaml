@@ -170,7 +170,7 @@ class TestYAMLData(object):
             yaml_version = d.get('yaml_version')
             if 'python' in d:
                 if not check_python_version(d['python']):
-                    pytest.skip("unsupported version")
+                    pytest.skip('unsupported version')
             idx += 1
         data = output = confirm = python = None
         for doc in docs[idx:]:
@@ -230,7 +230,7 @@ def check_python_version(match, current=None):
         # assert m[0].isdigit()
         # assert m[-1].isdigit()
         m = [int(x) for x in m.split('.')]
-        current_len = current[:len(m)]
+        current_len = current[: len(m)]
         # print(m, current, current_len)
         if minimal:
             if current_len >= m:

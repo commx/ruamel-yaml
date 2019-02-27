@@ -54,6 +54,10 @@ ChangeLog
 
 .. should insert NEXT: at the beginning of line for next key (with empty line)
 
+NEXT:
+  - fix for safe dumping erroring in creation of representereror when dumping namedtuple
+    (reported and solution by `Jaakko Kantojärvi <https://bitbucket.org/raphendyr/>`__)
+
 0.15.88 (2019-02-12):
   - fix inclusing of python code from the subpackage data (containing extra tests,
     reported by `Florian Apolloner <https://bitbucket.org/apollo13/>`__)
