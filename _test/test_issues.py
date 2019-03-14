@@ -112,6 +112,7 @@ class TestIssues:
         assert 'second' in dict(**child)
 
     def test_issue_160(self):
+        from ruamel.yaml.compat import StringIO
         s = dedent("""\
         root:
             # a comment
@@ -120,8 +121,19 @@ class TestIssues:
         foo: 32
         bar: 32
         """)
-        x = round_trip(s, block_seq_indent=4, preserve_quotes=True)
-        assert x['bar'] == 32
+        a = round_trip_load(s)
+        del a['root'][0]['some_key']
+        buf = StringIO()
+        round_trip_dump(a, buf, block_seq_indent=4)
+        exp = dedent("""\
+        root:
+            # a comment
+            - {}
+
+        foo: 32
+        bar: 32
+        """)
+        assert buf.getvalue() == exp
 
     def test_issue_161(self):
         yaml_str = dedent("""\
