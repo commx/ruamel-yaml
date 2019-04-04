@@ -186,7 +186,7 @@ class TestYAMLData(object):
                 data = doc
             else:
                 print('no handler for type:', type(doc), repr(doc))
-                assert False
+                raise AssertionError()
         if typ is None:
             if data is not None and output is not None:
                 typ = 'rt'
@@ -207,7 +207,7 @@ class TestYAMLData(object):
             self.load_assert(data, confirm, yaml_version=yaml_version)
         else:
             print('\nrun type unknown:', typ)
-            assert False
+            raise AssertionError()
 
 
 def check_python_version(match, current=None):

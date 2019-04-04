@@ -603,6 +603,16 @@ class TestIssues:
         with pytest.raises(RepresenterError, match='cannot represent'):
             yaml.dump({'t': t}, stdout)
 
+    def test_issue_282(self):
+        # update from list of tuples caused AttributeError
+        import ruamel.yaml
+        yaml_data = ruamel.yaml.comments.CommentedMap([('a', 'apple'), ('b', 'banana')])
+        yaml_data.update([('c', 'cantaloupe')])
+        yaml_data.update({'d': 'date', 'k': 'kiwi'})
+        assert 'c' in yaml_data.keys()
+        assert 'c' in yaml_data._ok
+
+
 #    @pytest.mark.xfail(strict=True, reason='bla bla', raises=AssertionError)
 #    def test_issue_ xxx(self):
 #        inp = """

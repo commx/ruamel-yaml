@@ -699,11 +699,16 @@ class CommentedMap(ordereddict, CommentedBase):
         # type: (Any) -> None
         try:
             ordereddict.update(self, vals)
-            self._ok.update(vals.keys())  # type: ignore
         except TypeError:
             # probably a dict that is used
             for x in vals:
                 self[x] = vals[x]
+        try:
+            self._ok.update(vals.keys())  # type: ignore
+        except AttributeError:
+            # assume a list/tuple of two element lists/tuples
+            for x in vals:
+                self._ok.add(x[0])
 
     def insert(self, pos, key, value, comment=None):
         # type: (Any, Any, Any, Optional[Any]) -> None

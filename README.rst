@@ -4,8 +4,8 @@ ruamel.yaml
 
 ``ruamel.yaml`` is a YAML 1.2 loader/dumper package for Python.
 
-:version:       0.15.89
-:updated:       2019-02-27
+:version:       0.15.90
+:updated:       2019-04-04
 :documentation: http://yaml.readthedocs.io
 :repository:    https://bitbucket.org/ruamel/
 :pypi:          https://pypi.org/project/ruamel.yaml/
@@ -53,6 +53,10 @@ ChangeLog
 =========
 
 .. should insert NEXT: at the beginning of line for next key (with empty line)
+
+0.15.90 (2019-04-04):
+  - fix issue with updating `CommentedMap` from list of tuples (reported by 
+    `Peter Henry <https://bitbucket.org/mosbasik/>`__)
 
 0.15.89 (2019-02-27):
   - fix for items with flow-mapping in block sequence output on single line
