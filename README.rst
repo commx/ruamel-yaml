@@ -4,8 +4,8 @@ ruamel.yaml
 
 ``ruamel.yaml`` is a YAML 1.2 loader/dumper package for Python.
 
-:version:       0.15.90
-:updated:       2019-04-04
+:version:       0.15.91
+:updated:       2019-04-05
 :documentation: http://yaml.readthedocs.io
 :repository:    https://bitbucket.org/ruamel/
 :pypi:          https://pypi.org/project/ruamel.yaml/
@@ -54,6 +54,10 @@ ChangeLog
 
 .. should insert NEXT: at the beginning of line for next key (with empty line)
 
+0.15.91 (2019-04-05):
+  - allowing duplicate keys would not work for merge keys (reported by mamacdon on
+    `StackOverflow <https://stackoverflow.com/questions/55540686/>`__ 
+
 0.15.90 (2019-04-04):
   - fix issue with updating `CommentedMap` from list of tuples (reported by 
     `Peter Henry <https://bitbucket.org/mosbasik/>`__)
@@ -74,7 +78,7 @@ ChangeLog
 
 0.15.86 (2019-01-16):
   - reinsert merge key in its old position (reported by grumbler on
-    <Stackoverflow <https://stackoverflow.com/a/54206512/1307905>`__)
+    `StackOverflow <https://stackoverflow.com/a/54206512/1307905>`__)
   - fix for issue with non-ASCII anchor names (reported and fix
     provided by Dandaleon Flux via email)
   - fix for issue when parsing flow mapping value starting with colon (in pure Python only)

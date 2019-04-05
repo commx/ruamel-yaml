@@ -362,6 +362,10 @@ class SafeConstructor(BaseConstructor):
             key_node, value_node = node.value[index]
             if key_node.tag == u'tag:yaml.org,2002:merge':
                 if merge:  # double << key
+                    if self.allow_duplicate_keys:
+                        del node.value[index]
+                        index += 1
+                        continue
                     args = [
                         'while constructing a mapping',
                         node.start_mark,
@@ -1330,6 +1334,10 @@ class RoundTripConstructor(SafeConstructor):
             key_node, value_node = node.value[index]
             if key_node.tag == u'tag:yaml.org,2002:merge':
                 if merge_map_list:  # double << key
+                    if self.allow_duplicate_keys:
+                        del node.value[index]
+                        index += 1
+                        continue
                     args = [
                         'while constructing a mapping',
                         node.start_mark,
