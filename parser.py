@@ -71,7 +71,7 @@ from __future__ import absolute_import
 # flow_mapping_entry: { ALIAS ANCHOR TAG SCALAR FLOW-SEQUENCE-START
 #                                                    FLOW-MAPPING-START KEY }
 
-# need to have full path, as pkg_resources tries to load parser.py in __init__.py
+# need to have full path with import, as pkg_resources tries to load parser.py in __init__.py
 # only to not do anything with the package afterwards
 # and for Jython too
 
@@ -569,6 +569,9 @@ class Parser(object):
             else:
                 self.state = self.parse_block_mapping_value
                 return self.process_empty_scalar(token.end_mark)
+        if self.resolver.processing_version > (1, 1) and self.scanner.check_token(ValueToken):
+            self.state = self.parse_block_mapping_value
+            return self.process_empty_scalar(self.scanner.peek_token().start_mark)
         if not self.scanner.check_token(BlockEndToken):
             token = self.scanner.peek_token()
             raise ParserError(

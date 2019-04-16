@@ -612,6 +612,23 @@ class TestIssues:
         assert 'c' in yaml_data.keys()
         assert 'c' in yaml_data._ok
 
+    def test_issue_284(self):
+        import ruamel.yaml
+        inp = dedent("""\
+        plain key: in-line value
+        : # Both empty
+        "quoted key":
+        - entry
+        """)
+        yaml = ruamel.yaml.YAML(typ='rt')
+        yaml.version = (1, 2)
+        d = yaml.load(inp)
+        assert d[None] is None
+
+        yaml = ruamel.yaml.YAML(typ='rt')
+        yaml.version = (1, 1)
+        with pytest.raises(ruamel.yaml.parser.ParserError, match='expected <block end>'):
+            d = yaml.load(inp)
 
 #    @pytest.mark.xfail(strict=True, reason='bla bla', raises=AssertionError)
 #    def test_issue_ xxx(self):

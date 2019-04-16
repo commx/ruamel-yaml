@@ -95,7 +95,7 @@ all functionality of the old interface will be available via
 ``YAML`` instances (if you are using something that isn't let me know).
 
 If a parse or dump fails, and throws and exception, the state of the
-`YAML()` instance is not guaranteed to be able to handle further
+``YAML()`` instance is not guaranteed to be able to handle further
 processing. You should, at that point to recreate the YAML instance before
 proceeding.
 
@@ -158,7 +158,7 @@ works for output (dumping) only, requires you to specify the output
 Within the context manager, you cannot use the ``dump()`` with a
 second (stream) argument, nor can you use ``dump_all()``. The
 ``dump()`` within the context of the ``YAML()`` automatically creates
- multi-document if called more than once.
+multi-document if called more than once.
 
 To combine multiple YAML documents from multiple files:
 

@@ -4,8 +4,8 @@ ruamel.yaml
 
 ``ruamel.yaml`` is a YAML 1.2 loader/dumper package for Python.
 
-:version:       0.15.91
-:updated:       2019-04-05
+:version:       0.15.92
+:updated:       2019-04-16
 :documentation: http://yaml.readthedocs.io
 :repository:    https://bitbucket.org/ruamel/
 :pypi:          https://pypi.org/project/ruamel.yaml/
@@ -53,6 +53,10 @@ ChangeLog
 =========
 
 .. should insert NEXT: at the beginning of line for next key (with empty line)
+
+0.15.92 (2019-04-16):
+  - fix failure to parse empty implicit block mapping key (reported by 
+    `Nolan W <https://bitbucket.org/i2labs/>`__)
 
 0.15.91 (2019-04-05):
   - allowing duplicate keys would not work for merge keys (reported by mamacdon on

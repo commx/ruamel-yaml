@@ -1,3 +1,7 @@
+[0, 15, 92]: 2019-04-16
+  - fix failure to parse empty implicit block mapping key (reported by 
+    `Nolan W <https://bitbucket.org/i2labs/>`__)
+
 [0, 15, 91]: 2019-04-05
   - allowing duplicate keys would not work for merge keys (reported by mamacdon on
     `StackOverflow <https://stackoverflow.com/questions/55540686/>`__ 
