@@ -1,3 +1,17 @@
+[0, 15, 93]: 2019-04-21
+  - fix failure to parse empty implicit flow mapping key
+  - in YAML 1.1 plains scalars `y`, 'n', `Y`, and 'N' are now
+    correctly recognised as booleans and such strings dumped quoted
+    (reported by `Marcel Bollmann
+    <https://bitbucket.org/%7Bd8850921-9145-4ad0-ac30-64c3bd9b036d%7D/>`__)
+
+[0, 15, 93]: 2019-04-21
+  - fix failure to parse empty implicit flow mapping key
+  - in YAML 1.1 plains scalars `y`, 'n', `Y`, and 'N' are now
+    correctly recognised as booleans and such strings dumped quoted
+    (reported by `Marcel Bollmann
+    <https://bitbucket.org/%7Bd8850921-9145-4ad0-ac30-64c3bd9b036d%7D/>`__)
+
 [0, 15, 92]: 2019-04-16
   - fix failure to parse empty implicit block mapping key (reported by 
     `Nolan W <https://bitbucket.org/i2labs/>`__)

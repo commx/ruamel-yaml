@@ -438,6 +438,8 @@ class SafeConstructor(BaseConstructor):
     bool_values = {
         u'yes': True,
         u'no': False,
+        u'y': True,
+        u'n': False,
         u'true': True,
         u'false': False,
         u'on': True,

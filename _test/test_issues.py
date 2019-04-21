@@ -630,6 +630,24 @@ class TestIssues:
         with pytest.raises(ruamel.yaml.parser.ParserError, match='expected <block end>'):
             d = yaml.load(inp)
 
+    def test_issue_285(self):
+        from ruamel.yaml import YAML
+
+        yaml = YAML()
+        inp = dedent("""\
+        %YAML 1.1
+        ---
+        - y
+        - n
+        - Y
+        - N
+        """)
+        a = yaml.load(inp)
+        assert a[0]
+        assert a[2]
+        assert not a[1]
+        assert not a[3]
+
 #    @pytest.mark.xfail(strict=True, reason='bla bla', raises=AssertionError)
 #    def test_issue_ xxx(self):
 #        inp = """

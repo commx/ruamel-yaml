@@ -435,7 +435,7 @@ class Parser(object):
             self.state = self.parse_flow_sequence_first_entry
         elif self.scanner.check_token(FlowMappingStartToken):
             pt = self.scanner.peek_token()
-            end_mark = self.scanner.peek_token().end_mark
+            end_mark = pt.end_mark
             event = MappingStartEvent(
                 anchor,
                 tag,
@@ -731,6 +731,11 @@ class Parser(object):
                 else:
                     self.state = self.parse_flow_mapping_value
                     return self.process_empty_scalar(token.end_mark)
+            elif self.resolver.processing_version > (1, 1) and self.scanner.check_token(
+                ValueToken
+            ):
+                self.state = self.parse_flow_mapping_value
+                return self.process_empty_scalar(self.scanner.peek_token().end_mark)
             elif not self.scanner.check_token(FlowMappingEndToken):
                 self.states.append(self.parse_flow_mapping_empty_value)
                 return self.parse_flow_node()

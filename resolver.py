@@ -29,7 +29,7 @@ implicit_resolvers = [
         list(u'tTfF')),
     ([(1, 1)],
         u'tag:yaml.org,2002:bool',
-        RegExp(u'''^(?:yes|Yes|YES|no|No|NO
+        RegExp(u'''^(?:y|Y|yes|Yes|YES|n|N|no|No|NO
         |true|True|TRUE|false|False|FALSE
         |on|On|ON|off|Off|OFF)$''', re.X),
         list(u'yYnNtTfFoO')),
