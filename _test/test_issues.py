@@ -648,6 +648,22 @@ class TestIssues:
         assert not a[1]
         assert not a[3]
 
+    def test_issue_286(self):
+        from ruamel.yaml import YAML
+        from ruamel.yaml.compat import StringIO
+
+        yaml = YAML()
+        inp = dedent("""\
+        parent_key:
+        - sub_key: sub_value
+
+        # xxx""")
+        a = yaml.load(inp)
+        a['new_key'] = 'new_value'
+        buf = StringIO()
+        yaml.dump(a, buf)
+        assert buf.getvalue().endswith('xxx\nnew_key: new_value\n')
+
 #    @pytest.mark.xfail(strict=True, reason='bla bla', raises=AssertionError)
 #    def test_issue_ xxx(self):
 #        inp = """

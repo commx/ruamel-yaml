@@ -4,8 +4,8 @@ ruamel.yaml
 
 ``ruamel.yaml`` is a YAML 1.2 loader/dumper package for Python.
 
-:version:       0.15.93
-:updated:       2019-04-21
+:version:       0.15.94
+:updated:       2019-04-23
 :documentation: http://yaml.readthedocs.io
 :repository:    https://bitbucket.org/ruamel/
 :pypi:          https://pypi.org/project/ruamel.yaml/
@@ -53,6 +53,11 @@ ChangeLog
 =========
 
 .. should insert NEXT: at the beginning of line for next key (with empty line)
+
+0.15.94 (2019-04-23):
+  - fix missing line-break after end-of-file comments not ending in
+    line-break (reported by `Philip Thompson
+    <https://bitbucket.org/%7Be42ba205-0876-4151-bcbe-ccaea5bd13ce%7D/>`__)
 
 0.15.93 (2019-04-21):
   - fix failure to parse empty implicit flow mapping key

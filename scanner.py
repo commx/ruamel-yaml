@@ -1877,6 +1877,10 @@ class RoundTripScanner(Scanner):
                 while ch not in _THE_END:
                     ch = srp()
                     if ch == '\0':  # don't gobble the end-of-stream character
+                        # but add an explicit newline as "YAML processors should terminate
+                        # the stream with an explicit line break
+                        # https://yaml.org/spec/1.2/spec.html#id2780069
+                        comment += '\n'
                         break
                     comment += ch
                     srf()
