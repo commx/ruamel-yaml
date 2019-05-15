@@ -4,8 +4,8 @@ ruamel.yaml
 
 ``ruamel.yaml`` is a YAML 1.2 loader/dumper package for Python.
 
-:version:       0.15.94
-:updated:       2019-04-23
+:version:       0.15.95
+:updated:       2019-05-16
 :documentation: http://yaml.readthedocs.io
 :repository:    https://bitbucket.org/ruamel/
 :pypi:          https://pypi.org/project/ruamel.yaml/
@@ -53,6 +53,13 @@ ChangeLog
 =========
 
 .. should insert NEXT: at the beginning of line for next key (with empty line)
+
+0.15.95 (2019-05-16):
+  - fix failure to round-trip anchored scalars in block sequence
+    (reported by `William Kimball
+    <https://bitbucket.org/%7Bba35ed20-4bb0-46f8-bb5d-c29871e86a22%7D/>`__)
+  - wheel files for Python 3.4 no longer provided (`Python 3.4 EOL 2019-03-18
+    <https://www.python.org/dev/peps/pep-0429/>`__)
 
 0.15.94 (2019-04-23):
   - fix missing line-break after end-of-file comments not ending in

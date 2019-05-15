@@ -664,6 +664,37 @@ class TestIssues:
         yaml.dump(a, buf)
         assert buf.getvalue().endswith('xxx\nnew_key: new_value\n')
 
+    def test_issue_288(self):
+        import sys
+        from ruamel.yaml.compat import StringIO
+        from ruamel.yaml import YAML
+
+        yamldoc = dedent("""\
+        ---
+        # Reusable values
+        aliases:
+          # First-element comment
+          - &firstEntry First entry
+          # Second-element comment
+          - &secondEntry Second entry
+
+          # Third-element comment is
+          # a multi-line value
+          - &thirdEntry Third entry
+
+        # EOF Comment
+        """)
+
+        yaml = YAML()
+        yaml.indent(mapping=2, sequence=4, offset=2)
+        yaml.explicit_start = True
+        yaml.preserve_quotes = True
+        yaml.width = sys.maxsize
+        data = yaml.load(yamldoc)
+        buf = StringIO()
+        yaml.dump(data, buf)
+        assert buf.getvalue() == yamldoc
+
 #    @pytest.mark.xfail(strict=True, reason='bla bla', raises=AssertionError)
 #    def test_issue_ xxx(self):
 #        inp = """

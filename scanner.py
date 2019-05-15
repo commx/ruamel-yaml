@@ -1794,7 +1794,7 @@ class RoundTripScanner(Scanner):
             if isinstance(self.tokens[0], CommentToken):
                 self.tokens_taken += 1
                 comment = self.tokens.pop(0)
-                # print 'dropping2', comment
+                # nprint('dropping2', comment)
                 comments.append(comment)
         if len(comments) >= 1:
             self.tokens[0].add_pre_comments(comments)
@@ -1825,6 +1825,26 @@ class RoundTripScanner(Scanner):
             ):
                 self.tokens_taken += 1
                 self.tokens[0].add_post_comment(self.tokens.pop(1))
+            elif (
+                len(self.tokens) > 1
+                and isinstance(self.tokens[0], ScalarToken)
+                and isinstance(self.tokens[1], CommentToken)
+                and self.tokens[0].end_mark.line != self.tokens[1].start_mark.line
+            ):
+                self.tokens_taken += 1
+                c = self.tokens.pop(1)
+                c.value = (
+                    '\n' * (c.start_mark.line - self.tokens[0].end_mark.line)
+                    + (' ' * c.start_mark.column)
+                    + c.value
+                )
+                self.tokens[0].add_post_comment(c)
+                self.fetch_more_tokens()
+                while len(self.tokens) > 1 and isinstance(self.tokens[1], CommentToken):
+                    self.tokens_taken += 1
+                    c1 = self.tokens.pop(1)
+                    c.value = c.value + (' ' * c.start_mark.column) + c1.value
+                    self.fetch_more_tokens()
             self.tokens_taken += 1
             return self.tokens.pop(0)
         return None

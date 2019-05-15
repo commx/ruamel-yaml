@@ -421,7 +421,6 @@ class Emitter(object):
                             self.indention = False
                             self.no_newline = True
                     if self.write_pre_comment(self.event):
-                        pass
                         self.indention = i2
                         self.no_newline = not self.indention
                 if (
@@ -780,6 +779,8 @@ class Emitter(object):
             self.prepared_anchor = self.prepare_anchor(self.event.anchor)
         if self.prepared_anchor:
             self.write_indicator(indicator + self.prepared_anchor, True)
+            # issue 288
+            self.no_newline = False
         self.prepared_anchor = None
         return True
 
@@ -1631,7 +1632,7 @@ class Emitter(object):
             # at least one space if the current column >= the start column of the comment
             # but not at the start of a line
             nr_spaces = col - self.column
-            if self.column and value.strip() and nr_spaces < 1:
+            if self.column and value.strip() and nr_spaces < 1 and value[0] != '\n':
                 nr_spaces = 1
             value = ' ' * nr_spaces + value
             try:
