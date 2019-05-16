@@ -4,7 +4,7 @@ ruamel.yaml
 
 ``ruamel.yaml`` is a YAML 1.2 loader/dumper package for Python.
 
-:version:       0.15.95
+:version:       0.15.96
 :updated:       2019-05-16
 :documentation: http://yaml.readthedocs.io
 :repository:    https://bitbucket.org/ruamel/
@@ -53,6 +53,11 @@ ChangeLog
 =========
 
 .. should insert NEXT: at the beginning of line for next key (with empty line)
+
+0.15.96 (2019-05-16):
+  - fix failure to indent comments on round-trip anchored block style
+    scalars in block sequence (reported by `William Kimball
+    <https://bitbucket.org/%7Bba35ed20-4bb0-46f8-bb5d-c29871e86a22%7D/>`__)
 
 0.15.95 (2019-05-16):
   - fix failure to round-trip anchored scalars in block sequence

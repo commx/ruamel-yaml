@@ -695,6 +695,109 @@ class TestIssues:
         yaml.dump(data, buf)
         assert buf.getvalue() == yamldoc
 
+    def test_issue_288a(self):
+        import sys
+        from ruamel.yaml.compat import StringIO
+        from ruamel.yaml import YAML
+
+        yamldoc = dedent("""\
+        ---
+        # Reusable values
+        aliases:
+          # First-element comment
+          - &firstEntry First entry
+          # Second-element comment
+          - &secondEntry Second entry
+
+          # Third-element comment is
+           # a multi-line value
+          - &thirdEntry Third entry
+
+        # EOF Comment
+        """)
+
+        yaml = YAML()
+        yaml.indent(mapping=2, sequence=4, offset=2)
+        yaml.explicit_start = True
+        yaml.preserve_quotes = True
+        yaml.width = sys.maxsize
+        data = yaml.load(yamldoc)
+        buf = StringIO()
+        yaml.dump(data, buf)
+        assert buf.getvalue() == yamldoc
+
+    def test_issue_290(self):
+        import sys
+        from ruamel.yaml.compat import StringIO
+        from ruamel.yaml import YAML
+
+        yamldoc = dedent("""\
+        ---
+        aliases:
+          # Folded-element comment
+          # for a multi-line value
+          - &FoldedEntry >
+            THIS IS A
+            FOLDED, MULTI-LINE
+            VALUE
+
+          # Literal-element comment
+          # for a multi-line value
+          - &literalEntry |
+            THIS IS A
+            LITERAL, MULTI-LINE
+            VALUE
+
+          # Plain-element comment
+          - &plainEntry Plain entry
+        """)
+
+        yaml = YAML()
+        yaml.indent(mapping=2, sequence=4, offset=2)
+        yaml.explicit_start = True
+        yaml.preserve_quotes = True
+        yaml.width = sys.maxsize
+        data = yaml.load(yamldoc)
+        buf = StringIO()
+        yaml.dump(data, buf)
+        assert buf.getvalue() == yamldoc
+
+    def test_issue_290a(self):
+        import sys
+        from ruamel.yaml.compat import StringIO
+        from ruamel.yaml import YAML
+
+        yamldoc = dedent("""\
+        ---
+        aliases:
+          # Folded-element comment
+          # for a multi-line value
+          - &FoldedEntry >
+            THIS IS A
+            FOLDED, MULTI-LINE
+            VALUE
+
+          # Literal-element comment
+          # for a multi-line value
+          - &literalEntry |
+            THIS IS A
+            LITERAL, MULTI-LINE
+            VALUE
+
+          # Plain-element comment
+          - &plainEntry Plain entry
+        """)
+
+        yaml = YAML()
+        yaml.indent(mapping=2, sequence=4, offset=2)
+        yaml.explicit_start = True
+        yaml.preserve_quotes = True
+        yaml.width = sys.maxsize
+        data = yaml.load(yamldoc)
+        buf = StringIO()
+        yaml.dump(data, buf)
+        assert buf.getvalue() == yamldoc
+
 #    @pytest.mark.xfail(strict=True, reason='bla bla', raises=AssertionError)
 #    def test_issue_ xxx(self):
 #        inp = """

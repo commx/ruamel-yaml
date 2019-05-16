@@ -266,6 +266,7 @@ class CommentToken(Token):
         if SHOWLINES:
             try:
                 v += ', line: ' + str(self.start_mark.line)
+                v += ', col: ' + str(self.start_mark.column)
             except:  # NOQA
                 pass
         return 'CommentToken({})'.format(v)

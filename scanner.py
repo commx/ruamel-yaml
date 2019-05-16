@@ -1237,7 +1237,7 @@ class Scanner(object):
             # Eat whitespaces and comments until we reach the next token.
             comment = self.scan_to_next_token()
             while comment:
-                trailing.append(comment[0])
+                trailing.append(' ' * comment[1].column + comment[0])
                 comment = self.scan_to_next_token()
 
             # Keep track of the trailing whitespace and following comments
@@ -1824,7 +1824,14 @@ class RoundTripScanner(Scanner):
                 and self.tokens[0].end_mark.line == self.tokens[1].start_mark.line
             ):
                 self.tokens_taken += 1
-                self.tokens[0].add_post_comment(self.tokens.pop(1))
+                c = self.tokens.pop(1)
+                self.fetch_more_tokens()
+                while len(self.tokens) > 1 and isinstance(self.tokens[1], CommentToken):
+                    self.tokens_taken += 1
+                    c1 = self.tokens.pop(1)
+                    c.value = c.value + (' ' * c1.start_mark.column) + c1.value
+                    self.fetch_more_tokens()
+                self.tokens[0].add_post_comment(c)
             elif (
                 len(self.tokens) > 1
                 and isinstance(self.tokens[0], ScalarToken)
@@ -1843,7 +1850,7 @@ class RoundTripScanner(Scanner):
                 while len(self.tokens) > 1 and isinstance(self.tokens[1], CommentToken):
                     self.tokens_taken += 1
                     c1 = self.tokens.pop(1)
-                    c.value = c.value + (' ' * c.start_mark.column) + c1.value
+                    c.value = c.value + (' ' * c1.start_mark.column) + c1.value
                     self.fetch_more_tokens()
             self.tokens_taken += 1
             return self.tokens.pop(0)
