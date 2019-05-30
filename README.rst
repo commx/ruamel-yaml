@@ -54,6 +54,11 @@ ChangeLog
 
 .. should insert NEXT: at the beginning of line for next key (with empty line)
 
+NEXT:
+  - regenerate ext/_ruamel_yaml.c with Cython version 0.29.9, needed for
+    Python 3.8.0a4 (reported by `Anthony Sottile
+    <https://bitbucket.org/%7B569cc8ea-0d9e-41cb-94a4-19ea517324df%7D/>`__)
+
 0.15.96 (2019-05-16):
   - fix failure to indent comments on round-trip anchored block style
     scalars in block sequence (reported by `William Kimball
