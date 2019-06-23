@@ -336,6 +336,7 @@ class CommentedBase(object):
 
     def yaml_set_anchor(self, value, always_dump=False):
         # type: (Any, bool) -> None
+        print('xxxxx')
         self.anchor.value = value
         self.anchor.always_dump = always_dump
 
@@ -350,14 +351,14 @@ class CommentedBase(object):
         # type: (Any) -> None
         self.tag.value = value
 
-    def copy_attributes(self, t, deep=False):
+    def copy_attributes(self, t, memo=None):
         # type: (Any, bool) -> None
         # fmt: off
         for a in [Comment.attrib, Format.attrib, LineCol.attrib, Anchor.attrib,
                   Tag.attrib, merge_attrib]:
             if hasattr(self, a):
-                if deep:
-                    setattr(t, a, copy.deepcopy(getattr(self, a)))
+                if memo is not None:
+                    setattr(t, a, copy.deepcopy(getattr(self, a, memo)))
                 else:
                     setattr(t, a, getattr(self, a))
         # fmt: on
@@ -478,8 +479,8 @@ class CommentedSeq(MutableSliceableSequence, list, CommentedBase):  # type: igno
         res = self.__class__()
         memo[id(self)] = res
         for k in self:
-            res.append(copy.deepcopy(k))
-            self.copy_attributes(res, deep=True)
+            res.append(copy.deepcopy(k, memo))
+            self.copy_attributes(res, memo=memo)
         return res
 
     def __add__(self, other):
@@ -949,8 +950,8 @@ class CommentedMap(ordereddict, CommentedBase):
         res = self.__class__()
         memo[id(self)] = res
         for k in self:
-            res[k] = copy.deepcopy(self[k])
-        self.copy_attributes(res, deep=True)
+            res[k] = copy.deepcopy(self[k], memo)
+        self.copy_attributes(res, memo=memo)
         return res
 
 
