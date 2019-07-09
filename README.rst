@@ -4,8 +4,8 @@ ruamel.yaml
 
 ``ruamel.yaml`` is a YAML 1.2 loader/dumper package for Python.
 
-:version:       0.15.97
-:updated:       2019-06-06
+:version:       0.15.98
+:updated:       2019-07-09
 :documentation: http://yaml.readthedocs.io
 :repository:    https://bitbucket.org/ruamel/
 :pypi:          https://pypi.org/project/ruamel.yaml/
@@ -53,6 +53,11 @@ ChangeLog
 =========
 
 .. should insert NEXT: at the beginning of line for next key (with empty line)
+
+0.15.98 (2019-07-09):
+  - regenerate ext/_ruamel_yaml.c with Cython version 0.29.12, needed
+    for Python 3.8.0b2 (reported by `John Vandenberg
+    <https://bitbucket.org/%7B6d4e8487-3c97-4dab-a060-088ec50c682c%7D/>`__)
 
 0.15.97 (2019-06-06):
   - regenerate ext/_ruamel_yaml.c with Cython version 0.29.10, needed for

@@ -336,7 +336,6 @@ class CommentedBase(object):
 
     def yaml_set_anchor(self, value, always_dump=False):
         # type: (Any, bool) -> None
-        print('xxxxx')
         self.anchor.value = value
         self.anchor.always_dump = always_dump
 
