@@ -7,7 +7,7 @@ ruamel.yaml
 :version:       0.15.98
 :updated:       2019-07-09
 :documentation: http://yaml.readthedocs.io
-:repository:    https://bitbucket.org/ruamel/
+:repository:    https://bitbucket.org/ruamel/yaml
 :pypi:          https://pypi.org/project/ruamel.yaml/
 
 
