@@ -7,8 +7,8 @@ if False:  # MYPY
 
 _package_data = dict(
     full_package_name='ruamel.yaml',
-    version_info=(0, 15, 98),
-    __version__='0.15.98',
+    version_info=(0, 15, 99),
+    __version__='0.15.99',
     author='Anthon van der Neut',
     author_email='a.van.der.neut@ruamel.eu',
     description='ruamel.yaml is a YAML parser/emitter that supports roundtrip preservation of comments, seq/map flow style, and map key order',  # NOQA
@@ -53,6 +53,7 @@ _package_data = dict(
             'Programming Language :: Python :: Implementation :: Jython',
             'Topic :: Software Development :: Libraries :: Python Modules',
             'Topic :: Text Processing :: Markup',
+            'Typing :: Typed',
     ],
     keywords='yaml 1.2 parser round-trip preserve quotes order config',
     wheels=dict(

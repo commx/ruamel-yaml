@@ -1,3 +1,19 @@
+[0, 15, 99]: 2019-07-12
+  - add `py.typed` to distribution, based on a PR submitted by
+    `Michael Crusoe
+    <https://bitbucket.org/%7Bc9fbde69-e746-48f5-900d-34992b7860c8%7D/>`__
+  - merge PR 40 (also by Michael Crusoe) to more accurately specify
+    repository in the README (also reported in a misunderstood issue
+    some time ago)
+
+[0, 15, 99]: 2019-07-12
+  - add `py.typed` to distribution, based on a PR submitted by
+    `Michael Crusoe
+    <https://bitbucket.org/%7Bc9fbde69-e746-48f5-900d-34992b7860c8%7D/>`__
+  - merge PR 40 (also by Michael Crusoe) to more accurately specify
+    repository in the README (also reported in a misunderstood issue
+    some time ago)
+
 [0, 15, 98]: 2019-07-09
   - regenerate ext/_ruamel_yaml.c with Cython version 0.29.12, needed
     for Python 3.8.0b2 (reported by `John Vandenberg

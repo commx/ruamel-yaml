@@ -656,6 +656,12 @@ class NameSpacePackager(object):
         and only adding defaults when no explicit entries were provided.
         Add explicit Python versions in sync with tox.env generation based on python_requires?
         """
+        attr = '_' + sys._getframe().f_code.co_name
+        if not hasattr(self, attr):
+            setattr(self, attr, self._setup_classifiers())
+        return getattr(self, attr)
+
+    def _setup_classifiers(self):
         return sorted(
             set(
                 [
@@ -760,6 +766,10 @@ class NameSpacePackager(object):
             df.append('LICENSE')
             # but don't install it
             exclude_files.append('LICENSE')
+        debug('testing<<<<<')
+        if 'Typing :: Typed' in self.classifiers:
+            debug('appending')
+            df.append('py.typed')
         pd = self._pkg_data.get('package_data', {})
         if df:
             pd[self.full_package_name] = df
