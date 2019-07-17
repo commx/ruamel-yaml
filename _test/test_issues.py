@@ -798,7 +798,7 @@ class TestIssues:
         yaml.dump(data, buf)
         assert buf.getvalue() == yamldoc
 
-    @pytest.mark.xfail(strict=True, reason='should fail pre 0.15.100', raises=AssertionError)
+    # @pytest.mark.xfail(strict=True, reason='should fail pre 0.15.100', raises=AssertionError)
     def test_issue_295(self):
         # deepcopy also makes a copy of the start and end mark, and these did not
         # have any comparison beyond their ID, which of course changed, breaking
@@ -811,7 +811,7 @@ class TestIssues:
           # comment
           - l1
           - l2
-        
+
         C:
           d: e
           f:

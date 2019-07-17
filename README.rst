@@ -4,8 +4,8 @@ ruamel.yaml
 
 ``ruamel.yaml`` is a YAML 1.2 loader/dumper package for Python.
 
-:version:       0.15.99
-:updated:       2019-07-12
+:version:       0.15.100
+:updated:       2019-07-17
 :documentation: http://yaml.readthedocs.io
 :repository:    https://bitbucket.org/ruamel/yaml
 :pypi:          https://pypi.org/project/ruamel.yaml/
@@ -53,6 +53,13 @@ ChangeLog
 =========
 
 .. should insert NEXT: at the beginning of line for next key (with empty line)
+
+0.15.100 (2019-07-17):
+  - fixing issue with dumping deep-copied data from commented YAML, by
+    providing both the memo parameter to __deepcopy__, and by allowing
+    startmarks to be compared on their content (reported by `Theofilos
+    Petsios
+    <https://bitbucket.org/%7Be550bc5d-403d-4fda-820b-bebbe71796d3%7D/>`__)
 
 0.15.99 (2019-07-12):
   - add `py.typed` to distribution, based on a PR submitted by

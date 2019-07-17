@@ -270,3 +270,15 @@ class CommentToken(Token):
             except:  # NOQA
                 pass
         return 'CommentToken({})'.format(v)
+
+    def __eq__(self, other):
+        if self.start_mark != other.start_mark:
+            return False
+        if self.end_mark != other.end_mark:
+            return False
+        if self.value != other.value:
+            return False
+        return True
+
+    def __ne__(self, other):
+        return not self.__eq__(other)

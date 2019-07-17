@@ -1,10 +1,9 @@
-[0, 15, 99]: 2019-07-12
-  - add `py.typed` to distribution, based on a PR submitted by
-    `Michael Crusoe
-    <https://bitbucket.org/%7Bc9fbde69-e746-48f5-900d-34992b7860c8%7D/>`__
-  - merge PR 40 (also by Michael Crusoe) to more accurately specify
-    repository in the README (also reported in a misunderstood issue
-    some time ago)
+[0, 15, 100]: 2019-07-17
+  - fixing issue with dumping deep-copied data from commented YAML, by
+    providing both the memo parameter to __deepcopy__, and by allowing
+    startmarks to be compared on their content (reported by `Theofilos
+    Petsios
+    <https://bitbucket.org/%7Be550bc5d-403d-4fda-820b-bebbe71796d3%7D/>`__)
 
 [0, 15, 99]: 2019-07-12
   - add `py.typed` to distribution, based on a PR submitted by

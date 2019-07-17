@@ -39,6 +39,16 @@ class StreamMark(object):
         where = '  in "%s", line %d, column %d' % (self.name, self.line + 1, self.column + 1)
         return where
 
+    def __eq__(self, other):
+        if self.line != other.line or self.column != other.column:
+            return False
+        if self.name != other.name or self.index != other.index:
+            return False
+        return True
+
+    def __ne__(self, other):
+        return not self.__eq__(other)
+
 
 class FileMark(StreamMark):
     __slots__ = ()
