@@ -798,6 +798,32 @@ class TestIssues:
         yaml.dump(data, buf)
         assert buf.getvalue() == yamldoc
 
+    @pytest.mark.xfail(strict=True, reason='should fail pre 0.15.100', raises=AssertionError)
+    def test_issue_295(self):
+        # deepcopy also makes a copy of the start and end mark, and these did not
+        # have any comparison beyond their ID, which of course changed, breaking
+        # some old merge_comment code
+        import copy
+
+        inp = dedent("""
+        A:
+          b:
+          # comment
+          - l1
+          - l2
+        
+        C:
+          d: e
+          f:
+          # comment2
+          - - l31
+            - l32
+            - l33: '5'
+        """)
+        data = round_trip_load(inp)  # NOQA
+        dc = copy.deepcopy(data)
+        assert round_trip_dump(dc) == inp
+
 #    @pytest.mark.xfail(strict=True, reason='bla bla', raises=AssertionError)
 #    def test_issue_ xxx(self):
 #        inp = """
