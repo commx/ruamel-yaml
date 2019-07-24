@@ -161,7 +161,7 @@ class Emitter(object):
         # self.compact_ms = False   # dash after key, only when excplicit key with ?
         self.no_newline = None  # type: Optional[bool]  # set if directly after `- `
 
-        # Whether the document requires an explicit document indicator
+        # Whether the document requires an explicit document end indicator
         self.open_ended = False
 
         # colon handling
