@@ -232,7 +232,7 @@ class TestOldAPI:
     def test_duplicate_keys_02(self):
         # Issue 165 unicode keys in error/warning
         from ruamel.yaml import safe_load
-        from ruamel.yaml.constructor import DuplicateKeyFutureWarning
+        from ruamel.yaml.constructor import DuplicateKeyError
 
-        with pytest.warns(DuplicateKeyFutureWarning):
+        with pytest.raises(DuplicateKeyError):
             safe_load('type: Doméstica\ntype: International')

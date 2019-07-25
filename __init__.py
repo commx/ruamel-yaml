@@ -7,8 +7,8 @@ if False:  # MYPY
 
 _package_data = dict(
     full_package_name='ruamel.yaml',
-    version_info=(0, 15, 100),
-    __version__='0.15.100',
+    version_info=(0, 16, 0),
+    __version__='0.16.0',
     author='Anthon van der Neut',
     author_email='a.van.der.neut@ruamel.eu',
     description='ruamel.yaml is a YAML parser/emitter that supports roundtrip preservation of comments, seq/map flow style, and map key order',  # NOQA
@@ -16,31 +16,9 @@ _package_data = dict(
     since=2014,
     extras_require={':platform_python_implementation=="CPython" and python_version<="2.7"': [
             'ruamel.ordereddict',
+        ], ':platform_python_implementation=="CPython" and python_version<"3.8"': [
+            'ruamel.yaml.clib',
         ], 'jinja2': ['ruamel.yaml.jinja2>=0.2'], 'docs': ['ryd']},
-    ext_modules=[
-            dict(
-                name='_ruamel_yaml',
-                src=[
-                        'ext/_ruamel_yaml.c',
-                        'ext/api.c',
-                        'ext/writer.c',
-                        'ext/dumper.c',
-                        'ext/loader.c',
-                        'ext/reader.c',
-                        'ext/scanner.c',
-                        'ext/parser.c',
-                        'ext/emitter.c',
-                ],
-                lib=[],
-                test="""
-            int main(int argc, char* argv[])
-            {
-              /* prevent warning */
-              return 0;
-            }
-            """,
-            ),
-    ],
     # NOQA
     # test='#include "ext/yaml.h"\n\nint main(int argc, char* argv[])\n{\nyaml_parser_t parser;\nparser = parser;  /* prevent warning */\nreturn 0;\n}\n',  # NOQA
     classifiers=[
@@ -56,11 +34,6 @@ _package_data = dict(
             'Typing :: Typed',
     ],
     keywords='yaml 1.2 parser round-trip preserve quotes order config',
-    wheels=dict(
-        windows='appveyor',
-        linux='libyaml-devel',
-        macos='builder@macos',
-    ),
     read_the_docs='yaml',
     supported=[(2, 7), (3, 5)],  # minimum
     tox=dict(
@@ -68,6 +41,7 @@ _package_data = dict(
         deps='ruamel.std.pathlib',
         fl8excl='_test/lib',
     ),
+    universal=True,
     rtfd='yaml',
 )  # type: Dict[Any, Any]
 

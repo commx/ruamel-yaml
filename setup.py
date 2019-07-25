@@ -317,6 +317,7 @@ class InMemoryZipFile(object):
         self.zip_file = zipfile
         # Create the in-memory file-like object
         self._file_name = file_name
+        self._removed_names = []
         self.in_memory_data = StringIO()
         # Create the in-memory zipfile
         self.in_memory_zip = self.zip_file.ZipFile(
@@ -326,7 +327,23 @@ class InMemoryZipFile(object):
 
     def append(self, filename_in_zip, file_contents):
         """Appends a file with name filename_in_zip and contents of
-        file_contents to the in-memory zip."""
+        file_contents to the in-memory zip.
+        """
+        if filename_in_zip.endswith('.dist-info/RECORD') and self._removed_names:
+            # this is normally the last file
+            # remove any names filtered, to placate auditwheel
+            convert = not isinstance(file_contents, string_type)
+            if convert:
+                file_contents = file_contents.decode('utf-8')
+            outlines = []
+            for line in file_contents.splitlines(True):
+                for fn in self._removed_names:
+                    fn = fn + ','  # comma is the record seperator in RECORD
+                    if line.startswith(fn):
+                        break
+                else:
+                    outlines.append(line)
+            file_contents = ''.join(outlines)
         self.in_memory_zip.writestr(filename_in_zip, file_contents)
         return self  # so you can daisy-chain
 
@@ -351,8 +368,9 @@ class InMemoryZipFile(object):
     def delete_from_zip_file(self, pattern=None, file_names=None):
         """
         zip_file can be a string or a zipfile.ZipFile object, the latter will be closed
-        any name in file_names is deleted, all file_names provided have to be in the ZIP
-        archive or else an IOError is raised
+        any name in file_names is deleted from the list of files to write to the new zip
+        (using .append)
+        all file_names provided have to be in the ZIP archive or else an IOError is raised
         """
         if pattern and isinstance(pattern, string_type):
             import re
@@ -367,8 +385,10 @@ class InMemoryZipFile(object):
             for l in zf.infolist():
                 if l.filename in file_names:
                     file_names.remove(l.filename)
+                    self._removed_names.append(l.filename)
                     continue
                 if pattern and pattern.match(l.filename):
+                    self._removed_names.append(l.filename)
                     continue
                 self.append(l.filename, zf.read(l))
             if file_names:
@@ -766,6 +786,8 @@ class NameSpacePackager(object):
             df.append('LICENSE')
             # but don't install it
             exclude_files.append('LICENSE')
+        if self._pkg_data.get('binary_only', False):
+            exclude_files.append('__init__.py')
         debug('testing<<<<<')
         if 'Typing :: Typed' in self.classifiers:
             debug('appending')
@@ -1005,15 +1027,21 @@ def main():
                     d = os.path.join(dist_base, nsp.full_package_name)
                 else:
                     d = 'dist'
+            dashed_vs = '-' + version_str + '-'
+            latest_mtime = -1
+            full_name = None
             for x in os.listdir(d):
-                dashed_vs = '-' + version_str + '-'
                 if x.endswith('.whl') and dashed_vs in x:
                     # remove .pth file from the wheel
-                    full_name = os.path.join(d, x)
-                    print('patching .pth from', full_name)
-                    with InMemoryZipFile(full_name) as imz:
-                        imz.delete_from_zip_file(nsp.full_package_name + '.*.pth')
-                    break
+                    fn = os.path.join(d, x)
+                    if os.path.getmtime(fn) > latest_mtime:
+                        full_name = fn
+            if full_name is None:
+                print('no wheel file found in', d)
+            else:
+                print('patching .pth from {}'.format(full_name))
+                with InMemoryZipFile(full_name) as imz:
+                    imz.delete_from_zip_file(nsp.full_package_name + '.*.pth')
         return
     for x in ['-c', 'egg_info', '--egg-base', 'pip-egg-info']:
         if x not in sys.argv:

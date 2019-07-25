@@ -1,2 +1,3 @@
 include README.rst LICENSE CHANGES setup.py
-recursive-include ext *
+prune ext*
+prune clib*

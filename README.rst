@@ -4,8 +4,8 @@ ruamel.yaml
 
 ``ruamel.yaml`` is a YAML 1.2 loader/dumper package for Python.
 
-:version:       0.15.100
-:updated:       2019-07-17
+:version:       0.16.0
+:updated:       2019-07-25
 :documentation: http://yaml.readthedocs.io
 :repository:    https://bitbucket.org/ruamel/yaml
 :pypi:          https://pypi.org/project/ruamel.yaml/
@@ -53,6 +53,10 @@ ChangeLog
 =========
 
 .. should insert NEXT: at the beginning of line for next key (with empty line)
+
+0.16.0 (2019-07-25):
+  - split of C source that generates .so file to ruamel.yaml.clib
+  - duplicate keys are now an error when working with the old API as well
 
 0.15.100 (2019-07-17):
   - fixing issue with dumping deep-copied data from commented YAML, by
