@@ -1,5 +1,6 @@
 # # header
 # coding: utf-8
+# dd: 20190807
 
 from __future__ import print_function, absolute_import, division, unicode_literals
 
@@ -18,6 +19,8 @@ from ast import parse  # NOQA
 from setuptools import setup, Extension, Distribution  # NOQA
 from setuptools.command import install_lib  # NOQA
 from setuptools.command.sdist import sdist as _sdist  # NOQA
+
+from setuptools.namespaces import Installer as NameSpaceInstaller # NOQA
 
 
 if __name__ != '__main__':
@@ -306,100 +309,6 @@ except ImportError:
     _bdist_wheel_available = False
 
 
-class InMemoryZipFile(object):
-    def __init__(self, file_name=None):
-        try:
-            from cStringIO import StringIO
-        except ImportError:
-            from io import BytesIO as StringIO
-        import zipfile
-
-        self.zip_file = zipfile
-        # Create the in-memory file-like object
-        self._file_name = file_name
-        self._removed_names = []
-        self.in_memory_data = StringIO()
-        # Create the in-memory zipfile
-        self.in_memory_zip = self.zip_file.ZipFile(
-            self.in_memory_data, 'w', self.zip_file.ZIP_DEFLATED, False
-        )
-        self.in_memory_zip.debug = 3
-
-    def append(self, filename_in_zip, file_contents):
-        """Appends a file with name filename_in_zip and contents of
-        file_contents to the in-memory zip.
-        """
-        if filename_in_zip.endswith('.dist-info/RECORD') and self._removed_names:
-            # this is normally the last file
-            # remove any names filtered, to placate auditwheel
-            convert = not isinstance(file_contents, string_type)
-            if convert:
-                file_contents = file_contents.decode('utf-8')
-            outlines = []
-            for line in file_contents.splitlines(True):
-                for fn in self._removed_names:
-                    fn = fn + ','  # comma is the record seperator in RECORD
-                    if line.startswith(fn):
-                        break
-                else:
-                    outlines.append(line)
-            file_contents = ''.join(outlines)
-        self.in_memory_zip.writestr(filename_in_zip, file_contents)
-        return self  # so you can daisy-chain
-
-    def write_to_file(self, filename):
-        """Writes the in-memory zip to a file."""
-        # Mark the files as having been created on Windows so that
-        # Unix permissions are not inferred as 0000
-        for zfile in self.in_memory_zip.filelist:
-            zfile.create_system = 0
-        self.in_memory_zip.close()
-        with open(filename, 'wb') as f:
-            f.write(self.in_memory_data.getvalue())
-
-    def __enter__(self):
-        return self
-
-    def __exit__(self, exc_type, exc_value, traceback):
-        if self._file_name is None:
-            return
-        self.write_to_file(self._file_name)
-
-    def delete_from_zip_file(self, pattern=None, file_names=None):
-        """
-        zip_file can be a string or a zipfile.ZipFile object, the latter will be closed
-        any name in file_names is deleted from the list of files to write to the new zip
-        (using .append)
-        all file_names provided have to be in the ZIP archive or else an IOError is raised
-        """
-        if pattern and isinstance(pattern, string_type):
-            import re
-
-            pattern = re.compile(pattern)
-        if file_names:
-            if not isinstance(file_names, list):
-                file_names = [file_names]
-        else:
-            file_names = []
-        with self.zip_file.ZipFile(self._file_name) as zf:
-            for l in zf.infolist():
-                if l.filename in file_names:
-                    file_names.remove(l.filename)
-                    self._removed_names.append(l.filename)
-                    continue
-                if pattern and pattern.match(l.filename):
-                    self._removed_names.append(l.filename)
-                    continue
-                self.append(l.filename, zf.read(l))
-            if file_names:
-                raise IOError(
-                    '[Errno 2] No such file{}: {}'.format(
-                        "" if len(file_names) == 1 else 's',
-                        ', '.join([repr(f) for f in file_names]),
-                    )
-                )
-
-
 class NameSpacePackager(object):
     def __init__(self, pkg_data):
         assert isinstance(pkg_data, dict)
@@ -408,6 +317,8 @@ class NameSpacePackager(object):
         self._split = None
         self.depth = self.full_package_name.count('.')
         self.nested = self._pkg_data.get('nested', False)
+        if self.nested:
+            NameSpaceInstaller.install_namespaces = lambda x: None
         self.command = None
         self.python_version()
         self._pkg = [None, None]  # required and pre-installable packages
@@ -769,14 +680,14 @@ class NameSpacePackager(object):
         ep = self._pkg_data.get('extras_require')
         return ep
 
-    @property
-    def data_files(self):
-        df = self._pkg_data.get('data_files', [])
-        if self.has_mit_lic():
-            df.append('LICENSE')
-        if not df:
-            return None
-        return [('.', df)]
+    # @property
+    # def data_files(self):
+    #     df = self._pkg_data.get('data_files', [])
+    #     if self.has_mit_lic():
+    #         df.append('LICENSE')
+    #     if not df:
+    #         return None
+    #     return [('.', df)]
 
     @property
     def package_data(self):
@@ -1018,30 +929,6 @@ def main():
         pass
 
     if nsp.wheel(kw, setup):
-        if nsp.nested and 'bdist_wheel' in sys.argv:
-            try:
-                d = sys.argv[sys.argv.index('-d') + 1]
-            except ValueError:
-                dist_base = os.environ.get('PYDISTBASE')
-                if dist_base:
-                    d = os.path.join(dist_base, nsp.full_package_name)
-                else:
-                    d = 'dist'
-            dashed_vs = '-' + version_str + '-'
-            latest_mtime = -1
-            full_name = None
-            for x in os.listdir(d):
-                if x.endswith('.whl') and dashed_vs in x:
-                    # remove .pth file from the wheel
-                    fn = os.path.join(d, x)
-                    if os.path.getmtime(fn) > latest_mtime:
-                        full_name = fn
-            if full_name is None:
-                print('no wheel file found in', d)
-            else:
-                print('patching .pth from {}'.format(full_name))
-                with InMemoryZipFile(full_name) as imz:
-                    imz.delete_from_zip_file(nsp.full_package_name + '.*.pth')
         return
     for x in ['-c', 'egg_info', '--egg-base', 'pip-egg-info']:
         if x not in sys.argv:
@@ -1066,16 +953,6 @@ def main():
                     break
                 try_dir = os.path.dirname(try_dir)
     setup(**kw)
-    if nsp.nested and sys.argv[:2] == ['-c', 'bdist_wheel']:
-        d = sys.argv[sys.argv.index('-d') + 1]
-        for x in os.listdir(d):
-            if x.endswith('.whl'):
-                # remove .pth file from the wheel
-                full_name = os.path.join(d, x)
-                print('patching .pth from', full_name)
-                with InMemoryZipFile(full_name) as imz:
-                    imz.delete_from_zip_file(nsp.full_package_name + '.*.pth')
-                break
 
 
 main()

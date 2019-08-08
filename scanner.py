@@ -1675,6 +1675,7 @@ class Scanner(object):
             or 'A' <= ch <= 'Z'
             or 'a' <= ch <= 'z'
             or ch in "-;/?:@&=+$,_.!~*'()[]%"
+            or ((self.scanner_processing_version > (1, 1)) and ch == "#")
         ):
             if ch == '%':
                 chunks.append(self.reader.prefix(length))

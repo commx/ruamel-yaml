@@ -4,8 +4,8 @@ ruamel.yaml
 
 ``ruamel.yaml`` is a YAML 1.2 loader/dumper package for Python.
 
-:version:       0.16.0
-:updated:       2019-07-25
+:version:       0.16.1
+:updated:       2019-08-08
 :documentation: http://yaml.readthedocs.io
 :repository:    https://bitbucket.org/ruamel/yaml
 :pypi:          https://pypi.org/project/ruamel.yaml/
@@ -53,6 +53,13 @@ ChangeLog
 =========
 
 .. should insert NEXT: at the beginning of line for next key (with empty line)
+
+0.16.1 (2019-08-08):
+  - Force the use of new version of ruamel.yaml.clib (reported by `Alex Joz
+    <https://bitbucket.org/%7B9af55900-2534-4212-976c-61339b6ffe14%7D/>`__)
+  - Allow '#' in tag URI as these are allowed in YAML 1.2 (reported by
+    `Thomas Smith
+    <https://bitbucket.org/%7Bd4c57a72-f041-4843-8217-b4d48b6ece2f%7D/>`__)
 
 0.16.0 (2019-07-25):
   - split of C source that generates .so file to ruamel.yaml.clib

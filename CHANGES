@@ -1,3 +1,10 @@
+[0, 16, 1]: 2019-08-08
+  - Force the use of new version of ruamel.yaml.clib (reported by `Alex Joz
+    <https://bitbucket.org/%7B9af55900-2534-4212-976c-61339b6ffe14%7D/>`__)
+  - Allow '#' in tag URI as these are allowed in YAML 1.2 (reported by
+    `Thomas Smith
+    <https://bitbucket.org/%7Bd4c57a72-f041-4843-8217-b4d48b6ece2f%7D/>`__)
+
 [0, 16, 0]: 2019-07-25
   - split of C source that generates .so file to ruamel.yaml.clib
   - duplicate keys are now an error when working with the old API as well

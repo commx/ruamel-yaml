@@ -824,6 +824,32 @@ class TestIssues:
         dc = copy.deepcopy(data)
         assert round_trip_dump(dc) == inp
 
+    def test_issue_300(self):
+        from ruamel.yaml import YAML
+
+        inp = dedent("""
+        %YAML 1.2
+        %TAG ! tag:example.com,2019/path#fragment
+        ---
+        null
+        """)
+        YAML().load(inp)
+
+    def test_issue_300a(self):
+        import ruamel.yaml
+
+        inp = dedent("""
+        %YAML 1.1
+        %TAG ! tag:example.com,2019/path#fragment
+        ---
+        null
+        """)
+        yaml = YAML()
+        yaml.version = (1, 1)  # This should not be necessary -> issue 301
+        with pytest.raises(ruamel.yaml.scanner.ScannerError,
+                           match='while scanning a directive'):
+            yaml.load(inp)
+
 #    @pytest.mark.xfail(strict=True, reason='bla bla', raises=AssertionError)
 #    def test_issue_ xxx(self):
 #        inp = """
