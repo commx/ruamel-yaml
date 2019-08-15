@@ -40,6 +40,7 @@ class StreamMark(object):
         return where
 
     def __eq__(self, other):
+        # type: (Any) -> bool
         if self.line != other.line or self.column != other.column:
             return False
         if self.name != other.name or self.index != other.index:
@@ -47,6 +48,7 @@ class StreamMark(object):
         return True
 
     def __ne__(self, other):
+        # type: (Any) -> bool
         return not self.__eq__(other)
 
 

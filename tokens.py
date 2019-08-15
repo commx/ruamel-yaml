@@ -272,6 +272,7 @@ class CommentToken(Token):
         return 'CommentToken({})'.format(v)
 
     def __eq__(self, other):
+        # type: (Any) -> bool
         if self.start_mark != other.start_mark:
             return False
         if self.end_mark != other.end_mark:
@@ -281,4 +282,5 @@ class CommentToken(Token):
         return True
 
     def __ne__(self, other):
+        # type: (Any) -> bool
         return not self.__eq__(other)

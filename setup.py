@@ -1,6 +1,6 @@
 # # header
 # coding: utf-8
-# dd: 20190807
+# dd: 20190815
 
 from __future__ import print_function, absolute_import, division, unicode_literals
 
@@ -20,8 +20,12 @@ from setuptools import setup, Extension, Distribution  # NOQA
 from setuptools.command import install_lib  # NOQA
 from setuptools.command.sdist import sdist as _sdist  # NOQA
 
-from setuptools.namespaces import Installer as NameSpaceInstaller # NOQA
-
+try:
+    from setuptools.namespaces import Installer as NameSpaceInstaller # NOQA
+except ImportError:
+    print("You should use the latest setuptools. The namespaces.py file that this setup.py"
+          " uses was added in setuptools 28.7.0 (Oct 2016)")
+    sys.exit()
 
 if __name__ != '__main__':
     raise NotImplementedError('should never include setup.py')
@@ -29,9 +33,6 @@ if __name__ != '__main__':
 # # definitions
 
 full_package_name = None
-
-if __name__ != '__main__':
-    raise NotImplementedError('should never include setup.py')
 
 if sys.version_info < (3,):
     string_type = basestring

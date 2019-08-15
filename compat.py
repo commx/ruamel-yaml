@@ -13,7 +13,8 @@ from abc import abstractmethod
 
 # fmt: off
 if False:  # MYPY
-    from typing import Any, Dict, Optional, List, Union, BinaryIO, IO, Text, Tuple, Optional  # NOQA
+    from typing import Any, Dict, Optional, List, Union, BinaryIO, IO, Text, Tuple  # NOQA
+    from typing import Optional  # NOQA
 # fmt: on
 
 _DEFAULT_YAML_VERSION = (1, 2)
@@ -106,7 +107,7 @@ else:
     binary_type = str
 
     # to allow importing
-    unichr = unichr  # type: ignore
+    unichr = unichr
     from StringIO import StringIO as _StringIO
 
     StringIO = _StringIO
@@ -122,7 +123,7 @@ if False:  # MYPY
     # StreamType = Union[BinaryIO, IO[str], StringIO]  # type: ignore
     StreamType = Any
 
-    StreamTextType = Union[Text, StreamType]
+    StreamTextType = StreamType  # Union[Text, StreamType]
     VersionType = Union[List[int], str, Tuple[int, int]]
 
 if PY3:

@@ -241,7 +241,7 @@ class Emitter(object):
     def dispose(self):
         # type: () -> None
         # Reset the state attributes (to clear self-references)
-        self.states = []  # type: List[Any]
+        self.states = []
         self.state = None
 
     def emit(self, event):
@@ -1591,7 +1591,7 @@ class Emitter(object):
                         self.stream.write(data)
                     start = end
             elif breaks:
-                if ch not in u'\n\x85\u2028\u2029':
+                if ch not in u'\n\x85\u2028\u2029':  # type: ignore
                     if text[start] == u'\n':
                         self.write_line_break()
                     for br in text[start:end]:

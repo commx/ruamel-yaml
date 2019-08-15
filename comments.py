@@ -12,7 +12,8 @@ import sys
 import copy
 
 
-from ruamel.yaml.compat import ordereddict, PY2, string_types, MutableSliceableSequence
+from ruamel.yaml.compat import ordereddict  # type: ignore
+from ruamel.yaml.compat import PY2, string_types, MutableSliceableSequence
 from ruamel.yaml.scalarstring import ScalarString
 from ruamel.yaml.anchor import Anchor
 
@@ -159,7 +160,7 @@ class LineCol(object):
     def add_idx_line_col(self, key, data):
         # type: (Any, Any) -> None
         if self.data is None:
-            self.data = {}  # type: Dict[Any, Any]
+            self.data = {}
         self.data[key] = data
 
 
@@ -351,7 +352,7 @@ class CommentedBase(object):
         self.tag.value = value
 
     def copy_attributes(self, t, memo=None):
-        # type: (Any, bool) -> None
+        # type: (Any, Any) -> None
         # fmt: off
         for a in [Comment.attrib, Format.attrib, LineCol.attrib, Anchor.attrib,
                   Tag.attrib, merge_attrib]:
@@ -629,7 +630,7 @@ class CommentedMapValuesView(CommentedMapView):
             yield self._mapping[key]
 
 
-class CommentedMap(ordereddict, CommentedBase):
+class CommentedMap(ordereddict, CommentedBase):  # type: ignore
     __slots__ = (Comment.attrib, '_ok', '_ref')
 
     def __init__(self, *args, **kw):
@@ -695,7 +696,7 @@ class CommentedMap(ordereddict, CommentedBase):
             self.ca.comment[1] = pre_comments
         return pre_comments
 
-    def update(self, vals):  # type: ignore
+    def update(self, vals):
         # type: (Any) -> None
         try:
             ordereddict.update(self, vals)
@@ -828,7 +829,7 @@ class CommentedMap(ordereddict, CommentedBase):
 
     def __len__(self):
         # type: () -> int
-        return ordereddict.__len__(self)
+        return int(ordereddict.__len__(self))
 
     def __eq__(self, other):
         # type: (Any) -> bool

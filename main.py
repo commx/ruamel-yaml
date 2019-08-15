@@ -35,7 +35,7 @@ from ruamel.yaml.constructor import (
 from ruamel.yaml.loader import Loader as UnsafeLoader
 
 if False:  # MYPY
-    from typing import List, Set, Dict, Union, Any, Callable  # NOQA
+    from typing import List, Set, Dict, Union, Any, Callable, Optional, Text  # NOQA
     from ruamel.yaml.compat import StreamType, StreamTextType, VersionType  # NOQA
 
     if PY3:
@@ -99,9 +99,9 @@ class YAML(object):
             self.default_flow_style = False
             # no optimized rt-dumper yet
             self.Emitter = ruamel.yaml.emitter.Emitter  # type: Any
-            self.Serializer = ruamel.yaml.serializer.Serializer  # type: Any
+            self.Serializer = ruamel.yaml.serializer.Serializer
             self.Representer = ruamel.yaml.representer.RoundTripRepresenter  # type: Any
-            self.Scanner = ruamel.yaml.scanner.RoundTripScanner  # type: Any
+            self.Scanner = ruamel.yaml.scanner.RoundTripScanner
             # no optimized rt-parser yet
             self.Parser = ruamel.yaml.parser.RoundTripParser  # type: Any
             self.Composer = ruamel.yaml.composer.Composer  # type: Any
@@ -326,7 +326,7 @@ class YAML(object):
         """
         if not hasattr(stream, 'read') and hasattr(stream, 'open'):
             # pathlib.Path() instance
-            with stream.open('rb') as fp:  # type: ignore
+            with stream.open('rb') as fp:
                 return self.load(fp)
         constructor, parser = self.get_constructor_parser(stream)
         try:
@@ -351,7 +351,7 @@ class YAML(object):
             )
         if not hasattr(stream, 'read') and hasattr(stream, 'open'):
             # pathlib.Path() instance
-            with stream.open('r') as fp:  # type: ignore
+            with stream.open('r') as fp:
                 for d in self.load_all(fp, _kw=enforce):
                     yield d
                 return

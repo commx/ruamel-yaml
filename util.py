@@ -77,9 +77,10 @@ def load_yaml_guess_indent(stream, **kw):
         return idx
 
     if isinstance(stream, text_type):
-        yaml_str = stream
+        yaml_str = stream  # type: Any
     elif isinstance(stream, binary_type):
-        yaml_str = stream.decode('utf-8')  # most likely, but the Reader checks BOM for this
+        # most likely, but the Reader checks BOM for this
+        yaml_str = stream.decode('utf-8')
     else:
         yaml_str = stream.read()
     map_indent = None

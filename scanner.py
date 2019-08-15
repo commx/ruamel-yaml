@@ -81,7 +81,7 @@ class Scanner(object):
             self.loader._scanner = self
         self.reset_scanner()
         self.first_time = False
-        self.yaml_version = None
+        self.yaml_version = None  # type: Any
 
     @property
     def flow_level(self):
@@ -156,10 +156,10 @@ class Scanner(object):
 
     @property
     def scanner_processing_version(self):  # prefix until un-composited
-        # type: () -> VersionType
+        # type: () -> Any
         if hasattr(self.loader, 'typ'):
-            return self.loader.resolver.processing_version  # type: ignore
-        return self.loader.processing_version  # type: ignore
+            return self.loader.resolver.processing_version
+        return self.loader.processing_version
 
     # Public methods.
 
@@ -454,7 +454,7 @@ class Scanner(object):
         # Reset simple keys.
         self.remove_possible_simple_key()
         self.allow_simple_key = False
-        self.possible_simple_keys = {}  # type: Dict[Any, Any]
+        self.possible_simple_keys = {}
         # Read the token.
         mark = self.reader.get_mark()
         # Add STREAM-END.

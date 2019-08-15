@@ -129,7 +129,8 @@ def walk_tree(base, map=None):
         map[':'] = SingleQuotedScalarString
         walk_tree(data, map=map)
     """
-    from ruamel.yaml.compat import string_types, MutableMapping, MutableSequence
+    from ruamel.yaml.compat import string_types
+    from ruamel.yaml.compat import MutableMapping, MutableSequence  # type: ignore
 
     if map is None:
         map = {'\n': preserve_literal}

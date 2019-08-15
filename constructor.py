@@ -16,8 +16,10 @@ from ruamel.yaml.error import (MarkedYAMLError, MarkedYAMLFutureWarning,
 from ruamel.yaml.nodes import *                               # NOQA
 from ruamel.yaml.nodes import (SequenceNode, MappingNode, ScalarNode)
 from ruamel.yaml.compat import (utf8, builtins_module, to_str, PY2, PY3,  # NOQA
-                                ordereddict, text_type, nprint, nprintf, version_tnf,
-                                Hashable, MutableSequence, MutableMapping)
+                                text_type, nprint, nprintf, version_tnf)
+from ruamel.yaml.compat import ordereddict, Hashable, MutableSequence  # type: ignore
+from ruamel.yaml.compat import MutableMapping  # type: ignore
+
 from ruamel.yaml.comments import *                               # NOQA
 from ruamel.yaml.comments import (CommentedMap, CommentedOrderedMap, CommentedSet,
                                   CommentedKeySeq, CommentedSeq, TaggedScalar,
@@ -141,19 +143,31 @@ class BaseConstructor(object):
             #     None, None, 'found unconstructable recursive node', node.start_mark
             # )
         self.recursive_objects[node] = None
+        data = self.construct_non_recursive_object(node)
+
+        self.constructed_objects[node] = data
+        del self.recursive_objects[node]
+        if deep:
+            self.deep_construct = old_deep
+        return data
+
+    def construct_non_recursive_object(self, node, tag=None):
+        # type: (Any, Optional[str]) -> Any
         constructor = None  # type: Any
         tag_suffix = None
-        if node.tag in self.yaml_constructors:
-            constructor = self.yaml_constructors[node.tag]
+        if tag is None:
+            tag = node.tag
+        if tag in self.yaml_constructors:
+            constructor = self.yaml_constructors[tag]
         else:
             for tag_prefix in self.yaml_multi_constructors:
-                if node.tag.startswith(tag_prefix):
-                    tag_suffix = node.tag[len(tag_prefix) :]
+                if tag.startswith(tag_prefix):
+                    tag_suffix = tag[len(tag_prefix) :]
                     constructor = self.yaml_multi_constructors[tag_prefix]
                     break
             else:
                 if None in self.yaml_multi_constructors:
-                    tag_suffix = node.tag
+                    tag_suffix = tag
                     constructor = self.yaml_multi_constructors[None]
                 elif None in self.yaml_constructors:
                     constructor = self.yaml_constructors[None]
@@ -175,10 +189,6 @@ class BaseConstructor(object):
                     pass
             else:
                 self.state_generators.append(generator)
-        self.constructed_objects[node] = data
-        del self.recursive_objects[node]
-        if deep:
-            self.deep_construct = old_deep
         return data
 
     def construct_scalar(self, node):

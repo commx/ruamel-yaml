@@ -1,3 +1,7 @@
+[0, 16, 3]: 2019-08-15
+  - move setting of version based on YAML directive to scanner, allowing to
+    check for file version during TAG directive scanning
+
 [0, 16, 2]: 2019-08-15
   - preserve YAML and TAG directives on roundtrip, correctly output #
     in URL for YAML 1.2 (both reported by `Thomas Smith
