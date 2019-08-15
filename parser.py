@@ -219,6 +219,9 @@ class Parser(object):
                 )
             token = self.scanner.get_token()
             end_mark = token.end_mark
+            # if self.loader is not None and \
+            #    end_mark.line != self.scanner.peek_token().start_mark.line:
+            #     self.loader.scalar_after_indicator = False
             event = DocumentStartEvent(
                 start_mark, end_mark, explicit=True, version=version, tags=tags
             )  # type: Any
@@ -295,6 +298,12 @@ class Parser(object):
             value = self.yaml_version, self.tag_handles.copy()  # type: Any
         else:
             value = self.yaml_version, None
+        if self.loader is not None and hasattr(self.loader, 'tags'):
+            self.loader.version = self.yaml_version
+            if self.loader.tags is None:
+                self.loader.tags = {}
+            for k in self.tag_handles:
+                self.loader.tags[k] = self.tag_handles[k]
         for key in self.DEFAULT_TAGS:
             if key not in self.tag_handles:
                 self.tag_handles[key] = self.DEFAULT_TAGS[key]

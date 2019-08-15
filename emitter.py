@@ -204,6 +204,8 @@ class Emitter(object):
         self.analysis = None  # type: Any
         self.style = None  # type: Any
 
+        self.scalar_after_indicator = True  # write a scalar on the same line as `---`
+
     @property
     def stream(self):
         # type: () -> Any
@@ -408,6 +410,8 @@ class Emitter(object):
                 and self.sequence_context
             ):
                 self.sequence_context = False
+            if root and isinstance(self.event, ScalarEvent) and not self.scalar_after_indicator:
+                self.write_indent()
             self.process_tag()
             if isinstance(self.event, ScalarEvent):
                 # nprint('@', self.indention, self.no_newline, self.column)

@@ -8,6 +8,7 @@ import pytest  # NOQA
 
 from roundtrip import (
     round_trip,
+    na_round_trip,
     round_trip_load,
     round_trip_dump,
     dedent,
@@ -849,6 +850,16 @@ class TestIssues:
         with pytest.raises(ruamel.yaml.scanner.ScannerError,
                            match='while scanning a directive'):
             yaml.load(inp)
+
+    def test_issue_304(self):
+        inp = """
+	%YAML 1.2
+	%TAG ! tag:example.com,2019:
+	---
+	!foo null
+	...
+        """
+        d = na_round_trip(inp)  # NOQA
 
 #    @pytest.mark.xfail(strict=True, reason='bla bla', raises=AssertionError)
 #    def test_issue_ xxx(self):

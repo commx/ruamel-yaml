@@ -161,6 +161,7 @@ class YAML(object):
         self.tags = None
         self.default_style = None
         self.top_level_block_style_scalar_no_indent_error_1_1 = False
+        self.scalar_after_indicator = None  # directives end indicator with single scalar document 
         # [a, b: 1, c: {d: 2}]  vs. [a, {b: 1}, {c: {d: 2}}]
         self.brace_single_entry_mapping_in_flow_sequence = False
 
@@ -518,12 +519,16 @@ class YAML(object):
                 self.Serializer = ruamel.yaml.serializer.Serializer
             self.emitter.stream = stream
             self.emitter.top_level_colon_align = tlca
+            if self.scalar_after_indicator is not None:
+                self.emitter.scalar_after_indicator = self.scalar_after_indicator
             return self.serializer, self.representer, self.emitter
         if self.Serializer is not None:
             # cannot set serializer with CEmitter
             self.Emitter = ruamel.yaml.emitter.Emitter
             self.emitter.stream = stream
             self.emitter.top_level_colon_align = tlca
+            if self.scalar_after_indicator is not None:
+                self.emitter.scalar_after_indicator = self.scalar_after_indicator
             return self.serializer, self.representer, self.emitter
         # C routines
 
