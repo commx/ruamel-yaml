@@ -169,6 +169,7 @@ def na_round_trip(
     inp:    input string to parse
     outp:   expected output (equals input if not specified)
     """
+    inp = dedent(inp)
     if outp is None:
         outp = inp
     if version is not None:
@@ -194,10 +195,7 @@ def na_round_trip(
     yaml.explicit_start = explicit_start
     yaml.explicit_end = explicit_end
     res = yaml.dump(data, compare=doutp)
-    #if res != doutp:
-    #    diff(doutp, res, 'input string')
-    #print('\nroundtrip data:\n', res, sep="")
-    #assert res == doutp
+    return res
 
 
 def YAML(**kw):

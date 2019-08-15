@@ -410,7 +410,8 @@ class Emitter(object):
                 and self.sequence_context
             ):
                 self.sequence_context = False
-            if root and isinstance(self.event, ScalarEvent) and not self.scalar_after_indicator:
+            if root and isinstance(self.event, ScalarEvent) \
+               and not self.scalar_after_indicator:
                 self.write_indent()
             self.process_tag()
             if isinstance(self.event, ScalarEvent):
@@ -951,13 +952,18 @@ class Emitter(object):
                 suffix = tag[len(prefix) :]
         chunks = []  # type: List[Any]
         start = end = 0
+        ch_set = u"-;/?:@&=+$,_.~*'()[]"
+        if self.dumper:
+            version = getattr(self.dumper, 'version', (1, 2))
+            if version is None or version >= (1, 2):
+                ch_set += u'#'
         while end < len(suffix):
             ch = suffix[end]
             if (
                 u'0' <= ch <= u'9'
                 or u'A' <= ch <= u'Z'
                 or u'a' <= ch <= u'z'
-                or ch in u"-;/?:@&=+$,_.~*'()[]"
+                or ch in ch_set
                 or (ch == u'!' and handle != u'!')
             ):
                 end += 1

@@ -853,11 +853,20 @@ class TestIssues:
 
     def test_issue_304(self):
         inp = """
-	%YAML 1.2
-	%TAG ! tag:example.com,2019:
-	---
-	!foo null
-	...
+        %YAML 1.2
+        %TAG ! tag:example.com,2019:
+        ---
+        !foo null
+        ...
+        """
+        d = na_round_trip(inp)  # NOQA
+
+    def test_issue_305(self):
+        inp = """
+        %YAML 1.2
+        ---
+        !<tag:example.com,2019/path#foo> null
+        ...
         """
         d = na_round_trip(inp)  # NOQA
 

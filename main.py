@@ -161,7 +161,8 @@ class YAML(object):
         self.tags = None
         self.default_style = None
         self.top_level_block_style_scalar_no_indent_error_1_1 = False
-        self.scalar_after_indicator = None  # directives end indicator with single scalar document 
+        # directives end indicator with single scalar document
+        self.scalar_after_indicator = None
         # [a, b: 1, c: {d: 2}]  vs. [a, {b: 1}, {c: {d: 2}}]
         self.brace_single_entry_mapping_in_flow_sequence = False
 
