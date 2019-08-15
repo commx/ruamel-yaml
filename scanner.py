@@ -81,6 +81,7 @@ class Scanner(object):
             self.loader._scanner = self
         self.reset_scanner()
         self.first_time = False
+        self.yaml_version = None
 
     @property
     def flow_level(self):
@@ -955,7 +956,8 @@ class Scanner(object):
                 "expected a digit or ' ', but found %r" % utf8(srp()),
                 self.reader.get_mark(),
             )
-        return (major, minor)
+        self.yaml_version = (major, minor)
+        return self.yaml_version
 
     def scan_yaml_directive_number(self, start_mark):
         # type: (Any) -> Any

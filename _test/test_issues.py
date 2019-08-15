@@ -846,7 +846,6 @@ class TestIssues:
         null
         """)
         yaml = YAML()
-        yaml.version = (1, 1)  # This should not be necessary -> issue 301
         with pytest.raises(ruamel.yaml.scanner.ScannerError,
                            match='while scanning a directive'):
             yaml.load(inp)

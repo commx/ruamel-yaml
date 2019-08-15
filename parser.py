@@ -109,7 +109,6 @@ class Parser(object):
         # type: () -> None
         # Reset the state attributes (to clear self-references)
         self.current_event = None
-        self.yaml_version = None
         self.tag_handles = {}  # type: Dict[Any, Any]
         self.states = []  # type: List[Any]
         self.marks = []  # type: List[Any]
@@ -269,12 +268,12 @@ class Parser(object):
 
     def process_directives(self):
         # type: () -> Any
-        self.yaml_version = None
+        yaml_version = None
         self.tag_handles = {}
         while self.scanner.check_token(DirectiveToken):
             token = self.scanner.get_token()
             if token.name == u'YAML':
-                if self.yaml_version is not None:
+                if yaml_version is not None:
                     raise ParserError(
                         None, None, 'found duplicate YAML directive', token.start_mark
                     )
@@ -286,7 +285,7 @@ class Parser(object):
                         'found incompatible YAML document (version 1.* is ' 'required)',
                         token.start_mark,
                     )
-                self.yaml_version = token.value
+                yaml_version = token.value
             elif token.name == u'TAG':
                 handle, prefix = token.value
                 if handle in self.tag_handles:
@@ -295,11 +294,11 @@ class Parser(object):
                     )
                 self.tag_handles[handle] = prefix
         if bool(self.tag_handles):
-            value = self.yaml_version, self.tag_handles.copy()  # type: Any
+            value = yaml_version, self.tag_handles.copy()  # type: Any
         else:
-            value = self.yaml_version, None
+            value = yaml_version, None
         if self.loader is not None and hasattr(self.loader, 'tags'):
-            self.loader.version = self.yaml_version
+            self.loader.version = yaml_version
             if self.loader.tags is None:
                 self.loader.tags = {}
             for k in self.tag_handles:

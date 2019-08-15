@@ -383,7 +383,7 @@ class VersionedResolver(BaseResolver):
     def processing_version(self):
         # type: () -> Any
         try:
-            version = self.parser.yaml_version
+            version = self.loadumper._scanner.yaml_version
         except AttributeError:
             try:
                 if hasattr(self.loadumper, 'typ'):
