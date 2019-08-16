@@ -869,6 +869,16 @@ class TestIssues:
         """
         d = na_round_trip(inp)  # NOQA
 
+    def test_issue_307(self):
+        inp = """
+        %YAML 1.2
+        %TAG ! tag:example.com,2019/path#
+        ---
+        null
+        ...
+        """
+        d = na_round_trip(inp)  # NOQA
+
 #    @pytest.mark.xfail(strict=True, reason='bla bla', raises=AssertionError)
 #    def test_issue_ xxx(self):
 #        inp = """
