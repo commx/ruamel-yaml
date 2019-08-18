@@ -78,7 +78,7 @@ class YAML(object):
                 'one was given ({!r})'.format(self.__class__.__name__, _kw)
             )
 
-        self.typ = 'rt' if typ is None else typ
+        self.typ = ['rt'] if typ is None else (typ if isinstance(typ, list) else [typ])
         self.pure = pure
 
         # self._input = input
@@ -95,7 +95,36 @@ class YAML(object):
         self.Scanner = None  # type: Any
         self.Serializer = None  # type: Any
         self.default_flow_style = None  # type: Any
-        if self.typ == 'rt':
+        typ_found = 1
+        setup_rt = False
+        if 'rt' in self.typ:
+            setup_rt = True
+        elif 'safe' in self.typ:
+            self.Emitter = (
+                ruamel.yaml.emitter.Emitter if pure or CEmitter is None else CEmitter
+            )
+            self.Representer = ruamel.yaml.representer.SafeRepresenter
+            self.Parser = ruamel.yaml.parser.Parser if pure or CParser is None else CParser
+            self.Composer = ruamel.yaml.composer.Composer
+            self.Constructor = ruamel.yaml.constructor.SafeConstructor
+        elif 'base' in self.typ:
+            self.Emitter = ruamel.yaml.emitter.Emitter
+            self.Representer = ruamel.yaml.representer.BaseRepresenter
+            self.Parser = ruamel.yaml.parser.Parser if pure or CParser is None else CParser
+            self.Composer = ruamel.yaml.composer.Composer
+            self.Constructor = ruamel.yaml.constructor.BaseConstructor
+        elif 'unsafe' in self.typ:
+            self.Emitter = (
+                ruamel.yaml.emitter.Emitter if pure or CEmitter is None else CEmitter
+            )
+            self.Representer = ruamel.yaml.representer.Representer
+            self.Parser = ruamel.yaml.parser.Parser if pure or CParser is None else CParser
+            self.Composer = ruamel.yaml.composer.Composer
+            self.Constructor = ruamel.yaml.constructor.Constructor
+        else:
+            setup_rt = True
+            typ_found = 0
+        if setup_rt:
             self.default_flow_style = False
             # no optimized rt-dumper yet
             self.Emitter = ruamel.yaml.emitter.Emitter  # type: Any
@@ -106,37 +135,7 @@ class YAML(object):
             self.Parser = ruamel.yaml.parser.RoundTripParser  # type: Any
             self.Composer = ruamel.yaml.composer.Composer  # type: Any
             self.Constructor = ruamel.yaml.constructor.RoundTripConstructor  # type: Any
-        elif self.typ == 'safe':
-            self.Emitter = (
-                ruamel.yaml.emitter.Emitter if pure or CEmitter is None else CEmitter
-            )
-            self.Representer = ruamel.yaml.representer.SafeRepresenter
-            self.Parser = ruamel.yaml.parser.Parser if pure or CParser is None else CParser
-            self.Composer = ruamel.yaml.composer.Composer
-            self.Constructor = ruamel.yaml.constructor.SafeConstructor
-        elif self.typ == 'base':
-            self.Emitter = ruamel.yaml.emitter.Emitter
-            self.Representer = ruamel.yaml.representer.BaseRepresenter
-            self.Parser = ruamel.yaml.parser.Parser if pure or CParser is None else CParser
-            self.Composer = ruamel.yaml.composer.Composer
-            self.Constructor = ruamel.yaml.constructor.BaseConstructor
-        elif self.typ == 'unsafe':
-            self.Emitter = (
-                ruamel.yaml.emitter.Emitter if pure or CEmitter is None else CEmitter
-            )
-            self.Representer = ruamel.yaml.representer.Representer
-            self.Parser = ruamel.yaml.parser.Parser if pure or CParser is None else CParser
-            self.Composer = ruamel.yaml.composer.Composer
-            self.Constructor = ruamel.yaml.constructor.Constructor
-        else:
-            for module in self.plug_ins:
-                if getattr(module, 'typ', None) == self.typ:
-                    module.init_typ(self)
-                    break
-            else:
-                raise NotImplementedError(
-                    'typ "{}"not recognised (need to install plug-in?)'.format(self.typ)
-                )
+        del setup_rt
         self.stream = None
         self.canonical = None
         self.old_indent = None
@@ -165,6 +164,15 @@ class YAML(object):
         self.scalar_after_indicator = None
         # [a, b: 1, c: {d: 2}]  vs. [a, {b: 1}, {c: {d: 2}}]
         self.brace_single_entry_mapping_in_flow_sequence = False
+        for module in self.plug_ins:
+            if getattr(module, 'typ', None) in self.typ:
+                typ_found += 1
+                module.init_typ(self)
+                break
+        if typ_found == 0:
+            raise NotImplementedError(
+                'typ "{}"not recognised (need to install plug-in?)'.format(self.typ)
+            )
 
     @property
     def reader(self):
@@ -535,7 +543,7 @@ class YAML(object):
 
         rslvr = (
             ruamel.yaml.resolver.BaseResolver
-            if self.typ == 'base'
+            if 'base' in self.typ
             else ruamel.yaml.resolver.Resolver
         )
 
@@ -601,7 +609,7 @@ class YAML(object):
     # basic types
     def map(self, **kw):
         # type: (Any) -> Any
-        if self.typ == 'rt':
+        if 'rt' in self.typ:
             from ruamel.yaml.comments import CommentedMap
 
             return CommentedMap(**kw)
@@ -610,7 +618,7 @@ class YAML(object):
 
     def seq(self, *args):
         # type: (Any) -> Any
-        if self.typ == 'rt':
+        if 'rt' in self.typ:
             from ruamel.yaml.comments import CommentedSeq
 
             return CommentedSeq(*args)

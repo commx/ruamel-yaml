@@ -4,8 +4,8 @@ ruamel.yaml
 
 ``ruamel.yaml`` is a YAML 1.2 loader/dumper package for Python.
 
-:version:       0.16.4
-:updated:       2019-08-16
+:version:       0.16.5
+:updated:       2019-08-18
 :documentation: http://yaml.readthedocs.io
 :repository:    https://bitbucket.org/ruamel/yaml
 :pypi:          https://pypi.org/project/ruamel.yaml/
@@ -53,6 +53,9 @@ ChangeLog
 =========
 
 .. should insert NEXT: at the beginning of line for next key (with empty line)
+
+0.16.5 (2019-08-18):
+  - allow for ``YAML(typ=['unsafe', 'pytypes'])``
 
 0.16.4 (2019-08-16):
   - fix output of TAG directives with # (reported by `Thomas Smith

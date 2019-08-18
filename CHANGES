@@ -1,3 +1,6 @@
+[0, 16, 5]: 2019-08-18
+  - allow for ``YAML(typ=['unsafe', 'pytypes'])``
+
 [0, 16, 4]: 2019-08-16
   - fix output of TAG directives with # (reported by `Thomas Smith
     <https://bitbucket.org/%7Bd4c57a72-f041-4843-8217-b4d48b6ece2f%7D/>`__)

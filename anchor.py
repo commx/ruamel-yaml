@@ -11,3 +11,7 @@ class Anchor(object):
         # type: () -> None
         self.value = None
         self.always_dump = False
+
+    def __repr__(self):
+        ad = ", (always dump)" if self.always_dump else ""
+        return "Anchor({!r}{})".format(self.value, ad)

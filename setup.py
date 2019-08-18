@@ -23,8 +23,9 @@ from setuptools.command.sdist import sdist as _sdist  # NOQA
 try:
     from setuptools.namespaces import Installer as NameSpaceInstaller # NOQA
 except ImportError:
-    print("You should use the latest setuptools. The namespaces.py file that this setup.py"
-          " uses was added in setuptools 28.7.0 (Oct 2016)")
+    msg = ('You should use the latest setuptools. The namespaces.py file that this setup.py'
+           ' uses was added in setuptools 28.7.0 (Oct 2016)')
+    print(msg)
     sys.exit()
 
 if __name__ != '__main__':
