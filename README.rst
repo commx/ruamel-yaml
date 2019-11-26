@@ -54,6 +54,10 @@ ChangeLog
 
 .. should insert NEXT: at the beginning of line for next key (with empty line)
 
+NEXT:
+  - fix empty string mapping key roundtripping with preservation of quotes as `? ''`
+    (reported via email by Tomer Aharoni).
+
 0.16.5 (2019-08-18):
   - allow for ``YAML(typ=['unsafe', 'pytypes'])``
 

@@ -769,7 +769,8 @@ class Emitter(object):
             or (isinstance(self.event, MappingStartEvent) and self.event.flow_style is True)
             or (
                 isinstance(self.event, ScalarEvent)
-                and not self.analysis.empty
+                # if there is an explicit style for an empty string, it is a simple key
+                and not (self.analysis.empty and self.style and self.style not in '\'"')
                 and not self.analysis.multiline
             )
             or self.check_empty_sequence()
