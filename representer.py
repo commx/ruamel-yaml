@@ -1243,6 +1243,8 @@ RoundTripRepresenter.add_representer(
     PlainScalarString, RoundTripRepresenter.represent_plain_scalarstring
 )
 
+# RoundTripRepresenter.add_representer(tuple, Representer.represent_tuple)
+
 RoundTripRepresenter.add_representer(ScalarInt, RoundTripRepresenter.represent_scalar_int)
 
 RoundTripRepresenter.add_representer(BinaryInt, RoundTripRepresenter.represent_binary_int)

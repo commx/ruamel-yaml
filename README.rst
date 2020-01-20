@@ -4,8 +4,8 @@ ruamel.yaml
 
 ``ruamel.yaml`` is a YAML 1.2 loader/dumper package for Python.
 
-:version:       0.16.5
-:updated:       2019-08-18
+:version:       0.16.6
+:updated:       2020-01-20
 :documentation: http://yaml.readthedocs.io
 :repository:    https://bitbucket.org/ruamel/yaml
 :pypi:          https://pypi.org/project/ruamel.yaml/
@@ -54,9 +54,13 @@ ChangeLog
 
 .. should insert NEXT: at the beginning of line for next key (with empty line)
 
-NEXT:
+0.16.6 (2020-01-20):
   - fix empty string mapping key roundtripping with preservation of quotes as `? ''`
     (reported via email by Tomer Aharoni).
+  - fix incorrect state setting in class constructor (reported by `Douglas Raillard
+    <https://bitbucket.org/%7Bcf052d92-a278-4339-9aa8-de41923bb556%7D/>`__)
+  - adjust deprecation warning test for Hashable, as that no longer warns (reported
+    by `Jason Montleon <https://bitbucket.org/%7B8f377d12-8d5b-4069-a662-00a2674fee4e%7D/>`__)
 
 0.16.5 (2019-08-18):
   - allow for ``YAML(typ=['unsafe', 'pytypes'])``
