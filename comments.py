@@ -1116,7 +1116,7 @@ class CommentedSet(MutableSet, CommentedBase):  # type: ignore  # NOQA
 class TaggedScalar(CommentedBase):
     # the value and style attributes are set during roundtrip construction
     def __init__(self, value=None, style=None, tag=None):
-        # type: () -> None
+        # type: (Any, Any, Any) -> None
         self.value = value
         self.style = style
         if tag is not None:

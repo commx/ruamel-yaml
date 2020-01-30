@@ -128,6 +128,8 @@ class TestYAMLData(object):
         value = buf.getvalue()
         if PY2:
             value = value.decode('utf-8')
+            print('value', value)
+            # print('expected', expected)
         assert value == expected
 
     def load_assert(self, input, confirm, yaml_version=None):

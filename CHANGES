@@ -1,3 +1,18 @@
+[0, 16, 7]: 2020-01-30
+  - fix typchecking issue on TaggedScalar (reported by Jens Nielsen)
+  - fix error in dumping literal scalar in sequence with comments before element
+    (reported by `EJ Etherington <https://sourceforge.net/u/ejether/>`__)
+
+[0, 16, 7]: 2020-01-30
+  - fix typchecking issue on TaggedScalar (reported by Jens Nielsen)
+  - fix error in dumping literal scalar in sequence with comments before element
+    (reported by `EJ Etherington <https://sourceforge.net/u/ejether/>`__)
+
+[0, 16, 7]: 2020-01-30
+  - fix typchecking issue on TaggedScalar (reported by Jens Nielsen)
+  - fix error in dumping literal scalar in sequence with comments before element
+    (reported by `EJ Etherington <https://sourceforge.net/u/ejether/>`__)
+
 [0, 16, 6]: 2020-01-20
   - fix empty string mapping key roundtripping with preservation of quotes as `? ''`
     (reported via email by Tomer Aharoni).

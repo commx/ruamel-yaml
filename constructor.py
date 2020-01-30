@@ -1311,9 +1311,10 @@ class RoundTripConstructor(SafeConstructor):
             if not templated_id(node.anchor):
                 seqtyp.yaml_set_anchor(node.anchor)
         for idx, child in enumerate(node.value):
-            ret_val.append(self.construct_object(child, deep=deep))
             if child.comment:
                 seqtyp._yaml_add_comment(child.comment, key=idx)
+                child.comment = None  # if moved to sequence remove from child
+            ret_val.append(self.construct_object(child, deep=deep))
             seqtyp._yaml_set_idx_line_col(
                 idx, [child.start_mark.line, child.start_mark.column]
             )
@@ -1467,7 +1468,6 @@ class RoundTripConstructor(SafeConstructor):
                     )
             value = self.construct_object(value_node, deep=deep)
             if self.check_mapping_key(node, key_node, maptyp, key, value):
-
                 if key_node.comment and len(key_node.comment) > 4 and key_node.comment[4]:
                     if last_value is None:
                         key_node.comment[0] = key_node.comment.pop(4)

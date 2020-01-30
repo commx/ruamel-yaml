@@ -1,4 +1,6 @@
 
+if False:  # MYPY
+    from typing import Any, Dict, Optional, List, Union, Optional, Iterator  # NOQA
 
 anchor_attrib = '_yaml_anchor'
 
@@ -13,5 +15,6 @@ class Anchor(object):
         self.always_dump = False
 
     def __repr__(self):
-        ad = ", (always dump)" if self.always_dump else ""
-        return "Anchor({!r}{})".format(self.value, ad)
+        # type: () -> Any
+        ad = ', (always dump)' if self.always_dump else ""
+        return 'Anchor({!r}{})'.format(self.value, ad)

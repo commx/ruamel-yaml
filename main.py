@@ -92,6 +92,8 @@ class YAML(object):
         self.Resolver = ruamel.yaml.resolver.VersionedResolver  # type: Any
         self.allow_unicode = True
         self.Reader = None  # type: Any
+        self.Representer = None  # type: Any
+        self.Constructor = None  # type: Any
         self.Scanner = None  # type: Any
         self.Serializer = None  # type: Any
         self.default_flow_style = None  # type: Any
@@ -127,14 +129,14 @@ class YAML(object):
         if setup_rt:
             self.default_flow_style = False
             # no optimized rt-dumper yet
-            self.Emitter = ruamel.yaml.emitter.Emitter  # type: Any
+            self.Emitter = ruamel.yaml.emitter.Emitter
             self.Serializer = ruamel.yaml.serializer.Serializer
-            self.Representer = ruamel.yaml.representer.RoundTripRepresenter  # type: Any
+            self.Representer = ruamel.yaml.representer.RoundTripRepresenter
             self.Scanner = ruamel.yaml.scanner.RoundTripScanner
             # no optimized rt-parser yet
-            self.Parser = ruamel.yaml.parser.RoundTripParser  # type: Any
-            self.Composer = ruamel.yaml.composer.Composer  # type: Any
-            self.Constructor = ruamel.yaml.constructor.RoundTripConstructor  # type: Any
+            self.Parser = ruamel.yaml.parser.RoundTripParser
+            self.Composer = ruamel.yaml.composer.Composer
+            self.Constructor = ruamel.yaml.constructor.RoundTripConstructor
         del setup_rt
         self.stream = None
         self.canonical = None
