@@ -1,18 +1,5 @@
-[0, 16, 8]: 2020-02-11
-  - update requirements so that ruamel.yaml.clib is installed for 3.8,
-    as it has become available (via manylinux builds)
-
-[0, 16, 8]: 2020-02-11
-  - update requirements so that ruamel.yaml.clib is installed for 3.8,
-    as it has become available (via manylinux builds)
-
-[0, 16, 8]: 2020-02-11
-  - update requirements so that ruamel.yaml.clib is installed for 3.8,
-    as it has become available (via manylinux builds)
-
-[0, 16, 8]: 2020-02-11
-  - update requirements so that ruamel.yaml.clib is installed for 3.8,
-    as it has become available (via manylinux builds)
+[0, 16, 9]: 2020-02-11
+  - update CHANGES
 
 [0, 16, 8]: 2020-02-11
   - update requirements so that ruamel.yaml.clib is installed for 3.8,
@@ -22,24 +9,6 @@
   - fix typchecking issue on TaggedScalar (reported by Jens Nielsen)
   - fix error in dumping literal scalar in sequence with comments before element
     (reported by `EJ Etherington <https://sourceforge.net/u/ejether/>`__)
-
-[0, 16, 7]: 2020-01-30
-  - fix typchecking issue on TaggedScalar (reported by Jens Nielsen)
-  - fix error in dumping literal scalar in sequence with comments before element
-    (reported by `EJ Etherington <https://sourceforge.net/u/ejether/>`__)
-
-[0, 16, 7]: 2020-01-30
-  - fix typchecking issue on TaggedScalar (reported by Jens Nielsen)
-  - fix error in dumping literal scalar in sequence with comments before element
-    (reported by `EJ Etherington <https://sourceforge.net/u/ejether/>`__)
-
-[0, 16, 6]: 2020-01-20
-  - fix empty string mapping key roundtripping with preservation of quotes as `? ''`
-    (reported via email by Tomer Aharoni).
-  - fix incorrect state setting in class constructor (reported by `Douglas Raillard
-    <https://bitbucket.org/%7Bcf052d92-a278-4339-9aa8-de41923bb556%7D/>`__)
-  - adjust deprecation warning test for Hashable, as that no longer warns (reported
-    by `Jason Montleon <https://bitbucket.org/%7B8f377d12-8d5b-4069-a662-00a2674fee4e%7D/>`__)
 
 [0, 16, 6]: 2020-01-20
   - fix empty string mapping key roundtripping with preservation of quotes as `? ''`
@@ -128,13 +97,6 @@
     (reported by `Marcel Bollmann
     <https://bitbucket.org/%7Bd8850921-9145-4ad0-ac30-64c3bd9b036d%7D/>`__)
 
-[0, 15, 93]: 2019-04-21
-  - fix failure to parse empty implicit flow mapping key
-  - in YAML 1.1 plains scalars `y`, 'n', `Y`, and 'N' are now
-    correctly recognised as booleans and such strings dumped quoted
-    (reported by `Marcel Bollmann
-    <https://bitbucket.org/%7Bd8850921-9145-4ad0-ac30-64c3bd9b036d%7D/>`__)
-
 [0, 15, 92]: 2019-04-16
   - fix failure to parse empty implicit block mapping key (reported by 
     `Nolan W <https://bitbucket.org/i2labs/>`__)
@@ -142,14 +104,6 @@
 [0, 15, 91]: 2019-04-05
   - allowing duplicate keys would not work for merge keys (reported by mamacdon on
     `StackOverflow <https://stackoverflow.com/questions/55540686/>`__ 
-
-[0, 15, 91]: 2019-04-05
-  - allowing duplicate keys would not work for merge keys (reported by mamacdon on
-    `StackOverflow <https://stackoverflow.com/questions/55540686/>`__ 
-
-[0, 15, 90]: 2019-04-04
-  - fix issue with updating `CommentedMap` from list of tuples (reported by 
-    `Peter Henry <https://bitbucket.org/mosbasik/>`__)
 
 [0, 15, 90]: 2019-04-04
   - fix issue with updating `CommentedMap` from list of tuples (reported by 
@@ -165,27 +119,11 @@
   - fix inclusing of python code from the subpackage data (containing extra tests,
     reported by `Florian Apolloner <https://bitbucket.org/apollo13/>`__)
 
-[0, 15, 88]: 2019-02-12
-  - fix inclusing of python code from the subpackage data (containing extra tests,
-    reported by `Florian Apolloner <https://bitbucket.org/apollo13/>`__)
-
-[0, 15, 87]: 2019-01-22
-  - fix problem with empty lists and the code to reinsert merge keys (reported via email 
-     by Zaloo)
-
 [0, 15, 87]: 2019-01-22
   - fix problem with empty lists and the code to reinsert merge keys (reported via email 
     by Zaloo)
 
 [0, 15, 86]: 2019-01-16
-  - reinsert merge key in its old position (reported by grumbler on
-    <Stackoverflow <https://stackoverflow.com/a/54206512/1307905>`__)
-  - fix for issue with non-ASCII anchor names (reported and fix
-    provided by Dandaleon Flux via email)
-  - fix for issue when parsing flow mapping value starting with colon (in pure Python only)
-    (reported by `FichteFoll <https://bitbucket.org/FichteFoll/>`__)
-
-[0, 15, 86]: 2019-01-15
   - reinsert merge key in its old position (reported by grumbler on
     <Stackoverflow <https://stackoverflow.com/a/54206512/1307905>`__)
   - fix for issue with non-ASCII anchor names (reported and fix
@@ -227,10 +165,6 @@
   - fix issue with anchors nested deeper than alias (reported by gaFF on
     `StackOverflow <https://stackoverflow.com/a/53397781/1307905>`__)
 
-[0, 15, 79]: 2018-11-21
-  - fix issue with anchors nested deeper than alias (reported by gaFF on
-    `StackOverflow <https://stackoverflow.com/a/53397781/1307905>`__)
-
 [0, 15, 78]: 2018-11-15
   - fix setup issue for 3.8 (reported by `Sidney Kuyateh 
     <https://bitbucket.org/autinerd/>`__)
@@ -255,14 +189,6 @@
     `StackOverflow question <https://stackoverflow.com/q/52851168/1307905>`__
     by `math <https://stackoverflow.com/users/1355634/math>`__)
 
-[0, 15, 75]: 2018-10-27
-  - fix issue with single '?' scalar (reported by `Terrance 
-    <https://bitbucket.org/OllieTerrance/>`__)
-  - fix issue with duplicate merge keys (prompted by `answering 
-    <https://stackoverflow.com/a/52852106/1307905>`__ a 
-    `StackOverflow question <https://stackoverflow.com/q/52851168/1307905>`__
-    by `math <https://stackoverflow.com/users/1355634/math>`__)
-
 [0, 15, 74]: 2018-10-17
   - fix dropping of comment on rt before sequence item that is sequence item
     (reported by `Thorsten Kampe <https://bitbucket.org/thorstenkampe/>`__)
@@ -271,10 +197,6 @@
   - fix irregular output on pre-comment in sequence within sequence (reported
     by `Thorsten Kampe <https://bitbucket.org/thorstenkampe/>`__)
   - allow non-compact (i.e. next line) dumping sequence/mapping within sequence.
-
-[0, 15, 72]: 2018-10-06
-  - fix regression on explicit 1.1 loading with the C based scanner/parser
-    (reported by `Tomas Vavra <https://bitbucket.org/xtomik/>`__)
 
 [0, 15, 72]: 2018-10-06
   - fix regression on explicit 1.1 loading with the C based scanner/parser
@@ -349,10 +271,6 @@
   - cleanup for mypy 
   - spurious print in library (reported by 
     `Lele Gaifax <https://bitbucket.org/lele/>`__), now automatically checked 
-
-[0, 15, 59]: 2018-08-17
-  - issue with C based loader and leading zeros (reported by 
-    `Tom Hamilton Stubber <https://bitbucket.org/TomHamiltonStubber/>`__)
 
 [0, 15, 59]: 2018-08-17
   - issue with C based loader and leading zeros (reported by 
@@ -467,29 +385,6 @@
     <https://stackoverflow.com/q/51573204/1307905>`__ and as time
     consuming to actually `fix
     <https://stackoverflow.com/a/51573205/1307905>`__ the tests.
-
-[0, 15, 46]: 2018-07-29
-  - fixed DeprecationWarning for importing from ``collections`` on 3.7
-    (issue 210, reported by `Reinoud Elhorst
-    <https://bitbucket.org/reinhrst/>`__). It was `difficult to find
-    why tox/pytest did not report
-    <https://stackoverflow.com/q/51573204/1307905>`__ and as time
-    consuming to actually `fix
-    <https://stackoverflow.com/a/51573205/1307905>`__ the tests.
-
-[0, 15, 45]: 2018-07-29
-  - fixed DeprecationWarning for importing from ``collections`` on 3.7
-    (issue 210, reported by `Reinoud Elhorst
-    <https://bitbucket.org/reinhrst/>`__). It was `difficult to find
-    why tox/pytest did not report
-    <https://stackoverflow.com/q/51573204/1307905>`__ and as time
-    consuming to actually `fix
-    <https://stackoverflow.com/a/51573205/1307905>`__ the tests.
-
-[0, 15, 45]: 2018-07-26
-  - After adding failing test for ``YAML.load_all(Path())``, remove StopIteration 
-    (PR provided by `Zachary Buhman <https://bitbucket.org/buhman/>`__,
-    also reported by `Steven Hiscocks <https://bitbucket.org/sdhiscocks/>`__.
 
 [0, 15, 45]: 2018-07-26
   - After adding failing test for ``YAML.load_all(Path())``, remove StopIteration 
@@ -667,10 +562,6 @@
   - fix for issue 130, regression in nested merge keys (reported by
     `David Fee <https://bitbucket.org/dfee/>`_)
 
-[0, 15, 10]: 2017-06-24
-  - fix for issue 130, regression in nested merge keys (reported by
-    `David Fee <https://bitbucket.org/dfee/>`_)
-
 [0, 15, 10]: 2017-06-23
   - top level PreservedScalarString not indented if not explicitly asked to
   - remove Makefile (not very useful anyway)
@@ -680,9 +571,6 @@
   - fix for issue 127: tagged scalars were always quoted and seperated
     by a newline when in a block sequence (reported and largely fixed by
     `Tommy Wang <https://bitbucket.org/twang817/>`_)
-
-[0, 15, 8]: 2017-06-15
-  - allow plug-in install via ``install ruamel.yaml[jinja2]``
 
 [0, 15, 8]: 2017-06-15
   - allow plug-in install via ``install ruamel.yaml[jinja2]``
