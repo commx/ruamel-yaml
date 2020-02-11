@@ -1,3 +1,23 @@
+[0, 16, 8]: 2020-02-11
+  - update requirements so that ruamel.yaml.clib is installed for 3.8,
+    as it has become available (via manylinux builds)
+
+[0, 16, 8]: 2020-02-11
+  - update requirements so that ruamel.yaml.clib is installed for 3.8,
+    as it has become available (via manylinux builds)
+
+[0, 16, 8]: 2020-02-11
+  - update requirements so that ruamel.yaml.clib is installed for 3.8,
+    as it has become available (via manylinux builds)
+
+[0, 16, 8]: 2020-02-11
+  - update requirements so that ruamel.yaml.clib is installed for 3.8,
+    as it has become available (via manylinux builds)
+
+[0, 16, 8]: 2020-02-11
+  - update requirements so that ruamel.yaml.clib is installed for 3.8,
+    as it has become available (via manylinux builds)
+
 [0, 16, 7]: 2020-01-30
   - fix typchecking issue on TaggedScalar (reported by Jens Nielsen)
   - fix error in dumping literal scalar in sequence with comments before element

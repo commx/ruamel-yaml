@@ -4,8 +4,8 @@ ruamel.yaml
 
 ``ruamel.yaml`` is a YAML 1.2 loader/dumper package for Python.
 
-:version:       0.16.7
-:updated:       2020-01-30
+:version:       0.16.8
+:updated:       2020-02-11
 :documentation: http://yaml.readthedocs.io
 :repository:    https://bitbucket.org/ruamel/yaml
 :pypi:          https://pypi.org/project/ruamel.yaml/
@@ -53,6 +53,10 @@ ChangeLog
 =========
 
 .. should insert NEXT: at the beginning of line for next key (with empty line)
+
+0.16.8 (2020-02-11):
+  - update requirements so that ruamel.yaml.clib is installed for 3.8,
+    as it has become available (via manylinux builds)
 
 0.16.7 (2020-01-30):
   - fix typchecking issue on TaggedScalar (reported by Jens Nielsen)
