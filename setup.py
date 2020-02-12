@@ -1,6 +1,6 @@
 # # header
 # coding: utf-8
-# dd: 20190815
+# dd: 20200125
 
 from __future__ import print_function, absolute_import, division, unicode_literals
 
@@ -51,7 +51,6 @@ if sys.version_info < (3, 4):
 
 
 if sys.version_info >= (3, 8):
-
     from ast import Str, Num, Bytes, NameConstant  # NOQA
 
 
@@ -540,11 +539,13 @@ class NameSpacePackager(object):
 
     @property
     def url(self):
-        if self.full_package_name.startswith('ruamel.'):
-            sp = self.full_package_name.split('.', 1)
-        else:
-            sp = ['ruamel', self.full_package_name]
-        return 'https://bitbucket.org/{0}/{1}'.format(*sp)
+        url = self._pkg_data.get('url')
+        if url:
+            return url
+        sp = self.full_package_name
+        for ch in '_.':
+            sp = sp.replace(ch, '-')
+        return 'https://sourceforge.net/p/{0}/code/ci/default/tree'.format(sp)
 
     @property
     def author(self):
@@ -927,6 +928,7 @@ def main():
     try:
         with open('README.rst') as fp:
             kw['long_description'] = fp.read()
+            kw['long_description_content_type'] = 'text/x-rst'
     except Exception:
         pass
 

@@ -7,8 +7,8 @@ if False:  # MYPY
 
 _package_data = dict(
     full_package_name='ruamel.yaml',
-    version_info=(0, 16, 9),
-    __version__='0.16.9',
+    version_info=(0, 16, 10),
+    __version__='0.16.10',
     author='Anthon van der Neut',
     author_email='a.van.der.neut@ruamel.eu',
     description='ruamel.yaml is a YAML parser/emitter that supports roundtrip preservation of comments, seq/map flow style, and map key order',  # NOQA
@@ -26,6 +26,7 @@ _package_data = dict(
             'Programming Language :: Python :: 3.5',
             'Programming Language :: Python :: 3.6',
             'Programming Language :: Python :: 3.7',
+            'Programming Language :: Python :: 3.8',
             'Programming Language :: Python :: Implementation :: CPython',
             'Programming Language :: Python :: Implementation :: PyPy',
             'Programming Language :: Python :: Implementation :: Jython',
@@ -37,7 +38,7 @@ _package_data = dict(
     read_the_docs='yaml',
     supported=[(2, 7), (3, 5)],  # minimum
     tox=dict(
-        env='*pn',  # also test narrow Python 2.7.15 for unicode patterns
+        env='*',  # remove 'pn', no longer test narrow Python 2.7 for unicode patterns and PyPy
         deps='ruamel.std.pathlib',
         fl8excl='_test/lib',
     ),
