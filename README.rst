@@ -4,8 +4,8 @@ ruamel.yaml
 
 ``ruamel.yaml`` is a YAML 1.2 loader/dumper package for Python.
 
-:version:       0.16.10
-:updated:       2020-02-12
+:version:       0.16.11
+:updated:       2020-09-03
 :documentation: http://yaml.readthedocs.io
 :repository:    https://bitbucket.org/ruamel/yaml
 :pypi:          https://pypi.org/project/ruamel.yaml/
@@ -53,6 +53,10 @@ ChangeLog
 =========
 
 .. should insert NEXT: at the beginning of line for next key (with empty line)
+
+0.16.11 (2020-09-03):
+  - workaround issue with setuptools 0.50 and importing pip ( fix by jaraco
+    https://github.com/pypa/setuptools/issues/2355#issuecomment-685159580 )
 
 0.16.10 (2020-02-12):
   - (auto) updated image references in README to sourceforge

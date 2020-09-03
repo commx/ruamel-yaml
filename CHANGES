@@ -1,3 +1,7 @@
+[0, 16, 11]: 2020-09-03
+  - workaround issue with setuptools 0.50 and importing pip ( fix by jaraco
+    https://github.com/pypa/setuptools/issues/2355#issuecomment-685159580 )
+
 [0, 16, 10]: 2020-02-12
   - (auto) updated image references in README to sourceforge
 

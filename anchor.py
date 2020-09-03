@@ -1,4 +1,3 @@
-
 if False:  # MYPY
     from typing import Any, Dict, Optional, List, Union, Optional, Iterator  # NOQA
 

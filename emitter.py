@@ -169,14 +169,14 @@ class Emitter(object):
         self.prefixed_colon = self.colon if prefix_colon is None else prefix_colon + self.colon
         # single entry mappings in flow sequence
         self.brace_single_entry_mapping_in_flow_sequence = (
-         brace_single_entry_mapping_in_flow_sequence
-        )  # NOQA
+            brace_single_entry_mapping_in_flow_sequence  # NOQA
+        )
 
         # Formatting details.
         self.canonical = canonical
         self.allow_unicode = allow_unicode
         # set to False to get "\Uxxxxxxxx" for non-basic unicode like emojis
-        self.unicode_supplementary = sys.maxunicode > 0xffff
+        self.unicode_supplementary = sys.maxunicode > 0xFFFF
         self.sequence_dash_offset = block_seq_indent if block_seq_indent else 0
         self.top_level_colon_align = top_level_colon_align
         self.best_sequence_indent = 2

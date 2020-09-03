@@ -1,6 +1,6 @@
 # # header
 # coding: utf-8
-# dd: 20200125
+# dd: 20200903
 
 from __future__ import print_function, absolute_import, division, unicode_literals
 
@@ -446,10 +446,8 @@ class NameSpacePackager(object):
             sys.exit(1)
 
     def check(self):
-        try:
-            from pip.exceptions import InstallationError
-        except ImportError:
-            return
+        # https://github.com/pypa/setuptools/issues/2355#issuecomment-685159580
+        InstallationError = Exception
         # arg is either develop (pip install -e) or install
         if self.command not in ['install', 'develop']:
             return
