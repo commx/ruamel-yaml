@@ -57,7 +57,7 @@ try:
     from ruamel.yaml import __version__, version_info  # NOQA
 
     # The short X.Y version.
-    version = '.'.join([str(l) for l in version_info[:3]])
+    version = '.'.join([str(ch) for ch in version_info[:3]])
     # The full version, including alpha/beta/rc tags.
     release = version  # = __version__
 except Exception as e:

@@ -9,14 +9,14 @@ Contributing
 
 Any contribution to ``ruamel.yaml`` is welcome, be it in the form of an
 email, a question on stackoverflow (I'll get notified of that when you tag it
-with ``ruamel.yaml``), an issue or pull-request (PR) on bitbucket.
+with ``ruamel.yaml``), an issue or pull-request (PR) on sourceforge.
 
 Contributing via stackoverflow is, for most, easiest to make. When I answer your
 question there and the answer warrants an extension to the documentation or
 code, I will include it in a documnetation update and/or future (normally the
 next) release of ``ruamel.yaml``.
 
-Please don't post support questions as an issue on Bitbucket.
+Please don't post support questions as an issue on sourceforge.
 
 Documentation
 =============
@@ -30,7 +30,7 @@ will be clear how that works.
 If you want to contribute to the documentation, you can sent me a clear
 description of the needed changes, e.g. as a unified diff. If the changes
 encompass multiple documents in a ``.ryd`` file, it is best to install ``ryd``
-(use a virtualenv!), clone the ``ruamel.yaml`` repository on Bitbucket, edit
+(use a virtualenv!), clone the ``ruamel.yaml`` repository on sourceforge, edit
 documentation, run ``ryd``::
 
       ryd --pdf '**/*.ryd'
@@ -107,7 +107,7 @@ Generated files
 
 I use a minimal environment when developing, void of most artifacts needed for
 packaging, testing etc. These artifact files are *generated*, just before committing to
-Bitbucket and pushing to PyPI, with nuances coming from the ``_package_data``
+sourceforge and pushing to PyPI, with nuances coming from the ``_package_data``
 information in ``__init__.py``. Including changes in these files will
 automatically be reverted, even assuming your PR is accepted as is.
 

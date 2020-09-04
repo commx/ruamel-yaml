@@ -15,6 +15,17 @@ from ruamel.yaml.scalarstring import (
     DoubleQuotedScalarString,
     PlainScalarString,
 )
+from ruamel.yaml.comments import (
+    CommentedMap,
+    CommentedOrderedMap,
+    CommentedSeq,
+    CommentedKeySeq,
+    CommentedKeyMap,
+    CommentedSet,
+    comment_attrib,
+    merge_attrib,
+    TaggedScalar,
+)
 from ruamel.yaml.scalarint import ScalarInt, BinaryInt, OctalInt, HexInt, HexCapsInt
 from ruamel.yaml.scalarfloat import ScalarFloat
 from ruamel.yaml.scalarbool import ScalarBoolean
@@ -643,18 +654,6 @@ if PY2:
 Representer.add_multi_representer(object, Representer.represent_object)
 
 Representer.add_multi_representer(type, Representer.represent_name)
-
-from ruamel.yaml.comments import (
-    CommentedMap,
-    CommentedOrderedMap,
-    CommentedSeq,
-    CommentedKeySeq,
-    CommentedKeyMap,
-    CommentedSet,
-    comment_attrib,
-    merge_attrib,
-    TaggedScalar,
-)  # NOQA
 
 
 class RoundTripRepresenter(SafeRepresenter):

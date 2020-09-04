@@ -17,7 +17,7 @@ Sections, subsections, etc. in .ryd files
 ruamel.yaml
 ***********
 
-`BitBucket <https://bitbucket.org/ruamel/yaml>`_ |
+`SoureForge <https://sourceforge.net/projects/ruamel-yaml/>`_ |
 `PyPI <https://pypi.python.org/pypi/ruamel.yaml/>`_
 
 
@@ -42,13 +42,13 @@ Contents:
 .. image:: https://bestpractices.coreinfrastructure.org/projects/1128/badge
    :target: https://bestpractices.coreinfrastructure.org/projects/1128
 
-.. image:: https://bitbucket.org/ruamel/yaml/raw/default/_doc/_static/license.svg
+.. image:: https://sourceforge.net/p/ruamel-yaml/code/ci/default/tree/_doc/_static/license.svg?format=raw
    :target: https://opensource.org/licenses/MIT
 
-.. image:: https://bitbucket.org/ruamel/yaml/raw/default/_doc/_static/pypi.svg
+.. image:: https://sourceforge.net/p/ruamel-yaml/code/ci/default/tree/_doc/_static/pypi.svg?format=raw
    :target: https://pypi.org/project/ruamel.yaml/
 
-.. image:: https://bitbucket.org/ruamel/oitnb/raw/default/_doc/_static/oitnb.svg
+.. image:: https://sourceforge.net/p/oitnb/code/ci/default/tree/_doc/_static/oitnb.svg?format=raw
    :target: https://pypi.org/project/oitnb/
 
 .. image:: http://www.mypy-lang.org/static/mypy_badge.svg
