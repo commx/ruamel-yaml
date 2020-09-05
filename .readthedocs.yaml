@@ -8,6 +8,6 @@ formats: [epub, pdf]
 python:
   version: 3.7
   install:
-    method: pip
+  - method: pip
     path: . 
     extra_requirements: [docs]
