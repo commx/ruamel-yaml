@@ -72,7 +72,7 @@ class ryd2rst:
     pass
 
 
-if False:
+if True:
     try:
         from ryd.__main__ import RYDCmd
         from ruamel.std.pathlib import Path
