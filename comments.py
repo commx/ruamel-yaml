@@ -702,13 +702,13 @@ class CommentedMap(ordereddict, CommentedBase):  # type: ignore
             ordereddict.update(self, *vals, **kw)
         except TypeError:
             # probably a dict that is used
-            for x in *vals:
-                self[x] = *vals[x]
+            for x in vals[0]:
+                self[x] = vals[0][x]
         try:
-            self._ok.update(*vals.keys())  # type: ignore
+            self._ok.update(vals.keys())  # type: ignore
         except AttributeError:
-            # assume a list/tuple of two element lists/tuples
-            for x in *vals:
+            # assume one argument that is a list/tuple of two element lists/tuples
+            for x in vals[0]:
                 self._ok.add(x[0])
         if kw:
             self._ok.add(*kw.keys())
