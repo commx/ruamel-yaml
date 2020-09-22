@@ -54,6 +54,10 @@ ChangeLog
 
 .. should insert NEXT: at the beginning of line for next key (with empty line)
 
+NEXT:
+  - fix for issue 359: could not update() CommentedMap with keyword arguments
+    (reported by `Steve Franchak <https://sourceforge.net/u/binaryadder/>__)
+
 0.16.12 (2020-09-04):
   - update links in doc
 

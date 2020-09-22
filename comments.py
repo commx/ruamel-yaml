@@ -696,20 +696,22 @@ class CommentedMap(ordereddict, CommentedBase):  # type: ignore
             self.ca.comment[1] = pre_comments
         return pre_comments
 
-    def update(self, vals):
-        # type: (Any) -> None
+    def update(self, *vals, **kw):
+        # type: (Any, Any) -> None
         try:
-            ordereddict.update(self, vals)
+            ordereddict.update(self, *vals, **kw)
         except TypeError:
             # probably a dict that is used
-            for x in vals:
-                self[x] = vals[x]
+            for x in *vals:
+                self[x] = *vals[x]
         try:
-            self._ok.update(vals.keys())  # type: ignore
+            self._ok.update(*vals.keys())  # type: ignore
         except AttributeError:
             # assume a list/tuple of two element lists/tuples
-            for x in vals:
+            for x in *vals:
                 self._ok.add(x[0])
+        if kw:
+            self._ok.add(*kw.keys())
 
     def insert(self, pos, key, value, comment=None):
         # type: (Any, Any, Any, Optional[Any]) -> None
