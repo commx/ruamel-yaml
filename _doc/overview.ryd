@@ -10,8 +10,9 @@ Overview
 derivative of Kirill Simonov's `PyYAML 3.11
 <https://bitbucket.org/xi/pyyaml>`_.
 
-``ruamel.yaml`` supports `YAML 1.2`_ and has  round-trip loaders and dumpers
-that preserves, among others:
+``ruamel.yaml`` supports `YAML 1.2`_ and has round-trip loaders and dumpers. 
+A round-trip is a YAML load-modify-save sequence and ruamel.yaml tries to
+preserve, among others:
 
 - comments
 - block style and key ordering are kept, so you can diff the round-tripped
