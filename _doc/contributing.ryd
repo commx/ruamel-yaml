@@ -11,7 +11,7 @@ Any contribution to ``ruamel.yaml`` is welcome, be it in the form of an
 email, a question on stackoverflow (I'll get notified of that when you tag it
 with ``ruamel.yaml``), an issue or pull-request (PR) on sourceforge.
 
-Contributing via stackoverflow are, for most, easiest to make. When I answer your
+Contributing via stackoverflow is, for most, easy to do. When I answer your
 question there and the answer warrants an extension to the documentation or
 code, I will include it in a documentation update and/or future (normally the
 next) release of ``ruamel.yaml``.
