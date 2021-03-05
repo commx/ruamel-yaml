@@ -230,7 +230,10 @@ class CommentedBase(object):
             comment = comment[:-1]  # strip final newline if there
         start_mark = CommentMark(indent)
         for com in comment.split('\n'):
-            pre_comments.append(CommentToken('# ' + com + '\n', start_mark, None))
+            c = com.strip()
+            if len(c) > 0 and c[0] != '#':
+                com = '# ' + com
+            pre_comments.append(CommentToken(com + '\n', start_mark, None))
 
     def yaml_set_comment_before_after_key(
         self, key, before=None, indent=0, after=None, after_indent=None
