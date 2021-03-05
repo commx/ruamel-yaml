@@ -144,7 +144,7 @@ def walk_tree(base, map=None):
                         base[k] = map[ch](v)
                         break
             else:
-                walk_tree(v)
+                walk_tree(v, map=map)
     elif isinstance(base, MutableSequence):
         for idx, elem in enumerate(base):
             if isinstance(elem, string_types):
@@ -153,4 +153,4 @@ def walk_tree(base, map=None):
                         base[idx] = map[ch](elem)
                         break
             else:
-                walk_tree(elem)
+                walk_tree(elem, map=map)
