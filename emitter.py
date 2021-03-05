@@ -206,6 +206,8 @@ class Emitter(object):
 
         self.scalar_after_indicator = True  # write a scalar on the same line as `---`
 
+        self.alt_null = 'null'
+
     @property
     def stream(self):
         # type: () -> Any
@@ -799,6 +801,11 @@ class Emitter(object):
         if isinstance(self.event, ScalarEvent):
             if self.style is None:
                 self.style = self.choose_scalar_style()
+                if self.event.value == '' and self.style == "'" and \
+                   tag == 'tag:yaml.org,2002:null' and self.alt_null is not None:
+                    self.event.value = self.alt_null
+                    self.analysis = None
+                    self.style = self.choose_scalar_style()
             if (not self.canonical or tag is None) and (
                 (self.style == "" and self.event.implicit[0])
                 or (self.style != "" and self.event.implicit[1])

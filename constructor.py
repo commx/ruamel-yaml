@@ -1728,6 +1728,7 @@ class RoundTripConstructor(SafeConstructor):
             delta = datetime.timedelta(hours=tz_hour, minutes=tz_minute)
             if values['tz_sign'] == '-':
                 delta = -delta
+        # shold check for NOne and solve issue 366 should be tzinfo=delta)
         if delta:
             dt = datetime.datetime(year, month, day, hour, minute)
             dt -= delta

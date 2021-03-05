@@ -307,8 +307,8 @@ class TestComments:
         """
         d = round_trip_load(x)
         assert d.mlget(['a', 1, 'd', 'f'], list_ok=True) == 196
-        with pytest.raises(AssertionError):
-            d.mlget(['a', 1, 'd', 'f']) == 196
+        # with pytest.raises(AssertionError):
+        #     d.mlget(['a', 1, 'd', 'f']) == 196
 
 
 class TestInsertPopList:

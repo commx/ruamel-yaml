@@ -40,7 +40,7 @@ The tag ``!User`` originates from the name of the class.
 
 You can specify a different tag by adding the attribute ``yaml_tag``, and
 explicitly specify dump and/or load *classmethods* which have to be called
-``from_yaml`` resp. ``from_yaml``::
+``to_yaml`` resp. ``from_yaml``::
 
 --- !python |
 import sys

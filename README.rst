@@ -4,11 +4,18 @@ ruamel.yaml
 
 ``ruamel.yaml`` is a YAML 1.2 loader/dumper package for Python.
 
-:version:       0.16.12
-:updated:       2020-09-04
+:version:       0.16.13
+:updated:       2021-03-05
 :documentation: http://yaml.readthedocs.io
 :repository:    https://sourceforge.net/projects/ruamel-yaml/
 :pypi:          https://pypi.org/project/ruamel.yaml/
+
+*The 0.16.13 release is the last that will tested to be working on Python 2.7.
+The 0.17 series will still be tested on Python 3.5, but the 0.18 will not. The
+0.17 series will also stop support for the old PyYAML functions, so a `YAML()` instance
+will need to be created.*
+
+*Please adjust your dependencies accordingly if necessary.*
 
 
 Starting with version 0.15.0 the way YAML files are loaded and dumped
@@ -54,9 +61,18 @@ ChangeLog
 
 .. should insert NEXT: at the beginning of line for next key (with empty line)
 
-NEXT:
+0.16.13 (2021-03-05):
   - fix for issue 359: could not update() CommentedMap with keyword arguments
     (reported by `Steve Franchak <https://sourceforge.net/u/binaryadder/>`__)
+  - fix for issue 365: unable to dump mutated TimeStamp objects
+    (reported by Anton Akmerov <https://sourceforge.net/u/akhmerov/>`__)
+  - fix for issue 371: unable to addd comment without starting space
+    (reported by 'Mark Grandi <https://sourceforge.net/u/mgrandi>`__)
+  - fix for issue 373: recursive call to walk_tree not preserving all params
+    (reported by `eulores <https://sourceforge.net/u/eulores/>`__)
+  - a None value in a flow-style sequence is now dumped as `null` instead
+    of `!!null ''` (reported by mcarans on
+    `StackOverlow <https://stackoverflow.com/a/66489600/1307905>`__)
 
 0.16.12 (2020-09-04):
   - update links in doc

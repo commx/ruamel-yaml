@@ -323,17 +323,17 @@ class NameSpacePackager(object):
         self.command = None
         self.python_version()
         self._pkg = [None, None]  # required and pre-installable packages
-        if (
-            sys.argv[0] == 'setup.py'
-            and sys.argv[1] == 'install'
-            and '--single-version-externally-managed' not in sys.argv
-        ):
-            if os.environ.get('READTHEDOCS', None) == 'True':
-                os.system('pip install .')
-                sys.exit(0)
-            if not os.environ.get('RUAMEL_NO_PIP_INSTALL_CHECK', False):
-                print('error: you have to install with "pip install ."')
-                sys.exit(1)
+        if sys.argv[0] == 'setup.py' and sys.argv[1] == 'install':
+            debug('calling setup.py', sys.argv)
+            if '-h' in sys.argv:
+                pass
+            elif '--single-version-externally-managed' not in sys.argv:
+                if os.environ.get('READTHEDOCS', None) == 'True':
+                    os.system('pip install .')
+                    sys.exit(0)
+                if not os.environ.get('RUAMEL_NO_PIP_INSTALL_CHECK', False):
+                    print('error: you have to install with "pip install ."')
+                    sys.exit(1)
         # If you only support an extension module on Linux, Windows thinks it
         # is pure. That way you would get pure python .whl files that take
         # precedence for downloading on Linux over source with compilable C code
@@ -799,8 +799,8 @@ class NameSpacePackager(object):
             try:
                 tmp_dir = tempfile.mkdtemp(prefix='tmp_ruamel_')
                 bin_file_name = 'test' + self.pn(target['name'])
-                print('test compiling', bin_file_name)
                 file_name = os.path.join(tmp_dir, bin_file_name + '.c')
+                print('test compiling', file_name, '->', bin_file_name, end=' ')
                 with open(file_name, 'w') as fp:  # write source
                     fp.write(c_code)
                 # and try to compile it
@@ -824,15 +824,17 @@ class NameSpacePackager(object):
                 except CompileError:
                     debug('compile error:', file_name)
                     print('compile error:', file_name)
-                    continue
+                    raise
                 except LinkError:
                     debug('link error', file_name)
                     print('link error', file_name)
-                    continue
+                    raise
+                print('OK')
                 self._ext_modules.append(ext)
             except Exception as e:  # NOQA
                 debug('Exception:', e)
                 print('Exception:', e)
+                sys.exit(1)
                 if sys.version_info[:2] == (3, 4) and platform.system() == 'Windows':
                     traceback.print_exc()
             finally:

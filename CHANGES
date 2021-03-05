@@ -1,3 +1,16 @@
+[0, 16, 13]: 2021-03-05
+  - fix for issue 359: could not update() CommentedMap with keyword arguments
+    (reported by `Steve Franchak <https://sourceforge.net/u/binaryadder/>`__)
+  - fix for issue 365: unable to dump mutated TimeStamp objects
+    (reported by Anton Akmerov <https://sourceforge.net/u/akhmerov/>`__)
+  - fix for issue 371: unable to addd comment without starting space
+    (reported by 'Mark Grandi <https://sourceforge.net/u/mgrandi>`__)
+  - fix for issue 373: recursive call to walk_tree not preserving all params
+    (reported by `eulores <https://sourceforge.net/u/eulores/>`__)
+  - a None value in a flow-style sequence is now dumped as `null` instead
+    of `!!null ''` (reported by mcarans on
+    `StackOverlow <https://stackoverflow.com/a/66489600/1307905>`__)
+
 [0, 16, 12]: 2020-09-04
   - update links in doc
 
