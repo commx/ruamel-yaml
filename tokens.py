@@ -1,7 +1,6 @@
-# # header
 # coding: utf-8
 
-from __future__ import unicode_literals
+from ruamel.yaml.compat import _F
 
 if False:  # MYPY
     from typing import Text, Any, Dict, Optional, List  # NOQA
@@ -24,7 +23,9 @@ class Token(object):
         #               hasattr('self', key)]
         attributes = [key for key in self.__slots__ if not key.endswith('_mark')]
         attributes.sort()
-        arguments = ', '.join(['%s=%r' % (key, getattr(self, key)) for key in attributes])
+        arguments = ', '.join(
+            [_F('{key!s}={gattr!r})', key=key, gattr=getattr(self, key)) for key in attributes]
+        )
         if SHOWLINES:
             try:
                 arguments += ', line: ' + str(self.start_mark.line)
@@ -81,7 +82,7 @@ class Token(object):
             # nprint('mco2:', self, target, target.comment, empty)
             return self
         if c[0] and tc[0] or c[1] and tc[1]:
-            raise NotImplementedError('overlap in comment %r %r' % (c, tc))
+            raise NotImplementedError(_F('overlap in comment {c!r} {tc!r}', c=c, tc=tc))
         if c[0]:
             tc[0] = c[0]
         if c[1]:

@@ -1,7 +1,5 @@
 # coding: utf-8
 
-from __future__ import print_function
-
 """
 various test cases for string scalars in YAML files
 '|' for preserved newlines

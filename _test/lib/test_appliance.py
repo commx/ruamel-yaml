@@ -1,13 +1,10 @@
 
-from __future__ import print_function
-
 import sys
 import os
 import types
 import traceback
 import pprint
 import argparse
-from ruamel.yaml.compat import PY3
 
 # DATA = 'tests/data'
 # determine the position of data dynamically relative to program
@@ -35,7 +32,8 @@ def find_test_filenames(directory):
     for filename in os.listdir(directory):
         if os.path.isfile(os.path.join(directory, filename)):
             base, ext = os.path.splitext(filename)
-            if base.endswith('-py2' if PY3 else '-py3'):
+            # ToDo: remove
+            if base.endswith('-py2'):
                 continue
             filenames.setdefault(base, []).append(ext)
     filenames = sorted(filenames.items())
@@ -105,13 +103,7 @@ def parse_arguments(args):
 
 
 def execute(function, filenames, verbose):
-    if PY3:
-        name = function.__name__
-    else:
-        if hasattr(function, 'unittest_name'):
-            name = function.unittest_name
-        else:
-            name = function.func_name
+    name = function.__name__
     if verbose:
         sys.stdout.write('=' * 75 + '\n')
         sys.stdout.write('%s(%s)...\n' % (name, ', '.join(filenames)))
@@ -164,12 +156,8 @@ def display(results, verbose):
         for filename in filenames:
             sys.stdout.write('-' * 75 + '\n')
             sys.stdout.write('%s:\n' % filename)
-            if PY3:
-                with open(filename, 'r', errors='replace') as fp:
-                    data = fp.read()
-            else:
-                with open(filename, 'rb') as fp:
-                    data = fp.read()
+            with open(filename, 'r', errors='replace') as fp:
+                data = fp.read()
             sys.stdout.write(data)
             if data and data[-1] != '\n':
                 sys.stdout.write('\n')

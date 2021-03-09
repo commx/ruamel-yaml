@@ -1,9 +1,8 @@
 # coding: utf-8
 
-from __future__ import print_function
-
 import sys
-from .compat import string_types
+
+from ruamel.yaml.compat import _F
 
 if False:  # MYPY
     from typing import Dict, Any, Text  # NOQA
@@ -30,18 +29,23 @@ class Node(object):
         #     elif len(value) == 1:
         #         value = '<1 item>'
         #     else:
-        #         value = '<%d items>' % len(value)
+        #         value = f'<{len(value)} items>'
         # else:
         #     if len(value) > 75:
-        #         value = repr(value[:70]+u' ... ')
+        #         value = repr(value[:70]+' ... ')
         #     else:
         #         value = repr(value)
         value = repr(value)
-        return '%s(tag=%r, value=%s)' % (self.__class__.__name__, self.tag, value)
+        return _F(
+            '{class_name!s}(tag={self_tag!r}, value={value!s})',
+            class_name=self.__class__.__name__,
+            self_tag=self.tag,
+            value=value,
+        )
 
     def dump(self, indent=0):
         # type: (int) -> None
-        if isinstance(self.value, string_types):
+        if isinstance(self.value, str):
             sys.stdout.write(
                 '{}{}(tag={!r}, value={!r})\n'.format(
                     '  ' * indent, self.__class__.__name__, self.tag, self.value

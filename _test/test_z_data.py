@@ -1,7 +1,5 @@
 # coding: utf-8
 
-from __future__ import print_function, unicode_literals
-
 import sys
 import pytest  # NOQA
 import warnings  # NOQA
@@ -9,7 +7,6 @@ import warnings  # NOQA
 from ruamel.std.pathlib import Path
 
 base_path = Path('data')  # that is ruamel.yaml.data
-PY2 = sys.version_info[0] == 2
 
 
 class YAMLData(object):
@@ -70,7 +67,7 @@ class Assert(YAMLData):
 
     @property
     def value(self):
-        from ruamel.yaml.compat import Mapping
+        from collections.abc import Mapping
 
         if hasattr(self, '_pa'):
             return self._pa
@@ -126,14 +123,10 @@ class TestYAMLData(object):
         yaml.dump(data, buf)
         expected = input.value if output is None else output.value
         value = buf.getvalue()
-        if PY2:
-            value = value.decode('utf-8')
-            print('value', value)
-            # print('expected', expected)
         assert value == expected
 
     def load_assert(self, input, confirm, yaml_version=None):
-        from ruamel.yaml.compat import Mapping
+        from collections.abc import Mapping
 
         d = self.yaml_load(input.value, yaml_version=yaml_version)[1]  # NOQA
         print('confirm.value', confirm.value, type(confirm.value))
@@ -159,7 +152,7 @@ class TestYAMLData(object):
     # this is executed by pytest the methods with names not starting with test_
     # are helpers
     def test_yaml_data(self, yaml, tmpdir):
-        from ruamel.yaml.compat import Mapping
+        from collections.abc import Mapping
 
         idx = 0
         typ = None

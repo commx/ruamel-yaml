@@ -1,7 +1,5 @@
 # coding: utf-8
 
-from __future__ import print_function
-
 import sys
 import pytest  # NOQA
 
@@ -9,12 +7,12 @@ from roundtrip import save_and_run  # NOQA
 
 
 def test_monster(tmpdir):
-    program_src = u'''\
+    program_src = '''\
     import ruamel.yaml
     from textwrap import dedent
 
     class Monster(ruamel.yaml.YAMLObject):
-        yaml_tag = u'!Monster'
+        yaml_tag = '!Monster'
 
         def __init__(self, name, hp, ac, attacks):
             self.name = name
@@ -48,7 +46,7 @@ def test_monster(tmpdir):
 @pytest.mark.skipif(sys.version_info < (3, 0), reason='no __qualname__')
 def test_qualified_name00(tmpdir):
     """issue 214"""
-    program_src = u"""\
+    program_src = """\
     from ruamel.yaml import YAML
     from ruamel.yaml.compat import StringIO
 

@@ -1,15 +1,14 @@
 # coding: utf-8
 
-from __future__ import print_function
-
 """
 helper routines for testing round trip of commented YAML data
 """
 import sys
 import textwrap
+import io
 from ruamel.std.pathlib import Path
 
-enforce = object()
+unset = object()
 
 
 def dedent(data):
@@ -29,50 +28,86 @@ def round_trip_load(inp, preserve_quotes=None, version=None):
     import ruamel.yaml  # NOQA
 
     dinp = dedent(inp)
-    return ruamel.yaml.load(
-        dinp,
-        Loader=ruamel.yaml.RoundTripLoader,
-        preserve_quotes=preserve_quotes,
-        version=version,
-    )
+    yaml = ruamel.yaml.YAML()
+    yaml.preserve_quotes = preserve_quotes
+    yaml.version = version
+    return yaml.load(dinp)
 
 
 def round_trip_load_all(inp, preserve_quotes=None, version=None):
     import ruamel.yaml  # NOQA
 
     dinp = dedent(inp)
-    return ruamel.yaml.load_all(
-        dinp,
-        Loader=ruamel.yaml.RoundTripLoader,
-        preserve_quotes=preserve_quotes,
-        version=version,
-    )
+    yaml = ruamel.yaml.YAML()
+    yaml.preserve_quotes = preserve_quotes
+    yaml.version = version
+    return yaml.load_all(dinp)
 
 
 def round_trip_dump(
     data,
-    stream=None,
+    stream=None, *,
     indent=None,
     block_seq_indent=None,
+    default_flow_style=unset,
     top_level_colon_align=None,
     prefix_colon=None,
     explicit_start=None,
     explicit_end=None,
     version=None,
+    allow_unicode=True,
 ):
     import ruamel.yaml  # NOQA
 
-    return ruamel.yaml.round_trip_dump(
-        data,
-        stream=stream,
-        indent=indent,
-        block_seq_indent=block_seq_indent,
-        top_level_colon_align=top_level_colon_align,
-        prefix_colon=prefix_colon,
-        explicit_start=explicit_start,
-        explicit_end=explicit_end,
-        version=version,
-    )
+    yaml = ruamel.yaml.YAML()
+    yaml.indent(mapping=indent, sequence=indent, offset=block_seq_indent)
+    if default_flow_style is not unset:
+        yaml.default_flow_style = default_flow_style
+    yaml.top_level_colon_align = top_level_colon_align
+    yaml.prefix_colon = prefix_colon
+    yaml.explicit_start = explicit_start
+    yaml.explicit_end = explicit_end
+    yaml.version = version
+    yaml.allow_unicode = allow_unicode
+    if stream is not None:
+        yaml.dump(data, stream=stream)
+        return
+    buf = io.StringIO()
+    yaml.dump(data, stream=buf)
+    return buf.getvalue()
+
+
+def round_trip_dump_all(
+    data,
+    stream=None, *,
+    indent=None,
+    block_seq_indent=None,
+    default_flow_style=unset,
+    top_level_colon_align=None,
+    prefix_colon=None,
+    explicit_start=None,
+    explicit_end=None,
+    version=None,
+    allow_unicode=None,
+):
+    import ruamel.yaml  # NOQA
+
+    yaml = ruamel.yaml.YAML()
+    yaml.indent(mapping=indent, sequence=indent, offset=block_seq_indent)
+    if default_flow_style is not unset:
+        yaml.default_flow_style = default_flow_style
+    yaml.top_level_colon_align = top_level_colon_align
+    yaml.prefix_colon = prefix_colon
+    yaml.explicit_start = explicit_start
+    yaml.explicit_end = explicit_end
+    yaml.version = version
+    yaml.allow_unicode = allow_unicode
+    if stream is not None:
+        yaml.dump(data, stream=stream)
+        return
+    buf = io.StringIO()
+    yaml.dump_all(data, stream=buf)
+    return buf.getvalue()
 
 
 def diff(inp, outp, file_name='stdin'):
@@ -242,7 +277,7 @@ def YAML(**kw):
         def round_trip(self, stream, **kw):
             from ruamel.yaml.compat import StringIO, BytesIO  # NOQA
 
-            assert isinstance(stream, (ruamel.yaml.compat.text_type, str))
+            assert isinstance(stream, str)
             lkw = kw.copy()
             if stream and stream[0] == '\n':
                 stream = stream[1:]
@@ -259,7 +294,7 @@ def YAML(**kw):
         def round_trip_all(self, stream, **kw):
             from ruamel.yaml.compat import StringIO, BytesIO  # NOQA
 
-            assert isinstance(stream, (ruamel.yaml.compat.text_type, str))
+            assert isinstance(stream, str)
             lkw = kw.copy()
             if stream and stream[0] == '\n':
                 stream = stream[1:]

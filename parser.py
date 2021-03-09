@@ -1,7 +1,5 @@
 # coding: utf-8
 
-from __future__ import absolute_import
-
 # The following YAML grammar is LL(1) and is parsed by a recursive descent
 # parser.
 #
@@ -80,7 +78,7 @@ from ruamel.yaml.error import MarkedYAMLError
 from ruamel.yaml.tokens import *  # NOQA
 from ruamel.yaml.events import *  # NOQA
 from ruamel.yaml.scanner import Scanner, RoundTripScanner, ScannerError  # NOQA
-from ruamel.yaml.compat import utf8, nprint, nprintf  # NOQA
+from ruamel.yaml.compat import _F, nprint, nprintf  # NOQA
 
 if False:  # MYPY
     from typing import Any, Dict, Optional, List  # NOQA
@@ -96,7 +94,7 @@ class Parser(object):
     # Since writing a recursive-descendant parser is a straightforward task, we
     # do not give many comments here.
 
-    DEFAULT_TAGS = {u'!': u'!', u'!!': u'tag:yaml.org,2002:'}
+    DEFAULT_TAGS = {'!': '!', '!!': 'tag:yaml.org,2002:'}
 
     def __init__(self, loader):
         # type: (Any) -> None
@@ -213,7 +211,10 @@ class Parser(object):
                 raise ParserError(
                     None,
                     None,
-                    "expected '<document start>', but found %r" % self.scanner.peek_token().id,
+                    _F(
+                        "expected '<document start>', but found {pt!r}",
+                        pt=self.scanner.peek_token().id,
+                    ),
                     self.scanner.peek_token().start_mark,
                 )
             token = self.scanner.get_token()
@@ -272,7 +273,7 @@ class Parser(object):
         self.tag_handles = {}
         while self.scanner.check_token(DirectiveToken):
             token = self.scanner.get_token()
-            if token.name == u'YAML':
+            if token.name == 'YAML':
                 if yaml_version is not None:
                     raise ParserError(
                         None, None, 'found duplicate YAML directive', token.start_mark
@@ -282,15 +283,18 @@ class Parser(object):
                     raise ParserError(
                         None,
                         None,
-                        'found incompatible YAML document (version 1.* is ' 'required)',
+                        'found incompatible YAML document (version 1.* is required)',
                         token.start_mark,
                     )
                 yaml_version = token.value
-            elif token.name == u'TAG':
+            elif token.name == 'TAG':
                 handle, prefix = token.value
                 if handle in self.tag_handles:
                     raise ParserError(
-                        None, None, 'duplicate tag handle %r' % utf8(handle), token.start_mark
+                        None,
+                        None,
+                        _F('duplicate tag handle {handle!r}', handle=handle),
+                        token.start_mark,
                     )
                 self.tag_handles[handle] = prefix
         if bool(self.tag_handles):
@@ -378,13 +382,13 @@ class Parser(object):
                     raise ParserError(
                         'while parsing a node',
                         start_mark,
-                        'found undefined tag handle %r' % utf8(handle),
+                        _F('found undefined tag handle {handle!r}', handle=handle),
                         tag_mark,
                     )
                 tag = self.transform_tag(handle, suffix)
             else:
                 tag = suffix
-        # if tag == u'!':
+        # if tag == '!':
         #     raise ParserError("while parsing a node", start_mark,
         #             "found non-specific tag '!'", tag_mark,
         #      "Please check 'http://pyyaml.org/wiki/YAMLNonSpecificTag'
@@ -392,7 +396,7 @@ class Parser(object):
         if start_mark is None:
             start_mark = end_mark = self.scanner.peek_token().start_mark
         event = None
-        implicit = tag is None or tag == u'!'
+        implicit = tag is None or tag == '!'
         if indentless_sequence and self.scanner.check_token(BlockEntryToken):
             comment = None
             pt = self.scanner.peek_token()
@@ -410,7 +414,7 @@ class Parser(object):
             token = self.scanner.get_token()
             # self.scanner.peek_token_same_line_comment(token)
             end_mark = token.end_mark
-            if (token.plain and tag is None) or tag == u'!':
+            if (token.plain and tag is None) or tag == '!':
                 implicit = (True, False)
             elif tag is None:
                 implicit = (False, True)
@@ -487,9 +491,9 @@ class Parser(object):
                 node = 'flow'
             token = self.scanner.peek_token()
             raise ParserError(
-                'while parsing a %s node' % node,
+                _F('while parsing a {node!s} node', node=node),
                 start_mark,
-                'expected the node content, but found %r' % token.id,
+                _F('expected the node content, but found {token_id!r}', token_id=token.id),
                 token.start_mark,
             )
         return event
@@ -521,7 +525,7 @@ class Parser(object):
             raise ParserError(
                 'while parsing a block collection',
                 self.marks[-1],
-                'expected <block end>, but found %r' % token.id,
+                _F('expected <block end>, but found {token_id!r}', token_id=token.id),
                 token.start_mark,
             )
         token = self.scanner.get_token()  # BlockEndToken
@@ -585,7 +589,7 @@ class Parser(object):
             raise ParserError(
                 'while parsing a block mapping',
                 self.marks[-1],
-                'expected <block end>, but found %r' % token.id,
+                _F('expected <block end>, but found {token_id!r}', token_id=token.id),
                 token.start_mark,
             )
         token = self.scanner.get_token()
@@ -652,7 +656,7 @@ class Parser(object):
                     raise ParserError(
                         'while parsing a flow sequence',
                         self.marks[-1],
-                        "expected ',' or ']', but got %r" % token.id,
+                        _F("expected ',' or ']', but got {token_id!r}", token_id=token.id),
                         token.start_mark,
                     )
 
@@ -726,7 +730,7 @@ class Parser(object):
                     raise ParserError(
                         'while parsing a flow mapping',
                         self.marks[-1],
-                        "expected ',' or '}', but got %r" % token.id,
+                        _F("expected ',' or '}', but got {token_id!r}", token_id=token.id),
                         token.start_mark,
                     )
             if self.scanner.check_token(KeyToken):
@@ -785,18 +789,18 @@ class RoundTripParser(Parser):
         # type: (Any, Any) -> Any
         # return self.tag_handles[handle]+suffix
         if handle == '!!' and suffix in (
-            u'null',
-            u'bool',
-            u'int',
-            u'float',
-            u'binary',
-            u'timestamp',
-            u'omap',
-            u'pairs',
-            u'set',
-            u'str',
-            u'seq',
-            u'map',
+            'null',
+            'bool',
+            'int',
+            'float',
+            'binary',
+            'timestamp',
+            'omap',
+            'pairs',
+            'set',
+            'str',
+            'seq',
+            'map',
         ):
             return Parser.transform_tag(self, handle, suffix)
         return handle + suffix

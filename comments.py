@@ -1,7 +1,5 @@
 # coding: utf-8
 
-from __future__ import absolute_import, print_function
-
 """
 stuff to deal with comments and formatting on dict/list/ordereddict/set
 these are not really related, formatting could be factored out as
@@ -13,14 +11,11 @@ import copy
 
 
 from ruamel.yaml.compat import ordereddict  # type: ignore
-from ruamel.yaml.compat import PY2, string_types, MutableSliceableSequence
+from ruamel.yaml.compat import MutableSliceableSequence
 from ruamel.yaml.scalarstring import ScalarString
 from ruamel.yaml.anchor import Anchor
 
-if PY2:
-    from collections import MutableSet, Sized, Set, Mapping
-else:
-    from collections.abc import MutableSet, Sized, Set, Mapping
+from collections.abc import MutableSet, Sized, Set, Mapping
 
 if False:  # MYPY
     from typing import Any, Dict, Optional, List, Union, Optional, Iterator  # NOQA
@@ -395,7 +390,7 @@ class CommentedSeq(MutableSliceableSequence, list, CommentedBase):  # type: igno
         # try to preserve the scalarstring type if setting an existing key to a new value
         if idx < len(self):
             if (
-                isinstance(value, string_types)
+                isinstance(value, str)
                 and not isinstance(value, ScalarString)
                 and isinstance(self[idx], ScalarString)
             ):
@@ -767,7 +762,7 @@ class CommentedMap(ordereddict, CommentedBase):  # type: ignore
         # try to preserve the scalarstring type if setting an existing key to a new value
         if key in self:
             if (
-                isinstance(value, string_types)
+                isinstance(value, str)
                 and not isinstance(value, ScalarString)
                 and isinstance(self[key], ScalarString)
             ):
@@ -840,75 +835,22 @@ class CommentedMap(ordereddict, CommentedBase):  # type: ignore
         # type: (Any) -> bool
         return bool(dict(self) == other)
 
-    if PY2:
+    def keys(self):
+        # type: () -> Any
+        return CommentedMapKeysView(self)
 
-        def keys(self):
-            # type: () -> Any
-            return list(self._keys())
-
-        def iterkeys(self):
-            # type: () -> Any
-            return self._keys()
-
-        def viewkeys(self):
-            # type: () -> Any
-            return CommentedMapKeysView(self)
-
-    else:
-
-        def keys(self):
-            # type: () -> Any
-            return CommentedMapKeysView(self)
-
-    if PY2:
-
-        def _values(self):
-            # type: () -> Any
-            for x in ordereddict.__iter__(self):
-                yield ordereddict.__getitem__(self, x)
-
-        def values(self):
-            # type: () -> Any
-            return list(self._values())
-
-        def itervalues(self):
-            # type: () -> Any
-            return self._values()
-
-        def viewvalues(self):
-            # type: () -> Any
-            return CommentedMapValuesView(self)
-
-    else:
-
-        def values(self):
-            # type: () -> Any
-            return CommentedMapValuesView(self)
+    def values(self):
+        # type: () -> Any
+        return CommentedMapValuesView(self)
 
     def _items(self):
         # type: () -> Any
         for x in ordereddict.__iter__(self):
             yield x, ordereddict.__getitem__(self, x)
 
-    if PY2:
-
-        def items(self):
-            # type: () -> Any
-            return list(self._items())
-
-        def iteritems(self):
-            # type: () -> Any
-            return self._items()
-
-        def viewitems(self):
-            # type: () -> Any
-            return CommentedMapItemsView(self)
-
-    else:
-
-        def items(self):
-            # type: () -> Any
-            return CommentedMapItemsView(self)
+    def items(self):
+        # type: () -> Any
+        return CommentedMapItemsView(self)
 
     @property
     def merge(self):
@@ -978,10 +920,7 @@ class CommentedKeyMap(CommentedBase, Mapping):  # type: ignore
         try:
             self._od = ordereddict(*args, **kw)
         except TypeError:
-            if PY2:
-                self._od = ordereddict(args[0].items())
-            else:
-                raise
+            raise
 
     __delitem__ = __setitem__ = clear = pop = popitem = setdefault = update = raise_immutable
 

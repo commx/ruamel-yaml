@@ -1,5 +1,4 @@
 # coding: utf-8
-from __future__ import print_function
 
 import pytest  # NOQA
 
@@ -64,15 +63,16 @@ class TestNoIndent:
 
     def test_root_literal_scalar_no_indent_1_1_old_style(self):
         from textwrap import dedent
-        from ruamel.yaml import safe_load
+        from ruamel.yaml import YAML
 
+        yaml = YAML(typ='safe', pure=True)
         s = 'testing123'
         inp = """
         %YAML 1.1
         --- |
           {}
         """
-        d = safe_load(dedent(inp.format(s)))
+        d = yaml.load(dedent(inp.format(s)))
         print(d)
         assert d == s + '\n'
 

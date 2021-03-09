@@ -1,16 +1,13 @@
-from __future__ import absolute_import
-from __future__ import print_function
 
 import ruamel.yaml as yaml
 import pprint
-from ruamel.yaml.compat import PY3
 
 
 def test_implicit_resolver(data_filename, detect_filename, verbose=False):
     correct_tag = None
     node = None
     try:
-        with open(detect_filename, 'r' if PY3 else 'rb') as fp0:
+        with open(detect_filename, 'r') as fp0:
             correct_tag = fp0.read().strip()
         with open(data_filename, 'rb') as fp0:
             node = yaml.compose(fp0)
@@ -38,14 +35,14 @@ def _make_path_loader_and_dumper():
     class MyDumper(yaml.Dumper):
         pass
 
-    yaml.add_path_resolver(u'!root', [], Loader=MyLoader, Dumper=MyDumper)
-    yaml.add_path_resolver(u'!root/scalar', [], str, Loader=MyLoader, Dumper=MyDumper)
+    yaml.add_path_resolver('!root', [], Loader=MyLoader, Dumper=MyDumper)
+    yaml.add_path_resolver('!root/scalar', [], str, Loader=MyLoader, Dumper=MyDumper)
     yaml.add_path_resolver(
-        u'!root/key11/key12/*', ['key11', 'key12'], Loader=MyLoader, Dumper=MyDumper
+        '!root/key11/key12/*', ['key11', 'key12'], Loader=MyLoader, Dumper=MyDumper
     )
-    yaml.add_path_resolver(u'!root/key21/1/*', ['key21', 1], Loader=MyLoader, Dumper=MyDumper)
+    yaml.add_path_resolver('!root/key21/1/*', ['key21', 1], Loader=MyLoader, Dumper=MyDumper)
     yaml.add_path_resolver(
-        u'!root/key31/*/*/key14/map',
+        '!root/key31/*/*/key14/map',
         ['key31', None, None, 'key14'],
         dict,
         Loader=MyLoader,

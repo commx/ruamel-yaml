@@ -16,6 +16,5 @@ from roundtrip import round_trip, dedent, round_trip_load, round_trip_dump  # NO
 class TestOrderedDict:
     def test_ordereddict(self):
         from collections import OrderedDict
-        import ruamel.yaml  # NOQA
 
-        assert ruamel.yaml.dump(OrderedDict()) == '!!omap []\n'
+        assert round_trip_dump(OrderedDict()) == '!!omap []\n'

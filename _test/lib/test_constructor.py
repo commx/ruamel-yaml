@@ -1,9 +1,6 @@
-from __future__ import absolute_import
-from __future__ import print_function
 
 import ruamel.yaml
 import pprint
-from ruamel.yaml.compat import PY2
 
 import datetime
 
@@ -211,7 +208,6 @@ def _make_objects():
         def __setstate__(self, state):
             self.baz = state
 
-    # if PY3 or PY2:
     InitArgs = NewArgs
 
     InitArgsWithState = NewArgsWithState
@@ -291,8 +287,6 @@ def _serialize_value(data):
         return '{%s}' % ', '.join(items)
     elif isinstance(data, datetime.datetime):
         return repr(data.utctimetuple())
-    elif PY2 and isinstance(data, unicode):  # NOQA
-        return data.encode('utf-8')
     elif isinstance(data, float) and data != data:
         return '?'
     else:
@@ -303,9 +297,11 @@ def test_constructor_types(data_filename, code_filename, verbose=False):
     _make_objects()
     native1 = None
     native2 = None
+    yaml = ruamel.yaml.YAML(typ='safe', pure=True)
+    yaml.loader = MyLoader
     try:
         with open(data_filename, 'rb') as fp0:
-            native1 = list(ruamel.yaml.load_all(fp0, Loader=MyLoader))
+            native1 = list(yaml.load_all(fp0))
         if len(native1) == 1:
             native1 = native1[0]
         with open(code_filename, 'rb') as fp0:
@@ -337,7 +333,9 @@ def test_roundtrip_data(code_filename, roundtrip_filename, verbose=False):
     _make_objects()
     with open(code_filename, 'rb') as fp0:
         value1 = fp0.read()
-    native2 = list(ruamel.yaml.load_all(value1, Loader=MyLoader))
+    yaml = YAML(typ='safe', pure=True)
+    yaml.Loader = MyLoader
+    native2 = list(yaml.load_all(value1))
     if len(native2) == 1:
         native2 = native2[0]
     try:

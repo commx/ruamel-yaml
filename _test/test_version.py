@@ -8,7 +8,9 @@ from roundtrip import dedent, round_trip, round_trip_load
 def load(s, version=None):
     import ruamel.yaml  # NOQA
 
-    return ruamel.yaml.round_trip_load(dedent(s), version)
+    yaml = ruamel.yaml.YAML()
+    yaml.version = version
+    return yaml.load(dedent(s))
 
 
 class TestVersions:

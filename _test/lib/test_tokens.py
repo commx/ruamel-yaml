@@ -1,9 +1,6 @@
-from __future__ import absolute_import
-from __future__ import print_function
 
 import ruamel.yaml as yaml
 import pprint
-from ruamel.yaml.compat import PY3
 
 # Tokens mnemonic:
 # directive:            %
@@ -48,7 +45,7 @@ _replaces = {
 
 def test_tokens(data_filename, tokens_filename, verbose=False):
     tokens1 = []
-    with open(tokens_filename, 'r' if PY3 else 'rb') as fp:
+    with open(tokens_filename, 'r') as fp:
         tokens2 = fp.read().split()
     try:
         with open(data_filename, 'rb') as fp1:

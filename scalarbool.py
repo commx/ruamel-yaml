@@ -1,7 +1,5 @@
 # coding: utf-8
 
-from __future__ import print_function, absolute_import, division, unicode_literals
-
 """
 You cannot subclass bool, and this is necessary for round-tripping anchored
 bool values (and also if you want to preserve the original way of writing)
@@ -17,8 +15,6 @@ if False:  # MYPY
     from typing import Text, Any, Dict, List  # NOQA
 
 __all__ = ['ScalarBoolean']
-
-# no need for no_limit_int -> int
 
 
 class ScalarBoolean(int):

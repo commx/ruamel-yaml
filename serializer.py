@@ -1,9 +1,7 @@
 # coding: utf-8
 
-from __future__ import absolute_import
-
 from ruamel.yaml.error import YAMLError
-from ruamel.yaml.compat import nprint, DBG_NODE, dbg, string_types, nprintf  # NOQA
+from ruamel.yaml.compat import nprint, DBG_NODE, dbg, nprintf  # NOQA
 from ruamel.yaml.util import RegExp
 
 from ruamel.yaml.events import (
@@ -34,8 +32,8 @@ class SerializerError(YAMLError):
 class Serializer(object):
 
     # 'id' and 3+ numbers, but not 000
-    ANCHOR_TEMPLATE = u'id%03d'
-    ANCHOR_RE = RegExp(u'id(?!000$)\\d{3,}')
+    ANCHOR_TEMPLATE = 'id%03d'
+    ANCHOR_RE = RegExp('id(?!000$)\\d{3,}')
 
     def __init__(
         self,
@@ -53,7 +51,7 @@ class Serializer(object):
         self.use_encoding = encoding
         self.use_explicit_start = explicit_start
         self.use_explicit_end = explicit_end
-        if isinstance(version, string_types):
+        if isinstance(version, str):
             self.use_version = tuple(map(int, version.split('.')))
         else:
             self.use_version = version  # type: ignore

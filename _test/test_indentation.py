@@ -1,22 +1,13 @@
 # coding: utf-8
 
-from __future__ import absolute_import
-from __future__ import print_function
-from __future__ import unicode_literals
-
-
 import pytest  # NOQA
 
 from roundtrip import round_trip, round_trip_load, round_trip_dump, dedent, YAML
 
 
 def rt(s):
-    import ruamel.yaml
 
-    res = ruamel.yaml.dump(
-        ruamel.yaml.load(s, Loader=ruamel.yaml.RoundTripLoader),
-        Dumper=ruamel.yaml.RoundTripDumper,
-    )
+    res = round_trip_dump(round_trip_load(s))
     return res.strip() + '\n'
 
 
@@ -55,8 +46,6 @@ class TestIndent:
 
     # first test by explicitly setting flow style
     def test_added_inline_list(self):
-        import ruamel.yaml
-
         s1 = dedent("""
         a:
         - b
@@ -64,24 +53,22 @@ class TestIndent:
         - d
         """)
         s = 'a: [b, c, d]\n'
-        data = ruamel.yaml.load(s1, Loader=ruamel.yaml.RoundTripLoader)
+        data = round_trip_load(s1)
         val = data['a']
         val.fa.set_flow_style()
         # print(type(val), '_yaml_format' in dir(val))
-        output = ruamel.yaml.dump(data, Dumper=ruamel.yaml.RoundTripDumper)
+        output = round_trip_dump(data)
         assert s == output
 
     # ############ flow mappings
 
     def test_roundtrip_flow_mapping(self):
-        import ruamel.yaml
-
         s = dedent("""\
         - {a: 1, b: hallo}
         - {j: fka, k: 42}
         """)
-        data = ruamel.yaml.load(s, Loader=ruamel.yaml.RoundTripLoader)
-        output = ruamel.yaml.dump(data, Dumper=ruamel.yaml.RoundTripDumper)
+        data = round_trip_load(s)
+        output = round_trip_dump(data)
         assert s == output
 
     def test_roundtrip_sequence_of_inline_mappings_eol_comments(self):

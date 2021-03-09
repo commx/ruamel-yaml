@@ -1,7 +1,5 @@
 # coding: utf-8
 
-from __future__ import print_function
-
 """
 testing of anchors and the aliases referring to them
 """
@@ -46,20 +44,20 @@ class TestAnchorsAliases:
         """test if id matches the anchor template"""
         from ruamel.yaml.serializer import templated_id
 
-        assert templated_id(u'id001')
-        assert templated_id(u'id999')
-        assert templated_id(u'id1000')
-        assert templated_id(u'id0001')
-        assert templated_id(u'id0000')
-        assert not templated_id(u'id02')
-        assert not templated_id(u'id000')
-        assert not templated_id(u'x000')
+        assert templated_id('id001')
+        assert templated_id('id999')
+        assert templated_id('id1000')
+        assert templated_id('id0001')
+        assert templated_id('id0000')
+        assert not templated_id('id02')
+        assert not templated_id('id000')
+        assert not templated_id('x000')
 
     # def test_re_matcher(self):
     #     import re
-    #     assert re.compile(u'id(?!000)\\d{3,}').match('id001')
-    #     assert not re.compile(u'id(?!000\\d*)\\d{3,}').match('id000')
-    #     assert re.compile(u'id(?!000$)\\d{3,}').match('id0001')
+    #     assert re.compile('id(?!000)\\d{3,}').match('id001')
+    #     assert not re.compile('id(?!000\\d*)\\d{3,}').match('id000')
+    #     assert re.compile('id(?!000$)\\d{3,}').match('id0001')
 
     def test_anchor_assigned(self):
         from ruamel.yaml.comments import CommentedMap
@@ -283,7 +281,8 @@ class TestAnchorsAliases:
             components:
               server: {<<: *server_service}
         """)
-        data = ruamel.yaml.safe_load(ys)
+        yaml = ruamel.yaml.YAML(typ='safe', pure=True)
+        data = yaml.load(ys)
         assert data['services']['shell']['components']['server']['port'] == 8000
 
     def test_issue_130a(self):
@@ -308,7 +307,8 @@ class TestAnchorsAliases:
             components:
               server: {<<: *server_service}
         """)
-        data = ruamel.yaml.safe_load(ys)
+        yaml = ruamel.yaml.YAML(typ='safe', pure=True)
+        data = yaml.load(ys)
         assert data['services']['shell']['components']['server']['port'] == 4000
 
 
@@ -332,9 +332,9 @@ class TestMergeKeysValues:
     # in the following d always has "expanded" the merges
 
     def test_merge_for(self):
-        from ruamel.yaml import safe_load
+        from ruamel.yaml import YAML
 
-        d = safe_load(self.yaml_str)
+        d = YAML(typ='safe', pure=True).load(self.yaml_str)
         data = round_trip_load(self.yaml_str)
         count = 0
         for x in data[2]:
@@ -343,9 +343,9 @@ class TestMergeKeysValues:
         assert count == len(d[2])
 
     def test_merge_keys(self):
-        from ruamel.yaml import safe_load
+        from ruamel.yaml import YAML
 
-        d = safe_load(self.yaml_str)
+        d = YAML(typ='safe', pure=True).load(self.yaml_str)
         data = round_trip_load(self.yaml_str)
         count = 0
         for x in data[2].keys():
@@ -354,9 +354,9 @@ class TestMergeKeysValues:
         assert count == len(d[2])
 
     def test_merge_values(self):
-        from ruamel.yaml import safe_load
+        from ruamel.yaml import YAML
 
-        d = safe_load(self.yaml_str)
+        d = YAML(typ='safe', pure=True).load(self.yaml_str)
         data = round_trip_load(self.yaml_str)
         count = 0
         for x in data[2].values():
@@ -365,9 +365,9 @@ class TestMergeKeysValues:
         assert count == len(d[2])
 
     def test_merge_items(self):
-        from ruamel.yaml import safe_load
+        from ruamel.yaml import YAML
 
-        d = safe_load(self.yaml_str)
+        d = YAML(typ='safe', pure=True).load(self.yaml_str)
         data = round_trip_load(self.yaml_str)
         count = 0
         for x in data[2].items():
@@ -376,10 +376,9 @@ class TestMergeKeysValues:
         assert count == len(d[2])
 
     def test_len_items_delete(self):
-        from ruamel.yaml import safe_load
-        from ruamel.yaml.compat import PY3
+        from ruamel.yaml import YAML
 
-        d = safe_load(self.yaml_str)
+        d = YAML(typ='safe', pure=True).load(self.yaml_str)
         data = round_trip_load(self.yaml_str)
         x = data[2].items()
         print('d2 items', d[2].items(), len(d[2].items()), x, len(x))
@@ -387,16 +386,13 @@ class TestMergeKeysValues:
         print('ref', ref)
         assert len(x) == ref
         del data[2]['m']
-        if PY3:
-            ref -= 1
+        ref -= 1
         assert len(x) == ref
         del data[2]['d']
-        if PY3:
-            ref -= 1
+        ref -= 1
         assert len(x) == ref
         del data[2]['a']
-        if PY3:
-            ref -= 1
+        ref -= 1
         assert len(x) == ref
 
     def test_issue_196_cast_of_dict(self, capsys):
@@ -467,7 +463,7 @@ class TestMergeKeysValues:
 class TestDuplicateKeyThroughAnchor:
     def test_duplicate_key_00(self):
         from ruamel.yaml import version_info
-        from ruamel.yaml import safe_load, round_trip_load
+        from ruamel.yaml import YAML
         from ruamel.yaml.constructor import DuplicateKeyFutureWarning, DuplicateKeyError
 
         s = dedent("""\
@@ -481,14 +477,14 @@ class TestDuplicateKeyThroughAnchor:
             pass
         elif version_info < (0, 16, 0):
             with pytest.warns(DuplicateKeyFutureWarning):
-                safe_load(s)
+                YAML(typ='safe', pure=True).load(s)
             with pytest.warns(DuplicateKeyFutureWarning):
-                round_trip_load(s)
+                YAML(typ='rt').load(s)
         else:
             with pytest.raises(DuplicateKeyError):
-                safe_load(s)
+                YAML(typ='safe', pure=True).load(s)
             with pytest.raises(DuplicateKeyError):
-                round_trip_load(s)
+                YAML(typ='rt').load(s)
 
     def test_duplicate_key_01(self):
         # so issue https://stackoverflow.com/a/52852106/1307905

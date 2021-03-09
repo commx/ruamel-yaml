@@ -1,7 +1,5 @@
 # coding: utf-8
 
-from __future__ import absolute_import
-
 from ruamel.yaml.emitter import Emitter
 from ruamel.yaml.serializer import Serializer
 from ruamel.yaml.representer import (

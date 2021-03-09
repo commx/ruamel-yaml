@@ -1,13 +1,9 @@
 # coding: utf-8
 
-from __future__ import absolute_import
-from __future__ import print_function
-
 import _ruamel_yaml
 import ruamel.yaml
 import types
 import pprint
-from ruamel.yaml.compat import PY3
 
 ruamel.yaml.PyBaseLoader = ruamel.yaml.BaseLoader
 ruamel.yaml.PySafeLoader = ruamel.yaml.SafeLoader
@@ -311,9 +307,9 @@ def _compare_emitters(data, verbose):
                 c_value = getattr(c_event, attribute, None)
                 if (
                     attribute == 'tag'
-                    and value in [None, u'!']
-                    and py_value in [None, u'!']
-                    and c_value in [None, u'!']
+                    and value in [None, '!']
+                    and py_value in [None, '!']
+                    and c_value in [None, '!']
                 ):
                     continue
                 if attribute == 'explicit' and (py_value or c_value):
@@ -349,14 +345,7 @@ def wrap_ext_function(function):
         finally:
             _tear_down()
 
-    if PY3:
-        wrapper.__name__ = '%s_ext' % function.__name__
-    else:
-        try:
-            wrapper.__name__ = '%s_ext' % function.__name__
-        except TypeError:
-            pass
-        wrapper.unittest_name = '%s_ext' % function.__name__
+    wrapper.__name__ = '%s_ext' % function.__name__
     wrapper.unittest = function.unittest
     wrapper.skip = getattr(function, 'skip', []) + ['.skip-ext']
     return wrapper
@@ -374,12 +363,8 @@ def wrap_ext(collections):
             if isinstance(value, types.FunctionType) and hasattr(value, 'unittest'):
                 functions.append(wrap_ext_function(value))
     for function in functions:
-        if PY3:
-            assert function.__name__ not in globals()
-            globals()[function.__name__] = function
-        else:
-            assert function.unittest_name not in globals()
-            globals()[function.unittest_name] = function
+        assert function.__name__ not in globals()
+        globals()[function.__name__] = function
 
 
 import test_tokens  # NOQA

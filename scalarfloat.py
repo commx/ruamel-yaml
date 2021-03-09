@@ -1,9 +1,6 @@
 # coding: utf-8
 
-from __future__ import print_function, absolute_import, division, unicode_literals
-
 import sys
-from .compat import no_limit_int  # NOQA
 from ruamel.yaml.anchor import Anchor
 
 if False:  # MYPY

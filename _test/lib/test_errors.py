@@ -1,14 +1,15 @@
-from __future__ import absolute_import
-from __future__ import print_function
 
-import ruamel.yaml as yaml
+import ruamel.yaml
+YAML = ruamel.yaml.YAML
+
 import test_emitter
 import warnings
 
-warnings.simplefilter('ignore', yaml.error.UnsafeLoaderWarning)
+warnings.simplefilter('ignore', ruamel.yaml.error.UnsafeLoaderWarning)
 
 
 def test_loader_error(error_filename, verbose=False):
+    yaml = YAML(typ='safe', pure=True)
     try:
         with open(error_filename, 'rb') as fp0:
             list(yaml.load_all(fp0))
@@ -23,6 +24,7 @@ test_loader_error.unittest = ['.loader-error']
 
 
 def test_loader_error_string(error_filename, verbose=False):
+    yaml = YAML(typ='safe', pure=True)
     try:
         with open(error_filename, 'rb') as fp0:
             list(yaml.load_all(fp0.read()))
@@ -37,6 +39,7 @@ test_loader_error_string.unittest = ['.loader-error']
 
 
 def test_loader_error_single(error_filename, verbose=False):
+    yaml = YAML(typ='safe', pure=True)
     try:
         with open(error_filename, 'rb') as fp0:
             yaml.load(fp0.read())
@@ -51,10 +54,11 @@ test_loader_error_single.unittest = ['.single-loader-error']
 
 
 def test_emitter_error(error_filename, verbose=False):
+    yaml = YAML(typ='safe', pure=True)
     with open(error_filename, 'rb') as fp0:
         events = list(yaml.load(fp0, Loader=test_emitter.EventsLoader))
     try:
-        yaml.emit(events)
+        ruamel.yaml.emit(events)
     except yaml.YAMLError as exc:
         if verbose:
             print('%s:' % exc.__class__.__name__, exc)
@@ -66,6 +70,7 @@ test_emitter_error.unittest = ['.emitter-error']
 
 
 def test_dumper_error(error_filename, verbose=False):
+    yaml = YAML(typ='safe', pure=True)
     with open(error_filename, 'rb') as fp0:
         code = fp0.read()
     try:

@@ -2,7 +2,7 @@
 
 import pytest  # NOQA
 
-from roundtrip import round_trip, round_trip_load_all
+from roundtrip import round_trip, round_trip_load_all, round_trip_dump_all
 
 
 class TestDocument:
@@ -16,8 +16,6 @@ class TestDocument:
         round_trip(inp, explicit_start=True, explicit_end=True)
 
     def test_multi_doc_begin_end(self):
-        from ruamel import yaml
-
         inp = """\
         ---
         - a
@@ -28,9 +26,7 @@ class TestDocument:
         """
         docs = list(round_trip_load_all(inp))
         assert docs == [['a'], ['b']]
-        out = yaml.dump_all(
-            docs, Dumper=yaml.RoundTripDumper, explicit_start=True, explicit_end=True
-        )
+        out = round_trip_dump_all(docs, explicit_start=True, explicit_end=True)
         assert out == '---\n- a\n...\n---\n- b\n...\n'
 
     def test_multi_doc_no_start(self):

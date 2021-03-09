@@ -1,8 +1,5 @@
 # coding: utf-8
 
-from __future__ import absolute_import, print_function, unicode_literals
-
-
 import pytest  # NOQA
 
 
@@ -19,8 +16,6 @@ from roundtrip import (
 
 class TestIssues:
     def test_issue_61(self):
-        import ruamel.yaml
-
         s = dedent("""
         def1: &ANCHOR1
             key1: value1
@@ -30,24 +25,20 @@ class TestIssues:
         comb:
             <<: *ANCHOR
         """)
-        data = ruamel.yaml.round_trip_load(s)
+        data = round_trip_load(s)
         assert str(data['comb']) == str(data['def'])
         assert str(data['comb']) == "ordereddict([('key', 'value'), ('key1', 'value1')])"
 
     def test_issue_82(self, tmpdir):
         program_src = r'''
-        from __future__ import print_function
-
         from ruamel import yaml
-
         import re
-
 
         class SINumber(yaml.YAMLObject):
             PREFIXES = {'k': 1e3, 'M': 1e6, 'G': 1e9}
             yaml_loader = yaml.Loader
             yaml_dumper = yaml.Dumper
-            yaml_tag = u'!si'
+            yaml_tag = '!si'
             yaml_implicit_pattern = re.compile(
                 r'^(?P<value>[0-9]+(?:\.[0-9]+)?)(?P<prefix>[kMG])$')
 
@@ -200,8 +191,6 @@ class TestIssues:
         assert res == yaml_str.replace(' b ', ' B ').replace(' d\n', ' D\n')
 
     def test_issue_176_test_slicing(self):
-        from ruamel.yaml.compat import PY2
-
         mss = round_trip_load('[0, 1, 2, 3, 4]')
         assert len(mss) == 5
         assert mss[2:2] == []
@@ -231,18 +220,10 @@ class TestIssues:
         m[1::2] = [42, 43]
         assert m == [0, 42, 2, 43, 4]
         m = mss[:]
-        if PY2:
-            with pytest.raises(ValueError, match='attempt to assign'):
-                m[1::2] = [42, 43, 44]
-        else:
-            with pytest.raises(TypeError, match='too many'):
-                m[1::2] = [42, 43, 44]
-        if PY2:
-            with pytest.raises(ValueError, match='attempt to assign'):
-                m[1::2] = [42]
-        else:
-            with pytest.raises(TypeError, match='not enough'):
-                m[1::2] = [42]
+        with pytest.raises(TypeError, match='too many'):
+            m[1::2] = [42, 43, 44]
+        with pytest.raises(TypeError, match='not enough'):
+            m[1::2] = [42]
         m = mss[:]
         m += [5]
         m[1::2] = [42, 43, 44]
@@ -288,7 +269,7 @@ class TestIssues:
         program_src = r'''
         from ruamel.yaml import YAML
 
-        yaml_str = u"""\
+        yaml_str = """\
         ---
         foo: ["bar"]
         """
@@ -409,8 +390,9 @@ class TestIssues:
         import ruamel.yaml
         from ruamel.yaml.compat import StringIO
 
+        yaml = ruamel.yaml.YAML(typ='safe')
         buf = StringIO()
-        ruamel.yaml.safe_dump(['012923'], buf)
+        yaml.dump(['012923'], buf)
         assert buf.getvalue() == "['012923']\n"
 
     def test_issue_223(self):
@@ -421,12 +403,13 @@ class TestIssues:
 
     def test_issue_232(self):
         import ruamel.yaml
-        from ruamel import yaml
+
+        yaml = YAML(typ='safe', pure=True)
 
         with pytest.raises(ruamel.yaml.parser.ParserError):
-            yaml.safe_load(']')
+            yaml.load(']')
         with pytest.raises(ruamel.yaml.parser.ParserError):
-            yaml.safe_load('{]')
+            yaml.load('{]')
 
     def test_issue_233(self):
         from ruamel.yaml import YAML

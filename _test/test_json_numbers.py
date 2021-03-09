@@ -1,7 +1,5 @@
 # coding: utf-8
 
-from __future__ import print_function
-
 import pytest  # NOQA
 
 import json
@@ -10,12 +8,13 @@ import json
 def load(s, typ=float):
     import ruamel.yaml
 
+    yaml = ruamel.yaml.YAML()
     x = '{"low": %s }' % (s)
     print('input: [%s]' % (s), repr(x))
     # just to check it is loadable json
     res = json.loads(x)
     assert isinstance(res['low'], typ)
-    ret_val = ruamel.yaml.load(x, ruamel.yaml.RoundTripLoader)
+    ret_val = yaml.load(x)
     print(ret_val)
     return ret_val['low']
 

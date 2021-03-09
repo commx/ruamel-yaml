@@ -45,11 +45,11 @@ source_suffix = ['.rst']
 master_doc = 'index'
 
 # General information about the project.
-project = u'yaml'
-copyright = u'2017-2019, Anthon van der Neut, Ruamel bvba'
-author = u'Anthon van der Neut'
+project = 'yaml'
+copyright = '2017-2021, Anthon van der Neut, Ruamel bvba'
+author = 'Anthon van der Neut'
 
-# The version info for the project you're documenting, acts as replacement for
+# The version info for the project you are documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
 # built documents.
 #
@@ -251,8 +251,8 @@ latex_documents = [
     (
         master_doc,
         'yaml.tex',
-        u'Python YAML package documentation',
-        u'Anthon van der Neut',
+        'Python YAML package documentation',
+        'Anthon van der Neut',
         'manual',
     )
 ]
@@ -282,7 +282,7 @@ latex_documents = [
 
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
-man_pages = [(master_doc, 'yaml', u'yaml Documentation', [author], 1)]
+man_pages = [(master_doc, 'yaml', 'yaml Documentation', [author], 1)]
 
 # If true, show URL addresses after external links.
 # man_show_urls = False
@@ -297,7 +297,7 @@ texinfo_documents = [
     (
         master_doc,
         'yaml',
-        u'yaml Documentation',
+        'yaml Documentation',
         author,
         'yaml',
         'One line description of project.',

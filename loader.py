@@ -1,8 +1,5 @@
 # coding: utf-8
 
-from __future__ import absolute_import
-
-
 from ruamel.yaml.reader import Reader
 from ruamel.yaml.scanner import Scanner, RoundTripScanner
 from ruamel.yaml.parser import Parser, RoundTripParser

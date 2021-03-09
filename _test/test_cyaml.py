@@ -5,6 +5,8 @@ import platform
 import pytest
 from textwrap import dedent
 
+NO_CLIB_VER = (3, 10)
+
 
 @pytest.mark.skipif(
     platform.python_implementation() in ['Jython', 'PyPy'],
@@ -14,30 +16,29 @@ def test_load_cyaml():
     print("???????????????????????", platform.python_implementation())
     import ruamel.yaml
 
-    if sys.version_info >= (3, 8):
+    if sys.version_info >= NO_CLIB_VER:
         return
+    yaml = ruamel.yaml.YAML(typ='safe', pure=False)
     assert ruamel.yaml.__with_libyaml__
-    from ruamel.yaml.cyaml import CLoader
 
-    ruamel.yaml.load('abc: 1', Loader=CLoader)
+    yaml.load('abc: 1')
 
 
-@pytest.mark.skipif(sys.version_info >= (3, 8)
+@pytest.mark.skipif(sys.version_info >= NO_CLIB_VER
                     or platform.python_implementation() in ['Jython', 'PyPy'],
                     reason='no _PyGC_FINALIZED')
 def test_dump_cyaml():
     import ruamel.yaml
 
-    if sys.version_info >= (3, 8):
+    if sys.version_info >= NO_CLIB_VER:
         return
     data = {'a': 1, 'b': 2}
-    res = ruamel.yaml.dump(
-        data,
-        Dumper=ruamel.yaml.cyaml.CSafeDumper,
-        default_flow_style=False,
-        allow_unicode=True,
-    )
-    assert res == 'a: 1\nb: 2\n'
+    yaml = ruamel.yaml.YAML(typ='safe', pure=False)
+    yaml.default_flow_style = False
+    yaml.allow_unicode = True
+    buf = ruamel.yaml.compat.StringIO()
+    yaml.dump(data, buf)
+    assert buf.getvalue() == 'a: 1\nb: 2\n'
 
 
 @pytest.mark.skipif(
@@ -47,7 +48,7 @@ def test_load_cyaml_1_2():
     # issue 155
     import ruamel.yaml
 
-    if sys.version_info >= (3, 8):
+    if sys.version_info >= NO_CLIB_VER:
         return
     assert ruamel.yaml.__with_libyaml__
     inp = dedent("""\
@@ -67,7 +68,7 @@ def test_dump_cyaml_1_2():
     import ruamel.yaml
     from ruamel.yaml.compat import StringIO
 
-    if sys.version_info >= (3, 8):
+    if sys.version_info >= NO_CLIB_VER:
         return
     assert ruamel.yaml.__with_libyaml__
     yaml = ruamel.yaml.YAML(typ='safe')

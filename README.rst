@@ -61,6 +61,19 @@ ChangeLog
 
 .. should insert NEXT: at the beginning of line for next key (with empty line)
 
+NEXT:
+  - this release no longer supports Python 2.7, most if not all Python 2
+    specific code is removed. The 0.17.x series is the last to  support Python 3.5
+  - remove Python2 specific code branches and adaptations (u-strings)
+  - prepare % code for f-strings using _F
+  - allow PyOxidisation (`issue 324 <https://sourceforge.net/p/ruamel-yaml/tickets/324/>`__
+    resp. `issue 171 https://github.com/indygreg/PyOxidizer/issues/171>`__)
+  - replaced Python 2 compatible enforcement of keyword arguments with '*'
+  - the old top level *functions* `load`, `safe_load`, `round_trip_load`,
+    `dump`, `safe_dump`, `round_trip_dump`, as well as their `_all` variants for
+    multi-document streams, now issue a `PendingDeprecationWarning` (e.g. when
+    run from pytest, but also Python is started with `-Wd`)
+
 0.16.13 (2021-03-05):
   - fix for issue 359: could not update() CommentedMap with keyword arguments
     (reported by `Steve Franchak <https://sourceforge.net/u/binaryadder/>`__)

@@ -1,7 +1,5 @@
 # coding: utf-8
 
-from __future__ import absolute_import
-
 # This module contains abstractions for the input stream. You don't have to
 # looks further, there are no pretty code.
 #
@@ -24,7 +22,7 @@ from __future__ import absolute_import
 import codecs
 
 from ruamel.yaml.error import YAMLError, FileMark, StringMark, YAMLStreamError
-from ruamel.yaml.compat import text_type, binary_type, PY3, UNICODE_SIZE
+from ruamel.yaml.compat import _F  # NOQA
 from ruamel.yaml.util import RegExp
 
 if False:  # MYPY
@@ -45,20 +43,25 @@ class ReaderError(YAMLError):
 
     def __str__(self):
         # type: () -> str
-        if isinstance(self.character, binary_type):
-            return "'%s' codec can't decode byte #x%02x: %s\n" '  in "%s", position %d' % (
-                self.encoding,
-                ord(self.character),
-                self.reason,
-                self.name,
-                self.position,
+        if isinstance(self.character, bytes):
+            return _F(
+                "'{self_encoding!s}' codec can't decode byte #x{ord_self_character:02x}: "
+                '{self_reason!s}\n'
+                '  in "{self_name!s}", position {self_position:d}',
+                self_encoding=self.encoding,
+                ord_self_character=ord(self.character),
+                self_reason=self.reason,
+                self_name=self.name,
+                self_position=self.position,
             )
         else:
-            return 'unacceptable character #x%04x: %s\n' '  in "%s", position %d' % (
-                self.character,
-                self.reason,
-                self.name,
-                self.position,
+            return _F(
+                'unacceptable character #x{self_character:04x}: {self._reason!s}\n'
+                '  in "{self_name!s}", position {self_position:d}',
+                self_character=self.character,
+                self_reason=self.reason,
+                self_name=self.name,
+                self_position=self.position,
             )
 
 
@@ -69,8 +72,8 @@ class Reader(object):
     # - adds '\0' to the end.
 
     # Reader accepts
-    #  - a `str` object (PY2) / a `bytes` object (PY3),
-    #  - a `unicode` object (PY2) / a `str` object (PY3),
+    #  - a `bytes` object,
+    #  - a `str` object,
     #  - a file-like object with its `read` method returning `str`,
     #  - a file-like object with its `read` method returning `unicode`.
 
@@ -112,11 +115,11 @@ class Reader(object):
         if val is None:
             return
         self._stream = None
-        if isinstance(val, text_type):
+        if isinstance(val, str):
             self.name = '<unicode string>'
             self.check_printable(val)
-            self.buffer = val + u'\0'  # type: ignore
-        elif isinstance(val, binary_type):
+            self.buffer = val + '\0'  # type: ignore
+        elif isinstance(val, bytes):
             self.name = '<byte string>'
             self.raw_buffer = val
             self.determine_encoding()
@@ -151,12 +154,12 @@ class Reader(object):
             ch = self.buffer[self.pointer]
             self.pointer += 1
             self.index += 1
-            if ch in u'\n\x85\u2028\u2029' or (
-                ch == u'\r' and self.buffer[self.pointer] != u'\n'
+            if ch in '\n\x85\u2028\u2029' or (
+                ch == '\r' and self.buffer[self.pointer] != '\n'
             ):
                 self.line += 1
                 self.column = 0
-            elif ch != u'\uFEFF':
+            elif ch != '\uFEFF':
                 self.column += 1
             length -= 1
 
@@ -168,10 +171,10 @@ class Reader(object):
             ch = self.buffer[self.pointer]
             self.pointer += 1
             self.index += 1
-            if ch == u'\n' or (ch == u'\r' and self.buffer[self.pointer] != u'\n'):
+            if ch == '\n' or (ch == '\r' and self.buffer[self.pointer] != '\n'):
                 self.line += 1
                 self.column = 0
-            elif ch != u'\uFEFF':
+            elif ch != '\uFEFF':
                 self.column += 1
             length -= 1
 
@@ -188,7 +191,7 @@ class Reader(object):
         # type: () -> None
         while not self.eof and (self.raw_buffer is None or len(self.raw_buffer) < 2):
             self.update_raw()
-        if isinstance(self.raw_buffer, binary_type):
+        if isinstance(self.raw_buffer, bytes):
             if self.raw_buffer.startswith(codecs.BOM_UTF16_LE):
                 self.raw_decode = codecs.utf_16_le_decode  # type: ignore
                 self.encoding = 'utf-16-le'
@@ -200,18 +203,9 @@ class Reader(object):
                 self.encoding = 'utf-8'
         self.update(1)
 
-    if UNICODE_SIZE == 2:
-        NON_PRINTABLE = RegExp(
-            u'[^\x09\x0A\x0D\x20-\x7E\x85' u'\xA0-\uD7FF' u'\uE000-\uFFFD' u']'
-        )
-    else:
-        NON_PRINTABLE = RegExp(
-            u'[^\x09\x0A\x0D\x20-\x7E\x85'
-            u'\xA0-\uD7FF'
-            u'\uE000-\uFFFD'
-            u'\U00010000-\U0010FFFF'
-            u']'
-        )
+    NON_PRINTABLE = RegExp(
+        '[^\x09\x0A\x0D\x20-\x7E\x85' '\xA0-\uD7FF' '\uE000-\uFFFD' '\U00010000-\U0010FFFF' ']'
+    )
 
     _printable_ascii = ('\x09\x0A\x0D' + "".join(map(chr, range(0x20, 0x7F)))).encode('ascii')
 
@@ -268,10 +262,7 @@ class Reader(object):
                 try:
                     data, converted = self.raw_decode(self.raw_buffer, 'strict', self.eof)
                 except UnicodeDecodeError as exc:
-                    if PY3:
-                        character = self.raw_buffer[exc.start]
-                    else:
-                        character = exc.object[exc.start]
+                    character = self.raw_buffer[exc.start]
                     if self.stream is not None:
                         position = self.stream_pointer - len(self.raw_buffer) + exc.start
                     elif self.stream is not None:
@@ -293,7 +284,7 @@ class Reader(object):
     def update_raw(self, size=None):
         # type: (Optional[int]) -> None
         if size is None:
-            size = 4096 if PY3 else 1024
+            size = 4096
         data = self.stream.read(size)
         if self.raw_buffer is None:
             self.raw_buffer = data

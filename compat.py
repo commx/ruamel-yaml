@@ -1,14 +1,13 @@
 # coding: utf-8
 
-from __future__ import print_function
-
 # partially from package six by Benjamin Peterson
 
 import sys
 import os
-import types
+import io
 import traceback
 from abc import abstractmethod
+import collections.abc
 
 
 # fmt: off
@@ -50,73 +49,18 @@ PY2 = sys.version_info[0] == 2
 PY3 = sys.version_info[0] == 3
 
 
-if PY3:
-
-    def utf8(s):
-        # type: (str) -> str
-        return s
-
-    def to_str(s):
-        # type: (str) -> str
-        return s
-
-    def to_unicode(s):
-        # type: (str) -> str
-        return s
+# replace with f-strings when 3.5 support is dropped
+# ft = '42'
+# assert _F('abc {ft!r}', ft=ft) == 'abc %r' % ft
+# 'abc %r' % ft -> _F('abc {ft!r}' -> f'abc {ft!r}'
+def _F(s, *superfluous, **kw):
+    if superfluous:
+        raise TypeError
+    return s.format(**kw)
 
 
-else:
-    if False:
-        unicode = str
-
-    def utf8(s):
-        # type: (unicode) -> str
-        return s.encode('utf-8')
-
-    def to_str(s):
-        # type: (str) -> str
-        return str(s)
-
-    def to_unicode(s):
-        # type: (str) -> unicode
-        return unicode(s)  # NOQA
-
-
-if PY3:
-    string_types = str
-    integer_types = int
-    class_types = type
-    text_type = str
-    binary_type = bytes
-
-    MAXSIZE = sys.maxsize
-    unichr = chr
-    import io
-
-    StringIO = io.StringIO
-    BytesIO = io.BytesIO
-    # have unlimited precision
-    no_limit_int = int
-    from collections.abc import Hashable, MutableSequence, MutableMapping, Mapping  # NOQA
-
-else:
-    string_types = basestring  # NOQA
-    integer_types = (int, long)  # NOQA
-    class_types = (type, types.ClassType)
-    text_type = unicode  # NOQA
-    binary_type = str
-
-    # to allow importing
-    unichr = unichr
-    from StringIO import StringIO as _StringIO
-
-    StringIO = _StringIO
-    import cStringIO
-
-    BytesIO = cStringIO.StringIO
-    # have unlimited precision
-    no_limit_int = long  # NOQA not available on Python 3
-    from collections import Hashable, MutableSequence, MutableMapping, Mapping  # NOQA
+StringIO = io.StringIO
+BytesIO = io.BytesIO
 
 if False:  # MYPY
     # StreamType = Union[BinaryIO, IO[str], IO[unicode],  StringIO]
@@ -126,12 +70,7 @@ if False:  # MYPY
     StreamTextType = StreamType  # Union[Text, StreamType]
     VersionType = Union[List[int], str, Tuple[int, int]]
 
-if PY3:
-    builtins_module = 'builtins'
-else:
-    builtins_module = '__builtin__'
-
-UNICODE_SIZE = 4 if sys.maxunicode > 65535 else 2
+builtins_module = 'builtins'
 
 
 def with_metaclass(meta, *bases):
@@ -232,20 +171,20 @@ nprintf = Nprint('/var/tmp/ruamel.yaml.log')
 
 def check_namespace_char(ch):
     # type: (Any) -> bool
-    if u'\x21' <= ch <= u'\x7E':  # ! to ~
+    if '\x21' <= ch <= '\x7E':  # ! to ~
         return True
-    if u'\xA0' <= ch <= u'\uD7FF':
+    if '\xA0' <= ch <= '\uD7FF':
         return True
-    if (u'\uE000' <= ch <= u'\uFFFD') and ch != u'\uFEFF':  # excl. byte order mark
+    if ('\uE000' <= ch <= '\uFFFD') and ch != '\uFEFF':  # excl. byte order mark
         return True
-    if u'\U00010000' <= ch <= u'\U0010FFFF':
+    if '\U00010000' <= ch <= '\U0010FFFF':
         return True
     return False
 
 
 def check_anchorname_char(ch):
     # type: (Any) -> bool
-    if ch in u',[]{}':
+    if ch in ',[]{}':
         return False
     return check_namespace_char(ch)
 
@@ -264,7 +203,7 @@ def version_tnf(t1, t2=None):
     return False
 
 
-class MutableSliceableSequence(MutableSequence):  # type: ignore
+class MutableSliceableSequence(collections.abc.MutableSequence):  # type: ignore
     __slots__ = ()
 
     def __getitem__(self, index):

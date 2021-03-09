@@ -1,7 +1,5 @@
 # coding: utf-8
 
-from __future__ import absolute_import, unicode_literals, print_function
-
 import sys
 import os
 import warnings
@@ -18,7 +16,7 @@ from ruamel.yaml.nodes import *  # NOQA
 
 from ruamel.yaml.loader import BaseLoader, SafeLoader, Loader, RoundTripLoader  # NOQA
 from ruamel.yaml.dumper import BaseDumper, SafeDumper, Dumper, RoundTripDumper  # NOQA
-from ruamel.yaml.compat import StringIO, BytesIO, with_metaclass, PY3, nprint
+from ruamel.yaml.compat import StringIO, BytesIO, with_metaclass, nprint
 from ruamel.yaml.resolver import VersionedResolver, Resolver  # NOQA
 from ruamel.yaml.representer import (
     BaseRepresenter,
@@ -37,11 +35,7 @@ from ruamel.yaml.loader import Loader as UnsafeLoader
 if False:  # MYPY
     from typing import List, Set, Dict, Union, Any, Callable, Optional, Text  # NOQA
     from ruamel.yaml.compat import StreamType, StreamTextType, VersionType  # NOQA
-
-    if PY3:
-        from pathlib import Path
-    else:
-        Path = Any
+    from pathlib import Path
 
 try:
     from _ruamel_yaml import CParser, CEmitter  # type: ignore
@@ -50,8 +44,6 @@ except:  # NOQA
 
 # import io
 
-enforce = object()
-
 
 # YAML is an acronym, i.e. spoken: rhymes with "camel". And thus a
 # subset of abbreviations, which should be all caps according to PEP8
@@ -59,11 +51,10 @@ enforce = object()
 
 class YAML(object):
     def __init__(
-        self, _kw=enforce, typ=None, pure=False, output=None, plug_ins=None  # input=None,
+        self, *, typ=None, pure=False, output=None, plug_ins=None  # input=None,
     ):
         # type: (Any, Optional[Text], Any, Any, Any) -> None
         """
-        _kw: not used, forces keyword arguments in 2.7 (in 3 you can do (*, safe_load=..)
         typ: 'rt'/None -> RoundTripLoader/RoundTripDumper,  (default)
              'safe'    -> SafeLoader/SafeDumper,
              'unsafe'  -> normal/unsafe Loader/Dumper
@@ -72,11 +63,6 @@ class YAML(object):
         input/output: needed to work as context manager
         plug_ins: a list of plug-in files
         """
-        if _kw is not enforce:
-            raise TypeError(
-                '{}.__init__() takes no positional argument but at least '
-                'one was given ({!r})'.format(self.__class__.__name__, _kw)
-            )
 
         self.typ = ['rt'] if typ is None else (typ if isinstance(typ, list) else [typ])
         self.pure = pure
@@ -352,17 +338,12 @@ class YAML(object):
             except AttributeError:
                 pass
 
-    def load_all(self, stream, _kw=enforce):  # , skip=None):
+    def load_all(self, stream):  # *, skip=None):
         # type: (Union[Path, StreamTextType], Any) -> Any
-        if _kw is not enforce:
-            raise TypeError(
-                '{}.__init__() takes no positional argument but at least '
-                'one was given ({!r})'.format(self.__class__.__name__, _kw)
-            )
         if not hasattr(stream, 'read') and hasattr(stream, 'open'):
             # pathlib.Path() instance
             with stream.open('r') as fp:
-                for d in self.load_all(fp, _kw=enforce):
+                for d in self.load_all(fp):
                     yield d
                 return
         # if skip is None:
@@ -429,16 +410,11 @@ class YAML(object):
                 return loader, loader
         return self.constructor, self.parser
 
-    def dump(self, data, stream=None, _kw=enforce, transform=None):
+    def dump(self, data, stream=None, *, transform=None):
         # type: (Any, Union[Path, StreamType], Any, Any) -> Any
         if self._context_manager:
             if not self._output:
                 raise TypeError('Missing output stream while dumping from context manager')
-            if _kw is not enforce:
-                raise TypeError(
-                    '{}.dump() takes one positional argument but at least '
-                    'two were given ({!r})'.format(self.__class__.__name__, _kw)
-                )
             if transform is not None:
                 raise TypeError(
                     '{}.dump() in the context manager cannot have transform keyword '
@@ -448,17 +424,12 @@ class YAML(object):
         else:  # old style
             if stream is None:
                 raise TypeError('Need a stream argument when not dumping from context manager')
-            return self.dump_all([data], stream, _kw, transform=transform)
+            return self.dump_all([data], stream, transform=transform)
 
-    def dump_all(self, documents, stream, _kw=enforce, transform=None):
+    def dump_all(self, documents, stream, *, transform=None):
         # type: (Any, Union[Path, StreamType], Any, Any) -> Any
         if self._context_manager:
             raise NotImplementedError
-        if _kw is not enforce:
-            raise TypeError(
-                '{}.dump(_all) takes two positional argument but at least '
-                'three were given ({!r})'.format(self.__class__.__name__, _kw)
-            )
         self._output = stream
         self._context_manager = YAMLContextManager(self, transform=transform)
         for data in documents:
@@ -467,7 +438,7 @@ class YAML(object):
         self._output = None
         self._context_manager = None
 
-    def Xdump_all(self, documents, stream, _kw=enforce, transform=None):
+    def Xdump_all(self, documents, stream, *, transform=None):
         # type: (Any, Union[Path, StreamType], Any, Any) -> Any
         """
         Serialize a sequence of Python objects into a YAML stream.
@@ -475,12 +446,7 @@ class YAML(object):
         if not hasattr(stream, 'write') and hasattr(stream, 'open'):
             # pathlib.Path() instance
             with stream.open('w') as fp:
-                return self.dump_all(documents, fp, _kw, transform=transform)
-        if _kw is not enforce:
-            raise TypeError(
-                '{}.dump(_all) takes two positional argument but at least '
-                'three were given ({!r})'.format(self.__class__.__name__, _kw)
-            )
+                return self.dump_all(documents, fp, transform=transform)
         # The stream should have the methods `write` and possibly `flush`.
         if self.top_level_colon_align is True:
             tlca = max([len(str(x)) for x in documents[0]])  # type: Any
@@ -630,7 +596,16 @@ class YAML(object):
     # helpers
     def official_plug_ins(self):
         # type: () -> Any
-        bd = os.path.dirname(__file__)
+        """search for list of subdirs that are plug-ins, if __file__ is not available, e.g.
+        single file installers that are not properly emulating a file-system (issue 324)
+        no plug-ins will be found. If any are packaged, you know which file that are
+        and you can explicitly provide it during instantiation:
+            yaml = ruamel.yaml.YAML(plug_ins=['ruamel/yaml/jinja2/__plug_in__'])
+        """
+        try:
+            bd = os.path.dirname(__file__)
+        except NameError:
+            return []
         gpbd = os.path.dirname(os.path.dirname(bd))
         res = [x.replace(gpbd, "")[1:-3] for x in glob.glob(bd + '/*/__plug_in__.py')]
         return res
@@ -882,6 +857,20 @@ def yaml_object(yml):
 
 
 ########################################################################################
+def warn_deprecation(fun, method, arg=''):
+    from ruamel.yaml.compat import _F
+
+    warnings.warn(
+        _F(
+            '\n{fun} will be removed, use\n\n  yaml=YAML({arg})\n  yaml.{method}(...)\n\ninstead',  # NOQA
+            fun=fun,
+            method=method,
+            arg=arg,
+        ),
+        PendingDeprecationWarning,  # this will show when testing with pytest/tox
+        stacklevel=3,
+    )
+########################################################################################
 
 
 def scan(stream, Loader=Loader):
@@ -943,6 +932,7 @@ def load(stream, Loader=None, version=None, preserve_quotes=None):
     Parse the first YAML document in a stream
     and produce the corresponding Python object.
     """
+    warn_deprecation('load', 'load', arg="typ='unsafe', pure=True")
     if Loader is None:
         warnings.warn(UnsafeLoaderWarning.text, UnsafeLoaderWarning, stacklevel=2)
         Loader = UnsafeLoader
@@ -967,6 +957,7 @@ def load_all(stream, Loader=None, version=None, preserve_quotes=None):
     Parse all YAML documents in a stream
     and produce corresponding Python objects.
     """
+    warn_deprecation('load_all', 'load_all', arg="typ='unsafe', pure=True")
     if Loader is None:
         warnings.warn(UnsafeLoaderWarning.text, UnsafeLoaderWarning, stacklevel=2)
         Loader = UnsafeLoader
@@ -993,6 +984,7 @@ def safe_load(stream, version=None):
     and produce the corresponding Python object.
     Resolve only basic YAML tags.
     """
+    warn_deprecation('safe_load', 'load', arg="typ='safe', pure=True")
     return load(stream, SafeLoader, version)
 
 
@@ -1003,6 +995,7 @@ def safe_load_all(stream, version=None):
     and produce corresponding Python objects.
     Resolve only basic YAML tags.
     """
+    warn_deprecation('safe_load_all', 'load_all', arg="typ='safe', pure=True")
     return load_all(stream, SafeLoader, version)
 
 
@@ -1013,6 +1006,7 @@ def round_trip_load(stream, version=None, preserve_quotes=None):
     and produce the corresponding Python object.
     Resolve only basic YAML tags.
     """
+    warn_deprecation('round_trip_load_all', 'load')
     return load(stream, RoundTripLoader, version, preserve_quotes=preserve_quotes)
 
 
@@ -1023,6 +1017,7 @@ def round_trip_load_all(stream, version=None, preserve_quotes=None):
     and produce corresponding Python objects.
     Resolve only basic YAML tags.
     """
+    warn_deprecation('round_trip_load_all', 'load_all')
     return load_all(stream, RoundTripLoader, version, preserve_quotes=preserve_quotes)
 
 
@@ -1066,7 +1061,7 @@ def emit(
         return getvalue()
 
 
-enc = None if PY3 else 'utf-8'
+enc = None
 
 
 def serialize_all(
@@ -1158,6 +1153,7 @@ def dump_all(
     Serialize a sequence of Python objects into a YAML stream.
     If stream is None, return the produced string instead.
     """
+    warn_deprecation('dump_all', 'dump_all', arg="typ='unsafe', pure=True")
     getvalue = None
     if top_level_colon_align is True:
         top_level_colon_align = max([len(str(x)) for x in documents[0]])
@@ -1231,6 +1227,7 @@ def dump(
     default_style ∈ None, '', '"', "'", '|', '>'
 
     """
+    warn_deprecation('dump', 'dump', arg="typ='unsafe', pure=True")
     return dump_all(
         [data],
         stream,
@@ -1258,6 +1255,7 @@ def safe_dump_all(documents, stream=None, **kwds):
     Produce only basic YAML tags.
     If stream is None, return the produced string instead.
     """
+    warn_deprecation('safe_dump_all', 'dump_all', arg="typ='safe', pure=True")
     return dump_all(documents, stream, Dumper=SafeDumper, **kwds)
 
 
@@ -1268,6 +1266,7 @@ def safe_dump(data, stream=None, **kwds):
     Produce only basic YAML tags.
     If stream is None, return the produced string instead.
     """
+    warn_deprecation('safe_dump', 'dump', arg="typ='safe', pure=True")
     return dump_all([data], stream, Dumper=SafeDumper, **kwds)
 
 
@@ -1293,6 +1292,7 @@ def round_trip_dump(
 ):
     # type: (Any, Optional[StreamType], Any, Any, Any, Optional[bool], Optional[int], Optional[int], Optional[bool], Any, Any, Optional[bool], Optional[bool], Optional[VersionType], Any, Any, Any, Any) -> Optional[str]   # NOQA
     allow_unicode = True if allow_unicode is None else allow_unicode
+    warn_deprecation('round_trip_dump', 'dump')
     return dump_all(
         [data],
         stream,
