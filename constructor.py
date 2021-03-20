@@ -1286,6 +1286,8 @@ class RoundTripConstructor(SafeConstructor):
         if node.comment:
             seqtyp._yaml_add_comment(node.comment[:2])
             if len(node.comment) > 2:
+                # this happens e.g. if you have a sequence element that is a flow-style mapping
+                # and that has no EOL comment but a following commentline or empty line
                 seqtyp.yaml_end_comment_extend(node.comment[2], clear=True)
         if node.anchor:
             from ruamel.yaml.serializer import templated_id
@@ -1294,7 +1296,7 @@ class RoundTripConstructor(SafeConstructor):
                 seqtyp.yaml_set_anchor(node.anchor)
         for idx, child in enumerate(node.value):
             if child.comment:
-                seqtyp._yaml_add_comment(child.comment, key=idx)
+                seqtyp._yaml_add_comment(child.comment[:], key=idx)
                 child.comment = None  # if moved to sequence remove from child
             ret_val.append(self.construct_object(child, deep=deep))
             seqtyp._yaml_set_idx_line_col(
@@ -1521,8 +1523,8 @@ class RoundTripConstructor(SafeConstructor):
         # type: (Any) -> Any
         data = CommentedSeq()
         data._yaml_set_line_col(node.start_mark.line, node.start_mark.column)
-        if node.comment:
-            data._yaml_add_comment(node.comment)
+        # if node.comment:
+        #    data._yaml_add_comment(node.comment)
         yield data
         data.extend(self.construct_rt_sequence(node, data))
         self.set_collection_style(data, node)
