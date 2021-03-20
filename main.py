@@ -298,6 +298,99 @@ class YAML(object):
             setattr(self, attr, repres)
         return getattr(self, attr)
 
+    def scan(self, stream):
+        # type: (StreamTextType) -> Any
+        """
+        Scan a YAML stream and produce scanning tokens.
+        """
+        if not hasattr(stream, 'read') and hasattr(stream, 'open'):
+            # pathlib.Path() instance
+            with stream.open('rb') as fp:
+                return self.scan(fp)
+        _, parser = self.get_constructor_parser(stream)
+        try:
+            while self.scanner.check_token():
+                yield self.scanner.get_token()
+        finally:
+            parser.dispose()
+            try:
+                self._reader.reset_reader()
+            except AttributeError:
+                pass
+            try:
+                self._scanner.reset_scanner()
+            except AttributeError:
+                pass
+
+    def parse(self, stream):
+        # type: (StreamTextType) -> Any
+        """
+        Parse a YAML stream and produce parsing events.
+        """
+        if not hasattr(stream, 'read') and hasattr(stream, 'open'):
+            # pathlib.Path() instance
+            with stream.open('rb') as fp:
+                return self.parse(fp)
+        _, parser = self.get_constructor_parser(stream)
+        try:
+            while parser.check_event():
+                yield parser.get_event()
+        finally:
+            parser.dispose()
+            try:
+                self._reader.reset_reader()
+            except AttributeError:
+                pass
+            try:
+                self._scanner.reset_scanner()
+            except AttributeError:
+                pass
+
+    def compose(self, stream):
+        # type: (Union[Path, StreamTextType]) -> Any
+        """
+        Parse the first YAML document in a stream
+        and produce the corresponding representation tree.
+        """
+        if not hasattr(stream, 'read') and hasattr(stream, 'open'):
+            # pathlib.Path() instance
+            with stream.open('rb') as fp:
+                return self.load(fp)
+        constructor, parser = self.get_constructor_parser(stream)
+        try:
+            return constructor.composer.get_single_node()
+        finally:
+            parser.dispose()
+            try:
+                self._reader.reset_reader()
+            except AttributeError:
+                pass
+            try:
+                self._scanner.reset_scanner()
+            except AttributeError:
+                pass
+
+    def compose_all(self, stream):
+        # type: (Union[Path, StreamTextType]) -> Any
+        """
+        Parse all YAML documents in a stream
+        and produce corresponding representation trees.
+        """
+        constructor, parser = self.get_constructor_parser(stream)
+        try:
+            while constructor.composer.check_node():
+                yield constructor.composer.get_node()
+        finally:
+            parser.dispose()
+            try:
+                self._reader.reset_reader()
+            except AttributeError:
+                pass
+            try:
+                self._scanner.reset_scanner()
+            except AttributeError:
+                pass
+
     # separate output resolver?
 
     # def load(self, stream=None):
@@ -409,6 +502,47 @@ class YAML(object):
                 loader = XLoader(stream)
                 return loader, loader
         return self.constructor, self.parser
+
+    def emit(self, events, stream):
+        """
+        Emit YAML parsing events into a stream.
+        If stream is None, return the produced string instead.
+        """
+        _, _, emitter = self.get_serializer_representer_emitter(stream, None)
+        try:
+            for event in events:
+                emitter.emit(event)
+        finally:
+            try:
+                emitter.dispose()
+            except AttributeError:
+                raise
+
+    def serialize(self, node, stream):
+        # type: (Any, Optional[StreamType]) -> Any
+        """
+        Serialize a representation tree into a YAML stream.
+        If stream is None, return the produced string instead.
+        """
+        self.serialize_all([node], stream)
+
+    def serialize_all(self, nodes, stream):
+        # type: (Any, Optional[StreamType]) -> Any
+        """
+        Serialize a sequence of representation trees into a YAML stream.
+        If stream is None, return the produced string instead.
+        """
+        serializer, _, emitter = self.get_serializer_representer_emitter(stream, None)
+        try:
+            serializer.open()
+            for node in nodes:
+                serializer.serialize(node)
+            serializer.close()
+        finally:
+            try:
+                emitter.dispose()
+            except AttributeError:
+                raise
 
     def dump(self, data, stream=None, *, transform=None):
         # type: (Any, Union[Path, StreamType], Any, Any) -> Any
@@ -641,26 +775,6 @@ class YAML(object):
             self.constructor.add_constructor(tag, f_y)
         return cls
 
-    def parse(self, stream):
-        # type: (StreamTextType) -> Any
-        """
-        Parse a YAML stream and produce parsing events.
-        """
-        _, parser = self.get_constructor_parser(stream)
-        try:
-            while parser.check_event():
-                yield parser.get_event()
-        finally:
-            parser.dispose()
-            try:
-                self._reader.reset_reader()
-            except AttributeError:
-                pass
-            try:
-                self._scanner.reset_scanner()
-            except AttributeError:
-                pass
-
     # ### context manager
 
     def __enter__(self):
@@ -878,6 +992,7 @@ def scan(stream, Loader=Loader):
     """
     Scan a YAML stream and produce scanning tokens.
     """
+    warn_deprecation('scan', 'scan', arg="typ='unsafe', pure=True")
     loader = Loader(stream)
     try:
         while loader.scanner.check_token():
@@ -891,6 +1006,7 @@ def parse(stream, Loader=Loader):
     """
     Parse a YAML stream and produce parsing events.
     """
+    warn_deprecation('parse', 'parse', arg="typ='unsafe', pure=True")
     loader = Loader(stream)
     try:
         while loader._parser.check_event():
@@ -905,6 +1021,7 @@ def compose(stream, Loader=Loader):
     Parse the first YAML document in a stream
     and produce the corresponding representation tree.
     """
+    warn_deprecation('compose', 'compose', arg="typ='unsafe', pure=True")
     loader = Loader(stream)
     try:
         return loader.get_single_node()
@@ -918,6 +1035,7 @@ def compose_all(stream, Loader=Loader):
     Parse all YAML documents in a stream
     and produce corresponding representation trees.
     """
+    warn_deprecation('compose', 'compose', arg="typ='unsafe', pure=True")
     loader = Loader(stream)
     try:
         while loader.check_node():
@@ -1036,6 +1154,7 @@ def emit(
     Emit YAML parsing events into a stream.
     If stream is None, return the produced string instead.
     """
+    warn_deprecation('emit', 'emit', arg="typ='safe', pure=True")
     getvalue = None
     if stream is None:
         stream = StringIO()
@@ -1084,6 +1203,7 @@ def serialize_all(
     Serialize a sequence of representation trees into a YAML stream.
     If stream is None, return the produced string instead.
     """
+    warn_deprecation('serialize_all', 'serialize_all', arg="typ='safe', pure=True")
     getvalue = None
     if stream is None:
         if encoding is None:
@@ -1125,6 +1245,7 @@ def serialize(node, stream=None, Dumper=Dumper, **kwds):
     Serialize a representation tree into a YAML stream.
     If stream is None, return the produced string instead.
     """
+    warn_deprecation('serialize', 'serialize', arg="typ='safe', pure=True")
     return serialize_all([node], stream, Dumper=Dumper, **kwds)
 
 
