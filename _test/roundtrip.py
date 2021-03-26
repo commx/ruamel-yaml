@@ -6,7 +6,7 @@ helper routines for testing round trip of commented YAML data
 import sys
 import textwrap
 import io
-from ruamel.std.pathlib import Path
+from pathlib import Path
 
 unset = object()
 
@@ -46,7 +46,7 @@ def round_trip_load_all(inp, preserve_quotes=None, version=None):
 
 def round_trip_dump(
     data,
-    stream=None, *,
+    stream=None,  # *,
     indent=None,
     block_seq_indent=None,
     default_flow_style=unset,
@@ -79,7 +79,7 @@ def round_trip_dump(
 
 def round_trip_dump_all(
     data,
-    stream=None, *,
+    stream=None,  # *,
     indent=None,
     block_seq_indent=None,
     default_flow_style=unset,
@@ -326,12 +326,13 @@ def save_and_run(program, base_dir=None, output=None, file_name=None, optimized=
     file_name.write_text(dedent(program))
 
     try:
-        cmd = [sys.executable]
+        cmd = [sys.executable, '-Wd']
         if optimized:
             cmd.append('-O')
         cmd.append(str(file_name))
         print('running:', *cmd)
-        res = check_output(cmd, stderr=STDOUT, universal_newlines=True)
+        # 3.5 needs strings
+        res = check_output(cmd, stderr=STDOUT, universal_newlines=True, cwd=str(base_dir))
         if output is not None:
             if '__pypy__' in sys.builtin_module_names:
                 res = res.splitlines(True)

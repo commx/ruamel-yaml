@@ -712,9 +712,7 @@ class RoundTripRepresenter(SafeRepresenter):
                 value = m1 + m2 + data._exp + '{:{}0{}d}'.format(e, esgn, data._e_width)
             elif data._prec == 0:  # mantissa with trailing dot
                 e -= len(m2)
-                value = (
-                    m1 + m2 + '.' + data._exp + '{:{}0{}d}'.format(e, esgn, data._e_width)
-                )
+                value = m1 + m2 + '.' + data._exp + '{:{}0{}d}'.format(e, esgn, data._e_width)
             else:
                 if data._m_lead0 > 0:
                     m2 = '0' * (data._m_lead0 - 1) + m1 + m2
@@ -725,9 +723,7 @@ class RoundTripRepresenter(SafeRepresenter):
                     m1 += m2[0]
                     m2 = m2[1:]
                     e -= 1
-                value = (
-                    m1 + '.' + m2 + data._exp + '{:{}0{}d}'.format(e, esgn, data._e_width)
-                )
+                value = m1 + '.' + m2 + data._exp + '{:{}0{}d}'.format(e, esgn, data._e_width)
 
         if value is None:
             value = repr(data).lower()
@@ -764,7 +760,11 @@ class RoundTripRepresenter(SafeRepresenter):
                     for ct in v[1]:
                         ct.reset()
             item_comments = comment.items
-            node.comment = comment.comment
+            if node.comment is None:
+                node.comment = comment.comment
+            else:
+                # as we are potentially going to extend this, make a new list
+                node.comment = comment.comment[:]
             try:
                 node.comment.append(comment.end)
             except AttributeError:
@@ -828,7 +828,11 @@ class RoundTripRepresenter(SafeRepresenter):
         # no sorting! !!
         try:
             comment = getattr(mapping, comment_attrib)
-            node.comment = comment.comment
+            if node.comment is None:
+                node.comment = comment.comment
+            else:
+                # as we are potentially going to extend this, make a new list
+                node.comment = comment.comment[:]
             if node.comment and node.comment[1]:
                 for ct in node.comment[1]:
                     ct.reset()
@@ -905,7 +909,11 @@ class RoundTripRepresenter(SafeRepresenter):
         best_style = True
         try:
             comment = getattr(omap, comment_attrib)
-            node.comment = comment.comment
+            if node.comment is None:
+                node.comment = comment.comment
+            else:
+                # as we are potentially going to extend this, make a new list
+                node.comment = comment.comment[:]
             if node.comment and node.comment[1]:
                 for ct in node.comment[1]:
                     ct.reset()
@@ -966,7 +974,11 @@ class RoundTripRepresenter(SafeRepresenter):
         # no sorting! !!
         try:
             comment = getattr(setting, comment_attrib)
-            node.comment = comment.comment
+            if node.comment is None:
+                node.comment = comment.comment
+            else:
+                # as we are potentially going to extend this, make a new list
+                node.comment = comment.comment[:]
             if node.comment and node.comment[1]:
                 for ct in node.comment[1]:
                     ct.reset()

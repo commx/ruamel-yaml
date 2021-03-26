@@ -1729,8 +1729,8 @@ class Scanner(object):
             value = bytes(code_bytes).decode('utf-8')
         except UnicodeDecodeError as exc:
             raise ScannerError(
-                _F('while scanning an {name!s}', name=name),
-                start_mark, str(exc), mark)
+                _F('while scanning an {name!s}', name=name), start_mark, str(exc), mark
+            )
         return value
 
     def scan_line_break(self):

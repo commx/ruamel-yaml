@@ -897,8 +897,22 @@ class Emitter(object):
             self.write_single_quoted(self.analysis.scalar, split)
         elif self.style == '>':
             self.write_folded(self.analysis.scalar)
+            if (
+                self.event.comment
+                and self.event.comment[0]
+                and self.event.comment[0].column >= self.indent
+            ):
+                # comment following a folded scalar must dedent (issue 376)
+                self.event.comment[0].column = self.indent - 1
         elif self.style == '|':
             self.write_literal(self.analysis.scalar, self.event.comment)
+            if (
+                self.event.comment
+                and self.event.comment[0]
+                and self.event.comment[0].column >= self.indent
+            ):
+                # comment following a literal scalar must dedent (issue 376)
+                self.event.comment[0].column = self.indent - 1
         else:
             self.write_plain(self.analysis.scalar, split)
         self.analysis = None
@@ -926,9 +940,7 @@ class Emitter(object):
                 _F("tag handle must start and end with '!': {handle!r}", handle=handle)
             )
         for ch in handle[1:-1]:
-            if not (
-                '0' <= ch <= '9' or 'A' <= ch <= 'Z' or 'a' <= ch <= 'z' or ch in '-_'
-            ):
+            if not ('0' <= ch <= '9' or 'A' <= ch <= 'Z' or 'a' <= ch <= 'z' or ch in '-_'):
                 raise EmitterError(
                     _F(
                         'invalid character {ch!r} in the tag handle: {handle!r}',

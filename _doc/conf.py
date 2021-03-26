@@ -75,7 +75,7 @@ class ryd2rst:
 if True:
     try:
         from ryd.__main__ import RYDCmd
-        from ruamel.std.pathlib import Path
+        from pathlib import Path
 
         oldargv = sys.argv
         for fn in Path('.').glob('*.ryd'):

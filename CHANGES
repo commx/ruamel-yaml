@@ -1,3 +1,24 @@
+[0, 17, 0]: 2021-03-26
+  - this release no longer supports Python 2.7, most if not all Python 2
+    specific code is removed. The 0.17.x series is the last to  support Python 3.5
+    (this also allowed for removal of the dependency  on ``ruamel.std.pathlib``)
+  - remove Python2 specific code branches and adaptations (u-strings)
+  - prepare % code for f-strings using ``_F``
+  - allow PyOxidisation (`issue 324 <https://sourceforge.net/p/ruamel-yaml/tickets/324/>`__
+    resp. `issue 171 <https://github.com/indygreg/PyOxidizer/issues/171>`__)
+  - replaced Python 2 compatible enforcement of keyword arguments with '*'
+  - the old top level *functions* ``load``, ``safe_load``, ``round_trip_load``,
+    ``dump``, ``safe_dump``, ``round_trip_dump``, ``scan``, ``parse``,
+    ``compose``, ``emit``, ``serialize`` as well as their ``_all`` variants for
+    multi-document streams, now issue a ``PendingDeprecationning`` (e.g. when run
+    from pytest, but also Python is started with ``-Wd``). Use the methods on
+    ``YAML()``, which have been extended.
+  - fix for issue 376: indentation changes could put literal/folded scalar to start
+    before the ``#`` column of a following comment. Effectively making the comment
+    part of the scalar in the output. (reported by
+    `Bence Nagy <https://sourceforge.net/u/underyx/>`__)
+
+
 [0, 16, 13]: 2021-03-05
   - fix for issue 359: could not update() CommentedMap with keyword arguments
     (reported by `Steve Franchak <https://sourceforge.net/u/binaryadder/>`__)

@@ -37,6 +37,14 @@ class Token(object):
             pass
         return '{}({})'.format(self.__class__.__name__, arguments)
 
+    @property
+    def column(self):
+        return self.start_mark.column
+
+    @column.setter
+    def column(self, pos):
+        self.start_mark.column = pos
+
     def add_post_comment(self, comment):
         # type: (Any) -> None
         if not hasattr(self, '_comment'):
@@ -267,6 +275,9 @@ class CommentToken(Token):
         if SHOWLINES:
             try:
                 v += ', line: ' + str(self.start_mark.line)
+            except:  # NOQA
+                pass
+            try:
                 v += ', col: ' + str(self.start_mark.column)
             except:  # NOQA
                 pass

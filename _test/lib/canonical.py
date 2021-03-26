@@ -339,7 +339,9 @@ ruamel.yaml.CanonicalLoader = CanonicalLoader
 
 
 def canonical_scan(stream):
-    return ruamel.yaml.scan(stream, Loader=CanonicalLoader)
+    yaml = ruamel.yaml.YAML()
+    yaml.scanner = CanonicalScanner
+    return yaml.scan(stream)
 
 
 ruamel.yaml.canonical_scan = canonical_scan

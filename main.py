@@ -50,9 +50,7 @@ except:  # NOQA
 
 
 class YAML(object):
-    def __init__(
-        self, *, typ=None, pure=False, output=None, plug_ins=None  # input=None,
-    ):
+    def __init__(self, *, typ=None, pure=False, output=None, plug_ins=None):  # input=None,
         # type: (Any, Optional[Text], Any, Any, Any) -> None
         """
         typ: 'rt'/None -> RoundTripLoader/RoundTripDumper,  (default)

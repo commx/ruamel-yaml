@@ -176,10 +176,12 @@ def test_c_version(verbose=False):
 
 
 def _compare_scanners(py_data, c_data, verbose):
-    py_tokens = list(ruamel.yaml.scan(py_data, Loader=ruamel.yaml.PyLoader))
+    yaml = ruamel.yaml.YAML(typ='unsafe', pure=True)
+    py_tokens = list(yaml.scan(py_data, Loader=ruamel.yaml.PyLoader))
     c_tokens = []
     try:
-        for token in ruamel.yaml.scan(c_data, Loader=ruamel.yaml.CLoader):
+        yaml = ruamel.yaml.YAML(typ='unsafe', pure=False)
+        for token in yaml.scan(c_data, Loader=ruamel.yaml.CLoader):
             c_tokens.append(token)
         assert len(py_tokens) == len(c_tokens), (len(py_tokens), len(c_tokens))
         for py_token, c_token in zip(py_tokens, c_tokens):

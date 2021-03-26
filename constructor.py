@@ -1014,13 +1014,9 @@ Constructor.add_constructor(
 
 Constructor.add_constructor('tag:yaml.org,2002:python/int', Constructor.construct_yaml_int)
 
-Constructor.add_constructor(
-    'tag:yaml.org,2002:python/long', Constructor.construct_python_long
-)
+Constructor.add_constructor('tag:yaml.org,2002:python/long', Constructor.construct_python_long)
 
-Constructor.add_constructor(
-    'tag:yaml.org,2002:python/float', Constructor.construct_yaml_float
-)
+Constructor.add_constructor('tag:yaml.org,2002:python/float', Constructor.construct_yaml_float)
 
 Constructor.add_constructor(
     'tag:yaml.org,2002:python/complex', Constructor.construct_python_complex
@@ -1296,7 +1292,7 @@ class RoundTripConstructor(SafeConstructor):
                 seqtyp.yaml_set_anchor(node.anchor)
         for idx, child in enumerate(node.value):
             if child.comment:
-                seqtyp._yaml_add_comment(child.comment[:], key=idx)
+                seqtyp._yaml_add_comment(child.comment, key=idx)
                 child.comment = None  # if moved to sequence remove from child
             ret_val.append(self.construct_object(child, deep=deep))
             seqtyp._yaml_set_idx_line_col(

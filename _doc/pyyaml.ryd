@@ -1,6 +1,7 @@
 version: 0.1
 output: rst
 fix_inline_single_backquotes: true
+pdf: true
 --- |
 ***********************
 Differences with PyYAML

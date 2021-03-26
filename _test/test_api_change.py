@@ -7,7 +7,7 @@ testing of anchors and the aliases referring to them
 import sys
 import textwrap
 import pytest
-from ruamel.std.pathlib import Path
+from pathlib import Path
 
 
 class TestNewAPI:
