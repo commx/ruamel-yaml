@@ -1,3 +1,6 @@
+[0, 17, 2]: 2021-03-29
+  - change -py2.py3-none-any.whl to -py3-none-any.whl, and remove 0.17.1
+
 [0, 17, 1]: 2021-03-29
    - added 'Programming Language :: Python :: 3 :: Only', and removing
      0.17.0 from PyPI (reported by `Alasdair Nicol <https://sourceforge.net/u/alasdairnicol/>`__)
