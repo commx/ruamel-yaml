@@ -863,7 +863,9 @@ class RoundTripRepresenter(SafeRepresenter):
             node_value = self.represent_data(item_value)
             item_comment = item_comments.get(item_key)
             if item_comment:
-                assert getattr(node_key, 'comment', None) is None
+                # assert getattr(node_key, 'comment', None) is None
+                # issue 351 did throw this because the comment from the list item was
+                # moved to the dict
                 node_key.comment = item_comment[:2]
                 nvc = getattr(node_value, 'comment', None)
                 if nvc is not None:  # end comment already there
