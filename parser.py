@@ -357,6 +357,7 @@ class Parser(object):
         start_mark = end_mark = tag_mark = None
         if self.scanner.check_token(AnchorToken):
             token = self.scanner.get_token()
+            token.move_comment(self.scanner.peek_token())
             start_mark = token.start_mark
             end_mark = token.end_mark
             anchor = token.value
@@ -730,7 +731,7 @@ class Parser(object):
                     raise ParserError(
                         'while parsing a flow mapping',
                         self.marks[-1],
-                        _F("expected ',' or '}', but got {token_id!r}", token_id=token.id),
+                        _F("expected ',' or '}}', but got {token_id!r}", token_id=token.id),
                         token.start_mark,
                     )
             if self.scanner.check_token(KeyToken):

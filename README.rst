@@ -4,8 +4,8 @@ ruamel.yaml
 
 ``ruamel.yaml`` is a YAML 1.2 loader/dumper package for Python.
 
-:version:       0.17.2
-:updated:       2021-03-29
+:version:       0.17.3
+:updated:       2021-04-07
 :documentation: http://yaml.readthedocs.io
 :repository:    https://sourceforge.net/projects/ruamel-yaml/
 :pypi:          https://pypi.org/project/ruamel.yaml/
@@ -64,6 +64,12 @@ ChangeLog
 =========
 
 .. should insert NEXT: at the beginning of line for next key (with empty line)
+
+0.17.3 (2021-04-07):
+  - fix for issue 382 caused by an error in a format string (reported by
+    `William Kimball <https://sourceforge.net/u/william303/>`__)
+  - allow expansion of aliases by setting ``yaml.composer.return_alias = lambda s: copy.deepcopy(s)``
+     (as per `Stackoverflow answer <https://stackoverflow.com/a/66983530/1307905>`__)
 
 0.17.2 (2021-03-29):
   - change -py2.py3-none-any.whl to -py3-none-any.whl, and remove 0.17.1

@@ -104,6 +104,9 @@ class Composer(object):
         self.anchors = {}
         return node
 
+    def return_alias(self, a):
+        return a
+
     def compose_node(self, parent, index):
         # type: (Any, Any) -> Any
         if self.parser.check_event(AliasEvent):
@@ -116,7 +119,7 @@ class Composer(object):
                     _F('found undefined alias {alias!r}', alias=alias),
                     event.start_mark,
                 )
-            return self.anchors[alias]
+            return self.return_alias(self.anchors[alias])
         event = self.parser.peek_event()
         anchor = event.anchor
         if anchor is not None:  # have an anchor

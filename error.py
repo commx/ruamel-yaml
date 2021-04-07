@@ -114,6 +114,19 @@ class StringMark(StreamMark):
             where += ':\n' + snippet
         return where
 
+    def __repr__(self):
+        # type: () -> Any
+        snippet = self.get_snippet()
+        where = _F(
+            '  in "{sname!s}", line {sline1:d}, column {scolumn1:d}',
+            sname=self.name,
+            sline1=self.line + 1,
+            scolumn1=self.column + 1,
+        )
+        if snippet is not None:
+            where += ':\n' + snippet
+        return where
+
 
 class CommentMark(object):
     __slots__ = ('column',)

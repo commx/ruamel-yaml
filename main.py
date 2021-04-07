@@ -150,6 +150,7 @@ class YAML(object):
         self.scalar_after_indicator = None
         # [a, b: 1, c: {d: 2}]  vs. [a, {b: 1}, {c: {d: 2}}]
         self.brace_single_entry_mapping_in_flow_sequence = False
+        self.comment_handling = None
         for module in self.plug_ins:
             if getattr(module, 'typ', None) in self.typ:
                 typ_found += 1
@@ -1614,7 +1615,7 @@ class YAMLObjectMetaclass(type):
 
     def __init__(cls, name, bases, kwds):
         # type: (Any, Any, Any) -> None
-        super(YAMLObjectMetaclass, cls).__init__(name, bases, kwds)
+        super().__init__(name, bases, kwds)
         if 'yaml_tag' in kwds and kwds['yaml_tag'] is not None:
             cls.yaml_constructor.add_constructor(cls.yaml_tag, cls.from_yaml)  # type: ignore
             cls.yaml_representer.add_representer(cls, cls.to_yaml)  # type: ignore
