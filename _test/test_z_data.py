@@ -89,6 +89,9 @@ def pytest_generate_tests(metafunc):
         if os.environ.get('RUAMELAUTOTEST') == '1':
             if path.parent.stem != 'debug':
                 continue
+        elif path.parent.stem == 'debug':
+            # don't test debug entries for production
+            continue
         stem = path.stem
         if stem.startswith('.#'):  # skip emacs temporary file
             continue

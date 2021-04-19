@@ -813,6 +813,14 @@ class TestEmptyValueBeforeComments:
         - []
         """)
 
+    def test_comment_after_block_scalar_indicator(self):
+        round_trip("""\
+        a: | # abc
+          test 1
+          test 2
+        # all done
+        """)
+
 
 test_block_scalar_commented_line_template = """\
 y: p

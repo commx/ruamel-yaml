@@ -23,8 +23,24 @@ if False:  # MYPY
 # fmt: off
 __all__ = ['CommentedSeq', 'CommentedKeySeq',
            'CommentedMap', 'CommentedOrderedMap',
-           'CommentedSet', 'comment_attrib', 'merge_attrib']
+           'CommentedSet', 'comment_attrib', 'merge_attrib',
+           'C_POST', 'C_PRE', 'C_SPLIT_ON_FIRST_BLANK', 'C_BLANK_LINE_PRESERVE_SPACE', 
+           ]
 # fmt: on
+
+# splitting of comments by the scanner
+# an EOLC (End-Of-Line Comment) is preceded by some token
+# an FLC (Full Line Comment) is a comment not preceded by a token, i.e. # is first non-blank on line
+# a BL is a blank line i.e. empty or spaces/tabs only
+# bits 0 and 1 are combined, you can choose only one
+C_POST = 0b00
+C_PRE =  0b01
+C_SPLIT_ON_FIRST_BLANK = 0b10   # as C_POST, but if blank line then C_PRE everything before first
+                                # blank goes to POST even if no following real FLC
+# 0b11 -> reserved for future use
+C_BLANK_LINE_PRESERVE_SPACE = 0b100 
+# C_EOL_PRESERVE_SPACE2 = 0b1000 
+
 
 comment_attrib = '_yaml_comment'
 format_attrib = '_yaml_format'
@@ -33,7 +49,7 @@ merge_attrib = '_yaml_merge'
 tag_attrib = '_yaml_tag'
 
 
-class Comment(object):
+class Comment:
     # using sys.getsize tested the Comment objects, __slots__ makes them bigger
     # and adding self.end did not matter
     __slots__ = 'comment', '_items', '_end', '_start'
@@ -127,7 +143,7 @@ def NoComment():
     pass
 
 
-class Format(object):
+class Format:
     __slots__ = ('_flow_style',)
     attrib = format_attrib
 
@@ -154,7 +170,7 @@ class Format(object):
         return self._flow_style
 
 
-class LineCol(object):
+class LineCol:
     """
     line and column information wrt document, values start at zero (0)
     """
@@ -205,7 +221,7 @@ class LineCol(object):
         return _F('LineCol({line}, {col})', line=self.line, col=self.col)
 
 
-class Tag(object):
+class Tag:
     """store tag information for roundtripping"""
 
     __slots__ = ('value',)
@@ -220,7 +236,7 @@ class Tag(object):
         return '{0.__class__.__name__}({0.value!r})'.format(self)
 
 
-class CommentedBase(object):
+class CommentedBase:
     @property
     def ca(self):
         # type: () -> Any
@@ -274,7 +290,7 @@ class CommentedBase(object):
             c = com.strip()
             if len(c) > 0 and c[0] != '#':
                 com = '# ' + com
-            pre_comments.append(CommentToken(com + '\n', start_mark, None))
+            pre_comments.append(CommentToken(com + '\n', start_mark))
 
     def yaml_set_comment_before_after_key(
         self, key, before=None, indent=0, after=None, after_indent=None
@@ -289,7 +305,7 @@ class CommentedBase(object):
         def comment_token(s, mark):
             # type: (Any, Any) -> Any
             # handle empty lines as having no comment
-            return CommentToken(('# ' if s else "") + s + '\n', mark, None)
+            return CommentToken(('# ' if s else "") + s + '\n', mark)
 
         if after_indent is None:
             after_indent = indent + 2
@@ -343,7 +359,7 @@ class CommentedBase(object):
                 comment = ' ' + comment
                 column = 0
         start_mark = CommentMark(column)
-        ct = [CommentToken(comment, start_mark, None), None]
+        ct = [CommentToken(comment, start_mark), None]
         self._yaml_add_eol_comment(ct, key=key)
 
     @property

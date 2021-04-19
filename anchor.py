@@ -5,7 +5,7 @@ if False:  # MYPY
 anchor_attrib = '_yaml_anchor'
 
 
-class Anchor(object):
+class Anchor:
     __slots__ = 'value', 'always_dump'
     attrib = anchor_attrib
 

@@ -8,7 +8,7 @@ if False:  # MYPY
     from typing import Dict, Any, Text  # NOQA
 
 
-class Node(object):
+class Node:
     __slots__ = 'tag', 'value', 'start_mark', 'end_mark', 'comment', 'anchor'
 
     def __init__(self, tag, value, start_mark, end_mark, comment=None, anchor=None):

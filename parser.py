@@ -90,7 +90,7 @@ class ParserError(MarkedYAMLError):
     pass
 
 
-class Parser(object):
+class Parser:
     # Since writing a recursive-descendant parser is a straightforward task, we
     # do not give many comments here.
 
@@ -171,7 +171,7 @@ class Parser(object):
         # type: () -> Any
         # Parse the stream start.
         token = self.scanner.get_token()
-        token.move_comment(self.scanner.peek_token())
+        self.move_token_comment(token)
         event = StreamStartEvent(token.start_mark, token.end_mark, encoding=token.encoding)
 
         # Prepare the next state.
@@ -357,7 +357,7 @@ class Parser(object):
         start_mark = end_mark = tag_mark = None
         if self.scanner.check_token(AnchorToken):
             token = self.scanner.get_token()
-            token.move_comment(self.scanner.peek_token())
+            self.move_token_comment(token)
             start_mark = token.start_mark
             end_mark = token.end_mark
             anchor = token.value
@@ -467,7 +467,7 @@ class Parser(object):
             comment = pt.comment
             # nprint('pt0', type(pt))
             if comment is None or comment[1] is None:
-                comment = pt.split_comment()
+                comment = pt.split_old_comment()
             # nprint('pt1', comment)
             event = SequenceStartEvent(
                 anchor, tag, implicit, start_mark, end_mark, flow_style=False, comment=comment
@@ -506,7 +506,7 @@ class Parser(object):
         # type: () -> Any
         token = self.scanner.get_token()
         # move any comment from start token
-        # token.move_comment(self.scanner.peek_token())
+        # self.move_token_comment(token)
         self.marks.append(token.start_mark)
         return self.parse_block_sequence_entry()
 
@@ -514,7 +514,7 @@ class Parser(object):
         # type: () -> Any
         if self.scanner.check_token(BlockEntryToken):
             token = self.scanner.get_token()
-            token.move_comment(self.scanner.peek_token())
+            self.move_token_comment(token)
             if not self.scanner.check_token(BlockEntryToken, BlockEndToken):
                 self.states.append(self.parse_block_sequence_entry)
                 return self.parse_block_node()
@@ -546,7 +546,7 @@ class Parser(object):
         # type: () -> Any
         if self.scanner.check_token(BlockEntryToken):
             token = self.scanner.get_token()
-            token.move_comment(self.scanner.peek_token())
+            self.move_token_comment(token)
             if not self.scanner.check_token(
                 BlockEntryToken, KeyToken, ValueToken, BlockEndToken
             ):
@@ -575,7 +575,7 @@ class Parser(object):
         # type: () -> Any
         if self.scanner.check_token(KeyToken):
             token = self.scanner.get_token()
-            token.move_comment(self.scanner.peek_token())
+            self.move_token_comment(token)
             if not self.scanner.check_token(KeyToken, ValueToken, BlockEndToken):
                 self.states.append(self.parse_block_mapping_value)
                 return self.parse_block_node_or_indentless_sequence()
@@ -594,7 +594,7 @@ class Parser(object):
                 token.start_mark,
             )
         token = self.scanner.get_token()
-        token.move_comment(self.scanner.peek_token())
+        self.move_token_comment(token)
         event = MappingEndEvent(token.start_mark, token.end_mark, comment=token.comment)
         self.state = self.states.pop()
         self.marks.pop()
@@ -606,10 +606,10 @@ class Parser(object):
             token = self.scanner.get_token()
             # value token might have post comment move it to e.g. block
             if self.scanner.check_token(ValueToken):
-                token.move_comment(self.scanner.peek_token())
+                self.move_token_comment(token)
             else:
                 if not self.scanner.check_token(KeyToken):
-                    token.move_comment(self.scanner.peek_token(), empty=True)
+                    self.move_token_comment(token, empty=True)
                 # else: empty value for this key cannot move token.comment
             if not self.scanner.check_token(KeyToken, ValueToken, BlockEndToken):
                 self.states.append(self.parse_block_mapping_key)
@@ -782,6 +782,11 @@ class Parser(object):
         # type: (Any, Any) -> Any
         return ScalarEvent(None, None, (True, False), "", mark, mark, comment=comment)
 
+    def move_token_comment(self, token, nt=None, empty=False):
+        if getattr(self.loader, 'comment_handling', None) is None:  # pre 0.18
+            token.move_old_comment(self.scanner.peek_token() if nt is None else nt, empty=empty)
+        else:
+            token.move_new_comment(self.scanner.peek_token() if nt is None else nt, empty=empty)
 
 class RoundTripParser(Parser):
     """roundtrip is a safe loader, that wants to see the unmangled tag"""

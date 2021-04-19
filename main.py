@@ -16,7 +16,7 @@ from ruamel.yaml.nodes import *  # NOQA
 
 from ruamel.yaml.loader import BaseLoader, SafeLoader, Loader, RoundTripLoader  # NOQA
 from ruamel.yaml.dumper import BaseDumper, SafeDumper, Dumper, RoundTripDumper  # NOQA
-from ruamel.yaml.compat import StringIO, BytesIO, with_metaclass, nprint
+from ruamel.yaml.compat import StringIO, BytesIO, with_metaclass, nprint, nprintf
 from ruamel.yaml.resolver import VersionedResolver, Resolver  # NOQA
 from ruamel.yaml.representer import (
     BaseRepresenter,
@@ -49,7 +49,7 @@ except:  # NOQA
 # subset of abbreviations, which should be all caps according to PEP8
 
 
-class YAML(object):
+class YAML:
     def __init__(self, *, typ=None, pure=False, output=None, plug_ins=None):  # input=None,
         # type: (Any, Optional[Text], Any, Any, Any) -> None
         """
@@ -825,7 +825,7 @@ class YAML(object):
         self.compact_seq_map = seq_map
 
 
-class YAMLContextManager(object):
+class YAMLContextManager:
     def __init__(self, yaml, transform=None):
         # type: (Any, Any) -> None  # used to be: (Any, Optional[Callable]) -> None
         self._yaml = yaml

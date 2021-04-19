@@ -13,7 +13,7 @@ def CommentCheck():
     pass
 
 
-class Event(object):
+class Event:
     __slots__ = 'start_mark', 'end_mark', 'comment'
 
     def __init__(self, start_mark=None, end_mark=None, comment=CommentCheck):
@@ -27,18 +27,30 @@ class Event(object):
 
     def __repr__(self):
         # type: () -> Any
-        attributes = [
-            key
-            for key in ['anchor', 'tag', 'implicit', 'value', 'flow_style', 'style']
-            if hasattr(self, key)
-        ]
-        arguments = ', '.join(
-            [_F('{key!s}={attr!r}', key=key, attr=getattr(self, key)) for key in attributes]
-        )
-        if self.comment not in [None, CommentCheck]:
-            arguments += ', comment={!r}'.format(self.comment)
+        if True:
+            arguments = []
+            if hasattr(self, 'value'):
+                arguments.append(repr(getattr(self, 'value')))
+            for key in ['anchor', 'tag', 'implicit', 'flow_style', 'style']:
+                v = getattr(self, key, None)
+                if v is not None:
+                    arguments.append(_F('{key!s}={v!r}', key=key, v=v))
+            if self.comment not in [None, CommentCheck]:
+                arguments.append('comment={!r}'.format(self.comment))
+            arguments = ', '.join(arguments)
+        else:
+            attributes = [
+                key
+                for key in ['anchor', 'tag', 'implicit', 'value', 'flow_style', 'style']
+                if hasattr(self, key)
+            ]
+            arguments = ', '.join(
+                [_F('{key!s}={attr!r}', key=key, attr=getattr(self, key)) for key in attributes]
+            )
+            if self.comment not in [None, CommentCheck]:
+                arguments += ', comment={!r}'.format(self.comment)
         return _F(
-            '{self_class_name!s}{arguments!s}',
+            '{self_class_name!s}({arguments!s})',
             self_class_name=self.__class__.__name__,
             arguments=arguments,
         )

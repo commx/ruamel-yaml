@@ -28,9 +28,10 @@
 # Read comments in the Scanner code for more details.
 #
 
-from ruamel.yaml.error import MarkedYAMLError
+import inspect
+from ruamel.yaml.error import MarkedYAMLError, CommentMark
 from ruamel.yaml.tokens import *  # NOQA
-from ruamel.yaml.compat import _F, check_anchorname_char, nprint  # NOQA
+from ruamel.yaml.compat import _F, check_anchorname_char, nprint, nprintf  # NOQA
 
 if False:  # MYPY
     from typing import Any, Dict, Optional, List, Union, Text  # NOQA
@@ -48,7 +49,7 @@ class ScannerError(MarkedYAMLError):
     pass
 
 
-class SimpleKey(object):
+class SimpleKey:
     # See below simple keys treatment.
 
     def __init__(self, token_number, required, index, line, column, mark):
@@ -61,7 +62,7 @@ class SimpleKey(object):
         self.mark = mark
 
 
-class Scanner(object):
+class Scanner:
     def __init__(self, loader=None):
         # type: (Any) -> None
         """Initialize the scanner."""
@@ -1972,10 +1973,3 @@ class RoundTripScanner(Scanner):
     def scan_block_scalar(self, style, rt=True):
         # type: (Any, Optional[bool]) -> Any
         return Scanner.scan_block_scalar(self, style, rt=rt)
-
-
-# try:
-#     import psyco
-#     psyco.bind(Scanner)
-# except ImportError:
-#     pass

@@ -13,7 +13,7 @@ if False:  # MYPY
     from .compat import StreamTextType  # NOQA
 
 
-class LazyEval(object):
+class LazyEval:
     """
     Lightweight wrapper around lazily evaluated func(*args, **kwargs).
 

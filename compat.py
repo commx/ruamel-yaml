@@ -95,7 +95,7 @@ if 'RUAMELDEBUG' in os.environ:
 
 if bool(_debug):
 
-    class ObjectCounter(object):
+    class ObjectCounter:
         def __init__(self):
             # type: () -> None
             self.map = {}  # type: Dict[Any, Any]
@@ -128,7 +128,7 @@ def dbg(val=None):
     return _debug & val
 
 
-class Nprint(object):
+class Nprint:
     def __init__(self, file_name=None):
         # type: (Any) -> None
         self._max_print = None  # type: Any
@@ -162,6 +162,9 @@ class Nprint(object):
         self._max_print = i
         self._count = None
 
+    def fp(self, mode='a'):
+        out = sys.stdout if self._file_name is None else open(self._file_name, mode)
+        return out
 
 nprint = Nprint()
 nprintf = Nprint('/var/tmp/ruamel.yaml.log')

@@ -52,7 +52,7 @@ class DuplicateKeyError(MarkedYAMLFutureWarning):
     pass
 
 
-class BaseConstructor(object):
+class BaseConstructor:
 
     yaml_constructors = {}  # type: Dict[Any, Any]
     yaml_multi_constructors = {}  # type: Dict[Any, Any]

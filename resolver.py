@@ -101,7 +101,7 @@ class ResolverError(YAMLError):
     pass
 
 
-class BaseResolver(object):
+class BaseResolver:
 
     DEFAULT_SCALAR_TAG = 'tag:yaml.org,2002:str'
     DEFAULT_SEQUENCE_TAG = 'tag:yaml.org,2002:seq'
