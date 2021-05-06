@@ -1,6 +1,6 @@
 # coding: utf-8
 
-from ruamel.yaml.compat import _F
+from ruamel.yaml.compat import _F, nprintf
 
 if False:  # MYPY
     from typing import Text, Any, Dict, Optional, List  # NOQA
@@ -89,13 +89,17 @@ class Token:
                 self._comment[0] = []
         self._comment[0].append(comment)
 
-    def add_comment_eol(self, comment):
+    def add_comment_eol(self, comment, comment_type):
         if not hasattr(self, '_comment'):
             self._comment = [None, None, None]
         else:
             assert len(self._comment) == 3
             assert self._comment[1] is None
-        self._comment[1] = comment
+        if self.comment[1] is None:
+            self._comment[1] = []
+        self._comment[1].extend([None] * (comment_type + 1 - len(self.comment[1])))
+        # nprintf('commy', self.comment, comment_type)
+        self._comment[1][comment_type] = comment
 
     def add_comment_post(self, comment):
         if not hasattr(self, '_comment'):
@@ -184,11 +188,9 @@ class Token:
             target._comment = c
             # nprint('mco2:', self, target, target.comment, empty)
             return self
-        return
-        raise NotImplemtedError
         # if self and target have both pre, eol or post comments, something seems wrong
         for idx in range(3):
-            if c[idx] and tc[idx]:
+            if c[idx] is not None and tc[idx] is not None:
                 raise NotImplementedError(_F('overlap in comment {c!r} {tc!r}', c=c, tc=tc))
         # move the comment parts
         for idx in range(3):

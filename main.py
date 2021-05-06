@@ -31,6 +31,7 @@ from ruamel.yaml.constructor import (
     RoundTripConstructor,
 )
 from ruamel.yaml.loader import Loader as UnsafeLoader
+from ruamel.yaml.comments import CommentedMap, CommentedSeq, C_PRE
 
 if False:  # MYPY
     from typing import List, Set, Dict, Union, Any, Callable, Optional, Text  # NOQA
@@ -81,6 +82,7 @@ class YAML:
         self.Scanner = None  # type: Any
         self.Serializer = None  # type: Any
         self.default_flow_style = None  # type: Any
+        self.comment_handling = None
         typ_found = 1
         setup_rt = False
         if 'rt' in self.typ:
@@ -107,6 +109,18 @@ class YAML:
             self.Parser = ruamel.yaml.parser.Parser if pure or CParser is None else CParser
             self.Composer = ruamel.yaml.composer.Composer
             self.Constructor = ruamel.yaml.constructor.Constructor
+        elif 'rtsc' in self.typ:
+            self.default_flow_style = False
+            # no optimized rt-dumper yet
+            self.Emitter = ruamel.yaml.emitter.Emitter
+            self.Serializer = ruamel.yaml.serializer.Serializer
+            self.Representer = ruamel.yaml.representer.RoundTripRepresenter
+            self.Scanner = ruamel.yaml.scanner.RoundTripScannerSC
+            # no optimized rt-parser yet
+            self.Parser = ruamel.yaml.parser.RoundTripParserSC
+            self.Composer = ruamel.yaml.composer.Composer
+            self.Constructor = ruamel.yaml.constructor.RoundTripConstructor
+            self.comment_handling = C_PRE
         else:
             setup_rt = True
             typ_found = 0
@@ -150,7 +164,6 @@ class YAML:
         self.scalar_after_indicator = None
         # [a, b: 1, c: {d: 2}]  vs. [a, {b: 1}, {c: {d: 2}}]
         self.brace_single_entry_mapping_in_flow_sequence = False
-        self.comment_handling = None
         for module in self.plug_ins:
             if getattr(module, 'typ', None) in self.typ:
                 typ_found += 1
@@ -711,8 +724,6 @@ class YAML:
     def map(self, **kw):
         # type: (Any) -> Any
         if 'rt' in self.typ:
-            from ruamel.yaml.comments import CommentedMap
-
             return CommentedMap(**kw)
         else:
             return dict(**kw)
@@ -720,8 +731,6 @@ class YAML:
     def seq(self, *args):
         # type: (Any) -> Any
         if 'rt' in self.typ:
-            from ruamel.yaml.comments import CommentedSeq
-
             return CommentedSeq(*args)
         else:
             return list(*args)

@@ -7,6 +7,8 @@ from ruamel.yaml.compat import _F
 if False:  # MYPY
     from typing import Any, Dict, Optional, List  # NOQA
 
+SHOW_LINES = False
+
 
 def CommentCheck():
     # type: () -> None
@@ -37,6 +39,9 @@ class Event:
                     arguments.append(_F('{key!s}={v!r}', key=key, v=v))
             if self.comment not in [None, CommentCheck]:
                 arguments.append('comment={!r}'.format(self.comment))
+            if SHOW_LINES:
+                arguments.append('({}:{}/{}:{})'.format(self.start_mark.line, self.start_mark.column,
+                                                    self.end_mark.line, self.end_mark.column))
             arguments = ', '.join(arguments)
         else:
             attributes = [

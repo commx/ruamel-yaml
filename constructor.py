@@ -21,7 +21,10 @@ from ruamel.yaml.compat import ordereddict  # type: ignore
 from ruamel.yaml.comments import *                               # NOQA
 from ruamel.yaml.comments import (CommentedMap, CommentedOrderedMap, CommentedSet,
                                   CommentedKeySeq, CommentedSeq, TaggedScalar,
-                                  CommentedKeyMap)
+                                  CommentedKeyMap,
+                                  C_KEY_PRE, C_KEY_EOL, C_KEY_POST,
+                                  C_VALUE_PRE, C_VALUE_EOL, C_VALUE_POST,
+                                  )
 from ruamel.yaml.scalarstring import (SingleQuotedScalarString, DoubleQuotedScalarString,
                                       LiteralScalarString, FoldedScalarString,
                                       PlainScalarString, ScalarString,)
@@ -91,6 +94,14 @@ class BaseConstructor:
         if hasattr(self.loader, 'typ'):
             return self.loader.resolver
         return self.loader._resolver
+
+    @property
+    def scanner(self):
+        # type: () -> Any
+        # needed to get to the expanded comments
+        if hasattr(self.loader, 'typ'):
+            return self.loader.scanner
+        return self.loader._scanner
 
     def check_data(self):
         # type: () -> Any
@@ -1056,6 +1067,23 @@ class RoundTripConstructor(SafeConstructor):
     as well as on the items
     """
 
+    def comment(self, idx):
+        assert self.loader.comment_handling is not None
+        x = self.scanner.comments[idx]
+        x.set_assigned()
+        return x
+
+    def comments(self, list_of_comments, idx=None):
+        # hand in the comment and optional pre, eol, post segment
+        if list_of_comments is None:
+            return []
+        if idx is not None:
+            if list_of_comments[idx] is None:
+                return []
+            list_of_comments = list_of_comments[idx]
+        for x in list_of_comments:
+            yield self.comment(x)
+
     def construct_scalar(self, node):
         # type: (Any) -> Any
         if not isinstance(node, ScalarNode):
@@ -1068,8 +1096,14 @@ class RoundTripConstructor(SafeConstructor):
 
         if node.style == '|' and isinstance(node.value, str):
             lss = LiteralScalarString(node.value, anchor=node.anchor)
-            if node.comment and node.comment[1]:
-                lss.comment = node.comment[1][0]  # type: ignore
+            if self.loader and self.loader.comment_handling is None:
+                if node.comment and node.comment[1]:
+                    lss.comment = node.comment[1][0]  # type: ignore
+            else:
+                # NEWCMNT
+                if node.comment is not None and node.comment[1]:
+                    # nprintf('>>>>nc1', node.comment)
+                    lss.comment = self.comment(node.comment[1][0])  # EOL comment after |
             return lss
         if node.style == '>' and isinstance(node.value, str):
             fold_positions = []  # type: List[int]
@@ -1080,8 +1114,14 @@ class RoundTripConstructor(SafeConstructor):
                     break
                 fold_positions.append(idx - len(fold_positions))
             fss = FoldedScalarString(node.value.replace('\a', ''), anchor=node.anchor)
-            if node.comment and node.comment[1]:
-                fss.comment = node.comment[1][0]  # type: ignore
+            if self.loader and self.loader.comment_handling is None:
+                if node.comment and node.comment[1]:
+                    fss.comment = node.comment[1][0]  # type: ignore
+            else:
+                # NEWCMNT
+                if node.comment is not None and node.comment[1]:
+                    # nprintf('>>>>nc2', node.comment)
+                    lss.comment = self.comment(node.comment[1][0])  # EOL comment after >
             if fold_positions:
                 fss.fold_pos = fold_positions  # type: ignore
             return fss
@@ -1279,12 +1319,17 @@ class RoundTripConstructor(SafeConstructor):
                 node.start_mark,
             )
         ret_val = []
-        if node.comment:
-            seqtyp._yaml_add_comment(node.comment[:2])
-            if len(node.comment) > 2:
-                # this happens e.g. if you have a sequence element that is a flow-style mapping
-                # and that has no EOL comment but a following commentline or empty line
-                seqtyp.yaml_end_comment_extend(node.comment[2], clear=True)
+        if self.loader and self.loader.comment_handling is None:
+            if node.comment:
+                seqtyp._yaml_add_comment(node.comment[:2])
+                if len(node.comment) > 2:
+                    # this happens e.g. if you have a sequence element that is a flow-style mapping
+                    # and that has no EOL comment but a following commentline or empty line
+                    seqtyp.yaml_end_comment_extend(node.comment[2], clear=True)
+        else:
+            # NEWCMNT
+            if node.comment:
+                nprintf('nc3', node.comment)
         if node.anchor:
             from ruamel.yaml.serializer import templated_id
 
@@ -1408,10 +1453,19 @@ class RoundTripConstructor(SafeConstructor):
             )
         merge_map = self.flatten_mapping(node)
         # mapping = {}
-        if node.comment:
-            maptyp._yaml_add_comment(node.comment[:2])
-            if len(node.comment) > 2:
-                maptyp.yaml_end_comment_extend(node.comment[2], clear=True)
+        if self.loader and self.loader.comment_handling is None:
+            if node.comment:
+                maptyp._yaml_add_comment(node.comment[:2])
+                if len(node.comment) > 2:
+                    maptyp.yaml_end_comment_extend(node.comment[2], clear=True)
+        else:
+            # NEWCMNT
+            if node.comment:
+                # nprintf('nc4', node.comment, node.start_mark)
+                if maptyp.ca.pre is None:
+                    maptyp.ca.pre = []
+                for cmnt in self.comments(node.comment, 0):
+                    maptyp.ca.pre.append(cmnt)
         if node.anchor:
             from ruamel.yaml.serializer import templated_id
 
@@ -1446,18 +1500,37 @@ class RoundTripConstructor(SafeConstructor):
                 )
             value = self.construct_object(value_node, deep=deep)
             if self.check_mapping_key(node, key_node, maptyp, key, value):
-                if key_node.comment and len(key_node.comment) > 4 and key_node.comment[4]:
-                    if last_value is None:
-                        key_node.comment[0] = key_node.comment.pop(4)
-                        maptyp._yaml_add_comment(key_node.comment, value=last_key)
-                    else:
-                        key_node.comment[2] = key_node.comment.pop(4)
+                if self.loader and self.loader.comment_handling is None:
+                    if key_node.comment and len(key_node.comment) > 4 and key_node.comment[4]:
+                        if last_value is None:
+                            key_node.comment[0] = key_node.comment.pop(4)
+                            maptyp._yaml_add_comment(key_node.comment, value=last_key)
+                        else:
+                            key_node.comment[2] = key_node.comment.pop(4)
+                            maptyp._yaml_add_comment(key_node.comment, key=key)
+                        key_node.comment = None
+                    if key_node.comment:
                         maptyp._yaml_add_comment(key_node.comment, key=key)
-                    key_node.comment = None
-                if key_node.comment:
-                    maptyp._yaml_add_comment(key_node.comment, key=key)
-                if value_node.comment:
-                    maptyp._yaml_add_comment(value_node.comment, value=key)
+                    if value_node.comment:
+                        maptyp._yaml_add_comment(value_node.comment, value=key)
+                else:
+                    # NEWCMNT
+                    if key_node.comment:
+                        nprintf('nc5a', key, key_node.comment)
+                        if key_node.comment[0]:
+                            maptyp.ca.set(key, C_KEY_PRE, key_node.comment[0])
+                        if key_node.comment[1]:
+                            maptyp.ca.set(key, C_KEY_EOL, key_node.comment[1])
+                        if key_node.comment[2]:
+                            maptyp.ca.set(key, C_KEY_POST, key_node.comment[2])
+                    if value_node.comment:
+                        nprintf('nc5b', key, value_node.comment)
+                        if value_node.comment[0]:
+                            maptyp.ca.set(key, C_VALUE_PRE, value_node.comment[0])
+                        if value_node.comment[1]:
+                            maptyp.ca.set(key, C_VALUE_EOL, value_node.comment[1])
+                        if value_node.comment[2]:
+                            maptyp.ca.set(key, C_VALUE_POST, value_node.comment[2])
                 maptyp._yaml_set_kv_line_col(
                     key,
                     [
@@ -1483,10 +1556,15 @@ class RoundTripConstructor(SafeConstructor):
                 _F('expected a mapping node, but found {node_id!s}', node_id=node.id),
                 node.start_mark,
             )
-        if node.comment:
-            typ._yaml_add_comment(node.comment[:2])
-            if len(node.comment) > 2:
-                typ.yaml_end_comment_extend(node.comment[2], clear=True)
+        if self.loader and self.loader.comment_handling is None:
+            if node.comment:
+                typ._yaml_add_comment(node.comment[:2])
+                if len(node.comment) > 2:
+                    typ.yaml_end_comment_extend(node.comment[2], clear=True)
+        else:
+            # NEWCMNT
+            if node.comment:
+                nprintf('nc6', node.comment)
         if node.anchor:
             from ruamel.yaml.serializer import templated_id
 
@@ -1509,10 +1587,17 @@ class RoundTripConstructor(SafeConstructor):
             # construct but should be null
             value = self.construct_object(value_node, deep=deep)  # NOQA
             self.check_set_key(node, key_node, typ, key)
-            if key_node.comment:
-                typ._yaml_add_comment(key_node.comment, key=key)
-            if value_node.comment:
-                typ._yaml_add_comment(value_node.comment, value=key)
+            if self.loader and self.loader.comment_handling is None:
+                if key_node.comment:
+                    typ._yaml_add_comment(key_node.comment, key=key)
+                if value_node.comment:
+                    typ._yaml_add_comment(value_node.comment, value=key)
+            else:
+                # NEWCMNT
+                if key_node.comment:
+                    nprintf('nc7a', key_node.comment)
+                if value_node.comment:
+                    nprintf('nc7b', value_node.comment)
             typ.add(key)
 
     def construct_yaml_seq(self, node):
@@ -1563,10 +1648,15 @@ class RoundTripConstructor(SafeConstructor):
         elif node.flow_style is False:
             omap.fa.set_block_style()
         yield omap
-        if node.comment:
-            omap._yaml_add_comment(node.comment[:2])
-            if len(node.comment) > 2:
-                omap.yaml_end_comment_extend(node.comment[2], clear=True)
+        if self.loader and self.loader.comment_handling is None:
+            if node.comment:
+                omap._yaml_add_comment(node.comment[:2])
+                if len(node.comment) > 2:
+                    omap.yaml_end_comment_extend(node.comment[2], clear=True)
+        else:
+            # NEWCMNT
+            if node.comment:
+                nprintf('nc8', node.comment)
         if not isinstance(node, SequenceNode):
             raise ConstructorError(
                 'while constructing an ordered map',
@@ -1599,12 +1689,21 @@ class RoundTripConstructor(SafeConstructor):
             key = self.construct_object(key_node)
             assert key not in omap
             value = self.construct_object(value_node)
-            if key_node.comment:
-                omap._yaml_add_comment(key_node.comment, key=key)
-            if subnode.comment:
-                omap._yaml_add_comment(subnode.comment, key=key)
-            if value_node.comment:
-                omap._yaml_add_comment(value_node.comment, value=key)
+            if self.loader and self.loader.comment_handling is None:
+                if key_node.comment:
+                    omap._yaml_add_comment(key_node.comment, key=key)
+                if subnode.comment:
+                    omap._yaml_add_comment(subnode.comment, key=key)
+                if value_node.comment:
+                    omap._yaml_add_comment(value_node.comment, value=key)
+            else:
+                # NEWCMNT
+                if key_node.comment:
+                    nprintf('nc9a', key_node.comment)
+                if subnode.comment:
+                    nprintf('nc9b', subnode.comment)
+                if value_node.comment:
+                    nprintf('nc9c', value_node.comment)
             omap[key] = value
 
     def construct_yaml_set(self, node):

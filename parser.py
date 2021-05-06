@@ -44,7 +44,7 @@
 #
 # FIRST sets:
 #
-# stream: { STREAM-START }
+# stream: { STREAM-START <}
 # explicit_document: { DIRECTIVE DOCUMENT-START }
 # implicit_document: FIRST(block_node)
 # block_node: { ALIAS TAG ANCHOR SCALAR BLOCK-SEQUENCE-START
@@ -78,6 +78,8 @@ from ruamel.yaml.error import MarkedYAMLError
 from ruamel.yaml.tokens import *  # NOQA
 from ruamel.yaml.events import *  # NOQA
 from ruamel.yaml.scanner import Scanner, RoundTripScanner, ScannerError  # NOQA
+from ruamel.yaml.scanner import BlankLineComment
+from ruamel.yaml.comments import C_PRE, C_POST, C_SPLIT_ON_FIRST_BLANK
 from ruamel.yaml.compat import _F, nprint, nprintf  # NOQA
 
 if False:  # MYPY
@@ -85,6 +87,10 @@ if False:  # MYPY
 
 __all__ = ['Parser', 'RoundTripParser', 'ParserError']
 
+
+def xprintf(*args, **kw):
+    return nprintf(*args, **kw)
+    pass
 
 class ParserError(MarkedYAMLError):
     pass
@@ -106,7 +112,7 @@ class Parser:
     def reset_parser(self):
         # type: () -> None
         # Reset the state attributes (to clear self-references)
-        self.current_event = None
+        self.current_event = self.last_event = None
         self.tag_handles = {}  # type: Dict[Any, Any]
         self.states = []  # type: List[Any]
         self.marks = []  # type: List[Any]
@@ -158,7 +164,10 @@ class Parser:
         if self.current_event is None:
             if self.state:
                 self.current_event = self.state()
-        value = self.current_event
+        # assert self.current_event is not None
+        # if self.current_event.end_mark.line != self.peek_event().start_mark.line:
+        xprintf('get_event', repr(self.current_event), self.peek_event().start_mark.line)
+        self.last_event = value = self.current_event
         self.current_event = None
         return value
 
@@ -204,8 +213,6 @@ class Parser:
             self.scanner.get_token()
         # Parse an explicit document.
         if not self.scanner.check_token(StreamEndToken):
-            token = self.scanner.peek_token()
-            start_mark = token.start_mark
             version, tags = self.process_directives()
             if not self.scanner.check_token(DocumentStartToken):
                 raise ParserError(
@@ -218,6 +225,7 @@ class Parser:
                     self.scanner.peek_token().start_mark,
                 )
             token = self.scanner.get_token()
+            start_mark = token.start_mark
             end_mark = token.end_mark
             # if self.loader is not None and \
             #    end_mark.line != self.scanner.peek_token().start_mark.line:
@@ -401,9 +409,13 @@ class Parser:
         if indentless_sequence and self.scanner.check_token(BlockEntryToken):
             comment = None
             pt = self.scanner.peek_token()
-            if pt.comment and pt.comment[0]:
-                comment = [pt.comment[0], []]
-                pt.comment[0] = None
+            if self.loader and self.loader.comment_handling is None:
+                if pt.comment and pt.comment[0]:
+                    comment = [pt.comment[0], []]
+                    pt.comment[0] = None
+            elif self.loader:
+                if pt.comment:
+                    comment = pt.comment
             end_mark = self.scanner.peek_token().end_mark
             event = SequenceStartEvent(
                 anchor, tag, implicit, start_mark, end_mark, flow_style=False, comment=comment
@@ -556,7 +568,14 @@ class Parser:
                 self.state = self.parse_indentless_sequence_entry
                 return self.process_empty_scalar(token.end_mark)
         token = self.scanner.peek_token()
-        event = SequenceEndEvent(token.start_mark, token.start_mark, comment=token.comment)
+        c = None
+        if self.loader and self.loader.comment_handling is None:
+            c = token.comment
+            start_mark = token.start_mark
+        else:
+            start_mark = self.last_event.end_mark
+            c = self.distribute_comment(token.comment, start_mark.line)
+        event = SequenceEndEvent(start_mark, start_mark, comment=c)
         self.state = self.states.pop()
         return event
 
@@ -783,10 +802,8 @@ class Parser:
         return ScalarEvent(None, None, (True, False), "", mark, mark, comment=comment)
 
     def move_token_comment(self, token, nt=None, empty=False):
-        if getattr(self.loader, 'comment_handling', None) is None:  # pre 0.18
-            token.move_old_comment(self.scanner.peek_token() if nt is None else nt, empty=empty)
-        else:
-            token.move_new_comment(self.scanner.peek_token() if nt is None else nt, empty=empty)
+        pass
+
 
 class RoundTripParser(Parser):
     """roundtrip is a safe loader, that wants to see the unmangled tag"""
@@ -810,3 +827,52 @@ class RoundTripParser(Parser):
         ):
             return Parser.transform_tag(self, handle, suffix)
         return handle + suffix
+
+    def move_token_comment(self, token, nt=None, empty=False):
+        token.move_old_comment(self.scanner.peek_token() if nt is None else nt, empty=empty)
+
+
+class RoundTripParserSC(RoundTripParser):
+    """roundtrip is a safe loader, that wants to see the unmangled tag"""
+
+    # some of the differences are based on the superclass testing if self.loader.comment_handling is not None
+
+    def move_token_comment(self, token, nt=None, empty=False):
+        token.move_new_comment(self.scanner.peek_token() if nt is None else nt, empty=empty)
+
+    def distribute_comment(self, comment, line):
+        # ToDo, look at indentation of the comment to determine attachment
+        if comment is None:
+            return None
+        if not comment[0]:
+            return None
+        if  comment[0][0] != line + 1:
+            nprintf('>>>dcxxx', comment, line, typ)
+        assert comment[0][0] == line + 1
+        #if comment[0] - line > 1:
+        #    return
+        typ = self.loader.comment_handling & 0b11
+        # nprintf('>>>dca', comment, line, typ)
+        if typ == C_POST:
+            return None
+        if typ == C_PRE:
+            c = [None, None, comment[0]]
+            comment[0] = None
+            return c
+        # nprintf('>>>dcb', comment[0])
+        for idx, cmntidx in enumerate(comment[0]):
+            # nprintf('>>>dcb', cmntidx)
+            if isinstance(self.scanner.comments[cmntidx], BlankLineComment):
+                break
+        else:
+            return None  # no space found
+        if idx == 0:
+            return None  # first line was blank
+        # nprintf('>>>dcc', idx)
+        if typ == C_SPLIT_ON_FIRST_BLANK:
+            c = [None, None, comment[0][:idx]]
+            comment[0] = comment[0][idx:]
+            return c
+        raise NotImplementedError  # reserved
+
+

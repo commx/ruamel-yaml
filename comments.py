@@ -11,7 +11,7 @@ import copy
 
 
 from ruamel.yaml.compat import ordereddict  # type: ignore
-from ruamel.yaml.compat import MutableSliceableSequence, _F
+from ruamel.yaml.compat import MutableSliceableSequence, _F, nprintf
 from ruamel.yaml.scalarstring import ScalarString
 from ruamel.yaml.anchor import Anchor
 
@@ -35,11 +35,42 @@ __all__ = ['CommentedSeq', 'CommentedKeySeq',
 # bits 0 and 1 are combined, you can choose only one
 C_POST = 0b00
 C_PRE =  0b01
-C_SPLIT_ON_FIRST_BLANK = 0b10   # as C_POST, but if blank line then C_PRE everything before first
-                                # blank goes to POST even if no following real FLC
+C_SPLIT_ON_FIRST_BLANK = 0b10   # as C_POST, but if blank line then C_PRE all lines before first
+                                # blank goes to POST even if no following real FLC (first blank -> first of post)
 # 0b11 -> reserved for future use
 C_BLANK_LINE_PRESERVE_SPACE = 0b100 
 # C_EOL_PRESERVE_SPACE2 = 0b1000 
+
+
+class IDX:
+    # temporary auto increment, so rearranging is easier
+    def __init__(self):
+        self._idx = 0
+
+    def __call__(self):
+        x = self._idx
+        self._idx += 1
+        return x
+
+    def __str__(self):
+        return str(self._idx)
+
+cidx = IDX()
+
+# more or less in order of subjective expected likelyhood
+# the _POST and _PRE ones are lists themselves
+C_VALUE_EOL = C_ELEM_EOL = cidx()
+C_KEY_EOL = cidx()
+C_KEY_PRE = C_ELEM_PRE = cidx()   # not this is not value
+C_VALUE_POST = C_ELEM_POST = cidx()   # not this is not value
+C_VALUE_PRE = cidx()
+C_KEY_POST = cidx()
+C_TAG_EOL = cidx()
+C_TAG_POST = cidx()
+C_TAG_PRE = cidx()
+C_ANCHOR_EOL = cidx()
+C_ANCHOR_POST = cidx()
+C_ANCHOR_PRE = cidx()
 
 
 comment_attrib = '_yaml_comment'
@@ -52,31 +83,32 @@ tag_attrib = '_yaml_tag'
 class Comment:
     # using sys.getsize tested the Comment objects, __slots__ makes them bigger
     # and adding self.end did not matter
-    __slots__ = 'comment', '_items', '_end', '_start'
+    __slots__ = 'comment', '_items', '_post', '_pre'
     attrib = comment_attrib
 
-    def __init__(self):
+    def __init__(self, old=True):
         # type: () -> None
+        self._pre = None if old else []
         self.comment = None  # [post, [pre]]
         # map key (mapping/omap/dict) or index (sequence/list) to a  list of
         # dict: post_key, pre_key, post_value, pre_value
         # list: pre item, post item
         self._items = {}  # type: Dict[Any, Any]
         # self._start = [] # should not put these on first item
-        self._end = []  # type: List[Any] # end of document comments
+        self._post = []  # type: List[Any] # end of document comments
 
     def __str__(self):
         # type: () -> str
-        if bool(self._end):
+        if bool(self._post):
             end = ',\n  end=' + str(self._end)
         else:
             end = ""
         return 'Comment(comment={0},\n  items={1}{2})'.format(self.comment, self._items, end)
 
-    def __repr__(self):
+    def _old__repr__(self):
         # type: () -> str
-        if bool(self._end):
-            end = ',\n  end=' + str(self._end)
+        if bool(self._post):
+            end = ',\n  end=' + str(self._post)
         else:
             end = ""
         try:
@@ -90,6 +122,25 @@ class Comment:
             it = '\n    ' + it + '  '
         return 'Comment(\n  start={},\n  items={{{}}}{})'.format(self.comment, it, end)
 
+    def __repr__(self):
+        if self._pre is None:
+            return self._old__repr__()
+        if bool(self._post):
+            end = ',\n  end=' + repr(self._post)
+        else:
+            end = ""
+        try:
+            ln = max([len(str(k)) for k in self._items]) + 1
+        except ValueError:
+            ln = ''
+        it = '    '.join(
+            ['{:{}} {}\n'.format(str(k) + ':', ln, v) for k, v in self._items.items()]
+        )
+        if it:
+            it = '\n    ' + it + '  '
+        return 'Comment(\n  pre={},\n  items={{{}}}{})'.format(self.pre, it, end)
+
+
     @property
     def items(self):
         # type: () -> Any
@@ -98,22 +149,38 @@ class Comment:
     @property
     def end(self):
         # type: () -> Any
-        return self._end
+        return self._post
 
     @end.setter
     def end(self, value):
         # type: (Any) -> None
-        self._end = value
+        self._post = value
 
     @property
-    def start(self):
+    def pre(self):
         # type: () -> Any
-        return self._start
+        return self._pre
 
-    @start.setter
-    def start(self, value):
+    @pre.setter
+    def pre(self, value):
         # type: (Any) -> None
-        self._start = value
+        self._pre = value
+
+    def get(self, item, pos):
+        x = self._items.get(item)
+        if x is None or len(x) < pos:
+            return None
+        return x[pos]  # can be None
+
+    def set(self, item, pos, value):
+        x = self._items.get(item)
+        if x is None:
+            self._items[item] = x = [None] * (pos + 1)
+        else:
+            while len(x) <= pos:
+                x.append(None)
+        assert x[pos] is None
+        x[pos] = value
 
     def __contains__(self, x):
         # test if a substring is in any of the attached comments
