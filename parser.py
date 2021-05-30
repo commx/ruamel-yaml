@@ -92,6 +92,7 @@ def xprintf(*args, **kw):
     return nprintf(*args, **kw)
     pass
 
+
 class ParserError(MarkedYAMLError):
     pass
 
@@ -834,8 +835,8 @@ class RoundTripParser(Parser):
 
 class RoundTripParserSC(RoundTripParser):
     """roundtrip is a safe loader, that wants to see the unmangled tag"""
-
-    # some of the differences are based on the superclass testing if self.loader.comment_handling is not None
+    # some of the differences are based on the superclass testing
+    # if self.loader.comment_handling is not None
 
     def move_token_comment(self, token, nt=None, empty=False):
         token.move_new_comment(self.scanner.peek_token() if nt is None else nt, empty=empty)
@@ -846,11 +847,11 @@ class RoundTripParserSC(RoundTripParser):
             return None
         if not comment[0]:
             return None
-        if  comment[0][0] != line + 1:
+        if comment[0][0] != line + 1:
             nprintf('>>>dcxxx', comment, line, typ)
         assert comment[0][0] == line + 1
-        #if comment[0] - line > 1:
-        #    return
+        # if comment[0] - line > 1:
+        #     return
         typ = self.loader.comment_handling & 0b11
         # nprintf('>>>dca', comment, line, typ)
         if typ == C_POST:
@@ -860,7 +861,7 @@ class RoundTripParserSC(RoundTripParser):
             comment[0] = None
             return c
         # nprintf('>>>dcb', comment[0])
-        for idx, cmntidx in enumerate(comment[0]):
+        for cmntidx in comment[0]:
             # nprintf('>>>dcb', cmntidx)
             if isinstance(self.scanner.comments[cmntidx], BlankLineComment):
                 break
@@ -874,5 +875,3 @@ class RoundTripParserSC(RoundTripParser):
             comment[0] = comment[0][idx:]
             return c
         raise NotImplementedError  # reserved
-
-

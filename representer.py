@@ -837,13 +837,17 @@ class RoundTripRepresenter(SafeRepresenter):
                 for ct in node.comment[1]:
                     ct.reset()
             item_comments = comment.items
-            for v in item_comments.values():
-                if v and v[1]:
-                    for ct in v[1]:
-                        ct.reset()
-            try:
-                node.comment.append(comment.end)
-            except AttributeError:
+            if self.dumper.comment_handling is None:
+                for v in item_comments.values():
+                    if v and v[1]:
+                        for ct in v[1]:
+                            ct.reset()
+                try:
+                    node.comment.append(comment.end)
+                except AttributeError:
+                    pass
+            else:
+                # NEWCMNT
                 pass
         except AttributeError:
             item_comments = {}

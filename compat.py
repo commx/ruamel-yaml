@@ -166,6 +166,7 @@ class Nprint:
         out = sys.stdout if self._file_name is None else open(self._file_name, mode)
         return out
 
+
 nprint = Nprint()
 nprintf = Nprint('/var/tmp/ruamel.yaml.log')
 

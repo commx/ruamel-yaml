@@ -154,7 +154,10 @@ class Serializer:
         # type: (Any, Any, Any) -> None
         alias = self.anchors[node]
         if node in self.serialized_nodes:
-            self.emitter.emit(AliasEvent(alias))
+            node_style = getattr(node, 'style', None)
+            if node_style != '?':
+                node_style = None
+            self.emitter.emit(AliasEvent(alias, style=node_style))
         else:
             self.serialized_nodes[node] = True
             self.resolver.descend_resolver(parent, index)

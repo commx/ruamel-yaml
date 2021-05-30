@@ -11,7 +11,7 @@ import copy
 
 
 from ruamel.yaml.compat import ordereddict  # type: ignore
-from ruamel.yaml.compat import MutableSliceableSequence, _F, nprintf
+from ruamel.yaml.compat import MutableSliceableSequence, _F, nprintf  # NOQA
 from ruamel.yaml.scalarstring import ScalarString
 from ruamel.yaml.anchor import Anchor
 
@@ -24,22 +24,24 @@ if False:  # MYPY
 __all__ = ['CommentedSeq', 'CommentedKeySeq',
            'CommentedMap', 'CommentedOrderedMap',
            'CommentedSet', 'comment_attrib', 'merge_attrib',
-           'C_POST', 'C_PRE', 'C_SPLIT_ON_FIRST_BLANK', 'C_BLANK_LINE_PRESERVE_SPACE', 
+           'C_POST', 'C_PRE', 'C_SPLIT_ON_FIRST_BLANK', 'C_BLANK_LINE_PRESERVE_SPACE',
            ]
 # fmt: on
 
 # splitting of comments by the scanner
 # an EOLC (End-Of-Line Comment) is preceded by some token
-# an FLC (Full Line Comment) is a comment not preceded by a token, i.e. # is first non-blank on line
+# an FLC (Full Line Comment) is a comment not preceded by a token, i.e. # is
+#   the first non-blank on line
 # a BL is a blank line i.e. empty or spaces/tabs only
 # bits 0 and 1 are combined, you can choose only one
 C_POST = 0b00
-C_PRE =  0b01
-C_SPLIT_ON_FIRST_BLANK = 0b10   # as C_POST, but if blank line then C_PRE all lines before first
-                                # blank goes to POST even if no following real FLC (first blank -> first of post)
+C_PRE = 0b01
+C_SPLIT_ON_FIRST_BLANK = 0b10  # as C_POST, but if blank line then C_PRE all lines before
+# first blank goes to POST even if no following real FLC
+# (first blank -> first of post)
 # 0b11 -> reserved for future use
-C_BLANK_LINE_PRESERVE_SPACE = 0b100 
-# C_EOL_PRESERVE_SPACE2 = 0b1000 
+C_BLANK_LINE_PRESERVE_SPACE = 0b100
+# C_EOL_PRESERVE_SPACE2 = 0b1000
 
 
 class IDX:
@@ -55,14 +57,15 @@ class IDX:
     def __str__(self):
         return str(self._idx)
 
+
 cidx = IDX()
 
 # more or less in order of subjective expected likelyhood
 # the _POST and _PRE ones are lists themselves
 C_VALUE_EOL = C_ELEM_EOL = cidx()
 C_KEY_EOL = cidx()
-C_KEY_PRE = C_ELEM_PRE = cidx()   # not this is not value
-C_VALUE_POST = C_ELEM_POST = cidx()   # not this is not value
+C_KEY_PRE = C_ELEM_PRE = cidx()  # not this is not value
+C_VALUE_POST = C_ELEM_POST = cidx()  # not this is not value
 C_VALUE_PRE = cidx()
 C_KEY_POST = cidx()
 C_TAG_EOL = cidx()
@@ -139,7 +142,6 @@ class Comment:
         if it:
             it = '\n    ' + it + '  '
         return 'Comment(\n  pre={},\n  items={{{}}}{})'.format(self.pre, it, end)
-
 
     @property
     def items(self):

@@ -1,6 +1,6 @@
 # coding: utf-8
 
-from ruamel.yaml.compat import _F, nprintf
+from ruamel.yaml.compat import _F, nprintf  # NOQA
 
 if False:  # MYPY
     from typing import Text, Any, Dict, Optional, List  # NOQA
@@ -23,10 +23,12 @@ class Token:
         #               hasattr('self', key)]
         attributes = [key for key in self.__slots__ if not key.endswith('_mark')]
         attributes.sort()
-        #arguments = ', '.join(
-        #    [_F('{key!s}={gattr!r})', key=key, gattr=getattr(self, key)) for key in attributes]
-        #)
-        arguments = [_F('{key!s}={gattr!r}', key=key, gattr=getattr(self, key)) for key in attributes]
+        # arguments = ', '.join(
+        #  [_F('{key!s}={gattr!r})', key=key, gattr=getattr(self, key)) for key in attributes]
+        # )
+        arguments = [
+            _F('{key!s}={gattr!r}', key=key, gattr=getattr(self, key)) for key in attributes
+        ]
         if SHOW_LINES:
             try:
                 arguments.append('line: ' + str(self.start_mark.line))
@@ -46,7 +48,7 @@ class Token:
     def column(self, pos):
         self.start_mark.column = pos
 
-    # old style ( <= 0.17) is a TWO element list with first being the EOL 
+    # old style ( <= 0.17) is a TWO element list with first being the EOL
     # comment concatenated with following FLC/BLNK; and second being a list of FLC/BLNK
     # preceding the token
     # new style ( >= 0.17 ) is a THREE element list with the first being a list of
@@ -62,8 +64,8 @@ class Token:
         if not hasattr(self, '_comment'):
             self._comment = [None, None]
         else:
-            assert len(self._comment) == 2 # make sure it is version 0
-        #if isinstance(comment, CommentToken):
+            assert len(self._comment) == 2  # make sure it is version 0
+        # if isinstance(comment, CommentToken):
         #    if comment.value.startswith('# C09'):
         #        raise
         self._comment[0] = comment
@@ -74,7 +76,7 @@ class Token:
         if not hasattr(self, '_comment'):
             self._comment = [None, None]
         else:
-            assert len(self._comment) == 2 # make sure it is version 0
+            assert len(self._comment) == 2  # make sure it is version 0
         assert self._comment[1] is None
         self._comment[1] = comments
         return
@@ -110,10 +112,9 @@ class Token:
                 self._comment[2] = []
         self._comment[2].append(comment)
 
-
-    #def get_comment(self):
-    #    # type: () -> Any
-    #    return getattr(self, '_comment', None)
+    # def get_comment(self):
+    #     # type: () -> Any
+    #     return getattr(self, '_comment', None)
 
     @property
     def comment(self):
@@ -347,7 +348,7 @@ class CommentToken(Token):
     def __init__(self, value, start_mark=None, end_mark=None, column=None):
         # type: (Any, Any, Any) -> None
         if start_mark is None:
-            assert columns is not None
+            assert column is not None
             self._column = column
         Token.__init__(self, start_mark, None)
         self._value = value

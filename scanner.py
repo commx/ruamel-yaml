@@ -29,7 +29,7 @@
 #
 
 import inspect
-from ruamel.yaml.error import MarkedYAMLError, CommentMark
+from ruamel.yaml.error import MarkedYAMLError, CommentMark  # NOQA
 from ruamel.yaml.tokens import *  # NOQA
 from ruamel.yaml.compat import _F, check_anchorname_char, nprint, nprintf  # NOQA
 
@@ -43,6 +43,7 @@ __all__ = ['Scanner', 'RoundTripScanner', 'ScannerError']
 _THE_END = '\n\0\r\x85\u2028\u2029'
 _THE_END_SPACE_TAB = ' \n\0\t\r\x85\u2028\u2029'
 _SPACE_TAB = ' \t'
+
 
 def xprintf(*args, **kw):
     return nprintf(*args, **kw)
@@ -1606,7 +1607,8 @@ class Scanner:
                 break
 
         token = ScalarToken("".join(chunks), True, start_mark, end_mark)
-        # getattr provides True so C type loader, which cannot handle comment, will not make CommentToken
+        # getattr provides True so C type loader, which cannot handle comment,
+        # will not make CommentToken
         if self.loader is not None:
             comment_handler = getattr(self.loader, 'comment_handling', False)
             if comment_handler is None:
@@ -2002,16 +2004,17 @@ class RoundTripScanner(Scanner):
         return Scanner.scan_block_scalar(self, style, rt=rt)
 
 
-# commenthandling 2021, differentiatiation not needed 
+# commenthandling 2021, differentiatiation not needed
 
 VALUECMNT = 0
 KEYCMNT = 0  # 1
-#TAGCMNT = 2
-#ANCHORCMNT = 3
+# TAGCMNT = 2
+# ANCHORCMNT = 3
 
 
 class CommentBase:
     __slots__ = ('value', 'line', 'column', 'used', 'function', 'fline', 'ufun', 'uline')
+
     def __init__(self, value, line, column):
         self.value = value
         self.line = line
@@ -2039,9 +2042,18 @@ class CommentBase:
         return _F('{value!r}', value=self.value)
 
     def info(self):
-        return _F('{name}{used} {line:2}:{column:<2} "{value:40s} {function}:{fline} {ufun}:{uline}',
-                  name=self.name, line=self.line, column=self.column, value=self.value + '"', used=self.used,
-                  function=self.function, fline=self.fline, ufun=self.ufun, uline=self.uline)
+        return _F(
+            '{name}{used} {line:2}:{column:<2} "{value:40s} {function}:{fline} {ufun}:{uline}',
+            name=self.name,
+            line=self.line,
+            column=self.column,
+            value=self.value + '"',
+            used=self.used,
+            function=self.function,
+            fline=self.fline,
+            ufun=self.ufun,
+            uline=self.uline,
+        )
 
 
 class EOLComment(CommentBase):
@@ -2071,7 +2083,7 @@ class ScannedComments:
         self.unused = []
 
     def add_eol_comment(self, comment, column, line):
-        info = inspect.getframeinfo(inspect.stack()[1][0])
+        # info = inspect.getframeinfo(inspect.stack()[1][0])
         if comment.count('\n') == 1:
             assert comment[-1] == '\n'
         else:
@@ -2081,7 +2093,7 @@ class ScannedComments:
         return retval
 
     def add_blank_line(self, comment, column, line):
-        info = inspect.getframeinfo(inspect.stack()[1][0])
+        # info = inspect.getframeinfo(inspect.stack()[1][0])
         assert comment.count('\n') == 1 and comment[-1] == '\n'
         assert line not in self.comments
         self.comments[line] = retval = BlankLineComment(comment[:-1], line, column)
@@ -2089,9 +2101,9 @@ class ScannedComments:
         return retval
 
     def add_full_line_comment(self, comment, column, line):
-        info = inspect.getframeinfo(inspect.stack()[1][0])
+        # info = inspect.getframeinfo(inspect.stack()[1][0])
         assert comment.count('\n') == 1 and comment[-1] == '\n'
-        #if comment.startswith('# C12'):
+        # if comment.startswith('# C12'):
         #    raise
         # this raises in line 2127 fro 330
         self.comments[line] = retval = FullLineComment(comment[:-1], line, column)
@@ -2102,20 +2114,28 @@ class ScannedComments:
         return self.comments[idx]
 
     def __str__(self):
-        return 'ParsedComments:\n  '  + \
-        '\n  '.join((_F('{lineno:2} {x}', lineno=lineno, x=x.info()) for lineno, x in self.comments.items())) + '\n'
+        return (
+            'ParsedComments:\n  '
+            + '\n  '.join(
+                (
+                    _F('{lineno:2} {x}', lineno=lineno, x=x.info())
+                    for lineno, x in self.comments.items()
+                )
+            )
+            + '\n'
+        )
 
     def last(self):
         lineno, x = list(self.comments.items())[-1]
-        return _F('{lineno:2} {x}\n', lineno=lineno, x=x.info()) 
+        return _F('{lineno:2} {x}\n', lineno=lineno, x=x.info())
 
     def any_unprocessed(self):
         # ToDo: might want to differentiate based on lineno
         return len(self.unused) > 0
-        #for lno, comment in reversed(self.comments.items()):
+        # for lno, comment in reversed(self.comments.items()):
         #    if comment.used == ' ':
         #        return True
-        #return False
+        # return False
 
     def unprocessed(self, use=False):
         while len(self.unused) > 0:
@@ -2132,7 +2152,7 @@ class ScannedComments:
         xprintf('assign_pre', token_line, self.unused, info.function, info.lineno)
         gobbled = False
         while self.unused and self.unused[0] < token_line:
-            gobled = True
+            gobbled = True
             first = self.unused.pop(0)
             xprintf('assign_pre < ', first)
             self.comments[first].set_used()
@@ -2147,13 +2167,21 @@ class ScannedComments:
         if not isinstance(self.comments[comment_line], EOLComment):
             return
         idx = 1
-        while tokens[-idx].start_mark.line > comment_line or isinstance(tokens[-idx], ValueToken):
+        while tokens[-idx].start_mark.line > comment_line or isinstance(
+            tokens[-idx], ValueToken
+        ):
             idx += 1
         xprintf('idx1', idx)
-        if len(tokens) > idx  and isinstance(tokens[-idx], ScalarToken) and isinstance(tokens[-(idx+1)], ScalarToken):
+        if (
+            len(tokens) > idx
+            and isinstance(tokens[-idx], ScalarToken)
+            and isinstance(tokens[-(idx + 1)], ScalarToken)
+        ):
             return
         try:
-            if isinstance(tokens[-idx], ScalarToken) and isinstance(tokens[-(idx+1)], KeyToken):
+            if isinstance(tokens[-idx], ScalarToken) and isinstance(
+                tokens[-(idx + 1)], KeyToken
+            ):
                 try:
                     eol_idx = self.unused.pop(0)
                     self.comments[eol_idx].set_used()
@@ -2166,7 +2194,9 @@ class ScannedComments:
             xprintf('IndexError1')
             pass
         try:
-            if isinstance(tokens[-idx], ScalarToken) and isinstance(tokens[-(idx+1)], (ValueToken, BlockEntryToken)):
+            if isinstance(tokens[-idx], ScalarToken) and isinstance(
+                tokens[-(idx + 1)], (ValueToken, BlockEntryToken)
+            ):
                 try:
                     eol_idx = self.unused.pop(0)
                     self.comments[eol_idx].set_used()
@@ -2180,7 +2210,9 @@ class ScannedComments:
         for t in tokens:
             xprintf('tt-', t)
         xprintf('not implemented EOL', type(tokens[-idx]))
-        import sys; sys.exit(0)
+        import sys
+
+        sys.exit(0)
 
     def assign_post(self, token):
         token_line = token.start_mark.line
@@ -2188,7 +2220,7 @@ class ScannedComments:
         xprintf('assign_post', token_line, self.unused, info.function, info.lineno)
         gobbled = False
         while self.unused and self.unused[0] < token_line:
-            gobled = True
+            gobbled = True
             first = self.unused.pop(0)
             xprintf('assign_post < ', first)
             self.comments[first].set_used()
@@ -2196,16 +2228,22 @@ class ScannedComments:
         return gobbled
 
     def str_unprocessed(self):
-        return ''.join((_F('  {ind:2} {x}\n', ind=ind, x=x.info()) for ind, x in self.comments.items() if x.used == ' '))
+        return ''.join(
+            (
+                _F('  {ind:2} {x}\n', ind=ind, x=x.info())
+                for ind, x in self.comments.items()
+                if x.used == ' '
+            )
+        )
 
 
 class RoundTripScannerSC(Scanner):  # RoundTripScanner Split Comments
     def __init__(self, *arg, **kw):
         super().__init__(*arg, **kw)
         assert self.loader is not None
-        # comments isinitialised on .need_more_tokens and persist on self.loader.parsed_comments
-        # 
-        self.comments = None 
+        # comments isinitialised on .need_more_tokens and persist on
+        # self.loader.parsed_comments
+        self.comments = None
 
     def get_token(self):
         # type: () -> Any
@@ -2240,7 +2278,7 @@ class RoundTripScannerSC(Scanner):  # RoundTripScanner Split Comments
             xprintf('-x--', len(self.tokens))
             for t in self.tokens:
                 xprintf(t)
-            #xprintf(self.comments.last())
+            # xprintf(self.comments.last())
             xprintf(self.comments.str_unprocessed())
         self.comments.assign_pre(self.tokens[0])
         self.comments.assign_eol(self.tokens)
@@ -2254,7 +2292,6 @@ class RoundTripScannerSC(Scanner):  # RoundTripScanner Split Comments
         start_mark = self.reader.get_mark()
         # xprintf('current_mark', start_mark.line, start_mark.column)
         found = False
-        idx = 0
         while not found:
             while srp() == ' ':
                 srf()
@@ -2262,7 +2299,7 @@ class RoundTripScannerSC(Scanner):  # RoundTripScanner Split Comments
             if ch == '#':
                 comment_start_mark = self.reader.get_mark()
                 comment = ch
-                srf() # skipt the '#'
+                srf()  # skipt the '#'
                 while ch not in _THE_END:
                     ch = srp()
                     if ch == '\0':  # don't gobble the end-of-stream character
@@ -2275,9 +2312,13 @@ class RoundTripScannerSC(Scanner):  # RoundTripScanner Split Comments
                     srf()
                 # we have a comment
                 if start_mark.column == 0:
-                    self.comments.add_full_line_comment(comment, comment_start_mark.column, comment_start_mark.line)
+                    self.comments.add_full_line_comment(
+                        comment, comment_start_mark.column, comment_start_mark.line
+                    )
                 else:
-                    self.comments.add_eol_comment(comment, comment_start_mark.column, comment_start_mark.line)
+                    self.comments.add_eol_comment(
+                        comment, comment_start_mark.column, comment_start_mark.line
+                    )
                     comment = ""
                 # gather any blank lines or full line comments following the comment as well
                 self.scan_empty_or_full_line_comments()
@@ -2300,7 +2341,7 @@ class RoundTripScannerSC(Scanner):  # RoundTripScanner Split Comments
                     if srp() == '#':
                         # empty line followed by indented real comment
                         comment = comment.rsplit('\n', 1)[0] + '\n'
-                    end_mark = self.reader.get_mark()
+                    _ = self.reader.get_mark()  # gobble end_mark
                     return None
             else:
                 found = True

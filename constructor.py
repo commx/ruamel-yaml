@@ -1323,8 +1323,9 @@ class RoundTripConstructor(SafeConstructor):
             if node.comment:
                 seqtyp._yaml_add_comment(node.comment[:2])
                 if len(node.comment) > 2:
-                    # this happens e.g. if you have a sequence element that is a flow-style mapping
-                    # and that has no EOL comment but a following commentline or empty line
+                    # this happens e.g. if you have a sequence element that is a flow-style
+                    # mapping and that has no EOL comment but a following commentline or
+                    # empty line
                     seqtyp.yaml_end_comment_extend(node.comment[2], clear=True)
         else:
             # NEWCMNT

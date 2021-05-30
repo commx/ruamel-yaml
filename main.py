@@ -16,7 +16,7 @@ from ruamel.yaml.nodes import *  # NOQA
 
 from ruamel.yaml.loader import BaseLoader, SafeLoader, Loader, RoundTripLoader  # NOQA
 from ruamel.yaml.dumper import BaseDumper, SafeDumper, Dumper, RoundTripDumper  # NOQA
-from ruamel.yaml.compat import StringIO, BytesIO, with_metaclass, nprint, nprintf
+from ruamel.yaml.compat import StringIO, BytesIO, with_metaclass, nprint, nprintf  # NOQA
 from ruamel.yaml.resolver import VersionedResolver, Resolver  # NOQA
 from ruamel.yaml.representer import (
     BaseRepresenter,

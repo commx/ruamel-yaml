@@ -13,7 +13,7 @@ from ruamel.yaml.events import *  # NOQA
 
 # fmt: off
 from ruamel.yaml.compat import _F, nprint, dbg, DBG_EVENT, \
-    check_anchorname_char, nprintf
+    check_anchorname_char, nprintf  # NOQA
 # fmt: on
 
 if False:  # MYPY
@@ -695,7 +695,8 @@ class Emitter:
                         pass
                 self.states.append(self.expect_block_mapping_simple_value)
                 self.expect_node(mapping=True, simple_key=True)
-                if isinstance(self.event, AliasEvent):
+                # test on style for alias in !!set
+                if isinstance(self.event, AliasEvent) and not self.event.style == '?':
                     self.stream.write(' ')
             else:
                 self.write_indicator('?', True, indention=True)
@@ -1562,7 +1563,7 @@ class Emitter:
     def write_literal(self, text, comment=None):
         # type: (Any, Any) -> None
         hints, _indent, _indicator = self.determine_block_hints(text)
-        #if comment is not None:
+        # if comment is not None:
         #    try:
         #        hints += comment[1][0]
         #    except (TypeError, IndexError) as e:
@@ -1570,12 +1571,12 @@ class Emitter:
         if not isinstance(comment, str):
             comment = ''
         self.write_indicator('|' + hints + comment, True)
-        #try:
+        # try:
         #    nprintf('selfev', comment)
         #    cmx = comment[1][0]
         #    if cmx:
         #        self.stream.write(cmx)
-        #except (TypeError, IndexError) as e:
+        # except (TypeError, IndexError) as e:
         #    pass
         if _indicator == '+':
             self.open_ended = True

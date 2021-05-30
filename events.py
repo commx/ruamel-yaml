@@ -32,7 +32,7 @@ class Event:
         if True:
             arguments = []
             if hasattr(self, 'value'):
-                arguments.append(repr(getattr(self, 'value')))
+                arguments.append(repr(self.value))
             for key in ['anchor', 'tag', 'implicit', 'flow_style', 'style']:
                 v = getattr(self, key, None)
                 if v is not None:
@@ -40,8 +40,14 @@ class Event:
             if self.comment not in [None, CommentCheck]:
                 arguments.append('comment={!r}'.format(self.comment))
             if SHOW_LINES:
-                arguments.append('({}:{}/{}:{})'.format(self.start_mark.line, self.start_mark.column,
-                                                    self.end_mark.line, self.end_mark.column))
+                arguments.append(
+                    '({}:{}/{}:{})'.format(
+                        self.start_mark.line,
+                        self.start_mark.column,
+                        self.end_mark.line,
+                        self.end_mark.column,
+                    )
+                )
             arguments = ', '.join(arguments)
         else:
             attributes = [
@@ -50,7 +56,7 @@ class Event:
                 if hasattr(self, key)
             ]
             arguments = ', '.join(
-                [_F('{key!s}={attr!r}', key=key, attr=getattr(self, key)) for key in attributes]
+                [_F('{k!s}={attr!r}', k=key, attr=getattr(self, key)) for key in attributes]
             )
             if self.comment not in [None, CommentCheck]:
                 arguments += ', comment={!r}'.format(self.comment)
@@ -141,7 +147,11 @@ class DocumentEndEvent(Event):
 
 
 class AliasEvent(NodeEvent):
-    __slots__ = ()
+    __slots__ = 'style'
+
+    def __init__(self, anchor, start_mark=None, end_mark=None, style=None, comment=None):
+        NodeEvent.__init__(self, anchor, start_mark, end_mark, comment)
+        self.style = style
 
 
 class ScalarEvent(NodeEvent):
