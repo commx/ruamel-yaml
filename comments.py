@@ -90,7 +90,7 @@ class Comment:
     attrib = comment_attrib
 
     def __init__(self, old=True):
-        # type: () -> None
+        # type: (Bool) -> None
         self._pre = None if old else []
         self.comment = None  # [post, [pre]]
         # map key (mapping/omap/dict) or index (sequence/list) to a  list of

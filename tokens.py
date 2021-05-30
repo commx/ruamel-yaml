@@ -346,7 +346,7 @@ class CommentToken(Token):
     id = '<comment>'
 
     def __init__(self, value, start_mark=None, end_mark=None, column=None):
-        # type: (Any, Any, Any) -> None
+        # type: (Any, Any, Any, Any) -> None
         if start_mark is None:
             assert column is not None
             self._column = column
