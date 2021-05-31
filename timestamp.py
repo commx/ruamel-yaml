@@ -37,6 +37,7 @@ class TimeStamp(datetime.datetime):
         tzinfo=True,
         fold=None,
     ):
+        # type: (Any, Any, Any, Any, Any, Any, Any, Any, Any) -> Any
         if year is None:
             year = self.year
         if month is None:

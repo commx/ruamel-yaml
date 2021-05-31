@@ -32,7 +32,10 @@ class Event:
         if True:
             arguments = []
             if hasattr(self, 'value'):
-                arguments.append(repr(self.value))
+                # if you use repr(getattr(self, 'value')) then flake8 complains about
+                # abuse of getattr with a constant. When you change to self.value
+                # then mypy throws an error
+                arguments.append(repr(self.value))  # type: ignore
             for key in ['anchor', 'tag', 'implicit', 'flow_style', 'style']:
                 v = getattr(self, key, None)
                 if v is not None:
@@ -48,7 +51,7 @@ class Event:
                         self.end_mark.column,
                     )
                 )
-            arguments = ', '.join(arguments)
+            arguments = ', '.join(arguments)  # type: ignore
         else:
             attributes = [
                 key
@@ -150,6 +153,7 @@ class AliasEvent(NodeEvent):
     __slots__ = 'style'
 
     def __init__(self, anchor, start_mark=None, end_mark=None, style=None, comment=None):
+        # type: (Any, Any, Any, Any, Any) -> None
         NodeEvent.__init__(self, anchor, start_mark, end_mark, comment)
         self.style = style
 

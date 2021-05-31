@@ -904,7 +904,7 @@ class Emitter:
                 and self.event.comment[0].column >= self.indent
             ):
                 # comment following a folded scalar must dedent (issue 376)
-                self.event.comment[0].column = self.indent - 1
+                self.event.comment[0].column = self.indent - 1  # type: ignore
         elif self.style == '|':
             # self.write_literal(self.analysis.scalar, self.event.comment)
             try:
@@ -918,7 +918,7 @@ class Emitter:
                 and self.event.comment[0].column >= self.indent
             ):
                 # comment following a literal scalar must dedent (issue 376)
-                self.event.comment[0].column = self.indent - 1
+                self.event.comment[0].column = self.indent - 1  # type: ignore
         else:
             self.write_plain(self.analysis.scalar, split)
         self.analysis = None
@@ -1271,7 +1271,7 @@ class Emitter:
             data = ' ' * (indent - self.column)
             self.column = indent
             if self.encoding:
-                data = data.encode(self.encoding)
+                data = data.encode(self.encoding)  # type: ignore
             self.stream.write(data)
 
     def write_line_break(self, data=None):
@@ -1629,7 +1629,7 @@ class Emitter:
             data = ' '
             self.column += len(data)
             if self.encoding:
-                data = data.encode(self.encoding)
+                data = data.encode(self.encoding)  # type: ignore
             self.stream.write(data)
         self.whitespace = False
         self.indention = False
@@ -1650,7 +1650,7 @@ class Emitter:
                         data = text[start:end]
                         self.column += len(data)
                         if self.encoding:
-                            data = data.encode(self.encoding)
+                            data = data.encode(self.encoding)  # type: ignore
                         self.stream.write(data)
                     start = end
             elif breaks:
@@ -1671,7 +1671,7 @@ class Emitter:
                     data = text[start:end]
                     self.column += len(data)
                     if self.encoding:
-                        data = data.encode(self.encoding)
+                        data = data.encode(self.encoding)  # type: ignore
                     try:
                         self.stream.write(data)
                     except:  # NOQA

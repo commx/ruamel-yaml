@@ -83,12 +83,13 @@ from ruamel.yaml.comments import C_PRE, C_POST, C_SPLIT_ON_FIRST_BLANK
 from ruamel.yaml.compat import _F, nprint, nprintf  # NOQA
 
 if False:  # MYPY
-    from typing import Any, Dict, Optional, List  # NOQA
+    from typing import Any, Dict, Optional, List, Optional  # NOQA
 
 __all__ = ['Parser', 'RoundTripParser', 'ParserError']
 
 
 def xprintf(*args, **kw):
+    # type: (Any, Any) -> Any
     return nprintf(*args, **kw)
     pass
 
@@ -574,8 +575,8 @@ class Parser:
             c = token.comment
             start_mark = token.start_mark
         else:
-            start_mark = self.last_event.end_mark
-            c = self.distribute_comment(token.comment, start_mark.line)
+            start_mark = self.last_event.end_mark  # type: ignore
+            c = self.distribute_comment(token.comment, start_mark.line)  # type: ignore
         event = SequenceEndEvent(start_mark, start_mark, comment=c)
         self.state = self.states.pop()
         return event
@@ -803,6 +804,7 @@ class Parser:
         return ScalarEvent(None, None, (True, False), "", mark, mark, comment=comment)
 
     def move_token_comment(self, token, nt=None, empty=False):
+        # type: (Any, Optional[Any], Optional[bool]) -> Any
         pass
 
 
@@ -830,25 +832,29 @@ class RoundTripParser(Parser):
         return handle + suffix
 
     def move_token_comment(self, token, nt=None, empty=False):
+        # type: (Any, Optional[Any], Optional[bool]) -> Any
         token.move_old_comment(self.scanner.peek_token() if nt is None else nt, empty=empty)
 
 
 class RoundTripParserSC(RoundTripParser):
     """roundtrip is a safe loader, that wants to see the unmangled tag"""
+
     # some of the differences are based on the superclass testing
     # if self.loader.comment_handling is not None
 
     def move_token_comment(self, token, nt=None, empty=False):
+        # type: (Any, Any, Any, Optional[bool]) -> None
         token.move_new_comment(self.scanner.peek_token() if nt is None else nt, empty=empty)
 
     def distribute_comment(self, comment, line):
+        # type: (Any, Any) -> Any
         # ToDo, look at indentation of the comment to determine attachment
         if comment is None:
             return None
         if not comment[0]:
             return None
         if comment[0][0] != line + 1:
-            nprintf('>>>dcxxx', comment, line, typ)
+            nprintf('>>>dcxxx', comment, line)
         assert comment[0][0] == line + 1
         # if comment[0] - line > 1:
         #     return
@@ -861,17 +867,17 @@ class RoundTripParserSC(RoundTripParser):
             comment[0] = None
             return c
         # nprintf('>>>dcb', comment[0])
-        for cmntidx in comment[0]:
+        for _idx, cmntidx in enumerate(comment[0]):
             # nprintf('>>>dcb', cmntidx)
             if isinstance(self.scanner.comments[cmntidx], BlankLineComment):
                 break
         else:
             return None  # no space found
-        if idx == 0:
+        if _idx == 0:
             return None  # first line was blank
         # nprintf('>>>dcc', idx)
         if typ == C_SPLIT_ON_FIRST_BLANK:
-            c = [None, None, comment[0][:idx]]
-            comment[0] = comment[0][idx:]
+            c = [None, None, comment[0][:_idx]]
+            comment[0] = comment[0][_idx:]
             return c
         raise NotImplementedError  # reserved

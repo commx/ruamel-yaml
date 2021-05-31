@@ -4,8 +4,8 @@ ruamel.yaml
 
 ``ruamel.yaml`` is a YAML 1.2 loader/dumper package for Python.
 
-:version:       0.17.5
-:updated:       2021-05-30
+:version:       0.17.6
+:updated:       2021-05-31
 :documentation: http://yaml.readthedocs.io
 :repository:    https://sourceforge.net/projects/ruamel-yaml/
 :pypi:          https://pypi.org/project/ruamel.yaml/
@@ -65,7 +65,14 @@ ChangeLog
 
 .. should insert NEXT: at the beginning of line for next key (with empty line)
 
-0.17.5 (2021-05-30):
+0.17.6 (2021-05-31):
+  - merged type annotations update provided by 
+    `Jochen Sprickerhof <https://sourceforge.net/u/jspricke/>`__
+  - fix for issue 385: deprecated round_trip_loader function not working
+    (reported by `Mike Gouline <https://sourceforge.net/u/gouline/>`__)
+  - wasted a few hours getting rid of mypy warnings/errors
+  
+0.17.5:
   - fix for issue 384 !!set with aliased entry resulting in broken YAML on rt
     reported by  `William Kimball <https://sourceforge.net/u/william303/>`__)
 

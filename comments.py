@@ -47,14 +47,17 @@ C_BLANK_LINE_PRESERVE_SPACE = 0b100
 class IDX:
     # temporary auto increment, so rearranging is easier
     def __init__(self):
+        # type: () -> None
         self._idx = 0
 
     def __call__(self):
+        # type: () -> Any
         x = self._idx
         self._idx += 1
         return x
 
     def __str__(self):
+        # type: () -> Any
         return str(self._idx)
 
 
@@ -90,8 +93,8 @@ class Comment:
     attrib = comment_attrib
 
     def __init__(self, old=True):
-        # type: (Bool) -> None
-        self._pre = None if old else []
+        # type: (bool) -> None
+        self._pre = None if old else []  # type: ignore
         self.comment = None  # [post, [pre]]
         # map key (mapping/omap/dict) or index (sequence/list) to a  list of
         # dict: post_key, pre_key, post_value, pre_value
@@ -103,7 +106,7 @@ class Comment:
     def __str__(self):
         # type: () -> str
         if bool(self._post):
-            end = ',\n  end=' + str(self._end)
+            end = ',\n  end=' + str(self._post)
         else:
             end = ""
         return 'Comment(comment={0},\n  items={1}{2})'.format(self.comment, self._items, end)
@@ -115,9 +118,9 @@ class Comment:
         else:
             end = ""
         try:
-            ln = max([len(str(k)) for k in self._items]) + 1
+            ln = max([len(str(k)) for k in self._items]) + 1  # type: ignore
         except ValueError:
-            ln = ''
+            ln = ''  # type: ignore
         it = '    '.join(
             ['{:{}} {}\n'.format(str(k) + ':', ln, v) for k, v in self._items.items()]
         )
@@ -126,6 +129,7 @@ class Comment:
         return 'Comment(\n  start={},\n  items={{{}}}{})'.format(self.comment, it, end)
 
     def __repr__(self):
+        # type: () -> str
         if self._pre is None:
             return self._old__repr__()
         if bool(self._post):
@@ -133,9 +137,9 @@ class Comment:
         else:
             end = ""
         try:
-            ln = max([len(str(k)) for k in self._items]) + 1
+            ln = max([len(str(k)) for k in self._items]) + 1  # type: ignore
         except ValueError:
-            ln = ''
+            ln = ''  # type: ignore
         it = '    '.join(
             ['{:{}} {}\n'.format(str(k) + ':', ln, v) for k, v in self._items.items()]
         )
@@ -169,12 +173,14 @@ class Comment:
         self._pre = value
 
     def get(self, item, pos):
+        # type: (Any, Any) -> Any
         x = self._items.get(item)
         if x is None or len(x) < pos:
             return None
         return x[pos]  # can be None
 
     def set(self, item, pos, value):
+        # type: (Any, Any, Any) -> Any
         x = self._items.get(item)
         if x is None:
             self._items[item] = x = [None] * (pos + 1)
@@ -185,6 +191,7 @@ class Comment:
         x[pos] = value
 
     def __contains__(self, x):
+        # type: (Any) -> Any
         # test if a substring is in any of the attached comments
         if self.comment:
             if self.comment[0] and x in self.comment[0].value:
@@ -287,7 +294,7 @@ class LineCol:
 
     def __repr__(self):
         # type: () -> str
-        return _F('LineCol({line}, {col})', line=self.line, col=self.col)
+        return _F('LineCol({line}, {col})', line=self.line, col=self.col)  # type: ignore
 
 
 class Tag:
@@ -351,7 +358,7 @@ class CommentedBase:
         from .error import CommentMark
         from .tokens import CommentToken
 
-        pre_comments = self._yaml_clear_pre_comment()
+        pre_comments = self._yaml_clear_pre_comment()  # type: ignore
         if comment[-1] == '\n':
             comment = comment[:-1]  # strip final newline if there
         start_mark = CommentMark(indent)

@@ -42,10 +42,12 @@ class Token:
 
     @property
     def column(self):
+        # type: () -> int
         return self.start_mark.column
 
     @column.setter
     def column(self, pos):
+        # type: (Any) -> None
         self.start_mark.column = pos
 
     # old style ( <= 0.17) is a TWO element list with first being the EOL
@@ -83,34 +85,37 @@ class Token:
 
     # new style
     def add_comment_pre(self, comment):
+        # type: (Any) -> None
         if not hasattr(self, '_comment'):
-            self._comment = [[], None, None]
+            self._comment = [[], None, None]  # type: ignore
         else:
             assert len(self._comment) == 3
             if self._comment[0] is None:
-                self._comment[0] = []
-        self._comment[0].append(comment)
+                self._comment[0] = []  # type: ignore
+        self._comment[0].append(comment)  # type: ignore
 
     def add_comment_eol(self, comment, comment_type):
+        # type: (Any, Any) -> None
         if not hasattr(self, '_comment'):
             self._comment = [None, None, None]
         else:
             assert len(self._comment) == 3
             assert self._comment[1] is None
         if self.comment[1] is None:
-            self._comment[1] = []
-        self._comment[1].extend([None] * (comment_type + 1 - len(self.comment[1])))
+            self._comment[1] = []  # type: ignore
+        self._comment[1].extend([None] * (comment_type + 1 - len(self.comment[1])))  # type: ignore # NOQA
         # nprintf('commy', self.comment, comment_type)
-        self._comment[1][comment_type] = comment
+        self._comment[1][comment_type] = comment  # type: ignore
 
     def add_comment_post(self, comment):
+        # type: (Any) -> None
         if not hasattr(self, '_comment'):
-            self._comment = [None, None, []]
+            self._comment = [None, None, []]  # type: ignore
         else:
             assert len(self._comment) == 3
             if self._comment[2] is None:
-                self._comment[2] = []
-        self._comment[2].append(comment)
+                self._comment[2] = []  # type: ignore
+        self._comment[2].append(comment)  # type: ignore
 
     # def get_comment(self):
     #     # type: () -> Any
@@ -350,17 +355,19 @@ class CommentToken(Token):
         if start_mark is None:
             assert column is not None
             self._column = column
-        Token.__init__(self, start_mark, None)
+        Token.__init__(self, start_mark, None)  # type: ignore
         self._value = value
 
     @property
     def value(self):
+        # type: () -> str
         if isinstance(self._value, str):
             return self._value
         return "".join(self._value)
 
     @value.setter
     def value(self, val):
+        # type: (Any) -> None
         self._value = val
 
     def reset(self):

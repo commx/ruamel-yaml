@@ -105,6 +105,7 @@ class Composer:
         return node
 
     def return_alias(self, a):
+        # type: (Any) -> Any
         return a
 
     def compose_node(self, parent, index):

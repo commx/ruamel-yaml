@@ -21,7 +21,7 @@ class Node:
         self.anchor = anchor
 
     def __repr__(self):
-        # type: () -> str
+        # type: () -> Any
         value = self.value
         # if isinstance(value, list):
         #     if len(value) == 0:

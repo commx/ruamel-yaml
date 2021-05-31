@@ -19,30 +19,29 @@ if False:  # MYPY
 _DEFAULT_YAML_VERSION = (1, 2)
 
 try:
-    from ruamel.ordereddict import ordereddict
-except:  # NOQA
-    try:
-        from collections import OrderedDict
-    except ImportError:
-        from ordereddict import OrderedDict  # type: ignore
+    from collections import OrderedDict
+except ImportError:
+    from ordereddict import OrderedDict  # type: ignore
+
     # to get the right name import ... as ordereddict doesn't do that
 
-    class ordereddict(OrderedDict):  # type: ignore
-        if not hasattr(OrderedDict, 'insert'):
 
-            def insert(self, pos, key, value):
-                # type: (int, Any, Any) -> None
-                if pos >= len(self):
+class ordereddict(OrderedDict):  # type: ignore
+    if not hasattr(OrderedDict, 'insert'):
+
+        def insert(self, pos, key, value):
+            # type: (int, Any, Any) -> None
+            if pos >= len(self):
+                self[key] = value
+                return
+            od = ordereddict()
+            od.update(self)
+            for k in od:
+                del self[k]
+            for index, old_key in enumerate(od):
+                if pos == index:
                     self[key] = value
-                    return
-                od = ordereddict()
-                od.update(self)
-                for k in od:
-                    del self[k]
-                for index, old_key in enumerate(od):
-                    if pos == index:
-                        self[key] = value
-                    self[old_key] = od[old_key]
+                self[old_key] = od[old_key]
 
 
 PY2 = sys.version_info[0] == 2
@@ -54,6 +53,7 @@ PY3 = sys.version_info[0] == 3
 # assert _F('abc {ft!r}', ft=ft) == 'abc %r' % ft
 # 'abc %r' % ft -> _F('abc {ft!r}' -> f'abc {ft!r}'
 def _F(s, *superfluous, **kw):
+    # type: (Any, Any, Any) -> Any
     if superfluous:
         raise TypeError
     return s.format(**kw)
@@ -163,6 +163,7 @@ class Nprint:
         self._count = None
 
     def fp(self, mode='a'):
+        # type: (str) -> Any
         out = sys.stdout if self._file_name is None else open(self._file_name, mode)
         return out
 

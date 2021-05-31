@@ -545,10 +545,7 @@ class SafeConstructor(BaseConstructor):
                 node.start_mark,
             )
         try:
-            if hasattr(base64, 'decodebytes'):
-                return base64.decodebytes(value)
-            else:
-                return base64.decodestring(value)
+            return base64.decodebytes(value)
         except binascii.Error as exc:
             raise ConstructorError(
                 None,
@@ -804,10 +801,7 @@ class Constructor(SafeConstructor):
                 node.start_mark,
             )
         try:
-            if hasattr(base64, 'decodebytes'):
-                return base64.decodebytes(value)
-            else:
-                return base64.decodestring(value)
+            return base64.decodebytes(value)
         except binascii.Error as exc:
             raise ConstructorError(
                 None,
@@ -1068,12 +1062,14 @@ class RoundTripConstructor(SafeConstructor):
     """
 
     def comment(self, idx):
+        # type: (Any) -> Any
         assert self.loader.comment_handling is not None
         x = self.scanner.comments[idx]
         x.set_assigned()
         return x
 
     def comments(self, list_of_comments, idx=None):
+        # type: (Any, Optional[Any]) -> Any
         # hand in the comment and optional pre, eol, post segment
         if list_of_comments is None:
             return []
@@ -1103,7 +1099,8 @@ class RoundTripConstructor(SafeConstructor):
                 # NEWCMNT
                 if node.comment is not None and node.comment[1]:
                     # nprintf('>>>>nc1', node.comment)
-                    lss.comment = self.comment(node.comment[1][0])  # EOL comment after |
+                    # EOL comment after |
+                    lss.comment = self.comment(node.comment[1][0])  # type: ignore
             return lss
         if node.style == '>' and isinstance(node.value, str):
             fold_positions = []  # type: List[int]
@@ -1121,7 +1118,8 @@ class RoundTripConstructor(SafeConstructor):
                 # NEWCMNT
                 if node.comment is not None and node.comment[1]:
                     # nprintf('>>>>nc2', node.comment)
-                    lss.comment = self.comment(node.comment[1][0])  # EOL comment after >
+                    # EOL comment after >
+                    lss.comment = self.comment(node.comment[1][0])  # type: ignore
             if fold_positions:
                 fss.fold_pos = fold_positions  # type: ignore
             return fss

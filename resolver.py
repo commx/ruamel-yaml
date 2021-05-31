@@ -250,7 +250,7 @@ class BaseResolver:
         self.resolver_prefix_paths.pop()
 
     def check_resolver_prefix(self, depth, path, kind, current_node, current_index):
-        # type: (int, Text, Any, Any, Any) -> bool
+        # type: (int, Any, Any, Any, Any) -> bool
         node_check, index_check = path[depth - 1]
         if isinstance(node_check, str):
             if current_node.tag != node_check:

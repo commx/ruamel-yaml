@@ -46,6 +46,7 @@ _SPACE_TAB = ' \t'
 
 
 def xprintf(*args, **kw):
+    # type: (Any, Any) -> Any
     return nprintf(*args, **kw)
     pass
 
@@ -1249,7 +1250,7 @@ class Scanner:
                     line = end_mark.line - len(trailing)
                     for x in trailing:
                         assert x[-1] == '\n'
-                        self.comments.add_blank_line(x, 0, line)
+                        self.comments.add_blank_line(x, 0, line)  # type: ignore
                         line += 1
             comment = self.scan_to_next_token()
             while comment:
@@ -1620,7 +1621,7 @@ class Scanner:
                 line = start_mark.line + 1
                 for ch in spaces:
                     if ch == '\n':
-                        self.comments.add_blank_line('\n', 0, line)
+                        self.comments.add_blank_line('\n', 0, line)  # type: ignore
                         line += 1
 
         return token
@@ -2016,6 +2017,7 @@ class CommentBase:
     __slots__ = ('value', 'line', 'column', 'used', 'function', 'fline', 'ufun', 'uline')
 
     def __init__(self, value, line, column):
+        # type: (Any, Any, Any) -> None
         self.value = value
         self.line = line
         self.column = column
@@ -2027,24 +2029,29 @@ class CommentBase:
         self.uline = None
 
     def set_used(self, v='+'):
+        # type: (Any) -> None
         self.used = v
         info = inspect.getframeinfo(inspect.stack()[1][0])
-        self.ufun = info.function
-        self.uline = info.lineno
+        self.ufun = info.function  # type: ignore
+        self.uline = info.lineno  # type: ignore
 
     def set_assigned(self):
+        # type: () -> None
         self.used = '|'
 
     def __str__(self):
-        return _F('{value}', value=self.value)
+        # type: () -> str
+        return _F('{value}', value=self.value)  # type: ignore
 
     def __repr__(self):
-        return _F('{value!r}', value=self.value)
+        # type: () -> str
+        return _F('{value!r}', value=self.value)  # type: ignore
 
     def info(self):
-        return _F(
+        # type: () -> str
+        return _F(  # type: ignore
             '{name}{used} {line:2}:{column:<2} "{value:40s} {function}:{fline} {ufun}:{uline}',
-            name=self.name,
+            name=self.name,  # type: ignore
             line=self.line,
             column=self.column,
             value=self.value + '"',
@@ -2060,6 +2067,7 @@ class EOLComment(CommentBase):
     name = 'EOLC'
 
     def __init__(self, value, line, column):
+        # type: (Any, Any, Any) -> None
         super().__init__(value, line, column)
 
 
@@ -2067,6 +2075,7 @@ class FullLineComment(CommentBase):
     name = 'FULL'
 
     def __init__(self, value, line, column):
+        # type: (Any, Any, Any) -> None
         super().__init__(value, line, column)
 
 
@@ -2074,15 +2083,18 @@ class BlankLineComment(CommentBase):
     name = 'BLNK'
 
     def __init__(self, value, line, column):
+        # type: (Any, Any, Any) -> None
         super().__init__(value, line, column)
 
 
 class ScannedComments:
     def __init__(self):
-        self.comments = {}
-        self.unused = []
+        # type: (Any) -> None
+        self.comments = {}  # type: ignore
+        self.unused = []  # type: ignore
 
     def add_eol_comment(self, comment, column, line):
+        # type: (Any, Any, Any) -> Any
         # info = inspect.getframeinfo(inspect.stack()[1][0])
         if comment.count('\n') == 1:
             assert comment[-1] == '\n'
@@ -2093,6 +2105,7 @@ class ScannedComments:
         return retval
 
     def add_blank_line(self, comment, column, line):
+        # type: (Any, Any, Any) -> Any
         # info = inspect.getframeinfo(inspect.stack()[1][0])
         assert comment.count('\n') == 1 and comment[-1] == '\n'
         assert line not in self.comments
@@ -2101,6 +2114,7 @@ class ScannedComments:
         return retval
 
     def add_full_line_comment(self, comment, column, line):
+        # type: (Any, Any, Any) -> Any
         # info = inspect.getframeinfo(inspect.stack()[1][0])
         assert comment.count('\n') == 1 and comment[-1] == '\n'
         # if comment.startswith('# C12'):
@@ -2111,9 +2125,11 @@ class ScannedComments:
         return retval
 
     def __getitem__(self, idx):
+        # type: (Any) -> Any
         return self.comments[idx]
 
     def __str__(self):
+        # type: () -> Any
         return (
             'ParsedComments:\n  '
             + '\n  '.join(
@@ -2126,10 +2142,12 @@ class ScannedComments:
         )
 
     def last(self):
+        # type: () -> str
         lineno, x = list(self.comments.items())[-1]
-        return _F('{lineno:2} {x}\n', lineno=lineno, x=x.info())
+        return _F('{lineno:2} {x}\n', lineno=lineno, x=x.info())  # type: ignore
 
     def any_unprocessed(self):
+        # type: () -> bool
         # ToDo: might want to differentiate based on lineno
         return len(self.unused) > 0
         # for lno, comment in reversed(self.comments.items()):
@@ -2138,6 +2156,7 @@ class ScannedComments:
         # return False
 
     def unprocessed(self, use=False):
+        # type: (Any) -> Any
         while len(self.unused) > 0:
             first = self.unused.pop(0) if use else self.unused[0]
             info = inspect.getframeinfo(inspect.stack()[1][0])
@@ -2147,6 +2166,7 @@ class ScannedComments:
                 self.comments[first].set_used()
 
     def assign_pre(self, token):
+        # type: (Any) -> Any
         token_line = token.start_mark.line
         info = inspect.getframeinfo(inspect.stack()[1][0])
         xprintf('assign_pre', token_line, self.unused, info.function, info.lineno)
@@ -2160,6 +2180,7 @@ class ScannedComments:
         return gobbled
 
     def assign_eol(self, tokens):
+        # type: (Any) -> Any
         try:
             comment_line = self.unused[0]
         except IndexError:
@@ -2215,6 +2236,7 @@ class ScannedComments:
         sys.exit(0)
 
     def assign_post(self, token):
+        # type: (Any) -> Any
         token_line = token.start_mark.line
         info = inspect.getframeinfo(inspect.stack()[1][0])
         xprintf('assign_post', token_line, self.unused, info.function, info.lineno)
@@ -2228,6 +2250,7 @@ class ScannedComments:
         return gobbled
 
     def str_unprocessed(self):
+        # type: () -> Any
         return ''.join(
             (
                 _F('  {ind:2} {x}\n', ind=ind, x=x.info())
@@ -2239,6 +2262,7 @@ class ScannedComments:
 
 class RoundTripScannerSC(Scanner):  # RoundTripScanner Split Comments
     def __init__(self, *arg, **kw):
+        # type: (Any, Any) -> None
         super().__init__(*arg, **kw)
         assert self.loader is not None
         # comments isinitialised on .need_more_tokens and persist on
@@ -2252,15 +2276,16 @@ class RoundTripScannerSC(Scanner):  # RoundTripScanner Split Comments
             self.fetch_more_tokens()
         if len(self.tokens) > 0:
             if isinstance(self.tokens[0], BlockEndToken):
-                self.comments.assign_post(self.tokens[0])
+                self.comments.assign_post(self.tokens[0])  # type: ignore
             else:
-                self.comments.assign_pre(self.tokens[0])
+                self.comments.assign_pre(self.tokens[0])  # type: ignore
             self.tokens_taken += 1
             return self.tokens.pop(0)
 
     def need_more_tokens(self):
+        # type: () -> bool
         if self.comments is None:
-            self.loader.parsed_comments = self.comments = ScannedComments()
+            self.loader.parsed_comments = self.comments = ScannedComments()  # type: ignore
         if self.done:
             return False
         if len(self.tokens) == 0:
@@ -2279,12 +2304,13 @@ class RoundTripScannerSC(Scanner):  # RoundTripScanner Split Comments
             for t in self.tokens:
                 xprintf(t)
             # xprintf(self.comments.last())
-            xprintf(self.comments.str_unprocessed())
-        self.comments.assign_pre(self.tokens[0])
-        self.comments.assign_eol(self.tokens)
+            xprintf(self.comments.str_unprocessed())  # type: ignore
+        self.comments.assign_pre(self.tokens[0])  # type: ignore
+        self.comments.assign_eol(self.tokens)  # type: ignore
         return False
 
     def scan_to_next_token(self):
+        # type: () -> None
         srp = self.reader.peek
         srf = self.reader.forward
         if self.reader.index == 0 and srp() == '\uFEFF':
@@ -2312,11 +2338,11 @@ class RoundTripScannerSC(Scanner):  # RoundTripScanner Split Comments
                     srf()
                 # we have a comment
                 if start_mark.column == 0:
-                    self.comments.add_full_line_comment(
+                    self.comments.add_full_line_comment(  # type: ignore
                         comment, comment_start_mark.column, comment_start_mark.line
                     )
                 else:
-                    self.comments.add_eol_comment(
+                    self.comments.add_eol_comment(  # type: ignore
                         comment, comment_start_mark.column, comment_start_mark.line
                     )
                     comment = ""
@@ -2348,6 +2374,7 @@ class RoundTripScannerSC(Scanner):  # RoundTripScanner Split Comments
         return None
 
     def scan_empty_or_full_line_comments(self):
+        # type: () -> None
         blmark = self.reader.get_mark()
         assert blmark.column == 0
         blanks = ""
@@ -2367,7 +2394,7 @@ class RoundTripScannerSC(Scanner):  # RoundTripScanner Split Comments
                     comment = None
                 else:
                     blanks += '\n'
-                    self.comments.add_blank_line(blanks, blmark.column, blmark.line)
+                    self.comments.add_blank_line(blanks, blmark.column, blmark.line)  # type: ignore # NOQA
                 blanks = ""
                 blmark = self.reader.get_mark()
                 ch = self.reader.peek()
@@ -2402,7 +2429,7 @@ class RoundTripScannerSC(Scanner):  # RoundTripScanner Split Comments
             while srp() not in _THE_END:
                 comment += srp()
                 srf()
-            comment += '\n'
+            comment += '\n'  # type: ignore
         ch = srp()
         if ch not in _THE_END:
             raise ScannerError(
@@ -2412,6 +2439,6 @@ class RoundTripScannerSC(Scanner):  # RoundTripScanner Split Comments
                 self.reader.get_mark(),
             )
         if comment is not None:
-            self.comments.add_eol_comment(comment, mark.column, mark.line)
+            self.comments.add_eol_comment(comment, mark.column, mark.line)  # type: ignore
         self.scan_line_break()
         return None

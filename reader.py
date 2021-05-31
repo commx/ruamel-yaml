@@ -42,7 +42,7 @@ class ReaderError(YAMLError):
         self.reason = reason
 
     def __str__(self):
-        # type: () -> str
+        # type: () -> Any
         if isinstance(self.character, bytes):
             return _F(
                 "'{self_encoding!s}' codec can't decode byte #x{ord_self_character:02x}: "
@@ -212,7 +212,7 @@ class Reader:
     @classmethod
     def _get_non_printable_ascii(cls, data):  # type: ignore
         # type: (Text, bytes) -> Optional[Tuple[int, Text]]
-        ascii_bytes = data.encode('ascii')
+        ascii_bytes = data.encode('ascii')  # type: ignore
         non_printables = ascii_bytes.translate(None, cls._printable_ascii)  # type: ignore
         if not non_printables:
             return None

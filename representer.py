@@ -253,7 +253,8 @@ class SafeRepresenter(BaseRepresenter):
         if hasattr(base64, 'encodebytes'):
             data = base64.encodebytes(data).decode('ascii')
         else:
-            data = base64.encodestring(data).decode('ascii')
+            # check py2 only?
+            data = base64.encodestring(data).decode('ascii')  # type: ignore
         return self.represent_scalar('tag:yaml.org,2002:binary', data, style='|')
 
     def represent_bool(self, data, anchor=None):
@@ -439,8 +440,8 @@ class Representer(SafeRepresenter):
         # !!python/object/apply node.
 
         cls = type(data)
-        if cls in copyreg.dispatch_table:
-            reduce = copyreg.dispatch_table[cls](data)
+        if cls in copyreg.dispatch_table:  # type: ignore
+            reduce = copyreg.dispatch_table[cls](data)  # type: ignore
         elif hasattr(data, '__reduce_ex__'):
             reduce = data.__reduce_ex__(2)
         elif hasattr(data, '__reduce__'):
