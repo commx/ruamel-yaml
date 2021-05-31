@@ -1,3 +1,7 @@
+[0, 17, 7]: 2021-05-31
+  - issue 385 also affected other deprecated loaders (reported via email 
+    by Oren Watson)
+
 [0, 17, 6]: 2021-05-31
   - merged type annotations update provided by 
     `Jochen Sprickerhof <https://sourceforge.net/u/jspricke/>`__

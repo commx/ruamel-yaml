@@ -22,6 +22,7 @@ __all__ = ['BaseLoader', 'SafeLoader', 'Loader', 'RoundTripLoader']
 class BaseLoader(Reader, Scanner, Parser, Composer, BaseConstructor, VersionedResolver):
     def __init__(self, stream, version=None, preserve_quotes=None):
         # type: (StreamTextType, Optional[VersionType], Optional[bool]) -> None
+        self.comment_handling = None
         Reader.__init__(self, stream, loader=self)
         Scanner.__init__(self, loader=self)
         Parser.__init__(self, loader=self)
@@ -33,6 +34,7 @@ class BaseLoader(Reader, Scanner, Parser, Composer, BaseConstructor, VersionedRe
 class SafeLoader(Reader, Scanner, Parser, Composer, SafeConstructor, VersionedResolver):
     def __init__(self, stream, version=None, preserve_quotes=None):
         # type: (StreamTextType, Optional[VersionType], Optional[bool]) -> None
+        self.comment_handling = None
         Reader.__init__(self, stream, loader=self)
         Scanner.__init__(self, loader=self)
         Parser.__init__(self, loader=self)
@@ -44,6 +46,7 @@ class SafeLoader(Reader, Scanner, Parser, Composer, SafeConstructor, VersionedRe
 class Loader(Reader, Scanner, Parser, Composer, Constructor, VersionedResolver):
     def __init__(self, stream, version=None, preserve_quotes=None):
         # type: (StreamTextType, Optional[VersionType], Optional[bool]) -> None
+        self.comment_handling = None
         Reader.__init__(self, stream, loader=self)
         Scanner.__init__(self, loader=self)
         Parser.__init__(self, loader=self)
