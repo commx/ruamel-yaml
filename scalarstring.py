@@ -23,8 +23,8 @@ class ScalarString(str):
 
     def __new__(cls, *args, **kw):
         # type: (Any, Any) -> Any
-        anchor = kw.pop('anchor', None)  # type: ignore
-        ret_val = str.__new__(cls, *args, **kw)  # type: ignore
+        anchor = kw.pop('anchor', None)
+        ret_val = str.__new__(cls, *args, **kw)
         if anchor is not None:
             ret_val.yaml_set_anchor(anchor, always_dump=True)
         return ret_val
@@ -126,7 +126,7 @@ def walk_tree(base, map=None):
         map[':'] = SingleQuotedScalarString
         walk_tree(data, map=map)
     """
-    from collections.abc import MutableMapping, MutableSequence  # type: ignore
+    from collections.abc import MutableMapping, MutableSequence
 
     if map is None:
         map = {'\n': preserve_literal}
@@ -145,7 +145,7 @@ def walk_tree(base, map=None):
         for idx, elem in enumerate(base):
             if isinstance(elem, str):
                 for ch in map:
-                    if ch in elem:  # type: ignore
+                    if ch in elem:
                         base[idx] = map[ch](elem)
                         break
             else:

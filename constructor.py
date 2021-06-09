@@ -7,7 +7,7 @@ import re
 import sys
 import types
 import warnings
-from collections.abc import Hashable, MutableSequence, MutableMapping  # type: ignore
+from collections.abc import Hashable, MutableSequence, MutableMapping
 
 # fmt: off
 from ruamel.yaml.error import (MarkedYAMLError, MarkedYAMLFutureWarning,
@@ -16,7 +16,7 @@ from ruamel.yaml.nodes import *                               # NOQA
 from ruamel.yaml.nodes import (SequenceNode, MappingNode, ScalarNode)
 from ruamel.yaml.compat import (_F, builtins_module, # NOQA
                                 nprint, nprintf, version_tnf)
-from ruamel.yaml.compat import ordereddict  # type: ignore
+from ruamel.yaml.compat import ordereddict
 
 from ruamel.yaml.comments import *                               # NOQA
 from ruamel.yaml.comments import (CommentedMap, CommentedOrderedMap, CommentedSet,
@@ -1725,7 +1725,10 @@ class RoundTripConstructor(SafeConstructor):
                 data.yaml_set_tag(node.tag)
                 yield data
                 if node.anchor:
-                    data.yaml_set_anchor(node.anchor)
+                    from ruamel.yaml.serializer import templated_id
+
+                    if not templated_id(node.anchor):
+                        data.yaml_set_anchor(node.anchor)
                 self.construct_mapping(node, data)
                 return
             elif isinstance(node, ScalarNode):
@@ -1735,7 +1738,10 @@ class RoundTripConstructor(SafeConstructor):
                 data2.yaml_set_tag(node.tag)
                 yield data2
                 if node.anchor:
-                    data2.yaml_set_anchor(node.anchor, always_dump=True)
+                    from ruamel.yaml.serializer import templated_id
+
+                    if not templated_id(node.anchor):
+                        data2.yaml_set_anchor(node.anchor, always_dump=True)
                 return
             elif isinstance(node, SequenceNode):
                 data3 = CommentedSeq()
@@ -1747,7 +1753,10 @@ class RoundTripConstructor(SafeConstructor):
                 data3.yaml_set_tag(node.tag)
                 yield data3
                 if node.anchor:
-                    data3.yaml_set_anchor(node.anchor)
+                    from ruamel.yaml.serializer import templated_id
+
+                    if not templated_id(node.anchor):
+                        data3.yaml_set_anchor(node.anchor)
                 data3.extend(self.construct_sequence(node))
                 return
         except:  # NOQA

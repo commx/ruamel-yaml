@@ -118,7 +118,7 @@ class Reader:
         if isinstance(val, str):
             self.name = '<unicode string>'
             self.check_printable(val)
-            self.buffer = val + '\0'  # type: ignore
+            self.buffer = val + '\0'
         elif isinstance(val, bytes):
             self.name = '<byte string>'
             self.raw_buffer = val

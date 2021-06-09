@@ -2,7 +2,7 @@
 
 from ruamel.yaml.error import *  # NOQA
 from ruamel.yaml.nodes import *  # NOQA
-from ruamel.yaml.compat import ordereddict  # type: ignore
+from ruamel.yaml.compat import ordereddict
 from ruamel.yaml.compat import _F, nprint, nprintf  # NOQA
 from ruamel.yaml.scalarstring import (
     LiteralScalarString,

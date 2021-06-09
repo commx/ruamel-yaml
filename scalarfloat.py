@@ -12,16 +12,16 @@ __all__ = ['ScalarFloat', 'ExponentialFloat', 'ExponentialCapsFloat']
 class ScalarFloat(float):
     def __new__(cls, *args, **kw):
         # type: (Any, Any, Any) -> Any
-        width = kw.pop('width', None)  # type: ignore
-        prec = kw.pop('prec', None)  # type: ignore
-        m_sign = kw.pop('m_sign', None)  # type: ignore
-        m_lead0 = kw.pop('m_lead0', 0)  # type: ignore
-        exp = kw.pop('exp', None)  # type: ignore
-        e_width = kw.pop('e_width', None)  # type: ignore
-        e_sign = kw.pop('e_sign', None)  # type: ignore
-        underscore = kw.pop('underscore', None)  # type: ignore
-        anchor = kw.pop('anchor', None)  # type: ignore
-        v = float.__new__(cls, *args, **kw)  # type: ignore
+        width = kw.pop('width', None)
+        prec = kw.pop('prec', None)
+        m_sign = kw.pop('m_sign', None)
+        m_lead0 = kw.pop('m_lead0', 0)
+        exp = kw.pop('exp', None)
+        e_width = kw.pop('e_width', None)
+        e_sign = kw.pop('e_sign', None)
+        underscore = kw.pop('underscore', None)
+        anchor = kw.pop('anchor', None)
+        v = float.__new__(cls, *args, **kw)
         v._width = width
         v._prec = prec
         v._m_sign = m_sign

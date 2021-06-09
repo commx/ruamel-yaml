@@ -17,7 +17,7 @@ class TimeStamp(datetime.datetime):
 
     def __new__(cls, *args, **kw):  # datetime is immutable
         # type: (Any, Any) -> Any
-        return datetime.datetime.__new__(cls, *args, **kw)  # type: ignore
+        return datetime.datetime.__new__(cls, *args, **kw)
 
     def __deepcopy__(self, memo):
         # type: (Any) -> Any

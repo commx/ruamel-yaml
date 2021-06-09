@@ -4,8 +4,8 @@ ruamel.yaml
 
 ``ruamel.yaml`` is a YAML 1.2 loader/dumper package for Python.
 
-:version:       0.17.7
-:updated:       2021-05-31
+:version:       0.17.8
+:updated:       2021-06-09
 :documentation: http://yaml.readthedocs.io
 :repository:    https://sourceforge.net/projects/ruamel-yaml/
 :pypi:          https://pypi.org/project/ruamel.yaml/
@@ -65,6 +65,11 @@ ChangeLog
 
 .. should insert NEXT: at the beginning of line for next key (with empty line)
 
+0.17.8 (2021-06-09):
+  - fix for issue 387 where templated anchors on tagged object did get set
+    resulting in potential id reuse. (reported by `Artem Ploujnikov 
+    <https://sourceforge.net/u/flexthink/>`__)
+
 0.17.7 (2021-05-31):
   - issue 385 also affected other deprecated loaders (reported via email 
     by Oren Watson)
@@ -76,7 +81,7 @@ ChangeLog
     (reported by `Mike Gouline <https://sourceforge.net/u/gouline/>`__)
   - wasted a few hours getting rid of mypy warnings/errors
   
-0.17.5:
+0.17.5 (2021-05-30):
   - fix for issue 384 !!set with aliased entry resulting in broken YAML on rt
     reported by  `William Kimball <https://sourceforge.net/u/william303/>`__)
 

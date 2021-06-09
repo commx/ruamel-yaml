@@ -11,10 +11,10 @@ __all__ = ['ScalarInt', 'BinaryInt', 'OctalInt', 'HexInt', 'HexCapsInt', 'Decima
 class ScalarInt(int):
     def __new__(cls, *args, **kw):
         # type: (Any, Any, Any) -> Any
-        width = kw.pop('width', None)  # type: ignore
-        underscore = kw.pop('underscore', None)  # type: ignore
-        anchor = kw.pop('anchor', None)  # type: ignore
-        v = int.__new__(cls, *args, **kw)  # type: ignore
+        width = kw.pop('width', None)
+        underscore = kw.pop('underscore', None)
+        anchor = kw.pop('anchor', None)
+        v = int.__new__(cls, *args, **kw)
         v._width = width
         v._underscore = underscore
         if anchor is not None:

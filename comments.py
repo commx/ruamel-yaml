@@ -10,7 +10,7 @@ import sys
 import copy
 
 
-from ruamel.yaml.compat import ordereddict  # type: ignore
+from ruamel.yaml.compat import ordereddict
 from ruamel.yaml.compat import MutableSliceableSequence, _F, nprintf  # NOQA
 from ruamel.yaml.scalarstring import ScalarString
 from ruamel.yaml.anchor import Anchor
@@ -118,7 +118,7 @@ class Comment:
         else:
             end = ""
         try:
-            ln = max([len(str(k)) for k in self._items]) + 1  # type: ignore
+            ln = max([len(str(k)) for k in self._items]) + 1
         except ValueError:
             ln = ''  # type: ignore
         it = '    '.join(
@@ -137,7 +137,7 @@ class Comment:
         else:
             end = ""
         try:
-            ln = max([len(str(k)) for k in self._items]) + 1  # type: ignore
+            ln = max([len(str(k)) for k in self._items]) + 1
         except ValueError:
             ln = ''  # type: ignore
         it = '    '.join(
@@ -632,7 +632,7 @@ class CommentedSeq(MutableSliceableSequence, list, CommentedBase):  # type: igno
         # type: (Any) -> Any
         return list.__add__(self, other)
 
-    def sort(self, key=None, reverse=False):  # type: ignore
+    def sort(self, key=None, reverse=False):
         # type: (Any, bool) -> None
         if key is None:
             tmp_lst = sorted(zip(self, range(len(self))), reverse=reverse)
@@ -784,7 +784,7 @@ class CommentedMapValuesView(CommentedMapView):
             yield self._mapping[key]
 
 
-class CommentedMap(ordereddict, CommentedBase):  # type: ignore
+class CommentedMap(ordereddict, CommentedBase):
     __slots__ = (Comment.attrib, '_ok', '_ref')
 
     def __init__(self, *args, **kw):

@@ -20,8 +20,8 @@ __all__ = ['ScalarBoolean']
 class ScalarBoolean(int):
     def __new__(cls, *args, **kw):
         # type: (Any, Any, Any) -> Any
-        anchor = kw.pop('anchor', None)  # type: ignore
-        b = int.__new__(cls, *args, **kw)  # type: ignore
+        anchor = kw.pop('anchor', None)
+        b = int.__new__(cls, *args, **kw)
         if anchor is not None:
             b.yaml_set_anchor(anchor, always_dump=True)
         return b
