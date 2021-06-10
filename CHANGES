@@ -1,3 +1,7 @@
+[0, 17, 9]: 2021-06-10
+  - fix issue with updating CommentedMap (reported by sri on
+    `StackOverlow <https://stackoverflow.com/q/67911659/1307905>`__)
+
 [0, 17, 8]: 2021-06-09
   - fix for issue 387 where templated anchors on tagged object did get set
     resulting in potential id reuse. (reported by `Artem Ploujnikov 

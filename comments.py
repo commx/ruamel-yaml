@@ -868,7 +868,7 @@ class CommentedMap(ordereddict, CommentedBase):
             for x in vals[0]:
                 self[x] = vals[0][x]
         try:
-            self._ok.update(vals.keys())  # type: ignore
+            self._ok.update(vals[0].keys())  # type: ignore
         except AttributeError:
             # assume one argument that is a list/tuple of two element lists/tuples
             for x in vals[0]:
