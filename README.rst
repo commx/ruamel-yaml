@@ -4,8 +4,8 @@ ruamel.yaml
 
 ``ruamel.yaml`` is a YAML 1.2 loader/dumper package for Python.
 
-:version:       0.17.9
-:updated:       2021-06-10
+:version:       0.17.10
+:updated:       2021-06-24
 :documentation: http://yaml.readthedocs.io
 :repository:    https://sourceforge.net/projects/ruamel-yaml/
 :pypi:          https://pypi.org/project/ruamel.yaml/
@@ -64,6 +64,10 @@ ChangeLog
 =========
 
 .. should insert NEXT: at the beginning of line for next key (with empty line)
+
+0.17.10 (2021-06-24):
+  - fix issue 388, token with old comment structure != two elements
+    (reported by `Dimitrios Bariamis <https://sourceforge.net/u/dbdbc/>`__)
 
 0.17.9 (2021-06-10):
   - fix issue with updating CommentedMap (reported by sri on

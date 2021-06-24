@@ -66,7 +66,7 @@ class Token:
         if not hasattr(self, '_comment'):
             self._comment = [None, None]
         else:
-            assert len(self._comment) == 2  # make sure it is version 0
+            assert len(self._comment) in [2, 5]  # make sure it is version 0
         # if isinstance(comment, CommentToken):
         #    if comment.value.startswith('# C09'):
         #        raise

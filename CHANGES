@@ -1,3 +1,7 @@
+[0, 17, 10]: 2021-06-24
+  - fix issue 388, token with old comment structure != two elements
+    (reported by `Dimitrios Bariamis <https://sourceforge.net/u/dbdbc/>`__)
+
 [0, 17, 9]: 2021-06-10
   - fix issue with updating CommentedMap (reported by sri on
     `StackOverlow <https://stackoverflow.com/q/67911659/1307905>`__)
