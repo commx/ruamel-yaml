@@ -51,7 +51,7 @@ class DuplicateKeyFutureWarning(MarkedYAMLFutureWarning):
     pass
 
 
-class DuplicateKeyError(MarkedYAMLFutureWarning):
+class DuplicateKeyError(MarkedYAMLError):
     pass
 
 

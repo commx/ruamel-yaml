@@ -1,3 +1,9 @@
+[0, 17, 11]: 2021-08-19
+  - fix error baseclass for ``DuplicateKeyErorr`` (reported by `Łukasz Rogalski
+    <https://sourceforge.net/u/lrogalski/>`__)
+  - fix typo in reader error message, causing `KeyError` during reader error 
+    (reported by `MTU <https://sourceforge.net/u/mtu/>`__)
+
 [0, 17, 10]: 2021-06-24
   - fix issue 388, token with old comment structure != two elements
     (reported by `Dimitrios Bariamis <https://sourceforge.net/u/dbdbc/>`__)

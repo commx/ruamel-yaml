@@ -4,8 +4,8 @@ ruamel.yaml
 
 ``ruamel.yaml`` is a YAML 1.2 loader/dumper package for Python.
 
-:version:       0.17.10
-:updated:       2021-06-24
+:version:       0.17.11
+:updated:       2021-08-19
 :documentation: http://yaml.readthedocs.io
 :repository:    https://sourceforge.net/projects/ruamel-yaml/
 :pypi:          https://pypi.org/project/ruamel.yaml/
@@ -23,11 +23,18 @@ it might even be necessary for documented methods that handle comments.*
 
 
 Starting with version 0.15.0 the way YAML files are loaded and dumped
-is changing. See the API doc for details.  Currently existing
+has been changing, see the API doc for details.  Currently existing
 functionality will throw a warning before being changed/removed.
-**For production systems you should pin the version being used with
-``ruamel.yaml<=0.15``**. There might be bug fixes in the 0.14 series,
-but new functionality is likely only to be available via the new API.
+**For production systems already using a pre 0.16 version, you should
+pin the version being used with ``ruamel.yaml<=0.15``** if you cannot
+fully test upgrading to a newer version. For new usage
+pin to the minor version tested ( ``ruamel.yaml<=0.17``) or even to the
+exact version used. 
+
+New functionality is usually only available via the new API, so
+make sure you use it and stop using the `ruamel.yaml.safe_load()`,
+`ruamel.yaml.round_trip_load()` and `ruamel.yaml.load()` functions
+(and their `....dump()` counterparts).
 
 If your package uses ``ruamel.yaml`` and is not listed on PyPI, drop
 me an email, preferably with some information on how you use the
@@ -65,13 +72,19 @@ ChangeLog
 
 .. should insert NEXT: at the beginning of line for next key (with empty line)
 
+0.17.11 (2021-08-19):
+  - fix error baseclass for ``DuplicateKeyErorr`` (reported by `Łukasz Rogalski
+    <https://sourceforge.net/u/lrogalski/>`__)
+  - fix typo in reader error message, causing `KeyError` during reader error 
+    (reported by `MTU <https://sourceforge.net/u/mtu/>`__)
+
 0.17.10 (2021-06-24):
   - fix issue 388, token with old comment structure != two elements
     (reported by `Dimitrios Bariamis <https://sourceforge.net/u/dbdbc/>`__)
 
 0.17.9 (2021-06-10):
   - fix issue with updating CommentedMap (reported by sri on
-    `StackOverlow <https://stackoverflow.com/q/67911659/1307905>`__)
+    `StackOverflow <https://stackoverflow.com/q/67911659/1307905>`__)
 
 0.17.8 (2021-06-09):
   - fix for issue 387 where templated anchors on tagged object did get set
@@ -144,7 +157,7 @@ ChangeLog
     (reported by `eulores <https://sourceforge.net/u/eulores/>`__)
   - a None value in a flow-style sequence is now dumped as `null` instead
     of `!!null ''` (reported by mcarans on
-    `StackOverlow <https://stackoverflow.com/a/66489600/1307905>`__)
+    `StackOverflow <https://stackoverflow.com/a/66489600/1307905>`__)
 
 0.16.12 (2020-09-04):
   - update links in doc

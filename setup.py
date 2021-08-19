@@ -50,10 +50,6 @@ if sys.version_info < (3, 4):
         pass
 
 
-if sys.version_info >= (3, 8):
-    from ast import Str, Num, Bytes, NameConstant  # NOQA
-
-
 if sys.version_info < (3,):
     open_kw = dict()
 else:
@@ -80,6 +76,9 @@ else:
             kw1['file'] = fp
             print('{:%Y-%d-%mT%H:%M:%S}'.format(datetime.datetime.now()), file=fp, end=' ')
             print(*args, **kw1)
+
+if sys.version_info >= (3, 8):
+    from ast import Str, Num, Bytes, NameConstant  # NOQA
 
 
 def literal_eval(node_or_string):
@@ -856,7 +855,7 @@ class NameSpacePackager(object):
             return False
         with open(file_name, 'w') as fp:
             if os.path.exists('LICENSE'):
-                fp.write('[metadata]\nlicense-file = LICENSE\n')
+                fp.write('[metadata]\nlicense_file = LICENSE\n')
             else:
                 print('\n\n>>>>>> LICENSE file not found <<<<<\n\n')
             if self._pkg_data.get('universal'):
