@@ -1635,7 +1635,10 @@ class RoundTripConstructor(SafeConstructor):
             data.__setstate__(state)
         else:
             state = SafeConstructor.construct_mapping(self, node)
-            data.__dict__.update(state)
+            if hasattr(data, '__attrs_attrs__'):  # issue 394
+                cls.__init__(cls, **state)
+            else:
+                data.__dict__.update(state)
         if node.anchor:
             from ruamel.yaml.serializer import templated_id
             from ruamel.yaml.anchor import Anchor

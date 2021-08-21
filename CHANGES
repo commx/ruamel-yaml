@@ -1,3 +1,7 @@
+[0, 17, 12]: 2021-08-21
+  - fix issue with anchor on registered class not preserved and those classes using package 
+    attrs with `@attr.s()` (both reported by `ssph <https://sourceforge.net/u/sph/>`__)
+
 [0, 17, 11]: 2021-08-19
   - fix error baseclass for ``DuplicateKeyErorr`` (reported by `Łukasz Rogalski
     <https://sourceforge.net/u/lrogalski/>`__)
