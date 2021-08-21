@@ -1,3 +1,6 @@
+[0, 17, 13]: 2021-08-21
+  - minor fix in attr handling
+
 [0, 17, 12]: 2021-08-21
   - fix issue with anchor on registered class not preserved and those classes using package 
     attrs with `@attr.s()` (both reported by `ssph <https://sourceforge.net/u/sph/>`__)

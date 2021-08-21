@@ -1636,7 +1636,7 @@ class RoundTripConstructor(SafeConstructor):
         else:
             state = SafeConstructor.construct_mapping(self, node)
             if hasattr(data, '__attrs_attrs__'):  # issue 394
-                cls.__init__(cls, **state)
+                data.__init__(**state)
             else:
                 data.__dict__.update(state)
         if node.anchor:
