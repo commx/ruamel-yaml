@@ -26,6 +26,7 @@ from ruamel.yaml.scalarint import ScalarInt, BinaryInt, OctalInt, HexInt, HexCap
 from ruamel.yaml.scalarfloat import ScalarFloat
 from ruamel.yaml.scalarbool import ScalarBoolean
 from ruamel.yaml.timestamp import TimeStamp
+from ruamel.yaml.anchor import Anchor
 
 import datetime
 import sys
@@ -1079,6 +1080,17 @@ class RoundTripRepresenter(SafeRepresenter):
         except AttributeError:
             anchor = None
         return SafeRepresenter.represent_bool(self, data, anchor=anchor)
+
+    def represent_yaml_object(self, tag, data, cls, flow_style=None):
+        if hasattr(data, '__getstate__'):
+            state = data.__getstate__()
+        else:
+            state = data.__dict__.copy()
+        anchor = state.pop(Anchor.attrib, None)
+        res = self.represent_mapping(tag, state, flow_style=flow_style)
+        if anchor is not None:
+            res.anchor = anchor
+        return res
 
 
 RoundTripRepresenter.add_representer(type(None), RoundTripRepresenter.represent_none)

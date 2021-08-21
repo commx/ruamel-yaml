@@ -1636,6 +1636,17 @@ class RoundTripConstructor(SafeConstructor):
         else:
             state = SafeConstructor.construct_mapping(self, node)
             data.__dict__.update(state)
+        if node.anchor:
+            from ruamel.yaml.serializer import templated_id
+            from ruamel.yaml.anchor import Anchor
+
+            if not templated_id(node.anchor):
+                if not hasattr(data, Anchor.attrib):
+                    a = Anchor()
+                    setattr(data, Anchor.attrib, a)
+                else:
+                    a = getattr(data, Anchor.attrib)
+                a.value = node.anchor
 
     def construct_yaml_omap(self, node):
         # type: (Any) -> Any
