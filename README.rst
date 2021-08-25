@@ -4,8 +4,8 @@ ruamel.yaml
 
 ``ruamel.yaml`` is a YAML 1.2 loader/dumper package for Python.
 
-:version:       0.17.13
-:updated:       2021-08-21
+:version:       0.17.14
+:updated:       2021-08-25
 :documentation: http://yaml.readthedocs.io
 :repository:    https://sourceforge.net/projects/ruamel-yaml/
 :pypi:          https://pypi.org/project/ruamel.yaml/
@@ -71,6 +71,10 @@ ChangeLog
 =========
 
 .. should insert NEXT: at the beginning of line for next key (with empty line)
+
+0.17.14 (2021-08-25):
+  - fix issue 396, inserting key/val in merged-in dictionary (reported by `Bastien gerard 
+    <https://sourceforge.net/u/bagerard/>`__)
 
 0.17.13 (2021-08-21):
   - minor fix in attr handling

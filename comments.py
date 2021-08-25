@@ -881,8 +881,13 @@ class CommentedMap(ordereddict, CommentedBase):
         """insert key value into given position
         attach comment if provided
         """
+        keys = list(self.keys()) + [key]
         ordereddict.insert(self, pos, key, value)
-        self._ok.add(key)
+        for keytmp in keys:
+            self._ok.add(keytmp)
+        for referer in self._ref:
+            for keytmp in keys:
+                referer.update_key_value(keytmp)
         if comment is not None:
             self.yaml_add_eol_comment(comment, key=key)
 

@@ -1,3 +1,7 @@
+[0, 17, 14]: 2021-08-25
+  - fix issue 396, inserting key/val in merged-in dictionary (reported by `Bastien gerard 
+    <https://sourceforge.net/u/bagerard/>`__)
+
 [0, 17, 13]: 2021-08-21
   - minor fix in attr handling
 
