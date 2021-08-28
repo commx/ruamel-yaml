@@ -394,6 +394,8 @@ class CommentedBase:
         if before == '\n':
             c[1].append(comment_token("", start_mark))
         elif before:
+            if c[1] is None:
+                c[1] = []
             for com in before.split('\n'):
                 c[1].append(comment_token(com, start_mark))
         if after:
