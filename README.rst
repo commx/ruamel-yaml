@@ -4,7 +4,7 @@ ruamel.yaml
 
 ``ruamel.yaml`` is a YAML 1.2 loader/dumper package for Python.
 
-:version:       0.17.15
+:version:       0.17.16
 :updated:       2021-08-28
 :documentation: http://yaml.readthedocs.io
 :repository:    https://sourceforge.net/projects/ruamel-yaml/
@@ -71,6 +71,9 @@ ChangeLog
 =========
 
 .. should insert NEXT: at the beginning of line for next key (with empty line)
+
+0.17.16 (2021-08-28):
+  - also handle issue 397 when comment is newline
 
 0.17.15 (2021-08-28):
   - fix issue 397, insert comment before key when a comment between key and value exists

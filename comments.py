@@ -391,13 +391,14 @@ class CommentedBase:
             after = after[:-1]  # strip final newline if there
         start_mark = CommentMark(indent)
         c = self.ca.items.setdefault(key, [None, [], None, None])
-        if before == '\n':
-            c[1].append(comment_token("", start_mark))
-        elif before:
+        if before is not None:
             if c[1] is None:
                 c[1] = []
-            for com in before.split('\n'):
-                c[1].append(comment_token(com, start_mark))
+            if before == '\n':
+                c[1].append(comment_token("", start_mark))
+            else:
+                for com in before.split('\n'):
+                    c[1].append(comment_token(com, start_mark))
         if after:
             start_mark = CommentMark(after_indent)
             if c[3] is None:
