@@ -870,12 +870,13 @@ class CommentedMap(ordereddict, CommentedBase):
             # probably a dict that is used
             for x in vals[0]:
                 self[x] = vals[0][x]
-        try:
-            self._ok.update(vals[0].keys())  # type: ignore
-        except AttributeError:
-            # assume one argument that is a list/tuple of two element lists/tuples
-            for x in vals[0]:
-                self._ok.add(x[0])
+        if vals:
+            try:
+                self._ok.update(vals[0].keys())  # type: ignore
+            except AttributeError:
+                # assume one argument that is a list/tuple of two element lists/tuples
+                for x in vals[0]:
+                    self._ok.add(x[0])
         if kw:
             self._ok.add(*kw.keys())
 
@@ -980,7 +981,7 @@ class CommentedMap(ordereddict, CommentedBase):
         #     # not found in merged in stuff
         #     ordereddict.__delitem__(self, key)
         #    for referer in self._ref:
-        #        referer.update_key_value(key)
+        #        referer.update=_key_value(key)
         #    return
         #
         # ordereddict.__setitem__(self, key, value)  # merge might have different value
