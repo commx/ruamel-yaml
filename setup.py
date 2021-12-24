@@ -527,7 +527,7 @@ class NameSpacePackager(object):
         if package_name is None:
             package_name = self.full_package_name
         if not script_name:
-            script_name = package_name.split('.')[-1]
+            script_name = package_name.rsplit('.', 1)[-1]
         return {
             'console_scripts': [
                 '{0} = {1}'.format(script_name, pckg_entry_point(package_name))
