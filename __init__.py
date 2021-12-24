@@ -13,7 +13,7 @@ _package_data = dict(
     entry_points=None,
     since=2014,
     extras_require={
-        ':platform_python_implementation=="CPython" and python_version<"3.10"': ['ruamel.yaml.clib>=0.1.2'],  # NOQA
+        ':platform_python_implementation=="CPython" and python_version<"3.11"': ['ruamel.yaml.clib>=0.2.6'],  # NOQA
         'jinja2': ['ruamel.yaml.jinja2>=0.2'],
         'docs': ['ryd'],
     },
@@ -24,6 +24,7 @@ _package_data = dict(
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
         'Programming Language :: Python :: 3.9',
+        'Programming Language :: Python :: 3.10',
         'Programming Language :: Python :: Implementation :: CPython',
         'Topic :: Software Development :: Libraries :: Python Modules',
         'Topic :: Text Processing :: Markup',

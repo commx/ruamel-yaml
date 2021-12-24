@@ -1071,7 +1071,7 @@ class RoundTripConstructor(SafeConstructor):
                 if node.comment is not None and node.comment[1]:
                     # nprintf('>>>>nc2', node.comment)
                     # EOL comment after >
-                    lss.comment = self.comment(node.comment[1][0])  # type: ignore
+                    fss.comment = self.comment(node.comment[1][0])  # type: ignore
             if fold_positions:
                 fss.fold_pos = fold_positions  # type: ignore
             return fss

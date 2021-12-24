@@ -72,6 +72,10 @@ ChangeLog
 
 .. should insert NEXT: at the beginning of line for next key (with empty line)
 
+NEXT:
+  - copy-paste error in folded scalar comment attachment (reported by `Stephan Geulette
+    <https://sourceforge.net/u/sgeulette/profile/>`__)
+
 0.17.17 (2021-10-31):
   - extract timestamp matching/creation to util
 

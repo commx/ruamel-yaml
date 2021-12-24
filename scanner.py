@@ -2406,7 +2406,7 @@ class RoundTripScannerSC(Scanner):  # RoundTripScanner Split Comments
                     mark = self.reader.get_mark()
                     comment = '#'
                 else:
-                    # print('breaking on', repr(ch))
+                    # xprintf('breaking on', repr(ch))
                     break
             else:
                 comment += ch
