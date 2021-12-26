@@ -1,3 +1,6 @@
+[0, 17, 19]: 2021-12-26
+  - fix mypy problems (reported by `Arun <https://sourceforge.net/u/arunppsg/profile/>`__)
+
 [0, 17, 18]: 2021-12-24
   - copy-paste error in folded scalar comment attachment (reported by `Stephan Geulette
     <https://sourceforge.net/u/sgeulette/profile/>`__)

@@ -1082,6 +1082,7 @@ class RoundTripRepresenter(SafeRepresenter):
         return SafeRepresenter.represent_bool(self, data, anchor=anchor)
 
     def represent_yaml_object(self, tag, data, cls, flow_style=None):
+        # type: (Any, Any, Any, Optional[Any]) -> Any
         if hasattr(data, '__getstate__'):
             state = data.__getstate__()
         else:

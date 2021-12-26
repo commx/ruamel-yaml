@@ -74,7 +74,7 @@ class Indents:
             return False
 
     def seq_flow_align(self, seq_indent, column, pre_comment=False):
-        # type: (int, int) -> int
+        # type: (int, int, Optional[bool]) -> int
         # extra spaces because of dash
         nprint('seq_flow_align', self.values, pre_comment)
         if len(self.values) < 2 or not self.values[-1][1]:
@@ -82,10 +82,10 @@ class Indents:
                 return 0
         base = self.values[-1][0] if self.values[-1][0] is not None else 0
         if pre_comment:
-            return base + seq_indent
+            return base + seq_indent  # type: ignore
             # return (len(self.values)) * seq_indent
         # -1 for the dash
-        return base + seq_indent - column - 1
+        return base + seq_indent - column - 1  # type: ignore
 
     def __len__(self):
         # type: () -> int
@@ -498,7 +498,7 @@ class Emitter:
     # Flow sequence handlers.
 
     def expect_flow_sequence(self, force_flow_indent=False):
-        # type: (bool) -> None
+        # type: (Optional[bool]) -> None
         if force_flow_indent:
             self.increase_indent(flow=True, sequence=True)
         ind = self.indents.seq_flow_align(self.best_sequence_indent, self.column,
@@ -554,7 +554,7 @@ class Emitter:
     # Flow mapping handlers.
 
     def expect_flow_mapping(self, single=False, force_flow_indent=False):
-        # type: (Optional[bool]) -> None
+        # type: (Optional[bool], Optional[bool]) -> None
         if force_flow_indent:
             self.increase_indent(flow=True, sequence=False)
         ind = self.indents.seq_flow_align(self.best_sequence_indent, self.column,

@@ -395,10 +395,10 @@ class CommentedBase:
             if c[1] is None:
                 c[1] = []
             if before == '\n':
-                c[1].append(comment_token("", start_mark))
+                c[1].append(comment_token("", start_mark))  # type: ignore
             else:
                 for com in before.split('\n'):
-                    c[1].append(comment_token(com, start_mark))
+                    c[1].append(comment_token(com, start_mark))  # type: ignore
         if after:
             start_mark = CommentMark(after_indent)
             if c[3] is None:

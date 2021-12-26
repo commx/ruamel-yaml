@@ -4,8 +4,8 @@ ruamel.yaml
 
 ``ruamel.yaml`` is a YAML 1.2 loader/dumper package for Python.
 
-:version:       0.17.18
-:updated:       2021-12-24
+:version:       0.17.19
+:updated:       2021-12-26
 :documentation: http://yaml.readthedocs.io
 :repository:    https://sourceforge.net/projects/ruamel-yaml/
 :pypi:          https://pypi.org/project/ruamel.yaml/
@@ -55,10 +55,10 @@ when the status of the API is stable enough to make the transition.
 .. image:: https://bestpractices.coreinfrastructure.org/projects/1128/badge
    :target: https://bestpractices.coreinfrastructure.org/projects/1128
 
-.. image:: https://sourceforge.net/p/ruamel-yaml-base/code/ci/default/tree/_doc/_static/license.svg?format=raw
+.. image:: https://sourceforge.net/p/ruamel-yaml/code/ci/default/tree/_doc/_static/license.svg?format=raw
    :target: https://opensource.org/licenses/MIT
 
-.. image:: https://sourceforge.net/p/ruamel-yaml-base/code/ci/default/tree/_doc/_static/pypi.svg?format=raw
+.. image:: https://sourceforge.net/p/ruamel-yaml/code/ci/default/tree/_doc/_static/pypi.svg?format=raw
    :target: https://pypi.org/project/ruamel.yaml/
 
 .. image:: https://sourceforge.net/p/oitnb/code/ci/default/tree/_doc/_static/oitnb.svg?format=raw
@@ -71,6 +71,9 @@ ChangeLog
 =========
 
 .. should insert NEXT: at the beginning of line for next key (with empty line)
+
+0.17.19 (2021-12-26):
+  - fix mypy problems (reported by `Arun <https://sourceforge.net/u/arunppsg/profile/>`__)
 
 0.17.18 (2021-12-24):
   - copy-paste error in folded scalar comment attachment (reported by `Stephan Geulette

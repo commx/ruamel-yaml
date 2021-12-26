@@ -67,6 +67,7 @@ timestamp_regexp = RegExp(
 def create_timestamp(
     year, month, day, t, hour, minute, second, fraction, tz, tz_sign, tz_hour, tz_minute
 ):
+    # type: (Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any) -> Any
     year = int(year)
     month = int(month)
     day = int(day)
