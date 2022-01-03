@@ -4,8 +4,8 @@ ruamel.yaml
 
 ``ruamel.yaml`` is a YAML 1.2 loader/dumper package for Python.
 
-:version:       0.17.19
-:updated:       2021-12-26
+:version:       0.17.20
+:updated:       today
 :documentation: http://yaml.readthedocs.io
 :repository:    https://sourceforge.net/projects/ruamel-yaml/
 :pypi:          https://pypi.org/project/ruamel.yaml/
@@ -71,6 +71,10 @@ ChangeLog
 =========
 
 .. should insert NEXT: at the beginning of line for next key (with empty line)
+
+0.17.20 (today):
+  - fix error in microseconds while rounding datetime fractions >= 9999995
+    (reported by `Luis Ferreira <https://sourceforge.net/u/ljmf00/>`__)
 
 0.17.19 (2021-12-26):
   - fix mypy problems (reported by `Arun <https://sourceforge.net/u/arunppsg/profile/>`__)

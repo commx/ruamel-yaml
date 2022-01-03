@@ -1759,20 +1759,7 @@ class RoundTripConstructor(SafeConstructor):
         else:
             return create_timestamp(**values)
             # return SafeConstructor.construct_yaml_timestamp(self, node, values)
-        year = int(values['year'])
-        month = int(values['month'])
-        day = int(values['day'])
-        hour = int(values['hour'])
-        minute = int(values['minute'])
-        second = int(values['second'])
-        fraction = 0
-        if values['fraction']:
-            fraction_s = values['fraction'][:6]
-            while len(fraction_s) < 6:
-                fraction_s += '0'
-            fraction = int(fraction_s)
-            if len(values['fraction']) > 6 and int(values['fraction'][6]) > 4:
-                fraction += 1
+        dd = create_timestamp(**values)  # this has delta applied
         delta = None
         if values['tz_sign']:
             tz_hour = int(values['tz_hour'])
@@ -1782,17 +1769,16 @@ class RoundTripConstructor(SafeConstructor):
             if values['tz_sign'] == '-':
                 delta = -delta
         # should check for None and solve issue 366 should be tzinfo=delta)
+        data = TimeStamp(
+            dd.year, dd.month, dd.day, dd.hour, dd.minute, dd.second, dd.microsecond
+        )
         if delta:
-            dt = datetime.datetime(year, month, day, hour, minute)
-            dt -= delta
-            data = TimeStamp(dt.year, dt.month, dt.day, dt.hour, dt.minute, second, fraction)
             data._yaml['delta'] = delta
             tz = values['tz_sign'] + values['tz_hour']
             if values['tz_minute']:
                 tz += ':' + values['tz_minute']
             data._yaml['tz'] = tz
         else:
-            data = TimeStamp(year, month, day, hour, minute, second, fraction)
             if values['tz']:  # no delta
                 data._yaml['tz'] = values['tz']
 

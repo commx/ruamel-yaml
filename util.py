@@ -68,6 +68,8 @@ def create_timestamp(
     year, month, day, t, hour, minute, second, fraction, tz, tz_sign, tz_hour, tz_minute
 ):
     # type: (Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any) -> Any
+    # create a timestamp from match against timestamp_regexp
+    MAX_FRAC = 999999
     year = int(year)
     month = int(month)
     day = int(day)
@@ -76,24 +78,31 @@ def create_timestamp(
     hour = int(hour)
     minute = int(minute)
     second = int(second)
+    frac = 0
     if fraction:
-        frac = 0
         frac_s = fraction[:6]
         while len(frac_s) < 6:
             frac_s += '0'
         frac = int(frac_s)
         if len(fraction) > 6 and int(fraction[6]) > 4:
             frac += 1
-        fraction = frac
+        if frac > MAX_FRAC:
+            fraction = 0
+        else:
+            fraction = frac
     else:
         fraction = 0
     delta = None
     if tz_sign:
         tz_hour = int(tz_hour)
         tz_minute = int(tz_minute) if tz_minute else 0
-        delta = datetime.timedelta(hours=tz_hour, minutes=tz_minute)
+        delta = datetime.timedelta(
+            hours=tz_hour, minutes=tz_minute, seconds=1 if frac > MAX_FRAC else 0
+        )
         if tz_sign == '-':
             delta = -delta
+    elif frac > MAX_FRAC:
+        delta = -datetime.timedelta(seconds=1)
     # should do something else instead (or hook this up to the preceding if statement
     # in reverse
     #  if delta is None:

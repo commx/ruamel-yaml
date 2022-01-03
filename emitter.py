@@ -76,7 +76,7 @@ class Indents:
     def seq_flow_align(self, seq_indent, column, pre_comment=False):
         # type: (int, int, Optional[bool]) -> int
         # extra spaces because of dash
-        nprint('seq_flow_align', self.values, pre_comment)
+        # nprint('seq_flow_align', self.values, pre_comment)
         if len(self.values) < 2 or not self.values[-1][1]:
             if len(self.values) == 0 or not pre_comment:
                 return 0

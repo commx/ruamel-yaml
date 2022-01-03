@@ -145,3 +145,16 @@ class TestDateTime:
         """)
         data = copy.deepcopy(round_trip_load(x))
         assert round_trip_dump(data) == x
+
+    def test_fraction_overflow(self):
+        # reported (indirectly) by Luís Ferreira
+        # https://sourceforge.net/p/ruamel-yaml/tickets/414/
+        inp = dedent("""\
+        - 2022-01-02T12:34:59.9999994
+        - 2022-01-02T12:34:59.9999995
+        """)
+        exp = dedent("""\
+        - 2022-01-02T12:34:59.999999
+        - 2022-01-02T12:35:00
+        """)
+        round_trip(inp, exp)
