@@ -1,3 +1,6 @@
+[0, 17, 21]: 2022-02-12
+  - fix bug in calling `.compose()` method with `pathlib.Path` instance.
+
 [0, 17, 20]: today
   - fix error in microseconds while rounding datetime fractions >= 9999995
     (reported by `Luis Ferreira <https://sourceforge.net/u/ljmf00/>`__)

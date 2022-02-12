@@ -4,23 +4,18 @@ ruamel.yaml
 
 ``ruamel.yaml`` is a YAML 1.2 loader/dumper package for Python.
 
-:version:       0.17.20
-:updated:       today
+:version:       0.17.21
+:updated:       2022-02-12
 :documentation: http://yaml.readthedocs.io
 :repository:    https://sourceforge.net/projects/ruamel-yaml/
 :pypi:          https://pypi.org/project/ruamel.yaml/
 
 *The 0.16.13 release was the last that was tested to be working on Python 2.7.
-The 0.17 series will still be tested on Python 3.5, but the 0.18 will not. The
-0.17 series will also stop support for the old PyYAML functions, so a `YAML()` instance
-will need to be created.*
+The 0.17.21 is the last one tested to be working on Python 3.5, 
+that is also the last release supporting old PyYAML functions, you'll have to create a 
+`YAML()` instance and use its `.load()` and `.dump()` methods.*
 
-*The 0.17 series will also see changes in how comments are attached during
-roundtrip. This will result in backwards incompatibilities on the `.ca` data and
-it might even be necessary for documented methods that handle comments.*
-
-*Please adjust your dependencies accordingly if necessary. (`ruamel.yaml<0.17`)*
-
+*Please adjust your dependencies accordingly if necessary. (`ruamel.yaml<0.18`)*
 
 Starting with version 0.15.0 the way YAML files are loaded and dumped
 has been changing, see the API doc for details.  Currently existing
@@ -72,7 +67,10 @@ ChangeLog
 
 .. should insert NEXT: at the beginning of line for next key (with empty line)
 
-0.17.20 (today):
+0.17.21 (2022-02-12):
+  - fix bug in calling `.compose()` method with `pathlib.Path` instance.
+
+0.17.20 (2022-01-03):
   - fix error in microseconds while rounding datetime fractions >= 9999995
     (reported by `Luis Ferreira <https://sourceforge.net/u/ljmf00/>`__)
 

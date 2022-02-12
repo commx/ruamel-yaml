@@ -367,7 +367,7 @@ class YAML:
         if not hasattr(stream, 'read') and hasattr(stream, 'open'):
             # pathlib.Path() instance
             with stream.open('rb') as fp:
-                return self.load(fp)
+                return self.compose(fp)
         constructor, parser = self.get_constructor_parser(stream)
         try:
             return constructor.composer.get_single_node()
