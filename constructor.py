@@ -1148,7 +1148,12 @@ class RoundTripConstructor(SafeConstructor):
                 anchor=node.anchor,
             )
         elif self.resolver.processing_version != (1, 2) and value_s[0] == '0':
-            return sign * int(value_s, 8)
+            return OctalInt(
+                sign * int(value_s, 8),
+                width=width,
+                underscore=underscore,
+                anchor=node.anchor,
+            )
         elif self.resolver.processing_version != (1, 2) and ':' in value_s:
             digits = [int(part) for part in value_s.split(':')]
             digits.reverse()

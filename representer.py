@@ -634,7 +634,10 @@ class RoundTripRepresenter(SafeRepresenter):
         else:
             s = format(data, 'o')
         anchor = data.yaml_anchor(any=True)
-        return self.insert_underscore('0o', s, data._underscore, anchor=anchor)
+        prefix = '0o'
+        if getattr(self.serializer, 'use_version', None) == (1, 1):
+            prefix = '0'
+        return self.insert_underscore(prefix, s, data._underscore, anchor=anchor)
 
     def represent_hex_int(self, data):
         # type: (Any) -> Any
