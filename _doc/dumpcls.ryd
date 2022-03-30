@@ -1,5 +1,5 @@
-version: 0.1
-output: rst
+version: 0.2
+text: rst
 fix_inline_single_backquotes: true
 pdf: true
 # code_directory: ../_example
@@ -16,7 +16,7 @@ If you have instances of some class(es) that you want to dump or load, it is
 easy to allow the YAML instance to do that explicitly. You can either register the
 class with the ``YAML`` instance or decorate the class.
 
-Registering is done with ``YAML.register_class()``::
+Registering is done with ``YAML.register_class()``:
 
 --- !python |
 
@@ -40,7 +40,7 @@ The tag ``!User`` originates from the name of the class.
 
 You can specify a different tag by adding the attribute ``yaml_tag``, and
 explicitly specify dump and/or load *classmethods* which have to be called
-``to_yaml`` resp. ``from_yaml``::
+``to_yaml`` resp. ``from_yaml``:
 
 --- !python |
 import sys
@@ -73,7 +73,7 @@ which gives as output::
 --- |
 
 When using the decorator, which takes the ``YAML()`` instance as a parameter,
-the ``yaml = YAML()`` line needs to be moved up in the file::
+the ``yaml = YAML()`` line needs to be moved up in the file:
 
 --- !python |
 import sys

@@ -1,5 +1,5 @@
-version: 0.1
-output: rst
+version: 0.2
+text: rst
 fix_inline_single_backquotes: true
 pdf: true
 --- |
@@ -8,7 +8,7 @@ Examples
 ********
 
 Basic round trip of parsing YAML to Python objects, modifying
-and generating YAML::
+and generating YAML:
 --- !python |
   import sys
   from ruamel.yaml import YAML
@@ -30,37 +30,11 @@ and generating YAML::
 --- !stdout |
 Resulting in::
 --- |
-with the old API::
---- !python |
-  from __future__ import print_function
-
-  import sys
-  import ruamel.yaml
-
-  inp = """\
-  # example
-  name:
-    # details
-    family: Smith   # very common
-    given: Alice    # one of the siblings
-  """
-
-  code = ruamel.yaml.load(inp, ruamel.yaml.RoundTripLoader)
-  code['name']['given'] = 'Bob'
-
-  ruamel.yaml.dump(code, sys.stdout, Dumper=ruamel.yaml.RoundTripDumper)
-
-  # the last statement can be done less efficient in time and memory with
-  # leaving out the end='' would cause a double newline at the end
-  # print(ruamel.yaml.dump(code, Dumper=ruamel.yaml.RoundTripDumper), end='')
---- !stdout |
-Resulting in ::
---- |
 ----
 
 YAML handcrafted anchors and references as well as key merging
 are preserved. The merged keys can transparently be accessed
-using ``[]`` and ``.get()``::
+using ``[]`` and ``.get()``:
 --- !python |
   from ruamel.yaml import YAML
 
@@ -94,7 +68,7 @@ using ``[]`` and ``.get()``::
 --- |
 
 The ``CommentedMap``, which is the ``dict`` like construct one gets when round-trip loading,
-supports insertion of a key into a particular position, while optionally adding a comment::
+supports insertion of a key into a particular position, while optionally adding a comment:
 --- !python |
   import sys
   from ruamel.yaml import YAML
@@ -125,7 +99,7 @@ both mappings and sequences. For sequences the indent is counted to the
 beginning of the scalar, with the dash taking the first position of the
 indented "space".
 
-You can change this default indentation by e.g. using ``yaml.indent()``::
+You can change this default indentation by e.g. using ``yaml.indent()``:
 
 
 --- !python |
@@ -157,7 +131,7 @@ that the dash of the "parent" sequence is on the same line as the
 first element resp. first key/value pair of the child collection.
 
 If you want either or both of these (sequence within sequence, mapping
-within sequence) to begin on the next line use ``yaml.compact()``::
+within sequence) to begin on the next line use ``yaml.compact()``:
 
 --- !python |
 
@@ -183,7 +157,7 @@ giving::
 ------
 
 The following program uses three dumps on the same data, resulting in a stream with 
-three documents::
+three documents:
 
 --- !python |
 import sys
@@ -259,7 +233,7 @@ sys.stdout)`` and do away with 90% of the cases for returning the string, and
 that all post-processing YAML, before writing to stream, can be handled by using
 the ``transform=`` parameter of dump, being able to handle most of the rest. But
 it is also much easier in the new API to provide that YAML output as a string if
-you really need to have it (or think you do)::
+you really need to have it (or think you do):
 
 --- !python |
 import sys

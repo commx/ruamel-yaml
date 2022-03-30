@@ -1,5 +1,5 @@
-version: 0.1
-output: rst
+version: 0.2
+text: rst
 fix_inline_single_backquotes: true
 pdf: true
 --- !python-pre |
@@ -47,17 +47,19 @@ Starting with 0.15.0 ``load()`` and ``dump()`` are methods on a
 resp. the data and stream argument. All other parameters are set on the instance
 of ``YAML`` before calling ``load()`` or ``dump()``
 
-Before 0.15.0::
---- !python |
-from pathlib import Path
-from ruamel import yaml
+Before 0.15.0 you could do:
 
-data = yaml.safe_load("abc: 1")
-out = Path('/tmp/out.yaml')
-with out.open('w') as fp:
-    yaml.safe_dump(data, fp, default_flow_style=False)
---- |
-after::
+.. code:: python
+
+    from pathlib import Path
+    from ruamel import yaml
+
+    data = yaml.safe_load("abc: 1")
+    out = Path('/tmp/out.yaml')
+    with out.open('w') as fp:
+        yaml.safe_dump(data, fp, default_flow_style=False)
+
+after:
 --- !python |
 from pathlib import Path
 from ruamel.yaml import YAML
@@ -111,7 +113,7 @@ PyYAML never enforced this although the YAML 1.1 specification already
 required this.
 
 In the new API (starting 0.15.1) duplicate keys in mappings are no longer allowed by
-default. To allow duplicate keys in mappings::
+default. To allow duplicate keys in mappings:
 
 --- !python |
 yaml = ruamel.yaml.YAML()
@@ -213,18 +215,17 @@ for reading resp.  writing.
 
 Loading and dumping using the ``SafeLoader``::
 
---- !python |
-if ruamel.yaml.version_info < (0, 15):
-    data = yaml.safe_load(istream)
-    yaml.safe_dump(data, ostream)
-else:
-    yml = ruamel.yaml.YAML(typ='safe', pure=True)  # 'safe' load and dump
-    data = yml.load(istream)
-    yml.dump(data, ostream)
---- |
+    if ruamel.yaml.version_info < (0, 15):
+        data = yaml.safe_load(istream)
+        yaml.safe_dump(data, ostream)
+    else:
+        yml = ruamel.yaml.YAML(typ='safe', pure=True)  # 'safe' load and dump
+        data = yml.load(istream)
+        yml.dump(data, ostream)
+
 Loading with the ``CSafeLoader``, dumping with
 ``RoundTripLoader``. You need two ``YAML`` instances, but each of them
-can be re-used::
+can be re-used:
 --- !python |
 if ruamel.yaml.version_info < (0, 15):
     data = yaml.load(istream, Loader=yaml.CSafeLoader)

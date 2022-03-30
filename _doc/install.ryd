@@ -1,5 +1,5 @@
-version: 0.1
-output: rst
+version: 0.2
+text: rst
 fix_inline_single_backquotes: true
 # pdf: true
 --- |
@@ -50,5 +50,5 @@ For CentOS (7) based systems you should do::
 
    sudo yum install python-devel
 
---- !incraw |
+--- !inc-raw |
 links.rydinc

@@ -1,5 +1,5 @@
-version: 0.1
-output: rst
+version: 0.2
+text: rst
 fix_inline_single_backquotes: true
 --- |
 ********
@@ -47,5 +47,5 @@ Many of the bugs filed against PyYAML, but that were never
 acted upon, have been fixed in ``ruamel.yaml``
 
 
---- !incraw |
+--- !inc-raw |
 links.rydinc

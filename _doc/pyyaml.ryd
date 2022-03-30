@@ -1,5 +1,5 @@
-version: 0.1
-output: rst
+version: 0.2
+text: rst
 fix_inline_single_backquotes: true
 pdf: true
 --- |
@@ -80,5 +80,5 @@ API
 Starting with 0.15 the API for using ``ruamel.yaml`` has diverged allowing 
 easier addition of new features.
 
---- !incraw |
-links.rydinc
+--- !inc-raw
+- links.rydinc

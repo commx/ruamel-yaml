@@ -1,5 +1,5 @@
-version: 0.1
-output: rst
+version: 0.2
+text: rst
 fix_inline_single_backquotes: true
 pdf: true
 --- !python-pre |
@@ -15,7 +15,7 @@ data = dict(a=1)
 Basic Usage
 ***********
 
-You load a YAML document using::
+You load a YAML document using:
 --- !python |
 from ruamel.yaml import YAML
 
@@ -43,7 +43,7 @@ in this ``s`` can be a file pointer (i.e. an object that has the
 your output, just stream to ``sys.stdout``.
 
 If you need to transform a string representation of the output provide
-a function that takes a string as input and returns one::
+a function that takes a string as input and returns one:
 
 --- !python |
 def tr(s):
@@ -56,7 +56,7 @@ More examples
 =============
 
 Using the C based SafeLoader (at this time is inherited from
-libyaml/PyYAML and e.g. loads ``0o52`` as well as ``052`` load as integer ``42``)::
+libyaml/PyYAML and e.g. loads ``0o52`` as well as ``052`` load as integer ``42``):
 
 --- !python |
    from ruamel.yaml import YAML
@@ -65,7 +65,7 @@ libyaml/PyYAML and e.g. loads ``0o52`` as well as ``052`` load as integer ``42``
    yaml.load("""a:\n  b: 2\n  c: 3\n""")
 
 --- |
-Using the Python based SafeLoader (YAML 1.2 support, ``052`` loads as ``52``)::
+Using the Python based SafeLoader (YAML 1.2 support, ``052`` loads as ``52``):
 --- !python |
    from ruamel.yaml import YAML
 
