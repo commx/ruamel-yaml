@@ -862,6 +862,12 @@ class TestIssues:
         """
         d = na_round_trip(inp)  # NOQA
 
+    def test_issue_449(self):
+        inp = """\
+        emoji_index: !!python/name:materialx.emoji.twemoji
+        """
+        d = na_round_trip(inp)  # NOQA
+
 #    @pytest.mark.xfail(strict=True, reason='bla bla', raises=AssertionError)
 #    def test_issue_ xxx(self):
 #        inp = """
