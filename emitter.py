@@ -92,6 +92,7 @@ class Emitter:
     DEFAULT_TAG_PREFIXES = {
         '!': '!',
         'tag:yaml.org,2002:': '!!',
+        '!!': '!!',
     }
     # fmt: on
 
@@ -955,7 +956,7 @@ class Emitter:
     def prepare_tag(self, tag: Any) -> Any:
         if not tag:
             raise EmitterError('tag must not be empty')
-        if tag == '!':
+        if tag == '!' or tag == '!!':
             return tag
         handle = None
         suffix = tag

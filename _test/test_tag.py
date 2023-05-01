@@ -65,6 +65,15 @@ class TestIndentFailures:
         language: python
         """)
 
+    def test_spec_6_26_tag_shorthands(self):
+        round_trip("""\
+        %TAG !e! tag:example.com,2000:app/
+        ---
+        - !local foo
+        - !!str bar
+        - !e!tag%21 baz
+        """)
+
 
 class TestRoundTripCustom:
     def test_X1(self) -> None:
