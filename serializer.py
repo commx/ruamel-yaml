@@ -18,9 +18,8 @@ from ruamel.yaml.events import (
 )
 from ruamel.yaml.nodes import MappingNode, ScalarNode, SequenceNode
 
-if False:  # MYPY
-    from typing import Any, Dict, Union, Text, Optional  # NOQA
-    from ruamel.yaml.compat import VersionType  # NOQA
+from typing import Any, Dict, Union, Text, Optional  # NOQA
+from ruamel.yaml.compat import VersionType  # NOQA
 
 __all__ = ['Serializer', 'SerializerError']
 
@@ -32,19 +31,19 @@ class SerializerError(YAMLError):
 class Serializer:
 
     # 'id' and 3+ numbers, but not 000
-    ANCHOR_TEMPLATE = 'id%03d'
+    ANCHOR_TEMPLATE = 'id{:03d}'
     ANCHOR_RE = RegExp('id(?!000$)\\d{3,}')
 
     def __init__(
         self,
-        encoding=None,
-        explicit_start=None,
-        explicit_end=None,
-        version=None,
-        tags=None,
-        dumper=None,
-    ):
-        # type: (Any, Optional[bool], Optional[bool], Optional[VersionType], Any, Any) -> None  # NOQA
+        encoding: Any = None,
+        explicit_start: Optional[bool] = None,
+        explicit_end: Optional[bool] = None,
+        version: Optional[VersionType] = None,
+        tags: Any = None,
+        dumper: Any = None,
+    ) -> None:
+        # NOQA
         self.dumper = dumper
         if self.dumper is not None:
             self.dumper._serializer = self
@@ -56,28 +55,25 @@ class Serializer:
         else:
             self.use_version = version  # type: ignore
         self.use_tags = tags
-        self.serialized_nodes = {}  # type: Dict[Any, Any]
-        self.anchors = {}  # type: Dict[Any, Any]
+        self.serialized_nodes: Dict[Any, Any] = {}
+        self.anchors: Dict[Any, Any] = {}
         self.last_anchor_id = 0
-        self.closed = None  # type: Optional[bool]
+        self.closed: Optional[bool] = None
         self._templated_id = None
 
     @property
-    def emitter(self):
-        # type: () -> Any
+    def emitter(self) -> Any:
         if hasattr(self.dumper, 'typ'):
             return self.dumper.emitter
         return self.dumper._emitter
 
     @property
-    def resolver(self):
-        # type: () -> Any
+    def resolver(self) -> Any:
         if hasattr(self.dumper, 'typ'):
             self.dumper.resolver
         return self.dumper._resolver
 
-    def open(self):
-        # type: () -> None
+    def open(self) -> None:
         if self.closed is None:
             self.emitter.emit(StreamStartEvent(encoding=self.use_encoding))
             self.closed = False
@@ -86,8 +82,7 @@ class Serializer:
         else:
             raise SerializerError('serializer is already opened')
 
-    def close(self):
-        # type: () -> None
+    def close(self) -> None:
         if self.closed is None:
             raise SerializerError('serializer is not opened')
         elif not self.closed:
@@ -97,8 +92,7 @@ class Serializer:
     # def __del__(self):
     #     self.close()
 
-    def serialize(self, node):
-        # type: (Any) -> None
+    def serialize(self, node: Any) -> None:
         if dbg(DBG_NODE):
             nprint('Serializing nodes')
             node.dump()
@@ -118,8 +112,7 @@ class Serializer:
         self.anchors = {}
         self.last_anchor_id = 0
 
-    def anchor_node(self, node):
-        # type: (Any) -> None
+    def anchor_node(self, node: Any) -> None:
         if node in self.anchors:
             if self.anchors[node] is None:
                 self.anchors[node] = self.generate_anchor(node)
@@ -139,19 +132,17 @@ class Serializer:
                     self.anchor_node(key)
                     self.anchor_node(value)
 
-    def generate_anchor(self, node):
-        # type: (Any) -> Any
+    def generate_anchor(self, node: Any) -> Any:
         try:
             anchor = node.anchor.value
         except:  # NOQA
             anchor = None
         if anchor is None:
             self.last_anchor_id += 1
-            return self.ANCHOR_TEMPLATE % self.last_anchor_id
+            return self.ANCHOR_TEMPLATE.format(self.last_anchor_id)
         return anchor
 
-    def serialize_node(self, node, parent, index):
-        # type: (Any, Any, Any) -> None
+    def serialize_node(self, node: Any, parent: Any, index: Any) -> None:
         alias = self.anchors[node]
         if node in self.serialized_nodes:
             node_style = getattr(node, 'style', None)
@@ -236,6 +227,5 @@ class Serializer:
             self.resolver.ascend_resolver()
 
 
-def templated_id(s):
-    # type: (Text) -> Any
+def templated_id(s: Text) -> Any:
     return Serializer.ANCHOR_RE.match(s)

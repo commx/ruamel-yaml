@@ -7,14 +7,14 @@ This is now so integrated in Python that it can be mapped to !!omap
 
 """
 
-import pytest  # NOQA
+import pytest  # type: ignore  # NOQA
 
 
 from roundtrip import round_trip, dedent, round_trip_load, round_trip_dump  # NOQA
 
 
 class TestOrderedDict:
-    def test_ordereddict(self):
+    def test_ordereddict(self) -> None:
         from collections import OrderedDict
 
         assert round_trip_dump(OrderedDict()) == '!!omap []\n'

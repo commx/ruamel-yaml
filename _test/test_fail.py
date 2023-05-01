@@ -6,14 +6,14 @@
 # on fix of ruamel.yaml, move the marked test to the appropriate test (without mark)
 # and remove remove the xyz_no_fail
 
-import pytest
+import pytest  # type: ignore
 
 from roundtrip import round_trip, dedent, round_trip_load, round_trip_dump
 
 
 class TestCommentFailures:
-    @pytest.mark.xfail(strict=True)
-    def test_set_comment_before_tag(self):
+    @pytest.mark.xfail(strict=True)  # type: ignore
+    def test_set_comment_before_tag(self) -> None:
         # no comments before tags
         round_trip("""
         # the beginning
@@ -26,7 +26,7 @@ class TestCommentFailures:
         # this is the end
         """)
 
-    def test_set_comment_before_tag_no_fail(self):
+    def test_set_comment_before_tag_no_fail(self) -> None:
         # no comments before tags
         inp = """
         # the beginning
@@ -48,15 +48,15 @@ class TestCommentFailures:
         # this is the end
         """)
 
-    @pytest.mark.xfail(strict=True)
-    def test_comment_dash_line(self):
+    @pytest.mark.xfail(strict=True)  # type: ignore
+    def test_comment_dash_line(self) -> None:
         round_trip("""
         - # abc
            a: 1
            b: 2
         """)
 
-    def test_comment_dash_line_fail(self):
+    def test_comment_dash_line_fail(self) -> None:
         x = """
         - # abc
            a: 1
@@ -72,8 +72,8 @@ class TestCommentFailures:
 
 
 class TestIndentFailures:
-    @pytest.mark.xfail(strict=True)
-    def test_indent_not_retained(self):
+    @pytest.mark.xfail(strict=True)  # type: ignore
+    def test_indent_not_retained(self) -> None:
         round_trip("""
         verbosity: 1                  # 0 is minimal output, -1 none
         base_url: http://gopher.net
@@ -97,7 +97,7 @@ class TestIndentFailures:
             -   too cold
         """)
 
-    def test_indent_not_retained_no_fail(self):
+    def test_indent_not_retained_no_fail(self) -> None:
         inp = """
         verbosity: 1                  # 0 is minimal output, -1 none
         base_url: http://gopher.net
@@ -143,7 +143,7 @@ class TestIndentFailures:
             -   too cold
         """)
 
-    def Xtest_indent_top_level_no_fail(self):
+    def Xtest_indent_top_level_no_fail(self) -> None:
         inp = """
         -   a:
             - b
@@ -152,8 +152,8 @@ class TestIndentFailures:
 
 
 class TestTagFailures:
-    @pytest.mark.xfail(strict=True)
-    def test_standard_short_tag(self):
+    @pytest.mark.xfail(strict=True)  # type: ignore
+    def test_standard_short_tag(self) -> None:
         round_trip("""\
         !!map
         name: Anthon
@@ -161,7 +161,7 @@ class TestTagFailures:
         language: python
         """)
 
-    def test_standard_short_tag_no_fail(self):
+    def test_standard_short_tag_no_fail(self) -> None:
         inp = """
         !!map
         name: Anthon
@@ -177,13 +177,13 @@ class TestTagFailures:
 
 
 class TestFlowValues:
-    def test_flow_value_with_colon(self):
+    def test_flow_value_with_colon(self) -> None:
         inp = """\
         {a: bcd:efg}
         """
         round_trip(inp)
 
-    def test_flow_value_with_colon_quoted(self):
+    def test_flow_value_with_colon_quoted(self) -> None:
         inp = """\
         {a: 'bcd:efg'}
         """
@@ -191,13 +191,13 @@ class TestFlowValues:
 
 
 class TestMappingKey:
-    def test_simple_mapping_key(self):
+    def test_simple_mapping_key(self) -> None:
         inp = """\
         {a: 1, b: 2}: hello world
         """
         round_trip(inp, preserve_quotes=True, dump_data=False)
 
-    def test_set_simple_mapping_key(self):
+    def test_set_simple_mapping_key(self) -> None:
         from ruamel.yaml.comments import CommentedKeyMap
 
         d = {CommentedKeyMap([('a', 1), ('b', 2)]): 'hello world'}
@@ -206,7 +206,7 @@ class TestMappingKey:
         """)
         assert round_trip_dump(d) == exp
 
-    def test_change_key_simple_mapping_key(self):
+    def test_change_key_simple_mapping_key(self) -> None:
         from ruamel.yaml.comments import CommentedKeyMap
 
         inp = """\
@@ -219,7 +219,7 @@ class TestMappingKey:
         """)
         assert round_trip_dump(d) == exp
 
-    def test_change_value_simple_mapping_key(self):
+    def test_change_value_simple_mapping_key(self) -> None:
         from ruamel.yaml.comments import CommentedKeyMap
 
         inp = """\

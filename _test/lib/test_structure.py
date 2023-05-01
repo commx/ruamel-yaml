@@ -84,9 +84,9 @@ def test_parser(data_filename, canonical_filename, verbose=False):
     events2 = None
     try:
         with open(data_filename, 'rb') as fp0:
-            events1 = list(ruamel.yaml.parse(fp0))
+            events1 = list(ruamel.yaml.YAML().parse(fp0))
         with open(canonical_filename, 'rb') as fp0:
-            events2 = list(ruamel.yaml.canonical_parse(fp0))
+            events2 = list(ruamel.yaml.YAML().canonical_parse(fp0))
         _compare_events(events1, events2)
     finally:
         if verbose:
@@ -104,9 +104,9 @@ def test_parser_on_canonical(canonical_filename, verbose=False):
     events2 = None
     try:
         with open(canonical_filename, 'rb') as fp0:
-            events1 = list(ruamel.yaml.parse(fp0))
+            events1 = list(ruamel.yaml.YAML().parse(fp0))
         with open(canonical_filename, 'rb') as fp0:
-            events2 = list(ruamel.yaml.canonical_parse(fp0))
+            events2 = list(ruamel.yaml.YAML().canonical_parse(fp0))
         _compare_events(events1, events2, full=True)
     finally:
         if verbose:
@@ -138,10 +138,11 @@ def test_composer(data_filename, canonical_filename, verbose=False):
     nodes1 = None
     nodes2 = None
     try:
+        yaml = ruamel.yaml.YAML()
         with open(data_filename, 'rb') as fp0:
-            nodes1 = list(ruamel.yaml.compose_all(fp0))
+            nodes1 = list(yaml.compose_all(fp0))
         with open(canonical_filename, 'rb') as fp0:
-            nodes2 = list(ruamel.yaml.canonical_compose_all(fp0))
+            nodes2 = list(yaml.canonical_compose_all(fp0))
         assert len(nodes1) == len(nodes2), (len(nodes1), len(nodes2))
         for node1, node2 in zip(nodes1, nodes2):
             _compare_nodes(node1, node2)

@@ -13,7 +13,7 @@ and the chomping modifiers:
 
 """
 
-import pytest
+import pytest  # type: ignore
 import platform
 
 # from ruamel.yaml.compat import ordereddict
@@ -21,20 +21,20 @@ from roundtrip import round_trip, dedent, round_trip_load, round_trip_dump  # NO
 
 
 class TestLiteralScalarString:
-    def test_basic_string(self):
+    def test_basic_string(self) -> None:
         round_trip("""
         a: abcdefg
         """)
 
-    def test_quoted_integer_string(self):
+    def test_quoted_integer_string(self) -> None:
         round_trip("""
         a: '12345'
         """)
 
-    @pytest.mark.skipif(
+    @pytest.mark.skipif(  # type: ignore
         platform.python_implementation() == 'Jython', reason='Jython throws RepresenterError'
     )
-    def test_preserve_string(self):
+    def test_preserve_string(self) -> None:
         inp = """
         a: |
           abc
@@ -42,10 +42,10 @@ class TestLiteralScalarString:
         """
         round_trip(inp, intermediate=dict(a='abc\ndef\n'))
 
-    @pytest.mark.skipif(
+    @pytest.mark.skipif(  # type: ignore
         platform.python_implementation() == 'Jython', reason='Jython throws RepresenterError'
     )
-    def test_preserve_string_strip(self):
+    def test_preserve_string_strip(self) -> None:
         s = """
         a: |-
           abc
@@ -54,10 +54,10 @@ class TestLiteralScalarString:
         """
         round_trip(s, intermediate=dict(a='abc\ndef'))
 
-    @pytest.mark.skipif(
+    @pytest.mark.skipif(  # type: ignore
         platform.python_implementation() == 'Jython', reason='Jython throws RepresenterError'
     )
-    def test_preserve_string_keep(self):
+    def test_preserve_string_keep(self) -> None:
         # with pytest.raises(AssertionError) as excinfo:
         inp = """
             a: |+
@@ -69,10 +69,10 @@ class TestLiteralScalarString:
             """
         round_trip(inp, intermediate=dict(a='ghi\njkl\n\n\n', b='x'))
 
-    @pytest.mark.skipif(
+    @pytest.mark.skipif(  # type: ignore
         platform.python_implementation() == 'Jython', reason='Jython throws RepresenterError'
     )
-    def test_preserve_string_keep_at_end(self):
+    def test_preserve_string_keep_at_end(self) -> None:
         # at EOF you have to specify the ... to get proper "closure"
         # of the multiline scalar
         inp = """
@@ -84,7 +84,7 @@ class TestLiteralScalarString:
             """
         round_trip(inp, intermediate=dict(a='ghi\njkl\n\n'))
 
-    def test_fold_string(self):
+    def test_fold_string(self) -> None:
         inp = """
         a: >
           abc
@@ -93,7 +93,7 @@ class TestLiteralScalarString:
         """
         round_trip(inp)
 
-    def test_fold_string_strip(self):
+    def test_fold_string_strip(self) -> None:
         inp = """
         a: >-
           abc
@@ -102,7 +102,7 @@ class TestLiteralScalarString:
         """
         round_trip(inp)
 
-    def test_fold_string_keep(self):
+    def test_fold_string_keep(self) -> None:
         with pytest.raises(AssertionError) as excinfo:  # NOQA
             inp = """
             a: >+
@@ -114,19 +114,19 @@ class TestLiteralScalarString:
 
 
 class TestQuotedScalarString:
-    def test_single_quoted_string(self):
+    def test_single_quoted_string(self) -> None:
         inp = """
         a: 'abc'
         """
         round_trip(inp, preserve_quotes=True)
 
-    def test_double_quoted_string(self):
+    def test_double_quoted_string(self) -> None:
         inp = """
         a: "abc"
         """
         round_trip(inp, preserve_quotes=True)
 
-    def test_non_preserved_double_quoted_string(self):
+    def test_non_preserved_double_quoted_string(self) -> None:
         inp = """
         a: "abc"
         """
@@ -139,7 +139,7 @@ class TestQuotedScalarString:
 class TestReplace:
     """inspired by issue 110 from sandres23"""
 
-    def test_replace_preserved_scalar_string(self):
+    def test_replace_preserved_scalar_string(self) -> None:
         import ruamel
 
         s = dedent("""\
@@ -159,7 +159,7 @@ class TestReplace:
         foo
         """)
 
-    def test_replace_double_quoted_scalar_string(self):
+    def test_replace_double_quoted_scalar_string(self) -> None:
         import ruamel
 
         s = dedent("""\
@@ -172,7 +172,7 @@ class TestReplace:
 
 
 class TestWalkTree:
-    def test_basic(self):
+    def test_basic(self) -> None:
         from ruamel.yaml.comments import CommentedMap
         from ruamel.yaml.scalarstring import walk_tree
 
@@ -188,7 +188,7 @@ class TestWalkTree:
         """
         assert round_trip_dump(data) == dedent(exp)
 
-    def test_map(self):
+    def test_map(self) -> None:
         from ruamel.yaml.compat import ordereddict
         from ruamel.yaml.comments import CommentedMap
         from ruamel.yaml.scalarstring import walk_tree, preserve_literal

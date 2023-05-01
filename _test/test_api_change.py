@@ -6,12 +6,14 @@ testing of anchors and the aliases referring to them
 
 import sys
 import textwrap
-import pytest
+import pytest  # type: ignore
 from pathlib import Path
+
+from typing import Any
 
 
 class TestNewAPI:
-    def test_duplicate_keys_00(self):
+    def test_duplicate_keys_00(self) -> None:
         from ruamel.yaml import YAML
         from ruamel.yaml.constructor import DuplicateKeyError
 
@@ -19,7 +21,7 @@ class TestNewAPI:
         with pytest.raises(DuplicateKeyError):
             yaml.load('{a: 1, a: 2}')
 
-    def test_duplicate_keys_01(self):
+    def test_duplicate_keys_01(self) -> None:
         from ruamel.yaml import YAML
         from ruamel.yaml.constructor import DuplicateKeyError
 
@@ -27,7 +29,7 @@ class TestNewAPI:
         with pytest.raises(DuplicateKeyError):
             yaml.load('{a: 1, a: 2}')
 
-    def test_duplicate_keys_02(self):
+    def test_duplicate_keys_02(self) -> None:
         from ruamel.yaml import YAML
         from ruamel.yaml.constructor import DuplicateKeyError
 
@@ -35,7 +37,7 @@ class TestNewAPI:
         with pytest.raises(DuplicateKeyError):
             yaml.load('{a: 1, a: 2}')
 
-    def test_issue_135(self):
+    def test_issue_135(self) -> None:
         # reported by Andrzej Ostrowski
         from ruamel.yaml import YAML
 
@@ -44,7 +46,7 @@ class TestNewAPI:
         # originally on 2.7: with pytest.raises(TypeError):
         yaml.dump(data, sys.stdout)
 
-    def test_issue_135_temporary_workaround(self):
+    def test_issue_135_temporary_workaround(self) -> None:
         # never raised error
         from ruamel.yaml import YAML
 
@@ -54,7 +56,7 @@ class TestNewAPI:
 
 
 class TestWrite:
-    def test_dump_path(self, tmpdir):
+    def test_dump_path(self, tmpdir: Any) -> None:
         from ruamel.yaml import YAML
 
         fn = Path(str(tmpdir)) / 'test.yaml'
@@ -65,7 +67,7 @@ class TestWrite:
         yaml.dump(data, fn)
         assert fn.read_text() == 'a: 1\nb: 2\n'
 
-    def test_dump_file(self, tmpdir):
+    def test_dump_file(self, tmpdir: Any) -> None:
         from ruamel.yaml import YAML
 
         fn = Path(str(tmpdir)) / 'test.yaml'
@@ -77,7 +79,7 @@ class TestWrite:
             yaml.dump(data, fp)
         assert fn.read_text() == 'a: 1\nb: 2\n'
 
-    def test_dump_missing_stream(self):
+    def test_dump_missing_stream(self) -> None:
         from ruamel.yaml import YAML
 
         yaml = YAML()
@@ -87,7 +89,7 @@ class TestWrite:
         with pytest.raises(TypeError):
             yaml.dump(data)
 
-    def test_dump_too_many_args(self, tmpdir):
+    def test_dump_too_many_args(self, tmpdir: Any) -> None:
         from ruamel.yaml import YAML
 
         fn = Path(str(tmpdir)) / 'test.yaml'
@@ -96,12 +98,12 @@ class TestWrite:
         data['a'] = 1
         data['b'] = 2
         with pytest.raises(TypeError):
-            yaml.dump(data, fn, True)
+            yaml.dump(data, fn, True)  # type: ignore
 
-    def test_transform(self, tmpdir):
+    def test_transform(self, tmpdir: Any) -> None:
         from ruamel.yaml import YAML
 
-        def tr(s):
+        def tr(s: str) -> str:
             return s.replace(' ', '  ')
 
         fn = Path(str(tmpdir)) / 'test.yaml'
@@ -112,7 +114,7 @@ class TestWrite:
         yaml.dump(data, fn, transform=tr)
         assert fn.read_text() == 'a:  1\nb:  2\n'
 
-    def test_print(self, capsys):
+    def test_print(self, capsys: Any) -> None:
         from ruamel.yaml import YAML
 
         yaml = YAML()
@@ -125,7 +127,7 @@ class TestWrite:
 
 
 class TestRead:
-    def test_multi_load(self):
+    def test_multi_load(self) -> None:
         # make sure reader, scanner, parser get reset
         from ruamel.yaml import YAML
 
@@ -133,7 +135,7 @@ class TestRead:
         yaml.load('a: 1')
         yaml.load('a: 1')  # did not work in 0.15.4
 
-    def test_parse(self):
+    def test_parse(self) -> None:
         # ensure `parse` method is functional and can parse "unsafe" yaml
         from ruamel.yaml import YAML
         from ruamel.yaml.constructor import ConstructorError
@@ -150,7 +152,7 @@ class TestRead:
 
 
 class TestLoadAll:
-    def test_multi_document_load(self, tmpdir):
+    def test_multi_document_load(self, tmpdir: Any) -> None:
         """this went wrong on 3.7 because of StopIteration, PR 37 and Issue 211"""
         from ruamel.yaml import YAML
 
@@ -169,7 +171,7 @@ class TestLoadAll:
 
 
 class TestDuplSet:
-    def test_dupl_set_00(self):
+    def test_dupl_set_00(self) -> None:
         # round-trip-loader should except
         from ruamel.yaml import YAML
         from ruamel.yaml.constructor import DuplicateKeyError
@@ -190,7 +192,7 @@ class TestDuplSet:
 class TestDumpLoadUnicode:
     # test triggered by SamH on stackoverflow (https://stackoverflow.com/q/45281596/1307905)
     # and answer by randomir (https://stackoverflow.com/a/45281922/1307905)
-    def test_write_unicode(self, tmpdir):
+    def test_write_unicode(self, tmpdir: Any) -> None:
         from ruamel.yaml import YAML
 
         yaml = YAML()
@@ -199,7 +201,7 @@ class TestDumpLoadUnicode:
         yaml.dump(text_dict, open(file_name, 'w'))
         assert open(file_name, 'rb').read().decode('utf-8') == 'text: HELLO_WORLD©\n'
 
-    def test_read_unicode(self, tmpdir):
+    def test_read_unicode(self, tmpdir: Any) -> None:
         from ruamel.yaml import YAML
 
         yaml = YAML()
@@ -211,7 +213,7 @@ class TestDumpLoadUnicode:
 
 
 class TestFlowStyle:
-    def test_flow_style(self, capsys):
+    def test_flow_style(self, capsys: Any) -> None:
         # https://stackoverflow.com/questions/45791712/
         from ruamel.yaml import YAML
 
@@ -226,8 +228,8 @@ class TestFlowStyle:
 
 
 class TestOldAPI:
-    @pytest.mark.skipif(sys.version_info >= (3, 0), reason='ok on Py3')
-    def test_duplicate_keys_02(self):
+    @pytest.mark.skipif(sys.version_info >= (3, 0), reason='ok on Py3')  # type: ignore
+    def test_duplicate_keys_02(self) -> None:
         # Issue 165 unicode keys in error/warning
         from ruamel.yaml import safe_load
         from ruamel.yaml.constructor import DuplicateKeyError

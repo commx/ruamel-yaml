@@ -1,10 +1,10 @@
 # coding: utf-8
 
 from roundtrip import YAML
-import pytest  # NOQA
+import pytest  # type: ignore  # NOQA
 
 
-def test_example_2_1():
+def test_example_2_1() -> None:
     yaml = YAML()
     yaml.round_trip("""
     - Mark McGwire
@@ -13,8 +13,8 @@ def test_example_2_1():
     """)
 
 
-@pytest.mark.xfail(strict=True)
-def test_example_2_2():
+@pytest.mark.xfail(strict=True)  # type: ignore
+def test_example_2_2() -> None:
     yaml = YAML()
     yaml.mapping_value_align = True
     yaml.round_trip("""
@@ -24,7 +24,7 @@ def test_example_2_2():
     """)
 
 
-def test_example_2_3():
+def test_example_2_3() -> None:
     yaml = YAML()
     yaml.indent(sequence=4, offset=2)
     yaml.round_trip("""
@@ -39,8 +39,8 @@ def test_example_2_3():
     """)
 
 
-@pytest.mark.xfail(strict=True)
-def test_example_2_4():
+@pytest.mark.xfail(strict=True)  # type: ignore
+def test_example_2_4() -> None:
     yaml = YAML()
     yaml.mapping_value_align = True
     yaml.round_trip("""
@@ -55,8 +55,8 @@ def test_example_2_4():
     """)
 
 
-@pytest.mark.xfail(strict=True)
-def test_example_2_5():
+@pytest.mark.xfail(strict=True)  # type: ignore
+def test_example_2_5() -> None:
     yaml = YAML()
     yaml.flow_sequence_element_align = True
     yaml.round_trip("""
@@ -66,8 +66,8 @@ def test_example_2_5():
     """)
 
 
-@pytest.mark.xfail(strict=True)
-def test_example_2_6():
+@pytest.mark.xfail(strict=True)  # type: ignore
+def test_example_2_6() -> None:
     yaml = YAML()
     # yaml.flow_mapping_final_comma = False
     yaml.flow_mapping_one_element_per_line = True
@@ -80,8 +80,8 @@ def test_example_2_6():
     """)
 
 
-@pytest.mark.xfail(strict=True)
-def test_example_2_7():
+@pytest.mark.xfail(strict=True)  # type: ignore
+def test_example_2_7() -> None:
     yaml = YAML()
     yaml.round_trip_all("""
     # Ranking of 1998 home runs
@@ -97,7 +97,7 @@ def test_example_2_7():
     """)
 
 
-def test_example_2_8():
+def test_example_2_8() -> None:
     yaml = YAML()
     yaml.explicit_start = True
     yaml.explicit_end = True
@@ -115,7 +115,7 @@ def test_example_2_8():
     """)
 
 
-def test_example_2_9():
+def test_example_2_9() -> None:
     yaml = YAML()
     yaml.explicit_start = True
     yaml.indent(sequence=4, offset=2)
@@ -131,8 +131,8 @@ def test_example_2_9():
     """)
 
 
-@pytest.mark.xfail(strict=True)
-def test_example_2_10():
+@pytest.mark.xfail(strict=True)  # type: ignore
+def test_example_2_10() -> None:
     yaml = YAML()
     yaml.explicit_start = True
     yaml.indent(sequence=4, offset=2)
@@ -148,8 +148,8 @@ def test_example_2_10():
     """)
 
 
-@pytest.mark.xfail(strict=True)
-def test_example_2_11():
+@pytest.mark.xfail(strict=True)  # type: ignore
+def test_example_2_11() -> None:
     yaml = YAML()
     yaml.round_trip("""
     ? - Detroit Tigers
@@ -164,8 +164,8 @@ def test_example_2_11():
     """)
 
 
-@pytest.mark.xfail(strict=True)
-def test_example_2_12():
+@pytest.mark.xfail(strict=True)  # type: ignore
+def test_example_2_12() -> None:
     yaml = YAML()
     yaml.explicit_start = True
     yaml.round_trip("""
@@ -180,8 +180,8 @@ def test_example_2_12():
     """)
 
 
-@pytest.mark.xfail(strict=True)
-def test_example_2_13():
+@pytest.mark.xfail(strict=True)  # type: ignore
+def test_example_2_13() -> None:
     yaml = YAML()
     yaml.round_trip(r"""
     # ASCII Art
@@ -191,8 +191,8 @@ def test_example_2_13():
     """)
 
 
-@pytest.mark.xfail(strict=True)
-def test_example_2_14():
+@pytest.mark.xfail(strict=True)  # type: ignore
+def test_example_2_14() -> None:
     yaml = YAML()
     yaml.explicit_start = True
     yaml.indent(root_scalar=2)  # needs to be added
@@ -204,8 +204,8 @@ def test_example_2_14():
     """)
 
 
-@pytest.mark.xfail(strict=True)
-def test_example_2_15():
+@pytest.mark.xfail(strict=True)  # type: ignore
+def test_example_2_15() -> None:
     yaml = YAML()
     yaml.round_trip("""
     >
@@ -219,7 +219,7 @@ def test_example_2_15():
     """)
 
 
-def test_example_2_16():
+def test_example_2_16() -> None:
     yaml = YAML()
     yaml.round_trip("""
     name: Mark McGwire
@@ -232,10 +232,10 @@ def test_example_2_16():
     """)
 
 
-@pytest.mark.xfail(
+@pytest.mark.xfail(  # type: ignore
     strict=True, reason='cannot YAML dump escape sequences (\n) as hex and normal'
 )
-def test_example_2_17():
+def test_example_2_17() -> None:
     yaml = YAML()
     yaml.allow_unicode = False
     yaml.preserve_quotes = True
@@ -250,8 +250,9 @@ def test_example_2_17():
     """)
 
 
-@pytest.mark.xfail(strict=True, reason='non-literal/folding multiline scalars not supported')
-def test_example_2_18():
+@pytest.mark.xfail(strict=True,  # type: ignore # NOQA
+                   reason='non-literal/folding multiline scalars not supported')
+def test_example_2_18() -> None:
     yaml = YAML()
     yaml.round_trip("""
     plain:
@@ -263,8 +264,8 @@ def test_example_2_18():
     """)
 
 
-@pytest.mark.xfail(strict=True, reason='leading + on decimal dropped')
-def test_example_2_19():
+@pytest.mark.xfail(strict=True, reason='leading + on decimal dropped')  # type: ignore
+def test_example_2_19() -> None:
     yaml = YAML()
     yaml.round_trip("""
     canonical: 12345
@@ -274,8 +275,8 @@ def test_example_2_19():
     """)
 
 
-@pytest.mark.xfail(strict=True, reason='case of NaN not preserved')
-def test_example_2_20():
+@pytest.mark.xfail(strict=True, reason='case of NaN not preserved')  # type: ignore
+def test_example_2_20() -> None:
     yaml = YAML()
     yaml.round_trip("""
     canonical: 1.23015e+3
@@ -286,7 +287,7 @@ def test_example_2_20():
     """)
 
 
-def Xtest_example_2_X():
+def Xtest_example_2_X() -> None:
     yaml = YAML()
     yaml.round_trip("""
     """)

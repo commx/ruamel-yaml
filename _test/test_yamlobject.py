@@ -1,12 +1,13 @@
 # coding: utf-8
 
 import sys
-import pytest  # NOQA
+from typing import Any
+import pytest  # type: ignore # NOQA
 
 from roundtrip import save_and_run  # NOQA
 
 
-def test_monster(tmpdir):
+def test_monster(tmpdir: Any) -> None:
     program_src = '''\
     import ruamel.yaml
     from textwrap import dedent
@@ -24,27 +25,33 @@ def test_monster(tmpdir):
             return "%s(name=%r, hp=%r, ac=%r, attacks=%r)" % (
                 self.__class__.__name__, self.name, self.hp, self.ac, self.attacks)
 
-    data = ruamel.yaml.load(dedent("""\\
+    yaml = ruamel.yaml.YAML(typ='safe', pure='True')
+    yaml = ruamel.yaml.YAML()
+    data = yaml.load(dedent("""\\
         --- !Monster
         name: Cave spider
         hp: [2,6]    # 2d6
         ac: 16
         attacks: [BITE, HURT]
-    """), Loader=ruamel.yaml.Loader)
+    """))
     # normal dump, keys will be sorted
-    assert ruamel.yaml.dump(data) == dedent("""\\
+    from io import BytesIO
+    buf = BytesIO()
+    yaml.dump(data, buf)
+    print(buf.getvalue().decode('utf-8'))
+    assert buf.getvalue().decode('utf8') == dedent("""\\
         !Monster
+        name: Cave spider
+        hp: [2, 6]   # 2d6
         ac: 16
         attacks: [BITE, HURT]
-        hp: [2, 6]
-        name: Cave spider
     """)
     '''
     assert save_and_run(program_src, tmpdir) == 0
 
 
-@pytest.mark.skipif(sys.version_info < (3, 0), reason='no __qualname__')
-def test_qualified_name00(tmpdir):
+@pytest.mark.skipif(sys.version_info < (3, 0), reason='no __qualname__')  # type: ignore
+def test_qualified_name00(tmpdir: Any) -> None:
     """issue 214"""
     program_src = """\
     from ruamel.yaml import YAML
@@ -67,8 +74,8 @@ def test_qualified_name00(tmpdir):
     assert save_and_run(program_src, tmpdir) == 0
 
 
-@pytest.mark.skipif(sys.version_info < (3, 0), reason='no __qualname__')
-def test_qualified_name01(tmpdir):
+@pytest.mark.skipif(sys.version_info < (3, 0), reason='no __qualname__')  # type: ignore
+def test_qualified_name01(tmpdir: Any) -> None:
     """issue 214"""
     from ruamel.yaml import YAML
     import ruamel.yaml.comments

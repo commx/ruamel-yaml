@@ -1,16 +1,18 @@
 # coding: utf-8
 
-import pytest  # NOQA
+import pytest  # type: ignore  # NOQA
 
 from roundtrip import round_trip, dedent, round_trip_load, round_trip_dump  # NOQA
 
+from typing import Any
 
-def load(s):
+
+def load(s: str) -> Any:
     return round_trip_load(dedent(s))
 
 
 class TestLineCol:
-    def test_item_00(self):
+    def test_item_00(self) -> None:
         data = load("""
             - a
             - e
@@ -20,7 +22,7 @@ class TestLineCol:
         assert data[2].lc.line == 2
         assert data[2].lc.col == 2
 
-    def test_item_01(self):
+    def test_item_01(self) -> None:
         data = load("""
             - a
             - e
@@ -30,7 +32,7 @@ class TestLineCol:
         assert data[2].lc.line == 2
         assert data[2].lc.col == 2
 
-    def test_item_02(self):
+    def test_item_02(self) -> None:
         data = load("""
             - a
             - e
@@ -40,7 +42,7 @@ class TestLineCol:
         assert data[2].lc.line == 2
         assert data[2].lc.col == 2
 
-    def test_item_03(self):
+    def test_item_03(self) -> None:
         data = load("""
             - a
             - e
@@ -52,7 +54,7 @@ class TestLineCol:
         assert data[2].lc.line == 2
         assert data[2].lc.col == 2
 
-    def test_item_04(self):
+    def test_item_04(self) -> None:
         data = load("""
          # testing line and column based on SO
          # http://stackoverflow.com/questions/13319067/
@@ -66,7 +68,7 @@ class TestLineCol:
         assert data[1].lc.line == 4
         assert data[1].lc.col == 2
 
-    def test_pos_mapping(self):
+    def test_pos_mapping(self) -> None:
         data = load("""
         a: 1
         b: 2
@@ -78,7 +80,7 @@ class TestLineCol:
         assert data.lc.key('klm') == (4, 0)
         assert data.lc.value('klm') == (4, 5)
 
-    def test_pos_sequence(self):
+    def test_pos_sequence(self) -> None:
         data = load("""
         - a
         - b

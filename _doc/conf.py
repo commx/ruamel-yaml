@@ -28,7 +28,7 @@ import os  # NOQA
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
-extensions = []
+extensions = []  # type: ignore
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -74,15 +74,13 @@ class ryd2rst:
 
 if True:
     try:
-        from ryd.__main__ import RYDCmd
+        from ryd.__main__ import main
         from pathlib import Path
 
         oldargv = sys.argv
         for fn in Path('.').glob('*.ryd'):
             sys.argv = ['ryd', 'convert', '--no-pdf', str(fn)]
-            rc = RYDCmd()
-            rc.parse_args()
-            print(sys.argv, '->', rc.run())
+            main(sys.argv)
         sys.argv = oldargv
 
     except Exception as e:

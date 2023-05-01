@@ -1,7 +1,8 @@
 from __future__ import absolute_import
 from __future__ import print_function
 
-import ruamel.yaml as yaml
+import ruamel.yaml
+from ruamel.yaml import YAML
 
 
 def _compare_events(events1, events2):
@@ -20,8 +21,8 @@ def _compare_events(events1, events2):
 
 def test_emitter_on_data(data_filename, canonical_filename, verbose=False):
     with open(data_filename, 'rb') as fp0:
-        events = list(yaml.parse(fp0))
-    output = yaml.emit(events)
+        events = list(YAML().parse(fp0))
+    output = YAML().emit(events)
     if verbose:
         print('OUTPUT:')
         print(output)
@@ -34,9 +35,9 @@ test_emitter_on_data.unittest = ['.data', '.canonical']
 
 def test_emitter_on_canonical(canonical_filename, verbose=False):
     with open(canonical_filename, 'rb') as fp0:
-        events = list(yaml.parse(fp0))
+        events = list(YAML().parse(fp0))
     for canonical in [False, True]:
-        output = yaml.emit(events, canonical=canonical)
+        output = YAML().emit(events, canonical=canonical)
         if verbose:
             print('OUTPUT (canonical=%s):' % canonical)
             print(output)
@@ -50,7 +51,7 @@ test_emitter_on_canonical.unittest = ['.canonical']
 def test_emitter_styles(data_filename, canonical_filename, verbose=False):
     for filename in [data_filename, canonical_filename]:
         with open(filename, 'rb') as fp0:
-            events = list(yaml.parse(fp0))
+            events = list(YAML().parse(fp0))
         for flow_style in [False, True]:
             for style in ['|', '>', '"', "'", ""]:
                 styled_events = []
@@ -68,23 +69,23 @@ def test_emitter_styles(data_filename, canonical_filename, verbose=False):
                             event.anchor, event.tag, event.implicit, flow_style=flow_style
                         )
                     styled_events.append(event)
-                output = yaml.emit(styled_events)
+                output = YAML().emit(styled_events)
                 if verbose:
                     print(
                         'OUTPUT (filename=%r, flow_style=%r, style=%r)'
                         % (filename, flow_style, style)
                     )
                     print(output)
-                new_events = list(yaml.parse(output))
+                new_events = list(YAML().parse(output))
                 _compare_events(events, new_events)
 
 
 test_emitter_styles.unittest = ['.data', '.canonical']
 
 
-class EventsLoader(yaml.Loader):
+class EventsLoader(ruamel.yaml.Loader):
     def construct_event(self, node):
-        if isinstance(node, yaml.ScalarNode):
+        if isinstance(node, ruamel.yaml.ScalarNode):
             mapping = {}
         else:
             mapping = self.construct_mapping(node)
@@ -116,12 +117,12 @@ EventsLoader.add_constructor(None, EventsLoader.construct_event)
 
 def test_emitter_events(events_filename, verbose=False):
     with open(events_filename, 'rb') as fp0:
-        events = list(yaml.load(fp0, Loader=EventsLoader))
-    output = yaml.emit(events)
+        events = list(YAML().load(fp0, Loader=EventsLoader))
+    output = YAML().emit(events)
     if verbose:
         print('OUTPUT:')
         print(output)
-    new_events = list(yaml.parse(output))
+    new_events = list(YAML().parse(output))
     _compare_events(events, new_events)
 
 

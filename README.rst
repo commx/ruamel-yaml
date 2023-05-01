@@ -11,9 +11,11 @@ ruamel.yaml
 :pypi:          https://pypi.org/project/ruamel.yaml/
 
 *The 0.16.13 release was the last that was tested to be working on Python 2.7.
-The 0.17.21 is the last one tested to be working on Python 3.5, 
-that is also the last release supporting old PyYAML functions, you'll have to create a 
-`YAML()` instance and use its `.load()` and `.dump()` methods.*
+The 0.17.21 was the last one tested to be working on Python 3.5 and 3.6 (the
+latter not tested, because 
+tox/virtualenv stopped supporting that EOL versions).
+The 0.17 series is also the last to support old PyYAML functions, replace it by 
+creating a `YAML()` instance and use its `.load()` and `.dump()` methods.*
 
 *Please adjust your dependencies accordingly if necessary. (`ruamel.yaml<0.18`)*
 
@@ -66,6 +68,24 @@ ChangeLog
 =========
 
 .. should insert NEXT: at the beginning of line for next key (with empty line)
+
+NEXT:
+  - fix issue with indent != 2 and literal scalars with empty first line
+    (reported by wrdis on `StackOverflow <https://stackoverflow.com/q/75584262/1307905>`__)
+  - updated __repr__ of CommentedMap, now that dict is ordered -> no more ordereddict
+  - fix loading of `!!float 42` (reported by Eric on
+    `Stack overflow <https://stackoverflow.com/a/71555107/1307905>`_)
+  - line numbers are now set on `CommentedKeySeq` and `CommentedKeyMap` (which
+    are created if you have a sequence resp. mapping as the key in a mapping)
+  - plain scalars: put single words longer than width on a line of their own, instead
+    of after the previous line (issue 427, reported by `Antoine Cotten 
+    <https://sourceforge.net/u/antoineco/profile/>`_). Caveat: this currently results in a 
+    space ending the previous line.
+  - fix for folded scalar part of 421: comments after ">" on first line of folded
+    scalars are now preserved (as were those in the same position on literal scalars).
+    Issue reported by Jacob Floyd.
+  - added stacklevel to warnings
+  - typing changed from Py2 compatible comments to Py3, removed various Py2-isms
 
 0.17.21 (2022-02-12):
   - fix bug in calling `.compose()` method with `pathlib.Path` instance.

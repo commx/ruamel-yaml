@@ -2,17 +2,21 @@
 
 import sys
 
-from ruamel.yaml.compat import _F
-
-if False:  # MYPY
-    from typing import Dict, Any, Text  # NOQA
+from typing import Dict, Any, Text  # NOQA
 
 
 class Node:
     __slots__ = 'tag', 'value', 'start_mark', 'end_mark', 'comment', 'anchor'
 
-    def __init__(self, tag, value, start_mark, end_mark, comment=None, anchor=None):
-        # type: (Any, Any, Any, Any, Any, Any) -> None
+    def __init__(
+        self,
+        tag: Any,
+        value: Any,
+        start_mark: Any,
+        end_mark: Any,
+        comment: Any = None,
+        anchor: Any = None,
+    ) -> None:
         self.tag = tag
         self.value = value
         self.start_mark = start_mark
@@ -20,8 +24,7 @@ class Node:
         self.comment = comment
         self.anchor = anchor
 
-    def __repr__(self):
-        # type: () -> Any
+    def __repr__(self) -> Any:
         value = self.value
         # if isinstance(value, list):
         #     if len(value) == 0:
@@ -36,29 +39,19 @@ class Node:
         #     else:
         #         value = repr(value)
         value = repr(value)
-        return _F(
-            '{class_name!s}(tag={self_tag!r}, value={value!s})',
-            class_name=self.__class__.__name__,
-            self_tag=self.tag,
-            value=value,
-        )
+        return f'{self.__class__.__name__!s}(tag={self.tag!r}, value={value!s})'
 
-    def dump(self, indent=0):
-        # type: (int) -> None
+    def dump(self, indent: int = 0) -> None:
+        xx = self.__class__.__name__
+        xi = '  ' * indent
         if isinstance(self.value, str):
-            sys.stdout.write(
-                '{}{}(tag={!r}, value={!r})\n'.format(
-                    '  ' * indent, self.__class__.__name__, self.tag, self.value
-                )
-            )
+            sys.stdout.write(f'{xi}{xx}(tag={self.tag!r}, value={self.value!r})\n')
             if self.comment:
-                sys.stdout.write('    {}comment: {})\n'.format('  ' * indent, self.comment))
+                sys.stdout.write(f'    {xi}comment: {self.comment})\n')
             return
-        sys.stdout.write(
-            '{}{}(tag={!r})\n'.format('  ' * indent, self.__class__.__name__, self.tag)
-        )
+        sys.stdout.write(f'{xi}{xx}(tag={self.tag!r})\n')
         if self.comment:
-            sys.stdout.write('    {}comment: {})\n'.format('  ' * indent, self.comment))
+            sys.stdout.write(f'    {xi}comment: {self.comment})\n')
         for v in self.value:
             if isinstance(v, tuple):
                 for v1 in v:
@@ -66,7 +59,7 @@ class Node:
             elif isinstance(v, Node):
                 v.dump(indent + 1)
             else:
-                sys.stdout.write('Node value type? {}\n'.format(type(v)))
+                sys.stdout.write(f'Node value type? {type(v)}\n')
 
 
 class ScalarNode(Node):
@@ -83,9 +76,15 @@ class ScalarNode(Node):
     id = 'scalar'
 
     def __init__(
-        self, tag, value, start_mark=None, end_mark=None, style=None, comment=None, anchor=None
-    ):
-        # type: (Any, Any, Any, Any, Any, Any, Any) -> None
+        self,
+        tag: Any,
+        value: Any,
+        start_mark: Any = None,
+        end_mark: Any = None,
+        style: Any = None,
+        comment: Any = None,
+        anchor: Any = None,
+    ) -> None:
         Node.__init__(self, tag, value, start_mark, end_mark, comment=comment, anchor=anchor)
         self.style = style
 
@@ -95,15 +94,14 @@ class CollectionNode(Node):
 
     def __init__(
         self,
-        tag,
-        value,
-        start_mark=None,
-        end_mark=None,
-        flow_style=None,
-        comment=None,
-        anchor=None,
-    ):
-        # type: (Any, Any, Any, Any, Any, Any, Any) -> None
+        tag: Any,
+        value: Any,
+        start_mark: Any = None,
+        end_mark: Any = None,
+        flow_style: Any = None,
+        comment: Any = None,
+        anchor: Any = None,
+    ) -> None:
         Node.__init__(self, tag, value, start_mark, end_mark, comment=comment)
         self.flow_style = flow_style
         self.anchor = anchor
@@ -120,15 +118,14 @@ class MappingNode(CollectionNode):
 
     def __init__(
         self,
-        tag,
-        value,
-        start_mark=None,
-        end_mark=None,
-        flow_style=None,
-        comment=None,
-        anchor=None,
-    ):
-        # type: (Any, Any, Any, Any, Any, Any, Any) -> None
+        tag: Any,
+        value: Any,
+        start_mark: Any = None,
+        end_mark: Any = None,
+        flow_style: Any = None,
+        comment: Any = None,
+        anchor: Any = None,
+    ) -> None:
         CollectionNode.__init__(
             self, tag, value, start_mark, end_mark, flow_style, comment, anchor
         )

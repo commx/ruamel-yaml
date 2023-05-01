@@ -121,7 +121,7 @@ def _make_objects():
             else:
                 return False
 
-    class AnObject(object):
+    class AnObject:
         def __new__(cls, foo=None, bar=None, baz=None):
             self = object.__new__(cls)
             self.foo = foo

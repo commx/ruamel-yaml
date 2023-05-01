@@ -1,13 +1,13 @@
 # coding: utf-8
 
-import pytest  # NOQA
+import pytest  # type: ignore  # NOQA
 
 # import ruamel.yaml
 from roundtrip import round_trip
 
 
 class TestProgramConfig:
-    def test_application_arguments(self):
+    def test_application_arguments(self) -> None:
         # application configur
         round_trip("""
         args:
@@ -20,7 +20,7 @@ class TestProgramConfig:
             wait: 10
         """)
 
-    def test_single(self):
+    def test_single(self) -> None:
         # application configuration
         round_trip("""
         # default arguments for the program
@@ -39,7 +39,7 @@ class TestProgramConfig:
           # no more argument info to pass
         """)
 
-    def test_multi(self):
+    def test_multi(self) -> None:
         # application configuration
         round_trip("""
         # default arguments for the program

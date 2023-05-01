@@ -2,17 +2,17 @@
 
 import sys
 import platform
-import pytest
+import pytest  # type: ignore  # NOQA
 from textwrap import dedent
 
 NO_CLIB_VER = (3, 10)
 
 
-@pytest.mark.skipif(
+@pytest.mark.skipif(  # type: ignore
     platform.python_implementation() in ['Jython', 'PyPy'],
     reason='Jython throws RepresenterError'
 )
-def test_load_cyaml():
+def test_load_cyaml() -> None:
     print("???????????????????????", platform.python_implementation())
     import ruamel.yaml
 
@@ -24,10 +24,10 @@ def test_load_cyaml():
     yaml.load('abc: 1')
 
 
-@pytest.mark.skipif(sys.version_info >= NO_CLIB_VER
+@pytest.mark.skipif(sys.version_info >= NO_CLIB_VER  # type: ignore
                     or platform.python_implementation() in ['Jython', 'PyPy'],
                     reason='no _PyGC_FINALIZED')
-def test_dump_cyaml():
+def test_dump_cyaml() -> None:
     import ruamel.yaml
 
     if sys.version_info >= NO_CLIB_VER:
@@ -41,10 +41,10 @@ def test_dump_cyaml():
     assert buf.getvalue() == 'a: 1\nb: 2\n'
 
 
-@pytest.mark.skipif(
+@pytest.mark.skipif(  # type: ignore
     platform.python_implementation() in ['Jython', 'PyPy'], reason='not avialable'
 )
-def test_load_cyaml_1_2():
+def test_load_cyaml_1_2() -> None:
     # issue 155
     import ruamel.yaml
 
@@ -60,10 +60,10 @@ def test_load_cyaml_1_2():
     yaml.load(inp)
 
 
-@pytest.mark.skipif(
+@pytest.mark.skipif(  # type: ignore
     platform.python_implementation() in ['Jython', 'PyPy'], reason='not available'
 )
-def test_dump_cyaml_1_2():
+def test_dump_cyaml_1_2() -> None:
     # issue 155
     import ruamel.yaml
     from ruamel.yaml.compat import StringIO

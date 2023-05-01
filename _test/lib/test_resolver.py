@@ -1,5 +1,6 @@
 
-import ruamel.yaml as yaml
+import ruamel.yaml
+yaml = ruamel.yaml.YAML()
 import pprint
 
 

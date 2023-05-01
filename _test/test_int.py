@@ -1,6 +1,6 @@
 # coding: utf-8
 
-import pytest  # NOQA
+import pytest  # type: ignore  # NOQA
 
 from roundtrip import dedent, round_trip_load, round_trip_dump
 
@@ -8,7 +8,7 @@ from roundtrip import dedent, round_trip_load, round_trip_dump
 
 
 class TestBinHexOct:
-    def test_calculate(self):
+    def test_calculate(self) -> None:
         # make sure type, leading zero(s) and underscore are preserved
         s = dedent("""\
         - 42

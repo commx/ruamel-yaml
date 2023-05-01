@@ -348,28 +348,32 @@ ruamel.yaml.canonical_scan = canonical_scan
 
 
 def canonical_parse(stream):
-    return ruamel.yaml.parse(stream, Loader=CanonicalLoader)
+    yaml = ruamel.yaml.YAML()
+    return yaml.parse(stream, Loader=CanonicalLoader)
 
 
 ruamel.yaml.canonical_parse = canonical_parse
 
 
 def canonical_compose(stream):
-    return ruamel.yaml.compose(stream, Loader=CanonicalLoader)
+    yaml = ruamel.yaml.YAML()
+    return yaml.compose(stream, Loader=CanonicalLoader)
 
 
 ruamel.yaml.canonical_compose = canonical_compose
 
 
 def canonical_compose_all(stream):
-    return ruamel.yaml.compose_all(stream, Loader=CanonicalLoader)
+    yaml = ruamel.yaml.YAML()
+    return yaml.compose_all(stream, Loader=CanonicalLoader)
 
 
 ruamel.yaml.canonical_compose_all = canonical_compose_all
 
 
 def canonical_load(stream):
-    return ruamel.yaml.load(stream, Loader=CanonicalLoader)
+    yaml = ruamel.yaml.YAML()
+    return yaml.load(stream, Loader=CanonicalLoader)
 
 
 ruamel.yaml.canonical_load = canonical_load

@@ -12,6 +12,7 @@ venv
 TODO.rst
 try_*
 _doc/*.pdf
+_doc/*.html
 _doc/*.rst
 *.py_alt
 

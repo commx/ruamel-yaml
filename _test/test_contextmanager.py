@@ -5,8 +5,9 @@ testing of anchors and the aliases referring to them
 """
 
 import sys
-import pytest
+import pytest  # type: ignore
 
+from typing import Any
 
 single_doc = """\
 - a: 1
@@ -31,33 +32,33 @@ multi_doc = """\
 multi_doc_data = [['abc', 'xyz'], single_data]
 
 
-def get_yaml():
+def get_yaml() -> Any:
     from ruamel.yaml import YAML
 
     return YAML()
 
 
 class TestOldStyle:
-    def test_single_load(self):
+    def test_single_load(self) -> None:
         d = get_yaml().load(single_doc)
         print(d)
         print(type(d[0]))
         assert d == single_data
 
-    def test_single_load_no_arg(self):
+    def test_single_load_no_arg(self) -> None:
         with pytest.raises(TypeError):
             assert get_yaml().load() == single_data
 
-    def test_multi_load(self):
+    def test_multi_load(self) -> None:
         data = list(get_yaml().load_all(multi_doc))
         assert data == multi_doc_data
 
-    def test_single_dump(self, capsys):
+    def test_single_dump(self, capsys: Any) -> None:
         get_yaml().dump(single_data, sys.stdout)
         out, err = capsys.readouterr()
         assert out == single_doc
 
-    def test_multi_dump(self, capsys):
+    def test_multi_dump(self, capsys: Any) -> None:
         yaml = get_yaml()
         yaml.explicit_start = True
         yaml.dump_all(multi_doc_data, sys.stdout)
@@ -66,7 +67,7 @@ class TestOldStyle:
 
 
 class TestContextManager:
-    def test_single_dump(self, capsys):
+    def test_single_dump(self, capsys: Any) -> None:
         from ruamel.yaml import YAML
 
         with YAML(output=sys.stdout) as yaml:
@@ -75,7 +76,7 @@ class TestContextManager:
         print(err)
         assert out == single_doc
 
-    def test_multi_dump(self, capsys):
+    def test_multi_dump(self, capsys: Any) -> None:
         from ruamel.yaml import YAML
 
         with YAML(output=sys.stdout) as yaml:
@@ -103,7 +104,7 @@ class TestContextManager:
     #         for idx, data in enumerate(yaml.load()):
     #             assert data == multi_doc_data[0]
 
-    def test_roundtrip(self, capsys):
+    def test_roundtrip(self, capsys: Any) -> None:
         from ruamel.yaml import YAML
 
         with YAML(output=sys.stdout) as yaml:

@@ -1,11 +1,13 @@
 # coding: utf-8
 
-import pytest  # NOQA
+import pytest  # type: ignore  # NOQA
 
 import json
 
+from typing import Any
 
-def load(s, typ=float):
+
+def load(s: str, typ: Any = float) -> float:
     import ruamel.yaml
 
     yaml = ruamel.yaml.YAML()
@@ -16,7 +18,7 @@ def load(s, typ=float):
     assert isinstance(res['low'], typ)
     ret_val = yaml.load(x)
     print(ret_val)
-    return ret_val['low']
+    return ret_val['low']  # type: ignore
 
 
 class TestJSONNumbers:
@@ -26,7 +28,7 @@ class TestJSONNumbers:
     # -? [1-9] ( \. [0-9]* [1-9] )? ( e [-+] [1-9] [0-9]* )?
     #
     # which is not a superset of the JSON numbers
-    def test_json_number_float(self):
+    def test_json_number_float(self) -> None:
         for x in (
             y.split('#')[0].strip()
             for y in """
@@ -43,7 +45,7 @@ class TestJSONNumbers:
             res = load(x)
             assert isinstance(res, float)
 
-    def test_json_number_int(self):
+    def test_json_number_int(self) -> None:
         for x in (
             y.split('#')[0].strip()
             for y in """

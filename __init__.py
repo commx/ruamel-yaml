@@ -20,12 +20,11 @@ _package_data = dict(
     },
     classifiers=[
         'Programming Language :: Python :: 3 :: Only',
-        'Programming Language :: Python :: 3.5',
-        'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
         'Programming Language :: Python :: 3.9',
         'Programming Language :: Python :: 3.10',
+        'Programming Language :: Python :: 3.11',
         'Programming Language :: Python :: Implementation :: CPython',
         'Topic :: Software Development :: Libraries :: Python Modules',
         'Topic :: Text Processing :: Markup',
@@ -33,10 +32,10 @@ _package_data = dict(
     ],
     keywords='yaml 1.2 parser round-trip preserve quotes order config',
     read_the_docs='yaml',
-    supported=[(3, 5)],  # minimum
+    supported=[(3, 7)],  # minimum
     tox=dict(
-        env='*f',  # f for 3.5
-        fl8excl='_test/lib',
+        env='*',
+        fl8excl='_test/lib,branch_default',
     ),
     # universal=True,
     python_requires='>=3',
