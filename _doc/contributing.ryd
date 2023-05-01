@@ -11,9 +11,9 @@ Any contribution to ``ruamel.yaml`` is welcome, be it in the form of an
 email, a question on stackoverflow (I'll get notified of that when you tag it
 with ``ruamel.yaml``), an issue or pull-request (PR) on sourceforge.
 
-Contributing via stackoverflow is, for most, easiest to make. When I answer your
+Contributing via stackoverflow is, for most, easy to do. When I answer your
 question there and the answer warrants an extension to the documentation or
-code, I will include it in a documnetation update and/or future (normally the
+code, I will include it in a documentation update and/or future (normally the
 next) release of ``ruamel.yaml``.
 
 Please don't post support questions as an issue on sourceforge.
@@ -27,7 +27,7 @@ The documentation for ``ruamel.yaml`` is in YAML, more specifically in `ryd
 within a single file. If you know a bit of YAML, Python and reStructuredText it
 will be clear how that works.
 
-If you want to contribute to the documentation, you can sent me a clear
+If you want to contribute to the documentation, you can send me a clear
 description of the needed changes, e.g. as a unified diff. If the changes
 encompass multiple documents in a ``.ryd`` file, it is best to install ``ryd``
 (use a virtualenv!), clone the ``ruamel.yaml`` repository on sourceforge, edit
@@ -41,7 +41,7 @@ look acceptable, submit a pull-request.
 ``ryd`` will check your file for single backquotes (my most common mistake going
 back and forth between reStructuredText and other mark up).
 
-If you contribute example programs, note that ``ryd`` will automatically run you
+If you contribute example programs, note that ``ryd`` will automatically run your
 program (so it should be correct) and can include the output of the program in
 the resulting ``.rst`` (and PDF) file.
 
@@ -108,11 +108,11 @@ Generated files
 I use a minimal environment when developing, void of most artifacts needed for
 packaging, testing etc. These artifact files are *generated*, just before committing to
 sourceforge and pushing to PyPI, with nuances coming from the ``_package_data``
-information in ``__init__.py``. Including changes in these files will
+information in ``__init__.py``. Included changes in these files will
 automatically be reverted, even assuming your PR is accepted as is.
 
-Consider the following files **read-only** (if you think changes need to made these,
-contact me)::
+Consider the following files **read-only** (if you think changes need to be made
+to these, contact me)::
 
    setup.py
    tox.ini
@@ -127,8 +127,8 @@ Vulnerabilities
 If you find a vulnerability in ``ruamel.yaml`` (e.g. that would show the ``safe``
 and ``rt`` loader are not safe due to a bug in the software)), please contact me
 directly via email, or by leaving a comment on StackOverflow (below any of my
-posts), without going into the details of the vulnerability. After contact is
+posts), without going into the details about the vulnerability. After contact is
 estabilished I will work to eliminate the vulnerability in a timely fashion.
-After the vulnerability is removed, and affected parties notified to allow them
-to update versions, the vulnerability will be published, and your role in
-finding/resolving this properly attributed.
+After the vulnerability is removed, and affected parties haven been notified to
+allow them to update versions, the vulnerability will be published, and your role
+in finding/resolving this properly attributed.
