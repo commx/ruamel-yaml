@@ -866,13 +866,13 @@ class CommentedMap(ordereddict, CommentedBase):
             return default
 
     def __repr__(self) -> Any:
-        res = "ordereddict(["
+        res = "{"
         sep = ''
         for k, v in self.items():
-            res += f'{sep}({k!r}, {v!r})'
+            res += f'{sep}{k!r}: {v!r}'
             if not sep:
                 sep = ', '
-        res += '])'
+        res += '}'
         return res
 
     def non_merged_items(self) -> Any:

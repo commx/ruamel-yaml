@@ -29,7 +29,7 @@ class TestIssues:
         """)
         data = round_trip_load(s)
         assert str(data['comb']) == str(data['def'])
-        assert str(data['comb']) == "ordereddict([('key', 'value'), ('key1', 'value1')])"
+        assert str(data['comb']) == "{'key': 'value', 'key1': 'value1'}"
 
 #    def test_issue_82(self, tmpdir):
 #        program_src = r'''

@@ -70,9 +70,13 @@ ChangeLog
 .. should insert NEXT: at the beginning of line for next key (with empty line)
 
 NEXT:
+
   - fix issue with indent != 2 and literal scalars with empty first line
     (reported by wrdis on `StackOverflow <https://stackoverflow.com/q/75584262/1307905>`__)
-  - updated __repr__ of CommentedMap, now that dict is ordered -> no more ordereddict
+  - updated __repr__ of CommentedMap, now that Python's dict is ordered -> no more 
+    ordereddict(list-of-tuples)
+  - merge MR 4, handling OctalInt in YAML 1.1 
+    (provided by `Jacob Floyd <https://sourceforge.net/u/cognifloyd/profile/>`_)
   - fix loading of `!!float 42` (reported by Eric on
     `Stack overflow <https://stackoverflow.com/a/71555107/1307905>`_)
   - line numbers are now set on `CommentedKeySeq` and `CommentedKeyMap` (which
