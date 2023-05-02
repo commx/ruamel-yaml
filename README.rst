@@ -4,34 +4,26 @@ ruamel.yaml
 
 ``ruamel.yaml`` is a YAML 1.2 loader/dumper package for Python.
 
-:version:       0.17.21
-:updated:       2022-02-12
+:version:       0.17.22
+:updated:       2023-05-02
 :documentation: http://yaml.readthedocs.io
 :repository:    https://sourceforge.net/projects/ruamel-yaml/
 :pypi:          https://pypi.org/project/ruamel.yaml/
 
-*The 0.16.13 release was the last that was tested to be working on Python 2.7.
-The 0.17.21 was the last one tested to be working on Python 3.5 and 3.6 (the
-latter not tested, because 
-tox/virtualenv stopped supporting that EOL versions).
+*Starting with 0.17.22 only Python 3.7+ is supported.
 The 0.17 series is also the last to support old PyYAML functions, replace it by 
 creating a `YAML()` instance and use its `.load()` and `.dump()` methods.*
+New(er) functionality is usually only available via the new API.
 
-*Please adjust your dependencies accordingly if necessary. (`ruamel.yaml<0.18`)*
+The 0.17.21 was the last one tested to be working on Python 3.5 and 3.6 (the
+latter was not tested, because 
+tox/virtualenv stopped supporting that EOL version).
+The 0.16.13 release was the last that was tested to be working on Python 2.7.
 
-Starting with version 0.15.0 the way YAML files are loaded and dumped
-has been changing, see the API doc for details.  Currently existing
-functionality will throw a warning before being changed/removed.
-**For production systems already using a pre 0.16 version, you should
-pin the version being used with ``ruamel.yaml<=0.15``** if you cannot
-fully test upgrading to a newer version. For new usage
-pin to the minor version tested ( ``ruamel.yaml<=0.17``) or even to the
-exact version used. 
+*Please adjust/pin your dependencies accordingly if necessary. (`ruamel.yaml<0.18`)*
 
-New functionality is usually only available via the new API, so
-make sure you use it and stop using the `ruamel.yaml.safe_load()`,
-`ruamel.yaml.round_trip_load()` and `ruamel.yaml.load()` functions
-(and their `....dump()` counterparts).
+There are now two extra plug-in packages (`ruamel.yaml.bytes` and `ruamel.yaml.string`)
+for those not wanting to do the streaming to a `io.BytesIO/StringIO` buffer themselves.
 
 If your package uses ``ruamel.yaml`` and is not listed on PyPI, drop
 me an email, preferably with some information on how you use the
@@ -69,8 +61,10 @@ ChangeLog
 
 .. should insert NEXT: at the beginning of line for next key (with empty line)
 
-NEXT:
+0.17.22 (2023-05-02):
 
+  - fix issue 449 where the second exclamation marks got URL encoded (reported
+    and fixing PR provided by `John Stark <https://sourceforge.net/u/jods/profile/>`__)
   - fix issue with indent != 2 and literal scalars with empty first line
     (reported by wrdis on `StackOverflow <https://stackoverflow.com/q/75584262/1307905>`__)
   - updated __repr__ of CommentedMap, now that Python's dict is ordered -> no more 

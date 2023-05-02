@@ -864,7 +864,7 @@ class TestIssues:
         """
         d = na_round_trip(inp)  # NOQA
 
-    def test_issue_449(self):
+    def test_issue_449(self) -> None:
         inp = """\
         emoji_index: !!python/name:materialx.emoji.twemoji
         """

@@ -1,3 +1,27 @@
+[0, 17, 22]: 2023-05-02
+
+  - fix issue 449 where the second exclamation marks got URL encoded (reported
+    and fixing PR provided by `John Stark <https://sourceforge.net/u/jods/profile/>`__)
+  - fix issue with indent != 2 and literal scalars with empty first line
+    (reported by wrdis on `StackOverflow <https://stackoverflow.com/q/75584262/1307905>`__)
+  - updated __repr__ of CommentedMap, now that Python's dict is ordered -> no more 
+    ordereddict(list-of-tuples)
+  - merge MR 4, handling OctalInt in YAML 1.1 
+    (provided by `Jacob Floyd <https://sourceforge.net/u/cognifloyd/profile/>`_)
+  - fix loading of `!!float 42` (reported by Eric on
+    `Stack overflow <https://stackoverflow.com/a/71555107/1307905>`_)
+  - line numbers are now set on `CommentedKeySeq` and `CommentedKeyMap` (which
+    are created if you have a sequence resp. mapping as the key in a mapping)
+  - plain scalars: put single words longer than width on a line of their own, instead
+    of after the previous line (issue 427, reported by `Antoine Cotten 
+    <https://sourceforge.net/u/antoineco/profile/>`_). Caveat: this currently results in a 
+    space ending the previous line.
+  - fix for folded scalar part of 421: comments after ">" on first line of folded
+    scalars are now preserved (as were those in the same position on literal scalars).
+    Issue reported by Jacob Floyd.
+  - added stacklevel to warnings
+  - typing changed from Py2 compatible comments to Py3, removed various Py2-isms
+
 [0, 17, 21]: 2022-02-12
   - fix bug in calling `.compose()` method with `pathlib.Path` instance.
 

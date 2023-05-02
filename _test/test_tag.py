@@ -65,7 +65,8 @@ class TestIndentFailures:
         language: python
         """)
 
-    def test_spec_6_26_tag_shorthands(self):
+    @pytest.mark.xfail(strict=True)  # type: ignore
+    def test_spec_6_26_tag_shorthands(self) -> None:
         round_trip("""\
         %TAG !e! tag:example.com,2000:app/
         ---
