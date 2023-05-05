@@ -888,7 +888,7 @@ def main():
 
     # if nsp.wheel(kw, setup):
     #     return
-    with TmpFiles(pkg_data, keep=True):
+    with TmpFiles(pkg_data, keep=False):
         for x in ['-c', 'egg_info', '--egg-base', 'pip-egg-info']:
             if x not in sys.argv:
                 break
