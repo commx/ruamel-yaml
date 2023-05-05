@@ -3,7 +3,7 @@
 import pytest  # type: ignore # NOQA
 from typing import Any, Optional
 
-from roundtrip import dedent, round_trip, round_trip_load
+from roundtrip import dedent, round_trip, round_trip_load  # type: ignore
 
 
 def load(s: str, version: Optional[Any] = None) -> Any:

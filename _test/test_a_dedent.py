@@ -1,6 +1,6 @@
 # coding: utf-8
 
-from roundtrip import dedent
+from roundtrip import dedent  # type: ignore
 
 
 class TestDedent:

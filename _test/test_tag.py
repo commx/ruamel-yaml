@@ -3,7 +3,7 @@
 import pytest  # type: ignore # NOQA
 from typing import Any
 
-from roundtrip import round_trip, round_trip_load, YAML
+from roundtrip import round_trip, round_trip_load, YAML  # type: ignore
 
 
 def register_xxx(**kw: Any) -> None:

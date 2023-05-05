@@ -2,7 +2,7 @@
 
 import pytest  # type: ignore  # NOQA
 
-from roundtrip import round_trip, dedent, round_trip_load, round_trip_dump  # NOQA
+from roundtrip import round_trip, dedent, round_trip_load, round_trip_dump  # type: ignore # NOQA
 
 from typing import Any
 

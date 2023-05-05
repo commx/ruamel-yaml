@@ -3,7 +3,7 @@
 import pytest  # type: ignore  # NOQA
 
 # import ruamel.yaml
-from roundtrip import round_trip
+from roundtrip import round_trip  # type: ignore
 
 
 class TestProgramConfig:

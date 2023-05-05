@@ -2,7 +2,7 @@
 
 import pytest  # type: ignore  # NOQA
 
-from roundtrip import YAML  # does an automatic dedent on load
+from roundtrip import YAML  # type: ignore # does an automatic dedent on load
 
 
 """
@@ -63,7 +63,7 @@ class TestNoIndent:
 
     def test_root_literal_scalar_no_indent_1_1_old_style(self) -> None:
         from textwrap import dedent
-        from ruamel.yaml import YAML  # type: ignore
+        from ruamel.yaml import YAML
 
         yaml = YAML(typ='safe', pure=True)
         s = 'testing123'

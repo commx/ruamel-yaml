@@ -31,7 +31,7 @@ class Event:
                 # if you use repr(getattr(self, 'value')) then flake8 complains about
                 # abuse of getattr with a constant. When you change to self.value
                 # then mypy throws an error
-                arguments.append(repr(self.value))  # type: ignore
+                arguments.append(repr(self.value))
             for key in ['anchor', 'tag', 'implicit', 'flow_style', 'style']:
                 v = getattr(self, key, None)
                 if v is not None:

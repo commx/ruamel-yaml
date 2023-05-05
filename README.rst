@@ -4,8 +4,8 @@ ruamel.yaml
 
 ``ruamel.yaml`` is a YAML 1.2 loader/dumper package for Python.
 
-:version:       0.17.22
-:updated:       2023-05-02
+:version:       0.17.23
+:updated:       2023-05-05
 :documentation: http://yaml.readthedocs.io
 :repository:    https://sourceforge.net/projects/ruamel-yaml/
 :pypi:          https://pypi.org/project/ruamel.yaml/
@@ -60,6 +60,19 @@ ChangeLog
 =========
 
 .. should insert NEXT: at the beginning of line for next key (with empty line)
+
+0.17.23 (2023-05-05):
+  - fix 458, error on plain scalars starting with word longer than width.
+    (reported by `Kyle Larose <https://sourceforge.net/u/klarose/profile/>`__)
+  - fix for ``.update()`` no longer correctly handling keyword arguments
+    (reported by John Lin on <StackOverflow 
+    `<https://stackoverflow.com/q/76089100/1307905>`__)
+  - fix issue 454: high Unicode (emojis) in quoted strings always
+    escaped (reported by `Michal Čihař <https://sourceforge.net/u/nijel/profile/>`__
+    based on a question on StackOverflow).
+  - fix issue with emitter conservatively inserting extra backslashes in wrapped
+    quoted strings (reported by thebenman on `StackOverflow 
+    <https://stackoverflow.com/q/75631454/1307905>`__)
 
 0.17.22 (2023-05-02):
 

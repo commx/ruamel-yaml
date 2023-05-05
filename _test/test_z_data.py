@@ -161,7 +161,7 @@ class TestYAMLData:
     def run_python(
         self, python: Any, data: Any, tmpdir: Any, input: Optional[Any] = None
     ) -> None:
-        from roundtrip import save_and_run
+        from roundtrip import save_and_run  # type: ignore
 
         if input is not None:
             (tmpdir / 'input.yaml').write_text(input.value, encoding='utf-8')

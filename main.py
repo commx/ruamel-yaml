@@ -54,7 +54,7 @@ class YAML:
     def __init__(
         self: Any,
         *,
-        typ: Optional[Text] = None,
+        typ: Optional[Union[List[Text], Text]] = None,
         pure: Any = False,
         output: Any = None,
         plug_ins: Any = None,
@@ -157,7 +157,7 @@ class YAML:
 
         self.top_level_colon_align = None
         self.prefix_colon = None
-        self.version: Optional[Any] = None
+        self._version: Optional[Any] = None
         self.preserve_quotes: Optional[bool] = None
         self.allow_duplicate_keys = False  # duplicate keys in map, set
         self.encoding = 'utf-8'
@@ -796,6 +796,24 @@ class YAML:
             self.sequence_indent = sequence
         if offset is not None:
             self.sequence_dash_offset = offset
+
+    @property
+    def version(self) -> Optional[Any]:
+        return self._version
+
+    @version.setter
+    def version(self, val: Optional[VersionType]) -> None:
+        if val is None:
+            self._version = val
+            return
+        if isinstance(val, str):
+            sval = tuple(int(x) for x in val.split('.'))
+        else:
+            sval = tuple(int(x) for x in val)
+        assert len(sval) == 2, f'version can only have major.minor, got {val}'
+        assert sval[0] == 1, f'version major part can only be 1, got {val}'
+        assert sval[1] in [1, 2], f'version minor part can only be 2 or 1, got {val}'
+        self._version = sval
 
     @property
     def indent(self) -> Any:

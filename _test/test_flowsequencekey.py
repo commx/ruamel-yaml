@@ -7,7 +7,7 @@ test flow style sequences as keys roundtrip
 
 # import pytest
 
-from roundtrip import round_trip  # , dedent, round_trip_load, round_trip_dump
+from roundtrip import round_trip  # type: ignore
 
 
 class TestFlowStyleSequenceKey:

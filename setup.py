@@ -788,7 +788,6 @@ class TmpFiles:
 
     def __enter__(self):
         self.bdist_wheel()
-        return
         self.py_project()
 
     def bdist_wheel(self):

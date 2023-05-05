@@ -93,7 +93,7 @@ class Reader:
         try:
             return self._stream
         except AttributeError:
-            raise YAMLStreamError('input stream needs to specified')
+            raise YAMLStreamError('input stream needs to be specified')
 
     @stream.setter
     def stream(self, val: Any) -> None:

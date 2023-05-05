@@ -4,7 +4,7 @@ import sys
 from typing import Any
 import pytest  # type: ignore # NOQA
 
-from roundtrip import save_and_run  # NOQA
+from roundtrip import save_and_run  # type: ignore # NOQA
 
 
 def test_monster(tmpdir: Any) -> None:

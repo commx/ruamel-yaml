@@ -7,7 +7,7 @@ testing of YAML.register_class and @yaml_object
 from typing import Any
 from ruamel.yaml.comments import TaggedScalar, CommentedMap  # NOQA
 
-from roundtrip import YAML
+from roundtrip import YAML  # type: ignore
 
 
 class User0:

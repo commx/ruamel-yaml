@@ -3,13 +3,13 @@
 from typing import Any
 import pytest  # type: ignore  # NOQA
 
-from roundtrip import round_trip, round_trip_load, round_trip_dump, dedent, YAML
+from roundtrip import round_trip, round_trip_load, round_trip_dump, dedent, YAML  # type: ignore  # NOQA
 
 
 def rt(s: str) -> str:
     res = round_trip_dump(round_trip_load(s))
     assert res is not None
-    return res.strip() + '\n'
+    return res.strip() + '\n'  # type: ignore
 
 
 class TestIndent:

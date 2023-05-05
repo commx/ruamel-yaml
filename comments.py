@@ -790,7 +790,7 @@ class CommentedMap(ordereddict, CommentedBase):
                 for x in vals[0]:
                     self._ok.add(x[0])
         if kw:
-            self._ok.add(*kw.keys())
+            self._ok.update(*kw.keys())  # type: ignore
 
     def insert(self, pos: Any, key: Any, value: Any, comment: Optional[Any] = None) -> None:
         """insert key value into given position
@@ -866,7 +866,7 @@ class CommentedMap(ordereddict, CommentedBase):
             return default
 
     def __repr__(self) -> Any:
-        res = "{"
+        res = '{'
         sep = ''
         for k, v in self.items():
             res += f'{sep}{k!r}: {v!r}'
@@ -1131,13 +1131,13 @@ def dump_comments(d: Any, name: str = "", sep: str = '.', out: Any = sys.stdout)
     if isinstance(d, dict) and hasattr(d, 'ca'):
         if name:
             out.write(f'{name} {type(d)}\n')
-        out.write(f'{d.ca!r}\n')  # type: ignore
+        out.write(f'{d.ca!r}\n')
         for k in d:
             dump_comments(d[k], name=(name + sep + str(k)) if name else k, sep=sep, out=out)
     elif isinstance(d, list) and hasattr(d, 'ca'):
         if name:
             out.write(f'{name} {type(d)}\n')
-        out.write(f'{d.ca!r}\n')  # type: ignore
+        out.write(f'{d.ca!r}\n')
         for idx, k in enumerate(d):
             dump_comments(
                 k, name=(name + sep + str(idx)) if name else str(idx), sep=sep, out=out
