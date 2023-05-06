@@ -822,8 +822,9 @@ class Scanner:
             srf()
         found = False
         _the_end = _THE_END
+        white_space = ' \t' if self.flow_level > 0 else ' '
         while not found:
-            while srp() == ' ':
+            while srp() in white_space:
                 srf()
             if srp() == '#':
                 while srp() not in _the_end:
@@ -1837,14 +1838,14 @@ class RoundTripScanner(Scanner):
         # We also need to add the check for `allow_simple_keys == True` to
         # `unwind_indent` before issuing BLOCK-END.
         # Scanners for block, flow, and plain scalars need to be modified.
-
         srp = self.reader.peek
         srf = self.reader.forward
         if self.reader.index == 0 and srp() == '\uFEFF':
             srf()
         found = False
+        white_space = ' \t' if self.flow_level > 0 else ' '
         while not found:
-            while srp() == ' ':
+            while srp() in white_space:
                 srf()
             ch = srp()
             if ch == '#':

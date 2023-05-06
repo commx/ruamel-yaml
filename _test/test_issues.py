@@ -954,6 +954,11 @@ class TestIssues:
         yaml.dump(data, buf)
         assert buf.getvalue() == '%YAML 1.1\n---\nquote: I have seen things\n'
 
+    def test_issue_447(self) -> None:
+        from ruamel.yaml import YAML
+
+        YAML().load("{\n\t\"FOO\": \"BAR\"\n}")
+
     def test_issue_449(self) -> None:
         inp = """\
         emoji_index: !!python/name:materialx.emoji.twemoji
@@ -973,6 +978,32 @@ class TestIssues:
             prev = v
             assert ord(k) == v
         assert len(cm) == 4
+
+    def test_issue_453(self) -> None:
+        from io import StringIO
+        from ruamel.yaml import YAML
+
+        inp = dedent(
+            """
+        to-merge: &anchor
+          merge-key: should not be duplicated
+
+        to-merge2: &anchor2
+          merge-key2: should not be duplicated
+
+        usage:
+          <<: [*anchor, *anchor2]
+          usage-key: usage-value
+        """
+        )
+        yaml = YAML()
+        data = yaml.load(inp)
+        data['usage'].insert(0, 'insert-key', 'insert-value')
+        out_stream = StringIO()
+        yaml.dump(data, out_stream)
+        result = out_stream.getvalue()
+        print(result)
+        assert inp.replace('usage:\n', 'usage:\n  insert-key: insert-value\n') == result
 
     def test_issue_454(self) -> None:
         inp = """

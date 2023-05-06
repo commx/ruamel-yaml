@@ -4,8 +4,8 @@ ruamel.yaml
 
 ``ruamel.yaml`` is a YAML 1.2 loader/dumper package for Python.
 
-:version:       0.17.23
-:updated:       2023-05-05
+:version:       0.17.24
+:updated:       2023-05-06
 :documentation: http://yaml.readthedocs.io
 :repository:    https://sourceforge.net/projects/ruamel-yaml/
 :pypi:          https://pypi.org/project/ruamel.yaml/
@@ -60,6 +60,21 @@ ChangeLog
 =========
 
 .. should insert NEXT: at the beginning of line for next key (with empty line)
+
+0.17.24 (2023-05-06):
+  - rewrite of ``CommentedMap.insert()``. If you have a merge key in
+    the YAML document for the mapping you insert to, the position value should 
+    be the one as you look at the YAML input.
+    This fixes issue 453 where other
+    keys of a merged in mapping would show up after an insert (reported by
+    `Alex Miller <https://sourceforge.net/u/millerdevel/profile/>`__). It
+    also fixes a call to `.insert()` resulting into the merge key to move
+    to be the first key if it wasn't already and it is also now possible
+    to insert a key before a merge key (even if the fist key in the mapping).
+  - fix (in the pure Python implementation including default) for issue 447.
+    (reported by `Jack Cherng <https://sourceforge.net/u/jfcherng/profile/>`__, 
+    also brought up by brent on 
+    `StackOverflow <https://stackoverflow.com/q/40072485/1307905>`__)
 
 0.17.23 (2023-05-05):
   - fix 458, error on plain scalars starting with word longer than width.

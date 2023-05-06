@@ -888,7 +888,7 @@ def main():
 
     # if nsp.wheel(kw, setup):
     #     return
-    with TmpFiles(pkg_data, keep=False):
+    with TmpFiles(pkg_data, keep=True):
         for x in ['-c', 'egg_info', '--egg-base', 'pip-egg-info']:
             if x not in sys.argv:
                 break
@@ -912,7 +912,6 @@ def main():
                         break
                     try_dir = os.path.dirname(try_dir)
         setup(**kw)
-        print('done')
 
 
 main()

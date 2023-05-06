@@ -793,16 +793,33 @@ class CommentedMap(ordereddict, CommentedBase):
             self._ok.update(*kw.keys())  # type: ignore
 
     def insert(self, pos: Any, key: Any, value: Any, comment: Optional[Any] = None) -> None:
-        """insert key value into given position
+        """insert key value into given position, as defined by source YAML
         attach comment if provided
         """
-        keys = list(self.keys()) + [key]
-        ordereddict.insert(self, pos, key, value)
-        for keytmp in keys:
-            self._ok.add(keytmp)
-        for referer in self._ref:
-            for keytmp in keys:
-                referer.update_key_value(keytmp)
+        if key in self._ok:
+            del self[key]
+        keys = [k for k in self.keys() if k in self._ok]
+        ma0 = getattr(self, merge_attrib, [[-1]])[0]
+        merge_pos = ma0[0]
+        if merge_pos >= 0:
+            if merge_pos >= pos:
+                getattr(self, merge_attrib)[0] = (merge_pos + 1, ma0[1])
+                idx_min = pos
+                idx_max = len(self._ok)
+            else:
+                idx_min = pos - 1
+                idx_max = len(self._ok)
+        else:
+            idx_min = pos
+            idx_max = len(self._ok)
+        self[key] = value  # at the end
+        # print(f'{idx_min=} {idx_max=}')
+        for idx in range(idx_min, idx_max):
+            self.move_to_end(keys[idx])
+        self._ok.add(key)
+        # for referer in self._ref:
+        #     for keytmp in keys:
+        #         referer.update_key_value(keytmp)
         if comment is not None:
             self.yaml_add_eol_comment(comment, key=key)
 
