@@ -1,3 +1,7 @@
+[0, 17, 25]: 2023-05-09
+  - fix for regression while dumping wrapped strings with too many backslashes removed
+    (issue 459, reported by `Lele Gaifax <https://sourceforge.net/u/lele/profile/>`__)
+
 [0, 17, 24]: 2023-05-06
   - rewrite of ``CommentedMap.insert()``. If you have a merge key in
     the YAML document for the mapping you insert to, the position value should 

@@ -1350,7 +1350,7 @@ class Emitter:
                 self.write_line_break()
                 if self.requested_indent != 0:
                     self.write_indent()
-        self.write_indicator(u'"', True)
+        self.write_indicator('"', True)
         start = end = 0
         while end <= len(text):
             ch = None
@@ -1358,15 +1358,15 @@ class Emitter:
                 ch = text[end]
             if (
                 ch is None
-                or ch in u'"\\\x85\u2028\u2029\uFEFF'
+                or ch in '"\\\x85\u2028\u2029\uFEFF'
                 or not (
-                    u'\x20' <= ch <= u'\x7E'
+                    '\x20' <= ch <= '\x7E'
                     or (
                         self.allow_unicode
                         and (
-                            (u'\xA0' <= ch <= u'\uD7FF')
-                            or (u'\uE000' <= ch <= u'\uFFFD')
-                            or (u'\U00010000' <= ch <= u'\U0010FFFF')
+                            ('\xA0' <= ch <= '\uD7FF')
+                            or ('\uE000' <= ch <= '\uFFFD')
+                            or ('\U00010000' <= ch <= '\U0010FFFF')
                         )
                     )
                 )
@@ -1380,13 +1380,13 @@ class Emitter:
                     start = end
                 if ch is not None:
                     if ch in self.ESCAPE_REPLACEMENTS:
-                        data = u'\\' + self.ESCAPE_REPLACEMENTS[ch]
-                    elif ch <= u'\xFF':
-                        data = u'\\x%02X' % ord(ch)
-                    elif ch <= u'\uFFFF':
-                        data = u'\\u%04X' % ord(ch)
+                        data = '\\' + self.ESCAPE_REPLACEMENTS[ch]
+                    elif ch <= '\xFF':
+                        data = '\\x%02X' % ord(ch)
+                    elif ch <= '\uFFFF':
+                        data = '\\u%04X' % ord(ch)
                     else:
-                        data = u'\\U%08X' % ord(ch)
+                        data = '\\U%08X' % ord(ch)
                     self.column += len(data)
                     if bool(self.encoding):
                         data = data.encode(self.encoding)
@@ -1394,18 +1394,26 @@ class Emitter:
                     start = end + 1
             if (
                 0 < end < len(text) - 1
-                and (ch == u' ' or start >= end)
+                and (ch == ' ' or start >= end)
                 and self.column + (end - start) > self.best_width
                 and split
             ):
                 # SO https://stackoverflow.com/a/75634614/1307905
                 # data = text[start:end] + u'\\'  # <<< replaced with following six lines
-                need_backquote = (
-                    text[end] == u' '
-                    and (len(text) > end)
-                    and text[end + 1] == u' '
-                )
-                data = text[start:end] + (u'\\' if need_backquote else u'')
+                need_backquote = True
+                if len(text) > end:
+                    space_pos = text.index(' ', end)
+                    try:
+                        if (
+                            '"' not in text[end:space_pos]
+                            and "'" not in text[end:space_pos]
+                            and text[space_pos + 1] != ' '
+                            and text[end - 1 : end + 1] != '  '
+                        ):
+                            need_backquote = False
+                    except IndexError:
+                        pass
+                data = text[start:end] + ('\\' if need_backquote else '')
                 if start < end:
                     start = end
                 self.column += len(data)
@@ -1415,18 +1423,18 @@ class Emitter:
                 self.write_indent()
                 self.whitespace = False
                 self.indention = False
-                if text[start] == u' ':
+                if text[start] == ' ':
                     if not need_backquote:
                         # remove leading space it will load from the newline
                         start += 1
                     # data = u'\\'    # <<< replaced with following line
-                    data = u'\\' if need_backquote else u''
+                    data = '\\' if need_backquote else ''
                     self.column += len(data)
                     if bool(self.encoding):
                         data = data.encode(self.encoding)
                     self.stream.write(data)
             end += 1
-        self.write_indicator(u'"', False)
+        self.write_indicator('"', False)
 
     def determine_block_hints(self, text: Any) -> Any:
         indent = 0
@@ -1634,9 +1642,11 @@ class Emitter:
             else:
                 if ch is None or ch in ' \n\x85\u2028\u2029':
                     data = text[start:end]
-                    if (len(data) > self.best_width
-                       and self.indent is not None
-                       and self.column > self.indent):
+                    if (
+                        len(data) > self.best_width
+                        and self.indent is not None
+                        and self.column > self.indent
+                    ):
                         # words longer than line length get a line of their own
                         self.write_indent()
                     self.column += len(data)

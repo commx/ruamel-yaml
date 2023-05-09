@@ -4,8 +4,8 @@ ruamel.yaml
 
 ``ruamel.yaml`` is a YAML 1.2 loader/dumper package for Python.
 
-:version:       0.17.24
-:updated:       2023-05-06
+:version:       0.17.25
+:updated:       2023-05-09
 :documentation: http://yaml.readthedocs.io
 :repository:    https://sourceforge.net/projects/ruamel-yaml/
 :pypi:          https://pypi.org/project/ruamel.yaml/
@@ -60,6 +60,10 @@ ChangeLog
 =========
 
 .. should insert NEXT: at the beginning of line for next key (with empty line)
+
+0.17.25 (2023-05-09):
+  - fix for regression while dumping wrapped strings with too many backslashes removed
+    (issue 459, reported by `Lele Gaifax <https://sourceforge.net/u/lele/profile/>`__)
 
 0.17.24 (2023-05-06):
   - rewrite of ``CommentedMap.insert()``. If you have a merge key in

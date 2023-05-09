@@ -957,7 +957,7 @@ class TestIssues:
     def test_issue_447(self) -> None:
         from ruamel.yaml import YAML
 
-        YAML().load("{\n\t\"FOO\": \"BAR\"\n}")
+        YAML().load('{\n\t"FOO": "BAR"\n}')
 
     def test_issue_449(self) -> None:
         inp = """\
@@ -1039,10 +1039,54 @@ class TestIssues:
 
         yaml = YAML()
         out_stream = StringIO()
-        in_string = "a" * 128
+        in_string = 'a' * 128
         yaml.dump(in_string, out_stream)
         result = out_stream.getvalue()
         assert in_string == result.splitlines()[0]
+
+    def test_issue_459(self) -> None:
+        from io import StringIO
+        from ruamel.yaml import YAML
+
+        MYOBJ = {
+            'data': dedent(
+                """\
+              example: "first"
+              data:
+                - flag: true
+                  integer: 1
+                  float: 1.0
+                  string: "this is a string"
+                  list:
+                    - first
+                    - second
+                    - third
+                  circle:
+                    x: 10cm
+                    y: 10cm
+                    radius: 2.24cm
+
+                - flag: false
+                  integer: 2
+                  float: 2.0
+                  string: "this is another string"
+                  list:
+                    - first
+                    - second
+                    - third
+                  circle:
+                    x: 20cm
+                    y: 20cm
+                    radius: 2.24cm
+              """
+            )
+        }
+        yaml = YAML()
+        yaml.width = 60
+        out_stream = StringIO()
+        yaml.dump([MYOBJ], out_stream)
+        data = yaml.load(out_stream.getvalue())
+        assert data[0]['data'] == MYOBJ['data']
 
 
 #    @pytest.mark.xfail(strict=True, reason='bla bla', raises=AssertionError)
