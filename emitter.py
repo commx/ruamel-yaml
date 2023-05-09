@@ -1402,8 +1402,8 @@ class Emitter:
                 # data = text[start:end] + u'\\'  # <<< replaced with following six lines
                 need_backquote = True
                 if len(text) > end:
-                    space_pos = text.index(' ', end)
                     try:
+                        space_pos = text.index(' ', end)
                         if (
                             '"' not in text[end:space_pos]
                             and "'" not in text[end:space_pos]
@@ -1411,7 +1411,7 @@ class Emitter:
                             and text[end - 1 : end + 1] != '  '
                         ):
                             need_backquote = False
-                    except IndexError:
+                    except (ValueError, IndexError):
                         pass
                 data = text[start:end] + ('\\' if need_backquote else '')
                 if start < end:
