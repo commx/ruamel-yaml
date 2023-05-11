@@ -1088,6 +1088,23 @@ class TestIssues:
         data = yaml.load(out_stream.getvalue())
         assert data[0]['data'] == MYOBJ['data']
 
+    def test_issue_461(self) -> None:
+        from ruamel.yaml import YAML
+        yaml = YAML()
+
+        inp = dedent(
+            """
+        first name: Roy
+        last name: Rogers
+        city: somewhere
+        """
+        )
+        yaml = YAML()
+        data = yaml.load(inp)
+        data.pop('last name')
+        assert data.pop('not there', 'xxx') == 'xxx'
+        data.insert(1, 'last name', 'Beaty', comment='he has seen things')
+
 
 #    @pytest.mark.xfail(strict=True, reason='bla bla', raises=AssertionError)
 #    def test_issue_ xxx(self) -> None:

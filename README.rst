@@ -61,6 +61,10 @@ ChangeLog
 
 .. should insert NEXT: at the beginning of line for next key (with empty line)
 
+NEXT:
+  - Fix for issue 461 pop + insert on same `CommentedMap` key throwing error
+    (reported by `John Thorvald Wodder II <https://sourceforge.net/u/jwodder/profile/>`__) 
+
 0.17.26 (2023-05-09):
   - Fix for error on edge cage for issue 459
 
