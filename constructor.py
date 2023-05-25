@@ -1218,7 +1218,7 @@ class RoundTripConstructor(SafeConstructor):
             if value_node in self.constructed_objects:
                 value = self.constructed_objects[value_node]
             else:
-                value = self.construct_object(value_node, deep=False)
+                value = self.construct_object(value_node, deep=True)
             return value
 
         # merge = []

@@ -1291,16 +1291,25 @@ class Scanner:
         srp = self.reader.peek
         srf = self.reader.forward
         chunks = []
+        first_indent = -1
         max_indent = 0
         end_mark = self.reader.get_mark()
         while srp() in ' \r\n\x85\u2028\u2029':
             if srp() != ' ':
+                if first_indent < 0:
+                    first_indent = self.reader.column
                 chunks.append(self.scan_line_break())
                 end_mark = self.reader.get_mark()
             else:
                 srf()
                 if self.reader.column > max_indent:
                     max_indent = self.reader.column
+        if first_indent > 0 and max_indent > first_indent:
+            start_mark = self.reader.get_mark()
+            raise ScannerError(
+                'more indented follow up line that first in a block scalar',
+                start_mark,
+            )
         return chunks, max_indent, end_mark
 
     def scan_block_scalar_breaks(self, indent: int) -> Any:

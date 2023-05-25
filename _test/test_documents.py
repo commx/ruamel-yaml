@@ -60,6 +60,36 @@ class TestDocument:
         docs = list(round_trip_load_all(inp, version=(1, 2)))
         assert docs == [['a'], ['b']]
 
+    def test_single_scalar_comment(self) -> None:
+        from ruamel import yaml
+
+        inp = """\
+        one # comment
+        two
+        """
+        with pytest.raises(yaml.parser.ParserError):
+            d = list(round_trip_load_all(inp, version=(1, 2)))  # NOQA
+
+    def test_scalar_after_seq_document(self) -> None:
+        from ruamel import yaml
+
+        inp = """\
+        [ 42 ]
+        hello
+        """
+        with pytest.raises(yaml.parser.ParserError):
+            d = list(round_trip_load_all(inp, version=(1, 2)))  # NOQA
+
+    def test_yunk_after_explicit_document_end(self) -> None:
+        from ruamel import yaml
+
+        inp = """\
+        hello: world
+        ... this is no comment
+        """
+        with pytest.raises(yaml.parser.ParserError):
+            d = list(round_trip_load_all(inp, version=(1, 2)))  # NOQA
+
     def test_multi_doc_ends_only_1_1(self) -> None:
         from ruamel import yaml
 

@@ -1,3 +1,11 @@
+[0, 17, 27]: 2023-05-25
+  - fix issue with inline mappings as value for merge keys
+    (reported by Sirish on `StackOverflow <https://stackoverflow.com/q/76331049/1307905>`__)
+  - fix for 468, error inserting after accessing merge attribute on ``CommentedMap``
+    (reported by `Bastien gerard <https://sourceforge.net/u/bagerard/>`__)
+  - fix for issue 461 pop + insert on same `CommentedMap` key throwing error
+    (reported by `John Thorvald Wodder II <https://sourceforge.net/u/jwodder/profile/>`__) 
+
 [0, 17, 26]: 2023-05-09
   - Fix for error on edge cage for issue 459
 

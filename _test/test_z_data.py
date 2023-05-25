@@ -100,10 +100,10 @@ def pytest_generate_tests(metafunc: Any) -> None:
 
 
 class TestYAMLData:
-    def yaml(self, yaml_version: Optional[Any] = None) -> Any:
+    def yaml(self, yaml_version: Optional[Any] = None, typ: Any = 'rt') -> Any:
         from ruamel.yaml import YAML
 
-        y = YAML()
+        y = YAML(typ=typ)
         y.preserve_quotes = True
         if yaml_version:
             y.version = yaml_version
@@ -136,6 +136,28 @@ class TestYAMLData:
         value = buf.getvalue()
         print('>>>> rt output\n', value.replace(' ', '\u2423'), sep='')  # 2423 open box
         assert value == expected
+
+    def gen_events(
+        self, input: Any, output: Optional[Any] = None, yaml_version: Optional[Any] = None
+    ) -> None:
+        from ruamel.yaml.compat import StringIO
+
+        buf = StringIO()
+        yaml = self.yaml(yaml_version=yaml_version)
+        indent = 0
+        try:
+            for event in yaml.parse(input.value):
+                compact = event.compact_repr()
+                assert compact[0] in '+=-'
+                if compact[0] == '-':
+                    indent -= 1
+                print(f'{" "*indent}{compact}', file=buf)
+                if compact[0] == '+':
+                    indent += 1
+
+        except Exception as e: # NOQA
+            print('=EXCEPTION', file=buf)
+        assert buf.getvalue() == output.value  # type: ignore
 
     def load_assert(
         self, input: Any, confirm: Any, yaml_version: Optional[Any] = None
@@ -239,6 +261,11 @@ class TestYAMLData:
         elif typ == 'comment':
             actions: List[Any] = []
             self.insert_comments(data, actions)
+        elif typ == 'events':
+            if output is None:
+                print('need to specify !Output for type: events')
+                sys.exit(1)
+            self.gen_events(data, output, yaml_version=yaml_version)
         else:
             f'\n>>>>>> run type unknown: "{typ}" <<<<<<\n'
             raise AssertionError()

@@ -4,8 +4,8 @@ ruamel.yaml
 
 ``ruamel.yaml`` is a YAML 1.2 loader/dumper package for Python.
 
-:version:       0.17.26
-:updated:       2023-05-09
+:version:       0.17.27
+:updated:       2023-05-25
 :documentation: http://yaml.readthedocs.io
 :repository:    https://sourceforge.net/projects/ruamel-yaml/
 :pypi:          https://pypi.org/project/ruamel.yaml/
@@ -61,12 +61,16 @@ ChangeLog
 
 .. should insert NEXT: at the beginning of line for next key (with empty line)
 
-NEXT:
-  - Fix for issue 461 pop + insert on same `CommentedMap` key throwing error
+0.17.27 (2023-05-25):
+  - fix issue with inline mappings as value for merge keys
+    (reported by Sirish on `StackOverflow <https://stackoverflow.com/q/76331049/1307905>`__)
+  - fix for 468, error inserting after accessing merge attribute on ``CommentedMap``
+    (reported by `Bastien gerard <https://sourceforge.net/u/bagerard/>`__)
+  - fix for issue 461 pop + insert on same `CommentedMap` key throwing error
     (reported by `John Thorvald Wodder II <https://sourceforge.net/u/jwodder/profile/>`__) 
 
 0.17.26 (2023-05-09):
-  - Fix for error on edge cage for issue 459
+  - fix for error on edge cage for issue 459
 
 0.17.25 (2023-05-09):
   - fix for regression while dumping wrapped strings with too many backslashes removed
@@ -162,7 +166,7 @@ NEXT:
     attrs with `@attr.s()` (both reported by `ssph <https://sourceforge.net/u/sph/>`__)
 
 0.17.11 (2021-08-19):
-  - fix error baseclass for ``DuplicateKeyErorr`` (reported by `Łukasz Rogalski
+  - fix error baseclass for ``DuplicateKeyError`` (reported by `Łukasz Rogalski
     <https://sourceforge.net/u/lrogalski/>`__)
   - fix typo in reader error message, causing `KeyError` during reader error 
     (reported by `MTU <https://sourceforge.net/u/mtu/>`__)

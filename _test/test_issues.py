@@ -1090,6 +1090,7 @@ class TestIssues:
 
     def test_issue_461(self) -> None:
         from ruamel.yaml import YAML
+
         yaml = YAML()
 
         inp = dedent(
@@ -1104,6 +1105,32 @@ class TestIssues:
         data.pop('last name')
         assert data.pop('not there', 'xxx') == 'xxx'
         data.insert(1, 'last name', 'Beaty', comment='he has seen things')
+
+    def test_issue_463(self) -> None:
+        import sys
+        from ruamel.yaml.compat import StringIO
+        from ruamel.yaml import YAML
+
+        yaml = YAML()
+
+        inp = dedent(
+            """
+        first_name: Art
+        """
+        )
+        data = yaml.load(inp)
+        _ = data.merge
+        data.insert(0, 'some_key', 'test')
+        yaml.dump(data, sys.stdout)
+        buf = StringIO()
+        yaml.dump(data, buf)
+        exp = dedent(
+            """
+        some_key: test
+        first_name: Art
+        """
+        )
+        assert buf.getvalue() == exp
 
 
 #    @pytest.mark.xfail(strict=True, reason='bla bla', raises=AssertionError)

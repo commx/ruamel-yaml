@@ -194,7 +194,8 @@ class Comment:
 
 
 # to distinguish key from None
-class NotNone: pass
+class NotNone:
+    pass  # NOQA
 
 
 class Format:
@@ -798,8 +799,11 @@ class CommentedMap(ordereddict, CommentedBase):
         if key in self._ok:
             del self[key]
         keys = [k for k in self.keys() if k in self._ok]
-        ma0 = getattr(self, merge_attrib, [[-1]])[0]
-        merge_pos = ma0[0]
+        try:
+            ma0 = getattr(self, merge_attrib, [[-1]])[0]
+            merge_pos = ma0[0]
+        except IndexError:
+            merge_pos = -1
         if merge_pos >= 0:
             if merge_pos >= pos:
                 getattr(self, merge_attrib)[0] = (merge_pos + 1, ma0[1])
@@ -919,7 +923,7 @@ class CommentedMap(ordereddict, CommentedBase):
         for x in ordereddict.__iter__(self):
             yield x
 
-    def pop(self, key, default=NotNone):
+    def pop(self, key: Any, default: Any = NotNone) -> Any:
         try:
             result = self[key]
         except KeyError:

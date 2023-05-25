@@ -243,6 +243,15 @@ class Parser:
         explicit = False
         if self.scanner.check_token(DocumentEndToken):
             token = self.scanner.get_token()
+            # if token.end_mark.line != self.peek_event().start_mark.line:
+            if token.end_mark.line == self.scanner.peek_token().start_mark.line:
+                raise ParserError(
+                    None,
+                    None,
+                    'found non-comment content after document end marker, '
+                    f'{self.scanner.peek_token().id,!r}',
+                    self.scanner.peek_token().start_mark,
+                )
             end_mark = token.end_mark
             explicit = True
         event = DocumentEndEvent(start_mark, end_mark, explicit=explicit)
@@ -251,7 +260,11 @@ class Parser:
         if self.resolver.processing_version == (1, 1):
             self.state = self.parse_document_start
         else:
-            self.state = self.parse_implicit_document_start
+            if explicit:
+                # found a document end marker, can be followed by implicit document
+                self.state = self.parse_implicit_document_start
+            else:
+                self.state = self.parse_document_start
 
         return event
 
