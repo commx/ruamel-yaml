@@ -1,3 +1,7 @@
+[0, 17, 28]: 2023-05-26
+  - fix for issue 464: documents ending with document end marker without final newline
+    fail to load (reported by `Mariusz Rusiniak <https://sourceforge.net/u/r2dan/profile/>`__)
+
 [0, 17, 27]: 2023-05-25
   - fix issue with inline mappings as value for merge keys
     (reported by Sirish on `StackOverflow <https://stackoverflow.com/q/76331049/1307905>`__)

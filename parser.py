@@ -244,7 +244,10 @@ class Parser:
         if self.scanner.check_token(DocumentEndToken):
             token = self.scanner.get_token()
             # if token.end_mark.line != self.peek_event().start_mark.line:
-            if token.end_mark.line == self.scanner.peek_token().start_mark.line:
+            pt = self.scanner.peek_token()
+            if not isinstance(pt, StreamEndToken) and (
+                token.end_mark.line == pt.start_mark.line
+            ):
                 raise ParserError(
                     None,
                     None,

@@ -1132,6 +1132,12 @@ class TestIssues:
         )
         assert buf.getvalue() == exp
 
+    def test_issue_464(self) -> None:
+        # document end marker without newline threw error in 0.17.27
+        from ruamel.yaml import YAML
+
+        yaml = YAML()
+        yaml.load('---\na: True\n...')
 
 #    @pytest.mark.xfail(strict=True, reason='bla bla', raises=AssertionError)
 #    def test_issue_ xxx(self) -> None:
