@@ -118,7 +118,7 @@ class YAML:
         elif 'rtsc' in self.typ:
             self.default_flow_style = False
             # no optimized rt-dumper yet
-            self.Emitter = ruamel.yaml.emitter.Emitter
+            self.Emitter = ruamel.yaml.emitter.RoundTripEmitter
             self.Serializer = ruamel.yaml.serializer.Serializer
             self.Representer = ruamel.yaml.representer.RoundTripRepresenter
             self.Scanner = ruamel.yaml.scanner.RoundTripScannerSC
@@ -133,7 +133,7 @@ class YAML:
         if setup_rt:
             self.default_flow_style = False
             # no optimized rt-dumper yet
-            self.Emitter = ruamel.yaml.emitter.Emitter
+            self.Emitter = ruamel.yaml.emitter.RoundTripEmitter
             self.Serializer = ruamel.yaml.serializer.Serializer
             self.Representer = ruamel.yaml.representer.RoundTripRepresenter
             self.Scanner = ruamel.yaml.scanner.RoundTripScanner

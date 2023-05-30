@@ -81,6 +81,7 @@ from ruamel.yaml.scanner import Scanner, RoundTripScanner, ScannerError  # NOQA
 from ruamel.yaml.scanner import BlankLineComment
 from ruamel.yaml.comments import C_PRE, C_POST, C_SPLIT_ON_FIRST_BLANK
 from ruamel.yaml.compat import nprint, nprintf  # NOQA
+from ruamel.yaml.tag import Tag
 
 from typing import Any, Dict, Optional, List, Optional  # NOQA
 
@@ -182,6 +183,7 @@ class Parser:
     def parse_implicit_document_start(self) -> Any:
         # Parse an implicit document.
         if not self.scanner.check_token(DirectiveToken, DocumentStartToken, StreamEndToken):
+            # don't need copy, as an implicit tag doesn't add tag_handles
             self.tag_handles = self.DEFAULT_TAGS
             token = self.scanner.peek_token()
             start_mark = end_mark = token.start_mark
@@ -347,8 +349,13 @@ class Parser:
     def parse_block_node_or_indentless_sequence(self) -> Any:
         return self.parse_node(block=True, indentless_sequence=True)
 
-    def transform_tag(self, handle: Any, suffix: Any) -> Any:
-        return self.tag_handles[handle] + suffix
+    # def transform_tag(self, handle: Any, suffix: Any) -> Any:
+    #     return self.tag_handles[handle] + suffix
+
+    def select_tag_transform(self, tag: Tag) -> None:
+        if tag is None:
+            return
+        tag.select_transform(False)
 
     def parse_node(self, block: bool = False, indentless_sequence: bool = False) -> Any:
         if self.scanner.check_token(AliasToken):
@@ -370,39 +377,34 @@ class Parser:
                 token = self.scanner.get_token()
                 tag_mark = token.start_mark
                 end_mark = token.end_mark
-                tag = token.value
+                # tag = token.value
+                tag = Tag(
+                    handle=token.value[0], suffix=token.value[1], handles=self.tag_handles,
+                )
         elif self.scanner.check_token(TagToken):
             token = self.scanner.get_token()
             start_mark = tag_mark = token.start_mark
             end_mark = token.end_mark
-            tag = token.value
+            # tag = token.value
+            tag = Tag(handle=token.value[0], suffix=token.value[1], handles=self.tag_handles)
             if self.scanner.check_token(AnchorToken):
                 token = self.scanner.get_token()
                 start_mark = tag_mark = token.start_mark
                 end_mark = token.end_mark
                 anchor = token.value
         if tag is not None:
-            handle, suffix = tag
-            if handle is not None:
-                if handle not in self.tag_handles:
-                    raise ParserError(
-                        'while parsing a node',
-                        start_mark,
-                        f'found undefined tag handle {handle!r}',
-                        tag_mark,
-                    )
-                tag = self.transform_tag(handle, suffix)
-            else:
-                tag = suffix
-        # if tag == '!':
-        #     raise ParserError("while parsing a node", start_mark,
-        #             "found non-specific tag '!'", tag_mark,
-        #      "Please check 'http://pyyaml.org/wiki/YAMLNonSpecificTag'
-        #     and share your opinion.")
+            self.select_tag_transform(tag)
+            if tag.check_handle():
+                raise ParserError(
+                    'while parsing a node',
+                    start_mark,
+                    f'found undefined tag handle {tag.handle!r}',
+                    tag_mark,
+                )
         if start_mark is None:
             start_mark = end_mark = self.scanner.peek_token().start_mark
         event = None
-        implicit = tag is None or tag == '!'
+        implicit = tag is None or str(tag) == '!'
         if indentless_sequence and self.scanner.check_token(BlockEntryToken):
             comment = None
             pt = self.scanner.peek_token()
@@ -415,7 +417,7 @@ class Parser:
                     comment = pt.comment
             end_mark = self.scanner.peek_token().end_mark
             event = SequenceStartEvent(
-                anchor, tag, implicit, start_mark, end_mark, flow_style=False, comment=comment
+                anchor, tag, implicit, start_mark, end_mark, flow_style=False, comment=comment,
             )
             self.state = self.parse_indentless_sequence_entry
             return event
@@ -424,17 +426,17 @@ class Parser:
             token = self.scanner.get_token()
             # self.scanner.peek_token_same_line_comment(token)
             end_mark = token.end_mark
-            if (token.plain and tag is None) or tag == '!':
-                implicit = (True, False)
+            if (token.plain and tag is None) or str(tag) == '!':
+                dimplicit = (True, False)
             elif tag is None:
-                implicit = (False, True)
+                dimplicit = (False, True)
             else:
-                implicit = (False, False)
+                dimplicit = (False, False)
             # nprint('se', token.value, token.comment)
             event = ScalarEvent(
                 anchor,
                 tag,
-                implicit,
+                dimplicit,
                 token.value,
                 start_mark,
                 end_mark,
@@ -791,24 +793,10 @@ class Parser:
 class RoundTripParser(Parser):
     """roundtrip is a safe loader, that wants to see the unmangled tag"""
 
-    def transform_tag(self, handle: Any, suffix: Any) -> Any:
-        # return self.tag_handles[handle]+suffix
-        if handle == '!!' and suffix in (
-            'null',
-            'bool',
-            'int',
-            'float',
-            'binary',
-            'timestamp',
-            'omap',
-            'pairs',
-            'set',
-            'str',
-            'seq',
-            'map',
-        ):
-            return Parser.transform_tag(self, handle, suffix)
-        return handle + suffix
+    def select_tag_transform(self, tag: Tag) -> None:
+        if tag is None:
+            return
+        tag.select_transform(True)
 
     def move_token_comment(
         self, token: Any, nt: Optional[Any] = None, empty: Optional[bool] = False

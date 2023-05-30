@@ -986,6 +986,17 @@ class RoundTripConstructor(SafeConstructor):
                 return SingleQuotedScalarString(node.value, anchor=node.anchor)
             if node.style == '"':
                 return DoubleQuotedScalarString(node.value, anchor=node.anchor)
+        # if node.ctag:
+        #     data2 = TaggedScalar()
+        #     data2.value = node.value
+        #     data2.style = node.style
+        #     data2.yaml_set_ctag(node.ctag)
+        #     if node.anchor:
+        #         from ruamel.yaml.serializer import templated_id
+
+        #         if not templated_id(node.anchor):
+        #             data2.yaml_set_anchor(node.anchor, always_dump=True)
+        #     return data2
         if node.anchor:
             return PlainScalarString(node.value, anchor=node.anchor)
         return node.value
@@ -1162,7 +1173,10 @@ class RoundTripConstructor(SafeConstructor):
         )
 
     def construct_yaml_str(self, node: Any) -> Any:
-        value = self.construct_scalar(node)
+        if node.ctag.handle:
+            value = self.construct_unknown(node)
+        else:
+            value = self.construct_scalar(node)
         if isinstance(value, ScalarString):
             return value
         return value
@@ -1569,7 +1583,7 @@ class RoundTripConstructor(SafeConstructor):
                     data.fa.set_flow_style()
                 elif node.flow_style is False:
                     data.fa.set_block_style()
-                data.yaml_set_tag(node.tag)
+                data.yaml_set_ctag(node.ctag)
                 yield data
                 if node.anchor:
                     from ruamel.yaml.serializer import templated_id
@@ -1582,7 +1596,7 @@ class RoundTripConstructor(SafeConstructor):
                 data2 = TaggedScalar()
                 data2.value = self.construct_scalar(node)
                 data2.style = node.style
-                data2.yaml_set_tag(node.tag)
+                data2.yaml_set_ctag(node.ctag)
                 yield data2
                 if node.anchor:
                     from ruamel.yaml.serializer import templated_id
@@ -1597,7 +1611,7 @@ class RoundTripConstructor(SafeConstructor):
                     data3.fa.set_flow_style()
                 elif node.flow_style is False:
                     data3.fa.set_block_style()
-                data3.yaml_set_tag(node.tag)
+                data3.yaml_set_ctag(node.ctag)
                 yield data3
                 if node.anchor:
                     from ruamel.yaml.serializer import templated_id

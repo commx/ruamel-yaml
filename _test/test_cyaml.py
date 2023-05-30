@@ -5,7 +5,7 @@ import platform
 import pytest  # type: ignore  # NOQA
 from textwrap import dedent
 
-NO_CLIB_VER = (3, 10)
+NO_CLIB_VER = (3, 12)
 
 
 @pytest.mark.skipif(  # type: ignore

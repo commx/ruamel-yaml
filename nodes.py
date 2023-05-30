@@ -2,11 +2,12 @@
 
 import sys
 
-from typing import Dict, Any, Text  # NOQA
+from typing import Dict, Any, Text, Optional  # NOQA
+from ruamel.yaml.tag import Tag
 
 
 class Node:
-    __slots__ = 'tag', 'value', 'start_mark', 'end_mark', 'comment', 'anchor'
+    __slots__ = 'ctag', 'value', 'start_mark', 'end_mark', 'comment', 'anchor'
 
     def __init__(
         self,
@@ -17,12 +18,17 @@ class Node:
         comment: Any = None,
         anchor: Any = None,
     ) -> None:
-        self.tag = tag
+        # you can still get a string from the serializer
+        self.ctag = tag if isinstance(tag, Tag) else Tag(suffix=tag)
         self.value = value
         self.start_mark = start_mark
         self.end_mark = end_mark
         self.comment = comment
         self.anchor = anchor
+
+    @property
+    def tag(self) -> Optional[str]:
+        return None if self.ctag is None else str(self.ctag)
 
     def __repr__(self) -> Any:
         value = self.value

@@ -5,6 +5,8 @@ import copy
 
 # ToDo: at least on PY3 you could probably attach the tzinfo correctly to the object
 #       a more complete datetime might be used by safe loading as well
+#
+#       add type information (iso8601, spaced)
 
 from typing import Any, Dict, Optional, List  # NOQA
 

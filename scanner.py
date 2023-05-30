@@ -1307,7 +1307,7 @@ class Scanner:
         if first_indent > 0 and max_indent > first_indent:
             start_mark = self.reader.get_mark()
             raise ScannerError(
-                'more indented follow up line that first in a block scalar',
+                'more indented follow up line than first in a block scalar',
                 start_mark,
             )
         return chunks, max_indent, end_mark
@@ -1502,7 +1502,9 @@ class Scanner:
                 break
             while True:
                 ch = srp(length)
-                if ch == ':' and srp(length + 1) not in _THE_END_SPACE_TAB:
+                if ch == ':' and srp(length + 1) == ',':
+                    break
+                elif ch == ':' and srp(length + 1) not in _THE_END_SPACE_TAB:
                     pass
                 elif ch == '?' and self.scanner_processing_version != (1, 1):
                     pass
@@ -1926,6 +1928,37 @@ class RoundTripScanner(Scanner):
 
     def scan_block_scalar(self, style: Any, rt: Optional[bool] = True) -> Any:
         return Scanner.scan_block_scalar(self, style, rt=rt)
+
+    def scan_uri_escapes(self, name: Any, start_mark: Any) -> Any:
+        """
+        The roundtripscanner doesn't do URI escaping
+        """
+        # See the specification for details.
+        srp = self.reader.peek
+        srf = self.reader.forward
+        code_bytes: List[Any] = []
+        chunk = ''
+        mark = self.reader.get_mark()
+        while srp() == '%':
+            chunk += '%'
+            srf()
+            for k in range(2):
+                if srp(k) not in '0123456789ABCDEFabcdef':
+                    raise ScannerError(
+                        f'while scanning an {name!s}',
+                        start_mark,
+                        f'expected URI escape sequence of 2 hexdecimal numbers, '
+                        f'but found {srp(k)!r}',
+                        self.reader.get_mark(),
+                    )
+            code_bytes.append(int(self.reader.prefix(2), 16))
+            chunk += self.reader.prefix(2)
+            srf(2)
+        try:
+            _ = bytes(code_bytes).decode('utf-8')
+        except UnicodeDecodeError as exc:
+            raise ScannerError(f'while scanning an {name!s}', start_mark, str(exc), mark)
+        return chunk
 
 
 # commenthandling 2021, differentiatiation not needed

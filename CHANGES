@@ -1,3 +1,9 @@
+[0, 17, 29]: 2023-05-30
+  - changed the internals of the tag property from a string to a class which allows
+    for preservation of the original handle and suffix. This should
+    result in better results using documents with %TAG directives, as well
+    as preserving URI escapes in tag suffixes.
+
 [0, 17, 28]: 2023-05-26
   - fix for issue 464: documents ending with document end marker without final newline
     fail to load (reported by `Mariusz Rusiniak <https://sourceforge.net/u/r2dan/profile/>`__)

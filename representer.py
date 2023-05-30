@@ -148,6 +148,8 @@ class BaseRepresenter:
             comment = getattr(value, 'comment', None)
             if comment:
                 comment = [None, [comment]]
+        if isinstance(tag, str):
+            tag = Tag(suffix=tag)
         node = ScalarNode(tag, value, style=style, comment=comment, anchor=anchor)
         if self.alias_key is not None:
             self.represented_objects[self.alias_key] = node
@@ -157,6 +159,8 @@ class BaseRepresenter:
         self, tag: Any, sequence: Any, flow_style: Any = None
     ) -> SequenceNode:
         value: List[Any] = []
+        if isinstance(tag, str):
+            tag = Tag(suffix=tag)
         node = SequenceNode(tag, value, flow_style=flow_style)
         if self.alias_key is not None:
             self.represented_objects[self.alias_key] = node
@@ -175,6 +179,8 @@ class BaseRepresenter:
 
     def represent_omap(self, tag: Any, omap: Any, flow_style: Any = None) -> SequenceNode:
         value: List[Any] = []
+        if isinstance(tag, str):
+            tag = Tag(suffix=tag)
         node = SequenceNode(tag, value, flow_style=flow_style)
         if self.alias_key is not None:
             self.represented_objects[self.alias_key] = node
@@ -195,6 +201,8 @@ class BaseRepresenter:
 
     def represent_mapping(self, tag: Any, mapping: Any, flow_style: Any = None) -> MappingNode:
         value: List[Any] = []
+        if isinstance(tag, str):
+            tag = Tag(suffix=tag)
         node = MappingNode(tag, value, flow_style=flow_style)
         if self.alias_key is not None:
             self.represented_objects[self.alias_key] = node
@@ -709,6 +717,8 @@ class RoundTripRepresenter(SafeRepresenter):
             anchor = sequence.yaml_anchor()
         except AttributeError:
             anchor = None
+        if isinstance(tag, str):
+            tag = Tag(suffix=tag)
         node = SequenceNode(tag, value, flow_style=flow_style, anchor=anchor)
         if self.alias_key is not None:
             self.represented_objects[self.alias_key] = node
@@ -784,6 +794,8 @@ class RoundTripRepresenter(SafeRepresenter):
             anchor = mapping.yaml_anchor()
         except AttributeError:
             anchor = None
+        if isinstance(tag, str):
+            tag = Tag(suffix=tag)
         node = MappingNode(tag, value, flow_style=flow_style, anchor=anchor)
         if self.alias_key is not None:
             self.represented_objects[self.alias_key] = node
@@ -858,7 +870,9 @@ class RoundTripRepresenter(SafeRepresenter):
             else:
                 arg = self.represent_data(merge_list)
                 arg.flow_style = True
-            value.insert(merge_pos, (ScalarNode('tag:yaml.org,2002:merge', '<<'), arg))
+            value.insert(
+                merge_pos, (ScalarNode(Tag(suffix='tag:yaml.org,2002:merge'), '<<'), arg)
+            )
         return node
 
     def represent_omap(self, tag: Any, omap: Any, flow_style: Any = None) -> SequenceNode:
@@ -871,6 +885,8 @@ class RoundTripRepresenter(SafeRepresenter):
             anchor = omap.yaml_anchor()
         except AttributeError:
             anchor = None
+        if isinstance(tag, str):
+            tag = Tag(suffix=tag)
         node = SequenceNode(tag, value, flow_style=flow_style, anchor=anchor)
         if self.alias_key is not None:
             self.represented_objects[self.alias_key] = node
@@ -926,7 +942,7 @@ class RoundTripRepresenter(SafeRepresenter):
 
     def represent_set(self, setting: Any) -> MappingNode:
         flow_style = False
-        tag = 'tag:yaml.org,2002:set'
+        tag = Tag(suffix='tag:yaml.org,2002:set')
         # return self.represent_mapping(tag, value)
         value: List[Any] = []
         flow_style = setting.fa.flow_style(flow_style)
@@ -979,30 +995,32 @@ class RoundTripRepresenter(SafeRepresenter):
     def represent_dict(self, data: Any) -> MappingNode:
         """write out tag if saved on loading"""
         try:
-            t = data.tag.value
+            _ = data.tag
         except AttributeError:
-            t = None
-        if t:
-            if t.startswith('!!'):
-                tag = 'tag:yaml.org,2002:' + t[2:]
-            else:
-                tag = t
+            tag = Tag(suffix='tag:yaml.org,2002:map')
         else:
-            tag = 'tag:yaml.org,2002:map'
+            if data.tag.trval:
+                if data.tag.startswith('!!'):
+                    tag = Tag(suffix='tag:yaml.org,2002:' + data.tag.trval[2:])
+                else:
+                    tag = data.tag
+            else:
+                tag = Tag(suffix='tag:yaml.org,2002:map')
         return self.represent_mapping(tag, data)
 
     def represent_list(self, data: Any) -> SequenceNode:
         try:
-            t = data.tag.value
+            _ = data.tag
         except AttributeError:
-            t = None
-        if t:
-            if t.startswith('!!'):
-                tag = 'tag:yaml.org,2002:' + t[2:]
-            else:
-                tag = t
+            tag = Tag(suffix='tag:yaml.org,2002:seq')
         else:
-            tag = 'tag:yaml.org,2002:seq'
+            if data.tag.trval:
+                if data.tag.startswith('!!'):
+                    tag = Tag(suffix='tag:yaml.org,2002:' + data.tag.trval[2:])
+                else:
+                    tag = data.tag
+            else:
+                tag = Tag(suffix='tag:yaml.org,2002:seq')
         return self.represent_sequence(tag, data)
 
     def represent_datetime(self, data: Any) -> ScalarNode:
@@ -1019,7 +1037,10 @@ class RoundTripRepresenter(SafeRepresenter):
 
     def represent_tagged_scalar(self, data: Any) -> ScalarNode:
         try:
-            tag = data.tag.value
+            if data.tag.handle == '!!':
+                tag = f'{data.tag.handle} {data.tag.suffix}'
+            else:
+                tag = data.tag
         except AttributeError:
             tag = None
         try:

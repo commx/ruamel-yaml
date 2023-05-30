@@ -209,6 +209,7 @@ class TestDumpLoadUnicode:
         with open(file_name, 'wb') as fp:
             fp.write('text: HELLO_WORLD©\n'.encode('utf-8'))
         text_dict = yaml.load(open(file_name, 'r'))
+        print(text_dict)
         assert text_dict['text'] == 'HELLO_WORLD©'
 
 

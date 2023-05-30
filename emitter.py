@@ -748,7 +748,7 @@ class Emitter:
             and self.event.tag is not None
         ):
             if self.prepared_tag is None:
-                self.prepared_tag = self.prepare_tag(self.event.tag)
+                self.prepared_tag = self.prepare_tag(self.event.ctag)
             length += len(self.prepared_tag)
         if isinstance(self.event, ScalarEvent):
             if self.analysis is None:
@@ -813,7 +813,7 @@ class Emitter:
         if tag is None:
             raise EmitterError('tag is not specified')
         if self.prepared_tag is None:
-            self.prepared_tag = self.prepare_tag(tag)
+            self.prepared_tag = self.prepare_tag(self.event.ctag)
         if self.prepared_tag:
             self.write_indicator(self.prepared_tag, True)
             if (
@@ -825,6 +825,9 @@ class Emitter:
         self.prepared_tag = None
 
     def choose_scalar_style(self) -> Any:
+        # issue 449 needs this otherwise emits single quoted empty string
+        if self.event.value == '' and self.event.ctag.handle == '!!':
+            return None
         if self.analysis is None:
             self.analysis = self.analyze_scalar(self.event.value)
         if self.event.style == '"' or self.canonical:
@@ -956,6 +959,7 @@ class Emitter:
     def prepare_tag(self, tag: Any) -> Any:
         if not tag:
             raise EmitterError('tag must not be empty')
+        tag = str(tag)
         if tag == '!' or tag == '!!':
             return tag
         handle = None
@@ -1723,3 +1727,26 @@ class Emitter:
         comment = event.comment[0]
         self.write_comment(comment)
         return True
+
+
+class RoundTripEmitter(Emitter):
+    def prepare_tag(self, ctag: Any) -> Any:
+        if not ctag:
+            raise EmitterError('tag must not be empty')
+        tag = str(ctag)
+        # print('handling', repr(tag))
+        if tag == '!' or tag == '!!':
+            return tag
+        handle = ctag.handle
+        suffix = ctag.suffix
+        prefixes = sorted(self.tag_prefixes.keys())
+        # print('handling', repr(tag), repr(suffix), repr(handle))
+        if handle is None:
+            for prefix in prefixes:
+                if tag.startswith(prefix) and (prefix == '!' or len(prefix) < len(tag)):
+                    handle = self.tag_prefixes[prefix]
+                    suffix = suffix[len(prefix) :]
+        if handle:
+            return f'{handle!s}{suffix!s}'
+        else:
+            return f'!<{suffix!s}>'

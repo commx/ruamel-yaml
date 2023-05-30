@@ -23,6 +23,7 @@ class YAMLData:
         'TAB': '\t',
         '---': '---',
         '...': '...',
+        'NL': '\n',
     }
     # fmt: on
 
@@ -78,6 +79,22 @@ class Assert(YAMLData):
         return self._pa
 
 
+class Events(YAMLData):
+    yaml_tag = '!Events'
+
+
+class JSONData(YAMLData):
+    yaml_tag = '!JSON'
+
+
+class Dump(YAMLData):
+    yaml_tag = '!Dump'
+
+
+class Emit(YAMLData):
+    yaml_tag = '!Emit'
+
+
 def pytest_generate_tests(metafunc: Any) -> None:
     test_yaml = []
     paths = sorted(base_path.glob('**/*.yaml'))
@@ -100,13 +117,16 @@ def pytest_generate_tests(metafunc: Any) -> None:
 
 
 class TestYAMLData:
-    def yaml(self, yaml_version: Optional[Any] = None, typ: Any = 'rt') -> Any:
+    def yaml(
+        self, yaml_version: Optional[Any] = None, typ: Any = 'rt', pure: Any = None
+    ) -> Any:
         from ruamel.yaml import YAML
 
-        y = YAML(typ=typ)
+        y = YAML(typ=typ, pure=pure)
         y.preserve_quotes = True
         if yaml_version:
             y.version = yaml_version
+        y.composer.warn_double_anchors = False
         return y
 
     def docs(self, path: Path) -> List[Any]:
@@ -117,6 +137,10 @@ class TestYAMLData:
         tyaml.register_class(Python)
         tyaml.register_class(Output)
         tyaml.register_class(Assert)
+        tyaml.register_class(Events)
+        tyaml.register_class(JSONData)
+        tyaml.register_class(Dump)
+        tyaml.register_class(Emit)
         return list(tyaml.load_all(path))
 
     def yaml_load(self, value: Any, yaml_version: Optional[Any] = None) -> Tuple[Any, Any]:
@@ -138,7 +162,7 @@ class TestYAMLData:
         assert value == expected
 
     def gen_events(
-        self, input: Any, output: Optional[Any] = None, yaml_version: Optional[Any] = None
+        self, input: Any, output: Any, yaml_version: Optional[Any] = None
     ) -> None:
         from ruamel.yaml.compat import StringIO
 
@@ -155,9 +179,55 @@ class TestYAMLData:
                 if compact[0] == '+':
                     indent += 1
 
-        except Exception as e: # NOQA
-            print('=EXCEPTION', file=buf)
-        assert buf.getvalue() == output.value  # type: ignore
+        except Exception as e:  # NOQA
+            print('=EXCEPTION', file=buf)  # exceptions not indented
+            if '=EXCEPTION' not in output.value:
+                raise
+        print('>>>> buf\n', buf.getvalue(), sep='')
+        assert buf.getvalue() == output.value
+
+    def load_compare_json(
+        self, input: Any, output: Any, yaml_version: Optional[Any] = None
+    ) -> None:
+        import json
+        from ruamel.yaml.compat import StringIO
+        from ruamel.yaml.comments import CommentedMap, TaggedScalar
+
+        def serialize_obj(obj: Any) -> Any:
+            if isinstance(obj, CommentedMap):
+                return {k: v for k, v in obj.items()}
+            elif isinstance(obj, TaggedScalar):
+                return str(obj.value)
+            elif isinstance(obj, set):
+                return {k: None for k in obj}
+            return str(obj)
+
+        buf = StringIO()
+        yaml = self.yaml(typ='rt', yaml_version=yaml_version)
+        for data in yaml.load_all(input.value):
+            if isinstance(data, dict):
+                data = {str(k): v for k, v in data.items()}
+            json.dump(data, buf, sort_keys=True, indent=2, default=serialize_obj)
+            buf.write('\n')
+        print('>>>> buf\n', buf.getvalue(), sep='')
+        # jsons = json.dumps(json.loads(output.value))  # normalize formatting of JSON
+        assert buf.getvalue() == output.value
+
+    def load_compare_emit(
+        self, input: Any, output: Any, yaml_version: Optional[Any] = None
+    ) -> None:
+        from ruamel.yaml.compat import StringIO
+
+        buf = StringIO()
+        yaml = self.yaml(yaml_version=yaml_version)
+        yaml.preserve_quotes = True
+        data = input.value
+        if data.startswith('---') or '\n--- ' in data or '\n---' in data:
+            yaml.explicit_start = True
+        data = list(yaml.load_all(data))
+        yaml.dump_all(data, buf)
+        print('>>>> buf\n', buf.getvalue(), sep='')
+        assert buf.getvalue() == output.value
 
     def load_assert(
         self, input: Any, confirm: Any, yaml_version: Optional[Any] = None
@@ -212,63 +282,95 @@ class TestYAMLData:
         from collections.abc import Mapping
 
         idx = 0
-        typ = None
+        typs = []  # list of test to be performed
         yaml_version = None
 
         docs = self.docs(yaml)
         if isinstance(docs[0], Mapping):
             d = docs[0]
+            if d.get('skip'):
+                pytest.skip('explicit skip')
+            if '1.3-mod' in d.get('tags', []):
+                pytest.skip('YAML 1.3')
             typ = d.get('type')
+            if isinstance(typ, str):
+                typs.append(typ)
+            elif isinstance(typ, list):
+                typs.extend(typ[:])
+            del typ
             yaml_version = d.get('yaml_version')
             if 'python' in d:
                 if not check_python_version(d['python']):
                     pytest.skip('unsupported version')
             idx += 1
-        data = output = confirm = python = None
+        data = output = confirm = python = events = json = dump = emit = None
         for doc in docs[idx:]:
             if isinstance(doc, Output):
                 output = doc
+            elif isinstance(doc, Events):
+                events = doc
+            elif isinstance(doc, JSONData):
+                json = doc
+            elif isinstance(doc, Dump):
+                dump = doc  # NOQA
+            elif isinstance(doc, Emit):
+                emit = doc  # NOQA
             elif isinstance(doc, Assert):
                 confirm = doc
             elif isinstance(doc, Python):
                 python = doc
-                if typ is None:
-                    typ = 'python_run'
+                if len(typs) == 0:
+                    typs = ['python_run']
             elif isinstance(doc, YAMLData):
                 data = doc
             else:
                 print('no handler for type:', type(doc), repr(doc))
                 raise AssertionError()
-        if typ is None:
+        if len(typs) == 0:
             if data is not None and output is not None:
-                typ = 'rt'
+                typs = ['rt']
             elif data is not None and confirm is not None:
-                typ = 'load_assert'
+                typs = ['load_assert']
             else:
                 assert data is not None
-                typ = 'rt'
-        print('type:', typ)
+                typs = ['rt']
+        print('type:', typs)
         if data is not None:
             print('>>>> data:\n', data.value.replace(' ', '\u2423'), sep='', end='')
-        print('>>>> output:\n', output.value if output is not None else output, sep='')
-        if typ == 'rt':
-            self.round_trip(data, output, yaml_version=yaml_version)
-        elif typ == 'python_run':
-            inp = None if output is None or data is None else data
-            self.run_python(python, output if output is not None else data, tmpdir, input=inp)
-        elif typ == 'load_assert':
-            self.load_assert(data, confirm, yaml_version=yaml_version)
-        elif typ == 'comment':
-            actions: List[Any] = []
-            self.insert_comments(data, actions)
-        elif typ == 'events':
-            if output is None:
-                print('need to specify !Output for type: events')
-                sys.exit(1)
-            self.gen_events(data, output, yaml_version=yaml_version)
+        if events is not None:
+            print('>>>> events:\n', events.value, sep='')
         else:
-            f'\n>>>>>> run type unknown: "{typ}" <<<<<<\n'
-            raise AssertionError()
+            print('>>>> output:\n', output.value if output is not None else output, sep='')
+        for typ in typs:
+            if typ == 'rt':
+                self.round_trip(data, output, yaml_version=yaml_version)
+            elif typ == 'python_run':
+                inp = None if output is None or data is None else data
+                self.run_python(
+                    python, output if output is not None else data, tmpdir, input=inp
+                )
+            elif typ == 'load_assert':
+                self.load_assert(data, confirm, yaml_version=yaml_version)
+            elif typ == 'comment':
+                actions: List[Any] = []
+                self.insert_comments(data, actions)
+            elif typ == 'events':
+                if events is None:
+                    print('need to specify !Events for type:', typ)
+                    sys.exit(1)
+                self.gen_events(data, events, yaml_version=yaml_version)
+            elif typ == 'json':
+                if json is None:
+                    print('need to specify !JSON for type:', typ)
+                    sys.exit(1)
+                self.load_compare_json(data, json, yaml_version=yaml_version)
+            elif typ == 'dump':
+                continue
+            elif typ == 'emit':
+                self.load_compare_emit(data, emit)
+            else:
+                f'\n>>>>>> run type unknown: "{typ}" <<<<<<\n'
+                raise AssertionError()
 
 
 def check_python_version(match: Any, current: Optional[Any] = None) -> bool:

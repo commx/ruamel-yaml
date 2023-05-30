@@ -4,8 +4,8 @@ ruamel.yaml
 
 ``ruamel.yaml`` is a YAML 1.2 loader/dumper package for Python.
 
-:version:       0.17.28
-:updated:       2023-05-26
+:version:       0.17.29
+:updated:       2023-05-30
 :documentation: http://yaml.readthedocs.io
 :repository:    https://sourceforge.net/projects/ruamel-yaml/
 :pypi:          https://pypi.org/project/ruamel.yaml/
@@ -60,6 +60,12 @@ ChangeLog
 =========
 
 .. should insert NEXT: at the beginning of line for next key (with empty line)
+
+0.17.29 (2023-05-30):
+  - changed the internals of the tag property from a string to a class which allows
+    for preservation of the original handle and suffix. This should
+    result in better results using documents with %TAG directives, as well
+    as preserving URI escapes in tag suffixes.
 
 0.17.28 (2023-05-26):
   - fix for issue 464: documents ending with document end marker without final newline

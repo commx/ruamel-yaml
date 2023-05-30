@@ -32,6 +32,7 @@ class Composer:
         if self.loader is not None and getattr(self.loader, '_composer', None) is None:
             self.loader._composer = self
         self.anchors: Dict[Any, Any] = {}
+        self.warn_double_anchors = True
 
     @property
     def parser(self) -> Any:
@@ -111,7 +112,7 @@ class Composer:
         event = self.parser.peek_event()
         anchor = event.anchor
         if anchor is not None:  # have an anchor
-            if anchor in self.anchors:
+            if self.warn_double_anchors and anchor in self.anchors:
                 ws = (
                     f'\nfound duplicate anchor {anchor!r}\n'
                     f'first occurrence {self.anchors[anchor].start_mark}\n'
@@ -130,9 +131,11 @@ class Composer:
 
     def compose_scalar_node(self, anchor: Any) -> Any:
         event = self.parser.get_event()
-        tag = event.tag
-        if tag is None or tag == '!':
+        tag = event.ctag
+        if tag is None or str(tag) == '!':
             tag = self.resolver.resolve(ScalarNode, event.value, event.implicit)
+            assert not isinstance(tag, str)
+            # e.g tag.yaml.org,2002:str
         node = ScalarNode(
             tag,
             event.value,
@@ -148,9 +151,10 @@ class Composer:
 
     def compose_sequence_node(self, anchor: Any) -> Any:
         start_event = self.parser.get_event()
-        tag = start_event.tag
-        if tag is None or tag == '!':
+        tag = start_event.ctag
+        if tag is None or str(tag) == '!':
             tag = self.resolver.resolve(SequenceNode, None, start_event.implicit)
+            assert not isinstance(tag, str)
         node = SequenceNode(
             tag,
             [],
@@ -180,9 +184,10 @@ class Composer:
 
     def compose_mapping_node(self, anchor: Any) -> Any:
         start_event = self.parser.get_event()
-        tag = start_event.tag
-        if tag is None or tag == '!':
+        tag = start_event.ctag
+        if tag is None or str(tag) == '!':
             tag = self.resolver.resolve(MappingNode, None, start_event.implicit)
+            assert not isinstance(tag, str)
         node = MappingNode(
             tag,
             [],

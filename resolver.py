@@ -5,6 +5,7 @@ import re
 from typing import Any, Dict, List, Union, Text, Optional  # NOQA
 from ruamel.yaml.compat import VersionType  # NOQA
 
+from ruamel.yaml.tag import Tag
 from ruamel.yaml.compat import _DEFAULT_YAML_VERSION  # NOQA
 from ruamel.yaml.error import *  # NOQA
 from ruamel.yaml.nodes import MappingNode, ScalarNode, SequenceNode  # NOQA
@@ -102,9 +103,9 @@ class ResolverError(YAMLError):
 
 class BaseResolver:
 
-    DEFAULT_SCALAR_TAG = 'tag:yaml.org,2002:str'
-    DEFAULT_SEQUENCE_TAG = 'tag:yaml.org,2002:seq'
-    DEFAULT_MAPPING_TAG = 'tag:yaml.org,2002:map'
+    DEFAULT_SCALAR_TAG = Tag(suffix='tag:yaml.org,2002:str')
+    DEFAULT_SEQUENCE_TAG = Tag(suffix='tag:yaml.org,2002:seq')
+    DEFAULT_MAPPING_TAG = Tag(suffix='tag:yaml.org,2002:map')
 
     yaml_implicit_resolvers: Dict[Any, Any] = {}
     yaml_path_resolvers: Dict[Any, Any] = {}
@@ -268,14 +269,14 @@ class BaseResolver:
             resolvers += self.yaml_implicit_resolvers.get(None, [])
             for tag, regexp in resolvers:
                 if regexp.match(value):
-                    return tag
+                    return Tag(suffix=tag)
             implicit = implicit[1]
         if bool(self.yaml_path_resolvers):
             exact_paths = self.resolver_exact_paths[-1]
             if kind in exact_paths:
-                return exact_paths[kind]
+                return Tag(suffix=exact_paths[kind])
             if None in exact_paths:
-                return exact_paths[None]
+                return Tag(suffix=exact_paths[None])
         if kind is ScalarNode:
             return self.DEFAULT_SCALAR_TAG
         elif kind is SequenceNode:
@@ -354,14 +355,14 @@ class VersionedResolver(BaseResolver):
             resolvers += self.versioned_resolver.get(None, [])
             for tag, regexp in resolvers:
                 if regexp.match(value):
-                    return tag
+                    return Tag(suffix=tag)
             implicit = implicit[1]
         if bool(self.yaml_path_resolvers):
             exact_paths = self.resolver_exact_paths[-1]
             if kind in exact_paths:
-                return exact_paths[kind]
+                return Tag(suffix=exact_paths[kind])
             if None in exact_paths:
-                return exact_paths[None]
+                return Tag(suffix=exact_paths[None])
         if kind is ScalarNode:
             return self.DEFAULT_SCALAR_TAG
         elif kind is SequenceNode:
