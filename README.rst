@@ -4,7 +4,7 @@ ruamel.yaml
 
 ``ruamel.yaml`` is a YAML 1.2 loader/dumper package for Python.
 
-:version:       0.17.29
+:version:       0.17.30
 :updated:       2023-05-30
 :documentation: http://yaml.readthedocs.io
 :repository:    https://sourceforge.net/projects/ruamel-yaml/
@@ -60,6 +60,11 @@ ChangeLog
 =========
 
 .. should insert NEXT: at the beginning of line for next key (with empty line)
+
+0.17.30 (2023-05-30):
+  - fix issue 467, caused by Tag instances not being hashable (reported by
+    `Douglas Raillard
+    <https://bitbucket.org/%7Bcf052d92-a278-4339-9aa8-de41923bb556%7D/>`__)
 
 0.17.29 (2023-05-30):
   - changed the internals of the tag property from a string to a class which allows

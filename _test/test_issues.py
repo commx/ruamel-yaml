@@ -1139,6 +1139,12 @@ class TestIssues:
         yaml = YAML()
         yaml.load('---\na: True\n...')
 
+    def test_issue_467(self) -> None:
+        import ruamel.yaml
+
+        yaml = ruamel.yaml.YAML()
+        yaml.constructor.add_constructor(yaml.resolver.DEFAULT_MAPPING_TAG, lambda x, y: None)
+
 #    @pytest.mark.xfail(strict=True, reason='bla bla', raises=AssertionError)
 #    def test_issue_ xxx(self) -> None:
 #        inp = """

@@ -32,6 +32,13 @@ class Tag:
     def __str__(self) -> str:
         return f'{self.trval}'
 
+    def __hash__(self) -> int:
+        try:
+            return self._hash_id  # type: ignore
+        except AttributeError:
+            self._hash_id = res = hash((self.handle, self.suffix))
+            return res
+
     def __eq__(self, other: Any) -> bool:
         # other should not be a string, but the serializer sometimes provides these
         if isinstance(other, str):
