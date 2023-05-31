@@ -3,6 +3,7 @@
 # Abstract classes.
 
 from typing import Any, Dict, Optional, List  # NOQA
+from ruamel.yaml.tag import Tag
 
 SHOW_LINES = False
 
@@ -207,6 +208,12 @@ class ScalarEvent(NodeEvent):
     @property
     def tag(self) -> Optional[str]:
         return None if self.ctag is None else str(self.ctag)
+
+    @tag.setter
+    def tag(self, val: Any) -> None:
+        if isinstance(val, str):
+            val = Tag(suffix=val)
+        self.ctag = val
 
     def compact_repr(self) -> str:
         style = ':' if self.style is None else self.style

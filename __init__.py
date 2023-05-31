@@ -5,9 +5,9 @@ if False:  # MYPY
 
 _package_data = dict(
     full_package_name='ruamel.yaml',
-    version_info=(0, 17, 30),
-    __version__='0.17.30',
-    version_timestamp='2023-05-30 14:48:20',
+    version_info=(0, 17, 31),
+    __version__='0.17.31',
+    version_timestamp='2023-05-31 07:56:46',
     author='Anthon van der Neut',
     author_email='a.van.der.neut@ruamel.eu',
     description='ruamel.yaml is a YAML parser/emitter that supports roundtrip preservation of comments, seq/map flow style, and map key order',  # NOQA

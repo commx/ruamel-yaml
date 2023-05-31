@@ -30,6 +30,12 @@ class Node:
     def tag(self) -> Optional[str]:
         return None if self.ctag is None else str(self.ctag)
 
+    @tag.setter
+    def tag(self, val: Any) -> None:
+        if isinstance(val, str):
+            val = Tag(suffix=val)
+        self.ctag = val
+
     def __repr__(self) -> Any:
         value = self.value
         # if isinstance(value, list):

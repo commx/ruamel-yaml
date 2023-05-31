@@ -4,8 +4,8 @@ ruamel.yaml
 
 ``ruamel.yaml`` is a YAML 1.2 loader/dumper package for Python.
 
-:version:       0.17.30
-:updated:       2023-05-30
+:version:       0.17.31
+:updated:       2023-05-31
 :documentation: http://yaml.readthedocs.io
 :repository:    https://sourceforge.net/projects/ruamel-yaml/
 :pypi:          https://pypi.org/project/ruamel.yaml/
@@ -60,6 +60,11 @@ ChangeLog
 =========
 
 .. should insert NEXT: at the beginning of line for next key (with empty line)
+
+0.17.31 (2023-05-31):
+  - added tag.setter on `ScalarEvent` and on `Node`, that takes either 
+    a `Tag` instance, or a str 
+    (reported by `Sorin Sbarnea <https://sourceforge.net/u/ssbarnea/profile/>`__)
 
 0.17.30 (2023-05-30):
   - fix issue 467, caused by Tag instances not being hashable (reported by
