@@ -4,8 +4,8 @@ ruamel.yaml
 
 ``ruamel.yaml`` is a YAML 1.2 loader/dumper package for Python.
 
-:version:       0.17.31
-:updated:       2023-05-31
+:version:       0.17.32
+:updated:       2023-06-17
 :documentation: http://yaml.readthedocs.io
 :repository:    https://sourceforge.net/projects/ruamel-yaml/
 :pypi:          https://pypi.org/project/ruamel.yaml/
@@ -60,6 +60,9 @@ ChangeLog
 =========
 
 .. should insert NEXT: at the beginning of line for next key (with empty line)
+
+0.17.32 (2023-06-17):
+  - fix issue with scanner getting stuck in infinite loop
 
 0.17.31 (2023-05-31):
   - added tag.setter on `ScalarEvent` and on `Node`, that takes either 

@@ -1502,7 +1502,7 @@ class Scanner:
                 break
             while True:
                 ch = srp(length)
-                if ch == ':' and srp(length + 1) == ',':
+                if False and ch == ':' and srp(length + 1) == ',':
                     break
                 elif ch == ':' and srp(length + 1) not in _THE_END_SPACE_TAB:
                     pass

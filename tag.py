@@ -85,6 +85,8 @@ class Tag:
             self._trval = self.handles[self.handle] + self.uri_decoded_suffix
         return self._trval
 
+    value = trval
+
     @property
     def uri_decoded_suffix(self) -> Optional[str]:
         try:
