@@ -32,7 +32,7 @@ class TestIndentFailures:
         name: Anthon
         location: Germany
         language: python
-        """
+        """,
         )
 
     def test_full_tag(self) -> None:
@@ -42,7 +42,7 @@ class TestIndentFailures:
         name: Anthon
         location: Germany
         language: python
-        """
+        """,
         )
 
     def test_standard_tag(self) -> None:
@@ -52,7 +52,7 @@ class TestIndentFailures:
         name: Anthon
         location: Germany
         language: python
-        """
+        """,
         )
 
     def test_Y1(self) -> None:
@@ -62,7 +62,7 @@ class TestIndentFailures:
         name: Anthon
         location: Germany
         language: python
-        """
+        """,
         )
 
     def test_Y2(self) -> None:
@@ -72,7 +72,7 @@ class TestIndentFailures:
         name: Anthon
         location: Germany
         language: python
-        """
+        """,
         )
 
     # @pytest.mark.xfail(strict=True)  # type: ignore
@@ -88,7 +88,7 @@ class TestIndentFailures:
         - !local foo
         - !!str bar
         - !e!tag%21 baz
-        """
+        """,
         )
         yaml = YAML()
         data = yaml.load(inp)
@@ -108,7 +108,7 @@ class TestTagGeneral:
             %TAG !x! tag:example.com,2000:app/
             ---
             - !y!tag%21 baz
-            """
+            """,
             )
 
 
@@ -121,7 +121,7 @@ class TestRoundTripCustom:
         name: Anthon
         location: Germany
         language: python
-        """
+        """,
         )
 
     @pytest.mark.xfail(strict=True)  # type: ignore
@@ -135,7 +135,7 @@ class TestRoundTripCustom:
           name: Anthon
           location: Germany
           language: python
-        """
+        """,
         )
 
     @pytest.mark.xfail(strict=True)  # type: ignore
@@ -148,7 +148,7 @@ class TestRoundTripCustom:
           name: Anthon
           location: Germany
           language: python
-        """
+        """,
         )
 
     def test_scalar_00(self) -> None:
@@ -160,7 +160,7 @@ class TestRoundTripCustom:
             Value: !Ref: vpc    # first tag
             Export:
               Name: !Sub "${AWS::StackName}-Vpc"  # second tag
-        """
+        """,
         )
 
 
@@ -169,7 +169,7 @@ class TestIssue201:
         round_trip_load(
             """
         s: !!python/%75nicode 'abc'
-        """
+        """,
         )
 
 
@@ -183,7 +183,7 @@ class TestImplicitTaggedNodes:
         - !SBool true
         - !SLit |
           glitter in the dark near the Tanhäuser gate
-        """
+        """,
         )
         # tagged scalers have string or string types as value
         assert data[0].count('d') == 1
@@ -196,7 +196,7 @@ class TestImplicitTaggedNodes:
         round_trip(
             """\
         - !Mapping {a: 1, b: 2}
-        """
+        """,
         )
 
     def test_sequence(self) -> None:
@@ -206,7 +206,7 @@ class TestImplicitTaggedNodes:
         yaml.round_trip(
             """
         - !Sequence [a, {b: 1}, {c: {d: 3}}]
-        """
+        """,
         )
 
     def test_sequence2(self) -> None:
@@ -215,5 +215,5 @@ class TestImplicitTaggedNodes:
         yaml.round_trip(
             """
         - !Sequence [a, b: 1, c: {d: 3}]
-        """
+        """,
         )

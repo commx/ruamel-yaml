@@ -28,7 +28,7 @@ class TestIssues:
             key: value
         comb:
             <<: *ANCHOR
-        """
+        """,
         )
         data = round_trip_load(s)
         assert str(data['comb']) == str(data['def'])
@@ -89,7 +89,7 @@ class TestIssues:
         var3: {} #empty object
         var4: {a: 1} #filled object
         var5: [] #empty array
-        """
+        """,
         )
         x = round_trip(yaml_str, preserve_quotes=True)  # NOQA
 
@@ -121,7 +121,7 @@ class TestIssues:
 
         foo: 32
         bar: 32
-        """
+        """,
         )
         a = round_trip_load(s)
         del a['root'][0]['some_key']
@@ -135,7 +135,7 @@ class TestIssues:
 
         foo: 32
         bar: 32
-        """
+        """,
         )
         assert buf.getvalue() == exp
 
@@ -145,7 +145,7 @@ class TestIssues:
         mapping-A:
           key-A:{}
         mapping-B:
-        """
+        """,
         )
         for comment in ['', ' # no-newline', '  # some comment\n', '\n']:
             s = yaml_str.format(comment)
@@ -157,7 +157,7 @@ class TestIssues:
         mapping-A:
           key-A:{}
         mapping-B:
-        """
+        """,
         )
         for comment in ['\n# between']:
             s = yaml_str.format(comment)
@@ -169,7 +169,7 @@ class TestIssues:
         some-list:
         # List comment
         - {}
-        """
+        """,
         )
         x = round_trip(s, preserve_quotes=True)  # NOQA
 
@@ -203,7 +203,7 @@ class TestIssues:
         - d
 
         - e # comment
-        """
+        """,
         )
         seq = round_trip_load(yaml_str)
         seq[1::2] = ['B', 'D']
@@ -267,7 +267,7 @@ class TestIssues:
           # test
           foo:
             bar: baz
-        """
+        """,
         )
         d = round_trip_load(yaml_str)
         d['bar'] = 'foo'
@@ -278,7 +278,7 @@ class TestIssues:
         yaml_str = dedent(
             """\
         [StackName: AWS::StackName]
-        """
+        """,
         )
         d = round_trip_load(yaml_str)  # NOQA
 
@@ -287,7 +287,7 @@ class TestIssues:
             """\
         [StackName:
         AWS::StackName]
-        """
+        """,
         )
         d = round_trip_load(yaml_str)  # NOQA
 
@@ -324,7 +324,7 @@ class TestIssues:
         - c  # 3
         - e  # 5
         - b  # 2
-        """
+        """,
         )
         a = yaml.load(dedent(inp))
         a.sort()
@@ -337,7 +337,7 @@ class TestIssues:
         - c  # 3
         - d
         - e  # 5
-        """
+        """,
         )
         assert buf.getvalue() == exp
 
@@ -353,7 +353,7 @@ class TestIssues:
         - c  # 3
         - e  # 5
         - b  # 2
-        """
+        """,
         )
         a = yaml.load(dedent(inp))
         a.sort(reverse=True)
@@ -366,7 +366,7 @@ class TestIssues:
         - c  # 3
         - b  # 2
         - a  # 1
-        """
+        """,
         )
         assert buf.getvalue() == exp
 
@@ -382,7 +382,7 @@ class TestIssues:
         - Three  # 3
         - five   # 5
         - two    # 2
-        """
+        """,
         )
         a = yaml.load(dedent(inp))
         a.sort(key=str.lower)
@@ -395,7 +395,7 @@ class TestIssues:
         - One    # 1
         - Three  # 3
         - two    # 2
-        """
+        """,
         )
         assert buf.getvalue() == exp
 
@@ -411,7 +411,7 @@ class TestIssues:
         - Three  # 3
         - five   # 5
         - two    # 2
-        """
+        """,
         )
         a = yaml.load(dedent(inp))
         a.sort(key=str.lower, reverse=True)
@@ -424,7 +424,7 @@ class TestIssues:
         - One    # 1
         - four
         - five   # 5
-        """
+        """,
         )
         assert buf.getvalue() == exp
 
@@ -480,7 +480,7 @@ class TestIssues:
           cmd: >
             foo bar
             foo bar
-        """
+        """,
         )
         yaml = YAML(typ='safe', pure=True)
         data = yaml.load(inp)
@@ -582,7 +582,7 @@ class TestIssues:
           - 1
           - 2
           - 3
-        """
+        """,
         )
         exp = dedent(
             """\
@@ -590,7 +590,7 @@ class TestIssues:
         - - 1
           - 2
           - 3
-        """
+        """,
         )
         yaml.round_trip(inp, outp=exp)  # NOQA
 
@@ -619,7 +619,7 @@ class TestIssues:
         # ATLAS EWK
               - {dataset: ATLASWZRAP36PB, frac: 1.0}
               - {dataset: ATLASZHIGHMASS49FB, frac: 1.0}
-        """
+        """,
         )
         a = yaml.load(inp)
         buf = StringIO()
@@ -658,7 +658,7 @@ class TestIssues:
         : # Both empty
         "quoted key":
         - entry
-        """
+        """,
         )
         yaml = ruamel.yaml.YAML(typ='rt')
         yaml.version = (1, 2)
@@ -682,7 +682,7 @@ class TestIssues:
         - n
         - Y
         - N
-        """
+        """,
         )
         a = yaml.load(inp)
         assert a[0]
@@ -700,7 +700,7 @@ class TestIssues:
         parent_key:
         - sub_key: sub_value
 
-        # xxx"""
+        # xxx""",
         )
         a = yaml.load(inp)
         a['new_key'] = 'new_value'
@@ -728,7 +728,7 @@ class TestIssues:
           - &thirdEntry Third entry
 
         # EOF Comment
-        """
+        """,
         )
 
         yaml = YAML()
@@ -761,7 +761,7 @@ class TestIssues:
           - &thirdEntry Third entry
 
         # EOF Comment
-        """
+        """,
         )
 
         yaml = YAML()
@@ -799,7 +799,7 @@ class TestIssues:
 
           # Plain-element comment
           - &plainEntry Plain entry
-        """
+        """,
         )
 
         yaml = YAML()
@@ -837,7 +837,7 @@ class TestIssues:
 
           # Plain-element comment
           - &plainEntry Plain entry
-        """
+        """,
         )
 
         yaml = YAML()
@@ -872,7 +872,7 @@ class TestIssues:
           - - l31
             - l32
             - l33: '5'
-        """
+        """,
         )
         data = round_trip_load(inp)  # NOQA
         dc = copy.deepcopy(data)
@@ -887,7 +887,7 @@ class TestIssues:
         %TAG ! tag:example.com,2019/path#fragment
         ---
         null
-        """
+        """,
         )
         YAML().load(inp)
 
@@ -900,11 +900,11 @@ class TestIssues:
         %TAG ! tag:example.com,2019/path#fragment
         ---
         null
-        """
+        """,
         )
         yaml = YAML()
         with pytest.raises(
-            ruamel.yaml.scanner.ScannerError, match='while scanning a directive'
+            ruamel.yaml.scanner.ScannerError, match='while scanning a directive',
         ):
             yaml.load(inp)
 
@@ -994,7 +994,7 @@ class TestIssues:
         usage:
           <<: [*anchor, *anchor2]
           usage-key: usage-value
-        """
+        """,
         )
         yaml = YAML()
         data = yaml.load(inp)
@@ -1022,7 +1022,7 @@ class TestIssues:
         test:
             long: "This is a sample text
                 across two lines."
-        """
+        """,
         )
         yaml = YAML()
         yaml.preserve_quotes = True
@@ -1078,8 +1078,8 @@ class TestIssues:
                     x: 20cm
                     y: 20cm
                     radius: 2.24cm
-              """
-            )
+              """,
+            ),
         }
         yaml = YAML()
         yaml.width = 60
@@ -1098,7 +1098,7 @@ class TestIssues:
         first name: Roy
         last name: Rogers
         city: somewhere
-        """
+        """,
         )
         yaml = YAML()
         data = yaml.load(inp)
@@ -1116,7 +1116,7 @@ class TestIssues:
         inp = dedent(
             """
         first_name: Art
-        """
+        """,
         )
         data = yaml.load(inp)
         _ = data.merge
@@ -1128,7 +1128,7 @@ class TestIssues:
             """
         some_key: test
         first_name: Art
-        """
+        """,
         )
         assert buf.getvalue() == exp
 

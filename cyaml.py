@@ -148,7 +148,7 @@ class CSafeDumper(CEmitter, SafeRepresenter, Resolver):  # type: ignore
         )
         self._emitter = self._serializer = self._representer = self
         SafeRepresenter.__init__(
-            self, default_style=default_style, default_flow_style=default_flow_style
+            self, default_style=default_style, default_flow_style=default_flow_style,
         )
         Resolver.__init__(self)
 
@@ -190,6 +190,6 @@ class CDumper(CEmitter, Representer, Resolver):  # type: ignore
         )
         self._emitter = self._serializer = self._representer = self
         Representer.__init__(
-            self, default_style=default_style, default_flow_style=default_flow_style
+            self, default_style=default_style, default_flow_style=default_flow_style,
         )
         Resolver.__init__(self)

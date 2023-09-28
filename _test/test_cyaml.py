@@ -10,7 +10,7 @@ NO_CLIB_VER = (3, 12)
 
 @pytest.mark.skipif(  # type: ignore
     platform.python_implementation() in ['Jython', 'PyPy'],
-    reason='Jython throws RepresenterError'
+    reason='Jython throws RepresenterError',
 )
 def test_load_cyaml() -> None:
     print("???????????????????????", platform.python_implementation())
@@ -42,7 +42,7 @@ def test_dump_cyaml() -> None:
 
 
 @pytest.mark.skipif(  # type: ignore
-    platform.python_implementation() in ['Jython', 'PyPy'], reason='not avialable'
+    platform.python_implementation() in ['Jython', 'PyPy'], reason='not avialable',
 )
 def test_load_cyaml_1_2() -> None:
     # issue 155
@@ -61,7 +61,7 @@ def test_load_cyaml_1_2() -> None:
 
 
 @pytest.mark.skipif(  # type: ignore
-    platform.python_implementation() in ['Jython', 'PyPy'], reason='not available'
+    platform.python_implementation() in ['Jython', 'PyPy'], reason='not available',
 )
 def test_dump_cyaml_1_2() -> None:
     # issue 155

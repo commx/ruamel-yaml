@@ -217,7 +217,7 @@ class StreamStartToken(Token):
     id = '<stream start>'
 
     def __init__(
-        self, start_mark: Any = None, end_mark: Any = None, encoding: Any = None
+        self, start_mark: Any = None, end_mark: Any = None, encoding: Any = None,
     ) -> None:
         Token.__init__(self, start_mark, end_mark)
         self.encoding = encoding
@@ -318,7 +318,7 @@ class ScalarToken(Token):
     id = '<scalar>'
 
     def __init__(
-        self, value: Any, plain: Any, start_mark: Any, end_mark: Any, style: Any = None
+        self, value: Any, plain: Any, start_mark: Any, end_mark: Any, style: Any = None,
     ) -> None:
         Token.__init__(self, start_mark, end_mark)
         self.value = value
@@ -331,7 +331,7 @@ class CommentToken(Token):
     id = '<comment>'
 
     def __init__(
-        self, value: Any, start_mark: Any = None, end_mark: Any = None, column: Any = None
+        self, value: Any, start_mark: Any = None, end_mark: Any = None, column: Any = None,
     ) -> None:
         if start_mark is None:
             assert column is not None

@@ -49,9 +49,9 @@ if sys.version_info < (3, 4):
 
 
 if sys.version_info < (3,):
-    open_kw = dict()
+    open_kw = {}
 else:
-    open_kw = dict(encoding='utf-8')
+    open_kw = dict(encoding='utf-8')  # NOQA: C408
 
 
 if sys.version_info < (2, 7) or platform.python_implementation() == 'Jython':
@@ -113,7 +113,7 @@ def literal_eval(node_or_string):
         elif isinstance(node, Set):
             return set(map(_convert, node.elts))
         elif isinstance(node, Dict):
-            return dict((_convert(k), _convert(v)) for k, v in zip(node.keys, node.values))
+            return {_convert(k): _convert(v) for k, v in zip(node.keys, node.values)}
         elif isinstance(node, NameConstant):
             return node.value
         elif sys.version_info < (3, 4) and isinstance(node, Name):
@@ -144,7 +144,7 @@ def literal_eval(node_or_string):
         elif isinstance(node, Call):
             func_id = getattr(node.func, 'id', None)
             if func_id == 'dict':
-                return dict((k.arg, _convert(k.value)) for k in node.keywords)
+                return {k.arg: _convert(k.value) for k in node.keywords}
             elif func_id == 'set':
                 return set(_convert(node.args[0]))
             elif func_id == 'date':
@@ -202,8 +202,8 @@ def _package_data(fn):
                                 if index == e.lineno - 1:
                                     print(
                                         '{0:{1}}  {2}^--- {3}'.format(
-                                            ' ', w, ' ' * e.offset, e.node
-                                        )
+                                            ' ', w, ' ' * e.offset, e.node,
+                                        ),
                                     )
                         raise
                     break
@@ -400,7 +400,7 @@ class NameSpacePackager(object):
     def package_dir(self):
         d = {
             # don't specify empty dir, clashes with package_data spec
-            self.full_package_name: '.'
+            self.full_package_name: '.',
         }
         if 'extra_packages' in self._pkg_data:
             return d
@@ -438,7 +438,7 @@ class NameSpacePackager(object):
         # installed packages. As we don't know the order in namespace_packages
         # do some magic
         prefix = self.split[0]
-        prefixes = set([prefix, prefix.replace('_', '-')])
+        prefixes = {prefix, prefix.replace('_', '-')}
         for p in sys.path:
             if not p:
                 continue  # directory with setup.py
@@ -461,7 +461,7 @@ class NameSpacePackager(object):
                     if self.command == 'develop':
                         raise InstallationError(
                             'Cannot mix develop (pip install -e),\nwith '
-                            'non-develop installs for package name {0}'.format(fn)
+                            'non-develop installs for package name {0}'.format(fn),
                         )
                 elif fn == prefix:
                     raise InstallationError('non directory package {0} in {1}'.format(fn, p))
@@ -473,7 +473,7 @@ class NameSpacePackager(object):
                 if fn.endswith('-link') and self.command == 'install':
                     raise InstallationError(
                         'Cannot mix non-develop with develop\n(pip install -e)'
-                        ' installs for package name {0}'.format(fn)
+                        ' installs for package name {0}'.format(fn),
                     )
 
     def entry_points(self, script_name=None, package_name=None):
@@ -491,7 +491,7 @@ class NameSpacePackager(object):
 
         def pckg_entry_point(name):
             return '{0}{1}:main'.format(
-                name, '.__main__' if os.path.exists('__main__.py') else ""
+                name, '.__main__' if os.path.exists('__main__.py') else "",
             )
 
         ep = self._pkg_data.get('entry_points', True)
@@ -512,8 +512,8 @@ class NameSpacePackager(object):
             script_name = package_name.rsplit('.', 1)[-1]
         return {
             'console_scripts': [
-                '{0} = {1}'.format(script_name, pckg_entry_point(package_name))
-            ]
+                '{0} = {1}'.format(script_name, pckg_entry_point(package_name)),
+            ],
         }
 
     @property
@@ -586,8 +586,8 @@ class NameSpacePackager(object):
                     'Operating System :: OS Independent',
                     'Programming Language :: Python',
                 ]
-                + [self.pn(x) for x in self._pkg_data.get('classifiers', [])]
-            )
+                + [self.pn(x) for x in self._pkg_data.get('classifiers', [])],
+            ),
         )
 
     @property
@@ -843,12 +843,12 @@ def main():
     nsp.check()
     # nsp.create_dirs()
     MySdist.nsp = nsp
-    cmdclass = dict(install_lib=MyInstallLib, sdist=MySdist)
+    cmdclass = dict(install_lib=MyInstallLib, sdist=MySdist)  # NOQA: C408
     if _bdist_wheel_available:
         MyBdistWheel.nsp = nsp
         cmdclass['bdist_wheel'] = MyBdistWheel
 
-    kw = dict(
+    kw = dict(  # NOQA: C408
         name=nsp.full_package_name,
         version=version_str,
         packages=nsp.packages,

@@ -211,7 +211,7 @@ class TestYpkgIndent:
             package Pine (itself now available under the Apache License as Alpine).
         """
         round_trip(
-            inp, indent=4, block_seq_indent=2, top_level_colon_align=True, prefix_colon=' '
+            inp, indent=4, block_seq_indent=2, top_level_colon_align=True, prefix_colon=' ',
         )
 
 

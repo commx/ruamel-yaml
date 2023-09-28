@@ -164,7 +164,7 @@ class TestLoadAll:
             ---
             - b
             ...
-            """)
+            """),
         )
         yaml = YAML()
         assert list(yaml.load_all(fn)) == [['a'], ['b']]
@@ -185,7 +185,7 @@ class TestDuplSet:
                 ? b
                 ? c
                 ? a
-                """)
+                """),
             )
 
 

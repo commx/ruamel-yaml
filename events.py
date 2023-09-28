@@ -17,7 +17,7 @@ class Event:
     crepr = 'Unspecified Event'
 
     def __init__(
-        self, start_mark: Any = None, end_mark: Any = None, comment: Any = CommentCheck
+        self, start_mark: Any = None, end_mark: Any = None, comment: Any = CommentCheck,
     ) -> None:
         self.start_mark = start_mark
         self.end_mark = end_mark
@@ -43,7 +43,7 @@ class Event:
             if SHOW_LINES:
                 arguments.append(
                     f'({self.start_mark.line}:{self.start_mark.column}/'
-                    f'{self.end_mark.line}:{self.end_mark.column})'
+                    f'{self.end_mark.line}:{self.end_mark.column})',
                 )
             arguments = ', '.join(arguments)  # type: ignore
         else:
@@ -65,7 +65,7 @@ class NodeEvent(Event):
     __slots__ = ('anchor',)
 
     def __init__(
-        self, anchor: Any, start_mark: Any = None, end_mark: Any = None, comment: Any = None
+        self, anchor: Any, start_mark: Any = None, end_mark: Any = None, comment: Any = None,
     ) -> None:
         Event.__init__(self, start_mark, end_mark, comment)
         self.anchor = anchor

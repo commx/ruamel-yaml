@@ -47,9 +47,6 @@ class ordereddict(OrderedDict):  # type: ignore
                 self[old_key] = od[old_key]
 
 
-PY2 = sys.version_info[0] == 2
-PY3 = sys.version_info[0] == 3
-
 StringIO = io.StringIO
 BytesIO = io.BytesIO
 
@@ -209,11 +206,11 @@ class MutableSliceableSequence(collections.abc.MutableSequence):  # type: ignore
             # need to test before changing, in case TypeError is caught
             if nr_assigned_items < len(value):
                 raise TypeError(
-                    f'too many elements in value {nr_assigned_items} < {len(value)}'
+                    f'too many elements in value {nr_assigned_items} < {len(value)}',
                 )
             elif nr_assigned_items > len(value):
                 raise TypeError(
-                    f'not enough elements in value {nr_assigned_items} > {len(value)}'
+                    f'not enough elements in value {nr_assigned_items} > {len(value)}',
                 )
             for idx, i in enumerate(range(*range_parms)):
                 self[i] = value[idx]

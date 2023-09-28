@@ -79,14 +79,14 @@ class ScalarInt(int):
 
 class BinaryInt(ScalarInt):
     def __new__(
-        cls, value: Any, width: Any = None, underscore: Any = None, anchor: Any = None
+        cls, value: Any, width: Any = None, underscore: Any = None, anchor: Any = None,
     ) -> Any:
         return ScalarInt.__new__(cls, value, width=width, underscore=underscore, anchor=anchor)
 
 
 class OctalInt(ScalarInt):
     def __new__(
-        cls, value: Any, width: Any = None, underscore: Any = None, anchor: Any = None
+        cls, value: Any, width: Any = None, underscore: Any = None, anchor: Any = None,
     ) -> Any:
         return ScalarInt.__new__(cls, value, width=width, underscore=underscore, anchor=anchor)
 
@@ -99,7 +99,7 @@ class HexInt(ScalarInt):
     """uses lower case (a-f)"""
 
     def __new__(
-        cls, value: Any, width: Any = None, underscore: Any = None, anchor: Any = None
+        cls, value: Any, width: Any = None, underscore: Any = None, anchor: Any = None,
     ) -> Any:
         return ScalarInt.__new__(cls, value, width=width, underscore=underscore, anchor=anchor)
 
@@ -108,7 +108,7 @@ class HexCapsInt(ScalarInt):
     """uses upper case (A-F)"""
 
     def __new__(
-        cls, value: Any, width: Any = None, underscore: Any = None, anchor: Any = None
+        cls, value: Any, width: Any = None, underscore: Any = None, anchor: Any = None,
     ) -> Any:
         return ScalarInt.__new__(cls, value, width=width, underscore=underscore, anchor=anchor)
 
@@ -117,6 +117,6 @@ class DecimalInt(ScalarInt):
     """needed if anchor"""
 
     def __new__(
-        cls, value: Any, width: Any = None, underscore: Any = None, anchor: Any = None
+        cls, value: Any, width: Any = None, underscore: Any = None, anchor: Any = None,
     ) -> Any:
         return ScalarInt.__new__(cls, value, width=width, underscore=underscore, anchor=anchor)

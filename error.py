@@ -51,7 +51,7 @@ class StringMark(StreamMark):
     __slots__ = 'name', 'index', 'line', 'column', 'buffer', 'pointer'
 
     def __init__(
-        self, name: Any, index: int, line: int, column: int, buffer: Any, pointer: Any
+        self, name: Any, index: int, line: int, column: int, buffer: Any, pointer: Any,
     ) -> None:
         StreamMark.__init__(self, name, index, line, column)
         self.buffer = buffer

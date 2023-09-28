@@ -89,7 +89,7 @@ class ScalarFloat(float):
         out.write(
             f'ScalarFloat({self}| w:{self._width}, p:{self._prec}, '  # type: ignore
             f's:{self._m_sign}, lz:{self._m_lead0}, _:{self._underscore}|{self._exp}'
-            f', w:{self._e_width}, s:{self._e_sign})\n'
+            f', w:{self._e_width}, s:{self._e_sign})\n',
         )
 
 

@@ -69,7 +69,7 @@ class Indents:
             return False
 
     def seq_flow_align(
-        self, seq_indent: int, column: int, pre_comment: Optional[bool] = False
+        self, seq_indent: int, column: int, pre_comment: Optional[bool] = False,
     ) -> int:
         # extra spaces because of dash
         # nprint('seq_flow_align', self.values, pre_comment)
@@ -97,6 +97,12 @@ class Emitter:
     # fmt: on
 
     MAX_SIMPLE_KEY_LENGTH = 128
+    flow_seq_start = '['
+    flow_seq_end = ']'
+    flow_seq_separator = ','
+    flow_map_start = '{'
+    flow_map_end = '}'
+    flow_map_separator = ','
 
     def __init__(
         self,
@@ -277,7 +283,7 @@ class Emitter:
         return len(self.events) < count + 1
 
     def increase_indent(
-        self, flow: bool = False, sequence: Optional[bool] = None, indentless: bool = False
+        self, flow: bool = False, sequence: Optional[bool] = None, indentless: bool = False,
     ) -> None:
         self.indents.append(self.indent, sequence)
         if self.indent is None:  # top level
@@ -450,7 +456,7 @@ class Emitter:
                     or self.check_empty_mapping()
                 ):
                     self.expect_flow_mapping(
-                        single=self.event.nr_items == 1, force_flow_indent=force_flow_indent
+                        single=self.event.nr_items == 1, force_flow_indent=force_flow_indent,
                     )
                 else:
                     self.expect_block_mapping()
@@ -475,9 +481,9 @@ class Emitter:
         if force_flow_indent:
             self.increase_indent(flow=True, sequence=True)
         ind = self.indents.seq_flow_align(
-            self.best_sequence_indent, self.column, force_flow_indent
+            self.best_sequence_indent, self.column, force_flow_indent,
         )
-        self.write_indicator(' ' * ind + '[', True, whitespace=True)
+        self.write_indicator(' ' * ind + self.flow_seq_start, True, whitespace=True)
         if not force_flow_indent:
             self.increase_indent(flow=True, sequence=True)
         self.flow_context.append('[')
@@ -488,7 +494,7 @@ class Emitter:
             self.indent = self.indents.pop()
             popped = self.flow_context.pop()
             assert popped == '['
-            self.write_indicator(']', False)
+            self.write_indicator(self.flow_seq_end, False)
             if self.event.comment and self.event.comment[0]:
                 # eol comment on empty flow sequence
                 self.write_post_comment(self.event)
@@ -507,9 +513,9 @@ class Emitter:
             popped = self.flow_context.pop()
             assert popped == '['
             if self.canonical:
-                self.write_indicator(',', False)
+                self.write_indicator(self.flow_seq_separator, False)
                 self.write_indent()
-            self.write_indicator(']', False)
+            self.write_indicator(self.flow_seq_end, False)
             if self.event.comment and self.event.comment[0]:
                 # eol comment on flow sequence
                 self.write_post_comment(self.event)
@@ -517,7 +523,7 @@ class Emitter:
                 self.no_newline = False
             self.state = self.states.pop()
         else:
-            self.write_indicator(',', False)
+            self.write_indicator(self.flow_seq_separator, False)
             if self.canonical or self.column > self.best_width:
                 self.write_indent()
             self.states.append(self.expect_flow_sequence_item)
@@ -526,14 +532,14 @@ class Emitter:
     # Flow mapping handlers.
 
     def expect_flow_mapping(
-        self, single: Optional[bool] = False, force_flow_indent: Optional[bool] = False
+        self, single: Optional[bool] = False, force_flow_indent: Optional[bool] = False,
     ) -> None:
         if force_flow_indent:
             self.increase_indent(flow=True, sequence=False)
         ind = self.indents.seq_flow_align(
-            self.best_sequence_indent, self.column, force_flow_indent
+            self.best_sequence_indent, self.column, force_flow_indent,
         )
-        map_init = '{'
+        map_init = self.flow_map_start
         if (
             single
             and self.flow_level
@@ -554,7 +560,7 @@ class Emitter:
             self.indent = self.indents.pop()
             popped = self.flow_context.pop()
             assert popped == '{'  # empty flow mapping
-            self.write_indicator('}', False)
+            self.write_indicator(self.flow_map_end, False)
             if self.event.comment and self.event.comment[0]:
                 # eol comment on empty mapping
                 self.write_post_comment(self.event)
@@ -580,10 +586,10 @@ class Emitter:
             popped = self.flow_context.pop()
             assert popped in ['{', '']
             if self.canonical:
-                self.write_indicator(',', False)
+                self.write_indicator(self.flow_map_separator, False)
                 self.write_indent()
             if popped != '':
-                self.write_indicator('}', False)
+                self.write_indicator(self.flow_map_end, False)
             if self.event.comment and self.event.comment[0]:
                 # eol comment on flow mapping, never reached on empty mappings
                 self.write_post_comment(self.event)
@@ -591,7 +597,7 @@ class Emitter:
                 self.no_newline = False
             self.state = self.states.pop()
         else:
-            self.write_indicator(',', False)
+            self.write_indicator(self.flow_map_separator, False)
             if self.canonical or self.column > self.best_width:
                 self.write_indent()
             if not self.canonical and self.check_simple_key():
@@ -674,7 +680,7 @@ class Emitter:
             self.write_indent()
             if self.check_simple_key():
                 if not isinstance(
-                    self.event, (SequenceStartEvent, MappingStartEvent)
+                    self.event, (SequenceStartEvent, MappingStartEvent),
                 ):  # sequence keys
                     try:
                         if self.event.style == '?':

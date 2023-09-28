@@ -32,7 +32,7 @@ class TestLiteralScalarString:
         """)
 
     @pytest.mark.skipif(  # type: ignore
-        platform.python_implementation() == 'Jython', reason='Jython throws RepresenterError'
+        platform.python_implementation() == 'Jython', reason='Jython throws RepresenterError',
     )
     def test_preserve_string(self) -> None:
         inp = """
@@ -43,7 +43,7 @@ class TestLiteralScalarString:
         round_trip(inp, intermediate=dict(a='abc\ndef\n'))
 
     @pytest.mark.skipif(  # type: ignore
-        platform.python_implementation() == 'Jython', reason='Jython throws RepresenterError'
+        platform.python_implementation() == 'Jython', reason='Jython throws RepresenterError',
     )
     def test_preserve_string_strip(self) -> None:
         s = """
@@ -55,7 +55,7 @@ class TestLiteralScalarString:
         round_trip(s, intermediate=dict(a='abc\ndef'))
 
     @pytest.mark.skipif(  # type: ignore
-        platform.python_implementation() == 'Jython', reason='Jython throws RepresenterError'
+        platform.python_implementation() == 'Jython', reason='Jython throws RepresenterError',
     )
     def test_preserve_string_keep(self) -> None:
         # with pytest.raises(AssertionError) as excinfo:
@@ -70,7 +70,7 @@ class TestLiteralScalarString:
         round_trip(inp, intermediate=dict(a='ghi\njkl\n\n\n', b='x'))
 
     @pytest.mark.skipif(  # type: ignore
-        platform.python_implementation() == 'Jython', reason='Jython throws RepresenterError'
+        platform.python_implementation() == 'Jython', reason='Jython throws RepresenterError',
     )
     def test_preserve_string_keep_at_end(self) -> None:
         # at EOF you have to specify the ... to get proper "closure"

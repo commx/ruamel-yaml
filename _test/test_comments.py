@@ -274,7 +274,7 @@ class TestComments:
         data = round_trip_load(x)
         for utf in [True, False]:
             y = round_trip_dump(
-                data, default_flow_style=False, allow_unicode=utf
+                data, default_flow_style=False, allow_unicode=utf,
             )
             assert y == x
 
@@ -289,7 +289,7 @@ class TestComments:
         data = round_trip_load(x)
         for utf in [True, False]:
             y = round_trip_dump(
-                data, default_flow_style=False, allow_unicode=utf
+                data, default_flow_style=False, allow_unicode=utf,
             )
             assert y == x
 

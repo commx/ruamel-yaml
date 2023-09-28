@@ -128,7 +128,7 @@ class TestDecorator:
             @classmethod
             def to_yaml(cls, representer: Any, node: Any) -> Any:
                 return representer.represent_scalar(
-                    cls.yaml_tag, '{.name}-{.age}'.format(node, node)
+                    cls.yaml_tag, '{.name}-{.age}'.format(node, node),
                 )
 
             @classmethod

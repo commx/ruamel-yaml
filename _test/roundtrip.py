@@ -27,7 +27,7 @@ def dedent(data: str) -> str:
 
 
 def round_trip_load(
-    inp: Any, preserve_quotes: Optional[bool] = None, version: Optional[Any] = None
+    inp: Any, preserve_quotes: Optional[bool] = None, version: Optional[Any] = None,
 ) -> Any:
     import ruamel.yaml  # NOQA
 
@@ -39,7 +39,7 @@ def round_trip_load(
 
 
 def round_trip_load_all(
-    inp: Any, preserve_quotes: Optional[bool] = None, version: Optional[Any] = None
+    inp: Any, preserve_quotes: Optional[bool] = None, version: Optional[Any] = None,
 ) -> Any:
     import ruamel.yaml  # NOQA
 

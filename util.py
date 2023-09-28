@@ -102,7 +102,7 @@ def create_timestamp(
         tz_hour = int(tz_hour)
         tz_minute = int(tz_minute) if tz_minute else 0
         delta = datetime.timedelta(
-            hours=tz_hour, minutes=tz_minute, seconds=1 if frac > MAX_FRAC else 0
+            hours=tz_hour, minutes=tz_minute, seconds=1 if frac > MAX_FRAC else 0,
         )
         if tz_sign == '-':
             delta = -delta

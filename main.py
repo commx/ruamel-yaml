@@ -177,7 +177,7 @@ class YAML:
                 break
         if typ_found == 0:
             raise NotImplementedError(
-                f'typ "{self.typ}" not recognised (need to install plug-in?)'
+                f'typ "{self.typ}" not recognised (need to install plug-in?)',
             )
 
     @property
@@ -550,7 +550,7 @@ class YAML:
                 raise
 
     def dump(
-        self: Any, data: Union[Path, StreamType], stream: Any = None, *, transform: Any = None
+        self: Any, data: Union[Path, StreamType], stream: Any = None, *, transform: Any = None,
     ) -> Any:
         if self._context_manager:
             if not self._output:
@@ -558,7 +558,7 @@ class YAML:
             if transform is not None:
                 x = self.__class__.__name__
                 raise TypeError(
-                    f'{x}.dump() in the context manager cannot have transform keyword'
+                    f'{x}.dump() in the context manager cannot have transform keyword',
                 )
             self._context_manager.dump(data)
         else:  # old style
@@ -567,7 +567,7 @@ class YAML:
             return self.dump_all([data], stream, transform=transform)
 
     def dump_all(
-        self, documents: Any, stream: Union[Path, StreamType], *, transform: Any = None
+        self, documents: Any, stream: Union[Path, StreamType], *, transform: Any = None,
     ) -> Any:
         if self._context_manager:
             raise NotImplementedError
@@ -599,7 +599,7 @@ class YAML:
             else:
                 stream = BytesIO()
         serializer, representer, emitter = self.get_serializer_representer_emitter(
-            stream, tlca
+            stream, tlca,
         )
         try:
             self.serializer.open()
@@ -691,7 +691,7 @@ class YAML:
                 )
                 selfx._emitter = selfx._serializer = selfx._representer = selfx
                 self.Representer.__init__(
-                    selfx, default_style=default_style, default_flow_style=default_flow_style
+                    selfx, default_style=default_style, default_flow_style=default_flow_style,
                 )
                 rslvr.__init__(selfx)
 
@@ -756,7 +756,7 @@ class YAML:
 
             def t_y(representer: Any, data: Any) -> Any:
                 return representer.represent_yaml_object(
-                    tag, data, cls, flow_style=representer.default_flow_style
+                    tag, data, cls, flow_style=representer.default_flow_style,
                 )
 
             self.representer.add_representer(cls, t_y)
@@ -956,7 +956,7 @@ def yaml_object(yml: Any) -> Any:
 
             def t_y(representer: Any, data: Any) -> Any:
                 return representer.represent_yaml_object(
-                    tag, data, cls, flow_style=representer.default_flow_style
+                    tag, data, cls, flow_style=representer.default_flow_style,
                 )
 
             yml.representer.add_representer(cls, t_y)
@@ -1048,7 +1048,7 @@ def compose_all(stream: StreamTextType, Loader: Any = Loader) -> Any:
 
 
 def load(
-    stream: Any, Loader: Any = None, version: Any = None, preserve_quotes: Any = None
+    stream: Any, Loader: Any = None, version: Any = None, preserve_quotes: Any = None,
 ) -> Any:
     """
     Parse the first YAML document in a stream
@@ -1074,7 +1074,7 @@ def load(
 
 
 def load_all(
-    stream: Any, Loader: Any = None, version: Any = None, preserve_quotes: Any = None
+    stream: Any, Loader: Any = None, version: Any = None, preserve_quotes: Any = None,
 ) -> Any:
     # NOQA
     """
@@ -1250,7 +1250,7 @@ def serialize_all(
 
 
 def serialize(
-    node: Any, stream: Optional[StreamType] = None, Dumper: Any = Dumper, **kwds: Any
+    node: Any, stream: Optional[StreamType] = None, Dumper: Any = Dumper, **kwds: Any,
 ) -> Any:
     """
     Serialize a representation tree into a YAML stream.
@@ -1459,7 +1459,7 @@ def add_implicit_resolver(
         if hasattr(Loader, 'add_implicit_resolver'):
             Loader.add_implicit_resolver(tag, regexp, first)
         elif issubclass(
-            Loader, (BaseLoader, SafeLoader, ruamel.yaml.loader.Loader, RoundTripLoader)
+            Loader, (BaseLoader, SafeLoader, ruamel.yaml.loader.Loader, RoundTripLoader),
         ):
             Resolver.add_implicit_resolver(tag, regexp, first)
         else:
@@ -1468,7 +1468,7 @@ def add_implicit_resolver(
         if hasattr(Dumper, 'add_implicit_resolver'):
             Dumper.add_implicit_resolver(tag, regexp, first)
         elif issubclass(
-            Dumper, (BaseDumper, SafeDumper, ruamel.yaml.dumper.Dumper, RoundTripDumper)
+            Dumper, (BaseDumper, SafeDumper, ruamel.yaml.dumper.Dumper, RoundTripDumper),
         ):
             Resolver.add_implicit_resolver(tag, regexp, first)
         else:
@@ -1497,7 +1497,7 @@ def add_path_resolver(
         if hasattr(Loader, 'add_path_resolver'):
             Loader.add_path_resolver(tag, path, kind)
         elif issubclass(
-            Loader, (BaseLoader, SafeLoader, ruamel.yaml.loader.Loader, RoundTripLoader)
+            Loader, (BaseLoader, SafeLoader, ruamel.yaml.loader.Loader, RoundTripLoader),
         ):
             Resolver.add_path_resolver(tag, path, kind)
         else:
@@ -1506,7 +1506,7 @@ def add_path_resolver(
         if hasattr(Dumper, 'add_path_resolver'):
             Dumper.add_path_resolver(tag, path, kind)
         elif issubclass(
-            Dumper, (BaseDumper, SafeDumper, ruamel.yaml.dumper.Dumper, RoundTripDumper)
+            Dumper, (BaseDumper, SafeDumper, ruamel.yaml.dumper.Dumper, RoundTripDumper),
         ):
             Resolver.add_path_resolver(tag, path, kind)
         else:
@@ -1514,7 +1514,7 @@ def add_path_resolver(
 
 
 def add_constructor(
-    tag: Any, object_constructor: Any, Loader: Any = None, constructor: Any = Constructor
+    tag: Any, object_constructor: Any, Loader: Any = None, constructor: Any = Constructor,
 ) -> None:
     """
     Add an object constructor for the given tag.
@@ -1540,7 +1540,7 @@ def add_constructor(
 
 
 def add_multi_constructor(
-    tag_prefix: Any, multi_constructor: Any, Loader: Any = None, constructor: Any = Constructor
+    tag_prefix: Any, multi_constructor: Any, Loader: Any = None, constructor: Any = Constructor,  # NOQA
 ) -> None:
     """
     Add a multi-constructor for the given tag prefix.
@@ -1567,7 +1567,7 @@ def add_multi_constructor(
 
 
 def add_representer(
-    data_type: Any, object_representer: Any, Dumper: Any = None, representer: Any = Representer
+    data_type: Any, object_representer: Any, Dumper: Any = None, representer: Any = Representer,  # NOQA
 ) -> None:
     """
     Add a representer for the given type.
@@ -1595,7 +1595,7 @@ def add_representer(
 
 # this code currently not tested
 def add_multi_representer(
-    data_type: Any, multi_representer: Any, Dumper: Any = None, representer: Any = Representer
+    data_type: Any, multi_representer: Any, Dumper: Any = None, representer: Any = Representer,
 ) -> None:
     """
     Add a representer for the given type.
@@ -1660,5 +1660,5 @@ class YAMLObject(with_metaclass(YAMLObjectMetaclass)):  # type: ignore
         Convert a Python object to a representation node.
         """
         return representer.represent_yaml_object(
-            cls.yaml_tag, data, cls, flow_style=cls.yaml_flow_style
+            cls.yaml_tag, data, cls, flow_style=cls.yaml_flow_style,
         )

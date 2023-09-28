@@ -233,7 +233,7 @@ def test_example_2_16() -> None:
 
 
 @pytest.mark.xfail(  # type: ignore
-    strict=True, reason='cannot YAML dump escape sequences (\n) as hex and normal'
+    strict=True, reason='cannot YAML dump escape sequences (\n) as hex and normal',
 )
 def test_example_2_17() -> None:
     yaml = YAML()

@@ -32,7 +32,7 @@ __all__ = ['Reader', 'ReaderError']
 
 class ReaderError(YAMLError):
     def __init__(
-        self, name: Any, position: Any, character: Any, encoding: Any, reason: Any
+        self, name: Any, position: Any, character: Any, encoding: Any, reason: Any,
     ) -> None:
         self.name = name
         self.character = character
@@ -162,7 +162,7 @@ class Reader:
     def get_mark(self) -> Any:
         if self.stream is None:
             return StringMark(
-                self.name, self.index, self.line, self.column, self.buffer, self.pointer
+                self.name, self.index, self.line, self.column, self.buffer, self.pointer,
             )
         else:
             return FileMark(self.name, self.index, self.line, self.column)
@@ -183,7 +183,7 @@ class Reader:
         self.update(1)
 
     NON_PRINTABLE = RegExp(
-        '[^\x09\x0A\x0D\x20-\x7E\x85' '\xA0-\uD7FF' '\uE000-\uFFFD' '\U00010000-\U0010FFFF' ']'
+        '[^\x09\x0A\x0D\x20-\x7E\x85' '\xA0-\uD7FF' '\uE000-\uFFFD' '\U00010000-\U0010FFFF' ']'  # NOQA
     )
 
     _printable_ascii = ('\x09\x0A\x0D' + "".join(map(chr, range(0x20, 0x7F)))).encode('ascii')

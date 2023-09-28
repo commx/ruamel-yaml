@@ -44,6 +44,6 @@ class TestDedent:
         x = dedent(
             dedent("""
         123
-        """)
+        """),
         )
         assert x == '123\n'

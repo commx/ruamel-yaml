@@ -1,3 +1,9 @@
+[0, 17, 33]: 2023-09-28
+  - added `flow_seq_start`, `flow_seq_end`, `flow_seq_separator`, `flow_map_start`, `flow_map_end`,
+    `flow_map_separator` **class** attributes to the `Emitter` class so flow style output
+    can more easily be influenced (based on `this answer <https://stackoverflow.com/a/76547814/1307905>`__
+    on a StackOverflow question by `Huw Walters <https://stackoverflow.com/users/291033/huw-walters>`__).
+
 [0, 17, 32]: 2023-06-17
   - fix issue with scanner getting stuck in infinite loop
 

@@ -89,7 +89,7 @@ class TestYAML:
         # preferable would be the shorter format without the ': null'
         import ruamel.yaml  # NOQA
 
-        x = set(['a', 'b', 'c'])
+        x = set(['a', 'b', 'c'])  # NOQA
         # cannot use round_trip_dump, it doesn't show null in block style
         buf = io.StringIO()
         yaml = ruamel.yaml.YAML(typ='unsafe', pure=True)
@@ -131,7 +131,7 @@ class TestYAML:
         """)
 
     @pytest.mark.skipif(  # type: ignore
-        platform.python_implementation() == 'Jython', reason='Jython throws RepresenterError'
+        platform.python_implementation() == 'Jython', reason='Jython throws RepresenterError',
     )
     def test_blank_line_after_literal_chip(self) -> None:
         s = """
@@ -155,7 +155,7 @@ class TestYAML:
         assert d['c'][1].split('line.')[1] == '\n'
 
     @pytest.mark.skipif(  # type: ignore
-        platform.python_implementation() == 'Jython', reason='Jython throws RepresenterError'
+        platform.python_implementation() == 'Jython', reason='Jython throws RepresenterError',
     )
     def test_blank_line_after_literal_keep(self) -> None:
         """ have to insert an eof marker in YAML to test this"""
@@ -181,7 +181,7 @@ class TestYAML:
         assert d['c'][1].split('line.')[1] == '\n\n\n'
 
     @pytest.mark.skipif(  # type: ignore
-        platform.python_implementation() == 'Jython', reason='Jython throws RepresenterError'
+        platform.python_implementation() == 'Jython', reason='Jython throws RepresenterError',
     )
     def test_blank_line_after_literal_strip(self) -> None:
         s = """

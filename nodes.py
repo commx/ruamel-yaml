@@ -139,6 +139,6 @@ class MappingNode(CollectionNode):
         anchor: Any = None,
     ) -> None:
         CollectionNode.__init__(
-            self, tag, value, start_mark, end_mark, flow_style, comment, anchor
+            self, tag, value, start_mark, end_mark, flow_style, comment, anchor,
         )
         self.merge = None

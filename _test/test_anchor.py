@@ -106,7 +106,7 @@ class TestAnchorsAliases:
         )
 
     @pytest.mark.skipif(  # type: ignore
-        platform.python_implementation() == 'Jython', reason='Jython throws RepresenterError'
+        platform.python_implementation() == 'Jython', reason='Jython throws RepresenterError',
     )
     def test_alias_before_anchor(self) -> None:
         from ruamel.yaml.composer import ComposerError

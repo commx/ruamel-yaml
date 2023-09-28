@@ -102,8 +102,8 @@ class Serializer:
             raise SerializerError('serializer is closed')
         self.emitter.emit(
             DocumentStartEvent(
-                explicit=self.use_explicit_start, version=self.use_version, tags=self.use_tags
-            )
+                explicit=self.use_explicit_start, version=self.use_version, tags=self.use_tags,
+            ),
         )
         self.anchor_node(node)
         self.serialize_node(node, None, None)
@@ -170,7 +170,7 @@ class Serializer:
                         node.value,
                         style=node.style,
                         comment=node.comment,
-                    )
+                    ),
                 )
             elif isinstance(node, SequenceNode):
                 implicit = node.ctag == self.resolver.resolve(SequenceNode, node.value, True)
@@ -192,7 +192,7 @@ class Serializer:
                         implicit,
                         flow_style=node.flow_style,
                         comment=node.comment,
-                    )
+                    ),
                 )
                 index = 0
                 for item in node.value:
@@ -218,7 +218,7 @@ class Serializer:
                         flow_style=node.flow_style,
                         comment=node.comment,
                         nr_items=len(node.value),
-                    )
+                    ),
                 )
                 for key, value in node.value:
                     self.serialize_node(key, node, None)

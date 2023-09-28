@@ -367,7 +367,7 @@ class CommentedBase:
         return getattr(self, Format.attrib)
 
     def yaml_add_eol_comment(
-        self, comment: Any, key: Optional[Any] = NotNone, column: Optional[Any] = None
+        self, comment: Any, key: Optional[Any] = NotNone, column: Optional[Any] = None,
     ) -> None:
         """
         there is a problem as eol comments should start with ' #'
@@ -563,7 +563,7 @@ class CommentedSeq(MutableSliceableSequence, list, CommentedBase):  # type: igno
             list.__init__(self, [x[0] for x in tmp_lst])
         else:
             tmp_lst = sorted(
-                zip(map(key, list.__iter__(self)), range(len(self))), reverse=reverse
+                zip(map(key, list.__iter__(self)), range(len(self))), reverse=reverse,
             )
             list.__init__(self, [list.__getitem__(self, x[1]) for x in tmp_lst])
         itm = self.ca.items
@@ -701,7 +701,7 @@ class CommentedMap(ordereddict, CommentedBase):
         ordereddict.__init__(self, *args, **kw)
 
     def _yaml_add_comment(
-        self, comment: Any, key: Optional[Any] = NotNone, value: Optional[Any] = NotNone
+        self, comment: Any, key: Optional[Any] = NotNone, value: Optional[Any] = NotNone,
     ) -> None:
         """values is set to key to indicate a value attachment of comment"""
         if key is not NotNone:
@@ -1085,7 +1085,7 @@ class CommentedSet(MutableSet, CommentedBase):  # type: ignore  # NOQA
             self |= values
 
     def _yaml_add_comment(
-        self, comment: Any, key: Optional[Any] = NotNone, value: Optional[Any] = NotNone
+        self, comment: Any, key: Optional[Any] = NotNone, value: Optional[Any] = NotNone,
     ) -> None:
         """values is set to key to indicate a value attachment of comment"""
         if key is not NotNone:
@@ -1159,5 +1159,5 @@ def dump_comments(d: Any, name: str = "", sep: str = '.', out: Any = sys.stdout)
         out.write(f'{d.ca!r}\n')
         for idx, k in enumerate(d):
             dump_comments(
-                k, name=(name + sep + str(idx)) if name else str(idx), sep=sep, out=out
+                k, name=(name + sep + str(idx)) if name else str(idx), sep=sep, out=out,
             )
