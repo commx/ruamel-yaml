@@ -4,8 +4,8 @@ ruamel.yaml
 
 ``ruamel.yaml`` is a YAML 1.2 loader/dumper package for Python.
 
-:version:       0.17.33
-:updated:       2023-09-28
+:version:       0.17.34
+:updated:       2023-10-03
 :documentation: http://yaml.readthedocs.io
 :repository:    https://sourceforge.net/projects/ruamel-yaml/
 :pypi:          https://pypi.org/project/ruamel.yaml/
@@ -60,6 +60,15 @@ ChangeLog
 =========
 
 .. should insert NEXT: at the beginning of line for next key (with empty line)
+
+0.17.34 (2023-10-03):
+  - Python 3.12 also loads C version when using `typ='safe'`
+  - initial support for loading invoking `__post_init__()` on dataclasses that have that method
+    after loading a registered dataclass (`@yaml.register_class\n@dataclass\nclass ...`).
+    (Originally `asked <https://stackoverflow.com/q/51529458/1307905>`__ on Stackoverflow by 
+    `nyanpasu64 <https://stackoverflow.com/users/2683842/nyanpasu64>`__ and as 
+    `ticket <https://sourceforge.net/p/ruamel-yaml/tickets/355/>`__
+    by `Patrick Lehmann <https://sourceforge.net/u/paebbels/profile/>`__ 
 
 0.17.33 (2023-09-28):
   - added `flow_seq_start`, `flow_seq_end`, `flow_seq_separator`, `flow_map_start`, `flow_map_end`,

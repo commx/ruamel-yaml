@@ -1472,11 +1472,19 @@ class RoundTripConstructor(SafeConstructor):
             data.fa.set_block_style()
 
     def construct_yaml_object(self, node: Any, cls: Any) -> Any:
+        from dataclasses import is_dataclass
+
         data = cls.__new__(cls)
         yield data
         if hasattr(data, '__setstate__'):
             state = SafeConstructor.construct_mapping(self, node, deep=True)
             data.__setstate__(state)
+        elif is_dataclass(data):
+            for attr, value in SafeConstructor.construct_mapping(self, node).items():
+                setattr(data, attr, value)
+            post_init = getattr(data, '__post_init__', None)
+            if post_init is not None:
+                post_init()
         else:
             state = SafeConstructor.construct_mapping(self, node)
             if hasattr(data, '__attrs_attrs__'):  # issue 394
