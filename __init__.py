@@ -16,7 +16,7 @@ _package_data = dict(
     extras_require={
         ':platform_python_implementation=="CPython" and python_version<"3.13"': ['ruamel.yaml.clib>=0.2.7'],  # NOQA
         'jinja2': ['ruamel.yaml.jinja2>=0.2'],
-        'docs': ['ryd'],
+        'docs': ['ryd', 'hg>5.7'],
     },
     classifiers=[
         'Programming Language :: Python :: 3 :: Only',
