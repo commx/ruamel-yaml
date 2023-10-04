@@ -6,7 +6,7 @@ sphinx:
 formats: [epub, pdf]
 
 python:
-  version: 3.7
+  version: 3.11
   install:
   - method: pip
     path: . 

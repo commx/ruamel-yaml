@@ -231,7 +231,7 @@ found).
 
 Make sure that the added comment is correct, in the sense that when it
 contains newlines, the following is either an empty line or a line with
-only spaces, or the first non-space is a `#`.
+only spaces, or the first non-space is a ``#``.
 
 Config file formats
 +++++++++++++++++++
