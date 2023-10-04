@@ -1472,7 +1472,7 @@ class RoundTripConstructor(SafeConstructor):
             data.fa.set_block_style()
 
     def construct_yaml_object(self, node: Any, cls: Any) -> Any:
-        from dataclasses import is_dataclass
+        from dataclasses import is_dataclass, InitVar, MISSING
 
         data = cls.__new__(cls)
         yield data
@@ -1480,11 +1480,25 @@ class RoundTripConstructor(SafeConstructor):
             state = SafeConstructor.construct_mapping(self, node, deep=True)
             data.__setstate__(state)
         elif is_dataclass(data):
-            for attr, value in SafeConstructor.construct_mapping(self, node).items():
-                setattr(data, attr, value)
+            mapping = SafeConstructor.construct_mapping(self, node)
+            init_var_defaults = {}
+            for field in data.__dataclass_fields__.values():
+                # nprintf('field', field, field.default is MISSING,
+                #          isinstance(field.type, InitVar))
+                # in 3.7, InitVar is a singleton
+                if (
+                    isinstance(field.type, InitVar) or field.type is InitVar
+                ) and field.default is not MISSING:
+                    init_var_defaults[field.name] = field.default
+            for attr, value in mapping.items():
+                if attr not in init_var_defaults:
+                    setattr(data, attr, value)
             post_init = getattr(data, '__post_init__', None)
             if post_init is not None:
-                post_init()
+                kw = {}
+                for name, default in init_var_defaults.items():
+                    kw[name] = mapping.get(name, default)
+                post_init(**kw)
         else:
             state = SafeConstructor.construct_mapping(self, node)
             if hasattr(data, '__attrs_attrs__'):  # issue 394

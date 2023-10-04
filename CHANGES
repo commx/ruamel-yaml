@@ -1,3 +1,9 @@
+[0, 17, 35]: 2023-10-04
+  - support for loading dataclasses with ``InitVar`` variables (some
+    special coding was necessary to get the, unexecpected, default value
+    in the corresponding instance attribute ( example of usage in
+    `this question <https://stackoverflow.com/q/77228378/1307905>`__ )
+
 [0, 17, 34]: 2023-10-03
   - Python 3.12 also loads C version when using `typ='safe'`
   - initial support for loading invoking `__post_init__()` on dataclasses that have that method

@@ -4,8 +4,8 @@ ruamel.yaml
 
 ``ruamel.yaml`` is a YAML 1.2 loader/dumper package for Python.
 
-:version:       0.17.34
-:updated:       2023-10-03
+:version:       0.17.35
+:updated:       2023-10-04
 :documentation: http://yaml.readthedocs.io
 :repository:    https://sourceforge.net/projects/ruamel-yaml/
 :pypi:          https://pypi.org/project/ruamel.yaml/
@@ -61,8 +61,14 @@ ChangeLog
 
 .. should insert NEXT: at the beginning of line for next key (with empty line)
 
+0.17.35 (2023-10-04):
+  - support for loading dataclasses with ``InitVar`` variables (some
+    special coding was necessary to get the, unexecpected, default value
+    in the corresponding instance attribute ( example of usage in
+    `this question <https://stackoverflow.com/q/77228378/1307905>`__ )
+
 0.17.34 (2023-10-03):
-  - Python 3.12 also loads C version when using `typ='safe'`
+  - Python 3.12 also loads C version when using ``typ='safe'``
   - initial support for loading invoking `__post_init__()` on dataclasses that have that method
     after loading a registered dataclass (`@yaml.register_class\n@dataclass\nclass ...`).
     (Originally `asked <https://stackoverflow.com/q/51529458/1307905>`__ on Stackoverflow by 
