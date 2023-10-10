@@ -1,23 +1,20 @@
 version: 0.2
-text: rst
-fix_inline_single_backquotes: true
-pdf: true
+text: md
+pdf: false
 # code_directory: ../_example
 --- |
+# Dumping Python classes
 
-**********************
-Dumping Python classes
-**********************
+Only `yaml = YAML(typ='unsafe')` loads and dumps Python objects
+out-of-the-box. And since it loads **any** Python object, this can be
+unsafe.
 
-Only ``yaml = YAML(typ='unsafe')`` loads and dumps Python objects out-of-the-box. And
-since it loads **any** Python object, this can be unsafe.
+If you have instances of some class(es) that you want to dump or load,
+it is easy to allow the YAML instance to do that explicitly. You can
+either register the class with the `YAML` instance or decorate the
+class.
 
-If you have instances of some class(es) that you want to dump or load, it is
-easy to allow the YAML instance to do that explicitly. You can either register the
-class with the ``YAML`` instance or decorate the class.
-
-Registering is done with ``YAML.register_class()``:
-
+Registering is done with `YAML.register_class()`:
 --- !python |
 
 import sys
@@ -36,12 +33,11 @@ yaml.dump([User('Anthon', 18)], sys.stdout)
 --- !stdout |
 which gives as output::
 --- |
-The tag ``!User`` originates from the name of the class.
+The tag `!User` originates from the name of the class.
 
-You can specify a different tag by adding the attribute ``yaml_tag``, and
-explicitly specify dump and/or load *classmethods* which have to be called
-``to_yaml`` resp. ``from_yaml``:
-
+You can specify a different tag by adding the attribute `yaml_tag`, and
+explicitly specify dump and/or load *classmethods* which have to be
+called `to_yaml` resp. `from_yaml`:
 --- !python |
 import sys
 import ruamel.yaml
@@ -71,10 +67,8 @@ yaml.dump([User('Anthon', 18)], sys.stdout)
 which gives as output::
 
 --- |
-
-When using the decorator, which takes the ``YAML()`` instance as a parameter,
-the ``yaml = YAML()`` line needs to be moved up in the file:
-
+When using the decorator, which takes the `YAML()` instance as a
+parameter, the `yaml = YAML()` line needs to be moved up in the file:
 --- !python |
 import sys
 from ruamel.yaml import YAML, yaml_object
@@ -103,5 +97,5 @@ class User:
 yaml.dump([User('Anthon', 18)], sys.stdout)
 
 --- |
-The ``yaml_tag``, ``from_yaml`` and ``to_yaml`` work in the same way as when using
-``.register_class()``.
+The `yaml_tag`, `from_yaml` and `to_yaml` work in the same way as when
+using `.register_class()`.

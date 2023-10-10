@@ -1,14 +1,11 @@
 version: 0.2
-text: rst
-fix_inline_single_backquotes: true
-pdf: true
+text: md
+pdf: false
 --- |
-********
-Examples
-********
+# Examples
 
-Basic round trip of parsing YAML to Python objects, modifying
-and generating YAML:
+Basic round trip of parsing YAML to Python objects, modifying and
+generating YAML:
 --- !python |
   import sys
   from ruamel.yaml import YAML
@@ -30,11 +27,11 @@ and generating YAML:
 --- !stdout |
 Resulting in::
 --- |
-----
+------------------------------------------------------------------------
 
-YAML handcrafted anchors and references as well as key merging
-are preserved. The merged keys can transparently be accessed
-using ``[]`` and ``.get()``:
+YAML handcrafted anchors and references as well as key merging are
+preserved. The merged keys can transparently be accessed using `[]` and
+`.get()`:
 --- !python |
   from ruamel.yaml import YAML
 
@@ -66,9 +63,9 @@ using ``[]`` and ``.get()``:
   data = yaml.load(inp)
   assert data[7]['y'] == 2
 --- |
-
-The ``CommentedMap``, which is the ``dict`` like construct one gets when round-trip loading,
-supports insertion of a key into a particular position, while optionally adding a comment:
+The `CommentedMap`, which is the `dict` like construct one gets when
+round-trip loading, supports insertion of a key into a particular
+position, while optionally adding a comment:
 --- !python |
   import sys
   from ruamel.yaml import YAML
@@ -87,21 +84,21 @@ supports insertion of a key into a particular position, while optionally adding 
 --- !stdout |
 gives::
 --- |
-Please note that the comment is aligned with that of its neighbour (if available).
+Please note that the comment is aligned with that of its neighbour (if
+available).
 
-The above was inspired by a `question <http://stackoverflow.com/a/36970608/1307905>`_
-posted by *demux* on StackOverflow.
+The above was inspired by a
+[question](http://stackoverflow.com/a/36970608/1307905) posted by
+*demux* on StackOverflow.
 
-----
+------------------------------------------------------------------------
 
-By default ``ruamel.yaml`` indents with two positions in block style, for
+By default `ruamel.yaml` indents with two positions in block style, for
 both mappings and sequences. For sequences the indent is counted to the
 beginning of the scalar, with the dash taking the first position of the
-indented "space".
+indented \"space\".
 
-You can change this default indentation by e.g. using ``yaml.indent()``:
-
-
+You can change this default indentation by e.g. using `yaml.indent()`:
 --- !python |
 
 import sys
@@ -123,16 +120,14 @@ giving::
 
 
 --- |
-
 If a block sequence or block mapping is the element of a sequence, the
-are, by default, displayed `compact
-<http://yaml.org/spec/1.2/spec.html#id2797686>`__ notation. This means
-that the dash of the "parent" sequence is on the same line as the
-first element resp. first key/value pair of the child collection.
+are, by default, displayed
+[compact](http://yaml.org/spec/1.2/spec.html#id2797686) notation. This
+means that the dash of the \"parent\" sequence is on the same line as
+the first element resp. first key/value pair of the child collection.
 
 If you want either or both of these (sequence within sequence, mapping
-within sequence) to begin on the next line use ``yaml.compact()``:
-
+within sequence) to begin on the next line use `yaml.compact()`:
 --- !python |
 
 import sys
@@ -152,13 +147,11 @@ yaml.dump(d, sys.stdout)
 giving::
 
 
---- | 
+--- |
+------------------------------------------------------------------------
 
-------
-
-The following program uses three dumps on the same data, resulting in a stream with 
-three documents:
-
+The following program uses three dumps on the same data, resulting in a
+stream with three documents:
 --- !python |
 import sys
 from ruamel.yaml import YAML
@@ -201,40 +194,39 @@ yaml.dump(data, sys.stdout, transform=sequence_indent_four)
 --- !stdout |
 gives as output::
 
---- | 
+--- |
+The transform example, in the last document, was inspired by a [question
+posted by \*nowox\*](https://stackoverflow.com/q/44388701/1307905) on
+StackOverflow.
 
-The transform example, in the last document, was inspired by a
-`question posted by *nowox*
-<https://stackoverflow.com/q/44388701/1307905>`_ on StackOverflow.
+------------------------------------------------------------------------
 
------
+# Output of `dump()` as a string
 
-Output of ``dump()`` as a string
-++++++++++++++++++++++++++++++++
+The single most abused \"feature\" of the old API is not providing the
+(second) stream parameter to one of the `dump()` variants, in order to
+get a monolithic string representation of the stream back.
 
-The single most abused "feature" of the old API is not providing the (second)
-stream parameter to one of the ``dump()`` variants, in order to get a monolithic string
-representation of the stream back.
-
-Apart from being memory inefficient and slow, quite often people using this did not
-realise that ``print(round_trip_dump(dict(a=1, b=2)))`` gets you an extra,
-empty, line after ``b: 2``.
+Apart from being memory inefficient and slow, quite often people using
+this did not realise that `print(round_trip_dump(dict(a=1, b=2)))` gets
+you an extra, empty, line after `b: 2`.
 
 The real question is why this functionality, which is seldom really
-necessary, is available in the old API (and in PyYAML) in the first place. One
-explanation you get by looking at what someone would need to do to make this
-available if it weren't there already. Apart from subclassing the ``Serializer``
-and providing a new ``dump`` method, which would ten or so lines, another
-**hundred** lines, essentially the whole ``dumper.py`` file, would need to be
-copied and to make use of this serializer.
+necessary, is available in the old API (and in PyYAML) in the first
+place. One explanation you get by looking at what someone would need to
+do to make this available if it weren\'t there already. Apart from
+subclassing the `Serializer` and providing a new `dump` method, which
+would ten or so lines, another **hundred** lines, essentially the whole
+`dumper.py` file, would need to be copied and to make use of this
+serializer.
 
-The fact is that one should normally be doing ``round_trip_dump(dict(a=1, b=2)),
-sys.stdout)`` and do away with 90% of the cases for returning the string, and
-that all post-processing YAML, before writing to stream, can be handled by using
-the ``transform=`` parameter of dump, being able to handle most of the rest. But
-it is also much easier in the new API to provide that YAML output as a string if
+The fact is that one should normally be doing
+`round_trip_dump(dict(a=1, b=2)), sys.stdout)` and do away with 90% of
+the cases for returning the string, and that all post-processing YAML,
+before writing to stream, can be handled by using the `transform=`
+parameter of dump, being able to handle most of the rest. But it is also
+much easier in the new API to provide that YAML output as a string if
 you really need to have it (or think you do):
-
 --- !python |
 import sys
 from ruamel.yaml import YAML
@@ -252,11 +244,12 @@ class MyYAML(YAML):
 
 yaml = MyYAML()   # or typ='safe'/'unsafe' etc
 --- |
-with about one tenth of the lines needed for the old interface, you can once more do::
+with about one tenth of the lines needed for the old interface, you can
+once more do:
 --- !code |
 print(yaml.dump(dict(a=1, b=2)))
 --- |
-instead of::
+instead of:
 --- !code |
 yaml.dump((dict(a=1, b=2)), sys.stdout)
 print()  # or sys.stdout.write('\n')

@@ -14,6 +14,7 @@ try_*
 _doc/*.pdf
 _doc/*.html
 _doc/*.rst
+_doc/*.md
 *.py_alt
 
 ziglib
