@@ -6,7 +6,7 @@ build:
     python: "3.11"
   jobs:
     pre_build:
-      - pip install ryd
+      - pip install ryd>=0.8.2
       - ryd convert --generate-mkdocs-config mkdocs.yaml _doc
 
 python:

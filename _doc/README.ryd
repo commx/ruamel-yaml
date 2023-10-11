@@ -17,7 +17,10 @@ mkdocs:
   - pyyaml.md
   - contributing.md
 
-  exclude_files: |
+  theme:
+    name: readthedocs
+
+  exclude_docs: |
     *.ryd
     *.rst
 
@@ -69,8 +72,7 @@ the API is stable enough to make the transition.
 -   [Differences with
     PyYAML](http://yaml.readthedocs.org/en/latest/pyyaml.html)
 
-[![image](https://readthedocs.org/projects/yaml/badge/?version=stable)](https://yaml.readthedocs.org/en/stable)
-[![image](https://bestpractices.coreinfrastructure.org/projects/1128/badge)](https://bestpractices.coreinfrastructure.org/projects/1128)
+[![image](https://readthedocs.org/projects/yaml/badge/?version=latest)](https://yaml.readthedocs.org/en/latest?badge=latest)[![image](https://bestpractices.coreinfrastructure.org/projects/1128/badge)](https://bestpractices.coreinfrastructure.org/projects/1128)
 [![image](https://sourceforge.net/p/ruamel-yaml/code/ci/default/tree/_doc/_static/license.svg?format=raw)](https://opensource.org/licenses/MIT)
 [![image](https://sourceforge.net/p/ruamel-yaml/code/ci/default/tree/_doc/_static/pypi.svg?format=raw)](https://pypi.org/project/ruamel.yaml/)
 [![image](https://sourceforge.net/p/oitnb/code/ci/default/tree/_doc/_static/oitnb.svg?format=raw)](https://pypi.org/project/oitnb/)
