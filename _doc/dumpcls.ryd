@@ -3,11 +3,11 @@ text: md
 pdf: false
 # code_directory: ../_example
 --- |
-# Dumping Python classes
+## Dumping Python classes
 
 Only `yaml = YAML(typ='unsafe')` loads and dumps Python objects
 out-of-the-box. And since it loads **any** Python object, this can be
-unsafe.
+unsafe, so don't use it.
 
 If you have instances of some class(es) that you want to dump or load,
 it is easy to allow the YAML instance to do that explicitly. You can
@@ -21,7 +21,7 @@ import sys
 import ruamel.yaml
 
 
-class User(object):
+class User:
     def __init__(self, name, age):
         self.name = name
         self.age = age
@@ -37,7 +37,7 @@ The tag `!User` originates from the name of the class.
 
 You can specify a different tag by adding the attribute `yaml_tag`, and
 explicitly specify dump and/or load *classmethods* which have to be
-called `to_yaml` resp. `from_yaml`:
+named `to_yaml` resp. `from_yaml`:
 --- !python |
 import sys
 import ruamel.yaml
@@ -99,3 +99,215 @@ yaml.dump([User('Anthon', 18)], sys.stdout)
 --- |
 The `yaml_tag`, `from_yaml` and `to_yaml` work in the same way as when
 using `.register_class()`.
+
+Alternatively you can use the `register_class()` method as decorator,
+This also requires you have the yaml instance available:
+--- !python |
+import sys
+import ruamel.yaml
+
+yaml = ruamel.yaml.YAML()
+
+@yaml.register_class
+class User:
+    yaml_tag = u'!user'
+
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+    @classmethod
+    def to_yaml(cls, representer, node):
+        return representer.represent_scalar(cls.yaml_tag,
+                                            u'{.name}-{.age}'.format(node, node))
+
+    @classmethod
+    def from_yaml(cls, constructor, node):
+        return cls(*node.value.split('-'))
+
+
+yaml.dump([User('Anthon', 18)], sys.stdout)
+
+--- !stdout |
+
+This also gives:
+
+--- |
+
+If your class is dumped as a YAML mapping or sequence, there might be an (indirect)
+reference to the object itself in one or more of the mapping keys (in YAML these
+don't have to be simple scalars), mapping values or sequence entries.
+
+That means that re-creating an object in `to_yaml` cannot generally just create
+a `dict`/`list` from the `node` parameter and then create and return a complete
+object. The solution for this is to create an empty object and yield that
+and then fill in the content data afterwards. That way, if there is a self
+reference, and the same node is encountered *while creating the content for the
+object*, there is an `id` (from the yielded object) created for that node which
+can be assigned.
+
+--- !python |
+
+from pathlib import Path
+import ruamel.yaml
+
+class Person:
+    def __init__(self, name, siblings=None):
+        self.name = name
+        self.siblings = [] if siblings is None else siblings
+
+arya = Person('Arya')   
+sansa = Person('Sansa')
+arya.siblings.append(sansa)  # there are better ways to represent this
+sansa.siblings.append(arya)
+
+yaml = ruamel.yaml.YAML()
+yaml.register_class(Person)
+
+path = Path('arya.yaml')
+yaml.dump(arya, path)
+print(path.read_text())
+
+--- !stdout |
+
+dumping as:
+
+--- |
+
+And you can load the output:
+
+--- !python |
+
+from pathlib import Path
+import ruamel.yaml
+
+class Person:
+    def __init__(self, name, siblings=None):
+        self.name = name
+        self.siblings = [] if siblings is None else siblings
+
+    def __repr__(self):
+        return f'Person(name: {self.name}, siblings: {self.siblings})'
+
+path = Path('arya.yaml')
+yaml = ruamel.yaml.YAML()
+yaml.register_class(Person)
+data = yaml.load(path)
+
+print(data)
+
+--- !stdout |
+
+giving:
+--- |
+
+But if you provide a (to) simple loader:
+
+--- !python |
+
+from pathlib import Path
+import ruamel.yaml
+
+class Person:
+    def __init__(self, name, siblings=None):
+        self.name = name
+        self.siblings = [] if siblings is None else siblings
+
+    def __repr__(self):
+        return f'Person(name: {self.name}, siblings: {self.siblings})'
+
+    @classmethod
+    def from_yaml(cls, constructor, node):
+        data = ruamel.yaml.CommentedMap()
+        constructor.construct_mapping(node, maptyp=data, deep=True)
+        return cls(**data)
+
+
+path = Path('arya.yaml')
+yaml = ruamel.yaml.YAML()
+yaml.register_class(Person)
+data = yaml.load(path)
+print(data)
+
+--- !stdout |
+
+giving:
+
+--- |
+As you can see, Sansa has no normal siblings after this load.
+
+What you need to do is yield the empty Person instance and fill it in
+afterwards:
+
+--- !python |
+
+from pathlib import Path
+import ruamel.yaml
+
+class Person:
+    def __init__(self, name, siblings=None):
+        self.name = name
+        self.siblings = [] if siblings is None else siblings
+
+    def __repr__(self):
+        return f'Person(name: {self.name}, siblings: {self.siblings})'
+
+    @classmethod
+    def from_yaml(cls, constructor, node):
+        person = Person(name='')
+        yield person
+        data = ruamel.yaml.CommentedMap()
+        constructor.construct_mapping(node, maptyp=data, deep=True)
+        for k, v in data.items():
+            setattr(person, k, v)
+
+
+path = Path('arya.yaml')
+yaml = ruamel.yaml.YAML()
+yaml.register_class(Person)
+data = yaml.load(path)
+print(data)
+
+--- !stdout |
+
+giving:
+
+--- |
+
+## Dataclass
+
+Although you could always register dataclasses, in 0.17.34 support was added to
+call `__post_init__()` on these classes, if available.
+
+
+--- !python |
+
+from typing import ClassVar
+from dataclasses import dataclass
+import ruamel.yaml
+
+@dataclass
+class DC:
+    yaml_tag: ClassVar = '!dc_example'   # if you don't want !DC as tag
+    abc: int
+    klm: int
+    xyz: int = 0
+
+    def __post_init__(self) -> None:
+        self.xyz = self.abc + self.klm
+
+yaml = ruamel.yaml.YAML()
+yaml.register_class(DC)
+dc = DC(abc=5, klm=42)
+assert dc.xyz == 47
+
+yaml_str = """\
+!dc_example
+abc: 13
+klm: 37
+"""
+dc2 = yaml.load(yaml_str)
+print(f'{dc2.xyz=}')
+
+--- !stdout |
+printing:
