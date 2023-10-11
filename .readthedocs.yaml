@@ -1,17 +1,19 @@
 version: 2
 
-sphinx:
-  configuration: _doc/conf.py
-
-formats: [epub, pdf]
-
 build:
   os: ubuntu-22.04
   tools:
     python: "3.11"
+  jobs:
+    pre_build:
+      - pip install ryd
+      - ryd convert --generate-mkdocs-config mkdocs.yaml _doc
 
 python:
   install:
   - method: pip
     path: . 
     extra_requirements: [docs]
+
+mkdocs:
+  configuration: mkdocs.yaml

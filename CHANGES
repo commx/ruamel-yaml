@@ -1,3 +1,6 @@
+NEXT:
+- updated documentation to mkdocs
+
 [0.17.35, 2023-10-04]:
 - support for loading dataclasses with `InitVar` variables (some
   special coding was necessary to get the, unexecpected, default
@@ -6,15 +9,10 @@
 
 [0.17.34, 2023-10-03]:
 - Python 3.12 also loads C version when using `typ='safe'`
-- |
+- |-
   initial support for loading invoking
   `__post_init__()` on dataclasses that have that
-  method after loading a registered dataclass
-  ``
-  @yaml.register_class
-  @dataclass
-  class ...
-  ``
+  method after loading a registered dataclass.
   (Originally
   [asked](https://stackoverflow.com/q/51529458/1307905) on
   Stackoverflow by
@@ -22,6 +20,13 @@
   and as
   [ticket](https://sourceforge.net/p/ruamel-yaml/tickets/355/) by
   [Patrick Lehmann](https://sourceforge.net/u/paebbels/profile/))
+
+  ```
+  @yaml.register_class
+  @dataclass
+  class ...
+  ```
+
 
 [0.17.33, 2023-09-28]:
 - added `flow_seq_start`, `flow_seq_end`,
@@ -54,7 +59,7 @@
   suffixes.
 
 [0.17.28, 2023-05-26]:
-- |
+- |-
   fix for issue 464: documents ending with document end marker
   without final newline fail to load (reported by [Mariusz
   Rusiniak](https://sourceforge.net/u/r2dan/profile/))
@@ -99,7 +104,7 @@
 - fix for `.update()` no longer correctly handling keyword
   arguments (reported by John Lin on [StackOverflow](
   https://stackoverflow.com/q/76089100/1307905))
-- |
+- |-
   fix issue 454: high Unicode (emojis) in quoted strings always
   escaped (reported by [Michal
   Čihař](https://sourceforge.net/u/nijel/profile/) based on a
@@ -116,7 +121,7 @@
   line (reported by wrdis on
   [StackOverflow](https://stackoverflow.com/q/75584262/1307905))
 - updated `__repr__` of CommentedMap, now that Python's dict is
-  ordered -\> no more `ordereddict(list-of-tuples)`
+  ordered -> no more `ordereddict(list-of-tuples)`
 - merge MR 4, handling OctalInt in YAML 1.1 (provided by [Jacob
   Floyd](https://sourceforge.net/u/cognifloyd/profile/))
 - fix loading of `!!float 42` (reported by Eric on
@@ -124,14 +129,14 @@
 - line numbers are now set on `CommentedKeySeq` and
   `CommentedKeyMap` (which are created if you have a
   sequence resp. mapping as the key in a mapping)
-- |
+- |-
   plain scalars: put single words longer than width on a line of
   their own, instead of after the previous line (issue 427, reported
   by [Antoine
   Cotten](https://sourceforge.net/u/antoineco/profile/)). Caveat:
   this currently results in a space ending the previous line.
-- |
-  fix for folded scalar part of 421: comments after \"\>\" on first
+- |-
+  fix for folded scalar part of 421: comments after ">" on first
   line of folded scalars are now preserved (as were those in the
   same position on literal scalars). Issue reported by Jacob Floyd.
 - added stacklevel to warnings
@@ -142,7 +147,7 @@
 - fix bug in calling `.compose()` method with `pathlib.Path` instance.
 
 [0.17.20, 2022-01-03]:
-- fix error in microseconds while rounding datetime fractions \>=
+- fix error in microseconds while rounding datetime fractions >=
   9999995 (reported by [Luis Ferreira](https://sourceforge.net/u/ljmf00/))
 
 [0.17.19, 2021-12-26]:
@@ -203,7 +208,7 @@
 [0.17.6, 2021-05-31]:
 - merged type annotations update provided by [Jochen
   Sprickerhof](https://sourceforge.net/u/jspricke/)
-- |
+- |-
   fix for issue 385: deprecated round_trip_loader function not
   working (reported by [Mike
   Gouline](https://sourceforge.net/u/gouline/))
@@ -223,7 +228,7 @@
 [0.17.3, 2021-04-07]:
 - fix for issue 382 caused by an error in a format string
   (reported by [William Kimball](https://sourceforge.net/u/william303/))
-- |
+- |-
   allow expansion of aliases by setting `yaml.composer.return_alias = lambda s: copy.deepcopy(s)`
   (as per [Stackoverflow answer](https://stackoverflow.com/a/66983530/1307905))
 
@@ -231,7 +236,7 @@
 - change -py2.py3-none-any.whl to -py3-none-any.whl, and remove 0.17.1
 
 [0.17.1, 2021-03-29]:
-- |
+- |-
   added 'Programming Language :: Python :: 3 :: Only', and
   removing 0.17.0 from PyPI (reported by [Alasdair
   Nicol](https://sourceforge.net/u/alasdairnicol/))
@@ -256,24 +261,24 @@
   `PendingDeprecationning` (e.g. when run from pytest, but also
   Python is started with `-Wd`). Use the methods on `YAML()`,
   which have been extended.
-- |
+- |-
   fix for issue 376: indentation changes could put literal/folded
   scalar to start before the `#` column of a following comment.
   Effectively making the comment part of the scalar in the output.
   (reported by [Bence Nagy](https://sourceforge.net/u/underyx/))
 
 [0.16.13, 2021-03-05]:
-- |
+- |-
   fix for issue 359: could not update() CommentedMap with keyword
   arguments (reported by [Steve
   Franchak](https://sourceforge.net/u/binaryadder/))
-- |
+- |-
   fix for issue 365: unable to dump mutated TimeStamp objects
   (reported by [Anton Akmerov](https://sourceforge.net/u/akhmerov))
-- |
+- |-
   fix for issue 371: unable to add comment without starting space
   (reported by [Mark Grandi](https://sourceforge.net/u/mgrandi))
-- |
+- |-
   fix for issue 373: recursive call to walk_tree not preserving
   all params (reported by [eulores](https://sourceforge.net/u/eulores/))
 - a None value in a flow-style sequence is now dumped as
@@ -532,7 +537,7 @@
     (reported by `Maximilian Hils <https://bitbucket.org/mhils/>`__).
 
 [0.15.65, 2018-09-07]:
-- |
+- |-
   fix issue #232 revert to throw ParserError for unexcpected `]`
   and `}` instead of IndexError. (Issue reported and PR with fix
   provided by `Naomi Seyfer <https://bitbucket.org/sixolet/>`__.)
@@ -541,9 +546,9 @@
   at the beginning of a line
 
 [0.15.64, 2018-08-30]:
-- |
+- |-
   support round-trip of tagged sequences: `!Arg [a, {b: 1}]`
-- |
+- |-
   single entry mappings in flow sequences now written by default without quotes
   set `yaml.brace_single_entry_mapping_in_flow_sequence=True` to force
   getting `[a, {b: 1}, {c: {d: 2}}]` instead of the default `[a, b: 1, c: {d: 2}]`
@@ -574,7 +579,7 @@
     `Tom Hamilton Stubber <https://bitbucket.org/TomHamiltonStubber/>`__)
 
 [0.15.58, 2018-08-17]:
-- |
+- |-
   simple mappings can now be used as keys when round-tripping::
 
     {a: 1, b: 2}: hello world
@@ -662,14 +667,14 @@
     by `Jimbo Jim <https://bitbucket.org/jimbo1qaz/>`__)
 
 [0.15.49, 2018-08-05]:
-- |
+- |-
   fix preservation of leading newlines in root level literal style scalar,
     and preserve comment after literal style indicator (`|  # some comment`)
     Both needed for round-tripping multi-doc streams in 
     `ryd <https://pypi.org/project/ryd/>`__.
 
 [0.15.48, 2018-08-03]:
-- |
+- |-
   housekeeping: `oitnb` for formatting, mypy 0.620 upgrade and conformity
 
 [0.15.47, 2018-07-31]:
@@ -699,7 +704,7 @@
     <https://bitbucket.org/minrk/>`__, that prompted this chance.
 
 [0.15.43, 2018-07-12]:
-- |
+- |-
   merge PR33: Python2.7 on Windows is narrow, but has no
     `sysconfig.get_config_var('Py_UNICODE_SIZE')`. (merge provided by
     `Marcel Bargull <https://bitbucket.org/mbargull/>`__)
@@ -724,7 +729,7 @@
 [0.15.40, 2018-06-18]:
 - added links to landing places as suggested in issue 190 by
   `KostisA <https://bitbucket.org/ankostis/>`__
-- |
+- |-
   fixes issue #201: decoding unicode escaped tags on Python2, reported
   by `Dan Abolafia <https://bitbucket.org/danabo/>`__
 
@@ -761,12 +766,12 @@
 - support for "undefined" round-tripping tagged scalar objects (in addition to
   tagged mapping object). Inspired by a use case presented by Matthew Patton
   on `StackOverflow <https://stackoverflow.com/a/45967047/1307905>`__.
-- |
+- |-
   fix issue 148: replace cryptic error message when using `!!timestamp` with an
   incorrectly formatted or non-scalar. Reported by FichteFoll.
 
 [0.15.32, 2017-08-21]:
-- |
+- |-
   allow setting `yaml.default_flow_style = None` (default: `False`) for for `typ='rt'`.
 - fix for issue 149: multiplications on `ScalarFloat` now return `float`
 
@@ -774,19 +779,19 @@
   - fix Comment dumping
 
 [0.15.30, 2017-08-14]:
-- |
+- |-
   fix for issue with "compact JSON" not parsing: `{"in":{},"out":{}}`
   (reported on `StackOverflow <https://stackoverflow.com/q/45681626/1307905>`_ by
   `mjalkio <https://stackoverflow.com/users/5130525/mjalkio>`_
 
 [0.15.29, 2017-08-14]:
-- |
+- |-
   fix issue #51: different indents for mappings and sequences (reported by Alex Harvey)
 - fix for flow sequence/mapping as element/value of block sequence with 
   sequence-indent minus dash-offset not equal two.
 
 [0.15.28, 2017-08-13]:
-- |
+- |-
   fix issue #61: merge of merge cannot be __repr__-ed (reported by Tal Liron)
 
 [0.15.27, 2017-08-13]:
@@ -810,7 +815,7 @@
   mapping key and value correctly
 - warn on YAML 1.1 float input that is incorrect (triggered by invalid YAML
   provided by Cecil Curry)
-- |
+- |-
   allow setting of boolean representation (`false`, `true`) by using:
   `yaml.boolean_representation = [u'False', u'True']`
 
@@ -874,7 +879,7 @@
   - some mypy additions
 
 [0.15.9, 2017-06-16]:
-- |
+- |-
   fix for issue 127: tagged scalars were always quoted and seperated
   by a newline when in a block sequence (reported and largely fixed by
   `Tommy Wang <https://bitbucket.org/twang817/>`_)
@@ -893,7 +898,7 @@
   - repeat `load()` on a single `YAML()` instance would fail.
 
 [0.15.4, 2017-06-08]:
-- |
+- |-
   `transform` parameter on dump that expects a function taking a
   string and returning a string. This allows transformation of the output
   before it is written to stream.
@@ -1054,7 +1059,7 @@
 [0.12.16, 2016-11-13]:
   - allow dot char (and many others) in anchor name
     Fix issue 72 (reported by Shalon Wood)
-  - |
+  - |-
     Slightly smarter behaviour dumping strings when no style is
     specified. Single string scalars that start with single quotes
     or have newlines now are dumped double quoted "'abc\nklm'" instead of
@@ -1068,7 +1073,7 @@
    (prompted by stackoverflow question 39595807 from Nowox)
 
 [0.12.13, 2016-09-15]:
-- |
+- |-
   Fix for issue #60 representation of CommentedMap with merge
   keys incorrect (reported by Tal Liron)
 
@@ -1093,7 +1098,7 @@
      (reported by Alex Harvey)
 
 [0.12.5, 2016-08-20]:
-- |
+- |-
   fixing issue 45 preserving datetime formatting (submitted by altuin)
   Several formatting parameters are preserved with some normalisation:
 - preserve 'T', 't' is replaced by 'T', multiple spaces between date
@@ -1103,7 +1108,7 @@
 - Z/-5/+01:00 preserved
 
 [0.12.4, 2016-08-19]:
-- |
+- |-
   Fix for issue 44: missing preserve_quotes keyword argument (reported by M. Crusoe)
 
 [0.12.3, 2016-08-17]:
@@ -1112,7 +1117,7 @@
 - iteration over round-trip loaded mappings, that contain merges. Also
   keys(), items(), values() (Py3/Py2) and iterkeys(), iteritems(),
   itervalues(), viewkeys(), viewitems(), viewvalues() (Py2)
-- |
+- |-
   reuse of anchor name now generates warning, not an error. Round-tripping such
   anchors works correctly. This inherited PyYAML issue was brought to attention
   by G. Coddut (and was long standing https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=515634)
@@ -1143,7 +1148,7 @@
   - documentation only, automated linux wheels
 
 [0.11.12, 2016-07-06]:
-- |
+- |-
   added support for roundtrip of single/double quoted scalars using:
   ruamel.yaml.round_trip_load(stream, preserve_quotes=True)
 
@@ -1250,16 +1255,16 @@
 - added support for octal integers starting with '0o'
   keep support for 01234 as well as 0o1234
 - commit
-- |
+- |-
   added test_roundtrip_data:
   requires a .data file and .roundtrip (empty), yaml_load .data
   and compare dump against original.
-- |
+- |-
   fix grammar as per David Pursehouse:
   https://bitbucket.org/xi/pyyaml/pull-request/5/fix-grammar-in-error-messages/diff
 - http://www.json.org/ extra escaped char `\/`
   add .skip-ext as libyaml is not updated
-- |
+- |-
   David Fraser: Extract a method to represent keys in mappings, so that
   a subclass can choose not to quote them, used in repesent_mapping
   https://bitbucket.org/davidfraser/pyyaml/
