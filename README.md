@@ -3,10 +3,10 @@
 `ruamel.yaml` is a YAML 1.2 loader/dumper package for Python.
 <table class="docutils">
   <tr>    <td>version</td>
-    <td>0.17.35</td>
+    <td>0.17.39</td>
   </tr>
   <tr>    <td>updated</td>
-    <td>2023-10-04</td>
+    <td>2023-10-19</td>
   </tr>
   <tr>    <td>documentation</td>
     <td><a href="http://yaml.readthedocs.io">http://yaml.readthedocs.io</a></td>
@@ -59,7 +59,11 @@ the API is stable enough to make the transition.
 
 # ChangeLog
 
-0.17.38 (2023-10-19):
+0.17.39 (2023-10-19):
+
+- update README generation, no code changes
+
+0.17.36 (2023-10-19):
 
 - fixed issue 480, dumping of a loaded empty flow-style mapping with comment failed (Reported by [Stéphane Brunner](https://sourceforge.net/u/stbrunner/profile/))
 - fixed issue 482, caused by DEFAULT_MAPPING_TAG having changes to being a `Tag()` instance, not a string (reported by [yan12125](https://sourceforge.net/u/yan12125/profile/))

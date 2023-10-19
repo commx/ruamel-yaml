@@ -1,4 +1,7 @@
-[0.17.38, 2023-10-19]:
+[0.17.39, 2023-10-19]:
+- update README generation, no code changes
+
+[0.17.36, 2023-10-19]:
 - fixed issue 480, dumping of a loaded empty flow-style mapping with comment failed
   (Reported by [Stéphane Brunner](https://sourceforge.net/u/stbrunner/profile/))
 - fixed issue 482, caused by DEFAULT_MAPPING_TAG having changes to being a `Tag()`

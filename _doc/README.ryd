@@ -33,8 +33,8 @@ mkdocs:
 `ruamel.yaml` is a YAML 1.2 loader/dumper package for Python.
 
 --- !table
-version: 0.17.35 
-updated: 2023-10-04 
+version: !Env version 
+updated: !Env date 
 documentation: http://yaml.readthedocs.io
 repository: https://sourceforge.net/projects/ruamel-yaml
 pypi:  https://pypi.org/project/ruamel.yaml
