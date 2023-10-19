@@ -1140,10 +1140,63 @@ class TestIssues:
         yaml.load('---\na: True\n...')
 
     def test_issue_467(self) -> None:
+        # cannot change the default constructor, following test will fail
         import ruamel.yaml
 
         yaml = ruamel.yaml.YAML()
-        yaml.constructor.add_constructor(yaml.resolver.DEFAULT_MAPPING_TAG, lambda x, y: None)
+        old_constructor = yaml.constructor.add_constructor(
+            yaml.resolver.DEFAULT_MAPPING_TAG,
+            lambda x, y: None,
+        )
+        # this should be solved by the copy to the Constructor instance
+        if old_constructor is not None:
+            yaml.constructor.add_constructor(
+                yaml.resolver.DEFAULT_MAPPING_TAG,
+                old_constructor,
+            )
+
+        yaml = ruamel.yaml.YAML()
+        # for k, v in yaml.constructor.yaml_constructors.items():
+        #     print(k, v)
+        assert yaml.load('a: b') is not None
+
+    def test_issue_480(self) -> None:
+        import sys
+        import ruamel.yaml
+
+        yaml = ruamel.yaml.YAML()
+        data = yaml.load(
+            dedent("""
+            # hi
+            {}
+            """),
+        )
+        yaml.dump(data, sys.stdout)
+
+    def test_issue_482(self) -> None:
+        import ruamel.yaml
+        from collections import OrderedDict
+
+        def _ordered_constructor(loader: Any, node: Any) -> Any:
+            loader.flatten_mapping(node)
+            return OrderedDict(loader.construct_pairs(node))
+
+        content = 'foo: bar'
+
+        yaml = ruamel.yaml.YAML(typ='safe', pure=True)
+        old_constructor = yaml.constructor.add_constructor(
+            yaml.Resolver.DEFAULT_MAPPING_TAG,
+            _ordered_constructor,
+        )
+
+        data = yaml.load(content)
+        print('data', data, type(data))
+        assert isinstance(data, OrderedDict)
+        if old_constructor is not None:
+            yaml.constructor.add_constructor(
+                yaml.resolver.DEFAULT_MAPPING_TAG,
+                old_constructor,
+            )
 
 #    @pytest.mark.xfail(strict=True, reason='bla bla', raises=AssertionError)
 #    def test_issue_ xxx(self) -> None:

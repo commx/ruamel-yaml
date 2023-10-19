@@ -447,7 +447,7 @@ class Emitter:
                     self.write_post_comment(self.event)
                 if self.event.comment and self.event.comment[1]:
                     self.write_pre_comment(self.event)
-                    if self.event.flow_style:
+                    if self.event.flow_style and self.indents.values:
                         force_flow_indent = not self.indents.values[-1][1]
                 if (
                     self.flow_level
@@ -513,6 +513,9 @@ class Emitter:
             popped = self.flow_context.pop()
             assert popped == '['
             if self.canonical:
+                # ToDo: so-39595807, maybe add a space to the flow_seq_separator
+                # and strip the last space, if space then indent, else do not
+                # not sure that [1,2,3] is a valid YAML seq
                 self.write_indicator(self.flow_seq_separator, False)
                 self.write_indent()
             self.write_indicator(self.flow_seq_end, False)

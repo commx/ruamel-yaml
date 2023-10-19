@@ -1,5 +1,10 @@
 NEXT:
-- updated documentation to mkdocs
+- fixed issue 480, dumping of a loaded empty flow-style mapping with comment
+  failed (Reported by [Stéphane Brunner](https://sourceforge.net/u/stbrunner/profile/))
+- fixed issue 482, caused by DEFAULT_MAPPING_TAG having changes to being
+  a `Tag()` instance, not a string (reported by 
+  [yan12125](https://sourceforge.net/u/yan12125/profile/))
+- updated documentation to use mkdocs
 
 [0.17.35, 2023-10-04]:
 - support for loading dataclasses with `InitVar` variables (some

@@ -17,6 +17,7 @@ from ruamel.yaml.compat import (builtins_module, # NOQA
                                 nprint, nprintf, version_tnf)
 from ruamel.yaml.compat import ordereddict
 
+from ruamel.yaml.tag import Tag
 from ruamel.yaml.comments import *                               # NOQA
 from ruamel.yaml.comments import (CommentedMap, CommentedOrderedMap, CommentedSet,
                                   CommentedKeySeq, CommentedSeq, TaggedScalar,
@@ -310,11 +311,17 @@ class BaseConstructor:
             pairs.append((key, value))
         return pairs
 
+    # ToDo: putting stuff on the class makes it global, consider making this to work on an
+    # instance variable once function load is dropped.
     @classmethod
-    def add_constructor(cls, tag: Any, constructor: Any) -> None:
+    def add_constructor(cls, tag: Any, constructor: Any) -> Any:
+        if isinstance(tag, Tag):
+            tag = str(tag)
         if 'yaml_constructors' not in cls.__dict__:
             cls.yaml_constructors = cls.yaml_constructors.copy()
+        ret_val = cls.yaml_constructors.get(tag, None)
         cls.yaml_constructors[tag] = constructor
+        return ret_val
 
     @classmethod
     def add_multi_constructor(cls, tag_prefix: Any, multi_constructor: Any) -> None:

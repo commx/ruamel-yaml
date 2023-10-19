@@ -20,17 +20,17 @@
 </table>
 
 *Starting with 0.17.22 only Python 3.7+ is supported. The 0.17 series is
-also the last to support old PyYAML functions, replace it by creating a
-\`YAML()\` instance and use its \`.load()\` and \`.dump()\` methods.*
-New(er) functionality is usually only available via the new API.
+also the last to support old PyYAML functions, replace it by creating a*
+`YAML()` *instance and use its* `.load()` *and* `.dump()` *methods.*
+**New(er) functionality is usually only available via the new API.**
 
 The 0.17.21 was the last one tested to be working on Python 3.5 and 3.6
 (the latter was not tested, because tox/virtualenv stopped supporting
 that EOL version). The 0.16.13 release was the last that was tested to
 be working on Python 2.7.
 
-*Please adjust/pin your dependencies accordingly if necessary.
-(\`ruamel.yaml\<0.18\`)*
+*Please adjust/pin your dependencies accordingly if necessary.*
+(`ruamel.yaml<0.18`)
 
 There are now two extra plug-in packages
 (`ruamel.yaml.bytes` and `ruamel.yaml.string`)
@@ -39,7 +39,7 @@ for those not wanting to do the streaming to a
 
 If your package uses `ruamel.yaml` and is not listed on PyPI, drop me an
 email, preferably with some information on how you use the package (or a
-link to the repository) and I\'ll keep you informed when the status of
+link to the repository) and I'll keep you informed when the status of
 the API is stable enough to make the transition.
 
 -   [Overview](http://yaml.readthedocs.org/en/latest/overview.html)
@@ -51,14 +51,17 @@ the API is stable enough to make the transition.
 -   [Differences with
     PyYAML](http://yaml.readthedocs.org/en/latest/pyyaml.html)
 
-[![image](https://readthedocs.org/projects/yaml/badge/?version=stable)](https://yaml.readthedocs.org/en/stable)
-[![image](https://bestpractices.coreinfrastructure.org/projects/1128/badge)](https://bestpractices.coreinfrastructure.org/projects/1128)
+[![image](https://readthedocs.org/projects/yaml/badge/?version=latest)](https://yaml.readthedocs.org/en/latest?badge=latest)[![image](https://bestpractices.coreinfrastructure.org/projects/1128/badge)](https://bestpractices.coreinfrastructure.org/projects/1128)
 [![image](https://sourceforge.net/p/ruamel-yaml/code/ci/default/tree/_doc/_static/license.svg?format=raw)](https://opensource.org/licenses/MIT)
 [![image](https://sourceforge.net/p/ruamel-yaml/code/ci/default/tree/_doc/_static/pypi.svg?format=raw)](https://pypi.org/project/ruamel.yaml/)
 [![image](https://sourceforge.net/p/oitnb/code/ci/default/tree/_doc/_static/oitnb.svg?format=raw)](https://pypi.org/project/oitnb/)
 [![image](http://www.mypy-lang.org/static/mypy_badge.svg)](http://mypy-lang.org/)
 
 # ChangeLog
+NEXT:<br>
+- fixed issue 480, dumping of a loaded empty flow-style mapping with comment failed (Reported by [Stéphane Brunner](https://sourceforge.net/u/stbrunner/profile/))
+- fixed issue 482, caused by DEFAULT_MAPPING_TAG having changes to being a `Tag()` instance, not a string (reported by [yan12125](https://sourceforge.net/u/yan12125/profile/))
+- updated documentation to use mkdocs
 
 0.17.35 (2023-10-04):
 
@@ -69,12 +72,7 @@ the API is stable enough to make the transition.
 - Python 3.12 also loads C version when using `typ='safe'`
 - initial support for loading invoking
 `__post_init__()` on dataclasses that have that
-method after loading a registered dataclass
-```
-@yaml.register_class
-@dataclass
-class ...
-```
+method after loading a registered dataclass.
 (Originally
 [asked](https://stackoverflow.com/q/51529458/1307905) on
 Stackoverflow by
@@ -83,6 +81,11 @@ and as
 [ticket](https://sourceforge.net/p/ruamel-yaml/tickets/355/) by
 [Patrick Lehmann](https://sourceforge.net/u/paebbels/profile/))
 
+```
+@yaml.register_class
+@dataclass
+class ...
+```
 
 0.17.33 (2023-09-28):
 
@@ -109,7 +112,6 @@ and as
 - fix for issue 464: documents ending with document end marker
 without final newline fail to load (reported by [Mariusz
 Rusiniak](https://sourceforge.net/u/r2dan/profile/))
-
 
 0.17.27 (2023-05-25):
 
@@ -138,14 +140,13 @@ Rusiniak](https://sourceforge.net/u/r2dan/profile/))
 escaped (reported by [Michal
 Čihař](https://sourceforge.net/u/nijel/profile/) based on a
 question on StackOverflow).
-
 - fix issue with emitter conservatively inserting extra backslashes in wrapped quoted strings (reported by thebenman on [StackOverflow](https://stackoverflow.com/q/75631454/1307905))
 
 0.17.22 (2023-05-02):
 
 - fix issue 449 where the second exclamation marks got URL encoded (reported and fixing PR provided by [John Stark](https://sourceforge.net/u/jods/profile/))
 - fix issue with indent != 2 and literal scalars with empty first line (reported by wrdis on [StackOverflow](https://stackoverflow.com/q/75584262/1307905))
-- updated `__repr__` of CommentedMap, now that Python's dict is ordered -\> no more `ordereddict(list-of-tuples)`
+- updated `__repr__` of CommentedMap, now that Python's dict is ordered -> no more `ordereddict(list-of-tuples)`
 - merge MR 4, handling OctalInt in YAML 1.1 (provided by [Jacob Floyd](https://sourceforge.net/u/cognifloyd/profile/))
 - fix loading of `!!float 42` (reported by Eric on [Stack overflow](https://stackoverflow.com/a/71555107/1307905))
 - line numbers are now set on `CommentedKeySeq` and `CommentedKeyMap` (which are created if you have a sequence resp. mapping as the key in a mapping)
@@ -154,11 +155,9 @@ their own, instead of after the previous line (issue 427, reported
 by [Antoine
 Cotten](https://sourceforge.net/u/antoineco/profile/)). Caveat:
 this currently results in a space ending the previous line.
-
-- fix for folded scalar part of 421: comments after \"\>\" on first
+- fix for folded scalar part of 421: comments after ">" on first
 line of folded scalars are now preserved (as were those in the
 same position on literal scalars). Issue reported by Jacob Floyd.
-
 - added stacklevel to warnings
 - typing changed from Py2 compatible comments to Py3, removed various Py2-isms
 
@@ -168,7 +167,7 @@ same position on literal scalars). Issue reported by Jacob Floyd.
 
 0.17.20 (2022-01-03):
 
-- fix error in microseconds while rounding datetime fractions \>= 9999995 (reported by [Luis Ferreira](https://sourceforge.net/u/ljmf00/))
+- fix error in microseconds while rounding datetime fractions >= 9999995 (reported by [Luis Ferreira](https://sourceforge.net/u/ljmf00/))
 
 0.17.19 (2021-12-26):
 
@@ -230,7 +229,6 @@ same position on literal scalars). Issue reported by Jacob Floyd.
 - fix for issue 385: deprecated round_trip_loader function not
 working (reported by [Mike
 Gouline](https://sourceforge.net/u/gouline/))
-
 - wasted a few hours getting rid of mypy warnings/errors
 
 0.17.5 (2021-05-30):
@@ -247,7 +245,6 @@ Gouline](https://sourceforge.net/u/gouline/))
 - allow expansion of aliases by setting `yaml.composer.return_alias = lambda s: copy.deepcopy(s)`
 (as per [Stackoverflow answer](https://stackoverflow.com/a/66983530/1307905))
 
-
 0.17.2 (2021-03-29):
 
 - change -py2.py3-none-any.whl to -py3-none-any.whl, and remove 0.17.1
@@ -257,7 +254,6 @@ Gouline](https://sourceforge.net/u/gouline/))
 - added 'Programming Language :: Python :: 3 :: Only', and
 removing 0.17.0 from PyPI (reported by [Alasdair
 Nicol](https://sourceforge.net/u/alasdairnicol/))
-
 
 0.17.0 (2021-03-26):
 
@@ -273,22 +269,17 @@ scalar to start before the `#` column of a following comment.
 Effectively making the comment part of the scalar in the output.
 (reported by [Bence Nagy](https://sourceforge.net/u/underyx/))
 
-
 0.16.13 (2021-03-05):
 
 - fix for issue 359: could not update() CommentedMap with keyword
 arguments (reported by [Steve
 Franchak](https://sourceforge.net/u/binaryadder/))
-
 - fix for issue 365: unable to dump mutated TimeStamp objects
 (reported by [Anton Akmerov](https://sourceforge.net/u/akhmerov))
-
 - fix for issue 371: unable to add comment without starting space
 (reported by [Mark Grandi](https://sourceforge.net/u/mgrandi))
-
 - fix for issue 373: recursive call to walk_tree not preserving
 all params (reported by [eulores](https://sourceforge.net/u/eulores/))
-
 - a None value in a flow-style sequence is now dumped as `null` instead of `!!null ''` (reported by mcarans on [StackOverflow](https://stackoverflow.com/a/66489600/1307905))
 
 0.16.12 (2020-09-04):
