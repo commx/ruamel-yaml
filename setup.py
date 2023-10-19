@@ -880,10 +880,17 @@ def main():
     if dump_kw in sys.argv:
         sys.argv.remove(dump_kw)
     try:
-        with open('README.rst') as fp:
+        with open('README.md') as fp:
             kw['long_description'] = fp.read()
-            kw['long_description_content_type'] = 'text/x-rst'
+            kw['long_description_content_type'] = \
+                'text/markdown; charset=UTF-8; variant=CommonMark'
     except Exception:
+        try:
+            with open('README.rst') as fp:
+                kw['long_description'] = fp.read()
+                kw['long_description_content_type'] = 'text/x-rst'
+        except Exception:
+            pass
         pass
 
     # if nsp.wheel(kw, setup):
