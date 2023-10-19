@@ -42,14 +42,14 @@ email, preferably with some information on how you use the package (or a
 link to the repository) and I'll keep you informed when the status of
 the API is stable enough to make the transition.
 
--   [Overview](http://yaml.readthedocs.org/en/latest/overview.html)
--   [Installing](http://yaml.readthedocs.org/en/latest/install.html)
--   [Basic Usage](http://yaml.readthedocs.org/en/latest/basicuse.html)
--   [Details](http://yaml.readthedocs.org/en/latest/detail.html)
--   [Examples](http://yaml.readthedocs.org/en/latest/example.html)
--   [API](http://yaml.readthedocs.org/en/latest/api.html)
+-   [Overview](http://yaml.readthedocs.io/en/latest/overview/)
+-   [Installing](http://yaml.readthedocs.io/en/latest/install/)
+-   [Basic Usage](http://yaml.readthedocs.io/en/latest/basicuse/)
+-   [Details](http://yaml.readthedocs.io/en/latest/detail/)
+-   [Examples](http://yaml.readthedocs.io/en/latest/example/)
+-   [API](http://yaml.readthedocs.io/en/latest/api/)
 -   [Differences with
-    PyYAML](http://yaml.readthedocs.org/en/latest/pyyaml.html)
+    PyYAML](http://yaml.readthedocs.io/en/latest/pyyaml/)
 
 [![image](https://readthedocs.org/projects/yaml/badge/?version=latest)](https://yaml.readthedocs.org/en/latest?badge=latest)[![image](https://bestpractices.coreinfrastructure.org/projects/1128/badge)](https://bestpractices.coreinfrastructure.org/projects/1128)
 [![image](https://sourceforge.net/p/ruamel-yaml/code/ci/default/tree/_doc/_static/license.svg?format=raw)](https://opensource.org/licenses/MIT)
