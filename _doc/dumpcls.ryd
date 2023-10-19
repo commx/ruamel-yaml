@@ -164,7 +164,7 @@ sansa.siblings.append(arya)
 yaml = ruamel.yaml.YAML()
 yaml.register_class(Person)
 
-path = Path('arya.yaml')
+path = Path('/tmp/arya.yaml')
 yaml.dump(arya, path)
 print(path.read_text())
 
@@ -189,7 +189,7 @@ class Person:
     def __repr__(self):
         return f'Person(name: {self.name}, siblings: {self.siblings})'
 
-path = Path('arya.yaml')
+path = Path('/tmp/arya.yaml')
 yaml = ruamel.yaml.YAML()
 yaml.register_class(Person)
 data = yaml.load(path)
@@ -223,7 +223,7 @@ class Person:
         return cls(**data)
 
 
-path = Path('arya.yaml')
+path = Path('/tmp/arya.yaml')
 yaml = ruamel.yaml.YAML()
 yaml.register_class(Person)
 data = yaml.load(path)
@@ -262,7 +262,7 @@ class Person:
             setattr(person, k, v)
 
 
-path = Path('arya.yaml')
+path = Path('/tmp/arya.yaml')
 yaml = ruamel.yaml.YAML()
 yaml.register_class(Person)
 data = yaml.load(path)
