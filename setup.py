@@ -879,19 +879,17 @@ def main():
     #     return
     if dump_kw in sys.argv:
         sys.argv.remove(dump_kw)
-    try:
-        with open('README.md') as fp:
-            kw['long_description'] = fp.read()
-            kw['long_description_content_type'] = \
-                'text/markdown; charset=UTF-8; variant=CommonMark'
-    except Exception:
-        try:
-            with open('README.rst') as fp:
-                kw['long_description'] = fp.read()
-                kw['long_description_content_type'] = 'text/x-rst'
-        except Exception:
-            pass
-        pass
+    if not os.environ.get('RUAMEL_NO_LONG_DESCRIPTION', False):
+        for readme_file_name, readme_markup_type in [
+            ('README.md', 'text/markdown; charset=UTF-8; variant=CommonMark'),
+            ('README.rst', 'text/x-rst'),
+        ]:
+            try:
+                kw['long_description'] = open(readme_file_name).read()
+                kw['long_description_content_type'] = readme_markup_type
+                break
+            except FileNotFoundError:
+                pass
 
     # if nsp.wheel(kw, setup):
     #     return

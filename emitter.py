@@ -48,6 +48,9 @@ class ScalarAnalysis:
         self.allow_double_quoted = allow_double_quoted
         self.allow_block = allow_block
 
+    def __repr__(self) -> str:
+        return f'scalar={self.scalar!r}, empty={self.empty}, multiline={self.multiline}, allow_flow_plain={self.allow_flow_plain}, allow_block_plain={self.allow_block_plain}, allow_single_quoted={self.allow_single_quoted}, allow_double_quoted={self.allow_double_quoted}, allow_block={self.allow_block}'  # NOQA
+
 
 class Indents:
     # replacement for the list based stack of None/int
@@ -612,7 +615,8 @@ class Emitter:
                 self.expect_node(mapping=True)
 
     def expect_flow_mapping_simple_value(self) -> None:
-        self.write_indicator(self.prefixed_colon, False)
+        if getattr(self.event, 'style', '?') != '-':  # suppress for flow style sets
+            self.write_indicator(self.prefixed_colon, False)
         self.states.append(self.expect_flow_mapping_key)
         self.expect_node(mapping=True)
 
@@ -841,7 +845,7 @@ class Emitter:
             self.analysis = self.analyze_scalar(self.event.value)
         if self.event.style == '"' or self.canonical:
             return '"'
-        if (not self.event.style or self.event.style == '?') and (
+        if (not self.event.style or self.event.style == '?' or self.event.style == '-') and (
             self.event.implicit[0] or not self.event.implicit[2]
         ):
             if not (
@@ -851,6 +855,8 @@ class Emitter:
                 and self.analysis.allow_flow_plain
                 or (not self.flow_level and self.analysis.allow_block_plain)
             ):
+                return ""
+            if self.event.style == '-':
                 return ""
         self.analysis.allow_block = True
         if self.event.style and self.event.style in '|>':
@@ -1743,7 +1749,6 @@ class RoundTripEmitter(Emitter):
         if not ctag:
             raise EmitterError('tag must not be empty')
         tag = str(ctag)
-        # print('handling', repr(tag))
         if tag == '!' or tag == '!!':
             return tag
         handle = ctag.handle

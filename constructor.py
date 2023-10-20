@@ -1588,6 +1588,10 @@ class RoundTripConstructor(SafeConstructor):
     def construct_yaml_set(self, node: Any) -> Iterator[CommentedSet]:
         data = CommentedSet()
         data._yaml_set_line_col(node.start_mark.line, node.start_mark.column)
+        if node.flow_style is True:
+            data.fa.set_flow_style()
+        elif node.flow_style is False:
+            data.fa.set_block_style()
         yield data
         self.construct_setting(node, data)
 

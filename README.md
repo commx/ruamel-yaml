@@ -3,10 +3,10 @@
 `ruamel.yaml` is a YAML 1.2 loader/dumper package for Python.
 <table class="docutils">
   <tr>    <td>version</td>
-    <td>0.17.39</td>
+    <td>0.17.40</td>
   </tr>
   <tr>    <td>updated</td>
-    <td>2023-10-19</td>
+    <td>2023-10-20</td>
   </tr>
   <tr>    <td>documentation</td>
     <td><a href="http://yaml.readthedocs.io">http://yaml.readthedocs.io</a></td>
@@ -58,6 +58,18 @@ the API is stable enough to make the transition.
 [![image](http://www.mypy-lang.org/static/mypy_badge.svg)](http://mypy-lang.org/)
 
 # ChangeLog
+
+0.17.40 (2023-10-20):
+
+- flow style sets are now preserved ( `!!set {a, b, c} )`. Any values specified when loading are dropped, including `!!null ""`.
+- potential workaround for issue 484: the long_description_content_type including the variant specification `CommonMark`
+can result in problems on Azure. If you can install from `.tar.gz` using
+`RUAMEL_NO_LONG_DESCRIPTION=1 pip install ruamel.yaml --no-binary :all:` then the long description, and its
+offending type, are nog included (in the METADATA). 
+(Reported by [Coury Ditch](https://sourceforge.net/u/cmditch/profile/))
+
+- links in documentation update (reported by [David Hoese](https://sourceforge.net/u/daveydave400/profile/))
+- Added some `__repr__` for internally used classes
 
 0.17.39 (2023-10-19):
 

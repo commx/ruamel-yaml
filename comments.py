@@ -220,6 +220,9 @@ class Format:
             return default
         return self._flow_style
 
+    def __repr__(self) -> str:
+        return f'Format({self._flow_style})'
+
 
 class LineCol:
     """

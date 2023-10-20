@@ -78,6 +78,7 @@ class ScalarNode(Node):
     """
     styles:
       ? -> set() ? key, no value
+      - -> suppressable null value in set
       " -> double quoted
       ' -> single quoted
       | -> literal style

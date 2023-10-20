@@ -980,7 +980,8 @@ class RoundTripRepresenter(SafeRepresenter):
             if item_comment:
                 assert getattr(node_key, 'comment', None) is None
                 node_key.comment = item_comment[:2]
-            node_key.style = node_value.style = '?'
+            node_key.style = '?'
+            node_value.style = '-' if flow_style else '?'
             if not (isinstance(node_key, ScalarNode) and not node_key.style):
                 best_style = False
             if not (isinstance(node_value, ScalarNode) and not node_value.style):

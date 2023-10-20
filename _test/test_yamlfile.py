@@ -112,6 +112,12 @@ class TestYAML:
         ? c
         """)
 
+    def test_set_compact_flow(self) -> None:
+        # this format is read and also should be written by default
+        round_trip("""
+        !!set {a, b, c}
+        """)
+
     def test_blank_line_after_comment(self) -> None:
         round_trip("""
         # Comment with spaces after it.
