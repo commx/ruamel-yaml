@@ -29,7 +29,8 @@ def dice_representer(dumper: Any, data: Any) -> Any:
 def test_dice_constructor() -> None:
     import ruamel.yaml  # NOQA
 
-    yaml = ruamel.yaml.YAML(typ='unsafe', pure=True)
+    with pytest.warns(PendingDeprecationWarning):
+        yaml = ruamel.yaml.YAML(typ='unsafe', pure=True)
     ruamel.yaml.add_constructor('!dice', dice_constructor)
     data = yaml.load('initial hit points: !dice 8d4')
     assert str(data) == "{'initial hit points': Dice(8,4)}"
@@ -38,7 +39,8 @@ def test_dice_constructor() -> None:
 def test_dice_constructor_with_loader() -> None:
     import ruamel.yaml  # NOQA
 
-    yaml = ruamel.yaml.YAML(typ='unsafe', pure=True)
+    with pytest.warns(PendingDeprecationWarning):
+        yaml = ruamel.yaml.YAML(typ='unsafe', pure=True)
     ruamel.yaml.add_constructor('!dice', dice_constructor, Loader=ruamel.yaml.Loader)
     data = yaml.load('initial hit points: !dice 8d4')
     assert str(data) == "{'initial hit points': Dice(8,4)}"
@@ -47,7 +49,8 @@ def test_dice_constructor_with_loader() -> None:
 def test_dice_representer() -> None:
     import ruamel.yaml  # NOQA
 
-    yaml = ruamel.yaml.YAML(typ='unsafe', pure=True)
+    with pytest.warns(PendingDeprecationWarning):
+        yaml = ruamel.yaml.YAML(typ='unsafe', pure=True)
     yaml.default_flow_style = False
     ruamel.yaml.add_representer(Dice, dice_representer)
     # ruamel.yaml 0.15.8+ no longer forces quotes tagged scalars
@@ -59,7 +62,8 @@ def test_dice_representer() -> None:
 def test_dice_implicit_resolver() -> None:
     import ruamel.yaml  # NOQA
 
-    yaml = ruamel.yaml.YAML(typ='unsafe', pure=True)
+    with pytest.warns(PendingDeprecationWarning):
+        yaml = ruamel.yaml.YAML(typ='unsafe', pure=True)
     yaml.default_flow_style = False
     pattern = re.compile(r'^\d+d\d+$')
     ruamel.yaml.add_implicit_resolver('!dice', pattern)
@@ -106,7 +110,8 @@ class YAMLObj1:
 def test_yaml_obj() -> None:
     import ruamel.yaml  # NOQA
 
-    yaml = ruamel.yaml.YAML(typ='unsafe', pure=True)
+    with pytest.warns(PendingDeprecationWarning):
+        yaml = ruamel.yaml.YAML(typ='unsafe', pure=True)
     ruamel.yaml.add_representer(Obj1, YAMLObj1.to_yaml)
     ruamel.yaml.add_multi_constructor(YAMLObj1.yaml_tag, YAMLObj1.from_yaml)
     x = yaml.load('!obj:x.2\na: 1')
@@ -119,7 +124,8 @@ def test_yaml_obj() -> None:
 def test_yaml_obj_with_loader_and_dumper() -> None:
     import ruamel.yaml  # NOQA
 
-    yaml = ruamel.yaml.YAML(typ='unsafe', pure=True)
+    with pytest.warns(PendingDeprecationWarning):
+        yaml = ruamel.yaml.YAML(typ='unsafe', pure=True)
     ruamel.yaml.add_representer(Obj1, YAMLObj1.to_yaml, Dumper=ruamel.yaml.Dumper)
     ruamel.yaml.add_multi_constructor(
         YAMLObj1.yaml_tag, YAMLObj1.from_yaml, Loader=ruamel.yaml.Loader,

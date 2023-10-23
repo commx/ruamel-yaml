@@ -1,7 +1,21 @@
+[0.18.0, 2023-10-23]:
+- the **functions** `scan`, `parse`, `compose`, `load`, `emit`, `serialize`, `dump`
+  and their variants (`_all`, `safe_`, `round_trip_`, etc) have been deprecated (the
+  same named **methods** on `YAML()` instances are, of course, still there.
+- |-
+  `YAML(typ='unsafe') now issues a `PendingDeprecationWarning'. This will become deprecated in the 0.18 series
+  (probably before the end of 2023).
+  You can use `YAML(typ='full')` to dump unregistered Python classes/functions. 
+  For loading you'll have to register your classes/functions
+  if you want the old, unsafe, functionality. You can still load any tag, like `!!python/name:posix.system', **safely** 
+  with the (default) round-trip parser.
+- fix for `bytes-like object is required not 'str' while dumping binary streams`.
+  This was reported analysed and a fix provided by [Vit Zikmund](https://sourceforge.net/u/tlwhitec/profile/)
+
 [0.17.40, 2023-10-20]:
 - flow style sets are now preserved ( `!!set {a, b, c} )`. Any values specified when
   loading are dropped, including `!!null ""`.
-- |
+- |-
   potential workaround for issue 484: the long_description_content_type including the variant specification `CommonMark`
   can result in problems on Azure. If you can install from `.tar.gz` using
   `RUAMEL_NO_LONG_DESCRIPTION=1 pip install ruamel.yaml --no-binary :all:` then the long description, and its

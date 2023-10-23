@@ -3,10 +3,10 @@
 `ruamel.yaml` is a YAML 1.2 loader/dumper package for Python.
 <table class="docutils">
   <tr>    <td>version</td>
-    <td>0.17.40</td>
+    <td>0.18.0</td>
   </tr>
   <tr>    <td>updated</td>
-    <td>2023-10-20</td>
+    <td>2023-10-23</td>
   </tr>
   <tr>    <td>documentation</td>
     <td><a href="http://yaml.readthedocs.io">http://yaml.readthedocs.io</a></td>
@@ -19,20 +19,43 @@
   </tr>
 </table>
 
-*Starting with 0.17.22 only Python 3.7+ is supported. The 0.17 series is
-also the last to support old PyYAML functions, replace it by creating a*
-`YAML()` *instance and use its* `.load()` *and* `.dump()` *methods.*
-**New(er) functionality is usually only available via the new API.**
+As announced, in 0.18.0, the old PyYAML functions have been deprecated.
+(`scan`, `parse`, `compose`, `load`, `emit`, `serialize`, `dump` and their variants
+(`_all`, `safe_`, `round_trip_`, etc)). If you only read this after your program has 
+stopped working: I am sorry to hear that, but that also means you, or the person 
+developing your program, has not tested with warnings on (which is the recommendation 
+in PEP 565, and e.g. defaultin when using `pytest`). If you have troubles, explicitly use
+```
+pip install "ruamel.yaml<0.18.0"
+```
+or put something to that effects in your requirments, to give yourself
+some time to solve the issue.
 
-The 0.17.21 was the last one tested to be working on Python 3.5 and 3.6
-(the latter was not tested, because tox/virtualenv stopped supporting
-that EOL version). The 0.16.13 release was the last that was tested to
-be working on Python 2.7.
-
+There will be at least one more potentially breaking change in the 0.18 series: `YAML(typ='unsafe')`
+now has a pending deprecation warning and is going to be deprecated, probably before the end of 2023.
+If you only use it to dump, please use the new `YAML(typ='full')`, the result of that can be *safely*
+loaded with a default  instance `YAML()`, as that will get you inspectable, tagged, scalars, instead of
+executed Python functions/classes. (You should probably add constructors for what you actually need, 
+but I do consider adding a `ruamel.yaml.unsafe` package that will re-add the `typ='unsafe'` option.
 *Please adjust/pin your dependencies accordingly if necessary.*
-(`ruamel.yaml<0.18`)
 
-There are now two extra plug-in packages
+
+There seems to be a CVE on `ruamel.yaml`, stating that the `load()` function could be abused 
+because of unchecked input. `load()` was never the default function (that was `round_trip_load()`
+before the new API came into existence`. So the creator of that CVE was ill informed and
+probably lazily assumed that since `ruamel.yaml` is a derivative of PyYAML (for which
+a similar CVE exists), the same problem would still exist, without checking. 
+So the CVE was always inappriate,  now just more so, as the call
+to the function `load()` with any input will terminate your program with an error message. If you 
+(have to) care about such things as this CVE, my recommendation is to stop using Python
+completely, as `pickle.load()` can be abused in the same way as `load()` (and like unlike `load()` 
+is only documented to be unsafe, without development-time warning. 
+
+Version 0.17.21 was the last one tested to be working on Python 3.5 and 3.6<BR>
+The 0.16.13 release was the last that was tested to be working on Python 2.7.
+
+
+There are two extra plug-in packages
 (`ruamel.yaml.bytes` and `ruamel.yaml.string`)
 for those not wanting to do the streaming to a
 `io.BytesIO/StringIO` buffer themselves.
@@ -41,6 +64,7 @@ If your package uses `ruamel.yaml` and is not listed on PyPI, drop me an
 email, preferably with some information on how you use the package (or a
 link to the repository) and I'll keep you informed when the status of
 the API is stable enough to make the transition.
+
 
 -   [Overview](http://yaml.readthedocs.io/en/latest/overview/)
 -   [Installing](http://yaml.readthedocs.io/en/latest/install/)
@@ -59,6 +83,17 @@ the API is stable enough to make the transition.
 
 # ChangeLog
 
+0.18.0 (2023-10-23):
+
+- the **functions** `scan`, `parse`, `compose`, `load`, `emit`, `serialize`, `dump` and their variants (`_all`, `safe_`, `round_trip_`, etc) have been deprecated (the same named **methods** on `YAML()` instances are, of course, still there.
+- `YAML(typ='unsafe') now issues a `PendingDeprecationWarning'. This will become deprecated in the 0.18 series
+(probably before the end of 2023).
+You can use `YAML(typ='full')` to dump unregistered Python classes/functions. 
+For loading you'll have to register your classes/functions
+if you want the old, unsafe, functionality. You can still load any tag, like `!!python/name:posix.system', **safely** 
+with the (default) round-trip parser.
+- fix for `bytes-like object is required not 'str' while dumping binary streams`. This was reported analysed and a fix provided by [Vit Zikmund](https://sourceforge.net/u/tlwhitec/profile/)
+
 0.17.40 (2023-10-20):
 
 - flow style sets are now preserved ( `!!set {a, b, c} )`. Any values specified when loading are dropped, including `!!null ""`.
@@ -67,7 +102,6 @@ can result in problems on Azure. If you can install from `.tar.gz` using
 `RUAMEL_NO_LONG_DESCRIPTION=1 pip install ruamel.yaml --no-binary :all:` then the long description, and its
 offending type, are nog included (in the METADATA). 
 (Reported by [Coury Ditch](https://sourceforge.net/u/cmditch/profile/))
-
 - links in documentation update (reported by [David Hoese](https://sourceforge.net/u/daveydave400/profile/))
 - Added some `__repr__` for internally used classes
 
@@ -286,78 +320,6 @@ Nicol](https://sourceforge.net/u/alasdairnicol/))
 scalar to start before the `#` column of a following comment.
 Effectively making the comment part of the scalar in the output.
 (reported by [Bence Nagy](https://sourceforge.net/u/underyx/))
-
-0.16.13 (2021-03-05):
-
-- fix for issue 359: could not update() CommentedMap with keyword
-arguments (reported by [Steve
-Franchak](https://sourceforge.net/u/binaryadder/))
-- fix for issue 365: unable to dump mutated TimeStamp objects
-(reported by [Anton Akmerov](https://sourceforge.net/u/akhmerov))
-- fix for issue 371: unable to add comment without starting space
-(reported by [Mark Grandi](https://sourceforge.net/u/mgrandi))
-- fix for issue 373: recursive call to walk_tree not preserving
-all params (reported by [eulores](https://sourceforge.net/u/eulores/))
-- a None value in a flow-style sequence is now dumped as `null` instead of `!!null ''` (reported by mcarans on [StackOverflow](https://stackoverflow.com/a/66489600/1307905))
-
-0.16.12 (2020-09-04):
-
-- update links in doc
-
-0.16.11 (2020-09-03):
-
-- workaround issue with setuptools 0.50 and importing pip (fix by [jaraco](https://github.com/pypa/setuptools/issues/2355#issuecomment-685159580)
-
-0.16.10 (2020-02-12):
-
-- (auto) updated image references in README to sourceforge
-
-0.16.9 (2020-02-11):
-
-- update CHANGES
-
-0.16.8 (2020-02-11):
-
-- update requirements so that ruamel.yaml.clib is installed for 3.8, as it has become available (via manylinux builds)
-
-0.16.7 (2020-01-30):
-
-- fix typchecking issue on TaggedScalar (reported by Jens Nielsen)
-- fix error in dumping literal scalar in sequence with comments before element (reported by [EJ Etherington](https://sourceforge.net/u/ejether/))
-
-0.16.6 (2020-01-20):
-
-- fix empty string mapping key roundtripping with preservation of quotes as `? ''` (reported via email by Tomer Aharoni).
-- fix incorrect state setting in class constructor (reported by [Douglas Raillard](https://bitbucket.org/%7Bcf052d92-a278-4339-9aa8-de41923bb556%7D/))
-- adjust deprecation warning test for Hashable, as that no longer warns (reported by [Jason Montleon](https://bitbucket.org/%7B8f377d12-8d5b-4069-a662-00a2674fee4e%7D/))
-
-0.16.5 (2019-08-18):
-
-- allow for `YAML(typ=['unsafe', 'pytypes'])`
-
-0.16.4 (2019-08-16):
-
-- fix output of TAG directives with `#` (reported by [Thomas Smith](https://bitbucket.org/%7Bd4c57a72-f041-4843-8217-b4d48b6ece2f%7D/))
-
-0.16.3 (2019-08-15):
-
-- split construct_object
-- change stuff back to keep mypy happy
-- move setting of version based on YAML directive to scanner, allowing to check for file version during TAG directive scanning
-
-0.16.2 (2019-08-15):
-
-- preserve YAML and TAG directives on roundtrip, correctly output `#` in URL for YAML 1.2 (both reported by [Thomas Smith](https://bitbucket.org/%7Bd4c57a72-f041-4843-8217-b4d48b6ece2f%7D/))
-
-0.16.1 (2019-08-08):
-
-- Force the use of new version of ruamel.yaml.clib (reported by [Alex Joz](https://bitbucket.org/%7B9af55900-2534-4212-976c-61339b6ffe14%7D/))
-- Allow `#` in tag URI as these are allowed in YAML 1.2 (reported by [Thomas Smith](https://bitbucket.org/%7Bd4c57a72-f041-4843-8217-b4d48b6ece2f%7D/))
-
-0.16.0 (2019-07-25):
-
-- split of C source that generates `.so` file to [ruamel.yaml.clib]( https://pypi.org/project/ruamel.yaml.clib/)
-- duplicate keys are now an error when working with the old API as well
 
 ------------------------------------------------------------------------
 

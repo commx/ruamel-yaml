@@ -110,6 +110,13 @@ Top level sequence is indented 2 without offset, the other sequence 4
         - foo
         - bar
 
+### Indenting using `typ="safe"`
+
+The C based emitter doesn't have the fine control, distinguishing between
+block mappings and sequences. Do only use the `pure` Python versions
+of the dumper if you want to have that sort of control.
+
+
 ## Positioning \':\' in top level mappings, prefixing \':\'
 
 If you want your toplevel mappings to look like:

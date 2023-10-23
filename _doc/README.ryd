@@ -40,20 +40,43 @@ repository: https://sourceforge.net/projects/ruamel-yaml
 pypi:  https://pypi.org/project/ruamel.yaml
 --- |
 
-*Starting with 0.17.22 only Python 3.7+ is supported. The 0.17 series is
-also the last to support old PyYAML functions, replace it by creating a*
-`YAML()` *instance and use its* `.load()` *and* `.dump()` *methods.*
-**New(er) functionality is usually only available via the new API.**
+As announced, in 0.18.0, the old PyYAML functions have been deprecated.
+(`scan`, `parse`, `compose`, `load`, `emit`, `serialize`, `dump` and their variants
+(`_all`, `safe_`, `round_trip_`, etc)). If you only read this after your program has 
+stopped working: I am sorry to hear that, but that also means you, or the person 
+developing your program, has not tested with warnings on (which is the recommendation 
+in PEP 565, and e.g. defaultin when using `pytest`). If you have troubles, explicitly use
+```
+pip install "ruamel.yaml<0.18.0"
+```
+or put something to that effects in your requirments, to give yourself
+some time to solve the issue.
 
-The 0.17.21 was the last one tested to be working on Python 3.5 and 3.6
-(the latter was not tested, because tox/virtualenv stopped supporting
-that EOL version). The 0.16.13 release was the last that was tested to
-be working on Python 2.7.
-
+There will be at least one more potentially breaking change in the 0.18 series: `YAML(typ='unsafe')`
+now has a pending deprecation warning and is going to be deprecated, probably before the end of 2023.
+If you only use it to dump, please use the new `YAML(typ='full')`, the result of that can be *safely*
+loaded with a default  instance `YAML()`, as that will get you inspectable, tagged, scalars, instead of
+executed Python functions/classes. (You should probably add constructors for what you actually need, 
+but I do consider adding a `ruamel.yaml.unsafe` package that will re-add the `typ='unsafe'` option.
 *Please adjust/pin your dependencies accordingly if necessary.*
-(`ruamel.yaml<0.18`)
 
-There are now two extra plug-in packages
+
+There seems to be a CVE on `ruamel.yaml`, stating that the `load()` function could be abused 
+because of unchecked input. `load()` was never the default function (that was `round_trip_load()`
+before the new API came into existence`. So the creator of that CVE was ill informed and
+probably lazily assumed that since `ruamel.yaml` is a derivative of PyYAML (for which
+a similar CVE exists), the same problem would still exist, without checking. 
+So the CVE was always inappriate,  now just more so, as the call
+to the function `load()` with any input will terminate your program with an error message. If you 
+(have to) care about such things as this CVE, my recommendation is to stop using Python
+completely, as `pickle.load()` can be abused in the same way as `load()` (and like unlike `load()` 
+is only documented to be unsafe, without development-time warning. 
+
+Version 0.17.21 was the last one tested to be working on Python 3.5 and 3.6<BR>
+The 0.16.13 release was the last that was tested to be working on Python 2.7.
+
+
+There are two extra plug-in packages
 (`ruamel.yaml.bytes` and `ruamel.yaml.string`)
 for those not wanting to do the streaming to a
 `io.BytesIO/StringIO` buffer themselves.
@@ -62,6 +85,7 @@ If your package uses `ruamel.yaml` and is not listed on PyPI, drop me an
 email, preferably with some information on how you use the package (or a
 link to the repository) and I'll keep you informed when the status of
 the API is stable enough to make the transition.
+
 
 -   [Overview](http://yaml.readthedocs.io/en/latest/overview/)
 -   [Installing](http://yaml.readthedocs.io/en/latest/install/)

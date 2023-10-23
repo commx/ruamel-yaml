@@ -4,6 +4,7 @@
 testing of YAML.register_class and @yaml_object
 """
 
+import pytest  # type: ignore  # NOQA  
 from typing import Any
 from ruamel.yaml.comments import TaggedScalar, CommentedMap  # NOQA
 
@@ -56,7 +57,8 @@ class TestRegisterClass:
 
     def test_register_0_unsafe(self) -> None:
         # default_flow_style = None
-        yaml = YAML(typ='unsafe')
+        with pytest.warns(PendingDeprecationWarning):
+            yaml = YAML(typ='unsafe')
         yaml.register_class(User0)
         ys = """
         - !User0 {age: 18, name: Anthon}
@@ -83,7 +85,8 @@ class TestRegisterClass:
         yaml.dump(d, compare=ys)
 
     def test_register_1_unsafe(self) -> None:
-        yaml = YAML(typ='unsafe')
+        with pytest.warns(PendingDeprecationWarning):
+            yaml = YAML(typ='unsafe')
         yaml.register_class(User1)
         ys = """
         [!user Anthon-18]
