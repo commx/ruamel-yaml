@@ -1144,6 +1144,9 @@ class TaggedScalar(CommentedBase):
     def __getitem__(self, pos: int) -> Any:
         return self.value[pos]
 
+    def __repr__(self) -> str:
+        return f'TaggedScalar(value={self.value!r}, style={self.style!r}, tag={self.tag!r})'
+
 
 def dump_comments(d: Any, name: str = "", sep: str = '.', out: Any = sys.stdout) -> None:
     """
