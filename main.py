@@ -1009,17 +1009,24 @@ def warn_deprecation(fun: Any, method: Any, arg: str = '') -> None:
 
 
 def error_deprecation(fun: Any, method: Any, arg: str = '', comment: str = 'instead of') -> None:  # NOQA
-    warnings.simplefilter('default', category=DeprecationWarning)
-    warnings.warn(
-        f'\n{fun} has been removed, use\n\n  yaml=YAML({arg})\n  yaml.{method}(...)\n\n{comment}\n',  # NOQA
-        DeprecationWarning,
-        stacklevel=3,
-    )
-    sys.exit(1)
+    import inspect
+
+    s = f'\n"{fun}()" has been removed, use\n\n  yaml = YAML({arg})\n  yaml.{method}(...)\n\n{comment}'  # NOQA
+    try:
+        info = inspect.getframeinfo(inspect.stack()[2][0])
+        context = '' if info.code_context is None else "".join(info.code_context)
+        s += f' file "{info.filename}", line {info.lineno}\n\n{context}'
+    except Exception as e:
+        _ = e
+    s += '\n'
+    if sys.version_info < (3, 10):
+        raise AttributeError(s)
+    else:
+        raise AttributeError(s, name=None)
 
 
 _error_dep_arg = "typ='rt'"
-_error_dep_comment = "and register the classes that you use, or check the tag attribute on the loaded data,\ninstead of"  # NOQA
+_error_dep_comment = "and register any classes that you use, or check the tag attribute on the loaded data,\ninstead of"  # NOQA
 
 ########################################################################################
 

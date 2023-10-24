@@ -1,6 +1,10 @@
+[0.18.2, 2023-10-24]:
+- calling the deprecated functions now raises an `AttributeError` with the, somewhat
+  more informative, orginal warning message. Instead of calling `sys.exit(1)`
+
 [0.18.1, 2023-10-24]:
 - calling the deprecated functions now always displays the warning message. (reported
-  by [Trend Lloyd](https://sourceforge.net/u/lathiat2/profile/)
+  by [Trend Lloyd](https://sourceforge.net/u/lathiat2/profile/))
 
 [0.18.0, 2023-10-23]:
 - the **functions** `scan`, `parse`, `compose`, `load`, `emit`, `serialize`, `dump`

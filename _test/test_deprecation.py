@@ -21,9 +21,8 @@ class TestFunctionDeprecation:
             with pytest.warns(PendingDeprecationWarning):
                 data = ruamel.yaml.load('a: 42')  # NOQA
         else:
-            with pytest.warns(DeprecationWarning):
-                with pytest.raises(SystemExit):
-                    data = ruamel.yaml.load('a: 42')  # NOQA
+            with pytest.raises(AttributeError):
+                data = ruamel.yaml.load('a: 42')  # NOQA
 
     def test_deprecation_parse(self) -> None:
         import ruamel.yaml
@@ -31,9 +30,8 @@ class TestFunctionDeprecation:
         if ruamel.yaml.version_info <= last_to_warn:
             data = ruamel.yaml.parse('a: 42')  # NOQA
         else:
-            with pytest.warns(DeprecationWarning):
-                with pytest.raises(SystemExit):
-                    data = ruamel.yaml.parse('a: 42')  # NOQA
+            with pytest.raises(AttributeError):
+                data = ruamel.yaml.parse('a: 42')  # NOQA
 
     def test_deprecation_compose(self) -> None:
         import ruamel.yaml
@@ -42,9 +40,8 @@ class TestFunctionDeprecation:
             with pytest.warns(PendingDeprecationWarning):
                 data = ruamel.yaml.compose('a: 42')  # NOQA
         else:
-            with pytest.warns(DeprecationWarning):
-                with pytest.raises(SystemExit):
-                    data = ruamel.yaml.compose('a: 42')  # NOQA
+            with pytest.raises(AttributeError):
+                data = ruamel.yaml.parse('a: 42')  # NOQA
 
     def test_deprecation_compose_all(self) -> None:
         import ruamel.yaml
@@ -52,9 +49,8 @@ class TestFunctionDeprecation:
         if ruamel.yaml.version_info <= last_to_warn:
             data = ruamel.yaml.compose_all('a: 42')  # NOQA
         else:
-            with pytest.warns(DeprecationWarning):
-                with pytest.raises(SystemExit):
-                    data = ruamel.yaml.compose_all('a: 42')  # NOQA
+            with pytest.raises(AttributeError):
+                data = ruamel.yaml.parse('a: 42')  # NOQA
 
     def test_deprecation_load(self) -> None:
         import ruamel.yaml
@@ -63,9 +59,8 @@ class TestFunctionDeprecation:
             with pytest.warns(PendingDeprecationWarning):
                 data = ruamel.yaml.load('a: 42')  # NOQA
         else:
-            with pytest.warns(DeprecationWarning):
-                with pytest.raises(SystemExit):
-                    data = ruamel.yaml.load('a: 42')  # NOQA
+            with pytest.raises(AttributeError):
+                data = ruamel.yaml.parse('a: 42')  # NOQA
 
     def test_deprecation_load_all(self) -> None:
         import ruamel.yaml
@@ -73,9 +68,8 @@ class TestFunctionDeprecation:
         if ruamel.yaml.version_info <= last_to_warn:
             data = ruamel.yaml.load_all('a: 42')  # NOQA
         else:
-            with pytest.warns(DeprecationWarning):
-                with pytest.raises(SystemExit):
-                    data = ruamel.yaml.load_all('a: 42')  # NOQA
+            with pytest.raises(AttributeError):
+                data = ruamel.yaml.parse('a: 42')  # NOQA
 
     def test_deprecation_safe_load(self) -> None:
         import ruamel.yaml
@@ -84,9 +78,8 @@ class TestFunctionDeprecation:
             with pytest.warns(PendingDeprecationWarning):
                 data = ruamel.yaml.safe_load('a: 42')  # NOQA
         else:
-            with pytest.warns(DeprecationWarning):
-                with pytest.raises(SystemExit):
-                    data = ruamel.yaml.safe_load('a: 42')  # NOQA
+            with pytest.raises(AttributeError):
+                data = ruamel.yaml.parse('a: 42')  # NOQA
 
     def test_deprecation_round_trip_load(self) -> None:
         import ruamel.yaml
@@ -95,9 +88,8 @@ class TestFunctionDeprecation:
             with pytest.warns(PendingDeprecationWarning):
                 data = ruamel.yaml.round_trip_load('a: 42')  # NOQA
         else:
-            with pytest.warns(DeprecationWarning):
-                with pytest.raises(SystemExit):
-                    data = ruamel.yaml.round_trip_load('a: 42')  # NOQA
+            with pytest.raises(AttributeError):
+                data = ruamel.yaml.parse('a: 42')  # NOQA
 
 
 class TestYamlTyp:

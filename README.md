@@ -3,7 +3,7 @@
 `ruamel.yaml` is a YAML 1.2 loader/dumper package for Python.
 <table class="docutils">
   <tr>    <td>version</td>
-    <td>0.18.1</td>
+    <td>0.18.2</td>
   </tr>
   <tr>    <td>updated</td>
     <td>2023-10-24</td>
@@ -83,9 +83,13 @@ the API is stable enough to make the transition.
 
 # ChangeLog
 
+0.18.2 (2023-10-24):
+
+- calling the deprecated functions now raises an `AttributeError` with the, somewhat more informative, orginal warning message. Instead of calling `sys.exit(1)`
+
 0.18.1 (2023-10-24):
 
-- calling the deprecated functions now always displays the warning message. (reported by [Trend Lloyd](https://sourceforge.net/u/lathiat2/profile/)
+- calling the deprecated functions now always displays the warning message. (reported by [Trend Lloyd](https://sourceforge.net/u/lathiat2/profile/))
 
 0.18.0 (2023-10-23):
 
