@@ -1009,6 +1009,7 @@ def warn_deprecation(fun: Any, method: Any, arg: str = '') -> None:
 
 
 def error_deprecation(fun: Any, method: Any, arg: str = '', comment: str = 'instead of') -> None:  # NOQA
+    warnings.simplefilter('default', category=DeprecationWarning)
     warnings.warn(
         f'\n{fun} has been removed, use\n\n  yaml=YAML({arg})\n  yaml.{method}(...)\n\n{comment}\n',  # NOQA
         DeprecationWarning,

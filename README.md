@@ -3,10 +3,10 @@
 `ruamel.yaml` is a YAML 1.2 loader/dumper package for Python.
 <table class="docutils">
   <tr>    <td>version</td>
-    <td>0.18.0</td>
+    <td>0.18.1</td>
   </tr>
   <tr>    <td>updated</td>
-    <td>2023-10-23</td>
+    <td>2023-10-24</td>
   </tr>
   <tr>    <td>documentation</td>
     <td><a href="http://yaml.readthedocs.io">http://yaml.readthedocs.io</a></td>
@@ -83,16 +83,20 @@ the API is stable enough to make the transition.
 
 # ChangeLog
 
+0.18.1 (2023-10-24):
+
+- calling the deprecated functions now always displays the warning message. (reported by [Trend Lloyd](https://sourceforge.net/u/lathiat2/profile/)
+
 0.18.0 (2023-10-23):
 
 - the **functions** `scan`, `parse`, `compose`, `load`, `emit`, `serialize`, `dump` and their variants (`_all`, `safe_`, `round_trip_`, etc) have been deprecated (the same named **methods** on `YAML()` instances are, of course, still there.
-- `YAML(typ='unsafe') now issues a `PendingDeprecationWarning'. This will become deprecated in the 0.18 series
+- `YAML(typ='unsafe')` now issues a `PendingDeprecationWarning`. This will become deprecated in the 0.18 series
 (probably before the end of 2023).
 You can use `YAML(typ='full')` to dump unregistered Python classes/functions. 
 For loading you'll have to register your classes/functions
 if you want the old, unsafe, functionality. You can still load any tag, like `!!python/name:posix.system', **safely** 
 with the (default) round-trip parser.
-- fix for `bytes-like object is required not 'str' while dumping binary streams`. This was reported analysed and a fix provided by [Vit Zikmund](https://sourceforge.net/u/tlwhitec/profile/)
+- fix for `bytes-like object is required not 'str' while dumping binary streams`. This was reported, analysed and a fix provided by [Vit Zikmund](https://sourceforge.net/u/tlwhitec/profile/)
 
 0.17.40 (2023-10-20):
 
