@@ -203,7 +203,7 @@ StackOverflow.
 
 ## Output of `dump()` as a string
 
-The single most abused \"feature\" of the old API is not providing the
+The single most abused "feature" of the old API is not providing the
 (second) stream parameter to one of the `dump()` variants, in order to
 get a monolithic string representation of the stream back.
 

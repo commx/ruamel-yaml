@@ -3,7 +3,9 @@ text: md
 pdf: false
 # code_directory: ../_example
 --- |
-# Dumping Python classes
+# Working with Python classes
+ 
+## Dumping Python classes
 
 Only `yaml = YAML(typ='unsafe')` loads and dumps Python objects
 out-of-the-box. And since it loads **any** Python object, this can be

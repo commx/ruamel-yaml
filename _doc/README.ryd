@@ -1,6 +1,17 @@
 version: 0.2
 text: md
 pdf: false
+order:
+- overview.ryd
+- install.ryd
+- basicuse.ryd
+- dumpcls.ryd
+- detail.ryd
+- example.ryd
+- api.ryd
+- pyyaml.ryd
+- contributing.ryd
+index: False  # don't index this file or put in mkdocs.nav
 mkdocs:
   site_name: yaml
   docs_dir: _doc
@@ -86,15 +97,20 @@ email, preferably with some information on how you use the package (or a
 link to the repository) and I'll keep you informed when the status of
 the API is stable enough to make the transition.
 
+--- !index
+level: 3
+prefix: http://yaml.readthedocs.io/en/latest/
 
--   [Overview](http://yaml.readthedocs.io/en/latest/overview/)
--   [Installing](http://yaml.readthedocs.io/en/latest/install/)
--   [Basic Usage](http://yaml.readthedocs.io/en/latest/basicuse/)
--   [Details](http://yaml.readthedocs.io/en/latest/detail/)
--   [Examples](http://yaml.readthedocs.io/en/latest/example/)
--   [API](http://yaml.readthedocs.io/en/latest/api/)
--   [Differences with
-    PyYAML](http://yaml.readthedocs.io/en/latest/pyyaml/)
+# -   [Overview](http://yaml.readthedocs.io/en/latest/overview/)
+# -   [Installing](http://yaml.readthedocs.io/en/latest/install/)
+# -   [Basic Usage](http://yaml.readthedocs.io/en/latest/basicuse/)
+# -   [Details](http://yaml.readthedocs.io/en/latest/detail/)
+# -   [Examples](http://yaml.readthedocs.io/en/latest/example/)
+# -   [API](http://yaml.readthedocs.io/en/latest/api/)
+# -   [Differences with
+#     PyYAML](http://yaml.readthedocs.io/en/latest/pyyaml/)
+
+--- |
 
 [![image](https://readthedocs.org/projects/yaml/badge/?version=latest)](https://yaml.readthedocs.org/en/latest?badge=latest)[![image](https://bestpractices.coreinfrastructure.org/projects/1128/badge)](https://bestpractices.coreinfrastructure.org/projects/1128)
 [![image](https://sourceforge.net/p/ruamel-yaml/code/ci/default/tree/_doc/_static/license.svg?format=raw)](https://opensource.org/licenses/MIT)

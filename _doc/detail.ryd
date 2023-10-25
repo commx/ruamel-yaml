@@ -82,10 +82,10 @@ The defaults are as if you specified
 If the `offset` equals `sequence`, there is not enough room for the dash
 and the space that has to follow it. In that case the element itself
 would normally be pushed to the next line (and older versions of
-ruamel.yaml did so). But this is prevented from happening. However the
+`ruamel.yaml` did so). But this is prevented from happening. However the
 `indent` level is what is used for calculating the cumulative indent for
 deeper levels and specifying `sequence=3` resp. `offset=2`, might give
-correct, but counter intuitive results.
+correct, but counter-intuitive results.
 
 **It is best to always have** `sequence >= offset + 2` **but this is not
 enforced**. Depending on your structure, not following this advice
@@ -117,7 +117,7 @@ block mappings and sequences. Do only use the `pure` Python versions
 of the dumper if you want to have that sort of control.
 
 
-## Positioning \':\' in top level mappings, prefixing \':\'
+## Positioning ':' in top level mappings, prefixing ':'
 
 If you want your toplevel mappings to look like:
 

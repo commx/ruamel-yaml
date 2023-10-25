@@ -20,9 +20,10 @@ Please don\'t post support questions as an issue on sourceforge.
 
 The documentation for `ruamel.yaml` is in YAML, more specifically in
 [ryd](https://pypi.python.org/pypi/ryd) ( /rɑɪt/, pronounced like the
-verb "write" ). This is reStructuredText mixed with Python, each in
+verb "write" ). This is Markdown (previously reStructuredText)
+mixed with Python, each in
 separate YAML documents within a single file. If you know a bit of YAML,
-Python and reStructuredText it will be clear how that works.
+Python and Markdown, it will be clear how that works.
 
 If you want to contribute to the documentation, you can send me a clear
 description of the needed changes, e.g. as a unified diff. If the
@@ -49,7 +50,8 @@ should be tested (`tox`/`pytest`), checked for typing conformance
 (`mypy`) and pass pep8 conformance (`flake8`).
 
 In my experience it is best to use two `virtualenv` environments, one
-with the latest Python from the 2.7 series, the other with 3.5 or 3.6.
+with the latest Python version currently supported, the other with 
+the oldest supported version.
 In the site-packages directory of each virtualenv make a soft link to
 the ruamel directory of your (cloned and checked out) copy of the
 repository. Do not under any circumstances run `pip install -e .` or
@@ -125,3 +127,13 @@ eliminate the vulnerability in a timely fashion. After the vulnerability
 is removed, and affected parties haven been notified to allow them to
 update versions, the vulnerability will be published, and your role in
 finding/resolving this properly attributed.
+
+Please note that there is a CVE out there against `ruamel.yaml`, that states
+that the input of the function `load()` is not checked. As the
+use of `ruamel.yaml.load()` was never the default, was documented to potentially
+cause problems when specific parameters were provided, and issued a 
+warning, this was always an inappropriate statement.
+(To compare: no such CVE was given for the use of the Python standard library 
+function `pickle.load`, which only documents which is default function
+to use and only documented to potentially dangerious). The whole CVE is moot,
+with the removal of the `load()` function 0.18.
