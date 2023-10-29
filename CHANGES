@@ -1,3 +1,8 @@
+[0.18.3, 2023-10-29]:
+- fix issue with spurious newline on first item after comment + nested block sequence
+- additional links in the metadata on PyPI (Reported, with pointers how to fix, by
+  [Sorin](https://sourceforge.net/u/ssbarnea/profile/)).
+
 [0.18.2, 2023-10-24]:
 - calling the deprecated functions now raises an `AttributeError` with the, somewhat
   more informative, orginal warning message. Instead of calling `sys.exit(1)`

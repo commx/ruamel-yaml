@@ -412,6 +412,9 @@ class Parser:
                 if pt.comment and pt.comment[0]:
                     comment = [pt.comment[0], []]
                     pt.comment[0] = None
+                elif pt.comment and pt.comment[0] is None and pt.comment[1]:
+                    comment = [None, pt.comment[1]]
+                    pt.comment[1] = None
             elif self.loader:
                 if pt.comment:
                     comment = pt.comment
@@ -821,8 +824,8 @@ class RoundTripParserSC(RoundTripParser):
             return None
         if not comment[0]:
             return None
-        if comment[0][0] != line + 1:
-            nprintf('>>>dcxxx', comment, line)
+        # if comment[0][0] != line + 1:
+        #     nprintf('>>>dcxxx', comment, line)
         assert comment[0][0] == line + 1
         # if comment[0] - line > 1:
         #     return

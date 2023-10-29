@@ -11,7 +11,7 @@ order:
 - api.ryd
 - pyyaml.ryd
 - contributing.ryd
-index: False  # don't index this file or put in mkdocs.nav
+toc: False  # don't index this file or put in mkdocs.nav
 mkdocs:
   site_name: yaml
   docs_dir: _doc
@@ -46,7 +46,7 @@ mkdocs:
 --- !table
 version: !Env version 
 updated: !Env date 
-documentation: http://yaml.readthedocs.io
+documentation: https://yaml.readthedocs.io
 repository: https://sourceforge.net/projects/ruamel-yaml
 pypi:  https://pypi.org/project/ruamel.yaml
 --- |
@@ -97,19 +97,9 @@ email, preferably with some information on how you use the package (or a
 link to the repository) and I'll keep you informed when the status of
 the API is stable enough to make the transition.
 
---- !index
+--- !toc
 level: 3
-prefix: http://yaml.readthedocs.io/en/latest/
-
-# -   [Overview](http://yaml.readthedocs.io/en/latest/overview/)
-# -   [Installing](http://yaml.readthedocs.io/en/latest/install/)
-# -   [Basic Usage](http://yaml.readthedocs.io/en/latest/basicuse/)
-# -   [Details](http://yaml.readthedocs.io/en/latest/detail/)
-# -   [Examples](http://yaml.readthedocs.io/en/latest/example/)
-# -   [API](http://yaml.readthedocs.io/en/latest/api/)
-# -   [Differences with
-#     PyYAML](http://yaml.readthedocs.io/en/latest/pyyaml/)
-
+# prefix: http://yaml.readthedocs.io/en/latest/
 --- |
 
 [![image](https://readthedocs.org/projects/yaml/badge/?version=latest)](https://yaml.readthedocs.org/en/latest?badge=latest)[![image](https://bestpractices.coreinfrastructure.org/projects/1128/badge)](https://bestpractices.coreinfrastructure.org/projects/1128)

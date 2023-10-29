@@ -3,13 +3,13 @@
 `ruamel.yaml` is a YAML 1.2 loader/dumper package for Python.
 <table class="docutils">
   <tr>    <td>version</td>
-    <td>0.18.2</td>
+    <td>0.18.3</td>
   </tr>
   <tr>    <td>updated</td>
-    <td>2023-10-24</td>
+    <td>2023-10-29</td>
   </tr>
   <tr>    <td>documentation</td>
-    <td><a href="http://yaml.readthedocs.io">http://yaml.readthedocs.io</a></td>
+    <td><a href="https://yaml.readthedocs.io">https://yaml.readthedocs.io</a></td>
   </tr>
   <tr>    <td>repository</td>
     <td><a href="https://sourceforge.net/projects/ruamel-yaml">https://sourceforge.net/projects/ruamel-yaml</a></td>
@@ -65,15 +65,60 @@ email, preferably with some information on how you use the package (or a
 link to the repository) and I'll keep you informed when the status of
 the API is stable enough to make the transition.
 
+<pre>
+    <a href="overview/#overview">Overview</a>
 
--   [Overview](http://yaml.readthedocs.io/en/latest/overview/)
--   [Installing](http://yaml.readthedocs.io/en/latest/install/)
--   [Basic Usage](http://yaml.readthedocs.io/en/latest/basicuse/)
--   [Details](http://yaml.readthedocs.io/en/latest/detail/)
--   [Examples](http://yaml.readthedocs.io/en/latest/example/)
--   [API](http://yaml.readthedocs.io/en/latest/api/)
--   [Differences with
-    PyYAML](http://yaml.readthedocs.io/en/latest/pyyaml/)
+    <a href="install/#installing">Installing</a>
+      <a href="install/#optional-requirements">Optional requirements</a>
+
+    <a href="basicuse/#basic-usage">Basic Usage</a>
+      <a href="basicuse/#load-and-dump">Load and dump  </a>
+      <a href="basicuse/#more-examples">More examples</a>
+
+    <a href="dumpcls/#working-with-python-classes">Working with Python classes</a>
+      <a href="dumpcls/#dumping-python-classes">Dumping Python classes</a>
+      <a href="dumpcls/#dataclass">Dataclass</a>
+
+    <a href="detail/#details">Details</a>
+      <a href="detail/#indentation-of-block-sequences">Indentation of block sequences</a>
+        <a href="detail/#inconsistently-indented-yaml">Inconsistently indented YAML</a>
+        <a href="detail/#indenting-using-typsafe">Indenting using `typ="safe"`</a>
+      <a href="detail/#positioning-in-top-level-mappings-prefixing">Positioning ':' in top level mappings, prefixing ':'</a>
+        <a href="detail/#document-version-support">Document version support</a>
+        <a href="detail/#round-trip-including-comments">Round trip including comments</a>
+    <a href="detail/#config-file-formats">Config file formats</a>
+    <a href="detail/#extending">Extending</a>
+    <a href="detail/#smartening">Smartening</a>
+
+    <a href="example/#examples">Examples</a>
+      <a href="example/#output-of-dump-as-a-string">Output of `dump()` as a string</a>
+
+    <a href="api/#departure-from-previous-api">Departure from previous API</a>
+      <a href="api/#loading">Loading</a>
+        <a href="api/#duplicate-keys">Duplicate keys</a>
+      <a href="api/#dumping-a-multi-document-yaml-stream">Dumping a multi-document YAML stream</a>
+      <a href="api/#dumping">Dumping</a>
+        <a href="api/#controls">Controls</a>
+      <a href="api/#transparent-usage-of-new-and-old-api">Transparent usage of new and old API</a>
+      <a href="api/#reason-for-api-change">Reason for API change</a>
+
+    <a href="pyyaml/#differences-with-pyyaml">Differences with PyYAML</a>
+      <a href="pyyaml/#defaulting-to-yaml-12-support">Defaulting to YAML 1.2 support</a>
+      <a href="pyyaml/#py2py3-reintegration">PY2/PY3 reintegration</a>
+      <a href="pyyaml/#fixes">Fixes</a>
+      <a href="pyyaml/#testing">Testing</a>
+      <a href="pyyaml/#api">API</a>
+
+    <a href="contributing/#contributing">Contributing</a>
+      <a href="contributing/#documentation">Documentation</a>
+      <a href="contributing/#code">Code</a>
+        <a href="contributing/#flake">Flake</a>
+        <a href="contributing/#toxpytest">Tox/pytest</a>
+        <a href="contributing/#typingmypy">Typing/mypy</a>
+      <a href="contributing/#generated-files">Generated files</a>
+      <a href="contributing/#vulnerabilities">Vulnerabilities</a>
+</pre>
+
 
 [![image](https://readthedocs.org/projects/yaml/badge/?version=latest)](https://yaml.readthedocs.org/en/latest?badge=latest)[![image](https://bestpractices.coreinfrastructure.org/projects/1128/badge)](https://bestpractices.coreinfrastructure.org/projects/1128)
 [![image](https://sourceforge.net/p/ruamel-yaml/code/ci/default/tree/_doc/_static/license.svg?format=raw)](https://opensource.org/licenses/MIT)
@@ -82,6 +127,11 @@ the API is stable enough to make the transition.
 [![image](http://www.mypy-lang.org/static/mypy_badge.svg)](http://mypy-lang.org/)
 
 # ChangeLog
+
+0.18.3 (2023-10-29):
+
+- fix issue with spurious newline on first item after comment + nested block sequence
+- additional links in the metadata on PyPI (Reported, with pointers how to fix, by [Sorin](https://sourceforge.net/u/ssbarnea/profile/)).
 
 0.18.2 (2023-10-24):
 

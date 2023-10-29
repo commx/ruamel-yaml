@@ -63,6 +63,14 @@ class Indents:
     def pop(self) -> Any:
         return self.values.pop()[0]
 
+    def seq_seq(self) -> bool:
+        try:
+            if self.values[-2][1] and self.values[-1][1]:
+                return True
+        except IndexError:
+            pass
+        return False
+
     def last_seq(self) -> bool:
         # return the seq(uence) value for the element added before the last one
         # in increase_indent()
@@ -419,7 +427,6 @@ class Emitter:
                 # nprint('@', self.indention, self.no_newline, self.column)
                 self.expect_scalar()
             elif isinstance(self.event, SequenceStartEvent):
-                # nprint('@', self.indention, self.no_newline, self.column)
                 i2, n2 = self.indention, self.no_newline  # NOQA
                 if self.event.comment:
                     if self.event.flow_style is False:
@@ -445,6 +452,10 @@ class Emitter:
                     self.expect_flow_sequence(force_flow_indent)
                 else:
                     self.expect_block_sequence()
+                if self.indents.seq_seq():
+                    # - -
+                    self.indention = True
+                    self.no_newline = False
             elif isinstance(self.event, MappingStartEvent):
                 if self.event.flow_style is False and self.event.comment:
                     self.write_post_comment(self.event)
@@ -895,7 +906,7 @@ class Emitter:
         elif self.style == '>':
             try:
                 cmx = self.event.comment[1][0]
-            except (IndexError, TypeError):
+            except (IndexError, TypeError) as e:  # NOQA
                 cmx = ""
             self.write_folded(self.analysis.scalar, cmx)
             if (
@@ -1718,6 +1729,8 @@ class Emitter:
             self.write_line_break()
 
     def write_pre_comment(self, event: Any) -> bool:
+        if event.comment is None:
+            return False
         comments = event.comment[1]
         if comments is None:
             return False

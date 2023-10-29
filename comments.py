@@ -24,6 +24,7 @@ from typing import Any, Dict, Optional, List, Union, Optional, Iterator  # NOQA
 __all__ = ['CommentedSeq', 'CommentedKeySeq',
            'CommentedMap', 'CommentedOrderedMap',
            'CommentedSet', 'comment_attrib', 'merge_attrib',
+           'TaggedScalar',
            'C_POST', 'C_PRE', 'C_SPLIT_ON_FIRST_BLANK', 'C_BLANK_LINE_PRESERVE_SPACE',
            ]
 # fmt: on
@@ -435,7 +436,11 @@ class CommentedBase:
     def yaml_set_ctag(self, value: Tag) -> None:
         setattr(self, Tag.attrib, value)
 
-    def copy_attributes(self, t: Any, memo: Any = None) -> None:
+    def copy_attributes(self, t: Any, memo: Any = None) -> Any:
+        """
+        copies the YAML related attributes, not e.g. .values
+        returns target
+        """
         # fmt: off
         for a in [Comment.attrib, Format.attrib, LineCol.attrib, Anchor.attrib,
                   Tag.attrib, merge_attrib]:
@@ -444,6 +449,7 @@ class CommentedBase:
                     setattr(t, a, copy.deepcopy(getattr(self, a, memo)))
                 else:
                     setattr(t, a, getattr(self, a))
+        return t
         # fmt: on
 
     def _yaml_add_eol_comment(self, comment: Any, key: Any) -> None:

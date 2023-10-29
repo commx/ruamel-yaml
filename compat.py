@@ -97,17 +97,17 @@ if bool(_debug):
 
 # used from yaml util when testing
 def dbg(val: Any = None) -> Any:
-    global _debug
-    if _debug is None:
+    debug = _debug
+    if debug is None:
         # set to true or false
         _debugx = os.environ.get('YAMLDEBUG')
         if _debugx is None:
-            _debug = 0
+            debug = 0
         else:
-            _debug = int(_debugx)
+            debug = int(_debugx)
     if val is None:
-        return _debug
-    return _debug & val
+        return debug
+    return debug & val
 
 
 class Nprint:
