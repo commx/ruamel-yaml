@@ -3,10 +3,10 @@
 `ruamel.yaml` is a YAML 1.2 loader/dumper package for Python.
 <table class="docutils">
   <tr>    <td>version</td>
-    <td>0.18.3</td>
+    <td>0.18.4</td>
   </tr>
   <tr>    <td>updated</td>
-    <td>2023-10-29</td>
+    <td>2023-11-01</td>
   </tr>
   <tr>    <td>documentation</td>
     <td><a href="https://yaml.readthedocs.io">https://yaml.readthedocs.io</a></td>
@@ -127,6 +127,13 @@ the API is stable enough to make the transition.
 [![image](http://www.mypy-lang.org/static/mypy_badge.svg)](http://mypy-lang.org/)
 
 # ChangeLog
+
+0.18.4 (2023-11-01):
+
+- YAML() instance has a `doc_infos` attribute which is a cumulative list of DocInfo instances (one for `load()`, one per document for `load_all()`). DocInfo instances contain version information (requested, directive) and tag directive information
+- fix issue that the YAML instance tags attribute was not reset between documents, resulting in mixing of tag directives of multiple documents. Now only provides tag directive information on latest document after loading. This means tags for dumping must be set **again** after a document is loaded with the same instance. (because of this tags will be removed in a favour of a different mechanism in the future)
+- fix issue with multiple document intermixing YAML 1.2 and YAML 1.1, the VersionedResolver now resets
+- fix issue with disappearing comment when next token was Tag (still can't have both a comment before a tag and after a tag, before node)
 
 0.18.3 (2023-10-29):
 

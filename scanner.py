@@ -31,10 +31,10 @@
 import inspect
 from ruamel.yaml.error import MarkedYAMLError, CommentMark  # NOQA
 from ruamel.yaml.tokens import *  # NOQA
+from ruamel.yaml.docinfo import Version, Tag  # NOQA
 from ruamel.yaml.compat import check_anchorname_char, nprint, nprintf  # NOQA
 
-from typing import Any, Dict, Optional, List, Union, Text  # NOQA
-from ruamel.yaml.compat import VersionType  # NOQA
+from typing import Any, Dict, Optional, List, Union, Text, Tuple  # NOQA
 
 __all__ = ['Scanner', 'RoundTripScanner', 'ScannerError']
 
@@ -84,7 +84,6 @@ class Scanner:
             self.loader._scanner = self
         self.reset_scanner()
         self.first_time = False
-        self.yaml_version: Any = None
 
     @property
     def flow_level(self) -> int:
@@ -142,6 +141,8 @@ class Scanner:
         # A simple key may start with ALIAS, ANCHOR, TAG, SCALAR(flow),
         # '[', or '{' tokens.
         self.possible_simple_keys: Dict[Any, Any] = {}
+        self.yaml_version: Any = None
+        self.tag_directives: List[Tuple[Any, Any]] = []
 
     @property
     def reader(self) -> Any:
@@ -911,6 +912,7 @@ class Scanner:
                 self.reader.get_mark(),
             )
         self.yaml_version = (major, minor)
+        self.loader.doc_infos[-1].doc_version = Version(major, minor)
         return self.yaml_version
 
     def scan_yaml_directive_number(self, start_mark: Any) -> Any:
@@ -942,7 +944,9 @@ class Scanner:
         while srp() == ' ':
             srf()
         prefix = self.scan_tag_directive_prefix(start_mark)
-        return (handle, prefix)
+        ret_val = (handle, prefix)
+        self.tag_directives.append(ret_val)
+        return ret_val
 
     def scan_tag_directive_handle(self, start_mark: Any) -> Any:
         # See the specification for details.

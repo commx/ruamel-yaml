@@ -330,6 +330,7 @@ class VersionedResolver(BaseResolver):
         if isinstance(version, list):
             return tuple(version)
         # assume string
+        assert isinstance(version, str)
         return tuple(map(int, version.split('.')))
 
     @property

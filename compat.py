@@ -1,5 +1,7 @@
 # coding: utf-8
 
+from __future__ import annotations
+
 # partially from package six by Benjamin Peterson
 
 import sys
@@ -18,7 +20,6 @@ try:
 except ImportError:
     SupportsIndex = int  # type: ignore
 # fmt: on
-
 
 _DEFAULT_YAML_VERSION = (1, 2)
 
@@ -50,12 +51,11 @@ class ordereddict(OrderedDict):  # type: ignore
 StringIO = io.StringIO
 BytesIO = io.BytesIO
 
-# StreamType = Union[BinaryIO, IO[str], IO[unicode],  StringIO]
-# StreamType = Union[BinaryIO, IO[str], StringIO]  # type: ignore
 StreamType = Any
 
-StreamTextType = StreamType  # Union[Text, StreamType]
-VersionType = Union[List[int], str, Tuple[int, int]]
+StreamTextType = StreamType
+from ruamel.yaml.docinfo import Version  # NOQA
+VersionType = Union[str , Tuple[int, int] , List[int] , Version , None]
 
 builtins_module = 'builtins'
 

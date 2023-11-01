@@ -1,5 +1,7 @@
 # coding: utf-8
 
+from __future__ import annotations
+
 import sys
 import os
 import warnings
@@ -32,8 +34,9 @@ from ruamel.yaml.constructor import (
 )
 from ruamel.yaml.loader import Loader as UnsafeLoader  # NOQA
 from ruamel.yaml.comments import CommentedMap, CommentedSeq, C_PRE
+from ruamel.yaml.docinfo import DocInfo, version, Version
 
-from typing import List, Set, Dict, Union, Any, Callable, Optional, Text, Type  # NOQA
+from typing import List, Set, Dict, Tuple, Union, Any, Callable, Optional, Text, Type  # NOQA
 from types import TracebackType
 from ruamel.yaml.compat import StreamType, StreamTextType, VersionType  # NOQA
 from pathlib import Path  # NOQA
@@ -178,7 +181,8 @@ class YAML:
         self.encoding = 'utf-8'
         self.explicit_start: Union[bool, None] = None
         self.explicit_end: Union[bool, None] = None
-        self.tags = None
+        self._tags = None
+        self.doc_infos: List[DocInfo] = []
         self.default_style = None
         self.top_level_block_style_scalar_no_indent_error_1_1 = False
         # directives end indicator with single scalar document
@@ -255,10 +259,13 @@ class YAML:
 
     @property
     def resolver(self) -> Any:
-        attr = '_' + sys._getframe().f_code.co_name
-        if not hasattr(self, attr):
-            setattr(self, attr, self.Resolver(version=self.version, loader=self))
-        return getattr(self, attr)
+        try:
+            rslvr = self._resolver  # type: ignore
+        except AttributeError:
+            rslvr = None
+        if rslvr is None or rslvr._loader_version != self.version:
+            rslvr = self._resolver = self.Resolver(version=self.version, loader=self)
+        return rslvr
 
     @property
     def emitter(self) -> Any:
@@ -335,20 +342,19 @@ class YAML:
             # pathlib.Path() instance
             with stream.open('rb') as fp:
                 return self.scan(fp)
+        self.doc_infos.append(DocInfo(requested_version=version(self.version)))
+        self.tags = {}
         _, parser = self.get_constructor_parser(stream)
         try:
             while self.scanner.check_token():
                 yield self.scanner.get_token()
         finally:
             parser.dispose()
-            try:
-                self._reader.reset_reader()
-            except AttributeError:
-                pass
-            try:
-                self._scanner.reset_scanner()
-            except AttributeError:
-                pass
+            for comp in ('reader', 'scanner'):
+                try:
+                    getattr(getattr(self, '_' + comp), f'reset_{comp}')()
+                except AttributeError:
+                    pass
 
     def parse(self, stream: StreamTextType) -> Any:
         """
@@ -358,20 +364,19 @@ class YAML:
             # pathlib.Path() instance
             with stream.open('rb') as fp:
                 return self.parse(fp)
+        self.doc_infos.append(DocInfo(requested_version=version(self.version)))
+        self.tags = {}
         _, parser = self.get_constructor_parser(stream)
         try:
             while parser.check_event():
                 yield parser.get_event()
         finally:
             parser.dispose()
-            try:
-                self._reader.reset_reader()
-            except AttributeError:
-                pass
-            try:
-                self._scanner.reset_scanner()
-            except AttributeError:
-                pass
+            for comp in ('reader', 'scanner'):
+                try:
+                    getattr(getattr(self, '_' + comp), f'reset_{comp}')()
+                except AttributeError:
+                    pass
 
     def compose(self, stream: Union[Path, StreamTextType]) -> Any:
         """
@@ -382,39 +387,37 @@ class YAML:
             # pathlib.Path() instance
             with stream.open('rb') as fp:
                 return self.compose(fp)
+        self.doc_infos.append(DocInfo(requested_version=version(self.version)))
+        self.tags = {}
         constructor, parser = self.get_constructor_parser(stream)
         try:
             return constructor.composer.get_single_node()
         finally:
             parser.dispose()
-            try:
-                self._reader.reset_reader()
-            except AttributeError:
-                pass
-            try:
-                self._scanner.reset_scanner()
-            except AttributeError:
-                pass
+            for comp in ('reader', 'scanner'):
+                try:
+                    getattr(getattr(self, '_' + comp), f'reset_{comp}')()
+                except AttributeError:
+                    pass
 
     def compose_all(self, stream: Union[Path, StreamTextType]) -> Any:
         """
         Parse all YAML documents in a stream
         and produce corresponding representation trees.
         """
+        self.doc_infos.append(DocInfo(requested_version=version(self.version)))
+        self.tags = {}
         constructor, parser = self.get_constructor_parser(stream)
         try:
             while constructor.composer.check_node():
                 yield constructor.composer.get_node()
         finally:
             parser.dispose()
-            try:
-                self._reader.reset_reader()
-            except AttributeError:
-                pass
-            try:
-                self._scanner.reset_scanner()
-            except AttributeError:
-                pass
+            for comp in ('reader', 'scanner'):
+                try:
+                    getattr(getattr(self, '_' + comp), f'reset_{comp}')()
+                except AttributeError:
+                    pass
 
     # separate output resolver?
 
@@ -441,19 +444,18 @@ class YAML:
             # pathlib.Path() instance
             with stream.open('rb') as fp:
                 return self.load(fp)
+        self.doc_infos.append(DocInfo(requested_version=version(self.version)))
+        self.tags = {}
         constructor, parser = self.get_constructor_parser(stream)
         try:
             return constructor.get_single_data()
         finally:
             parser.dispose()
-            try:
-                self._reader.reset_reader()
-            except AttributeError:
-                pass
-            try:
-                self._scanner.reset_scanner()
-            except AttributeError:
-                pass
+            for comp in ('reader', 'scanner'):
+                try:
+                    getattr(getattr(self, '_' + comp), f'reset_{comp}')()
+                except AttributeError:
+                    pass
 
     def load_all(self, stream: Union[Path, StreamTextType]) -> Any:  # *, skip=None):
         if not hasattr(stream, 'read') and hasattr(stream, 'open'):
@@ -466,20 +468,20 @@ class YAML:
         #     skip = []
         # elif isinstance(skip, int):
         #     skip = [skip]
+        self.doc_infos.append(DocInfo(requested_version=version(self.version)))
+        self.tags = {}
         constructor, parser = self.get_constructor_parser(stream)
         try:
             while constructor.check_data():
                 yield constructor.get_data()
+                self.doc_infos.append(DocInfo(requested_version=version(self.version)))
         finally:
             parser.dispose()
-            try:
-                self._reader.reset_reader()
-            except AttributeError:
-                pass
-            try:
-                self._scanner.reset_scanner()
-            except AttributeError:
-                pass
+            for comp in ('reader', 'scanner'):
+                try:
+                    getattr(getattr(self, '_' + comp), f'reset_{comp}')()
+                except AttributeError:
+                    pass
 
     def get_constructor_parser(self, stream: StreamTextType) -> Any:
         """
@@ -824,22 +826,34 @@ class YAML:
             self.sequence_dash_offset = offset
 
     @property
-    def version(self) -> Optional[Any]:
+    def version(self) -> Optional[Tuple[int, int]]:
         return self._version
 
     @version.setter
-    def version(self, val: Optional[VersionType]) -> None:
+    def version(self, val: VersionType) -> None:
         if val is None:
             self._version = val
             return
-        if isinstance(val, str):
+        elif isinstance(val, str):
             sval = tuple(int(x) for x in val.split('.'))
-        else:
+        elif isinstance(val, (list, tuple)):
             sval = tuple(int(x) for x in val)
+        elif isinstance(val, Version):
+            sval = (val.major, val.minor)
+        else:
+            raise TypeError(f'unknown version type {type(val)}')
         assert len(sval) == 2, f'version can only have major.minor, got {val}'
         assert sval[0] == 1, f'version major part can only be 1, got {val}'
         assert sval[1] in [1, 2], f'version minor part can only be 2 or 1, got {val}'
         self._version = sval
+
+    @property
+    def tags(self) -> Any:
+        return self._tags
+
+    @tags.setter
+    def tags(self, val: Any) -> None:
+        self._tags = val
 
     @property
     def indent(self) -> Any:
