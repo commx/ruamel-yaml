@@ -1,3 +1,7 @@
+[0.18.5, 2023-11-03]:
+- there is some indication that dependent packages have been pinned to use specific
+  (tested) and just install the latest even in Python versions that have end-of-life
+
 [0.18.4, 2023-11-01]:
 - YAML() instance has a `doc_infos` attribute which is a cumulative list of DocInfo
   instances (one for `load()`, one per document for `load_all()`). DocInfo instances

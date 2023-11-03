@@ -314,6 +314,8 @@ class Parser:
         else:
             value = yaml_version, None
         if self.loader is not None and hasattr(self.loader, 'tags'):
+            # ToDo: this is used to keep a single loaded file from losing its version
+            # info, but  it affects following versions that have no explicit directive
             self.loader.version = yaml_version
             if self.loader.tags is None:
                 self.loader.tags = {}

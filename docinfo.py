@@ -4,15 +4,19 @@ from __future__ import annotations
 """
 DocInfo
 
-Although it was possible to write tag directives, you would
-have to subclass the serializer to do so. DocInfo
-can be used by a yaml dumper to dump a class
+Although it was possible to read tag directives before this, all handle/prefix
+pairs for all documents in all streams were stored in one dictionary per
+YAML instance, making it impossible to distinguish where such a pair came
+from without sublassing the scanner.
+
+ToDo:
+DocInfo can be used by a yaml dumper to dump a class
 - if connected to the root of a data structure
 - if provided to the dumper?
 """
 
 from typing import Optional, Tuple
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, MISSING  # NOQA
 
 
 @dataclass(order=True, frozen=True)
@@ -54,7 +58,10 @@ class Tag:
 class DocInfo:
     """
     Store document information, can be used for analysis of a loaded YAML document
+    requested_version: if explicitly set before load
+    doc_version: from %YAML directive
+    tags: from %TAG directives in scanned order
     """
     requested_version: Optional[Version] = None
     doc_version: Optional[Version] = None
-    tags: list[Tag] = field(default_factory=list)  # tag directives in order
+    tags: list[Tag] = field(default_factory=list)
