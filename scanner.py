@@ -1995,8 +1995,6 @@ class CommentBase:
 
     def set_used(self, v: Any = '+') -> None:
         self.used = v
-        import inspect
-
         if _debug != 0:
             import inspect
 
@@ -2188,8 +2186,6 @@ class ScannedComments:
         sys.exit(0)
 
     def assign_post(self, token: Any) -> Any:
-        import inspect
-
         token_line = token.start_mark.line
         if _debug != 0:
             import inspect

@@ -155,7 +155,6 @@ class TestDateTime:
         rd = yaml.load(buf.getvalue())
         assert rd == dd
 
-
     def test_deepcopy_datestring(self) -> None:
         # reported by Quuxplusone, http://stackoverflow.com/a/41577841/1307905
         x = dedent("""\
@@ -188,8 +187,7 @@ class TestDateTime:
         print('----')
         # dx = DateTime.fromisoformat(dts)
         # print('dx', dx, repr(dx))
-        dd = DateTime(2011, 10, 2, 16, 45, 00, 930619, TimeZone(TimeDelta(hours=1,minutes=0), name='+01:00'))
+        dd = DateTime(2011, 10, 2, 16, 45, 00, 930619, TimeZone(TimeDelta(hours=1, minutes=0), name='+01:00'))  # NOQA
         yaml.dump([dd], sys.stdout)
         print('dd', dd, dd.tzinfo)
-        assert False
-
+        raise AssertionError()

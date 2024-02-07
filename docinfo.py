@@ -20,6 +20,7 @@ if False:  # MYPY
 
 # from dataclasses import dataclass, field, MISSING  # NOQA
 
+
 # @dataclass(order=True, frozen=True)
 class Version:
     # major: int
@@ -68,6 +69,7 @@ class Version:
         if self._major < v._major:
             return False
         return self._minor >= v._minor
+
 
 def version(
     major: int | str | Tuple[int, int] | None,

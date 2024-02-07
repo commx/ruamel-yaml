@@ -2,12 +2,7 @@
 from __future__ import annotations
 
 import datetime
-from datetime import (
-    datetime as DateTime,
-    date as Date,
-    timezone as TimeZone,
-    timedelta as TimeDelta
-)
+from datetime import timedelta as TimeDelta
 import binascii
 import sys
 import types
@@ -1691,24 +1686,20 @@ class RoundTripConstructor(SafeConstructor):
             return create_timestamp(**values)
             # return SafeConstructor.construct_yaml_timestamp(self, node, values)
         # print('>>>>>>>> here', values)
-        dd = create_timestamp(**values)  # this has delta applied
+        dd = create_timestamp(**values)  # this has tzinfo
         delta = None
-        timezone = None
         if values['tz_sign']:
             hours = values['tz_hour']
             tz_hour = int(hours)
             minutes = values['tz_minute']
             tz_minute = int(minutes) if minutes else 0
+            # ToDo: double work, replace with extraction from dd.tzinfo
             delta = TimeDelta(hours=tz_hour, minutes=tz_minute)
             if values['tz_sign'] == '-':
                 delta = -delta
-            # timezone = TimeZone(delta, name=f'{values["tz_sign"]}{tz_hour:02d}:{tz_minute:02d}')
-            timezone = TimeZone(delta, name=values['tz'])
-        # should check for None and solve issue 366 should be tzinfo=delta)
-        # isinstance(datetime.datetime.now, datetime.date) is true)
         if isinstance(dd, datetime.datetime):
             data = TimeStamp(
-                dd.year, dd.month, dd.day, dd.hour, dd.minute, dd.second, dd.microsecond, dd.tzinfo,
+                dd.year, dd.month, dd.day, dd.hour, dd.minute, dd.second, dd.microsecond, dd.tzinfo,  # NOQA
             )
         else:
             # ToDo: make this into a DateStamp?

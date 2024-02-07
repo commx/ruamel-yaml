@@ -1035,7 +1035,7 @@ class RoundTripRepresenter(SafeRepresenter):
             value += _yaml['tz']
         if data.tzinfo and str(data.tzinfo):
             if value[-6] in '+-':
-                value=value[:-6] + str(data.tzinfo)
+                value = value[:-6] + str(data.tzinfo)
         return self.represent_scalar('tag:yaml.org,2002:timestamp', value)
 
     def represent_tagged_scalar(self, data: Any) -> ScalarNode:
