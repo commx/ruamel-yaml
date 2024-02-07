@@ -177,7 +177,7 @@ class TestDateTime:
         """)
         round_trip(inp, exp)
 
-    def xtest_tzinfo(self) -> None:
+    def Xtest_tzinfo(self) -> None:
         import ruamel.yaml
 
         yaml = ruamel.yaml.YAML()

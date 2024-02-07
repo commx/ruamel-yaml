@@ -34,9 +34,9 @@ or put something to that effects in your requirments, to give yourself
 some time to solve the issue.
 
 There will be at least one more potentially breaking change in the 0.18 series: `YAML(typ='unsafe')`
-now has a pending deprecation warning and is going to be deprecated, probably before the end of 2023.
+now has a pending deprecation warning and is going to be deprecated, probably before summer 2023.
 If you only use it to dump, please use the new `YAML(typ='full')`, the result of that can be *safely*
-loaded with a default  instance `YAML()`, as that will get you inspectable, tagged, scalars, instead of
+loaded with a default instance `YAML()`, as that will get you inspectable, tagged, scalars, instead of
 executed Python functions/classes. (You should probably add constructors for what you actually need, 
 but I do consider adding a `ruamel.yaml.unsafe` package that will re-add the `typ='unsafe'` option.
 *Please adjust/pin your dependencies accordingly if necessary.*
@@ -55,7 +55,6 @@ is only documented to be unsafe, without development-time warning.
 
 Version 0.17.21 was the last one tested to be working on Python 3.5 and 3.6<BR>
 The 0.16.13 release was the last that was tested to be working on Python 2.7.
-
 
 There are two extra plug-in packages
 (`ruamel.yaml.bytes` and `ruamel.yaml.string`)
@@ -131,6 +130,8 @@ the API is stable enough to make the transition.
 
 # ChangeLog
 NEXT:<br>
+- Improved loading time based on a detailed analysis and suggestions by [Marcel Bargull](https://sourceforge.net/u/mbargull/profile/) ([issue 504](https://sourceforge.net/p/ruamel-yaml/tickets/504/))
+- fix issue 366 where date-time-stamps did not have proper timezone information. Reported by (Anthon Akhmerov)[https://sourceforge.net/u/akhmerov/profile/].
 - fixed an issue with dataclass loading when the fields were collections (bug found as a result of a question by [FibroMyAlgebra](https://stackoverflow.com/users/6855070/fibromyalgebra) on [StackOverflow](https://stackoverflow.com/a/77485786/1307905))
 - fixed an issue loading dataclasses with `InitVar` fields when `from __future__ import annotations` was used to delay evaluation of typing.
 
