@@ -1,4 +1,5 @@
-# coding: utf-8
+
+from __future__ import annotations
 
 # Emitter expects events obeying the following grammar:
 # stream ::= STREAM-START document* STREAM-END
@@ -17,8 +18,9 @@ from ruamel.yaml.compat import nprint, dbg, DBG_EVENT, \
 # fmt: on
 
 
-from typing import Any, Dict, List, Union, Text, Tuple, Optional  # NOQA
-from ruamel.yaml.compat import StreamType  # NOQA
+if False:  # MYPY
+    from typing import Any, Dict, List, Union, Text, Tuple, Optional  # NOQA
+    from ruamel.yaml.compat import StreamType  # NOQA
 
 __all__ = ['Emitter', 'EmitterError']
 

@@ -1,4 +1,5 @@
 
+from __future__ import annotations
 
 from dataclasses import dataclass, fields, InitVar   # NOQA
 from textwrap import dedent
@@ -133,3 +134,47 @@ class TestDataClasses:
         dc2 = yaml.load(yaml_str)
         assert dc2.xyz == 'hello'
         assert dc2.klm == 55 + len('hello')
+
+    def test_collection_field(self) -> None:
+        # https://stackoverflow.com/a/77485786/1307905
+        import ruamel.yaml
+        from dataclasses import dataclass
+
+        @dataclass
+        class Msg:
+
+            id: int
+            desc: str
+            fields: list[Field]
+
+            def __post_init__(self) -> None:
+                idx: int = 0
+                for field in self.fields:  # why is this empty??
+                    field.index = idx
+                    idx += field.size
+
+        @dataclass
+        class Field:
+            id: int
+            name: str
+            units: str
+            size: int
+            index: int = -1
+
+        yaml = ruamel.yaml.YAML()
+        yaml.register_class(Msg)
+        yaml.register_class(Field)
+
+        msg: Msg = yaml.load("""\
+        !Msg
+        id: 1
+        desc: status
+        fields:
+        - !Field
+            id: 1
+            name: Temp
+            units: degC
+            size: 2
+        """)
+
+        assert msg.fields[0].index != -1

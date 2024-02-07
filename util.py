@@ -1,4 +1,5 @@
-# coding: utf-8
+
+from __future__ import annotations
 
 """
 some helper functions that might be generally useful
@@ -9,8 +10,9 @@ from functools import partial
 import re
 
 
-from typing import Any, Dict, Optional, List, Text, Callable, Union  # NOQA
-from .compat import StreamTextType  # NOQA
+if False:  # MYPY
+    from typing import Any, Dict, Optional, List, Text, Callable, Union  # NOQA
+    from .compat import StreamTextType  # NOQA
 
 
 class LazyEval:
@@ -60,6 +62,72 @@ timestamp_regexp = RegExp(
 
 
 def create_timestamp(
+    year: Any,
+    month: Any,
+    day: Any,
+    t: Any,
+    hour: Any,
+    minute: Any,
+    second: Any,
+    fraction: Any,
+    tz: Any,
+    tz_sign: Any,
+    tz_hour: Any,
+    tz_minute: Any,
+) -> Union[datetime.datetime, datetime.date]:
+    # create a timestamp from matching against timestamp_regexp
+    MAX_FRAC = 999999
+    year = int(year)
+    month = int(month)
+    day = int(day)
+    if hour is None:
+        return datetime.date(year, month, day)
+    hour = int(hour)
+    minute = int(minute)
+    second = int(second)
+    frac = 0
+    if fraction:
+        frac_s = fraction[:6]
+        while len(frac_s) < 6:
+            frac_s += '0'
+        frac = int(frac_s)
+        if len(fraction) > 6 and int(fraction[6]) > 4:
+            frac += 1
+        if frac > MAX_FRAC:
+            fraction = 0
+        else:
+            fraction = frac
+    else:
+        fraction = 0
+    tzinfo = None
+    delta = None
+    if tz_sign:
+        tz_hour = int(tz_hour)
+        tz_minute = int(tz_minute) if tz_minute else 0
+        td = datetime.timedelta(
+            hours=tz_hour, minutes=tz_minute,
+        )
+        if tz_sign == '-':
+            td = -td
+        tzinfo = datetime.timezone(td, name=tz)
+    elif tz == 'Z':
+        tzinfo = datetime.timezone(datetime.timedelta(hours=0), name=tz)
+    if frac > MAX_FRAC:
+        delta = -datetime.timedelta(seconds=1)
+    # should do something else instead (or hook this up to the preceding if statement
+    # in reverse
+    #  if delta is None:
+    #      return datetime.datetime(year, month, day, hour, minute, second, fraction)
+    #  return datetime.datetime(year, month, day, hour, minute, second, fraction,
+    #                           datetime.timezone.utc)
+    # the above is not good enough though, should provide tzinfo. In Python3 that is easily
+    # doable drop that kind of support for Python2 as it has not native tzinfo
+    data = datetime.datetime(year, month, day, hour, minute, second, fraction, tzinfo)
+    if delta:
+        data -= delta
+    return data
+
+def create_timestamp_old(
     year: Any,
     month: Any,
     day: Any,

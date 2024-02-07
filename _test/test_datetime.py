@@ -19,8 +19,10 @@ Please note that a fraction can only be included if not equal to 0
 
 """
 
+import sys
 import copy
 import pytest  # type: ignore  # NOQA
+from datetime import datetime as DateTime, timezone as TimeZone, timedelta as TimeDelta
 
 from roundtrip import round_trip, dedent, round_trip_load, round_trip_dump  # type: ignore # NOQA
 
@@ -138,6 +140,22 @@ class TestDateTime:
         dt: 2016-08-19T22:45:47Z
         """)
 
+    def test_issue_366(self) -> None:
+        import ruamel.yaml
+        import io
+
+        round_trip("""
+        [2021-02-01 22:34:48.696868-03:00]
+        """)
+        yaml = ruamel.yaml.YAML()
+        dd = DateTime(2021, 2, 1, 22, 34, 48, 696868, TimeZone(TimeDelta(hours=-3), name=''))
+        buf = io.StringIO()
+        yaml.dump(dd, buf)
+        assert buf.getvalue() == '2021-02-01 22:34:48.696868-03:00\n...\n'
+        rd = yaml.load(buf.getvalue())
+        assert rd == dd
+
+
     def test_deepcopy_datestring(self) -> None:
         # reported by Quuxplusone, http://stackoverflow.com/a/41577841/1307905
         x = dedent("""\
@@ -158,3 +176,20 @@ class TestDateTime:
         - 2022-01-02T12:35:00
         """)
         round_trip(inp, exp)
+
+    def xtest_tzinfo(self) -> None:
+        import ruamel.yaml
+
+        yaml = ruamel.yaml.YAML()
+        dts = '2011-10-02T16:45:00.930619+01:00'
+        d = yaml.load(dts)
+        print('d', repr(d), d._yaml)
+        yaml.dump(dict(x=d), sys.stdout)
+        print('----')
+        # dx = DateTime.fromisoformat(dts)
+        # print('dx', dx, repr(dx))
+        dd = DateTime(2011, 10, 2, 16, 45, 00, 930619, TimeZone(TimeDelta(hours=1,minutes=0), name='+01:00'))
+        yaml.dump([dd], sys.stdout)
+        print('dd', dd, dd.tzinfo)
+        assert False
+

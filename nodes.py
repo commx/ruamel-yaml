@@ -1,8 +1,10 @@
-# coding: utf-8
+
+from __future__ import annotations
 
 import sys
 
-from typing import Dict, Any, Text, Optional  # NOQA
+if False:  # MYPY
+    from typing import Dict, Any, Text, Optional  # NOQA
 from ruamel.yaml.tag import Tag
 
 

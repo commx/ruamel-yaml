@@ -1,4 +1,5 @@
-# coding: utf-8
+
+from __future__ import annotations
 
 # The following YAML grammar is LL(1) and is parsed by a recursive descent
 # parser.
@@ -83,7 +84,8 @@ from ruamel.yaml.comments import C_PRE, C_POST, C_SPLIT_ON_FIRST_BLANK
 from ruamel.yaml.compat import nprint, nprintf  # NOQA
 from ruamel.yaml.tag import Tag
 
-from typing import Any, Dict, Optional, List, Optional  # NOQA
+if False:  # MYPY
+    from typing import Any, Dict, Optional, List, Optional  # NOQA
 
 __all__ = ['Parser', 'RoundTripParser', 'ParserError']
 

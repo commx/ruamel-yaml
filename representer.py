@@ -1,4 +1,5 @@
-# coding: utf-8
+
+from __future__ import annotations
 
 from ruamel.yaml.error import *  # NOQA
 from ruamel.yaml.nodes import *  # NOQA
@@ -35,7 +36,8 @@ import types
 import copyreg
 import base64
 
-from typing import Dict, List, Any, Union, Text, Optional  # NOQA
+if False:  # MYPY
+    from typing import Dict, List, Any, Union, Text, Optional  # NOQA
 
 # fmt: off
 __all__ = ['BaseRepresenter', 'SafeRepresenter', 'Representer',
@@ -1024,13 +1026,16 @@ class RoundTripRepresenter(SafeRepresenter):
     def represent_datetime(self, data: Any) -> ScalarNode:
         inter = 'T' if data._yaml['t'] else ' '
         _yaml = data._yaml
-        if _yaml['delta']:
+        if False and _yaml['delta']:
             data += _yaml['delta']
             value = data.isoformat(inter)
         else:
-            value = data.isoformat(inter)
-        if _yaml['tz']:
+            value = data.isoformat(inter).strip()
+        if False and _yaml['tz']:
             value += _yaml['tz']
+        if data.tzinfo and str(data.tzinfo):
+            if value[-6] in '+-':
+                value=value[:-6] + str(data.tzinfo)
         return self.represent_scalar('tag:yaml.org,2002:timestamp', value)
 
     def represent_tagged_scalar(self, data: Any) -> ScalarNode:

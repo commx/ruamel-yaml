@@ -1,4 +1,5 @@
-# coding: utf-8
+
+from __future__ import annotations
 
 if False:  # MYPY
     from typing import Dict, Any  # NOQA

@@ -1,4 +1,3 @@
-# coding: utf-8
 
 from __future__ import annotations
 
@@ -36,10 +35,11 @@ from ruamel.yaml.loader import Loader as UnsafeLoader  # NOQA
 from ruamel.yaml.comments import CommentedMap, CommentedSeq, C_PRE
 from ruamel.yaml.docinfo import DocInfo, version, Version
 
-from typing import List, Set, Dict, Tuple, Union, Any, Callable, Optional, Text, Type  # NOQA
-from types import TracebackType
-from ruamel.yaml.compat import StreamType, StreamTextType, VersionType  # NOQA
-from pathlib import Path  # NOQA
+if False:  # MYPY
+    from typing import List, Set, Dict, Tuple, Union, Any, Callable, Optional, Text, Type  # NOQA
+    from ruamel.yaml.compat import StreamType, StreamTextType, VersionType  # NOQA
+    from types import TracebackType
+    from pathlib import Path
 
 try:
     from _ruamel_yaml import CParser, CEmitter  # type: ignore

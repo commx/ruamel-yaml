@@ -164,3 +164,17 @@ class TestIssue62:
     def test_so_45681626(self) -> None:
         # was not properly parsing
         round_trip_load('{"in":{},"out":{}}')
+
+
+class TestVersionComparison:
+    def test_vc(self) -> None:
+        from ruamel.yaml.docinfo import Version
+
+        assert Version(1, 1) <= Version(2, 0)
+        assert Version(1, 1) <= Version(1, 2)
+        assert Version(1, 1) <= Version(1, 1)
+        assert Version(1, 3) == Version(1, 3)
+        assert Version(1, 2) > Version(1, 1)
+        assert Version(2, 0) > Version(1, 1)
+        assert Version(2, 0) >= Version(1, 1)
+        assert Version(1, 2) >= Version(1, 2)
