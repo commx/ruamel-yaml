@@ -128,6 +128,7 @@ the API is stable enough to make the transition.
 [![image](https://sourceforge.net/p/ruamel-yaml/code/ci/default/tree/_doc/_static/pypi.svg?format=raw)](https://pypi.org/project/ruamel.yaml/)
 [![image](https://sourceforge.net/p/oitnb/code/ci/default/tree/_doc/_static/oitnb.svg?format=raw)](https://pypi.org/project/oitnb/)
 [![image](http://www.mypy-lang.org/static/mypy_badge.svg)](http://mypy-lang.org/)
+[![image](https://img.shields.io/pepy/dt/ruamel.yaml.svg)](https://www.pepy.tech/projects/ruamel.yaml)
 
 # ChangeLog
 

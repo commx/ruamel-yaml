@@ -116,10 +116,10 @@ class Nprint:
         self._file_name = file_name
 
     def __call__(self, *args: Any, **kw: Any) -> None:
-        import traceback
-
         if not bool(_debug):
             return
+        import traceback
+
         out = sys.stdout if self._file_name is None else open(self._file_name, 'a')
         dbgprint = print  # to fool checking for print statements by dv utility
         kw1 = kw.copy()
