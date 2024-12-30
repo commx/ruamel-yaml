@@ -1,5 +1,5 @@
 version: 0.2
-text: md
+text: smd
 pdf: false
 # code_directory: ../_example
 --- |
@@ -32,8 +32,8 @@ class User:
 yaml = ruamel.yaml.YAML()
 yaml.register_class(User)
 yaml.dump([User('Anthon', 18)], sys.stdout)
---- !stdout |
-which gives as output::
+--- !stdout-yaml |
+which gives as output:
 --- |
 The tag `!User` originates from the name of the class.
 
@@ -65,8 +65,8 @@ class User:
 yaml = ruamel.yaml.YAML()
 yaml.register_class(User)
 yaml.dump([User('Anthon', 18)], sys.stdout)
---- !stdout |
-which gives as output::
+--- !stdout-yaml |
+which gives as output:
 
 --- |
 When using the decorator, which takes the `YAML()` instance as a
@@ -130,7 +130,7 @@ class User:
 
 yaml.dump([User('Anthon', 18)], sys.stdout)
 
---- !stdout |
+--- !stdout-yaml |
 
 This also gives:
 
@@ -170,7 +170,7 @@ path = Path('/tmp/arya.yaml')
 yaml.dump(arya, path)
 print(path.read_text())
 
---- !stdout |
+--- !stdout-yaml |
 
 dumping as:
 
@@ -203,7 +203,7 @@ print(data)
 giving:
 --- |
 
-But if you provide a (to) simple loader:
+But if you provide a (too) simple loader:
 
 --- !python |
 
@@ -238,7 +238,7 @@ giving:
 --- |
 As you can see, Sansa has no normal siblings after this load.
 
-What you need to do is yield the empty Person instance and fill it in
+What you need to do is yield the empty `Person` instance, and fill it in
 afterwards:
 
 --- !python |

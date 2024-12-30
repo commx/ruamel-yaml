@@ -1,9 +1,10 @@
 
-from __future__ import annotations
 
 """
 some helper functions that might be generally useful
 """
+
+from __future__ import annotations
 
 import datetime
 from functools import partial

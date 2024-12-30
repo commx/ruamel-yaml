@@ -1,15 +1,15 @@
 version: 0.2
-text: md
+text: smd
 pdf: false
 --- |
 # Differences with PyYAML
 
-::: parsed-literal
 
-*If I have seen further, it is by standing on the shoulders of giants*.
+```
+    If I have seen further, it is by standing on the shoulders of giants.
 
-:   Isaac Newton (1676)
-:::
+                                               Isaac Newton (1676)
+```
 
 `ruamel.yaml` is a derivative of Kirill Simonov\'s [PyYAML
 3.11](https://bitbucket.org/xi/pyyaml) and would not exist without that
@@ -19,8 +19,8 @@ The following a summary of the major differences with PyYAML 3.11
 
 ## Defaulting to YAML 1.2 support
 
-PyYAML supports the [YAML 1.1]() standard, `ruamel.yaml` supports [YAML
-1.2]() as released in 2009.
+PyYAML supports the [YAML 1.1] standard, `ruamel.yaml` supports [YAML
+1.2] as released in 2009.
 
 -   YAML 1.2 dropped support for several features unquoted `Yes`, `No`,
     `On`, `Off`
@@ -34,7 +34,7 @@ PyYAML supports the [YAML 1.1]() standard, `ruamel.yaml` supports [YAML
 -   `\/` escape for JSON compatibility
 -   correct parsing of floating point scalars with exponentials
 
-unless the YAML document is loaded with an explicit `version==1.1` or
+*unless* the YAML document is loaded with an explicit `version==1.1` or
 the document starts with:
 
     % YAML 1.1
@@ -57,7 +57,7 @@ miniscule part of the code is Python version specific.
 
 ## Testing
 
-`ruamel.yaml` is tested using [tox]() and [py.test](). In addition to
+`ruamel.yaml` is tested using [tox] and [py.test]. In addition to
 new tests, the original PyYAML test framework is called from within
 `tox` runs.
 

@@ -1,5 +1,5 @@
 version: 0.2
-text: md
+text: smd
 pdf: false
 --- |
 # Installing
@@ -14,7 +14,7 @@ probably best to do:
 in your environment (`virtualenv`, (Docker) container, etc) before
 installing `ruamel.yaml`.
 
-`ruamel.yaml` itself should be installed from [PyPI]() using:
+`ruamel.yaml` itself should be installed from [PyPI] using:
 
     pip install ruamel.yaml
 

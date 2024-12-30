@@ -78,6 +78,12 @@ else:
 if sys.version_info >= (3, 8):
     from ast import Str, Num, Bytes, NameConstant  # NOQA
 
+# # default data
+
+_setup_data = dict(
+    supported=[(3, 9)],  # minimum non-EOL python
+)
+
 
 def literal_eval(node_or_string):
     """
@@ -312,6 +318,7 @@ class NameSpacePackager(object):
         self._pkg_data = pkg_data
         self.full_package_name = self.pn(self._pkg_data['full_package_name'])
         self._split = None
+        self._extra_packages = []
         self.depth = self.full_package_name.count('.')
         self.nested = self._pkg_data.get('nested', False)
         # if self.nested:
@@ -352,8 +359,8 @@ class NameSpacePackager(object):
     def split(self):
         """split the full package name in list of compontents traditionally
         done by setuptools.find_packages. This routine skips any directories
-        with __init__.py, for which the name starts with "_" or ".", or contain a
-        setup.py/tox.ini (indicating a subpackage)
+        with __init__.py, for which the name starts with "_" or ".", or the
+        __init__.py contains package data (indicating a subpackage)
         """
         skip = []
         if self._split is None:
@@ -372,7 +379,9 @@ class NameSpacePackager(object):
                     if pd.get('nested', False):
                         skip.append(d)
                         continue
-                    self._split.append(self.full_package_name + '.' + d)
+                    ep = self.full_package_name + '.' + d
+                    self._split.append(ep)
+                    self._extra_packages.append(ep)
             if sys.version_info < (3,):
                 self._split = [
                     (y.encode('utf-8') if isinstance(y, unicode) else y) for y in self._split
@@ -517,16 +526,6 @@ class NameSpacePackager(object):
         }
 
     @property
-    def url(self):
-        url = self._pkg_data.get('url')
-        if url:
-            return url
-        sp = self.full_package_name
-        for ch in '_.':
-            sp = sp.replace(ch, '-')
-        return 'https://sourceforge.net/p/{0}/code/ci/default/tree'.format(sp)
-
-    @property
     def project_urls(self):
         ret_val = {}
         sp = self.full_package_name
@@ -539,9 +538,10 @@ class NameSpacePackager(object):
         if 'sourceforge.net' in base_url:
             ret_val['Source'] = base_url + 'code/ci/default/tree/'
             ret_val['Tracker'] = base_url + 'tickets/'
-        rtfd = self._pkg_data.get('read_the_docs')
-        if rtfd:
-            ret_val['Documentation'] = 'https://{0}.readthedocs.io/'.format(rtfd)
+        assert self._pkg_data.get('read_the_docs') is None, "update pon data read_the_docs -> url_doc='https://domain/path/{pkgname}/'"  # NOQA
+        url_doc = self._pkg_data.get('url_doc')
+        if url_doc:
+            ret_val['Documentation'] = url_doc.format(full_package_name=sp)
         return ret_val
 
     @property
@@ -586,6 +586,7 @@ class NameSpacePackager(object):
         """this needs more intelligence, probably splitting the classifiers from _pkg_data
         and only adding defaults when no explicit entries were provided.
         Add explicit Python versions in sync with tox.env generation based on python_requires?
+        See comment develop
         """
         attr = '_' + sys._getframe().f_code.co_name
         if not hasattr(self, attr):
@@ -593,20 +594,61 @@ class NameSpacePackager(object):
         return getattr(self, attr)
 
     def _setup_classifiers(self):
-        return sorted(
-            set(
-                [
-                    'Development Status :: {0} - {1}'.format(*self.status),
-                    'Intended Audience :: Developers',
-                    'License :: '
-                    + ('OSI Approved :: MIT' if self.has_mit_lic() else 'Other/Proprietary')
-                    + ' License',
-                    'Operating System :: OS Independent',
-                    'Programming Language :: Python',
-                ]
-                + [self.pn(x) for x in self._pkg_data.get('classifiers', [])],
-            ),
-        )
+        # return sorted(
+        #     set(
+        #         [
+        #             'Development Status :: {0} - {1}'.format(*self.status),
+        #             'Intended Audience :: Developers',
+        #             'License :: '
+        #             + ('OSI Approved :: MIT' if self.has_mit_lic() else 'Other/Proprietary')
+        #             + ' License',
+        #             'Operating System :: OS Independent',
+        #             'Programming Language :: Python',
+        #         ]
+        #         + [self.pn(x) for x in self._pkg_data.get('classifiers', [])],
+        #     ),
+        # )
+        c = {
+            ('Development Status', '{0} - {1}'.format(*self.status)),
+            ('Intended Audience', 'Developers'),
+            ('License', 'OSI Approved', ('MIT' if self.has_mit_lic() else 'Other/Proprietary') + ' License'),  # NOQA
+            ('Operating System', 'OS Independent'),
+            ('Programming Language', 'Python'),
+        }
+        for cl in self._pkg_data.get('classifiers', []):
+            print('cltype', type(cl), repr(cl))
+            if isinstance(cl, str):
+                c.add((cl,))
+            else:
+                c.add(tuple(c))
+        supported = self._pkg_data.get('supported', _setup_data['supported'])[0]
+        assert supported[0] == 3
+        minor = supported[1]
+        while minor <= 13:
+            version = (supported[0], minor)
+            c.add(tuple(['Programming Language', 'Python'] + list(version)))
+            minor += 1
+        ret_val = []
+        for x in c:
+            print('x', repr(x))
+        prev = str
+        for cl in sorted(c):
+            if isinstance(cl, str):
+                ret_val.append(cl)
+                continue
+            assert isinstance(cl, (tuple, list))
+            line = ""
+            for elem in cl:  # append the elements with appropriate separator
+                next = type(elem)
+                if line:
+                    if prev == int and next == int:
+                        line += '.'
+                    else:
+                        line += ' :: '
+                line += str(elem)
+                prev = next
+            ret_val.append(line)
+        return ret_val
 
     @property
     def keywords(self):
@@ -723,7 +765,16 @@ class NameSpacePackager(object):
         # fixed this in package_data, the keys there must be non-unicode for py27
         # if sys.version_info < (3, 0):
         #     s = [x.encode('utf-8') for x in self.split]
-        return s + self._pkg_data.get('extra_packages', [])
+        # return s + self._pkg_data.get('extra_packages', [])
+        return s + self.extra_packages
+
+    @property
+    def extra_packages(self):
+        try:
+            return self._pkg_data['extra_packages']
+        except KeyError:
+            _ = self.split
+            return self._extra_packages
 
     @property
     def python_requires(self):
@@ -871,7 +922,6 @@ def main():
         version=version_str,
         packages=nsp.packages,
         python_requires=nsp.python_requires,
-        # url=nsp.url,
         project_urls=nsp.project_urls,
         author=nsp.author,
         author_email=nsp.author_email,

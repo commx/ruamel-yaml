@@ -1,5 +1,5 @@
 version: 0.2
-text: md
+text: smd
 pdf: false
 --- |
 # Examples
@@ -24,8 +24,8 @@ generating YAML:
 
   yaml.dump(code, sys.stdout)
 
---- !stdout |
-Resulting in::
+--- !stdout-yaml |
+Resulting in:
 --- |
 ------------------------------------------------------------------------
 
@@ -81,8 +81,8 @@ position, while optionally adding a comment:
   data.insert(1, 'last name', 'Vandelay', comment="new key")
   yaml.dump(data, sys.stdout)
 
---- !stdout |
-gives::
+--- !stdout-yaml |
+gives:
 --- |
 Please note that the comment is aligned with that of its neighbour (if
 available).
@@ -107,16 +107,16 @@ from ruamel.yaml import YAML
 d = dict(a=dict(b=2),c=[3, 4])
 yaml = YAML()
 yaml.dump(d, sys.stdout)
-print('0123456789')
+print('#123456789')
 yaml = YAML()
 yaml.indent(mapping=4, sequence=6, offset=3)
 yaml.dump(d, sys.stdout)
-print('0123456789')
+print('#123456789')
 
 
---- !stdout |
+--- !stdout-yaml |
 
-giving::
+giving:
 
 
 --- |
@@ -142,9 +142,9 @@ yaml.compact(seq_seq=False, seq_map=False)
 yaml.dump(d, sys.stdout)
 
 
---- !stdout |
+--- !stdout-yaml |
 
-giving::
+giving:
 
 
 --- |
@@ -191,8 +191,8 @@ yaml = YAML()
 yaml.explicit_start = True
 yaml.dump(data, sys.stdout, transform=sequence_indent_four)
 
---- !stdout |
-gives as output::
+--- !stdout-yaml |
+gives as output:
 
 --- |
 The transform example, in the last document, was inspired by a [question
@@ -246,10 +246,10 @@ yaml = MyYAML()   # or typ='safe'/'unsafe' etc
 --- |
 with about one tenth of the lines needed for the old interface, you can
 once more do:
---- !code |
+--- !python-code |
 print(yaml.dump(dict(a=1, b=2)))
 --- |
 instead of:
---- !code |
+--- !python-code |
 yaml.dump((dict(a=1, b=2)), sys.stdout)
 print()  # or sys.stdout.write('\n')

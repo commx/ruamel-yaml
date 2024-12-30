@@ -1,5 +1,5 @@
 version: 0.2
-text: md
+text: smd
 pdf: false
 --- !python-pre |
 import sys

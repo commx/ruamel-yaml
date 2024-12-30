@@ -1,5 +1,5 @@
 version: 0.2
-text: md
+text: smd
 pdf: false
 order:
 - overview.ryd
@@ -46,7 +46,7 @@ mkdocs:
 --- !table
 version: !Env version 
 updated: !Env date 
-documentation: https://yaml.readthedocs.io
+documentation: https://yaml.dev/doc/ruamel.yaml
 repository: https://sourceforge.net/projects/ruamel-yaml
 pypi:  https://pypi.org/project/ruamel.yaml
 --- |
@@ -56,7 +56,7 @@ As announced, in 0.18.0, the old PyYAML functions have been deprecated.
 (`_all`, `safe_`, `round_trip_`, etc)). If you only read this after your program has 
 stopped working: I am sorry to hear that, but that also means you, or the person 
 developing your program, has not tested with warnings on (which is the recommendation 
-in PEP 565, and e.g. defaultin when using `pytest`). If you have troubles, explicitly use
+in PEP 565, and e.g. defaulting when using `pytest`). If you have troubles, explicitly use
 ```
 pip install "ruamel.yaml<0.18.0"
 ```
@@ -74,10 +74,10 @@ but I do consider adding a `ruamel.yaml.unsafe` package that will re-add the `ty
 
 There seems to be a CVE on `ruamel.yaml`, stating that the `load()` function could be abused 
 because of unchecked input. `load()` was never the default function (that was `round_trip_load()`
-before the new API came into existence`. So the creator of that CVE was ill informed and
+before the new API came into existence. So the creator of that CVE was ill informed and
 probably lazily assumed that since `ruamel.yaml` is a derivative of PyYAML (for which
 a similar CVE exists), the same problem would still exist, without checking. 
-So the CVE was always inappriate,  now just more so, as the call
+So the CVE was always inappropriate,  now just more so, as the call
 to the function `load()` with any input will terminate your program with an error message. If you 
 (have to) care about such things as this CVE, my recommendation is to stop using Python
 completely, as `pickle.load()` can be abused in the same way as `load()` (and like unlike `load()` 
@@ -97,17 +97,38 @@ email, preferably with some information on how you use the package (or a
 link to the repository) and I'll keep you informed when the status of
 the API is stable enough to make the transition.
 
---- !toc
-level: 3
-# prefix: http://yaml.readthedocs.io/en/latest/
+--- !comment |
+# # ToDo 2024-12
+# --- !toc
+# level: 3
+# # prefix: http://yaml.readthedocs.io/en/latest/
 --- |
 
-[![image](https://readthedocs.org/projects/yaml/badge/?version=latest)](https://yaml.readthedocs.org/en/latest?badge=latest)[![image](https://bestpractices.coreinfrastructure.org/projects/1128/badge)](https://bestpractices.coreinfrastructure.org/projects/1128)
-[![image](https://sourceforge.net/p/ruamel-yaml/code/ci/default/tree/_doc/_static/license.svg?format=raw)](https://opensource.org/licenses/MIT)
-[![image](https://sourceforge.net/p/ruamel-yaml/code/ci/default/tree/_doc/_static/pypi.svg?format=raw)](https://pypi.org/project/ruamel.yaml/)
-[![image](https://sourceforge.net/p/oitnb/code/ci/default/tree/_doc/_static/oitnb.svg?format=raw)](https://pypi.org/project/oitnb/)
-[![image](http://www.mypy-lang.org/static/mypy_badge.svg)](http://mypy-lang.org/)
-[![image](https://img.shields.io/pepy/dt/ruamel.yaml.svg)](https://www.pepy.tech/projects/ruamel.yaml)
+```=html
+<a href="https://bestpractices.coreinfrastructure.org/projects/1128"><img src="https://bestpractices.coreinfrastructure.org/projects/1128/badge"></a>
+<a href="https://opensource.org/licenses/MIT"><img src="https://sourceforge.net/p/ruamel-yaml/code/ci/default/tree/_doc/_static/license.svg?format=raw"></a>
+<a href="https://pypi.org/project/ruamel.yaml/"><img src="https://sourceforge.net/p/ruamel-yaml/code/ci/default/tree/_doc/_static/pypi.svg?format=raw"></a>
+<a href="https://pypi.org/project/oitnb/"><img src="https://sourceforge.net/p/oitnb/code/ci/default/tree/_doc/_static/oitnb.svg?format=raw"></a>
+<a href="http://mypy-lang.org/"><img src="http://www.mypy-lang.org/static/mypy_badge.svg"></a>
+<a href="https://www.pepy.tech/projects/ruamel.yaml"><img src="https://img.shields.io/pepy/dt/ruamel.yaml.svg"></a>
+```
+
+
+--- !comment |
+[]($image.url('https://sourceforge.net/p/oitnb/code/ci/default/tree/_doc/_static/oitnb.svg?format=raw'))
+
+[bla]($link.url("https://pypi.org/project/oitnb/"))
+
+[[]($image.url('https://sourceforge.net/p/oitnb/code/ci/default/tree/_doc/_static/oitnb.svg?format=raw'))]($link.url("https://pypi.org/project/oitnb/"))
+[($image.url('https://sourceforge.net/p/oitnb/code/ci/default/tree/_doc/_static/oitnb.svg?format=raw').linked(true))]
+[($image.url('https://sourceforge.net/p/oitnb/code/ci/default/tree/_doc/_static/oitnb.svg?format=raw'))](https://pypi.org/project/oitnb/)
+# [![image](https://readthedocs.org/projects/yaml/badge/?version=latest)](https://yaml.readthedocs.org/en/latest?badge=latest)
+# [![image](https://bestpractices.coreinfrastructure.org/projects/1128/badge)](https://bestpractices.coreinfrastructure.org/projects/1128)
+# [![image](https://sourceforge.net/p/ruamel-yaml/code/ci/default/tree/_doc/_static/license.svg?format=raw)](https://opensource.org/licenses/MIT)
+# [![image](https://sourceforge.net/p/ruamel-yaml/code/ci/default/tree/_doc/_static/pypi.svg?format=raw)](https://pypi.org/project/ruamel.yaml/)
+# [![image](https://sourceforge.net/p/oitnb/code/ci/default/tree/_doc/_static/oitnb.svg?format=raw)](https://pypi.org/project/oitnb/)
+# [![image](http://www.mypy-lang.org/static/mypy_badge.svg)](http://mypy-lang.org/)
+# [![image](https://img.shields.io/pepy/dt/ruamel.yaml.svg)](https://www.pepy.tech/projects/ruamel.yaml)
 
 # ChangeLog
 
