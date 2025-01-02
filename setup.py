@@ -541,7 +541,7 @@ class NameSpacePackager(object):
         assert self._pkg_data.get('read_the_docs') is None, "update pon data read_the_docs -> url_doc='https://domain/path/{pkgname}/'"  # NOQA
         url_doc = self._pkg_data.get('url_doc')
         if url_doc:
-            ret_val['Documentation'] = url_doc.format(full_package_name=sp)
+            ret_val['Documentation'] = url_doc.format(full_package_name=self.full_package_name)
         return ret_val
 
     @property

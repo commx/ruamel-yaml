@@ -49,6 +49,38 @@ updated: !Env date
 documentation: https://yaml.dev/doc/ruamel.yaml
 repository: https://sourceforge.net/projects/ruamel-yaml
 pypi:  https://pypi.org/project/ruamel.yaml
+--- !python-hidden |
+
+import os
+from textwrap import dedent
+
+if os.environ.get('GEN_README_MD'):
+    print(dedent("""\
+    ## breaking changes, that may make future uploads to PyPI impossible
+    
+    *If you are interested in future upgrades of `ruamel.yaml`
+    please check the [documentation on installing](https://yaml.dev/doc/ruamel.yaml/install/),
+    since at some point I might not be able to upload a new version to PyPI with updated information.*
+    
+    `ruamel.yaml` was intentionally named as `yaml` in a namespace `ruamel`. The namespace allows the installation
+    name to correspond unchanged to how the package is imported, reduces the number of links I have to create
+    in site-packages of a Python install during development, as well as providing a recognisable set of packages
+    my company releases to the public. 
+    
+    However, after uploading version 0.18.7, I got an email from PyPI, about having to change the project name
+    to `ruamel_yaml` to comply with PEP 625, sometime in the future. The email doesn't say if namespace packages are
+    no longer allowed, or how to deal with the very real clash with the pre-existing package `ruamel_yaml`.
+    
+    I might not be able to adapt `ruamel.yaml`, in
+    a way that does not negatively affect the 0.5 million daily downloads (and my own usage of the package) in time. 
+    My experience with other such service downgrades (Bitbucket, Readthedocs), has not been entirely positive. 
+    
+    -----
+    
+    """))
+
+--- !stdout-raw |
+
 --- |
 
 As announced, in 0.18.0, the old PyYAML functions have been deprecated.

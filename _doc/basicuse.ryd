@@ -13,7 +13,7 @@ doc = "a: 1"
 data = dict(a=1)
 --- |
 # Basic Usage
-## Load and dump  
+## Load and dump
 
 You load a YAML document using:
 --- !python |

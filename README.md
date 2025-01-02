@@ -1,24 +1,37 @@
-
 # ruamel.yaml
 
 `ruamel.yaml` is a YAML 1.2 loader/dumper package for Python.
-<table class="docutils">
-  <tr>    <td>version</td>
-    <td>0.18.6</td>
-  </tr>
-  <tr>    <td>updated</td>
-    <td>2024-02-07</td>
-  </tr>
-  <tr>    <td>documentation</td>
-    <td><a href="https://yaml.readthedocs.io">https://yaml.readthedocs.io</a></td>
-  </tr>
-  <tr>    <td>repository</td>
-    <td><a href="https://sourceforge.net/projects/ruamel-yaml">https://sourceforge.net/projects/ruamel-yaml</a></td>
-  </tr>
-  <tr>    <td>pypi</td>
-    <td><a href="https://pypi.org/project/ruamel.yaml">https://pypi.org/project/ruamel.yaml</a></td>
-  </tr>
-</table>
+
+| | |
+| - | - |
+| version |0.18.8 |
+| updated |2025-01-02 |
+| documentation |https://yaml.dev/doc/ruamel.yaml |
+| repository |https://sourceforge.net/projects/ruamel-yaml |
+| pypi |https://pypi.org/project/ruamel.yaml |
+
+
+## breaking changes, that may make future uploads to PyPI impossible
+
+*If you are interested in future upgrades of `ruamel.yaml`
+please check the [documentation on installing](https://yaml.dev/doc/ruamel.yaml/install/),
+since at some point I might not be able to upload a new version to PyPI with updated information.*
+
+`ruamel.yaml` was intentionally named as `yaml` in a namespace `ruamel`. The namespace allows the installation
+name to correspond unchanged to how the package is imported, reduces the number of links I have to create
+in site-packages of a Python install during development, as well as providing a recognisable set of packages
+my company releases to the public. 
+
+However, after uploading version 0.18.7, I got an email from PyPI, about having to change the project name
+to `ruamel_yaml` to comply with PEP 625, sometime in the future. The email doesn't say if namespace packages are
+no longer allowed, or how to deal with the very real clash with the pre-existing package `ruamel_yaml`.
+
+I might not be able to adapt `ruamel.yaml`, in
+a way that does not negatively affect the 0.5 million daily downloads (and my own usage of the package) in time. 
+My experience with other such service downgrades (Bitbucket, Readthedocs), has not been entirely positive. 
+
+-----
+
 
 
 As announced, in 0.18.0, the old PyYAML functions have been deprecated.
@@ -26,7 +39,7 @@ As announced, in 0.18.0, the old PyYAML functions have been deprecated.
 (`_all`, `safe_`, `round_trip_`, etc)). If you only read this after your program has 
 stopped working: I am sorry to hear that, but that also means you, or the person 
 developing your program, has not tested with warnings on (which is the recommendation 
-in PEP 565, and e.g. defaultin when using `pytest`). If you have troubles, explicitly use
+in PEP 565, and e.g. defaulting when using `pytest`). If you have troubles, explicitly use
 ```
 pip install "ruamel.yaml<0.18.0"
 ```
@@ -44,10 +57,10 @@ but I do consider adding a `ruamel.yaml.unsafe` package that will re-add the `ty
 
 There seems to be a CVE on `ruamel.yaml`, stating that the `load()` function could be abused 
 because of unchecked input. `load()` was never the default function (that was `round_trip_load()`
-before the new API came into existence`. So the creator of that CVE was ill informed and
+before the new API came into existence. So the creator of that CVE was ill informed and
 probably lazily assumed that since `ruamel.yaml` is a derivative of PyYAML (for which
 a similar CVE exists), the same problem would still exist, without checking. 
-So the CVE was always inappriate,  now just more so, as the call
+So the CVE was always inappropriate,  now just more so, as the call
 to the function `load()` with any input will terminate your program with an error message. If you 
 (have to) care about such things as this CVE, my recommendation is to stop using Python
 completely, as `pickle.load()` can be abused in the same way as `load()` (and like unlike `load()` 
@@ -67,70 +80,22 @@ email, preferably with some information on how you use the package (or a
 link to the repository) and I'll keep you informed when the status of
 the API is stable enough to make the transition.
 
-<pre>
-    <a href="overview/#overview">Overview</a>
 
-    <a href="install/#installing">Installing</a>
-      <a href="install/#optional-requirements">Optional requirements</a>
+<a href="https://bestpractices.coreinfrastructure.org/projects/1128"><img src="https://bestpractices.coreinfrastructure.org/projects/1128/badge"></a>
+<a href="https://opensource.org/licenses/MIT"><img src="https://sourceforge.net/p/ruamel-yaml/code/ci/default/tree/_doc/_static/license.svg?format=raw"></a>
+<a href="https://pypi.org/project/ruamel.yaml/"><img src="https://sourceforge.net/p/ruamel-yaml/code/ci/default/tree/_doc/_static/pypi.svg?format=raw"></a>
+<a href="https://pypi.org/project/oitnb/"><img src="https://sourceforge.net/p/oitnb/code/ci/default/tree/_doc/_static/oitnb.svg?format=raw"></a>
+<a href="http://mypy-lang.org/"><img src="http://www.mypy-lang.org/static/mypy_badge.svg"></a>
+<a href="https://www.pepy.tech/projects/ruamel.yaml"><img src="https://img.shields.io/pepy/dt/ruamel.yaml.svg"></a>
 
-    <a href="basicuse/#basic-usage">Basic Usage</a>
-      <a href="basicuse/#load-and-dump">Load and dump  </a>
-      <a href="basicuse/#more-examples">More examples</a>
+0.18.8 (2025-01-02):
 
-    <a href="dumpcls/#working-with-python-classes">Working with Python classes</a>
-      <a href="dumpcls/#dumping-python-classes">Dumping Python classes</a>
-      <a href="dumpcls/#dataclass">Dataclass</a>
+- added warning to README.md that PyPI might block updates due to breaking changes
 
-    <a href="detail/#details">Details</a>
-      <a href="detail/#indentation-of-block-sequences">Indentation of block sequences</a>
-        <a href="detail/#inconsistently-indented-yaml">Inconsistently indented YAML</a>
-        <a href="detail/#indenting-using-typsafe">Indenting using `typ="safe"`</a>
-      <a href="detail/#positioning-in-top-level-mappings-prefixing">Positioning ':' in top level mappings, prefixing ':'</a>
-        <a href="detail/#document-version-support">Document version support</a>
-        <a href="detail/#round-trip-including-comments">Round trip including comments</a>
-    <a href="detail/#config-file-formats">Config file formats</a>
-    <a href="detail/#extending">Extending</a>
-    <a href="detail/#smartening">Smartening</a>
+0.18.7 (2024-12-30):
 
-    <a href="example/#examples">Examples</a>
-      <a href="example/#output-of-dump-as-a-string">Output of `dump()` as a string</a>
-
-    <a href="api/#departure-from-previous-api">Departure from previous API</a>
-      <a href="api/#loading">Loading</a>
-        <a href="api/#duplicate-keys">Duplicate keys</a>
-      <a href="api/#dumping-a-multi-document-yaml-stream">Dumping a multi-document YAML stream</a>
-      <a href="api/#dumping">Dumping</a>
-        <a href="api/#controls">Controls</a>
-      <a href="api/#transparent-usage-of-new-and-old-api">Transparent usage of new and old API</a>
-      <a href="api/#reason-for-api-change">Reason for API change</a>
-
-    <a href="pyyaml/#differences-with-pyyaml">Differences with PyYAML</a>
-      <a href="pyyaml/#defaulting-to-yaml-12-support">Defaulting to YAML 1.2 support</a>
-      <a href="pyyaml/#py2py3-reintegration">PY2/PY3 reintegration</a>
-      <a href="pyyaml/#fixes">Fixes</a>
-      <a href="pyyaml/#testing">Testing</a>
-      <a href="pyyaml/#api">API</a>
-
-    <a href="contributing/#contributing">Contributing</a>
-      <a href="contributing/#documentation">Documentation</a>
-      <a href="contributing/#code">Code</a>
-        <a href="contributing/#flake">Flake</a>
-        <a href="contributing/#toxpytest">Tox/pytest</a>
-        <a href="contributing/#typingmypy">Typing/mypy</a>
-      <a href="contributing/#generated-files">Generated files</a>
-      <a href="contributing/#vulnerabilities">Vulnerabilities</a>
-</pre>
-
-
-
-[![image](https://readthedocs.org/projects/yaml/badge/?version=latest)](https://yaml.readthedocs.org/en/latest?badge=latest)[![image](https://bestpractices.coreinfrastructure.org/projects/1128/badge)](https://bestpractices.coreinfrastructure.org/projects/1128)
-[![image](https://sourceforge.net/p/ruamel-yaml/code/ci/default/tree/_doc/_static/license.svg?format=raw)](https://opensource.org/licenses/MIT)
-[![image](https://sourceforge.net/p/ruamel-yaml/code/ci/default/tree/_doc/_static/pypi.svg?format=raw)](https://pypi.org/project/ruamel.yaml/)
-[![image](https://sourceforge.net/p/oitnb/code/ci/default/tree/_doc/_static/oitnb.svg?format=raw)](https://pypi.org/project/oitnb/)
-[![image](http://www.mypy-lang.org/static/mypy_badge.svg)](http://mypy-lang.org/)
-[![image](https://img.shields.io/pepy/dt/ruamel.yaml.svg)](https://www.pepy.tech/projects/ruamel.yaml)
-
-# ChangeLog
+- fixes for README (reported by [Kees Bakker](https://sourceforge.net/u/keesb/profile/))
+- fixes preserving anchor on scalar integer `0` (bug found as a result of a question by [Ravi](https://stackoverflow.com/users/6550398/ravi) on [Stackoverflow](https://stackoverflow.com/a/79306830/1307905))
 
 0.18.6 (2024-02-07):
 
