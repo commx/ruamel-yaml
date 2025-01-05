@@ -4,8 +4,8 @@
 
 | | |
 | - | - |
-| version |0.18.8 |
-| updated |2025-01-02 |
+| version |0.18.9 |
+| updated |2025-01-05 |
 | documentation |https://yaml.dev/doc/ruamel.yaml |
 | repository |https://sourceforge.net/projects/ruamel-yaml |
 | pypi |https://pypi.org/project/ruamel.yaml |
@@ -88,6 +88,10 @@ the API is stable enough to make the transition.
 <a href="http://mypy-lang.org/"><img src="http://www.mypy-lang.org/static/mypy_badge.svg"></a>
 <a href="https://www.pepy.tech/projects/ruamel.yaml"><img src="https://img.shields.io/pepy/dt/ruamel.yaml.svg"></a>
 
+0.18.9 (2025-01-05):
+
+- fix issue with roundtripping 0 in YAML 1.1 reported by [Peter Law](https://sourceforge.net/u/peterjclaw/profile/)
+
 0.18.8 (2025-01-02):
 
 - added warning to README.md that PyPI might block updates due to breaking changes
@@ -95,7 +99,7 @@ the API is stable enough to make the transition.
 0.18.7 (2024-12-30):
 
 - fixes for README (reported by [Kees Bakker](https://sourceforge.net/u/keesb/profile/))
-- fixes preserving anchor on scalar integer `0` (bug found as a result of a question by [Ravi](https://stackoverflow.com/users/6550398/ravi) on [Stackoverflow](https://stackoverflow.com/a/79306830/1307905))
+- fixes preserving anchor on scalar integer `0` (issue reported by (Mor Peled)[https://sourceforge.net/u/morp/profile/] and also in a question by [Ravi](https://stackoverflow.com/users/6550398/ravi) on [Stackoverflow](https://stackoverflow.com/a/79306830/1307905))
 
 0.18.6 (2024-02-07):
 
