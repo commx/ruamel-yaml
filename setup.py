@@ -1,6 +1,6 @@
 # # header
 # coding: utf-8
-# dd: 20230418
+# dd: 20241207
 
 # # __init__.py parser
 
@@ -11,20 +11,13 @@ from textwrap import dedent
 
 sys.path = [path for path in sys.path if path not in [os.getcwd(), ""]]
 import platform  # NOQA
-from _ast import *  # NOQA
+import _ast as Ast  # NOQA
 from ast import parse  # NOQA
 
 from setuptools import setup, Extension, Distribution  # NOQA
 from setuptools.command import install_lib  # NOQA
 from setuptools.command.sdist import sdist as _sdist  # NOQA
 
-# try:
-#     from setuptools.namespaces import Installer as NameSpaceInstaller # NOQA
-# except ImportError:
-#     msg = ('You should use the latest setuptools. The namespaces.py file that this setup.py'
-#            ' uses was added in setuptools 28.7.0 (Oct 2016)')
-#     print(msg)
-#     sys.exit()
 
 if __name__ != '__main__':
     raise NotImplementedError('should never include setup.py')
@@ -33,38 +26,12 @@ if __name__ != '__main__':
 
 full_package_name = None
 
-if sys.version_info < (3,):
-    string_type = basestring
-else:
-    string_type = str
-
-
-if sys.version_info < (3, 4):
-
-    class Bytes:
-        pass
-
-    class NameConstant:
-        pass
-
-
-if sys.version_info < (3,):
-    open_kw = {}
-else:
-    open_kw = dict(encoding='utf-8')  # NOQA: C408
-
-
-if sys.version_info < (2, 7) or platform.python_implementation() == 'Jython':
-
-    class Set:
-        pass
-
+open_kw = dict(encoding='utf-8')  # NOQA: C408
 
 if os.environ.get('DVDEBUG', "") == "":
 
     def debug(*args, **kw):
         pass
-
 
 else:
 
@@ -75,8 +42,6 @@ else:
             print('{:%Y-%d-%mT%H:%M:%S}'.format(datetime.datetime.now()), file=fp, end=' ')
             print(*args, **kw1)
 
-if sys.version_info >= (3, 8):
-    from ast import Str, Num, Bytes, NameConstant  # NOQA
 
 # # default data
 
@@ -95,59 +60,47 @@ def literal_eval(node_or_string):
     Even when passing in Unicode, the resulting Str types parsed are 'str' in Python 2.
     I don't now how to set 'unicode_literals' on parse -> Str is explicitly converted.
     """
-    _safe_names = {'None': None, 'True': True, 'False': False}
-    if isinstance(node_or_string, string_type):
+    if isinstance(node_or_string, str):
         node_or_string = parse(node_or_string, mode='eval')
-    if isinstance(node_or_string, Expression):
+    if isinstance(node_or_string, Ast.Expression):
         node_or_string = node_or_string.body
     else:
         raise TypeError('only string or AST nodes supported')
 
     def _convert(node):
-        if isinstance(node, Str):
-            if sys.version_info < (3,) and not isinstance(node.s, unicode):
-                return node.s.decode('utf-8')
-            return node.s
-        elif isinstance(node, Bytes):
-            return node.s
-        elif isinstance(node, Num):
-            return node.n
-        elif isinstance(node, Tuple):
-            return tuple(map(_convert, node.elts))
-        elif isinstance(node, List):
-            return list(map(_convert, node.elts))
-        elif isinstance(node, Set):
-            return set(map(_convert, node.elts))
-        elif isinstance(node, Dict):
-            return {_convert(k): _convert(v) for k, v in zip(node.keys, node.values)}
-        elif isinstance(node, NameConstant):
+        if isinstance(node, Ast.Constant):
             return node.value
-        elif sys.version_info < (3, 4) and isinstance(node, Name):
-            if node.id in _safe_names:
-                return _safe_names[node.id]
+        elif isinstance(node, Ast.Tuple):
+            return tuple(map(_convert, node.elts))
+        elif isinstance(node, Ast.List):
+            return list(map(_convert, node.elts))
+        elif isinstance(node, Ast.Set):
+            return set(map(_convert, node.elts))
+        elif isinstance(node, Ast.Dict):
+            return {_convert(k): _convert(v) for k, v in zip(node.keys, node.values)}
         elif (
-            isinstance(node, UnaryOp)
-            and isinstance(node.op, (UAdd, USub))
-            and isinstance(node.operand, (Num, UnaryOp, BinOp))
+            isinstance(node, Ast.UnaryOp)
+            and isinstance(node.op, (Ast.UAdd, Ast.USub))
+            and isinstance(node.operand, (Ast.Num, Ast.UnaryOp, Ast.BinOp))
         ):  # NOQA
             operand = _convert(node.operand)
-            if isinstance(node.op, UAdd):
+            if isinstance(node.op, Ast.UAdd):
                 return +operand
             else:
                 return -operand
         elif (
-            isinstance(node, BinOp)
-            and isinstance(node.op, (Add, Sub))
-            and isinstance(node.right, (Num, UnaryOp, BinOp))
-            and isinstance(node.left, (Num, UnaryOp, BinOp))
+            isinstance(node, Ast.BinOp)
+            and isinstance(node.op, (Ast.Add, Ast.Sub))
+            and isinstance(node.right, (Ast.Num, Ast.UnaryOp, Ast.BinOp))
+            and isinstance(node.left, (Ast.Num, Ast.UnaryOp, Ast.BinOp))
         ):  # NOQA
             left = _convert(node.left)
             right = _convert(node.right)
-            if isinstance(node.op, Add):
+            if isinstance(node.op, Ast.Add):
                 return left + right
             else:
                 return left - right
-        elif isinstance(node, Call):
+        elif isinstance(node, Ast.Call):
             func_id = getattr(node.func, 'id', None)
             if func_id == 'dict':
                 return {k.arg: _convert(k.value) for k in node.keywords}
@@ -175,8 +128,6 @@ def _package_data(fn):
         parsing = False
         lines = []
         for line in fp.readlines():
-            if sys.version_info < (3,):
-                line = line.decode('utf-8')
             if line.startswith('_package_data'):
                 if 'dict(' in line:
                     parsing = 'python'
@@ -284,7 +235,7 @@ class MySdist(_sdist):
         _sdist.initialize_options(self)
         # failed expiriment, see pep 527, new uploads should be tar.gz or .zip
         # because of unicode_literals
-        # self.formats = fmt if fmt else [b'bztar'] if sys.version_info < (3, ) else ['bztar']
+        # self.formats = fmt if fmt else ['bztar']
         dist_base = os.environ.get('PYDISTBASE')
         fpn = getattr(getattr(self, 'nsp', self), 'full_package_name', None)
         if fpn and dist_base:
@@ -316,7 +267,7 @@ class NameSpacePackager(object):
     def __init__(self, pkg_data):
         assert isinstance(pkg_data, dict)
         self._pkg_data = pkg_data
-        self.full_package_name = self.pn(self._pkg_data['full_package_name'])
+        self.full_package_name = self._pkg_data['full_package_name']
         self._split = None
         self._extra_packages = []
         self.depth = self.full_package_name.count('.')
@@ -350,11 +301,6 @@ class NameSpacePackager(object):
             self.command = x
             break
 
-    def pn(self, s):
-        if sys.version_info < (3,) and isinstance(s, unicode):
-            return s.encode('utf-8')
-        return s
-
     @property
     def split(self):
         """split the full package name in list of compontents traditionally
@@ -382,10 +328,6 @@ class NameSpacePackager(object):
                     ep = self.full_package_name + '.' + d
                     self._split.append(ep)
                     self._extra_packages.append(ep)
-            if sys.version_info < (3,):
-                self._split = [
-                    (y.encode('utf-8') if isinstance(y, unicode) else y) for y in self._split
-                ]
         if skip:
             # this interferes with output checking
             # print('skipping sub-packages:', ', '.join(skip))
@@ -538,10 +480,10 @@ class NameSpacePackager(object):
         if 'sourceforge.net' in base_url:
             ret_val['Source'] = base_url + 'code/ci/default/tree/'
             ret_val['Tracker'] = base_url + 'tickets/'
-        assert self._pkg_data.get('read_the_docs') is None, "update pon data read_the_docs -> url_doc='https://domain/path/{pkgname}/'"  # NOQA
+        assert self._pkg_data.get('read_the_docs') is None, "update pon data read_the_docs -> url_doc='https://domain/path/{pkgname}/'"
         url_doc = self._pkg_data.get('url_doc')
         if url_doc:
-            ret_val['Documentation'] = url_doc.format(full_package_name=self.full_package_name)
+            ret_val['Documentation'] = url_doc.format(full_package_name=sp)
         return ret_val
 
     @property
@@ -585,8 +527,7 @@ class NameSpacePackager(object):
     def classifiers(self):
         """this needs more intelligence, probably splitting the classifiers from _pkg_data
         and only adding defaults when no explicit entries were provided.
-        Add explicit Python versions in sync with tox.env generation based on python_requires?
-        See comment develop
+        Add explicit Python versions in sync with tox.env generation based on python_requires? See comment develop
         """
         attr = '_' + sys._getframe().f_code.co_name
         if not hasattr(self, attr):
@@ -594,27 +535,15 @@ class NameSpacePackager(object):
         return getattr(self, attr)
 
     def _setup_classifiers(self):
-        # return sorted(
-        #     set(
-        #         [
-        #             'Development Status :: {0} - {1}'.format(*self.status),
-        #             'Intended Audience :: Developers',
-        #             'License :: '
-        #             + ('OSI Approved :: MIT' if self.has_mit_lic() else 'Other/Proprietary')
-        #             + ' License',
-        #             'Operating System :: OS Independent',
-        #             'Programming Language :: Python',
-        #         ]
-        #         + [self.pn(x) for x in self._pkg_data.get('classifiers', [])],
-        #     ),
-        # )
-        c = {
-            ('Development Status', '{0} - {1}'.format(*self.status)),
-            ('Intended Audience', 'Developers'),
-            ('License', 'OSI Approved', ('MIT' if self.has_mit_lic() else 'Other/Proprietary') + ' License'),  # NOQA
-            ('Operating System', 'OS Independent'),
-            ('Programming Language', 'Python'),
-        }
+        c = set(
+            [
+                ('Development Status', '{0} - {1}'.format(*self.status), ),
+                ('Intended Audience', 'Developers'),
+                ('License', 'OSI Approved', 'MIT' if self.has_mit_lic() else 'Other/Proprietary' + ' License'),
+                ('Operating System', 'OS Independent', ),
+                ('Programming Language', 'Python'),
+            ]
+        )
         for cl in self._pkg_data.get('classifiers', []):
             print('cltype', type(cl), repr(cl))
             if isinstance(cl, str):
@@ -626,7 +555,7 @@ class NameSpacePackager(object):
         minor = supported[1]
         while minor <= 13:
             version = (supported[0], minor)
-            c.add(tuple(['Programming Language', 'Python'] + list(version)))
+            c.add(tuple(['Programming Language', 'Python',] + list(version)))
             minor += 1
         ret_val = []
         for x in c:
@@ -641,7 +570,7 @@ class NameSpacePackager(object):
             for elem in cl:  # append the elements with appropriate separator
                 next = type(elem)
                 if line:
-                    if prev == int and next == int:
+                    if prev is int and next is int:
                         line += '.'
                     else:
                         line += ' :: '
@@ -652,7 +581,7 @@ class NameSpacePackager(object):
 
     @property
     def keywords(self):
-        return self.pn(self._pkg_data.get('keywords', []))
+        return self._pkg_data.get('keywords', [])
 
     @property
     def install_requires(self):
@@ -685,7 +614,7 @@ class NameSpacePackager(object):
             return self._pkg
         # 'any' for all builds, 'py27' etc for specifics versions
         packages = ir.get('any', [])
-        if isinstance(packages, string_type):
+        if isinstance(packages, str):
             packages = packages.split()  # assume white space separated string
         if self.nested:
             # parent dir is also a package, make sure it is installed (need its .pth file)
@@ -748,24 +677,12 @@ class NameSpacePackager(object):
         pd = self._pkg_data.get('package_data', {})
         if df:
             pd[self.full_package_name] = df
-        if sys.version_info < (3,):
-            # python2 doesn't seem to like unicode package names as keys
-            # maybe only when the packages themselves are non-unicode
-            for k in pd:
-                if isinstance(k, unicode):
-                    pd[str(k)] = pd.pop(k)
-            # for k in pd:
-            #     pd[k] = [e.encode('utf-8') for e in pd[k]]  # de-unicode
         return pd
 
     @property
     def packages(self):
         # s = self.split
         s = [self._pkg_data['full_package_name']]
-        # fixed this in package_data, the keys there must be non-unicode for py27
-        # if sys.version_info < (3, 0):
-        #     s = [x.encode('utf-8') for x in self.split]
-        # return s + self._pkg_data.get('extra_packages', [])
         return s + self.extra_packages
 
     @property
@@ -814,9 +731,9 @@ class NameSpacePackager(object):
         if no_test_compile:
             for target in self._pkg_data.get('ext_modules', []):
                 ext = Extension(
-                    self.pn(target['name']),
-                    sources=[self.pn(x) for x in target['src']],
-                    libraries=[self.pn(x) for x in target.get('lib')],
+                    target['name'],
+                    sources=[x for x in target['src']],
+                    libraries=[x for x in target.get('lib')],
                 )
                 self._ext_modules.append(ext)
             return self._ext_modules
@@ -881,7 +798,7 @@ class TmpFiles:
         with open(file_name, 'w') as fp:
             fp.write(dedent("""\
             [build-system]
-            requires = ["setuptools", "wheel"]
+            requires = ["setuptools"]
             # test
             build-backend = "setuptools.build_meta"
             """))

@@ -1,3 +1,7 @@
+[0.18.10, 2025-01-06]:
+- implemented changes to the setup.py for Python 3.14 as suggested by [Miro Hrončok](https://sourceforge.net/u/hroncok/profile/)
+  in merge requests (MR not merged as those files are copied in from `develop` config)
+
 [0.18.9, 2025-01-05]:
 - fix issue with roundtripping 0 in YAML 1.1 reported by [Peter Law](https://sourceforge.net/u/peterjclaw/profile/)
 
@@ -9,6 +13,7 @@
 - fixes preserving anchor on scalar integer `0` (issue reported by (Mor Peled)[https://sourceforge.net/u/morp/profile/]
   and also in a question by [Ravi](https://stackoverflow.com/users/6550398/ravi) on
   [Stackoverflow](https://stackoverflow.com/a/79306830/1307905))
+- fix for formatting of README suggested by [Michael R. Crusoe](https://sourceforge.net/u/crusoe/profile/)
 
 [0.18.6, 2024-02-07]:
 - fixed an issue with dataclass loading when the fields were collections (bug found

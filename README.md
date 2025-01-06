@@ -66,6 +66,7 @@ to the function `load()` with any input will terminate your program with an erro
 completely, as `pickle.load()` can be abused in the same way as `load()` (and like unlike `load()` 
 is only documented to be unsafe, without development-time warning. 
 
+Version 0.18.9 was the last one tested to be working with Python 3.7
 Version 0.17.21 was the last one tested to be working on Python 3.5 and 3.6<BR>
 The 0.16.13 release was the last that was tested to be working on Python 2.7.
 
@@ -87,6 +88,8 @@ the API is stable enough to make the transition.
 <a href="https://pypi.org/project/oitnb/"><img src="https://sourceforge.net/p/oitnb/code/ci/default/tree/_doc/_static/oitnb.svg?format=raw"></a>
 <a href="http://mypy-lang.org/"><img src="http://www.mypy-lang.org/static/mypy_badge.svg"></a>
 <a href="https://www.pepy.tech/projects/ruamel.yaml"><img src="https://img.shields.io/pepy/dt/ruamel.yaml.svg"></a>
+NEXT:<br>
+- implemented changes to the setup.py for Python 3.14 as suggested by [Miro Hrončok](https://sourceforge.net/u/hroncok/profile/) in merge requests (MR not merged as those files are copied in from `develop` config)
 
 0.18.9 (2025-01-05):
 
@@ -100,6 +103,7 @@ the API is stable enough to make the transition.
 
 - fixes for README (reported by [Kees Bakker](https://sourceforge.net/u/keesb/profile/))
 - fixes preserving anchor on scalar integer `0` (issue reported by (Mor Peled)[https://sourceforge.net/u/morp/profile/] and also in a question by [Ravi](https://stackoverflow.com/users/6550398/ravi) on [Stackoverflow](https://stackoverflow.com/a/79306830/1307905))
+- fix for formatting of README suggested by [Michael R. Crusoe](https://sourceforge.net/u/crusoe/profile/)
 
 0.18.6 (2024-02-07):
 

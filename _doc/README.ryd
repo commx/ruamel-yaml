@@ -115,6 +115,7 @@ to the function `load()` with any input will terminate your program with an erro
 completely, as `pickle.load()` can be abused in the same way as `load()` (and like unlike `load()` 
 is only documented to be unsafe, without development-time warning. 
 
+Version 0.18.9 was the last one tested to be working with Python 3.7
 Version 0.17.21 was the last one tested to be working on Python 3.5 and 3.6<BR>
 The 0.16.13 release was the last that was tested to be working on Python 2.7.
 
