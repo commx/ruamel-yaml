@@ -480,7 +480,7 @@ class NameSpacePackager(object):
         if 'sourceforge.net' in base_url:
             ret_val['Source'] = base_url + 'code/ci/default/tree/'
             ret_val['Tracker'] = base_url + 'tickets/'
-        assert self._pkg_data.get('read_the_docs') is None, "update pon data read_the_docs -> url_doc='https://domain/path/{pkgname}/'"
+        assert self._pkg_data.get('read_the_docs') is None, "update pon data read_the_docs -> url_doc='https://domain/path/{pkgname}/'"  # NOQA
         url_doc = self._pkg_data.get('url_doc')
         if url_doc:
             ret_val['Documentation'] = url_doc.format(full_package_name=sp)
@@ -527,7 +527,8 @@ class NameSpacePackager(object):
     def classifiers(self):
         """this needs more intelligence, probably splitting the classifiers from _pkg_data
         and only adding defaults when no explicit entries were provided.
-        Add explicit Python versions in sync with tox.env generation based on python_requires? See comment develop
+        Add explicit Python versions in sync with tox.env generation based on python_requires?
+        See comment develop
         """
         attr = '_' + sys._getframe().f_code.co_name
         if not hasattr(self, attr):
@@ -535,16 +536,14 @@ class NameSpacePackager(object):
         return getattr(self, attr)
 
     def _setup_classifiers(self):
-        c = set(
-            [
-                ('Development Status', '{0} - {1}'.format(*self.status), ),
+        c = set([  # NOQA
+                ('Development Status', '{0} - {1}'.format(*self.status)),
                 ('Intended Audience', 'Developers'),
-#               ('License', 'OSI Approved', ('MIT' if self.has_mit_lic() else 'Other/Proprietary') + ' License'),
-                ('License', ('OSI Approved :: MIT' if self.has_mit_lic() else 'Other/Proprietary') + ' License'),
-                ('Operating System', 'OS Independent', ),
+#               ('License', 'OSI Approved', ('MIT' if self.has_mit_lic() else 'Other/Proprietary') + ' License'),  # NOQA
+                ('License', ('OSI Approved :: MIT' if self.has_mit_lic() else 'Other/Proprietary') + ' License'),  # NOQA
+                ('Operating System', 'OS Independent'),
                 ('Programming Language', 'Python'),
-            ]
-        )
+                ])
         for cl in self._pkg_data.get('classifiers', []):
             print('cltype', type(cl), repr(cl))
             if isinstance(cl, str):
@@ -556,7 +555,7 @@ class NameSpacePackager(object):
         minor = supported[1]
         while minor <= 13:
             version = (supported[0], minor)
-            c.add(tuple(['Programming Language', 'Python',] + list(version)))
+            c.add(tuple(['Programming Language', 'Python'] + list(version)))
             minor += 1
         ret_val = []
         for x in c:
@@ -733,8 +732,8 @@ class NameSpacePackager(object):
             for target in self._pkg_data.get('ext_modules', []):
                 ext = Extension(
                     target['name'],
-                    sources=[x for x in target['src']],
-                    libraries=[x for x in target.get('lib')],
+                    sources=[x for x in target['src']],  # NOQA
+                    libraries=[x for x in target.get('lib')],  # NOQA
                 )
                 self._ext_modules.append(ext)
             return self._ext_modules
