@@ -539,7 +539,8 @@ class NameSpacePackager(object):
             [
                 ('Development Status', '{0} - {1}'.format(*self.status), ),
                 ('Intended Audience', 'Developers'),
-                ('License', 'OSI Approved', 'MIT' if self.has_mit_lic() else 'Other/Proprietary' + ' License'),
+#               ('License', 'OSI Approved', ('MIT' if self.has_mit_lic() else 'Other/Proprietary') + ' License'),
+                ('License', ('OSI Approved :: MIT' if self.has_mit_lic() else 'Other/Proprietary') + ' License'),
                 ('Operating System', 'OS Independent', ),
                 ('Programming Language', 'Python'),
             ]

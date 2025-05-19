@@ -253,6 +253,21 @@ class TestGuessIndent:
         """
         assert guess(inp) == (3, None)
 
+    def test_guess_with_preserve_quotes(self) -> None:
+        from ruamel.yaml.util import load_yaml_guess_indent
+        from ruamel.yaml.scalarstring import DoubleQuotedScalarString
+
+        inp = """\
+        b:
+           a: "hello world"
+        """
+        yaml = YAML()
+        yaml.preserve_quotes = True
+        x, y, z = load_yaml_guess_indent(dedent(inp), yaml=yaml)
+        assert y == 3
+        assert z is None
+        assert isinstance(x['b']['a'], DoubleQuotedScalarString)
+
 
 class TestSeparateMapSeqIndents:
     # using uncommon 6 indent with 3 push in as 2 push in automatically

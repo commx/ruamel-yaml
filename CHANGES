@@ -1,3 +1,14 @@
+NEXT:
+- function `load_yaml_guess_indent` now takes an option `yaml` argument so you
+  can provide an already created/configured `YAML` instance
+- Sequence item indicator with both comment/empty line before indicator
+  **and** comment before sequence item, could not move comment and raise
+  `NotImplementedError`. Reported by 
+  [Karsten Tessarzik](https://sourceforge.net/u/kars10/profile/).
+- missing f for f-string (reported by π, via email)
+- fixed issue with extra space in double quoted dump (reported by
+  [Jan Möller](https://sourceforge.net/u/redfiredragon/profile/))
+
 [0.18.10, 2025-01-06]:
 - implemented changes to the setup.py for Python 3.14 as suggested by [Miro Hrončok](https://sourceforge.net/u/hroncok/profile/)
   in merge requests (MR not merged as those files are copied in from `develop` config)

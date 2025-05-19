@@ -192,7 +192,7 @@ def load_yaml_guess_indent(stream: StreamTextType, **kw: Any) -> Any:
         prev_line_key_only = None
     if indent is None and map_indent is not None:
         indent = map_indent
-    yaml = YAML()
+    yaml = YAML() if 'yaml' not in kw else kw.pop('yaml')
     return yaml.load(yaml_str, **kw), indent, block_seq_indent
 
 

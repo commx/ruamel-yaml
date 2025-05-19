@@ -58,3 +58,6 @@ class TimeStamp(datetime.datetime):
         ts = type(self)(year, month, day, hour, minute, second, microsecond, tzinfo, fold=fold)
         ts._yaml = copy.deepcopy(self._yaml)
         return ts
+
+    def __str__(self):
+        return self.isoformat('T' if self._yaml['t'] else ' ')

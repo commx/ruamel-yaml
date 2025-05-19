@@ -477,7 +477,7 @@ class Emitter:
                 else:
                     self.expect_block_mapping()
         else:
-            raise EmitterError('expected NodeEvent, but got {self.event!s}')
+            raise EmitterError(f'expected NodeEvent, but got {self.event!s}')
 
     def expect_alias(self) -> None:
         if self.event.anchor is None:
@@ -1436,11 +1436,17 @@ class Emitter:
                 if len(text) > end:
                     try:
                         space_pos = text.index(' ', end)
+                        try:
+                            space_pos = text.index('\n', end, space_pos)
+                        except (ValueError, IndexError):
+                            pass
                         if (
                             '"' not in text[end:space_pos]
                             and "'" not in text[end:space_pos]
-                            and text[space_pos + 1] != ' '
+                            # and text[space_pos + 1] != ' '
+                            and text[space_pos + 1] not in ' \n'
                             and text[end - 1 : end + 1] != '  '
+                            and start != end
                         ):
                             need_backquote = False
                     except (ValueError, IndexError):

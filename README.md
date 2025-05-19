@@ -4,8 +4,8 @@
 
 | | |
 | - | - |
-| version |0.18.9 |
-| updated |2025-01-05 |
+| version |0.18.10 |
+| updated |2025-01-06 |
 | documentation |https://yaml.dev/doc/ruamel.yaml |
 | repository |https://sourceforge.net/projects/ruamel-yaml |
 | pypi |https://pypi.org/project/ruamel.yaml |
@@ -89,6 +89,12 @@ the API is stable enough to make the transition.
 <a href="http://mypy-lang.org/"><img src="http://www.mypy-lang.org/static/mypy_badge.svg"></a>
 <a href="https://www.pepy.tech/projects/ruamel.yaml"><img src="https://img.shields.io/pepy/dt/ruamel.yaml.svg"></a>
 NEXT:<br>
+- function `load_yaml_guess_indent` now takes an option `yaml` argument so you can provide an already created/configured `YAML` instance
+- Sequence item indicator with both comment/empty line before indicator **and** comment before sequence item, could not move comment and raise `NotImplementedError`. Reported by [Karsten Tessarzik](https://sourceforge.net/u/kars10/profile/).
+- missing f for f-string (reported by π, via email)
+
+0.18.10 (2025-01-06):
+
 - implemented changes to the setup.py for Python 3.14 as suggested by [Miro Hrončok](https://sourceforge.net/u/hroncok/profile/) in merge requests (MR not merged as those files are copied in from `develop` config)
 
 0.18.9 (2025-01-05):

@@ -1314,6 +1314,7 @@ class RoundTripConstructor(SafeConstructor):
     def _sentinel(self) -> None:
         pass
 
+    # RoundTrip
     def construct_mapping(self, node: Any, maptyp: Any, deep: bool = False) -> Any:  # type: ignore # NOQA
         if not isinstance(node, MappingNode):
             raise ConstructorError(

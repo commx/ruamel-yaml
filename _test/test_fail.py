@@ -40,6 +40,7 @@ class TestCommentFailures:
         """
         assert round_trip_dump(round_trip_load(inp)) == dedent("""
         !!set
+        # the beginning
         # or this one?
         ? a
         # next one is B (lowercase)
