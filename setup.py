@@ -2,6 +2,14 @@
 # coding: utf-8
 # dd: 20241207
 
+"""
+this is a common setup.py for multiple packages, driven by the info in
+__init__.py. If there is an issue with this in a particular package,
+e.g. because of a change in Python, that issue might have been solved,
+but not yet "percolated" into a new release of the package. (So don't
+spent too much time debugging).
+"""
+
 # # __init__.py parser
 
 import sys
@@ -836,6 +844,7 @@ def main():
 
     kw = dict(  # NOQA: C408
         name=nsp.full_package_name,
+        metadata_version="1.0",
         version=version_str,
         packages=nsp.packages,
         python_requires=nsp.python_requires,

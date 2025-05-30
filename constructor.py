@@ -52,6 +52,9 @@ class DuplicateKeyFutureWarning(MarkedYAMLFutureWarning):
     pass
 
 
+DUPKEY_URL = 'https://yaml.dev/doc/ruamel.yaml/api/#Duplicate_keys'
+
+
 class DuplicateKeyError(MarkedYAMLError):
     pass
 
@@ -263,9 +266,9 @@ class BaseConstructor:
                     f'found duplicate key "{key}" with value "{value}" '
                     f'(original value: "{mk}")',
                     key_node.start_mark,
-                    """
+                    f"""
                     To suppress this check see:
-                        http://yaml.readthedocs.io/en/latest/api.html#duplicate-keys
+                        {DUPKEY_URL}
                     """,
                     """\
                     Duplicate keys will become an error in future releases, and are errors
@@ -287,9 +290,9 @@ class BaseConstructor:
                     node.start_mark,
                     f'found duplicate key "{key}"',
                     key_node.start_mark,
-                    """
+                    f"""
                     To suppress this check see:
-                        http://yaml.readthedocs.io/en/latest/api.html#duplicate-keys
+                        {DUPKEY_URL}
                     """,
                     """\
                     Duplicate keys will become an error in future releases, and are errors
@@ -371,9 +374,9 @@ class SafeConstructor(BaseConstructor):
                         node.start_mark,
                         f'found duplicate key "{key_node.value}"',
                         key_node.start_mark,
-                        """
+                        f"""
                         To suppress this check see:
-                           http://yaml.readthedocs.io/en/latest/api.html#duplicate-keys
+                           {DUPKEY_URL}
                         """,
                         """\
                         Duplicate keys will become an error in future releases, and are errors
@@ -1260,9 +1263,9 @@ class RoundTripConstructor(SafeConstructor):
                         node.start_mark,
                         f'found duplicate key "{key_node.value}"',
                         key_node.start_mark,
-                        """
+                        f"""
                         To suppress this check see:
-                           http://yaml.readthedocs.io/en/latest/api.html#duplicate-keys
+                           {DUPKEY_URL}
                         """,
                         """\
                         Duplicate keys will become an error in future releases, and are errors
@@ -1387,7 +1390,7 @@ class RoundTripConstructor(SafeConstructor):
                 else:
                     # NEWCMNT
                     if key_node.comment:
-                        nprintf('nc5a', key, key_node.comment)
+                        # nprintf('nc5a', key, key_node.comment)
                         if key_node.comment[0]:
                             maptyp.ca.set(key, C_KEY_PRE, key_node.comment[0])
                         if key_node.comment[1]:

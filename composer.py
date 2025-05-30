@@ -177,7 +177,8 @@ class Composer:
             if node.comment is not None:
                 x = node.flow_style
                 nprint(
-                    f'Warning: unexpected end_event commment in sequence node {x}',
+                    f'Warning: unexpected end_event commment in sequence node {x}\n',
+                    '    if possible, please report an issue with reproducable data/code',
                 )
             node.comment = end_event.comment
         node.end_mark = end_event.end_mark

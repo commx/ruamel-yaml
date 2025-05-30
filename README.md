@@ -4,8 +4,8 @@
 
 | | |
 | - | - |
-| version |0.18.11 |
-| updated |2025-05-19 |
+| version |0.18.12 |
+| updated |2025-05-30 |
 | documentation |https://yaml.dev/doc/ruamel.yaml |
 | repository |https://sourceforge.net/projects/ruamel-yaml |
 | pypi |https://pypi.org/project/ruamel.yaml |
@@ -88,6 +88,12 @@ the API is stable enough to make the transition.
 <a href="https://pypi.org/project/oitnb/"><img src="https://sourceforge.net/p/oitnb/code/ci/default/tree/_doc/_static/oitnb.svg?format=raw"></a>
 <a href="http://mypy-lang.org/"><img src="http://www.mypy-lang.org/static/mypy_badge.svg"></a>
 <a href="https://www.pepy.tech/projects/ruamel.yaml"><img src="https://img.shields.io/pepy/dt/ruamel.yaml.svg"></a>
+
+0.18.12 (2025-05-30):
+
+- fix additional issue with extra space in double quoted string. Reported by [Saugat Pachhai](https://sourceforge.net/u/skshetry/profile/)
+- fix duplicate key url, now pointing to yaml.dev. Reported by [Hugo](https://sourceforge.net/u/hugovk/profile/)
+- fix broken RECORD file, which was a problem for uv, not pip. Reported by [konstin](https://sourceforge.net/u/konstin/profile/)
 
 0.18.11 (2025-05-19):
 

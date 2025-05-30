@@ -1377,6 +1377,10 @@ class Emitter:
     }
 
     def write_double_quoted(self, text: Any, split: Any = True) -> None:
+        """
+        a newline, as written by self.write_indent(), might need to be escaped with a backslash
+        as on reading this will produce a possibly unwanted space.
+        """
         if self.root_context:
             if self.requested_indent is not None:
                 self.write_line_break()
@@ -1431,8 +1435,8 @@ class Emitter:
                 and split
             ):
                 # SO https://stackoverflow.com/a/75634614/1307905
-                # data = text[start:end] + u'\\'  # <<< replaced with following six lines
-                need_backquote = True
+                # data = text[start:end] + u'\\'  # <<< replaced with following lines
+                need_backslash = True
                 if len(text) > end:
                     try:
                         space_pos = text.index(' ', end)
@@ -1440,7 +1444,10 @@ class Emitter:
                             space_pos = text.index('\n', end, space_pos)
                         except (ValueError, IndexError):
                             pass
-                        if (
+                        # nprint('backslash?', space_pos, repr(text[:space_pos]), repr(text[space_pos:]), (text[space_pos] == '\n' and text[space_pos+1] == ' '))  # NOQA
+                        if (text[space_pos] == '\n' and text[space_pos + 1] != ' '):
+                            pass
+                        elif (
                             '"' not in text[end:space_pos]
                             and "'" not in text[end:space_pos]
                             # and text[space_pos + 1] != ' '
@@ -1448,10 +1455,10 @@ class Emitter:
                             and text[end - 1 : end + 1] != '  '
                             and start != end
                         ):
-                            need_backquote = False
+                            need_backslash = False
                     except (ValueError, IndexError):
                         pass
-                data = text[start:end] + ('\\' if need_backquote else '')
+                data = text[start:end] + ('\\' if need_backslash else '')
                 if start < end:
                     start = end
                 self.column += len(data)
@@ -1462,11 +1469,11 @@ class Emitter:
                 self.whitespace = False
                 self.indention = False
                 if text[start] == ' ':
-                    if not need_backquote:
+                    if not need_backslash:
                         # remove leading space it will load from the newline
                         start += 1
                     # data = u'\\'    # <<< replaced with following line
-                    data = '\\' if need_backquote else ''
+                    data = '\\' if need_backslash else ''
                     self.column += len(data)
                     if bool(self.encoding):
                         data = data.encode(self.encoding)
