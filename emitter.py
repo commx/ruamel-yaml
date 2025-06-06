@@ -1655,12 +1655,14 @@ class Emitter:
         breaks = False
         start = end = 0
         while end <= len(text):
+            # ToDo: there is an empty space at the end of the wrapped line, if that line
+            # does not exceed self.best_width, that space is superfluous if wrapping is on
             ch = None
             if end < len(text):
                 ch = text[end]
             if spaces:
                 if ch != ' ':
-                    if start + 1 == end and self.column > self.best_width and split:
+                    if start + 1 == end and self.column >= self.best_width and split:
                         self.write_indent()
                         self.whitespace = False
                         self.indention = False
@@ -1688,7 +1690,7 @@ class Emitter:
                 if ch is None or ch in ' \n\x85\u2028\u2029':
                     data = text[start:end]
                     if (
-                        len(data) > self.best_width
+                        (len(data) + self.column) > self.best_width
                         and self.indent is not None
                         and self.column > self.indent
                     ):

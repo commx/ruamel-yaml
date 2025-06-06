@@ -200,7 +200,8 @@ class TestYpkgIndent:
         release    : 1
         homepage   : http://www.nano-editor.org
         source     :
-          - http://www.nano-editor.org/dist/v2.3/nano-2.3.2.tar.gz : ff30924807ea289f5b60106be8
+          - http://www.nano-editor.org/dist/v2.3/nano-2.3.2.tar.gz :<SPC>
+                ff30924807ea289f5b60106be8
         license    : GPL-2.0
         summary    : GNU nano is an easy-to-use text editor
         builddeps  :
