@@ -6,9 +6,9 @@ if False:  # MYPY
 
 _package_data = dict(
     full_package_name='ruamel.yaml',
-    version_info=(0, 18, 13),
-    __version__='0.18.13',
-    version_timestamp='2025-06-06 16:19:58',
+    version_info=(0, 18, 14),
+    __version__='0.18.14',
+    version_timestamp='2025-06-09 10:47:31',
     author='Anthon van der Neut',
     author_email='a.van.der.neut@ruamel.eu',
     description='ruamel.yaml is a YAML parser/emitter that supports roundtrip preservation of comments, seq/map flow style, and map key order',  # NOQA
@@ -27,13 +27,12 @@ _package_data = dict(
     ],
     keywords='yaml 1.2 parser round-trip preserve quotes order config',
     url_doc='https://yaml.dev/doc/{full_package_name}',
-    supported=[(3, 8)],  # minimum
     tox=dict(
         env='*',
         fl8excl='_test/lib,branch_default',
     ),
     # universal=True,
-    python_requires='>=3.7',
+    supported=[(3, 8)],  # minimum
 )  # type: Dict[Any, Any]
 
 

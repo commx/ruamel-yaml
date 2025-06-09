@@ -558,7 +558,7 @@ class NameSpacePackager(object):
                 c.add((cl,))
             else:
                 c.add(tuple(c))
-        supported = self._pkg_data.get('supported', _setup_data['supported'])[0]
+        supported = self.supported[0]
         assert supported[0] == 3
         minor = supported[1]
         while minor <= 13:
@@ -702,8 +702,12 @@ class NameSpacePackager(object):
             return self._extra_packages
 
     @property
+    def supported(self):
+        return self._pkg_data.get('supported', _setup_data['supported'])
+
+    @property
     def python_requires(self):
-        return self._pkg_data.get('python_requires', None)
+        return self._pkg_data.get('python_requires', f'>={".".join([str(x) for x in self.supported[0]])}')  # NOQA
 
     @property
     def ext_modules(self):

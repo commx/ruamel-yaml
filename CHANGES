@@ -1,3 +1,12 @@
+[0.18.14, 2025-06-09]:
+- Fix issue with constructing dataclasses that have a default factoryi 
+  attribute, but were missing a mapping value for that attribute. Reported by  
+  [Victor Prieto](https://sourceforge.net/u/vsprieto/profile/)
+- the tagged release tar files can now also be downloaded from 
+  https://yaml.dev/ruamel-dl-tagged-releases/ please adjust if you use 
+  https://sourceforge.net/projects/ruamel-dl-tagged-releases/files/ as that 
+  repository in sourceforge will no longer be updated from some later date.
+
 [0.18.13, 2025-06-06]:
 - Fix line wrapping on plain scalars not observing width correctly. Issue 529, 
   reported by [Sebastien 
@@ -1022,7 +1031,7 @@
 - update to conform to mypy 0.511:mypy --strict
 
 [0.15.1, 2017-06-07]:
-- Any `duplicate keys  
+- Any `duplicate keys 
   <http://yaml.readthedocs.io/en/latest/api.html#duplicate-keys>`_ in mappings 
   generate an error (in the old API this change generates a warning until 0.16)
 - dependecy on ruamel.ordereddict for 2.7 now via extras_require

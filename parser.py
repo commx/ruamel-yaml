@@ -161,7 +161,7 @@ class Parser:
                 self.current_event = self.state()
         # assert self.current_event is not None
         # if self.current_event.end_mark.line != self.peek_event().start_mark.line:
-        xprintf('get_event', repr(self.current_event), self.peek_event().start_mark.line)
+        # xprintf('get_event', repr(self.current_event), self.peek_event().start_mark.line)
         self.last_event = value = self.current_event
         self.current_event = None
         return value
