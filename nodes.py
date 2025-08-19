@@ -53,6 +53,8 @@ class Node:
         #     else:
         #         value = repr(value)
         value = repr(value)
+        if self.anchor is not None:
+            return f'{self.__class__.__name__!s}(tag={self.tag!r}, anchor={self.anchor!r}, value={value!s})'  # NOQA
         return f'{self.__class__.__name__!s}(tag={self.tag!r}, value={value!s})'
 
     def dump(self, indent: int = 0) -> None:

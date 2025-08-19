@@ -20,7 +20,7 @@ from ruamel.yaml.tag import Tag
 from collections.abc import MutableSet, Sized, Set, Mapping
 
 if False:  # MYPY
-    from typing import Any, Dict, Optional, List, Union, Optional, Iterator  # NOQA
+    from typing import Any, Dict, Optional, List, Union, Iterator  # NOQA
 
 # fmt: off
 __all__ = ['CommentedSeq', 'CommentedKeySeq',
@@ -798,13 +798,14 @@ class CommentedMap(ordereddict, CommentedBase):
             del self[key]
         keys = [k for k in self.keys() if k in self._ok]
         try:
-            ma0 = getattr(self, merge_attrib, [[-1]])[0]
-            merge_pos = ma0[0]
-        except IndexError:
+            merge_value = getattr(self, merge_attrib)
+            merge_pos = merge_value.merge_pos
+        except (AttributeError, IndexError):
             merge_pos = -1
         if merge_pos >= 0:
             if merge_pos >= pos:
-                getattr(self, merge_attrib)[0] = (merge_pos + 1, ma0[1])
+                # getattr(self, merge_attrib)[0] = (merge_pos + 1, ma0[1])
+                merge_value.merge_pos += 1
                 idx_min = pos
                 idx_max = len(self._ok)
             else:
@@ -853,8 +854,13 @@ class CommentedMap(ordereddict, CommentedBase):
             return ordereddict.__getitem__(self, key)
         except KeyError:
             for merged in getattr(self, merge_attrib, []):
-                if key in merged[1]:
-                    return merged[1][key]
+                # if isinstance(merged, tuple):
+                #     if key in merged[1]:
+                #         return merged[1][key]
+                # else:
+                if True:
+                    if key in merged:
+                        return merged[key]
             raise
 
     def __setitem__(self, key: Any, value: Any) -> None:
@@ -912,6 +918,20 @@ class CommentedMap(ordereddict, CommentedBase):
         #
         # ordereddict.__setitem__(self, key, value)  # merge might have different value
         # self._ok.discard(key)
+
+        try:
+            merge_value = getattr(self, merge_attrib)
+            merge_pos = merge_value.merge_pos
+        except AttributeError:
+            merge_pos = -1
+        if merge_pos >= 0:
+            try:
+                pos = list(ordereddict.keys(self)).index(key)
+                # the merge is not in the dict, so don't use >=
+                if merge_pos > pos:
+                    merge_value.merge_pos -= 1
+            except ValueError:
+                pass  # let the removal of the key throw a "normal" error
         self._ok.discard(key)
         ordereddict.__delitem__(self, key)
         for referer in self._ref:
@@ -972,13 +992,24 @@ class CommentedMap(ordereddict, CommentedBase):
             self._ref.append(cm)
 
     def add_yaml_merge(self, value: Any) -> None:
+        assert not hasattr(self, merge_attrib)
+        setattr(self, merge_attrib, value)
         for v in value:
-            v[1].add_referent(self)
-            for k1, v1 in v[1].items():
-                if ordereddict.__contains__(self, k1):
-                    continue
-                ordereddict.__setitem__(self, k1, v1)
-        self.merge.extend(value)
+            # if isinstance(v, tuple):
+            #     assert len(v) == 2
+            #     # print('vvv', v, type(v[1]))
+            #     v[1].add_referent(self)
+            #     for k1, v1 in v[1].items():
+            #         if ordereddict.__contains__(self, k1):
+            #             continue
+            #         ordereddict.__setitem__(self, k1, v1)
+            # else:
+            if True:
+                v.add_referent(self)
+                for k1, v1 in v.items():
+                    if ordereddict.__contains__(self, k1):
+                        continue
+                    ordereddict.__setitem__(self, k1, v1)
 
     def update_key_value(self, key: Any) -> None:
         if key in self._ok:

@@ -130,6 +130,8 @@ email, preferably with some information on how you use the package (or a
 link to the repository) and I'll keep you informed when the status of
 the API is stable enough to make the transition.
 
+For packaging purposes you can use a download of the [tar balls oof tagged source](https://yaml.dev/ruamel-dl-tagged-releases)
+
 --- !comment |
 # # ToDo 2024-12
 # --- !toc

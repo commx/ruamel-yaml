@@ -12,7 +12,7 @@ only.
 """
 
 if False:  # MYPY
-    from typing import Any, Dict, Optional, List, Union, Optional, Iterator  # NOQA
+    from typing import Any, Dict, Optional, List, Union, Iterator  # NOQA
 
 tag_attrib = '_yaml_tag'
 

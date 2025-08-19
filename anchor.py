@@ -2,7 +2,7 @@
 from __future__ import annotations
 
 if False:  # MYPY
-    from typing import Any, Dict, Optional, List, Union, Optional, Iterator  # NOQA
+    from typing import Any, Dict, Optional, List, Union, Iterator  # NOQA
 
 anchor_attrib = '_yaml_anchor'
 

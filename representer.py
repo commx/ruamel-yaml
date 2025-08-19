@@ -825,13 +825,18 @@ class RoundTripRepresenter(SafeRepresenter):
                 pass
         except AttributeError:
             item_comments = {}
-        merge_list = [m[1] for m in getattr(mapping, merge_attrib, [])]
+        merge_value = getattr(mapping, merge_attrib, [])
+        # merge_list = [m[1] for m in merge_value]
+        # merge_list = [m for m in merge_value]
         try:
-            merge_pos = getattr(mapping, merge_attrib, [[0]])[0][0]
-        except IndexError:
+            # merge_pos = getattr(mapping, merge_attrib, [[0]])[0][0]
+            # print('merge_pos', merge_pos, merge_value.merge_pos)
+            merge_pos = merge_value.merge_pos
+        except (AttributeError, IndexError):
             merge_pos = 0
         item_count = 0
-        if bool(merge_list):
+        # if bool(merge_list):
+        if len(merge_value) > 0:
             items = mapping.non_merged_items()
         else:
             items = mapping.items()
@@ -857,18 +862,20 @@ class RoundTripRepresenter(SafeRepresenter):
                 best_style = False
             value.append((node_key, node_value))
         if flow_style is None:
-            if ((item_count != 0) or bool(merge_list)) and self.default_flow_style is not None:
+            if ((item_count != 0) or (len(merge_value) > 0)) and self.default_flow_style is not None:  # NOQA
                 node.flow_style = self.default_flow_style
             else:
                 node.flow_style = best_style
-        if bool(merge_list):
+        if len(merge_value) > 0:
             # because of the call to represent_data here, the anchors
             # are marked as being used and thereby created
-            if len(merge_list) == 1:
-                arg = self.represent_data(merge_list[0])
+            # if len(merge_list) == 1:
+            if merge_value.sequence is None:
+                arg = self.represent_data(merge_value[0])
             else:
-                arg = self.represent_data(merge_list)
-                arg.flow_style = True
+                # arg = self.represent_data(merge_list)
+                # arg.flow_style = True
+                arg = self.represent_data(merge_value.sequence)
             value.insert(
                 merge_pos, (ScalarNode(Tag(suffix='tag:yaml.org,2002:merge'), '<<'), arg),
             )

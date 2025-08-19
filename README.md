@@ -81,6 +81,8 @@ email, preferably with some information on how you use the package (or a
 link to the repository) and I'll keep you informed when the status of
 the API is stable enough to make the transition.
 
+For packaging purposes you can use a download of the [tar balls oof tagged source](https://yaml.dev/ruamel-dl-tagged-releases)
+
 
 <a href="https://bestpractices.coreinfrastructure.org/projects/1128"><img src="https://bestpractices.coreinfrastructure.org/projects/1128/badge"></a>
 <a href="https://opensource.org/licenses/MIT"><img src="https://sourceforge.net/p/ruamel-yaml/code/ci/default/tree/_doc/_static/license.svg?format=raw"></a>
@@ -88,6 +90,9 @@ the API is stable enough to make the transition.
 <a href="https://pypi.org/project/oitnb/"><img src="https://sourceforge.net/p/oitnb/code/ci/default/tree/_doc/_static/oitnb.svg?format=raw"></a>
 <a href="http://mypy-lang.org/"><img src="http://www.mypy-lang.org/static/mypy_badge.svg"></a>
 <a href="https://www.pepy.tech/projects/ruamel.yaml"><img src="https://img.shields.io/pepy/dt/ruamel.yaml.svg"></a>
+NEXT:<br>
+- duplicate merge keys are never allowed (not even with .allow_duplicate_keys = True
+- merge keys now keep there position if a key before the merge key gets deleted (previously a key after the merge key would move before it)
 
 0.18.14 (2025-06-09):
 

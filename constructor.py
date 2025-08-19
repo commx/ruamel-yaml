@@ -353,7 +353,7 @@ class SafeConstructor(BaseConstructor):
                     return self.construct_scalar(value_node)
         return BaseConstructor.construct_scalar(self, node)
 
-    def flatten_mapping(self, node: Any) -> Any:
+    def flatten_mapping(self, node: Any) -> Any:  # SafeConstructor
         """
         This implements the merge key feature http://yaml.org/type/merge.html
         by inserting keys from the merge dict/list of dicts if not yet
@@ -372,21 +372,14 @@ class SafeConstructor(BaseConstructor):
                     args = [
                         'while constructing a mapping',
                         node.start_mark,
-                        f'found duplicate key "{key_node.value}"',
+                        'found duplicate merge key "<<"',
                         key_node.start_mark,
-                        f"""
-                        To suppress this check see:
-                           {DUPKEY_URL}
-                        """,
                         """\
-                        Duplicate keys will become an error in future releases, and are errors
-                        by default when using the new API.
+                        Duplicate merge keys are never allowed, not even when
+                        `.allow_duplicate_keys` is set to True
                         """,
                     ]
-                    if self.allow_duplicate_keys is None:
-                        warnings.warn(DuplicateKeyFutureWarning(*args), stacklevel=1)
-                    else:
-                        raise DuplicateKeyError(*args)
+                    raise DuplicateKeyError(*args)
                 del node.value[index]
                 if isinstance(value_node, MappingNode):
                     self.flatten_mapping(value_node)
@@ -1230,11 +1223,12 @@ class RoundTripConstructor(SafeConstructor):
             )
         return ret_val
 
-    def flatten_mapping(self, node: Any) -> Any:
+    def flatten_mapping(self, node: Any) -> Any:  # RTConstructor
         """
         This implements the merge key feature http://yaml.org/type/merge.html
         by referencing the merge dict/list of dicts
         """
+        from ruamel.yaml.mergevalue import MergeValue
 
         def constructed(value_node: Any) -> Any:
             # If the contents of a merge are defined within the
@@ -1248,41 +1242,31 @@ class RoundTripConstructor(SafeConstructor):
             return value
 
         # merge = []
-        merge_map_list: List[Any] = []
+        # merge_map_list: List[Any] = []
+        merge_map_list = MergeValue()
         index = 0
         while index < len(node.value):
             key_node, value_node = node.value[index]
             if key_node.tag == 'tag:yaml.org,2002:merge':
-                if merge_map_list:  # double << key
-                    if self.allow_duplicate_keys:
-                        del node.value[index]
-                        index += 1
-                        continue
+                if len(merge_map_list):  # double << key
                     args = [
                         'while constructing a mapping',
                         node.start_mark,
-                        f'found duplicate key "{key_node.value}"',
+                        'found duplicate merge key "<<"',
                         key_node.start_mark,
-                        f"""
-                        To suppress this check see:
-                           {DUPKEY_URL}
-                        """,
                         """\
-                        Duplicate keys will become an error in future releases, and are errors
-                        by default when using the new API.
+                        Duplicate merge keys are never allowed, not even when
+                        `.allow_duplicate_keys` is set to True
                         """,
                     ]
-                    if self.allow_duplicate_keys is None:
-                        warnings.warn(DuplicateKeyFutureWarning(*args), stacklevel=1)
-                    else:
-                        raise DuplicateKeyError(*args)
+                    raise DuplicateKeyError(*args)
                 del node.value[index]
+                merge_map_list.merge_pos = index
                 if isinstance(value_node, MappingNode):
-                    merge_map_list.append((index, constructed(value_node)))
-                    # self.flatten_mapping(value_node)
-                    # merge.extend(value_node.value)
+                    merge_map_list.append(constructed(value_node))
                 elif isinstance(value_node, SequenceNode):
                     # submerge = []
+                    merge_map_list.set_sequence(constructed(value_node))
                     for subnode in value_node.value:
                         if not isinstance(subnode, MappingNode):
                             raise ConstructorError(
@@ -1291,12 +1275,7 @@ class RoundTripConstructor(SafeConstructor):
                                 f'expected a mapping for merging, but found {subnode.id!s}',
                                 subnode.start_mark,
                             )
-                        merge_map_list.append((index, constructed(subnode)))
-                    #     self.flatten_mapping(subnode)
-                    #     submerge.append(subnode.value)
-                    # submerge.reverse()
-                    # for value in submerge:
-                    #     merge.extend(value)
+                        merge_map_list.append(constructed(subnode))
                 else:
                     raise ConstructorError(
                         'while constructing a mapping',
