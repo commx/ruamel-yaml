@@ -831,7 +831,7 @@ class RoundTripRepresenter(SafeRepresenter):
         try:
             # merge_pos = getattr(mapping, merge_attrib, [[0]])[0][0]
             # print('merge_pos', merge_pos, merge_value.merge_pos)
-            merge_pos = merge_value.merge_pos
+            merge_pos = merge_value.merge_pos  # type: ignore
         except (AttributeError, IndexError):
             merge_pos = 0
         item_count = 0
@@ -870,12 +870,12 @@ class RoundTripRepresenter(SafeRepresenter):
             # because of the call to represent_data here, the anchors
             # are marked as being used and thereby created
             # if len(merge_list) == 1:
-            if merge_value.sequence is None:
+            if merge_value.sequence is None:  # type: ignore
                 arg = self.represent_data(merge_value[0])
             else:
                 # arg = self.represent_data(merge_list)
                 # arg.flow_style = True
-                arg = self.represent_data(merge_value.sequence)
+                arg = self.represent_data(merge_value.sequence)  # type: ignore
             value.insert(
                 merge_pos, (ScalarNode(Tag(suffix='tag:yaml.org,2002:merge'), '<<'), arg),
             )

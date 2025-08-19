@@ -1,11 +1,12 @@
-NEXT:
-- duplicate merge keys are never allowed (not even with .allow_duplicate_keys = True
-- merge keys now keep there position if a key before the merge key gets deleted
+[0.18.15, 2025-08-19]:
+- duplicate merge keys are never allowed (not even with .allow_duplicate_keys = 
+  True
+- merge keys now keep there position if a key before the merge key gets deleted 
   (previously a key after the merge key would move before it)
 
 [0.18.14, 2025-06-09]:
 - Fix issue with constructing dataclasses that have a default factoryi 
-  attribute, but were missing a mapping value for that attribute. Reported by  
+  attribute, but were missing a mapping value for that attribute. Reported by 
   [Victor Prieto](https://sourceforge.net/u/vsprieto/profile/)
 - the tagged release tar files can now also be downloaded from 
   https://yaml.dev/ruamel-dl-tagged-releases/ please adjust if you use 
