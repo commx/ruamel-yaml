@@ -341,7 +341,7 @@ class CommentToken(Token):
         if start_mark is None:
             assert column is not None
             self._column = column
-        Token.__init__(self, start_mark, None)  # type: ignore
+        Token.__init__(self, start_mark, end_mark)
         self._value = value
 
     @property
