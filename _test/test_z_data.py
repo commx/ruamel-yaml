@@ -102,7 +102,7 @@ def pytest_generate_tests(metafunc: Any) -> None:
     for path in paths:
         # while developing tests put them in data/debug and run:
         #   auto -c "pytest _test/test_z_data.py" data/debug/*.yaml *.py _test/*.py
-        if os.environ.get('RUAMELAUTOTEST') == '1':
+        if os.environ.get('RUAMEL_AUTOTEST') == '1':
             if path.parent.stem != 'debug':
                 continue
         elif path.parent.stem == 'debug':

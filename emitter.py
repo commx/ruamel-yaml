@@ -1490,21 +1490,27 @@ class Emitter:
                 indent = 2
                 hints += str(indent)
             elif self.root_context:
-                for end in ['\n---', '\n...']:
+                for end in ['---', '...']:
+                    position = -1
                     pos = 0
-                    while True:
+                    while position == -1:
                         pos = text.find(end, pos)
                         if pos == -1:
                             break
+                        if pos != 0:
+                            if text[pos - 1] != '\n':
+                                pos += 1
+                                continue
                         try:
-                            if text[pos + 4] in ' \r\n':
+                            if text[pos + len(end)] in ' \r\n':
+                                position = pos
                                 break
                         except IndexError:
                             pass
                         pos += 1
-                    if pos > -1:
+                    if position != -1:
                         break
-                if pos > 0:
+                if position != -1:
                     indent = 2
             if text[-1] not in '\n\x85\u2028\u2029':
                 indicator = '-'

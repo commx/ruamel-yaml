@@ -70,8 +70,8 @@ DBG_NODE = 4
 
 
 _debug: Optional[int] = None
-if 'RUAMELDEBUG' in os.environ:
-    _debugx = os.environ.get('RUAMELDEBUG')
+if 'RUAMEL_DEBUG' in os.environ:
+    _debugx = os.environ.get('RUAMEL_DEBUG')
     if _debugx is None:
         _debug = 0
     else:

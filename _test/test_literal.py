@@ -323,6 +323,20 @@ class Test_RoundTripLiteral:
         d = yaml.load(ys)
         yaml.dump(d, compare=ys)
 
+    def test_rt_root_literal_scalar_directive_end_at_start(self) -> None:
+        yaml = YAML()
+        yaml.explicit_start = True
+        s = 'abc'
+        ys = """
+        --- |
+          ---
+          {}
+        """
+        ys = ys.format(s)
+        d = yaml.load(ys)
+        assert str(d) == '---\n{}\n'.format(s)
+        yaml.dump(d, compare=ys)
+
     def test_rt_non_root_literal_scalar(self) -> None:
         yaml = YAML()
         s = 'testing123'

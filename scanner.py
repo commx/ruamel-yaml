@@ -29,9 +29,9 @@ from __future__ import annotations
 # Read comments in the Scanner code for more details.
 #
 
-from ruamel.yaml.error import MarkedYAMLError, CommentMark  # NOQA
-from ruamel.yaml.tokens import *  # NOQA
-from ruamel.yaml.docinfo import Version, Tag  # NOQA
+from ruamel.yaml.error import MarkedYAMLError
+import ruamel.yaml.tokens as tokens
+from ruamel.yaml.docinfo import Version  # NOQA
 from ruamel.yaml.compat import check_anchorname_char, _debug, nprint, nprintf  # NOQA
 
 if False:  # MYPY
@@ -415,7 +415,7 @@ class Scanner:
         while self.indent > column:
             mark = self.reader.get_mark()
             self.indent = self.indents.pop()
-            self.tokens.append(BlockEndToken(mark, mark))
+            self.tokens.append(tokens.BlockEndToken(mark, mark))
 
     def add_indent(self, column: int) -> bool:
         # Check if we need to increase indentation.
@@ -433,7 +433,7 @@ class Scanner:
         # Read the token.
         mark = self.reader.get_mark()
         # Add STREAM-START.
-        self.tokens.append(StreamStartToken(mark, mark, encoding=self.reader.encoding))
+        self.tokens.append(tokens.StreamStartToken(mark, mark, encoding=self.reader.encoding))
 
     def fetch_stream_end(self) -> None:
         # Set the current intendation to -1.
@@ -445,7 +445,7 @@ class Scanner:
         # Read the token.
         mark = self.reader.get_mark()
         # Add STREAM-END.
-        self.tokens.append(StreamEndToken(mark, mark))
+        self.tokens.append(tokens.StreamEndToken(mark, mark))
         # The steam is finished.
         self.done = True
 
@@ -461,10 +461,10 @@ class Scanner:
         self.tokens.append(self.scan_directive())
 
     def fetch_document_start(self) -> None:
-        self.fetch_document_indicator(DocumentStartToken)
+        self.fetch_document_indicator(tokens.DocumentStartToken)
 
     def fetch_document_end(self) -> None:
-        self.fetch_document_indicator(DocumentEndToken)
+        self.fetch_document_indicator(tokens.DocumentEndToken)
 
     def fetch_document_indicator(self, TokenClass: Any) -> None:
         # Set the current intendation to -1.
@@ -482,10 +482,10 @@ class Scanner:
         self.tokens.append(TokenClass(start_mark, end_mark))
 
     def fetch_flow_sequence_start(self) -> None:
-        self.fetch_flow_collection_start(FlowSequenceStartToken, to_push='[')
+        self.fetch_flow_collection_start(tokens.FlowSequenceStartToken, to_push='[')
 
     def fetch_flow_mapping_start(self) -> None:
-        self.fetch_flow_collection_start(FlowMappingStartToken, to_push='{')
+        self.fetch_flow_collection_start(tokens.FlowMappingStartToken, to_push='{')
 
     def fetch_flow_collection_start(self, TokenClass: Any, to_push: Text) -> None:
         # '[' and '{' may start a simple key.
@@ -501,10 +501,10 @@ class Scanner:
         self.tokens.append(TokenClass(start_mark, end_mark))
 
     def fetch_flow_sequence_end(self) -> None:
-        self.fetch_flow_collection_end(FlowSequenceEndToken)
+        self.fetch_flow_collection_end(tokens.FlowSequenceEndToken)
 
     def fetch_flow_mapping_end(self) -> None:
-        self.fetch_flow_collection_end(FlowMappingEndToken)
+        self.fetch_flow_collection_end(tokens.FlowMappingEndToken)
 
     def fetch_flow_collection_end(self, TokenClass: Any) -> None:
         # Reset possible simple key on the current level.
@@ -533,7 +533,7 @@ class Scanner:
         start_mark = self.reader.get_mark()
         self.reader.forward()
         end_mark = self.reader.get_mark()
-        self.tokens.append(FlowEntryToken(start_mark, end_mark))
+        self.tokens.append(tokens.FlowEntryToken(start_mark, end_mark))
 
     def fetch_block_entry(self) -> None:
         # Block context needs additional checks.
@@ -549,7 +549,7 @@ class Scanner:
             # We may need to add BLOCK-SEQUENCE-START.
             if self.add_indent(self.reader.column):
                 mark = self.reader.get_mark()
-                self.tokens.append(BlockSequenceStartToken(mark, mark))
+                self.tokens.append(tokens.BlockSequenceStartToken(mark, mark))
         # It's an error for the block entry to occur in the flow context,
         # but we let the parser detect this.
         else:
@@ -563,7 +563,7 @@ class Scanner:
         start_mark = self.reader.get_mark()
         self.reader.forward()
         end_mark = self.reader.get_mark()
-        self.tokens.append(BlockEntryToken(start_mark, end_mark))
+        self.tokens.append(tokens.BlockEntryToken(start_mark, end_mark))
 
     def fetch_key(self) -> None:
         # Block context needs additional checks.
@@ -578,7 +578,7 @@ class Scanner:
             # We may need to add BLOCK-MAPPING-START.
             if self.add_indent(self.reader.column):
                 mark = self.reader.get_mark()
-                self.tokens.append(BlockMappingStartToken(mark, mark))
+                self.tokens.append(tokens.BlockMappingStartToken(mark, mark))
 
         # Simple keys are allowed after '?' in the block context.
         self.allow_simple_key = not self.flow_level
@@ -590,7 +590,7 @@ class Scanner:
         start_mark = self.reader.get_mark()
         self.reader.forward()
         end_mark = self.reader.get_mark()
-        self.tokens.append(KeyToken(start_mark, end_mark))
+        self.tokens.append(tokens.KeyToken(start_mark, end_mark))
 
     def fetch_value(self) -> None:
         # Do we determine a simple key?
@@ -599,7 +599,7 @@ class Scanner:
             key = self.possible_simple_keys[self.flow_level]
             del self.possible_simple_keys[self.flow_level]
             self.tokens.insert(
-                key.token_number - self.tokens_taken, KeyToken(key.mark, key.mark),
+                key.token_number - self.tokens_taken, tokens.KeyToken(key.mark, key.mark),
             )
 
             # If this key starts a new block mapping, we need to add
@@ -608,7 +608,7 @@ class Scanner:
                 if self.add_indent(key.column):
                     self.tokens.insert(
                         key.token_number - self.tokens_taken,
-                        BlockMappingStartToken(key.mark, key.mark),
+                        tokens.BlockMappingStartToken(key.mark, key.mark),
                     )
 
             # There cannot be two simple keys one after another.
@@ -638,7 +638,7 @@ class Scanner:
             if not self.flow_level:
                 if self.add_indent(self.reader.column):
                     mark = self.reader.get_mark()
-                    self.tokens.append(BlockMappingStartToken(mark, mark))
+                    self.tokens.append(tokens.BlockMappingStartToken(mark, mark))
 
             # Simple keys are allowed after ':' in the block context.
             self.allow_simple_key = not self.flow_level
@@ -650,7 +650,7 @@ class Scanner:
         start_mark = self.reader.get_mark()
         self.reader.forward()
         end_mark = self.reader.get_mark()
-        self.tokens.append(ValueToken(start_mark, end_mark))
+        self.tokens.append(tokens.ValueToken(start_mark, end_mark))
 
     def fetch_alias(self) -> None:
         # ALIAS could be a simple key.
@@ -658,7 +658,7 @@ class Scanner:
         # No simple keys after ALIAS.
         self.allow_simple_key = False
         # Scan and add ALIAS.
-        self.tokens.append(self.scan_anchor(AliasToken))
+        self.tokens.append(self.scan_anchor(tokens.AliasToken))
 
     def fetch_anchor(self) -> None:
         # ANCHOR could start a simple key.
@@ -666,7 +666,7 @@ class Scanner:
         # No simple keys after ANCHOR.
         self.allow_simple_key = False
         # Scan and add ANCHOR.
-        self.tokens.append(self.scan_anchor(AnchorToken))
+        self.tokens.append(self.scan_anchor(tokens.AnchorToken))
 
     def fetch_tag(self) -> None:
         # TAG could start a simple key.
@@ -758,7 +758,7 @@ class Scanner:
                 if self.flow_context[-1] == '[':
                     if self.reader.peek(1) not in _THE_END_SPACE_TAB:
                         return False
-                elif self.tokens and isinstance(self.tokens[-1], ValueToken):
+                elif self.tokens and isinstance(self.tokens[-1], tokens.ValueToken):
                     # mapping flow context scanning a value token
                     if self.reader.peek(1) not in _THE_END_SPACE_TAB:
                         return False
@@ -860,7 +860,7 @@ class Scanner:
             while srp() not in _THE_END:
                 srf()
         self.scan_directive_ignored_line(start_mark)
-        return DirectiveToken(name, value, start_mark, end_mark)
+        return tokens.DirectiveToken(name, value, start_mark, end_mark)
 
     def scan_directive_name(self, start_mark: Any) -> Any:
         # See the specification for details.
@@ -1094,7 +1094,7 @@ class Scanner:
             )
         value = (handle, suffix)
         end_mark = self.reader.get_mark()
-        return TagToken(value, start_mark, end_mark)
+        return tokens.TagToken(value, start_mark, end_mark)
 
     def scan_block_scalar(self, style: Any, rt: Optional[bool] = False) -> Any:
         # See the specification for details.
@@ -1189,7 +1189,7 @@ class Scanner:
             trailing.extend(breaks)
 
         # We are done.
-        token = ScalarToken("".join(chunks), False, start_mark, end_mark, style)
+        token = tokens.ScalarToken("".join(chunks), False, start_mark, end_mark, style)
         if self.loader is not None:
             comment_handler = getattr(self.loader, 'comment_handling', False)
             if comment_handler is None:
@@ -1215,7 +1215,9 @@ class Scanner:
                     # Keep track of the trailing whitespace and following comments
                     # as a comment token, if isn't all included in the actual value.
                     comment_end_mark = self.reader.get_mark()
-                    comment = CommentToken("".join(trailing), end_mark, comment_end_mark)
+                    comment = tokens.CommentToken("".join(trailing),
+                                                  end_mark,
+                                                  comment_end_mark)
                     token.add_post_comment(comment)
         return token
 
@@ -1356,7 +1358,7 @@ class Scanner:
             chunks.extend(self.scan_flow_scalar_non_spaces(double, start_mark))
         self.reader.forward()
         end_mark = self.reader.get_mark()
-        return ScalarToken("".join(chunks), False, start_mark, end_mark, style)
+        return tokens.ScalarToken("".join(chunks), False, start_mark, end_mark, style)
 
     ESCAPE_REPLACEMENTS = {
         '0': '\0',
@@ -1557,7 +1559,7 @@ class Scanner:
             ):
                 break
 
-        token = ScalarToken("".join(chunks), True, start_mark, end_mark)
+        token = tokens.ScalarToken("".join(chunks), True, start_mark, end_mark)
         # getattr provides True so C type loader, which cannot handle comment,
         # will not make CommentToken
         if self.loader is not None:
@@ -1565,7 +1567,7 @@ class Scanner:
             if comment_handler is None:
                 if spaces and spaces[0] == '\n':
                     # Create a comment token to preserve the trailing line breaks.
-                    comment = CommentToken("".join(spaces) + '\n', start_mark, end_mark)
+                    comment = tokens.CommentToken("".join(spaces) + '\n', start_mark, end_mark)
                     token.add_post_comment(comment)
             elif comment_handler is not False:
                 line = start_mark.line + 1
@@ -1755,7 +1757,7 @@ class RoundTripScanner(Scanner):
         comments: List[Any] = []
         if not self.tokens:
             return comments
-        if isinstance(self.tokens[0], CommentToken):
+        if isinstance(self.tokens[0], tokens.CommentToken):
             comment = self.tokens.pop(0)
             self.tokens_taken += 1
             comments.append(comment)
@@ -1763,7 +1765,7 @@ class RoundTripScanner(Scanner):
             self.fetch_more_tokens()
             if not self.tokens:
                 return comments
-            if isinstance(self.tokens[0], CommentToken):
+            if isinstance(self.tokens[0], tokens.CommentToken):
                 self.tokens_taken += 1
                 comment = self.tokens.pop(0)
                 # nprint('dropping2', comment)
@@ -1789,15 +1791,16 @@ class RoundTripScanner(Scanner):
                 len(self.tokens) > 1
                 and isinstance(
                     self.tokens[0],
-                    (ScalarToken, ValueToken, FlowSequenceEndToken, FlowMappingEndToken),
+                    (tokens.ScalarToken, tokens.ValueToken, tokens.FlowSequenceEndToken,
+                     tokens.FlowMappingEndToken),
                 )
-                and isinstance(self.tokens[1], CommentToken)
+                and isinstance(self.tokens[1], tokens.CommentToken)
                 and self.tokens[0].end_mark.line == self.tokens[1].start_mark.line
             ):
                 self.tokens_taken += 1
                 c = self.tokens.pop(1)
                 self.fetch_more_tokens()
-                while len(self.tokens) > 1 and isinstance(self.tokens[1], CommentToken):
+                while len(self.tokens) > 1 and isinstance(self.tokens[1], tokens.CommentToken):
                     self.tokens_taken += 1
                     c1 = self.tokens.pop(1)
                     c.value = c.value + (' ' * c1.start_mark.column) + c1.value
@@ -1805,8 +1808,8 @@ class RoundTripScanner(Scanner):
                 self.tokens[0].add_post_comment(c)
             elif (
                 len(self.tokens) > 1
-                and isinstance(self.tokens[0], ScalarToken)
-                and isinstance(self.tokens[1], CommentToken)
+                and isinstance(self.tokens[0], tokens.ScalarToken)
+                and isinstance(self.tokens[1], tokens.CommentToken)
                 and self.tokens[0].end_mark.line != self.tokens[1].start_mark.line
             ):
                 self.tokens_taken += 1
@@ -1818,7 +1821,7 @@ class RoundTripScanner(Scanner):
                 )
                 self.tokens[0].add_post_comment(c)
                 self.fetch_more_tokens()
-                while len(self.tokens) > 1 and isinstance(self.tokens[1], CommentToken):
+                while len(self.tokens) > 1 and isinstance(self.tokens[1], tokens.CommentToken):
                     self.tokens_taken += 1
                     c1 = self.tokens.pop(1)
                     c.value = c.value + (' ' * c1.start_mark.column) + c1.value
@@ -1833,7 +1836,7 @@ class RoundTripScanner(Scanner):
             # empty line within indented key context
             # no need to update end-mark, that is not used
             value = value[:-1]
-        self.tokens.append(CommentToken(value, start_mark, end_mark))
+        self.tokens.append(tokens.CommentToken(value, start_mark, end_mark))
 
     # scanner
 
@@ -2134,20 +2137,20 @@ class ScannedComments:
             return
         idx = 1
         while tokens[-idx].start_mark.line > comment_line or isinstance(
-            tokens[-idx], ValueToken,
+            tokens[-idx], tokens.ValueToken,
         ):
             idx += 1
         if _debug != 0:
             xprintf('idx1', idx)
         if (
             len(tokens) > idx
-            and isinstance(tokens[-idx], ScalarToken)
-            and isinstance(tokens[-(idx + 1)], ScalarToken)
+            and isinstance(tokens[-idx], tokens.ScalarToken)
+            and isinstance(tokens[-(idx + 1)], tokens.ScalarToken)
         ):
             return
         try:
-            if isinstance(tokens[-idx], ScalarToken) and isinstance(
-                tokens[-(idx + 1)], KeyToken,
+            if isinstance(tokens[-idx], tokens.ScalarToken) and isinstance(
+                tokens[-(idx + 1)], tokens.KeyToken,
             ):
                 try:
                     eol_idx = self.unused.pop(0)
@@ -2163,8 +2166,8 @@ class ScannedComments:
                 xprintf('IndexError1')
             pass
         try:
-            if isinstance(tokens[-idx], ScalarToken) and isinstance(
-                tokens[-(idx + 1)], (ValueToken, BlockEntryToken),
+            if isinstance(tokens[-idx], tokens.ScalarToken) and isinstance(
+                tokens[-(idx + 1)], (tokens.ValueToken, tokens.BlockEntryToken),
             ):
                 try:
                     eol_idx = self.unused.pop(0)
@@ -2221,7 +2224,7 @@ class RoundTripScannerSC(Scanner):  # RoundTripScanner Split Comments
         while self.need_more_tokens():
             self.fetch_more_tokens()
         if len(self.tokens) > 0:
-            if isinstance(self.tokens[0], BlockEndToken):
+            if isinstance(self.tokens[0], tokens.BlockEndToken):
                 self.comments.assign_post(self.tokens[0])  # type: ignore
             else:
                 self.comments.assign_pre(self.tokens[0])  # type: ignore

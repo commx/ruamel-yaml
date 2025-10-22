@@ -4,8 +4,8 @@
 
 | | |
 | - | - |
-| version |0.18.14 |
-| updated |2025-06-09 |
+| version |0.18.16 |
+| updated |2025-10-22 |
 | documentation |https://yaml.dev/doc/ruamel.yaml |
 | repository |https://sourceforge.net/projects/ruamel-yaml |
 | pypi |https://pypi.org/project/ruamel.yaml |
@@ -81,7 +81,7 @@ email, preferably with some information on how you use the package (or a
 link to the repository) and I'll keep you informed when the status of
 the API is stable enough to make the transition.
 
-For packaging purposes you can use a download of the [tar balls oof tagged source](https://yaml.dev/ruamel-dl-tagged-releases)
+For packaging purposes you can use a download of the [tar balls of tagged source](https://yaml.dev/ruamel-dl-tagged-releases)
 
 
 <a href="https://bestpractices.coreinfrastructure.org/projects/1128"><img src="https://bestpractices.coreinfrastructure.org/projects/1128/badge"></a>
@@ -90,7 +90,14 @@ For packaging purposes you can use a download of the [tar balls oof tagged sourc
 <a href="https://pypi.org/project/oitnb/"><img src="https://sourceforge.net/p/oitnb/code/ci/default/tree/_doc/_static/oitnb.svg?format=raw"></a>
 <a href="http://mypy-lang.org/"><img src="http://www.mypy-lang.org/static/mypy_badge.svg"></a>
 <a href="https://www.pepy.tech/projects/ruamel.yaml"><img src="https://img.shields.io/pepy/dt/ruamel.yaml.svg"></a>
-NEXT:<br>
+
+0.18.16 (2025-10-22):
+
+- root level block style scalars that started with a directives-end marker or a document-end marker, are now indented 2 spaces.
+- merged fix for accessing end_marks on Tokens provided by [Toknak](https://sourceforge.net/u/taknok/)
+
+0.18.15 (2025-08-19):
+
 - duplicate merge keys are never allowed (not even with .allow_duplicate_keys = True
 - merge keys now keep there position if a key before the merge key gets deleted (previously a key after the merge key would move before it)
 

@@ -1,3 +1,9 @@
+[0.18.16, 2025-10-22]:
+- root level block style scalars that started with a directives-end marker or a 
+  document-end marker, are now indented 2 spaces.
+- merged fix for accessing end_marks on Tokens provided by 
+  [Toknak](https://sourceforge.net/u/taknok/)
+
 [0.18.15, 2025-08-19]:
 - duplicate merge keys are never allowed (not even with .allow_duplicate_keys = 
   True

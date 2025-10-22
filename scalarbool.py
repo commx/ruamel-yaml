@@ -1,6 +1,3 @@
-
-from __future__ import annotations
-
 """
 You cannot subclass bool, and this is necessary for round-tripping anchored
 bool values (and also if you want to preserve the original way of writing)
@@ -9,6 +6,8 @@ bool.__bases__ is type 'int', so that is what is used as the basis for ScalarBoo
 
 You can use these in an if statement, but not when testing equivalence
 """
+
+from __future__ import annotations
 
 from ruamel.yaml.anchor import Anchor
 
