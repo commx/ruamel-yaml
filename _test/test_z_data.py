@@ -94,6 +94,9 @@ class Dump(YAMLData):
 class Emit(YAMLData):
     yaml_tag = '!Emit'
 
+class Comment(YAMLData):
+    yaml_tag = '!Comment'
+
 
 def pytest_generate_tests(metafunc: Any) -> None:
     test_yaml = []
@@ -141,6 +144,7 @@ class TestYAMLData:
         tyaml.register_class(JSONData)
         tyaml.register_class(Dump)
         tyaml.register_class(Emit)
+        tyaml.register_class(Comment)
         return list(tyaml.load_all(path))
 
     def yaml_load(self, value: Any, yaml_version: Optional[Any] = None) -> Tuple[Any, Any]:
@@ -317,6 +321,8 @@ class TestYAMLData:
                 emit = doc  # NOQA
             elif isinstance(doc, Assert):
                 confirm = doc
+            elif isinstance(doc, Comment):
+                pass
             elif isinstance(doc, Python):
                 python = doc
                 if len(typs) == 0:
@@ -365,6 +371,8 @@ class TestYAMLData:
                     sys.exit(1)
                 self.load_compare_json(data, json, yaml_version=yaml_version)
             elif typ == 'dump':
+                continue
+            elif typ == 'comment':
                 continue
             elif typ == 'emit':
                 self.load_compare_emit(data, emit)

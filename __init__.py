@@ -32,7 +32,7 @@ _package_data = dict(
         fl8excl='_test/lib,branch_default',
     ),
     # universal=True,
-    supported=[(3, 8)],  # minimum
+    supported=[(3, 9)],  # minimum
 )  # type: Dict[Any, Any]
 
 
