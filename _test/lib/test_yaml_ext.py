@@ -1,6 +1,11 @@
 # coding: utf-8
 
-import _ruamel_yaml
+
+try:
+   import _ruamel_yaml as _ruamel_yaml_clib
+except ImportError:
+   import _ruamel_yaml_clibz as _ruamel_yaml_clib
+
 import ruamel.yaml
 import types
 import pprint
@@ -167,11 +172,11 @@ def _tear_down():
 
 def test_c_version(verbose=False):
     if verbose:
-        print(_ruamel_yaml.get_version())
-        print(_ruamel_yaml.get_version_string())
-    assert ('%s.%s.%s' % _ruamel_yaml.get_version()) == _ruamel_yaml.get_version_string(), (
-        _ruamel_yaml.get_version(),
-        _ruamel_yaml.get_version_string(),
+        print(_ruamel_yaml_clib.get_version())
+        print(_ruamel_yaml_clib.get_version_string())
+    assert ('%s.%s.%s' % _ruamel_yaml_clib.get_version()) == _ruamel_yaml_clib.get_version_string(), (
+        _ruamel_yaml_clib.get_version(),
+        _ruamel_yaml_clib.get_version_string(),
     )
 
 

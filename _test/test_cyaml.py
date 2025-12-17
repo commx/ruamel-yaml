@@ -5,7 +5,7 @@ import platform
 import pytest  # type: ignore  # NOQA
 from textwrap import dedent
 
-NO_CLIB_VER = (3, 12)
+NO_CLIB_VER = (3, 15)
 
 
 @pytest.mark.skipif(  # type: ignore
@@ -30,8 +30,8 @@ def test_load_cyaml() -> None:
 def test_dump_cyaml() -> None:
     import ruamel.yaml
 
-    if sys.version_info >= NO_CLIB_VER:
-        return
+    # if sys.version_info >= NO_CLIB_VER:
+    #     return
     data = {'a': 1, 'b': 2}
     yaml = ruamel.yaml.YAML(typ='safe', pure=False)
     yaml.default_flow_style = False

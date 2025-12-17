@@ -1,3 +1,6 @@
+[0.18.17, 2025-12-17]:
+- try to load C functions from `_ruamel_yaml_clibz` first.
+
 [0.18.16, 2025-10-22]:
 - root level block style scalars that started with a directives-end marker or a 
   document-end marker, are now indented 2 spaces.

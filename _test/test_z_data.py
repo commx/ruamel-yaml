@@ -94,6 +94,7 @@ class Dump(YAMLData):
 class Emit(YAMLData):
     yaml_tag = '!Emit'
 
+
 class Comment(YAMLData):
     yaml_tag = '!Comment'
 

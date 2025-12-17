@@ -26,6 +26,7 @@ from setuptools import setup, Extension, Distribution  # NOQA
 from setuptools.command import install_lib  # NOQA
 from setuptools.command.sdist import sdist as _sdist  # NOQA
 
+max_supported_minor_3_version = 14
 
 if __name__ != '__main__':
     raise NotImplementedError('should never include setup.py')
@@ -491,7 +492,7 @@ class NameSpacePackager(object):
         assert self._pkg_data.get('read_the_docs') is None, "update pon data read_the_docs -> url_doc='https://domain/path/{pkgname}/'"  # NOQA
         url_doc = self._pkg_data.get('url_doc')
         if url_doc:
-            ret_val['Documentation'] = url_doc.format(full_package_name=sp)
+            ret_val['Documentation'] = url_doc.format(full_package_name=self.full_package_name)
         return ret_val
 
     @property
@@ -507,9 +508,7 @@ class NameSpacePackager(object):
         """return the license field from _package_data, None means MIT"""
         lic = self._pkg_data.get('license')
         if lic is None:
-            # lic_fn = os.path.join(os.path.dirname(__file__), 'LICENSE')
-            # assert os.path.exists(lic_fn)
-            return 'MIT license'
+            return 'MIT'
         return lic
 
     def has_mit_lic(self):
@@ -537,6 +536,7 @@ class NameSpacePackager(object):
         and only adding defaults when no explicit entries were provided.
         Add explicit Python versions in sync with tox.env generation based on python_requires?
         See comment develop
+        https://pypi.org/classifiers/
         """
         attr = '_' + sys._getframe().f_code.co_name
         if not hasattr(self, attr):
@@ -547,13 +547,12 @@ class NameSpacePackager(object):
         c = set([  # NOQA
                 ('Development Status', '{0} - {1}'.format(*self.status)),
                 ('Intended Audience', 'Developers'),
-#               ('License', 'OSI Approved', ('MIT' if self.has_mit_lic() else 'Other/Proprietary') + ' License'),  # NOQA
                 ('License', ('OSI Approved :: MIT' if self.has_mit_lic() else 'Other/Proprietary') + ' License'),  # NOQA
                 ('Operating System', 'OS Independent'),
                 ('Programming Language', 'Python'),
                 ])
         for cl in self._pkg_data.get('classifiers', []):
-            print('cltype', type(cl), repr(cl))
+            # print('cltype', type(cl), repr(cl))
             if isinstance(cl, str):
                 c.add((cl,))
             else:
@@ -561,13 +560,13 @@ class NameSpacePackager(object):
         supported = self.supported[0]
         assert supported[0] == 3
         minor = supported[1]
-        while minor <= 13:
+        while minor <= max_supported_minor_3_version:
             version = (supported[0], minor)
             c.add(tuple(['Programming Language', 'Python'] + list(version)))
             minor += 1
         ret_val = []
-        for x in c:
-            print('x', repr(x))
+        # for x in c:
+        #     print('x', repr(x))
         prev = str
         for cl in sorted(c):
             if isinstance(cl, str):
@@ -659,15 +658,6 @@ class NameSpacePackager(object):
         ep = self._pkg_data.get('extras_require')
         return ep
 
-    # @property
-    # def data_files(self):
-    #     df = self._pkg_data.get('data_files', [])
-    #     if self.has_mit_lic():
-    #         df.append('LICENSE')
-    #     if not df:
-    #         return None
-    #     return [('.', df)]
-
     @property
     def package_data(self):
         df = self._pkg_data.get('data_files', [])
@@ -700,6 +690,10 @@ class NameSpacePackager(object):
         except KeyError:
             _ = self.split
             return self._extra_packages
+
+    @property
+    def zig(self):
+        return self._pkg_data.get('zig')
 
     @property
     def supported(self):
@@ -745,16 +739,13 @@ class NameSpacePackager(object):
                 ext = Extension(
                     target['name'],
                     sources=[x for x in target['src']],  # NOQA
-                    libraries=[x for x in target.get('lib')],  # NOQA
+                    libraries=[x for x in target.get('lib', [])],  # NOQA
                 )
                 self._ext_modules.append(ext)
             return self._ext_modules
         # this used to use distutils
 
     @property
-    def test_suite(self):
-        return self._pkg_data.get('test_suite')
-
     def wheel(self, kw, setup):
         """temporary add setup.cfg if creating a wheel to include LICENSE file
         https://bitbucket.org/pypa/wheel/issues/47
@@ -765,8 +756,11 @@ class NameSpacePackager(object):
         if os.path.exists(file_name):  # add it if not in there?
             return False
         with open(file_name, 'w') as fp:
+            fp.write('[options]\n')
+            fp.write('python_requires = {}\n'.format(self.pkg_data.get(
+                'python_requires', '>=3.9')))
             if self._pkg_data.get('universal'):
-                fp.write('[bdist_wheel]\nuniversal = 1\n')
+                fp.write('\n[bdist_wheel]\nuniversal = 1\n')
         try:
             setup(**kw)
         except Exception:
@@ -816,6 +810,7 @@ class TmpFiles:
             """))
 
     def __exit__(self, typ, value, traceback):
+        print('exiting tmpfile', self._pkg_data)
         if self._keep:
             return
         for p in self._rm_after:
@@ -848,7 +843,7 @@ def main():
 
     kw = dict(  # NOQA: C408
         name=nsp.full_package_name,
-        metadata_version="1.0",
+        # metadata_version="1.0",
         version=version_str,
         packages=nsp.packages,
         python_requires=nsp.python_requires,
@@ -866,9 +861,11 @@ def main():
         keywords=nsp.keywords,
         package_data=nsp.package_data,
         ext_modules=nsp.ext_modules,
-        test_suite=nsp.test_suite,
         zip_safe=False,
     )
+    if nsp.zig:
+        kw['build_zig'] = True
+        kw.setdefault('setup_requires', []).append('setuptools-zig>=0.4.1')
 
     if '--version' not in sys.argv and ('--verbose' in sys.argv or dump_kw in sys.argv):
         for k in sorted(kw):
