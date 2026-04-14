@@ -12,7 +12,9 @@ import collections.abc
 
 from ruamel.yaml.docinfo import Version  # NOQA
 # fmt: off
-if False:  # MYPY
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
     from typing import Any, Dict, Optional, List, Union, BinaryIO, IO, Text, Tuple  # NOQA
     from typing import Optional  # NOQA
     try:
