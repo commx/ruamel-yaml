@@ -35,8 +35,21 @@ from ruamel.yaml.loader import Loader as UnsafeLoader  # NOQA
 from ruamel.yaml.comments import CommentedMap, CommentedSeq, C_PRE
 from ruamel.yaml.docinfo import DocInfo, version, Version
 
-from typing import List, Set, Dict, Tuple, Union, Any, Callable, Optional, Text, Type  # NOQA
-if False:  # MYPY
+from typing import (
+    TYPE_CHECKING,
+    List,
+    Set,
+    Dict,
+    Tuple,
+    Union,
+    Any,
+    Callable,
+    Optional,
+    Text,
+    Type,
+)  # NOQA
+
+if TYPE_CHECKING:
     from ruamel.yaml.compat import StreamType, StreamTextType, VersionType  # NOQA
     from types import TracebackType
     from pathlib import Path
@@ -581,7 +594,11 @@ class YAML:
                 raise
 
     def dump(
-        self: Any, data: Union[Path, StreamType], stream: Any = None, *, transform: Any = None,
+        self,
+        data: Any,
+        stream: Optional[Union[Path, StreamType]] = None,
+        *,
+        transform: Any = None,
     ) -> Any:
         if self._context_manager:
             if not self._output:

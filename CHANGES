@@ -10,6 +10,9 @@
   this limits the recursion, so loading does throw a `MaxDepthExceededError`.
   Based on comments by Benjamin Oberdorfer via email. This also triggered the
   new documenation section on processing unchecked input.
+- use `typing.TYPE_CHECKING` instead of `if False` for type-only imports in
+  `compat.py` and `main.py`, and annotate `YAML.dump(..., data=...)` with `Any`,
+  so Pyright can resolve `YAML.load` / `YAML.dump` parameter types (SF #564).
 
 [0.18.17, 2025-12-17]:
 - try to load C functions from `_ruamel_yaml_clibz` first.
